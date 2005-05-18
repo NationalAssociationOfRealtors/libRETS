@@ -1,0 +1,41 @@
+srcdir=@srcdir@
+VPATH=@srcdir@
+
+SHELL = /bin/sh
+
+prefix=@prefix@
+datadir=@datadir@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+mandir=@mandir@
+sysconfdir=@sysconfdir@
+docdir=$(datadir)/doc
+
+INSTALL=@INSTALL@
+INSTALL_PROGRAM=@INSTALL_PROGRAM@
+INSTALL_DATA=@INSTALL_DATA@
+
+CC=@CC@
+CXX=@CXX@
+CFLAGS=@CFLAGS@ @DEFS@
+LIBS=@LIBS@
+LDFLAGS=@LDFLAGS@
+
+USE_DEPENDS=@USE_DEPENDS@
+
+TARGET=unix
+TARGET_CFLAGS=-DTARGET_UNIX
+
+# Put targets here so that zsh can complete on them, as zsh won't
+# follow the include directives.
+all: _all
+debug: _debug
+build: _build
+doc: _doc
+doc-api: _doc-api
+clean: _clean
+distclean: _distclean
+maintainer-clean: _maintainer-clean
+
+include $(srcdir)/project/build/sources.mk
+include $(srcdir)/project/build/rules.mk
