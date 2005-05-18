@@ -1,0 +1,44 @@
+{
+    IBClasses = (
+        {
+            CLASS = AccountDictionary; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSMutableDictionary; 
+        }, 
+        {
+            CLASS = AccountsArrayController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSArrayController; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                addAccount = id; 
+                clearSavedQueries = id; 
+                convertSqlToDmql = id; 
+                executeQuery = id; 
+                showPhotoWindow = id; 
+            }; 
+            CLASS = MyController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                mAccountNameField = NSTextField; 
+                mAccountsController = NSArrayController; 
+                mCurrencyFormatter = NSFormatter; 
+                mDateFormatter = NSFormatter; 
+                mDmqlTextView = NSTextView; 
+                mGenerateDmqlMenu = NSMenuItem; 
+                mMainWindow = NSWindow; 
+                mPhotoPanel = NSPanel; 
+                mPreferencesPanel = NSPanel; 
+                mResultsController = NSArrayController; 
+                mSelectedAccount = NSPopUpButton; 
+                mSqlTextView = NSTextView; 
+                mSqlView = SNDisclosableView; 
+                mTableView = NSTableView; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

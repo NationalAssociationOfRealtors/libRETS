@@ -1,0 +1,177 @@
+LIB_NAME   = librets
+
+BOOST_PATH = ../../../../boost_1_32_0
+CURL_PATH  = ../../../../curl-7.13.2
+EXPAT_PATH = C:/Expat-1.95.8
+ANTLR_PATH = C:/antlr/antlr-2.7.5
+
+CCNODBG    = cl.exe /MD /O2 /DNDEBUG
+CCDEBUG    = cl.exe /MDd /Od /Gm /Zi /D_DEBUG /GZ
+CFLAGS_STD = /I. /I../include /nologo /W3 /GX /YX /FD /c /GR
+LINKDLL    = link.exe /DLL
+LINKLIB    = link.exe /lib
+LDFLAGS_STD = /nologo
+
+BOOST_CFLAGS = /I "$(BOOST_PATH)" /DBOOST_ALL_NO_LIB
+BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib" \
+	libboost_filesystem-vc71-mt-gd-1_32.lib
+
+CURL_CFLAGS = /I "$(CURL_PATH)/include" /DCURL_STATICLIB
+CURL_LDFLAGS = "/LIBPATH:$(CURL_PATH)/lib" libcurl.lib
+
+EXPAT_CFLAGS = /I "$(EXPAT_PATH)/Source/lib" /DXML_STATIC
+EXPAT_LDFLAGS = "/LIBPATH:$(EXPAT_PATH)/StaticLibs" libexpat.lib
+
+ANTLR = java -classpath $(ANTLR_PATH)/lib/antlr.jar antlr.Tool
+ANTLR_CFLAGS = /I "$(ANTLR_PATH)/include" /I release\antlr
+ANTLR_LDFLAGS = "/LIBPATH:$(ANTLR_PATH)/lib" antlr.lib
+
+########################################################################
+#
+
+TARGET = $(LIB_NAME).lib
+DIROBJ 	= release
+CC 	= $(CCDEBUG)
+CXX 	= $(CCDEBUG)
+CFLAGS  = $(CFLAGS_STD) $(BOOST_CFLAGS) $(CURL_CFLAGS) $(EXPAT_CFLAGS) \
+	$(ANTLR_CFLAGS)
+LDFLAGS = $(LDFLAGS_STD) $(BOOST_LDFLAGS) $(CURL_LDFLAGS) $(EXPAT_LDFLAGS) \
+	$(ANTLR_LDFLAGS)
+LINK    = $(LINKLIB) $(LDFLAGS) /out:$(DIROBJ)\$(TARGET)
+
+########################################################################
+#
+
+
+ANTLR_DIR = $(DIROBJ)\antlr
+
+ANTLR_SRCS = \
+	$(ANTLR_DIR)\RetsSqlLexer.hpp \
+	$(ANTLR_DIR)\RetsSqlLexer.cpp \
+	$(ANTLR_DIR)\RetsSqlParser.hpp \
+	$(ANTLR_DIR)\RetsSqlParser.cpp \
+	$(ANTLR_DIR)\DmqlTreeParser.hpp \
+	$(ANTLR_DIR)\DmqlTreeParser.cpp \
+	$(ANTLR_DIR)\GetObjectTreeParser.hpp \
+	$(ANTL_DIR)\GetObjectTreeParser.cpp
+
+ANTLR_OBJS = \
+	$(DIROBJ)\RetsSqlLexer.obj \
+	$(DIROBJ)\RetsSqlParser.obj \
+	$(DIROBJ)\DmqlTreeParser.obj \
+	$(DIROBJ)\GetObjectTreeParser.obj
+
+X_OBJS = \
+	$(ANTLR_OBJS) \
+	$(DIROBJ)\AndCriterion.obj \
+	$(DIROBJ)\CapabilityUrls.obj \
+	$(DIROBJ)\CurlHttpClient.obj \
+	$(DIROBJ)\CurlHttpResponse.obj \
+	$(DIROBJ)\CurlSlist.obj \
+	$(DIROBJ)\DefaultMetadataElementFactory.obj \
+	$(DIROBJ)\DmqlCriterion.obj \
+	$(DIROBJ)\DmqlExpression.obj \
+	$(DIROBJ)\DmqlQuery.obj \
+	$(DIROBJ)\EqCriterion.obj \
+	$(DIROBJ)\ExpatXmlParser.obj \
+	$(DIROBJ)\FieldCriterion.obj \
+	$(DIROBJ)\GetObjectQuery.obj \
+	$(DIROBJ)\GetObjectRequest.obj \
+	$(DIROBJ)\GetObjectResponse.obj \
+	$(DIROBJ)\GtCriterion.obj \
+	$(DIROBJ)\JunctionCriterion.obj \
+	$(DIROBJ)\KeyValueResponse.obj \
+	$(DIROBJ)\LiteralCriterion.obj \
+	$(DIROBJ)\LoginResponse.obj \
+	$(DIROBJ)\LogoutResponse.obj \
+	$(DIROBJ)\LtCriterion.obj \
+	$(DIROBJ)\MetadataByLevelCollector.obj \
+	$(DIROBJ)\MetadataClass.obj \
+	$(DIROBJ)\MetadataEditMask.obj \
+	$(DIROBJ)\MetadataElement.obj \
+	$(DIROBJ)\MetadataElementCollector.obj \
+	$(DIROBJ)\MetadataLookup.obj \
+	$(DIROBJ)\MetadataLookupType.obj \
+	$(DIROBJ)\MetadataObject.obj \
+	$(DIROBJ)\MetadataResource.obj \
+	$(DIROBJ)\MetadataSearchHelp.obj \
+	$(DIROBJ)\MetadataSystem.obj \
+	$(DIROBJ)\MetadataTable.obj \
+	$(DIROBJ)\MetadataUpdate.obj \
+	$(DIROBJ)\MetadataUpdateHelp.obj \
+	$(DIROBJ)\MetadataUpdateType.obj \
+	$(DIROBJ)\MetadataValidationExpression.obj \
+	$(DIROBJ)\MetadataValidationExternal.obj \
+	$(DIROBJ)\MetadataValidationExternalType.obj \
+	$(DIROBJ)\MetadataValidationLookup.obj \
+	$(DIROBJ)\MetadataValidationLookupType.obj \
+	$(DIROBJ)\NotCriterion.obj \
+	$(DIROBJ)\ObjectDescriptor.obj \
+	$(DIROBJ)\OrCriterion.obj \
+	$(DIROBJ)\RetsAST.obj \
+	$(DIROBJ)\RetsException.obj \
+	$(DIROBJ)\RetsExceptionContext.obj \
+	$(DIROBJ)\RetsHttpClient.obj \
+	$(DIROBJ)\RetsHttpRequest.obj \
+	$(DIROBJ)\RetsHttpResponse.obj \
+	$(DIROBJ)\RetsMetadata.obj \
+	$(DIROBJ)\RetsObject.obj \
+	$(DIROBJ)\RetsReplyException.obj \
+	$(DIROBJ)\RetsSession.obj \
+	$(DIROBJ)\RetsSqlException.obj \
+	$(DIROBJ)\RetsXmlAttribute.obj \
+	$(DIROBJ)\RetsXmlEndElementEvent.obj \
+	$(DIROBJ)\RetsXmlEvent.obj \
+	$(DIROBJ)\RetsXmlParser.obj \
+	$(DIROBJ)\RetsXmlStartElementEvent.obj \
+	$(DIROBJ)\RetsXmlTextEvent.obj \
+	$(DIROBJ)\SearchRequest.obj \
+	$(DIROBJ)\SearchResultSet.obj \
+	$(DIROBJ)\SqlToDmqlCompiler.obj \
+	$(DIROBJ)\Uri.obj \
+	$(DIROBJ)\XmlMetadataElementFactory.obj \
+	$(DIROBJ)\XmlMetadataParser.obj \
+	$(DIROBJ)\util.obj
+
+all: $(TARGET)
+
+$(TARGET): $(X_OBJS)
+	$(LINK) $(X_OBJS)
+
+$(X_OBJS): $(DIROBJ)
+
+$(ANTLR_OBJS): $(ANTLR_SRCS)
+
+$(ANTLR_SRCS): rets-sql.g dmql-tree.g get-object-tree.g $(ANTLR_DIR)
+	$(ANTLR) -o $(ANTLR_DIR) rets-sql.g
+	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g dmql-tree.g
+	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g get-object-tree.g
+
+$(DIROBJ):
+	@if not exist "$(DIROBJ)" mkdir $(DIROBJ)
+
+$(ANTLR_DIR): $(DIROBJ)
+	@if not exist "$(ANTLR_DIR)" mkdir $(ANTLR_DIR)
+
+clean:
+	@-erase /q $(ANTLR_DIR) 2> NUL
+	@-erase /q $(DIROBJ) 2> NUL
+	@-erase /s *.dll 2> NUL
+	@-erase /s *.exp 2> NUL
+	@-erase /s *.idb 2> NUL
+	@-erase /s *.lib 2> NUL
+	@-erase /s *.obj 2> NUL
+	@-erase /s *.pch 2> NUL
+	@-erase /s *.pdb 2> NUL
+	@-erase /s *.res 2> NUL
+
+.SUFFIXES: .c .cpp .obj .res
+
+{.\}.c{$(DIROBJ)\}.obj:
+	$(CC) $(CFLAGS) /Fo"$@"  $<
+
+{.\}.cpp{$(DIROBJ)\}.obj:
+	$(CXX) $(CFLAGS) /Fo"$@"  $<
+
+{$(ANTLR_DIR)\}.cpp{$(DIROBJ)\}.obj:
+	$(CXX) $(CFLAGS) /Fo"$@"  $<

@@ -1,0 +1,93 @@
+LIB_NAME   = librets
+
+BOOST_PATH = ../../../../boost_1_32_0
+
+CCNODBG    = cl.exe /MD /O2 /DNDEBUG
+CCDEBUG    = cl.exe /MDd /Od /Gm /Zi /D_DEBUG /GZ
+CFLAGS_STD = /I. /I../include /I../../librets/include /nologo /W3 /GX /YX /FD /c /GR
+LINKDLL    = link.exe /DLL
+LINKLIB    = link.exe /lib
+LDFLAGS_STD = /nologo
+
+BOOST_CFLAGS = /I "$(BOOST_PATH)"
+
+########################################################################
+#
+
+TARGET  = xml.exe http.exe raw-rets.exe login.exe metadata.exe search.exe \
+	sql2dmql.exe
+DIROBJ 	= release
+CC 	= $(CCDEBUG)
+CXX 	= $(CCDEBUG)
+CFLAGS  = $(CFLAGS_STD) $(BOOST_CFLAGS)
+LDFLAGS = $(LDFLAGS_STD) ../../librets/src/release/librets.lib
+
+LINK    = link.exe $(LDFLAGS)
+
+########################################################################
+#
+
+
+XML_OBJS = $(DIROBJ)\xml.obj
+
+HTTP_OBJS = $(DIROBJ)\http.obj
+
+RAW_RETS_OBJS = $(DIROBJ)\raw-rets.obj
+
+LOGIN_OBJS = $(DIROBJ)\login.obj
+
+METADATA_OBJS = $(DIROBJ)\metadata.obj
+
+SEARCH_OBJS = $(DIROBJ)\search.obj
+
+SQL2DMQL_OBJS = $(DIROBJ)\sql2dmql.obj
+
+X_OBJS = $(XML_OBJS) $(HTTP_OBJS) $(RAW_RETS_OBJS) $(LOGIN_OBJS) \
+	$(METADATA_OBJ) $(SEARCH_OBJ) $(SQL2DMQL_OBJS)
+
+all: $(TARGET)
+
+xml.exe: $(XML_OBJS)
+	$(LINK) /out:$(DIROBJ)\xml.exe $(XML_OBJS) /NODEFAULTLIB:LIBCMT
+
+http.exe: $(HTTP_OBJS)
+	$(LINK) /out:$(DIROBJ)\http.exe $(HTTP_OBJS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT
+
+raw-rets.exe: $(RAW_RETS_OBJS)
+	$(LINK) /out:$(DIROBJ)\raw-rets.exe $(RAW_RETS_OBJS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
+
+login.exe: $(LOGIN_OBJS)
+	$(LINK) /out:$(DIROBJ)\login.exe $(LOGIN_OBJS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
+
+metadata.exe: $(METADATA_OBJS)
+	$(LINK) /out:$(DIROBJ)\metadata.exe $(METADATA_OBJS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
+
+search.exe: $(SEARCH_OBJS)
+	$(LINK) /out:$(DIROBJ)\search.exe $(SEARCH_OBJS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
+
+sql2dmql.exe: $(SQL2DMQL_OBJS)
+	link.exe /out:$(DIROBJ)\sql2dmql.exe $(SQL2DMQL_OBJS) $(LDFLAGS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
+
+$(X_OBJS): $(DIROBJ) ../../librets/src/release/librets.lib
+
+$(DIROBJ):
+	@if not exist "$(DIROBJ)" mkdir $(DIROBJ)
+
+clean:
+	@-erase /q $(DIROBJ) 2> NUL
+	@-erase /s *.dll 2> NUL
+	@-erase /s *.exp 2> NUL
+	@-erase /s *.idb 2> NUL
+	@-erase /s *.lib 2> NUL
+	@-erase /s *.obj 2> NUL
+	@-erase /s *.pch 2> NUL
+	@-erase /s *.pdb 2> NUL
+	@-erase /s *.res 2> NUL
+
+.SUFFIXES: .c .cpp .obj .res
+
+{.\}.c{$(DIROBJ)\}.obj:
+	$(CC) $(CFLAGS) /Fo"$@"  $<
+
+{.\}.cpp{$(DIROBJ)\}.obj:
+	$(CXX) $(CFLAGS) /Fo"$@"  $<
