@@ -1,0 +1,12 @@
+
+all:
+	cd project\librets\src
+	nmake /nologo /f Makefile.vc
+	cd ..\..\examples\src
+	nmake /nologo /f Makefile.vc
+
+clean:
+	cd project\librets\src
+	nmake /nologo /f Makefile.vc clean
+	cd ..\..\examples\src
+	nmake /nologo /f Makefile.vc clean

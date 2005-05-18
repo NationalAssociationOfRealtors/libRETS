@@ -1,0 +1,16 @@
+/*
+ *  librets_Prefix.pch
+ *  librets
+ *
+ *  Created by Dave Dribin on 3/29/05.
+ *  Copyright 2005 __MyCompanyName__. All rights reserved.
+ *
+ */
+
+#include <string>
+#include <vector>
+#include <map>
+#include <iostream>
+#include <sstream>
+
+#include <boost/shared_ptr.hpp>
