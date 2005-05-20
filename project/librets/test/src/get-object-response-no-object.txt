@@ -1,0 +1,4 @@
+200
+Content-Type: text/xml
+
+<RETS ReplyCode="20403" ReplyText="No Object Found"/>

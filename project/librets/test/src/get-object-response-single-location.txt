@@ -1,0 +1,7 @@
+200
+Content-Type: image/gif
+Content-ID: abc123
+Object-ID: 1
+Content-Description: Front view
+Location: http://www.example.com/images/abc123.gif
+

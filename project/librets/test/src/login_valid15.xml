@@ -1,0 +1,25 @@
+<RETS ReplyCode="0" ReplyText="Operation Successful">
+<RETS-RESPONSE>
+Broker =
+MemberName = Joe Schmoe
+MetadataVersion = 1.0.000
+MetadataTimestamp = 01 Jan 2000 01:02:00 GMT
+MinMetadataTimestamp = 01 Jan 2000 01:01:00 GMT
+User = Joe,NULL,NULL,NULL
+OfficeList = chi
+Expr = 01 Jan 2000 01:03:00 GMT, 5
+Action = action
+Login = http://example.com:6103/rets/login
+LoginComplete = http://example.com:6103/rets/loginComplete
+Logout = http://example.com:6103/rets/logout
+Search = /rets/search
+GetMetadata = http://example.com:6103/rets/getMetadata
+ChangePassword = http://example.com:6103/rets/changePassword
+GetObject = http://example.com:6103/rets/getObject
+ServerInformation = http://example.com:6103/rets/serverInfo
+Update = http://example.com:6103/rets/update
+Balance = 3,197.35
+TimeoutSeconds = 1800
+X-Field = Value
+</RETS-RESPONSE>
+</RETS>
