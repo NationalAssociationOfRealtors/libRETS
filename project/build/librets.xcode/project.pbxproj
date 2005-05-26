@@ -4014,9 +4014,9 @@
 			);
 			isa = PBXGroup;
 			name = test;
-			path = /Users/dave/work/nar/rets/odbc/librets/project/librets/test;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = ../librets/test;
+			refType = 4;
+			sourceTree = "<group>";
 		};
 		55BD577E07FDAAFD00526D69 = {
 			children = (
