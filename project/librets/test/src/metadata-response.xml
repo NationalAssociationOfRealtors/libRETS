@@ -1,0 +1,11 @@
+<RETS ReplyCode="0" ReplyText="Success">
+<METADATA-SYSTEM Version="100.00.001" Date="Mon, 18 Aug 2003 17:00:00 GMT">
+<SYSTEM SystemID="CRT_RETS" SystemDescription="Center for REALTOR Technology"/>
+<COMMENTS>The reference implementation of a RETS Server</COMMENTS>
+</METADATA-SYSTEM>
+<METADATA-CLASS Resource="Property" Version="100.00.001" Date="Mon, 18 Aug 2003 17:00:00 GMT">
+<COLUMNS>	ClassName	StandardName	VisibleName	Description	TableVersion	TableDate	UpdateVersion	UpdateDate	</COLUMNS>
+<DATA>	CON	CommonInterest	Condos	Condos	100.00.001	Mon, 18 Aug 2003 17:00:00 GMT	100.00.001	Mon, 18 Aug 2003 17:00:00 GMT	</DATA>
+<DATA>	RES	ResidentialProperty	Single Family	Single Family	100.00.001	Mon, 18 Aug 2003 17:00:00 GMT	100.00.001	Mon, 18 Aug 2003 17:00:00 GMT	</DATA>
+</METADATA-CLASS>
+</RETS>

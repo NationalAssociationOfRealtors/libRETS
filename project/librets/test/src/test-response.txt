@@ -1,0 +1,6 @@
+200
+Content-Type: text/plain
+Colon-Header: header:with:colons
+
+this is
+sample text.

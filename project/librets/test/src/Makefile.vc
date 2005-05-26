@@ -1,0 +1,99 @@
+BOOST_PATH = ../../../../../boost_1_32_0
+CURL_PATH  = ../../../../curl-7.13.2
+EXPAT_PATH = C:/Expat-1.95.8
+ANTLR_PATH = C:/antlr/antlr-2.7.5
+CPPUNIT_PATH = ../../../../../cppunit-1.10.2
+
+CCNODBG    = cl.exe /MD /O2 /DNDEBUG
+CCDEBUG    = cl.exe /MDd /Od /Gm /Zi /D_DEBUG /GZ
+CFLAGS_STD = /I. /I../include /I../../include /nologo /W3 /GX /YX /FD /c /GR
+LINKDLL    = link.exe /DLL
+LINKLIB    = link.exe /lib
+LDFLAGS_STD = /nologo
+
+BOOST_CFLAGS = /I "$(BOOST_PATH)"
+
+EXPAT_CFLAGS = /I "$(EXPAT_PATH)/Source/lib" /DXML_STATIC
+EXPAT_LDFLAGS = "/LIBPATH:$(EXPAT_PATH)/StaticLibs" libexpat.lib
+
+CPPUNIT_CFLAGS = /I "$(CPPUNIT_PATH)/include"
+CPPUNIT_LDFLAGS = "/LIBPATH:$(CPPUNIT_PATH)/lib" cppunit.lib
+
+########################################################################
+#
+
+TARGET  = test.exe
+DIROBJ 	= release
+CC 	= $(CCDEBUG)
+CXX 	= $(CCDEBUG)
+CFLAGS  = $(CFLAGS_STD) $(BOOST_CFLAGS) $(CPPUNIT_CFLAGS) $(EXPAT_CFLAGS)
+LDFLAGS = $(LDFLAGS_STD) ../../src/release/librets.lib $(CPPUNIT_LDFLAGS)
+
+LINK    = link.exe $(LDFLAGS)
+
+########################################################################
+#
+
+
+TEST_OBJS = \
+	$(DIROBJ)\AndCriterionTest.obj \
+	$(DIROBJ)\CapabilityUrlsTest.obj \
+	$(DIROBJ)\DefaultMetadataElementFactoryTest.obj \
+	$(DIROBJ)\EqCriterionTest.obj \
+	$(DIROBJ)\ExpatXmlParserTest.obj \
+	$(DIROBJ)\GetObjectRequestTest.obj \
+	$(DIROBJ)\GetObjectResponseTest.obj \
+	$(DIROBJ)\GtCriterionTest.obj \
+	$(DIROBJ)\LiteralCriterionTest.obj \
+	$(DIROBJ)\LoginResponseTest.obj \
+	$(DIROBJ)\LogoutResponseTest.obj \
+	$(DIROBJ)\LtCriterionTest.obj \
+	$(DIROBJ)\MetadataByLevelCollectorTest.obj \
+	$(DIROBJ)\NotCriterionTest.obj \
+	$(DIROBJ)\OrCriterionTest.obj \
+	$(DIROBJ)\RetsHttpRequestTest.obj \
+	$(DIROBJ)\RetsMetadataTest.obj \
+	$(DIROBJ)\RetsObjectTest.obj \
+	$(DIROBJ)\RetsXmlAttributeTest.obj \
+	$(DIROBJ)\RetsXmlStartElementEventTest.obj \
+	$(DIROBJ)\SearchResultSetTest.obj \
+	$(DIROBJ)\SqlToDmqlCompilerTest.obj \
+	$(DIROBJ)\TestHttpResponse.obj \
+	$(DIROBJ)\TestHttpResponseTest.obj \
+	$(DIROBJ)\TestObject.obj \
+	$(DIROBJ)\UriTest.obj \
+	$(DIROBJ)\XmlMetadataParserTest.obj \
+	$(DIROBJ)\main.obj \
+	$(DIROBJ)\testUtil.obj \
+	$(DIROBJ)\utilTest.obj
+
+ALL_OBJS = $(TEST_OBJS)
+
+all: $(TARGET)
+
+test.exe: $(TEST_OBJS)
+	$(LINK) /out:$(DIROBJ)\test.exe $(TEST_OBJS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
+
+$(ALL_OBJS): $(DIROBJ) ../../src/release/librets.lib
+
+$(DIROBJ):
+	@if not exist "$(DIROBJ)" mkdir $(DIROBJ)
+
+clean:
+	@-erase /q $(DIROBJ) 2> NUL
+	@-erase /s *.dll 2> NUL
+	@-erase /s *.exp 2> NUL
+	@-erase /s *.idb 2> NUL
+	@-erase /s *.lib 2> NUL
+	@-erase /s *.obj 2> NUL
+	@-erase /s vc*.pch 2> NUL
+	@-erase /s *.pdb 2> NUL
+	@-erase /s *.res 2> NUL
+
+.SUFFIXES: .c .cpp .obj .res
+
+{.\}.c{$(DIROBJ)\}.obj:
+	$(CC) $(CFLAGS) /Fo"$@"  $<
+
+{.\}.cpp{$(DIROBJ)\}.obj:
+	$(CXX) $(CFLAGS) /Fo"$@"  $<

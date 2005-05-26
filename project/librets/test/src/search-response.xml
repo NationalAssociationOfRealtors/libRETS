@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<RETS ReplyCode="0" ReplyText="Operation Successful">
+<COUNT Records="2"/>
+<DELIMITER value="09"/>
+<COLUMNS>	ListingID	ListPrice	City	ListDate	</COLUMNS>
+<DATA>	LN000005	250000	Chicago	2004-07-04	</DATA>
+<DATA>	LN000004	380000	Buffalo Grove	2004-05-30	</DATA>
+</RETS>

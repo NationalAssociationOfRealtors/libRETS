@@ -1,0 +1,8 @@
+200
+RETS-Version: RETS/1.5
+Content-Type: text/xml;charset=ISO-8859-1
+Content-Length: 55
+Date: Thu, 26 May 2005 21:16:59 GMT
+Server: Apache-Coyote/1.1
+
+<RETS ReplyCode="20403" ReplyText="No Object Found"/>

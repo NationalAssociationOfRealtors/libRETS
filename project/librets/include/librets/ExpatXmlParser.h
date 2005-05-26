@@ -1,0 +1,52 @@
+#ifndef LIBRETS_EXPAT_XML_PARSER_H
+#define LIBRETS_EXPAT_XML_PARSER_H
+
+#include <istream>
+#include <list>
+#include <expat.h>
+#include "librets/std_forward.h"
+#include "librets/xml_forward.h"
+#include "librets/RetsXmlParser.h"
+
+namespace librets {
+
+class ExpatXmlParser : public RetsXmlParser
+{
+  public:
+    ExpatXmlParser(istreamPtr inputStream);
+    ExpatXmlParser(std::string inputString);
+
+    virtual ~ExpatXmlParser();
+
+    virtual bool HasNext();
+
+    virtual RetsXmlEventPtr GetNextEvent();
+
+  private:
+    typedef std::list<RetsXmlEventPtr> XmlEventList;
+
+    void init(istreamPtr inputStream);
+
+    RetsXmlEventPtr GetNextEventWithoutCoalescing();
+    void CoalesceTextEvents(RetsXmlTextEventPtr textEvent);
+
+    static void StartElement(void * userData, const char * name,
+                             const char **atts);
+    static void EndElement(void * userData, const char * name);
+
+    static void CharacterData(void * userData, const XML_Char * s,
+                              int len);
+
+    XmlEventList mEvents;
+    istreamPtr mInputStream;
+    bool mIsDone;
+    XML_Parser mParser;
+};
+
+};
+
+#endif
+
+/* Local Variables: */
+/* mode: c++ */
+/* End: */
