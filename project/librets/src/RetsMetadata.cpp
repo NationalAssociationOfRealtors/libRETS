@@ -17,6 +17,7 @@ RetsMetadata::RetsMetadata(MetadataByLevelCollectorPtr collector)
 {
     mCollector = collector;
     InitSystem();
+    InitAllResources();
     InitAllClasses();
 }
 
@@ -59,6 +60,20 @@ void RetsMetadata::InitAllClasses()
     }
 }
 
+void RetsMetadata::InitAllResources()
+{
+    mAllResources.reset(new MetadataResourceList());
+    MetadataElementListPtr resources =
+        mCollector->Find(MetadataElement::RESOURCE, "");
+    MetadataElementList::iterator i;
+    for (i = resources->begin(); i != resources->end(); i++)
+    {
+        MetadataResourcePtr resource =
+            b::dynamic_pointer_cast<MetadataResource>(*i);
+        mAllResources->push_back(resource);
+    }
+}
+
 MetadataSystemPtr RetsMetadata::GetSystem() const
 {
     return mSystem;
@@ -98,4 +113,26 @@ MetadataTableListPtr RetsMetadata::GetTablesForClass(
         tables->push_back(table);
     }
     return tables;
+}
+
+MetadataResourceListPtr RetsMetadata::GetAllResources() const
+{
+    return mAllResources;
+}
+
+MetadataClassListPtr RetsMetadata::GetClassesForResource(
+    string resourceName) const
+{
+    MetadataElementListPtr elements =
+        mCollector->Find(MetadataElement::CLASS, resourceName);
+    
+    MetadataClassListPtr classes(new MetadataClassList());
+    MetadataElementList::iterator i;
+    for (i = elements->begin(); i != elements->end(); i++)
+    {
+        MetadataClassPtr aClass = b::dynamic_pointer_cast<MetadataClass>(*i);
+        classes->push_back(aClass);
+    }
+    
+    return classes;
 }

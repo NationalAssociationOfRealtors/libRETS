@@ -7,6 +7,11 @@
 
 namespace librets {
 
+/** A vector of MetadataResource objects. */
+typedef std::vector<MetadataResourcePtr> MetadataResourceList;
+/** A smart pointer to MetadataResourceList. */
+typedef boost::shared_ptr<MetadataResourceList> MetadataResourceListPtr;
+
 /** A vector of MetadataClass objects. */
 typedef std::vector<MetadataClassPtr> MetadataClassList;
 /** A smart pointer to MetadataClassList. */
@@ -43,6 +48,21 @@ class RetsMetadata
     MetadataClassListPtr GetAllClasses() const;
 
     /**
+     * Returns all the resource metadata elements.
+     *
+     * @return All the resource metadata elemens
+     */
+    MetadataResourceListPtr GetAllResources() const;
+
+    /**
+     * Returns all metadata class elements for a specified metadata class.
+     *
+     * @param resourceName A resource name
+     * @return All metadata class elements for that resource
+     */
+    MetadataClassListPtr GetClassesForResource(std::string resourceName) const;
+    
+    /**
      * Returns the metadata class from its resource and class names.
      *
      * @param resourceName A resource name
@@ -69,10 +89,12 @@ class RetsMetadata
   private:
     void InitSystem();
     void InitAllClasses();
+    void InitAllResources();
 
     MetadataByLevelCollectorPtr mCollector;
     MetadataSystemPtr mSystem;
     MetadataClassListPtr mAllClasses;
+    MetadataResourceListPtr mAllResources;
 };
 
 };
