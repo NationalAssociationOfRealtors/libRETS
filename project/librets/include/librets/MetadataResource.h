@@ -70,6 +70,8 @@ class MetadataResource : public MetadataElement
 
     std::string GetResourceID() const;
 
+    std::string GetStandardName() const;
+
     /**
      * Returns all classes.
      *

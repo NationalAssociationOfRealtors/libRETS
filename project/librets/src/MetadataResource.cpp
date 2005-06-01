@@ -14,3 +14,8 @@ string CLASS::GetResourceID() const
 {
     return GetStringAttribute("ResourceID");
 }
+
+string CLASS::GetStandardName() const
+{
+    return GetStringAttribute("StandardName");
+}
