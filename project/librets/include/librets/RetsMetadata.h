@@ -55,6 +55,14 @@ class RetsMetadata
     MetadataResourceListPtr GetAllResources() const;
 
     /**
+     * Returns the metadata resource from its resource names.
+     *
+     * @param resourceName A resource name
+     * @return A metadata class
+     */
+    MetadataResourcePtr GetResource(std::string resourceName) const;
+
+    /**
      * Returns all metadata class elements for a specified metadata class.
      *
      * @param resourceName A resource name
@@ -71,6 +79,17 @@ class RetsMetadata
      */
     MetadataClassPtr GetClass(std::string resourceName, std::string className)
         const;
+
+    /**
+     * Returns the metadata class from its resource and class names.
+     *
+     * @param resourceName A resource name
+     * @param className A class name
+     * @param className A table name
+     * @return A metadata class
+     */
+    MetadataTablePtr GetTable(std::string resourceName, std::string className,
+                              std::string tableName) const;
 
     /**
      * Returns all metadata table elements for a specified
