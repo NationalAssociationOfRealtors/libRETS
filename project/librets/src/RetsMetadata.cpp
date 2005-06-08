@@ -136,3 +136,18 @@ MetadataClassListPtr RetsMetadata::GetClassesForResource(
     
     return classes;
 }
+
+MetadataResourcePtr RetsMetadata::GetResource(string resourceName) const
+{
+    MetadataResourcePtr metadataResource;
+    return metadataResource;
+    // TODO: fill me in
+}
+
+MetadataTablePtr RetsMetadata::GetTable(string resourceName, string className,
+                                        string tableName) const
+{
+    MetadataTablePtr metadataTable;
+    return metadataTable;
+    // TODO: fill me in
+}
