@@ -43,15 +43,17 @@ void CLASS::testGetSystem()
     resource->SetAttribute("ResourceID", "Agent");
     collector->AddElement(resource);
     resources->push_back(resource);
+    MetadataResourcePtr agentResource = resource;
 
     MetadataClassListPtr classes(new MetadataClassList());
     MetadataClassListPtr propClasses(new MetadataClassList());
+    MetadataClassPtr resClass(new MetadataClass());
+    resClass->SetLevel("Property");
+    resClass->SetAttribute("ClassName", "RES");
+    collector->AddElement(resClass);
+    classes->push_back(resClass);
+    propClasses->push_back(resClass);
     MetadataClassPtr aClass(new MetadataClass());
-    aClass->SetLevel("Property");
-    aClass->SetAttribute("ClassName", "RES");
-    collector->AddElement(aClass);
-    classes->push_back(aClass);
-    propClasses->push_back(aClass);
     aClass.reset(new MetadataClass());
     aClass->SetLevel("Property");
     aClass->SetAttribute("ClassName", "LND");
@@ -78,6 +80,7 @@ void CLASS::testGetSystem()
     table->SetAttribute("SystemName", "LD");
     collector->AddElement(table);
     tables->push_back(table);
+    MetadataTablePtr ldTable = table;
 
     RetsMetadataPtr metadata(new RetsMetadata(collector));
 
@@ -87,8 +90,14 @@ void CLASS::testGetSystem()
     MetadataResourceListPtr actualResources = metadata->GetAllResources();
     ASSERT_VECTOR_EQUAL(*resources, *actualResources);
 
+    MetadataResourcePtr actualResource = metadata->GetResource("Agent");
+    ASSERT_EQUAL(agentResource, actualResource);
+
     MetadataClassListPtr actualClasses = metadata->GetAllClasses();
     ASSERT_VECTOR_EQUAL(*classes, *actualClasses);
+
+    MetadataClassPtr actualClass = metadata->GetClass("Property", "RES");
+    ASSERT_EQUAL(resClass, actualClass);
 
     MetadataTableListPtr actualTables =
         metadata->GetTablesForClass(actualClasses->at(0));
@@ -96,6 +105,9 @@ void CLASS::testGetSystem()
     
     actualTables = metadata->GetTablesForClass("Property", "RES");
     ASSERT_VECTOR_EQUAL(*tables, *actualTables);
+
+    MetadataTablePtr actualTable = metadata->GetTable("Property", "RES", "LD");
+    ASSERT_EQUAL(ldTable, actualTable);
 
     MetadataClassListPtr actualPropClasses =
         metadata->GetClassesForResource("Property");

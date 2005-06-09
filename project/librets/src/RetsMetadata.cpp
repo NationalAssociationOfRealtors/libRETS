@@ -88,6 +88,24 @@ MetadataClassPtr RetsMetadata::GetClass(string resourceName, string className)
     const
 {
     MetadataClassPtr metadataClass;
+
+    MetadataClassListPtr classList = GetClassesForResource(resourceName);
+    
+    bool found = false;
+    MetadataClassList::iterator i = classList->begin();
+    
+    while (i != classList->end() && !found)
+    {
+        MetadataClassPtr clazz = *i;
+        string testName = clazz->GetClassName();
+        if (testName == className)
+        {
+            metadataClass = clazz;
+            found = true;
+        }
+        i++;
+    }
+    
     return metadataClass;
 }
 
@@ -140,14 +158,47 @@ MetadataClassListPtr RetsMetadata::GetClassesForResource(
 MetadataResourcePtr RetsMetadata::GetResource(string resourceName) const
 {
     MetadataResourcePtr metadataResource;
+
+    bool found = false;
+    MetadataResourceList::iterator i = mAllResources->begin();
+    
+    while (i != mAllResources->end() && !found)
+    {
+        MetadataResourcePtr res = *i;
+        string testName = res->GetResourceID();
+        if (testName == resourceName)
+        {
+            metadataResource = res;
+            found = true;
+        }
+        i++;
+    }
+    
     return metadataResource;
-    // TODO: fill me in
 }
 
 MetadataTablePtr RetsMetadata::GetTable(string resourceName, string className,
                                         string tableName) const
 {
     MetadataTablePtr metadataTable;
+
+    MetadataTableListPtr tableList =
+        GetTablesForClass(resourceName, className);
+    
+    bool found = false;
+    MetadataTableList::iterator i = tableList->begin();
+    
+    while (i != tableList->end() && !found)
+    {
+        MetadataTablePtr table = *i;
+        string testName = table->GetSystemName();
+        if (testName == tableName)
+        {
+            metadataTable = table;
+            found = true;
+        }
+        i++;
+    }
+    
     return metadataTable;
-    // TODO: fill me in
 }
