@@ -42,7 +42,7 @@ const char * RetsException::what() const throw()
     return mMessage.c_str();
 }
 
-void RetsException::PrintFullReport(ostream & out) const throw()
+void RetsException::PrintContextMessage(ostream & out) const throw()
 {
     out << GetName();
     if (mContext.IsValid())
@@ -50,6 +50,18 @@ void RetsException::PrintFullReport(ostream & out) const throw()
         out << " thrown at " << mContext.GetFileName() << ":"
             << mContext.GetLineNumber();
     }
+}
+
+std::string RetsException::GetContextMessage() const throw()
+{
+    ostringstream contextMessage;
+    PrintContextMessage(contextMessage);
+    return contextMessage.str();
+}
+
+void RetsException::PrintFullReport(ostream & out) const throw()
+{
+    PrintContextMessage(out);
     out << ": " << mMessage << endl;
 }
 

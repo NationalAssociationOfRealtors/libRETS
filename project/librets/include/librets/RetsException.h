@@ -36,6 +36,11 @@ class RetsException : public std::exception
      */
     virtual std::string GetMessage() const throw();
     
+    virtual void PrintContextMessage(std::ostream & outputStream)
+        const throw();
+
+    std::string GetContextMessage() const throw();
+
     virtual void PrintFullReport(std::ostream & outputStream) const throw();
     
     std::string GetFullReport() const throw();
