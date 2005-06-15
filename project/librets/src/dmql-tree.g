@@ -26,17 +26,25 @@ options
 
 {
 
-void DmqlTreeParser::setResourceAndClass(DmqlQueryPtr query, RefRetsAST ast)
+void DmqlTreeParser::setTable(DmqlQueryPtr query, RefRetsAST ast)
 {
-    std::string table = ast->getText();
+    mTable = ast->getText();
     StringVector components;
-    split(components, table, is_any_of(":"));
+    split(components, mTable, is_any_of(":"));
     if ((components.size() != 3) || (components.at(0) != "data")) {
-        throwSemanticException("Invalid table: " + table, ast);
+        throwSemanticException("Invalid table: " + mTable, ast);
     }
 
     query->SetResource(components.at(1));
     query->SetClass(components.at(2));
+}
+
+void DmqlTreeParser::assertValidTable(RefRetsAST ast)
+{
+    std::string table = ast->getText();
+    if (!table.empty() && (table != mTable)) {
+        throwSemanticException("Invalid table: " + table, ast);
+    }
 }
 
 void DmqlTreeParser::throwSemanticException(std::string message,
@@ -58,14 +66,15 @@ options
 }
 
 {
-    void setResourceAndClass(DmqlQueryPtr query, RefRetsAST ast);
+    void setTable(DmqlQueryPtr query, RefRetsAST ast);
+    void assertValidTable(RefRetsAST ast);
     void throwSemanticException(std::string message, RefRetsAST ast);
-    std::string tableName;
+    std::string mTable;
 }
 
 statement returns [DmqlQueryPtr q]
     { q.reset(new DmqlQuery()); DmqlCriterionPtr c; }
-    : #(SELECT columns[q] table_name[q] c=xcriteria)
+    : #(SELECT table_name[q] columns[q] c=criteria)
         { q->SetCriterion(c);}
     ;
 
@@ -74,16 +83,13 @@ columns [DmqlQueryPtr q]
     ;
 
 column [DmqlQueryPtr q]
-    : #(COLUMN table:ID col:ID { q->AddField(col->getText()); })
+    : #(COLUMN
+            table:ID    { assertValidTable(table); }
+            col:ID      { q->AddField(col->getText()); })
     ;
 
 table_name [DmqlQueryPtr q]
-    : id:ID { setResourceAndClass(q, id); tableName = id->getText();}
-    ;
-
-xcriteria returns [DmqlCriterionPtr criterion]
-    : {tableName == "rets_data_objects"}? criterion=get_object
-    | {tableName != "rets_data_objects"}? criterion=criteria
+    : id:ID { setTable(q, id); }
     ;
 
 criteria returns [DmqlCriterionPtr criterion]
@@ -111,7 +117,9 @@ query_element returns [DmqlCriterionPtr criterion]
     ;
 
 field_name returns [std::string name]
-    : #(COLUMN table:ID col:ID) { name = col->getText(); }
+    : #(COLUMN
+            table:ID    { assertValidTable(table); }
+            col:ID)     { name = col->getText(); }
     ;
 
 field_value returns [DmqlCriterionPtr criterion]

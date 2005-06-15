@@ -20,6 +20,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGreaterThan);
     CPPUNIT_TEST(testSelectColumns);
     CPPUNIT_TEST(testFullyQualifiedColumnNames);
+    CPPUNIT_TEST(testInvalidColumnFQColumnNames);
     CPPUNIT_TEST(testLessThan);
     CPPUNIT_TEST(testEquals);
     CPPUNIT_TEST(testStringEquals);
@@ -39,6 +40,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testGreaterThan();
     void testSelectColumns();
     void testFullyQualifiedColumnNames();
+    void testInvalidColumnFQColumnNames();
     void testLessThan();
     void testEquals();
     void testStringEquals();
@@ -155,7 +157,7 @@ void CLASS::testSelectColumns()
 void CLASS::testFullyQualifiedColumnNames()
 {
     DmqlQueryPtr query =
-    sqlToDmql("select data:Property:RES.ListingID, data:property:RES.ListPrice "
+    sqlToDmql("select data:Property:RES.ListingID, data:Property:RES.ListPrice "
               "  from data:Property:RES "
               " where data:Property:RES.ListPrice >= 300000;");
     ASSERT_STRING_EQUAL("Property", query->GetResource());
@@ -168,6 +170,18 @@ void CLASS::testFullyQualifiedColumnNames()
     
     DmqlCriterionPtr criterion = gt("ListPrice", literal("300000"));
     ASSERT_EQUAL(*criterion, *query->GetCriterion());
+}
+
+void CLASS::testInvalidColumnFQColumnNames()
+{
+    ASSERT_INVALID_SQL(
+        "select invalid.ListingID, data:Property:RES.ListPrice "
+        "  from data:Property:RES "
+        " where data:Property:RES.ListPrice >= 300000;");
+    ASSERT_INVALID_SQL(
+        "select data:Property:RES.ListingID, data:Property:RES.ListPrice "
+        "  from data:Property:RES "
+        " where invalid.ListPrice >= 300000;");
 }
 
 void CLASS::testLessThanOrEquals()

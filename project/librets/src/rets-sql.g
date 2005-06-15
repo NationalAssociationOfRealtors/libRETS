@@ -47,9 +47,10 @@ sql_command
     ;
 
 select_statement
-    : SELECT^ column_names
-        FROM! table_name
-        WHERE! where_condition
+    :! SELECT^ c:column_names
+        FROM! t:table_name
+        WHERE! w:where_condition
+        { #select_statement = #([SELECT], t_AST, c_AST, w_AST); }
     ;
 
 column_names

@@ -90,7 +90,7 @@ options
 
 statement returns [GetObjectQueryPtr q]
     { q.reset(new GetObjectQuery()); }
-    : #(SELECT columns table_name[q] criteria[q])
+    : #(SELECT table_name[q] columns criteria[q])
     ;
 
 columns
