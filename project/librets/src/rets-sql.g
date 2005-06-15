@@ -26,7 +26,7 @@ tokens
 {
     SELECT = "select"; FROM = "from"; WHERE = "where";
     OR = "or"; AND = "and"; NOT = "not";
-    COLUMNS; QUERY_ELEMENT;
+    COLUMNS; COLUMN; QUERY_ELEMENT;
 }
 
 {
@@ -58,8 +58,10 @@ column_names
         { #column_names = #([COLUMNS], #column_names); }
     ;
 
-column_name
-    : ID
+column_name!
+    : id:ID         { #column_name = #([COLUMN], #[ID, ""], #id);  }
+    | table:ID DOT col:ID
+        { #column_name = #([COLUMN], #table, #col); }
     ;
 
 table_name
@@ -87,11 +89,7 @@ query_element
     ;
 
 numeric_condition
-    : field_name (EQ^ | LESS^ | LTE^ | GREATER^ | GTE^) field_value
-    ;
-
-field_name
-    : ID
+    : column_name (EQ^ | LESS^ | LTE^ | GREATER^ | GTE^) field_value
     ;
 
 field_value
@@ -129,6 +127,7 @@ LESS    : "<"  ;
 LTE  options { paraphrase = "<="; }             : "<=" ;
 SEMI options { paraphrase = "a semicolon"; }    : ';' ;
 COMMA options { paraphrase = ","; }             : ',' ;
+DOT options { paraphrase = "."; }               : '.' ;
 
 COMMENT
     : "--" (~('\n'|'\r'))* ('\n'|'\r'('\n')?)?

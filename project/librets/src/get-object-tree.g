@@ -118,7 +118,7 @@ query_element [GetObjectQueryPtr q]
     ;
 
 field_name returns [RefRetsAST name]
-    : id:ID { name = id; }
+    : #(COLUMN table:ID col:ID) { name = col; }
     ;
 
 field_value returns [RefRetsAST value]

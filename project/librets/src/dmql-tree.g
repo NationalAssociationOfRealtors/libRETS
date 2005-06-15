@@ -70,7 +70,11 @@ statement returns [DmqlQueryPtr q]
     ;
 
 columns [DmqlQueryPtr q]
-    : #(COLUMNS (id:ID {q->AddField(id->getText());})* )
+    : #(COLUMNS (column[q])* )
+    ;
+
+column [DmqlQueryPtr q]
+    : #(COLUMN table:ID col:ID { q->AddField(col->getText()); })
     ;
 
 table_name [DmqlQueryPtr q]
@@ -107,7 +111,7 @@ query_element returns [DmqlCriterionPtr criterion]
     ;
 
 field_name returns [std::string name]
-    : id:ID { name = id->getText(); }
+    : #(COLUMN table:ID col:ID) { name = col->getText(); }
     ;
 
 field_value returns [DmqlCriterionPtr criterion]
