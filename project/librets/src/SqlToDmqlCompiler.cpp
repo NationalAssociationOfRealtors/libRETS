@@ -40,6 +40,7 @@ SqlToDmqlCompiler::QueryType SqlToDmqlCompiler::sqlToDmql(istream & inputStream)
 
         parser.sql_statements();
         string tableName = parser.getTableName()->getText();
+        // std::cout << parser.getAST()->toStringList() << std::endl;
         if (ba::starts_with(tableName, "data:"))
         {
             DmqlTreeParser treeParser;
