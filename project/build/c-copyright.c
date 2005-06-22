@@ -14,24 +14,3 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#include "librets/MetadataResource.h"
-
-using namespace librets;
-using std::string;
-
-#define CLASS MetadataResource
-
-MetadataElement::MetadataType CLASS::GetType() const
-{
-    return RESOURCE;
-}
-
-string CLASS::GetResourceID() const
-{
-    return GetStringAttribute("ResourceID");
-}
-
-string CLASS::GetStandardName() const
-{
-    return GetStringAttribute("StandardName");
-}
