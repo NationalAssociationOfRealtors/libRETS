@@ -41,7 +41,7 @@ options
 tokens
 {
     SELECT = "select"; FROM = "from"; WHERE = "where";
-    OR = "or"; AND = "and"; NOT = "not";
+    OR = "or"; AND = "and"; NOT = "not"; ORDER = "order"; BY = "by";
     COLUMNS; COLUMN; QUERY_ELEMENT;
 }
 
@@ -67,6 +67,7 @@ select_statement
         FROM! t:table_name
         WHERE! w:where_condition
         { #select_statement = #([SELECT], t_AST, c_AST, w_AST); }
+        (order_by)?
     ;
 
 column_names
@@ -83,6 +84,10 @@ column_name!
 
 table_name
     : id:ID { mTableName = id; }
+    ;
+
+order_by!
+    : ORDER BY column_name
     ;
 
 where_condition
