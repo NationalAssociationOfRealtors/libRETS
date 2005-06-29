@@ -33,8 +33,3 @@ string MetadataClass::GetStandardName() const
 {
     return GetStringAttribute("StandardName");
 }
-
-string MetadataClass::GetResourceName() const
-{
-    return "";
-}

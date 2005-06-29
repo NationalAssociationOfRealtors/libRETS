@@ -53,14 +53,13 @@ class MetadataClass : public MetadataElement
      */
     std::string GetClassName() const;
 
-    std::string GetStandardName() const;
-
     /**
-     * Returns the resource name of the class metadata.
+     * Returns the standard name of the class metadata.  If no standard name
+     * is given, then an empty string is returned.
      *
-     * @return Name of the resource metadata.
+     * @return Standard name of the class.
      */
-    std::string GetResourceName() const;
+    std::string GetStandardName() const;
 
     /**
      * Returns all tables.
