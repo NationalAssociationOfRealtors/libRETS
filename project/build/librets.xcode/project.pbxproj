@@ -254,14 +254,6 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
-		554A9EC307F9F2D200402C35 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			path = ForeignKey.h;
-			refType = 4;
-			sourceTree = "<group>";
-		};
 		554A9EC407F9F2D200402C35 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -1349,7 +1341,6 @@
 				554AA05807FA00F100402C35,
 				554AA05907FA00F100402C35,
 				554AA05A07FA00F100402C35,
-				554AA05B07FA00F100402C35,
 				554AA05C07FA00F100402C35,
 				554AA05D07FA00F100402C35,
 				554AA05E07FA00F100402C35,
@@ -1629,12 +1620,6 @@
 		};
 		554AA05A07FA00F100402C35 = {
 			fileRef = 554A9EC207F9F2D200402C35;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		554AA05B07FA00F100402C35 = {
-			fileRef = 554A9EC307F9F2D200402C35;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -3667,7 +3652,6 @@
 			children = (
 				554A9ECD07F9F2D200402C35,
 				554A9EBC07F9F2D200402C35,
-				554A9EC307F9F2D200402C35,
 				554A9ECE07F9F2D200402C35,
 				554A9ECF07F9F2D200402C35,
 				554A9ED007F9F2D200402C35,
