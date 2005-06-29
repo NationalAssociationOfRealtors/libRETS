@@ -17,10 +17,10 @@
 #ifndef LIBRETS_CURL_HTTP_CLIENT_H
 #define LIBRETS_CURL_HTTP_CLIENT_H
 
-#include <vector>
 #include <sstream>
 #include <istream>
 #include "librets/curl.h"
+#include "librets/std_forward.h"
 #include "librets/RetsHttpClient.h"
 #include "librets/CurlSlist.h"
 #include "librets/RetsException.h"
@@ -39,7 +39,11 @@ class CurlHttpClient : public RetsHttpClient
     virtual void SetUserCredentials(std::string userName,
                                     std::string password);
 
-    virtual void AddDefaultHeader(std::string name, std::string value);
+    virtual void SetDefaultHeader(std::string name, std::string value);
+    
+    virtual void ClearDefaultHeader(std::string name);
+    
+    virtual void SetUserAgent(std::string userAgent);
 
     virtual RetsHttpResponsePtr DoRequest(RetsHttpRequestPtr request);
 
@@ -50,6 +54,7 @@ class CurlHttpClient : public RetsHttpClient
                             void * userData);
     static size_t WriteHeader(void * buffer, size_t size, size_t nmemb,
                               void * userData);
+    void GenerateHeaderSlist();
 
     CURL * mCurl;
     char * mCurlErrorBuffer[CURL_ERROR_SIZE];
@@ -61,7 +66,7 @@ class CurlHttpClient : public RetsHttpClient
     std::string mCurlUserpwd;
     std::string mCurlUrl;
     std::string mQueryString;
-    std::vector<std::string> mDefaultHeaderStrings;
+    StringMap mDefaultHeaders;
 };
 
 };

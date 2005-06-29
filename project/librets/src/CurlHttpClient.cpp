@@ -85,11 +85,32 @@ void CurlHttpClient::CurlAssert(const RetsExceptionContext & context,
     }
 }
 
-void CurlHttpClient::AddDefaultHeader(string name, string value)
+void CurlHttpClient::SetDefaultHeader(string name, string value)
 {
-    string header = name + ": " + value;
-    mDefaultHeaderStrings.push_back(header);
-    mHeaders.append(header.c_str());
+    mDefaultHeaders[name] = value;
+    GenerateHeaderSlist();
+}
+
+void CurlHttpClient::ClearDefaultHeader(string name)
+{
+    mDefaultHeaders.erase(name);
+    GenerateHeaderSlist();
+}
+
+void CurlHttpClient::GenerateHeaderSlist()
+{
+    mHeaders.free_all();
+    StringMap::const_iterator i;
+    for (i = mDefaultHeaders.begin(); i != mDefaultHeaders.end(); i++)
+    {
+        string header = (*i).first + ": " + (*i).second;
+        mHeaders.append(header.c_str());
+    }
+}
+
+void CurlHttpClient::SetUserAgent(string userAgent)
+{
+    SetDefaultHeader("User-Agent", userAgent);
 }
 
 void CurlHttpClient::SetUserCredentials(string userName, string password)

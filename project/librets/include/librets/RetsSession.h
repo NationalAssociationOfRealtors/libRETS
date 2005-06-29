@@ -86,6 +86,16 @@ class RetsSession
      * @throws RetsException if an error occurs.
      */
     LogoutResponsePtr Logout();
+    
+    /**
+     * Sets the HTTP user agent.
+     *
+     * @param userAgent HTTP user agent string.
+     */
+    void SetUserAgent(std::string userAgent);
+    
+    /** Default user agent, for librets. */
+    static const char * DEFAULT_USER_AGENT;
 
   private:
     void RetrieveAction();

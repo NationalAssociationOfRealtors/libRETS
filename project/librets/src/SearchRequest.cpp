@@ -19,16 +19,25 @@
 using namespace librets;
 using std::string;
 
+const char * SearchRequest::FORMAT_PARAMETER = "Format";
+const char * SearchRequest::STANDARD_NAMES_PARAMETER = "StandardNames";
+const char * SearchRequest::QUERY_TYPE_PARAMETER = "QueryType";
+const char * SearchRequest::SEARCH_TYPE_PARAMETER = "SearchType";
+const char * SearchRequest::CLASS_PARAMETER = "Class";
+const char * SearchRequest::QUERY_PARAMETER = "Query";
+const char * SearchRequest::SELECT_PARAMETER = "Select";
+const char * SearchRequest::COUNT_PARAMETER = "Count";
+
 SearchRequest::SearchRequest(string searchType, string searchClass,
                              string query)
 {
     SetMethod(POST);
-    SetQueryParameter("Format", "COMPACT-DECODED");
-    SetQueryParameter("StandardNames", "1");
-    SetQueryParameter("QueryType", "DMQL2");
-    SetQueryParameter("SearchType", searchType);
-    SetQueryParameter("Class", searchClass);
-    SetQueryParameter("Query", query);
+    SetQueryParameter(FORMAT_PARAMETER, "COMPACT-DECODED");
+    SetQueryParameter(STANDARD_NAMES_PARAMETER, "1");
+    SetQueryParameter(QUERY_TYPE_PARAMETER, "DMQL2");
+    SetQueryParameter(SEARCH_TYPE_PARAMETER, searchType);
+    SetQueryParameter(CLASS_PARAMETER, searchClass);
+    SetQueryParameter(QUERY_PARAMETER, query);
 }
 
 void SearchRequest::SetLimit(int limit)
@@ -38,7 +47,7 @@ void SearchRequest::SetLimit(int limit)
 
 void SearchRequest::SetSelect(string select)
 {
-    SetQueryParameter("Select", select);
+    SetQueryParameter(SELECT_PARAMETER, select);
 }
 
 void SearchRequest::SetCountType(CountType countType)
@@ -46,15 +55,20 @@ void SearchRequest::SetCountType(CountType countType)
     switch (countType)
     {
         case RECORD_COUNT_AND_RESULTS:
-            SetQueryParameter("Count", "1");
+            SetQueryParameter(COUNT_PARAMETER, "1");
             break;
 
         case RECORD_COUNT_ONLY:
-            SetQueryParameter("Count", "2");
+            SetQueryParameter(COUNT_PARAMETER, "2");
             break;
 
         case NO_RECORD_COUNT:
         default:
-            SetQueryParameter("Count", "0");
+            SetQueryParameter(COUNT_PARAMETER, "0");
     }
+}
+
+void SearchRequest::SetStandardNames(bool standardNames)
+{
+    SetQueryParameter(STANDARD_NAMES_PARAMETER, standardNames ? "1" : "0");
 }

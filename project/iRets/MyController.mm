@@ -371,6 +371,7 @@ NSString * toNSString(const std::string aString)
             new SearchRequest(cppString(retsResource), cppString(retsClass),
                               cppString(query)));
         searchRequest->SetSelect(cppString(retsSelect));
+        searchRequest->SetQueryParameter("StandardNames", "0");
         searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
         SearchResultSetPtr resultSet = session->Search(searchRequest);
         StringVectorPtr columns = resultSet->GetColumns();

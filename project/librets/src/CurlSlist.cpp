@@ -29,10 +29,7 @@ CLASS::CLASS()
 
 CLASS::~CLASS()
 {
-    if (mSlist != 0)
-    {
-        curl_slist_free_all(mSlist);
-    }
+    free_all();
 }
 
 void CLASS::append(const char * aString)
@@ -43,6 +40,15 @@ void CLASS::append(const char * aString)
         throw RetsException("Unable to append to curl_slist");
     }
     mSlist = temp;
+}
+
+void CLASS::free_all()
+{
+    if (mSlist != 0)
+    {
+        curl_slist_free_all(mSlist);
+        mSlist = 0;
+    }
 }
 
 const curl_slist * CLASS::slist()

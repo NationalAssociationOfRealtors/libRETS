@@ -30,12 +30,14 @@ using std::string;
 
 #define CLASS RetsSession
 
+const char * CLASS::DEFAULT_USER_AGENT = "librets/0.1";
+
 CLASS::CLASS(string login_url)
 {
     mLoginUrl = login_url;
     mHttpClient.reset(new CurlHttpClient());
-    mHttpClient->AddDefaultHeader("RETS-Version", "RETS/1.5");
-    mHttpClient->AddDefaultHeader("User-Agent", "librets/0.1");
+    mHttpClient->SetDefaultHeader("RETS-Version", "RETS/1.5");
+    mHttpClient->SetUserAgent(DEFAULT_USER_AGENT);
 }
 
 void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
@@ -166,4 +168,9 @@ LogoutResponsePtr CLASS::Logout()
     logoutResponse.reset(new LogoutResponse());
     logoutResponse->Parse(httpResponse->GetInputStream());
     return logoutResponse;
+}
+
+void CLASS::SetUserAgent(string userAgent)
+{
+    mHttpClient->SetUserAgent(userAgent);
 }

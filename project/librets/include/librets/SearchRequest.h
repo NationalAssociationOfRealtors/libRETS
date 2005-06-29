@@ -65,6 +65,19 @@ class SearchRequest : public RetsHttpRequest
     };
 
     void SetCountType(CountType countType);
+    
+    void SetStandardNames(bool standardNames);
+    
+  private:
+    
+    static const char * FORMAT_PARAMETER;
+    static const char * STANDARD_NAMES_PARAMETER;
+    static const char * QUERY_TYPE_PARAMETER;
+    static const char * SEARCH_TYPE_PARAMETER;
+    static const char * CLASS_PARAMETER;
+    static const char * QUERY_PARAMETER;
+    static const char * COUNT_PARAMETER;
+    static const char * SELECT_PARAMETER;
 };
 
 };

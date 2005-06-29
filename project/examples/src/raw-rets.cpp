@@ -29,7 +29,7 @@ int main(int argc, char * argv[])
     try
     {
         RetsHttpClientPtr client = RetsHttpClient::CreateDefault();
-        client->AddDefaultHeader("RETS-Version", "RETS/1.5");
+        client->SetDefaultHeader("RETS-Version", "RETS/1.5");
         client->SetUserCredentials("Joe", "Schmoe");
 
         RetsHttpRequestPtr request(new RetsHttpRequest());

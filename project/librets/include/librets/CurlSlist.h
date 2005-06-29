@@ -30,6 +30,8 @@ class CurlSlist
     ~CurlSlist();
 
     void append(const char * string);
+    
+    void free_all();
 
     const curl_slist * slist();
 

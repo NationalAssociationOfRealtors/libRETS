@@ -32,7 +32,11 @@ class RetsHttpClient
     virtual void SetUserCredentials(std::string userName, std::string password)
         = 0;
 
-    virtual void AddDefaultHeader(std::string name, std::string value) = 0;
+    virtual void SetDefaultHeader(std::string name, std::string value) = 0;
+    
+    virtual void ClearDefaultHeader(std::string name) =  0;
+    
+    virtual void SetUserAgent(std::string userAgent) = 0;
 
     virtual RetsHttpResponsePtr DoRequest(RetsHttpRequestPtr request) = 0;
 };
