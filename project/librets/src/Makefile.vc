@@ -90,6 +90,7 @@ X_OBJS = \
 	$(DIROBJ)\MetadataEditMask.obj \
 	$(DIROBJ)\MetadataElement.obj \
 	$(DIROBJ)\MetadataElementCollector.obj \
+	$(DIROBJ)\MetadataForeignKey.obj \
 	$(DIROBJ)\MetadataLookup.obj \
 	$(DIROBJ)\MetadataLookupType.obj \
 	$(DIROBJ)\MetadataObject.obj \
