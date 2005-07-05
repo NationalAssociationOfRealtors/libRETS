@@ -31,7 +31,6 @@ const char * SearchRequest::COUNT_PARAMETER = "Count";
 SearchRequest::SearchRequest(string searchType, string searchClass,
                              string query)
 {
-    SetMethod(POST);
     SetQueryParameter(FORMAT_PARAMETER, "COMPACT-DECODED");
     SetQueryParameter(STANDARD_NAMES_PARAMETER, "1");
     SetQueryParameter(QUERY_TYPE_PARAMETER, "DMQL2");

@@ -19,6 +19,7 @@
 
 #include <string>
 #include "librets/protocol_forward.h"
+#include "librets/RetsHttpRequest.h"
 #include "librets/http_forward.h"
 
 /**
@@ -94,6 +95,14 @@ class RetsSession
      */
     void SetUserAgent(std::string userAgent);
     
+    /**    
+     * Use the HTTP POST method for GetMetadata, Seach, and GetObject
+     * requests.  The default is to use GET.
+     *
+     * @param useHttpGet <code>true</code> for HTTP GET instead of POST
+     */
+    void UseHttpGet(bool useHttpGet);
+    
     /** Default user agent, for librets. */
     static const char * DEFAULT_USER_AGENT;
 
@@ -114,6 +123,8 @@ class RetsSession
     std::string mAction;
 
     RetsMetadataPtr mMetadata;
+    
+    RetsHttpRequest::Method mHttpMethod;
 };
 
 };

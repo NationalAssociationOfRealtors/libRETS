@@ -101,7 +101,7 @@ class RetsMetadata
      *
      * @param resourceName A resource name
      * @param className A class name
-     * @param className A table name
+     * @param tableName A table name
      * @return A metadata class
      */
     MetadataTablePtr GetTable(std::string resourceName, std::string className,

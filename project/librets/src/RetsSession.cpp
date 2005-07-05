@@ -35,6 +35,7 @@ const char * CLASS::DEFAULT_USER_AGENT = "librets/0.1";
 CLASS::CLASS(string login_url)
 {
     mLoginUrl = login_url;
+    mHttpMethod = RetsHttpRequest::POST;
     mHttpClient.reset(new CurlHttpClient());
     mHttpClient->SetDefaultHeader("RETS-Version", "RETS/1.5");
     mHttpClient->SetUserAgent(DEFAULT_USER_AGENT);
@@ -112,8 +113,8 @@ void CLASS::RetrieveMetadata()
 {
     string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
     RetsHttpRequestPtr request(new RetsHttpRequest());
-    request->SetMethod(RetsHttpRequest::POST);
     request->SetUrl(getMetadataUrl);
+    request->SetMethod(mHttpMethod);
     request->SetQueryParameter("Type", "METADATA-SYSTEM");
     request->SetQueryParameter("ID", "*");
     request->SetQueryParameter("Format", "COMPACT");
@@ -131,6 +132,7 @@ SearchResultSetPtr CLASS::Search(SearchRequestPtr request)
 {
     string searchUrl = mCapabilityUrls->GetSearchUrl();
     request->SetUrl(searchUrl);
+    request->SetMethod(mHttpMethod);
     RetsHttpResponsePtr httpResponse = mHttpClient->DoRequest(request);
     AssertSuccessfulResponse(httpResponse, searchUrl);
     
@@ -144,6 +146,7 @@ GetObjectResponsePtr CLASS::GetObject(GetObjectRequestPtr request)
     RetsHttpRequestPtr httpRequest = request->CreateHttpRequest();
     string getObjectUrl = mCapabilityUrls->GetGetObjectUrl();
     httpRequest->SetUrl(getObjectUrl);
+    httpRequest->SetMethod(mHttpMethod);
     RetsHttpResponsePtr httpResponse = mHttpClient->DoRequest(httpRequest);
     AssertSuccessfulResponse(httpResponse, getObjectUrl);
     
@@ -174,4 +177,16 @@ LogoutResponsePtr CLASS::Logout()
 void CLASS::SetUserAgent(string userAgent)
 {
     mHttpClient->SetUserAgent(userAgent);
+}
+
+void CLASS::UseHttpGet(bool useHttpGet)
+{
+    if (useHttpGet)
+    {
+        mHttpMethod = RetsHttpRequest::GET;
+    }
+    else
+    {
+        mHttpMethod = RetsHttpRequest::POST;
+    }
 }
