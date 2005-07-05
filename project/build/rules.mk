@@ -1,4 +1,8 @@
-VERSION		= 0.0.1
+VERSION		= 1.0.0b1
+
+DIST_SRC	= librets-$(VERSION)
+SRC_TGZ		= librets-$(VERSION).tar.gz
+SRC_ZIP		= librets-$(VERSION).zip
 
 CFLAGS		+= $(TARGET_CFLAGS) -DLIBRETS_VERSION='"$(VERSION)"'
 
@@ -42,13 +46,15 @@ _doc-api: prepare
 # --cvs-exclude option.  Must manually copy "./configure" over since
 # it is ignored in .cvsignore.
 _dist: _build _doc-api
-	$(RM) -r dist/librets
-	mkdir -p dist/librets
-	mkdir -p dist/librets/doc
-	rsync -a --cvs-exclude project/librets/include dist/librets
-	rsync -a --cvs-exclude build/doc/api dist/librets/doc
-	cd dist; zip -r -q librets.zip librets
-	cd dist; tar --gzip -cf librets.tar.gz librets
+	$(RM) -r dist/$(DIST_SRC)
+	mkdir -p dist/$(DIST_SRC)
+	mkdir -p dist/$(DIST_SRC)/doc
+	rsync -a --exclude-from project/build/dist-exclude . \
+	dist/$(DIST_SRC)
+	rsync -a --cvs-exclude build/doc/api dist/$(DIST_SRC)/doc
+	cd dist; zip -r -q $(SRC_ZIP) $(DIST_SRC)
+	cd dist; tar --gzip -cf $(SRC_TGZ) $(DIST_SRC)
+	$(RM) -r dist/$(DIST_SRC)
 
 _clean:
 	$(RM) -r build dist
@@ -66,20 +72,10 @@ _test: prepare $(LIBRETS_TEST_EXE)
 _maintainer-clean: _veryclean
 	$(RM) configure
 
-build/objects/librets/%.d: project/librets/src/%.cc
-	@echo Generating dependencies for $<
-	@mkdir -p $(dir $@)
-	@$(CC) -MM $(CFLAGS) $< | $(FIXDEP) > $@
-
-$(OBJ_DIR)/%.d: $(SRC_DIR)/%.c
-	@echo Generating dependencies for $<
-	@mkdir -p $(dir $@)
-	@$(CC) -MM $(CFLAGS) $< | $(FIXDEP) > $@
-
-$(OBJ_DIR)/%.d: $(SRC_DIR)/%.cc
-	@echo Generating dependencies for $<
-	@mkdir -p $(dir $@)
-	@$(CXX) -MM $(CFLAGS) $< | $(FIXDEP) > $@
+# Cancel built-in rules
+%.o: %.cpp
+%.o: %.c
+%.o: %.d
 
 ifeq ($(USE_DEPENDS),1)
 -include $(ALL_DEPENDS)

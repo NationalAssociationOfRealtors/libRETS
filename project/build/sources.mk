@@ -37,10 +37,12 @@ $(LIBRETS_ANTLR_SRC_FILES): $(LIBRETS_ANTLR_TRIGGER)
 $(LIBRETS_ANTLR_OBJECTS): $(LIBRETS_ANTLR_TRIGGER)
 $(LIBRETS_ANTLR_DEPENDS): $(LIBRETS_ANTLR_TRIGGER)
 
-$(LIBRETS_ANTLR_OBJ_DIR)/%.o: $(LIBRETS_ANTLR_SRC_DIR)/%.cpp
+$(LIBRETS_ANTLR_OBJECTS): \
+	$(LIBRETS_ANTLR_OBJ_DIR)/%.o:  $(LIBRETS_ANTLR_SRC_DIR)/%.cpp
 	$(CXX) $(CFLAGS) -I$(LIBRETS_INC_DIR) -c $< -o $@
 
-$(LIBRETS_ANTLR_OBJ_DIR)/%.d: $(LIBRETS_ANTLR_SRC_DIR)/%.cpp
+$(LIBRETS_ANTLR_DEPENDS): \
+	$(LIBRETS_ANTLR_OBJ_DIR)/%.d: $(LIBRETS_ANTLR_SRC_DIR)/%.cpp
 	@echo Generating dependencies for $<
 	@mkdir -p $(dir $@)
 	@$(CC) -MM $(CFLAGS) -I$(LIBRETS_INC_DIR) $< \
@@ -50,18 +52,20 @@ LIBRETS_SRC_DIR = project/librets/src
 LIBRETS_INC_DIR = project/librets/include
 LIBRETS_OBJ_DIR = build/librets/objects
 LIBRETS_SRC_FILES := $(wildcard ${LIBRETS_SRC_DIR}/*.cpp)
-LIBRETS_OBJECTS	:= $(patsubst $(LIBRETS_SRC_DIR)/%.cpp, \
-	$(LIBRETS_OBJ_DIR)/%.o, $(LIBRETS_SRC_FILES)) $(LIBRETS_ANTLR_OBJECTS)
+LIBRETS_OBJECTS	:= $(LIBRETS_ANTLR_OBJECTS) $(patsubst $(LIBRETS_SRC_DIR)/%.cpp, \
+	$(LIBRETS_OBJ_DIR)/%.o, $(LIBRETS_SRC_FILES))
 LIBRETS_DEPENDS	:= $(patsubst $(LIBRETS_SRC_DIR)/%.cpp, \
 	$(LIBRETS_OBJ_DIR)/%.d, $(LIBRETS_SRC_FILES)) $(LIBRETS_ANTLR_DEPENDS)
 LIBRETS_LIB	= build/librets/lib/librets.a
 LIBRETS_CFLAGS = $(CFLAGS) -I$(LIBRETS_INC_DIR) -I$(LIBRETS_ANTLR_SRC_DIR)
 
 
-$(LIBRETS_OBJ_DIR)/%.o: $(LIBRETS_SRC_DIR)/%.cpp
+$(filter $(LIBRETS_OBJ_DIR)/%.o, $(LIBRETS_OBJECTS)): \
+	$(LIBRETS_OBJ_DIR)/%.o: $(LIBRETS_SRC_DIR)/%.cpp
 	$(CXX) $(LIBRETS_CFLAGS) -c $< -o $@
 
-$(LIBRETS_OBJ_DIR)/%.d: $(LIBRETS_SRC_DIR)/%.cpp
+$(filter $(LIBRETS_OBJ_DIR)/%.d, $(LIBRETS_DEPENDS)): \
+	$(LIBRETS_OBJ_DIR)/%.d: $(LIBRETS_SRC_DIR)/%.cpp
 	@echo Generating dependencies for $<
 	@mkdir -p $(dir $@)
 	@$(CC) -MM $(LIBRETS_CFLAGS) $< \

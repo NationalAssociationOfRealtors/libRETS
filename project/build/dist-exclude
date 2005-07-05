@@ -1,0 +1,13 @@
+/build
+/dist
+/scratch
+
+.svn
+*~
+
+# autoconf stuff
+/Makefile
+/project/build/Doxyfile
+/autom4te.cache
+/config.log
+/config.status
