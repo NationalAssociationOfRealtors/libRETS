@@ -19,6 +19,11 @@
 using namespace librets;
 using namespace std;
 
+RetsXmlTextEvent::RetsXmlTextEvent(int lineNumber, int columnNumber)
+    : RetsXmlEvent(lineNumber, columnNumber)
+{
+}
+
 RetsXmlTextEvent::~RetsXmlTextEvent()
 {
 }
@@ -40,7 +45,8 @@ string RetsXmlTextEvent::GetText() const
 
 ostream & RetsXmlTextEvent::Print(ostream & outputStream) const
 {
-    return outputStream << "XML text event, <" << mText.str() << ">";
+    outputStream << "XML text event, <" << mText.str() << ">";
+    return PrintLineAndColumn(outputStream);
 }
 
 bool RetsXmlTextEvent::Equals(const RetsObject * object) const

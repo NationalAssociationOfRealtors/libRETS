@@ -31,9 +31,22 @@ class RetsXmlEvent : public RetsObject
         TEXT
     };
     
+    RetsXmlEvent();
+    RetsXmlEvent(int lineNumber, int columnNumber);
+    
     virtual ~RetsXmlEvent();
 
     virtual Type GetType() const = 0;
+    
+    int GetLineNumber() const;
+    
+    int GetColumnNumber() const;
+    
+  protected:
+    std::ostream & PrintLineAndColumn(std::ostream & out) const;
+    
+    int mLineNumber;
+    int mColumnNumber;
 };
 
 };

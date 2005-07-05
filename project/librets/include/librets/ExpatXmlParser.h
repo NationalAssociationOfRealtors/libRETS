@@ -52,6 +52,9 @@ class ExpatXmlParser : public RetsXmlParser
 
     static void CharacterData(void * userData, const XML_Char * s,
                               int len);
+    
+    int GetCurrentLineNumber() const;
+    int GetCurrentColumnNumber() const;
 
     XmlEventList mEvents;
     istreamPtr mInputStream;

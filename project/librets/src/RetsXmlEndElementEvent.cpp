@@ -20,6 +20,11 @@
 using namespace librets;
 using namespace std;
 
+RetsXmlEndElementEvent::RetsXmlEndElementEvent(int lineNumber, int columnNumber)
+    : RetsXmlEvent(lineNumber, columnNumber)
+{
+}
+
 RetsXmlEndElementEvent::~RetsXmlEndElementEvent()
 {
 }
@@ -41,7 +46,8 @@ string RetsXmlEndElementEvent::GetName() const
 
 ostream & RetsXmlEndElementEvent::Print(ostream & outputStream) const
 {
-    return outputStream << "XML end element: <" << mName << ">";
+    outputStream << "XML end element: <" << mName << ">";
+    return PrintLineAndColumn(outputStream);
 }
 
 bool RetsXmlEndElementEvent::Equals(const RetsObject * object) const

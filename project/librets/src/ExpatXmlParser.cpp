@@ -124,8 +124,8 @@ RetsXmlEventPtr ExpatXmlParser::GetNextEventWithoutCoalescing()
             int len = mInputStream->gcount();
             if (XML_Parse(mParser, buf, len, false) == XML_STATUS_ERROR)
             {
-                int lineNumber = XML_GetCurrentLineNumber(mParser);
-                int columnNumber = XML_GetCurrentColumnNumber(mParser);
+                int lineNumber = GetCurrentLineNumber();
+                int columnNumber = GetCurrentColumnNumber();
                 string errorString =
                     XML_ErrorString(XML_GetErrorCode(mParser));
                 ostringstream message;
@@ -145,11 +145,24 @@ RetsXmlEventPtr ExpatXmlParser::GetNextEventWithoutCoalescing()
     return event;
 }
 
+int ExpatXmlParser::GetCurrentLineNumber() const
+{
+    return XML_GetCurrentLineNumber(mParser);
+}
+
+int ExpatXmlParser::GetCurrentColumnNumber() const
+{
+    return XML_GetCurrentColumnNumber(mParser);
+}
+
 void ExpatXmlParser::StartElement(void * userData, const char * name,
                                   const char **atts)
 {
     ExpatXmlParser * parser = (ExpatXmlParser *) userData;
-    RetsXmlStartElementEventPtr event(new RetsXmlStartElementEvent());
+    int lineNumber = parser->GetCurrentLineNumber();
+    int columnNumber = parser->GetCurrentColumnNumber();
+    RetsXmlStartElementEventPtr event(
+        new RetsXmlStartElementEvent(lineNumber, columnNumber));
     event->SetName(name);
     for (int i = 0; atts[i] != 0; i += 2)
     {
@@ -163,7 +176,10 @@ void ExpatXmlParser::StartElement(void * userData, const char * name,
 void ExpatXmlParser::EndElement(void * userData, const char * name)
 {
     ExpatXmlParser * parser = (ExpatXmlParser *) userData;
-    RetsXmlEndElementEventPtr event(new RetsXmlEndElementEvent());
+    int lineNumber = parser->GetCurrentLineNumber();
+    int columnNumber = parser->GetCurrentColumnNumber();
+    RetsXmlEndElementEventPtr event(
+        new RetsXmlEndElementEvent(lineNumber, columnNumber));
     event->SetName(name);
     parser->mEvents.push_back(event);
 }
@@ -173,7 +189,10 @@ void ExpatXmlParser::CharacterData(void * userData, const XML_Char * s,
 {
     string text((const char *) s, len);
     ExpatXmlParser * parser = (ExpatXmlParser *) userData;
-    RetsXmlTextEventPtr event(new RetsXmlTextEvent());
+    int lineNumber = parser->GetCurrentLineNumber();
+    int columnNumber = parser->GetCurrentColumnNumber();
+    RetsXmlTextEventPtr event(
+        new RetsXmlTextEvent(lineNumber, columnNumber));
     event->AppendText(text);
     parser->mEvents.push_back(event);
 }

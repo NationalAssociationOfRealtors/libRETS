@@ -31,7 +31,7 @@ typedef boost::shared_ptr<RetsXmlAttributeList> RetsXmlAttributeListPtr;
 class RetsXmlStartElementEvent : public RetsXmlEvent
 {
   public:
-    RetsXmlStartElementEvent();
+    RetsXmlStartElementEvent(int lineNumber = -1, int columnNumber = -1);
     
     virtual ~RetsXmlStartElementEvent();
 

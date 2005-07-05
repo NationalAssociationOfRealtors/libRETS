@@ -24,6 +24,8 @@ namespace librets {
 class RetsXmlEndElementEvent : public RetsXmlEvent
 {
   public:
+    RetsXmlEndElementEvent(int lineNumber = -1, int columnNumber = -1);
+    
     virtual ~RetsXmlEndElementEvent();
 
     virtual Type GetType() const;

@@ -17,7 +17,43 @@
 #include "librets/RetsXmlEvent.h"
 
 using namespace librets;
+using std::ostream;
+
+RetsXmlEvent::RetsXmlEvent()
+{
+    mLineNumber = -1;
+    mColumnNumber = -1;
+}
+
+RetsXmlEvent::RetsXmlEvent(int lineNumber, int columnNumber)
+{
+    mLineNumber = lineNumber;
+    mColumnNumber = columnNumber;
+}
 
 RetsXmlEvent::~RetsXmlEvent()
 {
+}
+
+int RetsXmlEvent::GetLineNumber() const
+{
+    return mLineNumber;
+}
+
+int RetsXmlEvent::GetColumnNumber() const
+{
+    return mColumnNumber;
+}
+
+ostream & RetsXmlEvent::PrintLineAndColumn(ostream & out) const
+{
+    if (mLineNumber != -1)
+    {
+        out << ", line: " << mLineNumber;
+    }
+    if (mColumnNumber != -1)
+    {
+        out << ", column: " << mColumnNumber;
+    }
+    return out;
 }

@@ -27,8 +27,9 @@ using std::ostream;
 
 #define CLASS RetsXmlStartElementEvent
 
-CLASS::CLASS()
-    : mAttributes(new RetsXmlAttributeList())
+CLASS::CLASS(int lineNumber, int columnNumber)
+    : RetsXmlEvent(lineNumber, columnNumber),
+      mAttributes(new RetsXmlAttributeList())
 {
 }
 
@@ -94,7 +95,7 @@ ostream & RetsXmlStartElementEvent::Print(ostream & outputStream) const
         separator = ", ";
     }
     outputStream << "]";
-    return outputStream;
+    return PrintLineAndColumn(outputStream);
 }
 
 bool RetsXmlStartElementEvent::Equals(const RetsObject * object) const
