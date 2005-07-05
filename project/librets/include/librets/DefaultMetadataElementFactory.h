@@ -101,7 +101,10 @@ class DefaultMetadataElementFactory : public XmlMetadataElementFactory
 
     MetadataElementPtr CreateValidationExpression(
         RetsXmlStartElementEventPtr startElementEvent);
-
+    
+    MetadataElementPtr CreateForeignKey(
+        RetsXmlStartElementEventPtr startElementEvent);
+    
     void AddElement(MetadataElementPtr element, std::string level);
 
     std::string LevelBuilder(RetsXmlStartElementEventPtr startEvent,
@@ -128,6 +131,7 @@ class DefaultMetadataElementFactory : public XmlMetadataElementFactory
     static char * VALIDATION_EXTERNAL_ATTRIBUTES[];
     static char * VALIDATION_EXTERNAL_TYPE_ATTRIBUTES[];
     static char * VALIDATION_EXPRESSION_ATTRIBUTES[];
+    static char * FOREIGN_KEY_ATTRIBUTES[];
 };
 
 };

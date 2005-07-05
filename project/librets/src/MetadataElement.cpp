@@ -35,11 +35,6 @@ CLASS::~CLASS()
 {
 }
 
-CLASS::MetadataType MetadataElement::GetType() const
-{
-    return SYSTEM;
-}
-
 string CLASS::GetStringAttribute(string attributeName,
                                  string defaultValue) const
 {

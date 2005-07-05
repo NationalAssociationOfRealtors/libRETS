@@ -37,6 +37,7 @@
 #include "librets/MetadataValidationExternal.h"
 #include "librets/MetadataValidationExternalType.h"
 #include "librets/MetadataValidationExpression.h"
+#include "librets/MetadataForeignKey.h"
 #include "librets/RetsXmlStartElementEvent.h"
 
 using namespace librets;
@@ -64,6 +65,7 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testCreateValidationExternal);
     CPPUNIT_TEST(testCreateValidationExternalType);
     CPPUNIT_TEST(testCreateValidationExpression);
+    CPPUNIT_TEST(testCreateForeignKey);
     CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -87,6 +89,7 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     void testCreateValidationExternal();
     void testCreateValidationExternalType();
     void testCreateValidationExpression();
+    void testCreateForeignKey();
 
     void runTest(RetsXmlStartElementEventPtr startElement,
                  const type_info & typeInfo,
@@ -286,4 +289,13 @@ void CLASS_::testCreateValidationExpression()
 
     runTest(startElement, typeid(MetadataValidationExpression),
             MetadataElement::VALIDATION_EXPRESSION, "Property");
+}
+
+void CLASS_::testCreateForeignKey()
+{
+    RetsXmlStartElementEventPtr startElement(new RetsXmlStartElementEvent());
+    startElement->SetName("METADATA-FOREIGNKEYS");
+    
+    runTest(startElement, typeid(MetadataForeignKey),
+            MetadataElement::FOREIGN_KEY, "");
 }

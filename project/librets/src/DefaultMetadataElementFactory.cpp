@@ -36,6 +36,7 @@
 #include "librets/MetadataValidationExternal.h"
 #include "librets/MetadataValidationExternalType.h"
 #include "librets/MetadataValidationExpression.h"
+#include "librets/MetadataForeignKey.h"
 #include "librets/RetsException.h"
 
 using namespace librets;
@@ -65,6 +66,7 @@ char * CLASS::VALIDATION_EXTERNAL_ATTRIBUTES[] = {"Resource", 0};
 char * CLASS::VALIDATION_EXTERNAL_TYPE_ATTRIBUTES[] =
     {"Resource", "ValidationExternal", 0};
 char * CLASS::VALIDATION_EXPRESSION_ATTRIBUTES[] = {"Resource", 0};
+char * CLASS::FOREIGN_KEY_ATTRIBUTES[] = {0};
 
 CLASS::CLASS()
     : mTypeMap(), mCreatorMap(), mAttributeMap()
@@ -102,6 +104,8 @@ CLASS::CLASS()
     AddMappings("METADATA-VALIDATION_EXPRESSION",
                 &CLASS::CreateValidationExpression,
                 VALIDATION_EXPRESSION_ATTRIBUTES);
+    AddMappings("METADATA-FOREIGNKEYS", &CLASS::CreateForeignKey,
+                FOREIGN_KEY_ATTRIBUTES);
 }
 
 void CLASS::AddMappings(string name, CreatorPointer creator,
@@ -245,6 +249,13 @@ MetadataElementPtr CLASS::CreateValidationExpression(
         RetsXmlStartElementEventPtr startEvent)
 {
     MetadataElementPtr element(new MetadataValidationExpression());
+    return element;
+}
+
+MetadataElementPtr CLASS::CreateForeignKey(
+        RetsXmlStartElementEventPtr startEvent)
+{
+    MetadataElementPtr element(new MetadataForeignKey());
     return element;
 }
 
