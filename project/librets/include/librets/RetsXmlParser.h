@@ -41,11 +41,14 @@ class RetsXmlParser
 
     RetsXmlEventPtr GetNextSkippingEmptyText();
     
-    RetsXmlStartElementEventPtr AssertNextIsStartEvent();
+    RetsXmlStartElementEventPtr AssertNextIsStartEvent(std::string prefix = "");
 
-    RetsXmlEndElementEventPtr AssertNextIsEndEvent();
+    RetsXmlEndElementEventPtr AssertNextIsEndEvent(std::string prefix = "");
 
-    RetsXmlTextEventPtr AssertNextIsTextEvent();
+    RetsXmlTextEventPtr AssertNextIsTextEvent(std::string prefix = "");
+    
+    RetsXmlTextEventPtr AssertTextEvent(RetsXmlEventPtr event,
+                                        std::string prefix = "");
 };
 
 };

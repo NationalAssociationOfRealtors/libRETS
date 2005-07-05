@@ -112,6 +112,7 @@ void CLASS::RetrieveMetadata()
 {
     string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
     RetsHttpRequestPtr request(new RetsHttpRequest());
+    request->SetMethod(RetsHttpRequest::POST);
     request->SetUrl(getMetadataUrl);
     request->SetQueryParameter("Type", "METADATA-SYSTEM");
     request->SetQueryParameter("ID", "*");

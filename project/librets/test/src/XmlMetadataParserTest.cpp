@@ -37,13 +37,14 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testParseSystem);
     CPPUNIT_TEST(testParseTabularData);
     CPPUNIT_TEST(testParseRetsResponse);
+    CPPUNIT_TEST(testBlankDataTag);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
     void testParseSystem();
     void testParseTabularData();
     void testParseRetsResponse();
-
+    void testBlankDataTag();
 };
 
 class TestMetadataElement : public MetadataElement
@@ -196,4 +197,20 @@ void CLASS::testParseRetsResponse()
     ASSERT_STRING_EQUAL("METADATA-CLASS", element->GetTypeName());
     element = elements[2];
     ASSERT_STRING_EQUAL("METADATA-CLASS", element->GetTypeName());
+}
+
+void CLASS::testBlankDataTag()
+{
+    TestElementFactoryPtr elementFactory(new TestElementFactory());
+    XmlMetadataParser parser(elementFactory);
+    parser.SetElementFactory(elementFactory);
+    istreamPtr inputStream = getResource("metadata-blank-data.xml");
+    parser.Parse(inputStream);
+    
+    TestMetadataElementList elements = elementFactory->GetCreatedElements();
+    // Only 1 row should appear, as the blank one should be ignored
+    ASSERT_EQUAL(size_t(1), elements.size());
+    TestMetadataElementPtr element = elements[0];
+    ASSERT_STRING_EQUAL("METADATA-CLASS", element->GetTypeName());
+    ASSERT_STRING_EQUAL("CON", element->GetStringAttribute("ClassName"));
 }

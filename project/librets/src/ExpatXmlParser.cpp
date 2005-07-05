@@ -171,6 +171,9 @@ void ExpatXmlParser::StartElement(void * userData, const char * name,
         event->AddAttribute(attribute);
     }
     parser->mEvents.push_back(event);
+#if 0
+    std::cout << event << std::endl;
+#endif
 }
 
 void ExpatXmlParser::EndElement(void * userData, const char * name)
@@ -182,6 +185,9 @@ void ExpatXmlParser::EndElement(void * userData, const char * name)
         new RetsXmlEndElementEvent(lineNumber, columnNumber));
     event->SetName(name);
     parser->mEvents.push_back(event);
+#if 0
+    std::cout << event << std::endl;
+#endif
 }
 
 void ExpatXmlParser::CharacterData(void * userData, const XML_Char * s,
@@ -195,4 +201,7 @@ void ExpatXmlParser::CharacterData(void * userData, const XML_Char * s,
         new RetsXmlTextEvent(lineNumber, columnNumber));
     event->AppendText(text);
     parser->mEvents.push_back(event);
+#if 0
+    std::cout << event << std::endl;
+#endif
 }

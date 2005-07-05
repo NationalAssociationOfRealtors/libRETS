@@ -34,12 +34,15 @@ class XmlMetadataParser : public RetsObject
     void Parse(istreamPtr inputStream);
 
   private:
-    void HandleSystemMetadata(RetsXmlStartElementEventPtr metadtaEvent);
-    void HandleOtherMetadata(RetsXmlStartElementEventPtr metadtaEvent);
+    void HandleSystemMetadata(RetsXmlStartElementEventPtr metadataEvent);
+    void HandleOtherMetadata(RetsXmlStartElementEventPtr metadataEvent);
+    void HandleColumns();
+    void HandleData(RetsXmlStartElementEventPtr metadataEvent);
 
     MetadataElementCollectorPtr mElementCollector;
     XmlMetadataElementFactoryPtr mElementFactory;
     RetsXmlParserPtr mXmlParser;
+    StringVector columns;
 };
 
 };

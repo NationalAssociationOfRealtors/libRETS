@@ -94,14 +94,14 @@ void CLASS::HandleSystemMetadata(RetsXmlStartElementEventPtr metadataEvent)
                 element->SetAttribute("SystemID", value);
                 value = startEvent->GetAttributeValue("SystemDescription");
                 element->SetAttribute("SystemDescription", value);
-                mXmlParser->AssertNextIsEndEvent();
+                mXmlParser->AssertNextIsEndEvent("SYSTEM: ");
             }
             else if (startEvent->GetName() == "COMMENTS")
             {
                 RetsXmlTextEventPtr textEvent =
-                    mXmlParser->AssertNextIsTextEvent();
+                    mXmlParser->AssertNextIsTextEvent("COMMENTS: ");
                 element->SetAttribute("COMMENTS", textEvent->GetText());
-                mXmlParser->AssertNextIsEndEvent();
+                mXmlParser->AssertNextIsEndEvent("COMMENTS: ");
             }
         }
         else if (endEvent && endEvent->GetName() == "METADATA-SYSTEM")
@@ -114,7 +114,6 @@ void CLASS::HandleSystemMetadata(RetsXmlStartElementEventPtr metadataEvent)
 
 void CLASS::HandleOtherMetadata(RetsXmlStartElementEventPtr metadataEvent)
 {
-    StringVector columns;
     while (mXmlParser->HasNext())
     {
         RetsXmlEventPtr event = mXmlParser->GetNextSkippingEmptyText();
@@ -126,44 +125,11 @@ void CLASS::HandleOtherMetadata(RetsXmlStartElementEventPtr metadataEvent)
         {
             if (startEvent->GetName() == "COLUMNS")
             {
-                RetsXmlTextEventPtr textEvent =
-                    mXmlParser->AssertNextIsTextEvent();
-                string text = textEvent->GetText();
-                ba::split(columns, text, ba::is_any_of("\t"));
-                if (columns.size() < 2)
-                {
-                    ostringstream message;
-                    message << "Unknown column format: " << Output(columns);
-                    throw RetsException(message.str());
-                }
+                HandleColumns();
             }
             else if (startEvent->GetName() == "DATA")
             {
-                RetsXmlTextEventPtr textEvent =
-                    mXmlParser->AssertNextIsTextEvent();
-                string text = textEvent->GetText();
-                StringVector data;
-                ba::split(data, text, ba::is_any_of("\t"));
-                if (columns.empty())
-                {
-                    throw RetsException("Got data without columns");
-                }
-                if (data.size() < columns.size())
-                {
-                    ostringstream message;
-                    message << "Unknown data format: " << Output(data);
-                    throw RetsException(message.str());
-                }
-                MetadataElementPtr element =
-                    mElementFactory->CreateMetadataElement(metadataEvent);
-                for (StringVector::size_type index = 1;
-                     index < columns.size(); index++)
-                {
-                    string name = columns.at(index);
-                    string value = data.at(index);
-                    element->SetAttribute(name, value);
-                }
-                mElementCollector->AddElement(element);
+                HandleData(metadataEvent);
             }
         }
         else if (endEvent &&
@@ -172,4 +138,56 @@ void CLASS::HandleOtherMetadata(RetsXmlStartElementEventPtr metadataEvent)
             break;
         }
     }
+}
+
+void CLASS::HandleColumns()
+{
+    RetsXmlTextEventPtr textEvent =
+    mXmlParser->AssertNextIsTextEvent("COLUMNS: ");
+    string text = textEvent->GetText();
+    ba::split(columns, text, ba::is_any_of("\t"));
+    if (columns.size() < 2)
+    {
+        ostringstream message;
+        message << "Unknown column format: " << Output(columns);
+        throw RetsException(message.str());
+    }
+}
+
+void CLASS::HandleData(RetsXmlStartElementEventPtr metadataEvent)
+{
+    RetsXmlEventPtr event = mXmlParser->GetNextSkippingEmptyText();
+    RetsXmlEndElementEventPtr endEvent =
+        b::dynamic_pointer_cast<RetsXmlEndElementEvent>(event);
+    if (endEvent && (endEvent->GetName() == "DATA"))
+    {
+        // Skip a blank data row (or a row with only whitespace)
+        return;
+    }
+
+    RetsXmlTextEventPtr textEvent = mXmlParser->AssertTextEvent(event,
+                                                                "DATA: ");
+    string text = textEvent->GetText();
+    StringVector data;
+    ba::split(data, text, ba::is_any_of("\t"));
+    if (columns.empty())
+    {
+        throw RetsException("Got data without columns");
+    }
+    if (data.size() < columns.size())
+    {
+        ostringstream message;
+        message << "Unknown data format: " << Output(data);
+        throw RetsException(message.str());
+    }
+    MetadataElementPtr element =
+        mElementFactory->CreateMetadataElement(metadataEvent);
+    for (StringVector::size_type index = 1;
+         index < columns.size(); index++)
+    {
+        string name = columns.at(index);
+        string value = data.at(index);
+        element->SetAttribute(name, value);
+    }
+    mElementCollector->AddElement(element);
 }

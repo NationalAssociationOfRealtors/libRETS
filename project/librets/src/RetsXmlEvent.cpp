@@ -15,6 +15,7 @@
  * appear in supporting documentation.
  */
 #include "librets/RetsXmlEvent.h"
+#include <ostream>
 
 using namespace librets;
 using std::ostream;

@@ -69,7 +69,7 @@ RetsXmlEventPtr CLASS::GetNextSkippingEmptyText()
     }
 }
 
-RetsXmlStartElementEventPtr CLASS::AssertNextIsStartEvent()
+RetsXmlStartElementEventPtr CLASS::AssertNextIsStartEvent(string prefix)
 {
     RetsXmlEventPtr event = GetNextSkippingEmptyText();
     RetsXmlStartElementEventPtr startEvent =
@@ -77,13 +77,13 @@ RetsXmlStartElementEventPtr CLASS::AssertNextIsStartEvent()
     if (!startEvent)
     {
         ostringstream message;
-        message << "Event is not a start event: " << event;
+        message << prefix << "Event is not a start event: " << event;
         throw RetsException(message.str());
     }
     return startEvent;
 }
 
-RetsXmlEndElementEventPtr CLASS::AssertNextIsEndEvent()
+RetsXmlEndElementEventPtr CLASS::AssertNextIsEndEvent(string prefix)
 {
     RetsXmlEventPtr event = GetNextSkippingEmptyText();
     RetsXmlEndElementEventPtr endEvent =
@@ -91,23 +91,26 @@ RetsXmlEndElementEventPtr CLASS::AssertNextIsEndEvent()
     if (!endEvent)
     {
         ostringstream message;
-        message << "Event is not an end event: " << event;
+        message << prefix <<  "Event is not an end event: " << event;
         throw RetsException(message.str());
     }
     return endEvent;
 }
 
-RetsXmlTextEventPtr CLASS::AssertNextIsTextEvent()
+RetsXmlTextEventPtr CLASS::AssertNextIsTextEvent(string prefix)
 {
-    RetsXmlEventPtr event = GetNextSkippingEmptyText();
+    return AssertTextEvent(GetNextSkippingEmptyText());
+}
+
+RetsXmlTextEventPtr CLASS::AssertTextEvent(RetsXmlEventPtr event, string prefix)
+{
     RetsXmlTextEventPtr textEvent =
         b::dynamic_pointer_cast<RetsXmlTextEvent>(event);
     if (!textEvent)
     {
         ostringstream message;
-        message << "Event is not a text event: " << event;
+        message << prefix << "Event is not a text event: " << event;
         throw RetsException(message.str());
     }
     return textEvent;
 }
-
