@@ -14,7 +14,9 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include "librets.h"
+#include "Options.h"
 #include <iostream>
 
 using namespace librets;
@@ -22,32 +24,22 @@ using std::string;
 using std::cout;
 using std::cerr;
 using std::endl;
+using std::exception;
 
 int main(int argc, char * argv[])
 {
     try
     {
-        string loginUrl = "http://demo.crt.realtors.org:6103/rets/login";
-        string username = "Joe";
-        string passwd = "Schmoe";
-
-        if (argc > 1)
+        Options options;
+        if (!options.ParseCommandLine(argc, argv))
         {
-            loginUrl = argv[1];
+            return 0;
         }
 
-        if (argc > 2)
-        {
-            username = argv[2];
-        }
-
-        if (argc > 3)
-        {
-            passwd = argv[3];
-        }
-
-        RetsSessionPtr session(new RetsSession(loginUrl));
-        if (!session->Login(username, passwd))
+        RetsSessionPtr session(new RetsSession(options.loginUrl));
+        session->SetUserAgent(options.userAgent);
+        session->UseHttpGet(options.useHttpGet);
+        if (!session->Login(options.username, options.password))
         {
             cout << "Login failed\n";
             return -1;
@@ -69,5 +61,12 @@ int main(int argc, char * argv[])
     catch (RetsException & e)
     {
         e.PrintFullReport(cerr);
+        return 1;
     }
+    catch (exception & e)
+    {
+        cerr << e.what() << endl;
+        return 2;
+    }
+    return 0;
 }

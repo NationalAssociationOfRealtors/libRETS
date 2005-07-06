@@ -15,6 +15,7 @@
  * appear in supporting documentation.
  */
 #include "librets.h"
+#include "Options.h"
 #include <iostream>
 
 using namespace librets;
@@ -22,7 +23,7 @@ using std::string;
 using std::vector;
 using std::cout;
 using std::endl;
-using std::auto_ptr;
+using std::exception;
 
 void dumpSystem(RetsMetadataPtr metadata);
 void dumpAllClasses(RetsMetadataPtr metadata);
@@ -32,9 +33,21 @@ int main(int argc, char * argv[])
 {
     try
     {
-        RetsSessionPtr session(
-            new RetsSession("http://demo.crt.realtors.org:6103/rets/login"));
-        session->Login("Joe", "Schmoe");
+        Options options;
+        if (!options.ParseCommandLine(argc, argv))
+        {
+            return 0;
+        }
+
+
+        RetsSessionPtr session(new RetsSession(options.loginUrl));
+        session->SetUserAgent(options.userAgent);
+        session->UseHttpGet(options.useHttpGet);
+        if (!session->Login(options.username, options.password))
+        {
+            cout << "Login failed\n";
+            return -1;
+        }
 
         RetsMetadataPtr metadata = session->GetMetadata();
         dumpSystem(metadata);
@@ -45,7 +58,14 @@ int main(int argc, char * argv[])
     catch (RetsException & e)
     {
         e.PrintFullReport(cout);
+        return 1;
     }
+    catch (exception & e)
+    {
+        cout << e.what() << endl;
+        return 2;
+    }
+    return 0;
 }
 
 void dumpSystem(RetsMetadataPtr metadata)
