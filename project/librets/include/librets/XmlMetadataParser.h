@@ -42,7 +42,7 @@ class XmlMetadataParser : public RetsObject
     MetadataElementCollectorPtr mElementCollector;
     XmlMetadataElementFactoryPtr mElementFactory;
     RetsXmlParserPtr mXmlParser;
-    StringVector columns;
+    StringVector mColumns;
 };
 
 };

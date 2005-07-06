@@ -145,11 +145,11 @@ void CLASS::HandleColumns()
     RetsXmlTextEventPtr textEvent =
     mXmlParser->AssertNextIsTextEvent("COLUMNS: ");
     string text = textEvent->GetText();
-    ba::split(columns, text, ba::is_any_of("\t"));
-    if (columns.size() < 2)
+    ba::split(mColumns, text, ba::is_any_of("\t"));
+    if (mColumns.size() < 2)
     {
         ostringstream message;
-        message << "Unknown column format: " << Output(columns);
+        message << "Unknown column format: " << Output(mColumns);
         throw RetsException(message.str());
     }
 }
@@ -170,11 +170,11 @@ void CLASS::HandleData(RetsXmlStartElementEventPtr metadataEvent)
     string text = textEvent->GetText();
     StringVector data;
     ba::split(data, text, ba::is_any_of("\t"));
-    if (columns.empty())
+    if (mColumns.empty())
     {
         throw RetsException("Got data without columns");
     }
-    if (data.size() < columns.size())
+    if (data.size() < mColumns.size())
     {
         ostringstream message;
         message << "Unknown data format: " << Output(data);
@@ -183,9 +183,9 @@ void CLASS::HandleData(RetsXmlStartElementEventPtr metadataEvent)
     MetadataElementPtr element =
         mElementFactory->CreateMetadataElement(metadataEvent);
     for (StringVector::size_type index = 1;
-         index < columns.size(); index++)
+         index < mColumns.size(); index++)
     {
-        string name = columns.at(index);
+        string name = mColumns.at(index);
         string value = data.at(index);
         element->SetAttribute(name, value);
     }
