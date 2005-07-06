@@ -1417,6 +1417,8 @@
 				5504F141081D532B0043B5CF,
 				5504F1B8081D79BF0043B5CF,
 				5504F1B9081D79BF0043B5CF,
+				55F23736087C75710090B325,
+				55F237A4087C7D030090B325,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1498,6 +1500,8 @@
 				5504F157081D563E0043B5CF,
 				5504F1B7081D79BF0043B5CF,
 				55F23659087B2AB00090B325,
+				55F23738087C76A50090B325,
+				55F237A6087C7DA30090B325,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3135,6 +3139,8 @@
 				554A9F8207F9F2E700402C35,
 				554A9F8307F9F2E700402C35,
 				554A9F8407F9F2E700402C35,
+				55F23737087C76A50090B325,
+				55F237A5087C7DA30090B325,
 			);
 			isa = PBXGroup;
 			name = HTTP;
@@ -3756,6 +3762,8 @@
 				554A9EE807F9F2D200402C35,
 				554A9EE907F9F2D200402C35,
 				554A9EEA07F9F2D200402C35,
+				55F23735087C75710090B325,
+				55F237A3087C7D030090B325,
 			);
 			isa = PBXGroup;
 			name = HTTP;
@@ -4646,6 +4654,62 @@
 		};
 		55F23659087B2AB00090B325 = {
 			fileRef = 55F23658087B2AB00090B325;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F23735087C75710090B325 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = RetsHttpLogger.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F23736087C75710090B325 = {
+			fileRef = 55F23735087C75710090B325;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F23737087C76A50090B325 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = RetsHttpLogger.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F23738087C76A50090B325 = {
+			fileRef = 55F23737087C76A50090B325;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F237A3087C7D030090B325 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = StreamHttpLogger.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F237A4087C7D030090B325 = {
+			fileRef = 55F237A3087C7D030090B325;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F237A5087C7DA30090B325 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = StreamHttpLogger.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F237A6087C7DA30090B325 = {
+			fileRef = 55F237A5087C7DA30090B325;
 			isa = PBXBuildFile;
 			settings = {
 			};
