@@ -1,0 +1,22 @@
+
+Instructions for building on Mac OS X are nearly identical as the Unix
+instructions in unix.txt.  The OpenDarwin ports has many of the
+preqruisites.  Fink tends to be more out of date.
+
+If you choost to build Boost, the following shell script on OS X 10.3
+will install it into /usr/local:
+
+-----
+#!/bin/sh
+
+export PYTHON_VERSION=2.3
+
+TOOLS="-sTOOLS=darwin"
+LIBS="--with-filesystem --with-date_time --with-program_options"
+STAGE=stage
+INSTALL="--prefix=/usr/local --layout=system install"
+
+bjam $TOOLS $LIBS $STAGE
+sudo bjam $TOOLS $LIBS $INSTALL
+-----
+

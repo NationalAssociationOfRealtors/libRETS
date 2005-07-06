@@ -1,0 +1,63 @@
+
+Installing the Prequisites
+==========================
+
+gcc
+---
+
+  Version: 3.3 or higher
+  URL: http://gcc.gnu.org/
+
+Earlier versions of gcc do not have good C++ support.
+
+Boost
+-----
+
+  Version: 1.32.0 or higher.
+  URL: http://www.boost.org/
+
+Boost has it's own build system, bjam.  Read it's instructions for
+installation.  You need to compile and install the filesystem and
+program options libraries.
+
+libcurl
+-------
+
+  Version: 7.13.2 or higher.
+  URL: http://curl.haxx.se/libcurl/
+
+Build as per its instructions.  No special steps are needed.
+
+Expat
+-----
+
+  Version: 1.95.8 or higher.
+  URL: http://expat.sourceforge.net/    
+
+Build as per its instructions.  No special steps are needed.
+
+Java SDK
+--------
+
+  Version: 1.4.2 or higher.
+  URL: http://java.sun.com/
+
+Download, install, and setup the JAVA_HOME environment variable.
+
+
+ANTLR
+-----
+
+  Version: 2.7.5 or higher.
+  URL: http://www.antlr.org/
+
+Build as per its instructions.  No special steps are needed.
+
+Building librets
+================
+
+Run the following commands:
+
+  % ./configure
+  % make
+  % sudo make install
