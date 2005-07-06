@@ -10,6 +10,7 @@ LINKLIB    = link.exe /lib
 LDFLAGS_STD = /nologo
 
 BOOST_CFLAGS = /I "$(BOOST_PATH)"
+BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib"
 
 ########################################################################
 #
@@ -20,7 +21,8 @@ DIROBJ 	= release
 CC 	= $(CCDEBUG)
 CXX 	= $(CCDEBUG)
 CFLAGS  = $(CFLAGS_STD) $(BOOST_CFLAGS)
-LDFLAGS = $(LDFLAGS_STD) ../../librets/src/release/librets.lib
+LDFLAGS = $(LDFLAGS_STD) ../../librets/src/release/librets.lib \
+	$(BOOST_LDFLAGS) /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
 
 LINK    = link.exe $(LDFLAGS)
 
@@ -28,15 +30,17 @@ LINK    = link.exe $(LDFLAGS)
 #
 
 
+OPTIONS_OBJS = $(DIROBJ)\Options.obj
+
 XML_OBJS = $(DIROBJ)\xml.obj
 
 HTTP_OBJS = $(DIROBJ)\http.obj
 
 RAW_RETS_OBJS = $(DIROBJ)\raw-rets.obj
 
-LOGIN_OBJS = $(DIROBJ)\login.obj
+LOGIN_OBJS = $(DIROBJ)\login.obj $(OPTIONS_OBJS)
 
-METADATA_OBJS = $(DIROBJ)\metadata.obj
+METADATA_OBJS = $(DIROBJ)\metadata.obj $(OPTIONS_OBJS)
 
 SEARCH_OBJS = $(DIROBJ)\search.obj
 
@@ -48,25 +52,25 @@ X_OBJS = $(XML_OBJS) $(HTTP_OBJS) $(RAW_RETS_OBJS) $(LOGIN_OBJS) \
 all: $(TARGET)
 
 xml.exe: $(XML_OBJS)
-	$(LINK) /out:$(DIROBJ)\xml.exe $(XML_OBJS) /NODEFAULTLIB:LIBCMT
+	$(LINK) /out:$(DIROBJ)\xml.exe $(XML_OBJS)
 
 http.exe: $(HTTP_OBJS)
-	$(LINK) /out:$(DIROBJ)\http.exe $(HTTP_OBJS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT
+	$(LINK) /out:$(DIROBJ)\http.exe $(HTTP_OBJS) wsock32.lib winmm.lib
 
 raw-rets.exe: $(RAW_RETS_OBJS)
-	$(LINK) /out:$(DIROBJ)\raw-rets.exe $(RAW_RETS_OBJS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
+	$(LINK) /out:$(DIROBJ)\raw-rets.exe $(RAW_RETS_OBJS) wsock32.lib winmm.lib
 
 login.exe: $(LOGIN_OBJS)
-	$(LINK) /out:$(DIROBJ)\login.exe $(LOGIN_OBJS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
+	$(LINK) /out:$(DIROBJ)\login.exe $(LOGIN_OBJS) wsock32.lib winmm.lib
 
 metadata.exe: $(METADATA_OBJS)
-	$(LINK) /out:$(DIROBJ)\metadata.exe $(METADATA_OBJS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
+	$(LINK) /out:$(DIROBJ)\metadata.exe $(METADATA_OBJS) wsock32.lib winmm.lib
 
 search.exe: $(SEARCH_OBJS)
-	$(LINK) /out:$(DIROBJ)\search.exe $(SEARCH_OBJS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
+	$(LINK) /out:$(DIROBJ)\search.exe $(SEARCH_OBJS) wsock32.lib winmm.lib
 
 sql2dmql.exe: $(SQL2DMQL_OBJS)
-	link.exe /out:$(DIROBJ)\sql2dmql.exe $(SQL2DMQL_OBJS) $(LDFLAGS) wsock32.lib winmm.lib /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
+	link.exe /out:$(DIROBJ)\sql2dmql.exe $(SQL2DMQL_OBJS) $(LDFLAGS) wsock32.lib winmm.lib
 
 $(X_OBJS): $(DIROBJ) ../../librets/src/release/librets.lib
 
