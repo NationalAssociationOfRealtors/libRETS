@@ -12,6 +12,8 @@ while (defined($_ = $dir->read)) {
 
 my $separator = "";
 my $last = "";
+print "# Automatically generated file list.  Edits will be overwritten.\n";
+print "X_OBJS = \\\n";
 foreach my $file (sort @cpp_files) {
   print $separator . "\t\$\(DIROBJ\)\\$file";
   $separator = " \\\n";

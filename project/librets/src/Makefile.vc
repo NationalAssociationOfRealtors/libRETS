@@ -61,78 +61,9 @@ ANTLR_OBJS = \
 	$(DIROBJ)\DmqlTreeParser.obj \
 	$(DIROBJ)\GetObjectTreeParser.obj
 
-X_OBJS = \
-	$(ANTLR_OBJS) \
-	$(DIROBJ)\AndCriterion.obj \
-	$(DIROBJ)\CapabilityUrls.obj \
-	$(DIROBJ)\CurlHttpClient.obj \
-	$(DIROBJ)\CurlHttpResponse.obj \
-	$(DIROBJ)\CurlSlist.obj \
-	$(DIROBJ)\DefaultMetadataElementFactory.obj \
-	$(DIROBJ)\DmqlCriterion.obj \
-	$(DIROBJ)\DmqlExpression.obj \
-	$(DIROBJ)\DmqlQuery.obj \
-	$(DIROBJ)\EqCriterion.obj \
-	$(DIROBJ)\ExpatXmlParser.obj \
-	$(DIROBJ)\FieldCriterion.obj \
-	$(DIROBJ)\GetObjectQuery.obj \
-	$(DIROBJ)\GetObjectRequest.obj \
-	$(DIROBJ)\GetObjectResponse.obj \
-	$(DIROBJ)\GtCriterion.obj \
-	$(DIROBJ)\JunctionCriterion.obj \
-	$(DIROBJ)\KeyValueResponse.obj \
-	$(DIROBJ)\LiteralCriterion.obj \
-	$(DIROBJ)\LoginResponse.obj \
-	$(DIROBJ)\LogoutResponse.obj \
-	$(DIROBJ)\LtCriterion.obj \
-	$(DIROBJ)\MetadataByLevelCollector.obj \
-	$(DIROBJ)\MetadataClass.obj \
-	$(DIROBJ)\MetadataEditMask.obj \
-	$(DIROBJ)\MetadataElement.obj \
-	$(DIROBJ)\MetadataElementCollector.obj \
-	$(DIROBJ)\MetadataForeignKey.obj \
-	$(DIROBJ)\MetadataLookup.obj \
-	$(DIROBJ)\MetadataLookupType.obj \
-	$(DIROBJ)\MetadataObject.obj \
-	$(DIROBJ)\MetadataResource.obj \
-	$(DIROBJ)\MetadataSearchHelp.obj \
-	$(DIROBJ)\MetadataSystem.obj \
-	$(DIROBJ)\MetadataTable.obj \
-	$(DIROBJ)\MetadataUpdate.obj \
-	$(DIROBJ)\MetadataUpdateHelp.obj \
-	$(DIROBJ)\MetadataUpdateType.obj \
-	$(DIROBJ)\MetadataValidationExpression.obj \
-	$(DIROBJ)\MetadataValidationExternal.obj \
-	$(DIROBJ)\MetadataValidationExternalType.obj \
-	$(DIROBJ)\MetadataValidationLookup.obj \
-	$(DIROBJ)\MetadataValidationLookupType.obj \
-	$(DIROBJ)\NotCriterion.obj \
-	$(DIROBJ)\ObjectDescriptor.obj \
-	$(DIROBJ)\OrCriterion.obj \
-	$(DIROBJ)\RetsAST.obj \
-	$(DIROBJ)\RetsException.obj \
-	$(DIROBJ)\RetsExceptionContext.obj \
-	$(DIROBJ)\RetsHttpClient.obj \
-	$(DIROBJ)\RetsHttpRequest.obj \
-	$(DIROBJ)\RetsHttpResponse.obj \
-	$(DIROBJ)\RetsMetadata.obj \
-	$(DIROBJ)\RetsObject.obj \
-	$(DIROBJ)\RetsReplyException.obj \
-	$(DIROBJ)\RetsSession.obj \
-	$(DIROBJ)\RetsSqlException.obj \
-	$(DIROBJ)\RetsXmlAttribute.obj \
-	$(DIROBJ)\RetsXmlEndElementEvent.obj \
-	$(DIROBJ)\RetsXmlEvent.obj \
-	$(DIROBJ)\RetsXmlParser.obj \
-	$(DIROBJ)\RetsXmlStartElementEvent.obj \
-	$(DIROBJ)\RetsXmlTextEvent.obj \
-	$(DIROBJ)\SearchRequest.obj \
-	$(DIROBJ)\SearchResultSet.obj \
-	$(DIROBJ)\SqlToDmqlCompiler.obj \
-	$(DIROBJ)\Uri.obj \
-	$(DIROBJ)\XmlMetadataElementFactory.obj \
-	$(DIROBJ)\XmlMetadataParser.obj \
-	$(DIROBJ)\util.obj
+!include <objects.vc>
+
+X_OBJS = $(ANTLR_OBJS) $(X_OBJS)
 
 all: $(TARGET)
 
