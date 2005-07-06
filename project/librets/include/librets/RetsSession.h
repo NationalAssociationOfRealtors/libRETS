@@ -95,16 +95,18 @@ class RetsSession
      */
     void SetUserAgent(std::string userAgent);
     
+    /** Default user agent, for librets. */
+    static const char * DEFAULT_USER_AGENT;
+    
     /**    
-     * Use the HTTP POST method for GetMetadata, Seach, and GetObject
-     * requests.  The default is to use GET.
+     * Use the HTTP GET method for GetMetadata, Seach, and GetObject
+     * requests.  The default is to use POST.
      *
      * @param useHttpGet <code>true</code> for HTTP GET instead of POST
      */
     void UseHttpGet(bool useHttpGet);
     
-    /** Default user agent, for librets. */
-    static const char * DEFAULT_USER_AGENT;
+    void SetHttpLogger(RetsHttpLogger * logger);
 
   private:
     void RetrieveAction();

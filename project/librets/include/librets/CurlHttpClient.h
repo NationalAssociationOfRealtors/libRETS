@@ -46,20 +46,35 @@ class CurlHttpClient : public RetsHttpClient
     virtual void SetUserAgent(std::string userAgent);
 
     virtual RetsHttpResponsePtr DoRequest(RetsHttpRequestPtr request);
+    
+    virtual void SetLogger(RetsHttpLogger * logger);
 
   private:
     void CurlAssert(const RetsExceptionContext & context, CURLcode errorCode,
                     bool useErrorBuffer = true);
-    static size_t WriteData(void * buffer, size_t size, size_t nmemb,
-                            void * userData);
-    static size_t WriteHeader(void * buffer, size_t size, size_t nmemb,
-                              void * userData);
+    
+    static size_t StaticWriteData(void * buffer, size_t size, size_t nmemb,
+                                  void * userData);
+        
+    size_t WriteData(void * buffer, size_t size, size_t nmemb);
+
+    static size_t StaticWriteHeader(void * buffer, size_t size, size_t nmemb,
+                                    void * userData);
+    
+    size_t WriteHeader(void * buffer, size_t size, size_t nmemb);
+    
+    static int StaticDebug(CURL * handle, curl_infotype type, char * data,
+                           size_t size, void * userData);
+    
+    int Debug(CURL * handle, curl_infotype type, char * data, size_t size);
+    
     void GenerateHeaderSlist();
 
     CURL * mCurl;
     char * mCurlErrorBuffer[CURL_ERROR_SIZE];
     CurlSlist mHeaders;
     CurlHttpResponsePtr mResponse;
+    RetsHttpLogger * mLogger;
 
     // Need to keep copies of strings we pass to curl, as it just stores
     // a pointer (i.e. it does not copy the contents into the library)

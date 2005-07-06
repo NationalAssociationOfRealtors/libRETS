@@ -21,6 +21,7 @@
 #include "librets/CurlHttpClient.h"
 #include "librets/CurlHttpResponse.h"
 #include "librets/RetsException.h"
+#include "librets/RetsHttpLogger.h"
 #include "librets/util.h"
 
 using namespace librets;
@@ -40,19 +41,23 @@ CurlHttpClient::CurlHttpClient()
 
     try
     {
+        mLogger = NullHttpLogger::GetInstance();
         CurlAssert(
             LIBRETS_ECTXT(),
             curl_easy_setopt(mCurl, CURLOPT_ERRORBUFFER, mCurlErrorBuffer),
             false);
-        // CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_VERBOSE, true));
+        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_VERBOSE, false));
+        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_DEBUGFUNCTION,
+                                     CurlHttpClient::StaticDebug));
+        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_DEBUGDATA, this));
         CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_HTTPAUTH, CURLAUTH_ANY));
         CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_COOKIEFILE, ""));
         CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_WRITEDATA, this));
         CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_WRITEFUNCTION,
-                                     CurlHttpClient::WriteData));
+                                     CurlHttpClient::StaticWriteData));
         CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_WRITEHEADER, this));
         CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_HEADERFUNCTION,
-                                     CurlHttpClient::WriteHeader));
+                                     CurlHttpClient::StaticWriteHeader));
     }
     catch (RetsException &)
     {
@@ -151,30 +156,43 @@ RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequestPtr request)
     return mResponse;
 }
 
-size_t CurlHttpClient::WriteData(void * buffer, size_t size, size_t nmemb,
-                                 void * userData)
+void CurlHttpClient::SetLogger(RetsHttpLogger * logger)
+{
+    if (logger == 0)
+    {
+        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_VERBOSE, false));
+        mLogger = NullHttpLogger::GetInstance();
+    }
+    else
+    {
+        mLogger = logger;
+        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_VERBOSE, true));
+    }
+}
+
+size_t CurlHttpClient::StaticWriteData(void * buffer, size_t size, size_t nmemb,
+                                       void * userData)
 {
     CurlHttpClient * client = (CurlHttpClient *) userData;
-    CurlHttpResponsePtr response = client->mResponse;
+    return client->WriteData(buffer, size, nmemb);
+}
+
+size_t CurlHttpClient::WriteData(void * buffer, size_t size, size_t nmemb)
+{
     size_t bytes = size * nmemb;
-
-    response->WriteData((const char *) buffer, bytes);
-
-#if 0
-    cout << "size: " << size << ", nmemb: " << nmemb << ", bytes: "
-         << bytes << endl;
-    string output((const char *) buffer, bytes);
-    cout << output;
-#endif
-
+    mResponse->WriteData((const char *) buffer, bytes);
     return bytes;
 }
 
-size_t CurlHttpClient::WriteHeader(void * buffer, size_t size, size_t nmemb,
-                                   void * userData)
+size_t CurlHttpClient::StaticWriteHeader(void * buffer, size_t size,
+                                         size_t nmemb, void * userData)
 {
     CurlHttpClient * client = (CurlHttpClient *) userData;
-    CurlHttpResponsePtr response = client->mResponse;
+    return client->WriteHeader(buffer, size, nmemb);
+}
+
+size_t CurlHttpClient::WriteHeader(void * buffer, size_t size, size_t nmemb)
+{
     size_t bytes = size * nmemb;
 
     string header((const char *) buffer, bytes);
@@ -183,8 +201,44 @@ size_t CurlHttpClient::WriteHeader(void * buffer, size_t size, size_t nmemb,
     if (splitField(header, ":", name, value))
     {
         ba::trim(value);
-        response->SetHeader(name, value);
+        mResponse->SetHeader(name, value);
     }
 
     return bytes;
+}
+
+int CurlHttpClient::StaticDebug(CURL * handle, curl_infotype type, char * data,
+                                size_t size, void * userData)
+{
+    CurlHttpClient * client = (CurlHttpClient *) userData;
+    return client->Debug(handle, type, data, size);
+}
+
+int CurlHttpClient::Debug(CURL * handle, curl_infotype type, char * data,
+                          size_t size)
+{
+    string text(data, size);
+    switch (type)
+    {
+        case CURLINFO_TEXT:
+            mLogger->logHttpData(RetsHttpLogger::INFORMATIONAL, data);
+            break;
+            
+        case CURLINFO_HEADER_IN:
+        case CURLINFO_DATA_IN:
+        case CURLINFO_SSL_DATA_IN:
+            mLogger->logHttpData(RetsHttpLogger::RECEIVED, data);
+            break;
+            
+        case CURLINFO_HEADER_OUT:
+        case CURLINFO_DATA_OUT:
+        case CURLINFO_SSL_DATA_OUT:
+            mLogger->logHttpData(RetsHttpLogger::SENT, data);
+            break;
+            
+        default:
+            // Ignore
+            break;
+    }
+    return 0;
 }

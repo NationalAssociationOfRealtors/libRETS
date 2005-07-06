@@ -76,6 +76,8 @@
 #include "librets/RetsHttpClient.h"
 #include "librets/RetsHttpRequest.h"
 #include "librets/RetsHttpResponse.h"
+#include "librets/RetsHttpLogger.h"
+#include "librets/StreamHttpLogger.h"
 
 #include "librets/SqlToDmqlCompiler.h"
 #include "librets/DmqlQuery.h"

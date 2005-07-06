@@ -33,6 +33,14 @@ class RetsHttpResponse;
 /** Smart pointer to RetsHttpResponse. */
 typedef boost::shared_ptr<RetsHttpResponse> RetsHttpResponsePtr;
 
+class RetsHttpLogger;
+/** Smart pointer to RetsHttpLogger. */
+typedef boost::shared_ptr<RetsHttpLogger> RetsHttpLoggerPtr;
+
+class NullHttpLogger;
+
+class StreamHttpLogger;
+
 class CurlHttpClient;
 typedef boost::shared_ptr<CurlHttpClient> CurlHttpClientPtr;
 

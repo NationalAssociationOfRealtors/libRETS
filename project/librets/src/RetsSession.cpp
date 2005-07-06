@@ -190,3 +190,8 @@ void CLASS::UseHttpGet(bool useHttpGet)
         mHttpMethod = RetsHttpRequest::POST;
     }
 }
+
+void CLASS::SetHttpLogger(RetsHttpLogger * logger)
+{
+    mHttpClient->SetLogger(logger);
+}

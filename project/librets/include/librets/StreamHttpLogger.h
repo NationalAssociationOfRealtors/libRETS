@@ -14,36 +14,26 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#ifndef LIBRETS_RETS_HTTP_CLIENT_H
-#define LIBRETS_RETS_HTTP_CLIENT_H
 
-#include <string>
-#include "librets/http_forward.h"
+#ifndef LIBRETS_STREAM_HTTP_LOGGER_H
+#define LIBRETS_STREAM_HTTP_LOGGER_H
+
+#include "librets/RetsHttpLogger.h"
+#include "librets/std_forward.h"
 
 namespace librets {
-
-class RetsHttpClient
+    
+class StreamHttpLogger : public RetsHttpLogger
 {
   public:
-    static RetsHttpClientPtr CreateDefault();
+    StreamHttpLogger(ostreamPtr out);
 
-    virtual ~RetsHttpClient();
+    virtual void logHttpData(Type type, std::string data);
     
-    virtual void SetUserCredentials(std::string userName, std::string password)
-        = 0;
-
-    virtual void SetDefaultHeader(std::string name, std::string value) = 0;
-    
-    virtual void ClearDefaultHeader(std::string name) =  0;
-    
-    virtual void SetUserAgent(std::string userAgent) = 0;
-
-    virtual RetsHttpResponsePtr DoRequest(RetsHttpRequestPtr request) = 0;
-    
-    virtual void SetLogger(RetsHttpLogger * logger) = 0;
+  private:
+    ostreamPtr mOut;
 };
-
-};
+}
 
 #endif
 
