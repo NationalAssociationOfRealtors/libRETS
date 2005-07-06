@@ -19,6 +19,7 @@
 #define LIBRETS_EXAMPLES_OPTIONS_H
 
 #include <boost/program_options.hpp>
+#include "librets.h"
 #include <string>
 
 class Options
@@ -36,6 +37,12 @@ class Options
     Options();
 
     bool ParseCommandLine(int argc, char * argv[]);
+
+    librets::RetsSessionPtr RetsLogin();
+
+  private:
+    std::string mLogFile;
+    librets::RetsHttpLoggerPtr mLogger;
 };
 
 #endif

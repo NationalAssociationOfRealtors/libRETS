@@ -39,11 +39,8 @@ int main(int argc, char * argv[])
             return 0;
         }
 
-
-        RetsSessionPtr session(new RetsSession(options.loginUrl));
-        session->SetUserAgent(options.userAgent);
-        session->UseHttpGet(options.useHttpGet);
-        if (!session->Login(options.username, options.password))
+        RetsSessionPtr session = options.RetsLogin();
+        if (!session)
         {
             cout << "Login failed\n";
             return -1;

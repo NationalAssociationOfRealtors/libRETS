@@ -18,12 +18,14 @@
 #include "Options.h"
 #include "librets.h"
 #include <iostream>
+#include <fstream>
 
 using namespace librets;
 namespace po = boost::program_options;
 using std::string;
 using std::cout;
 using std::endl;
+using std::ofstream;
 
 Options::Options()
     : descriptions("Allowed options")
@@ -41,6 +43,7 @@ Options::Options()
          ->default_value(RetsSession::DEFAULT_USER_AGENT, ""), "User agent")
         ("http-get,g", po::value<bool>(&useHttpGet)
          ->default_value(false, ""), "Use HTTP GET")
+        ("http-log,l", po::value<string>(&mLogFile), "HTTP log file")
         ;
 }
 
@@ -54,4 +57,19 @@ bool Options::ParseCommandLine(int argc, char * argv[])
         return false;
     }
     return true;
+}
+
+RetsSessionPtr Options::RetsLogin()
+{
+    RetsSessionPtr session(new RetsSession(loginUrl));
+    session->SetUserAgent(userAgent);
+    session->UseHttpGet(useHttpGet);
+    ostreamPtr logFile(new ofstream(mLogFile.c_str()));
+    mLogger.reset(new StreamHttpLogger(logFile));
+    session->SetHttpLogger(mLogger.get());
+    if (!session->Login(username, password))
+    {
+        session.reset();
+    }
+    return session;
 }
