@@ -42,9 +42,7 @@ _doc-api: prepare
 
 # (Ab)use rsync as a recursive copy with exclude.  Yeah, rsync is
 # "non-standard", but screw it.  It's unfortunately the easiest way to
-# do a recursive copy with exclude, especially with the cool
-# --cvs-exclude option.  Must manually copy "./configure" over since
-# it is ignored in .cvsignore.
+# do a recursive copy with exclude.
 _dist: _build _doc-api
 	$(RM) -r dist/$(DIST_SRC)
 	mkdir -p dist/$(DIST_SRC)
