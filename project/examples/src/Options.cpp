@@ -66,8 +66,8 @@ RetsSessionPtr Options::RetsLogin()
     session->UseHttpGet(useHttpGet);
     if (options.count("http-log"))
     {
-        ostreamPtr logFile(new ofstream(mLogFile.c_str()));
-        mLogger.reset(new StreamHttpLogger(logFile));
+        mLogStream.open(mLogFile.c_str());
+        mLogger.reset(new StreamHttpLogger(&mLogStream));
         session->SetHttpLogger(mLogger.get());
     }
     if (!session->Login(username, password))

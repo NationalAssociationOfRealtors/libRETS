@@ -19,8 +19,9 @@
 #include <ostream>
 
 using namespace librets;
+using std::ostream;
 
-StreamHttpLogger::StreamHttpLogger(ostreamPtr out)
+StreamHttpLogger::StreamHttpLogger(ostream * out)
     : mOut(out)
 {
 }

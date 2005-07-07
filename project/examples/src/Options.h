@@ -21,6 +21,7 @@
 #include <boost/program_options.hpp>
 #include "librets.h"
 #include <string>
+#include <fstream>
 
 class Options
 {
@@ -42,6 +43,7 @@ class Options
 
   private:
     std::string mLogFile;
+    std::ofstream mLogStream;
     librets::RetsHttpLoggerPtr mLogger;
 };
 

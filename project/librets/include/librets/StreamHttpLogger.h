@@ -26,12 +26,12 @@ namespace librets {
 class StreamHttpLogger : public RetsHttpLogger
 {
   public:
-    StreamHttpLogger(ostreamPtr out);
+    StreamHttpLogger(std::ostream * out);
 
     virtual void logHttpData(Type type, std::string data);
     
   private:
-    ostreamPtr mOut;
+    std::ostream * mOut;
 };
 }
 
