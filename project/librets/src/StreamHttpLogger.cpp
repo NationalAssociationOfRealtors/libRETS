@@ -20,29 +20,28 @@
 
 using namespace librets;
 using std::ostream;
+using std::endl;
 
 StreamHttpLogger::StreamHttpLogger(ostream * out)
-    : mOut(out)
+    : mLastType(INFORMATIONAL), mOut(out)
 {
 }
 
 void StreamHttpLogger::logHttpData(Type type, std::string data)
 {
-    switch (type)
+    if ((type == RECEIVED) && (mLastType != RECEIVED))
     {
-        case RECEIVED:
-            *mOut << "< ";
-            break;
-            
-        case SENT:
-            *mOut << "> ";
-            break;
-            
-        case INFORMATIONAL:
-        default:
-            *mOut << "* ";
-            break;
+        *mOut << endl << "<<< Received" << endl;
+    }
+    else if ((type == SENT) && (mLastType != SENT))
+    {
+        *mOut << endl << ">>> Sent" << endl;
+    }
+    else if (type == INFORMATIONAL)
+    {
+        *mOut << "* ";
     }
     *mOut << data;
     mOut->flush();
+    mLastType = type;
 }

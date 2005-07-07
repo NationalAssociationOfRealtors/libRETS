@@ -31,6 +31,7 @@ class StreamHttpLogger : public RetsHttpLogger
     virtual void logHttpData(Type type, std::string data);
     
   private:
+    Type mLastType;
     std::ostream * mOut;
 };
 }
