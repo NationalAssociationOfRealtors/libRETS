@@ -42,7 +42,7 @@ Options::Options()
         ("user-agent,a", po::value<string>(&userAgent)
          ->default_value(RetsSession::DEFAULT_USER_AGENT, ""), "User agent")
         ("http-get,g", po::value<bool>(&useHttpGet)
-         ->default_value(false, ""), "Use HTTP GET")
+         ->default_value(false, "")->implicit(), "Use HTTP GET")
         ("http-log,l", po::value<string>(&mLogFile), "HTTP log file")
         ;
 }
