@@ -65,7 +65,7 @@ sql_command
 select_statement
     :! SELECT^ c:column_names
         FROM! t:table_name
-        WHERE! w:where_condition
+        (WHERE! w:where_condition)?
         { #select_statement = #([SELECT], t_AST, c_AST, w_AST); }
         (order_by)?
     ;
@@ -87,7 +87,7 @@ table_name
     ;
 
 order_by!
-    : ORDER BY column_name
+    : ORDER BY column_name (COMMA column_name)
     ;
 
 where_condition
