@@ -221,19 +221,19 @@ int CurlHttpClient::Debug(CURL * handle, curl_infotype type, char * data,
     switch (type)
     {
         case CURLINFO_TEXT:
-            mLogger->logHttpData(RetsHttpLogger::INFORMATIONAL, data);
+            mLogger->logHttpData(RetsHttpLogger::INFORMATIONAL, text);
             break;
             
         case CURLINFO_HEADER_IN:
         case CURLINFO_DATA_IN:
         case CURLINFO_SSL_DATA_IN:
-            mLogger->logHttpData(RetsHttpLogger::RECEIVED, data);
+            mLogger->logHttpData(RetsHttpLogger::RECEIVED, text);
             break;
             
         case CURLINFO_HEADER_OUT:
         case CURLINFO_DATA_OUT:
         case CURLINFO_SSL_DATA_OUT:
-            mLogger->logHttpData(RetsHttpLogger::SENT, data);
+            mLogger->logHttpData(RetsHttpLogger::SENT, text);
             break;
             
         default:
