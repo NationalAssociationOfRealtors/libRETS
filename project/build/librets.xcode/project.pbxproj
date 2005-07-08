@@ -2675,6 +2675,8 @@
 				55BD56CD07FC76F600526D69,
 				5552AC870804E6B8002288F1,
 				5552ACF30804F096002288F1,
+				55F238AB087DB2530090B325,
+				55F23A99087EEB460090B325,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2687,6 +2689,8 @@
 				554AA1E107FA14D700402C35,
 				5552AC880804E6B8002288F1,
 				5552ACF40804F096002288F1,
+				55F238AC087DB2530090B325,
+				55F23A9A087EEB460090B325,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2824,6 +2828,10 @@
 		};
 		554AA1C107FA13BF00402C35 = {
 			children = (
+				55F23A97087EEB460090B325,
+				55F23A98087EEB460090B325,
+				55F238A9087DB2530090B325,
+				55F238AA087DB2530090B325,
 				5552ACF10804F096002288F1,
 				5552ACF20804F096002288F1,
 				5552AC850804E6B8002288F1,
@@ -4710,6 +4718,62 @@
 		};
 		55F237A6087C7DA30090B325 = {
 			fileRef = 55F237A5087C7DA30090B325;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F238A9087DB2530090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = LogController.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F238AA087DB2530090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.objcpp;
+			path = LogController.mm;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F238AB087DB2530090B325 = {
+			fileRef = 55F238A9087DB2530090B325;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F238AC087DB2530090B325 = {
+			fileRef = 55F238AA087DB2530090B325;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F23A97087EEB460090B325 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = TextViewHttpLogger.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F23A98087EEB460090B325 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.objcpp;
+			path = TextViewHttpLogger.mm;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F23A99087EEB460090B325 = {
+			fileRef = 55F23A97087EEB460090B325;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F23A9A087EEB460090B325 = {
+			fileRef = 55F23A98087EEB460090B325;
 			isa = PBXBuildFile;
 			settings = {
 			};

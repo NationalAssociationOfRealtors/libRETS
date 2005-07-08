@@ -14,10 +14,10 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-/* MyController */
 
 #import <Cocoa/Cocoa.h>
 #import <DisclosableView/DisclosableView.h>
+#import "LogController.h"
 #include "librets.h"
 
 @interface MyController : NSObject
@@ -40,6 +40,7 @@
     IBOutlet NSTextView * mDmqlTextView;
     IBOutlet NSMenuItem * mGenerateDmqlMenu;
     IBOutlet NSPanel * mPhotoPanel;
+    IBOutlet LogController * mLogController;
         
     NSString * retsResource;
     NSString * retsClass;

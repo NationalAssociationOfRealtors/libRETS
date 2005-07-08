@@ -12,6 +12,13 @@
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
+            ACTIONS = {clearLog = id; showLogWindow = id; }; 
+            CLASS = LogController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mLogPanel = NSPanel; mLogText = NSTextView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
             ACTIONS = {
                 addAccount = id; 
                 clearSavedQueries = id; 
@@ -28,6 +35,7 @@
                 mDateFormatter = NSFormatter; 
                 mDmqlTextView = NSTextView; 
                 mGenerateDmqlMenu = NSMenuItem; 
+                mLogController = LogController; 
                 mMainWindow = NSWindow; 
                 mPhotoPanel = NSPanel; 
                 mPreferencesPanel = NSPanel; 

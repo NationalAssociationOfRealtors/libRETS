@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #import "MyController.h"
 #import "ResultListing.h"
 #include "librets.h"
@@ -315,6 +316,7 @@ NSString * toNSString(const std::string aString)
     NSString * password = [account objectForKey: @"password"];
 
     RetsSessionPtr session(new RetsSession([loginUrl cString]));
+    session->SetHttpLogger([mLogController logger]);
     bool loggedIn = session->Login([userName cString], [password cString]);
     if (!loggedIn)
     {
@@ -371,7 +373,7 @@ NSString * toNSString(const std::string aString)
             new SearchRequest(cppString(retsResource), cppString(retsClass),
                               cppString(query)));
         searchRequest->SetSelect(cppString(retsSelect));
-        searchRequest->SetQueryParameter("StandardNames", "0");
+        searchRequest->SetStandardNames(true);
         searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
         SearchResultSetPtr resultSet = session->Search(searchRequest);
         StringVectorPtr columns = resultSet->GetColumns();
