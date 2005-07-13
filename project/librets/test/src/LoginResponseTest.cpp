@@ -28,20 +28,22 @@ using namespace std;
 class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
-    CPPUNIT_TEST(testValidResponse);
+    CPPUNIT_TEST(testValid15Response);
+    CPPUNIT_TEST(testValid10Response);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
-    void testValidResponse();
+    void testValid15Response();
+    void testValid10Response();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
 
-void CLASS::testValidResponse()
+void CLASS::testValid15Response()
 {
     istreamPtr inputStream = getResource("login_valid15.xml");
     LoginResponse response;
-    response.Parse(inputStream);
+    response.Parse(inputStream, RETS_1_5);
 
     ASSERT_STRING_EQUAL("Joe Schmoe", response.GetValue("MemberName"));
     ASSERT_STRING_EQUAL("Joe Schmoe", response.GetValue("membername"));
@@ -101,3 +103,58 @@ void CLASS::testValidResponse()
         response.GetCapabilityUrls("http://example.com:6103/rets/login");
     CPPUNIT_ASSERT_EQUAL(expected, *actual);
 }
+
+void CLASS::testValid10Response()
+{
+    istreamPtr inputStream = getResource("login_valid10.xml");
+    LoginResponse response;
+    response.Parse(inputStream, RETS_1_0);
+    
+    ASSERT_STRING_EQUAL("Elizabeth A Davis", response.GetValue("MemberName"));
+    ASSERT_STRING_EQUAL("Elizabeth A Davis", response.GetValue("membername"));
+    ASSERT_STRING_EQUAL("", response.GetValue("none"));
+    
+    ASSERT_STRING_EQUAL("Elizabeth A Davis", response.GetMemberName());
+    ASSERT_STRING_EQUAL("272, AGENT:BROKER OFFICE:OFFICE, 50, 272",
+                        response.GetUserInfo());
+    ASSERT_STRING_EQUAL("MRIS,1", response.GetBroker());
+    ASSERT_STRING_EQUAL("1.2.200", response.GetMetadataVersion());
+    ASSERT_STRING_EQUAL("", response.GetMetadataTimestamp());
+    ASSERT_STRING_EQUAL("", response.GetMinMetadataTimestamp());
+    ASSERT_STRING_EQUAL("1800", response.GetTimeout());
+    ASSERT_STRING_EQUAL("MRIS;1", response.GetOfficeList());
+    
+    ASSERT_STRING_EQUAL("", response.GetActionUrl());
+    ASSERT_STRING_EQUAL(
+        "http://cornerstone.mris.com:6103/platinum/changepassword",
+        response.GetChangePasswordUrl());
+    ASSERT_STRING_EQUAL("http://cornerstone.mris.com:6103/platinum/getobject",
+                        response.GetGetObjectUrl());
+    ASSERT_STRING_EQUAL("http://cornerstone.mris.com:6103/platinum/login",
+                        response.GetLoginUrl());
+    ASSERT_STRING_EQUAL("", response.GetLoginCompleteUrl());
+    ASSERT_STRING_EQUAL("http://cornerstone.mris.com:6103/platinum/logout",
+                        response.GetLogoutUrl());
+    ASSERT_STRING_EQUAL("http://cornerstone.mris.com:6103/platinum/search",
+                        response.GetSearchUrl());
+    ASSERT_STRING_EQUAL("http://cornerstone.mris.com:6103/platinum/getmetadata",
+                        response.GetGetMetadataUrl());
+    ASSERT_STRING_EQUAL("", response.GetServerInformationUrl());
+    ASSERT_STRING_EQUAL("", response.GetUpdateUrl());
+    
+    CapabilityUrls expected("http://cornerstone.mris.com:6103/platinum/");
+    expected.SetActionUrl("");
+    expected.SetChangePasswordUrl("changepassword");
+    expected.SetGetObjectUrl("getobject");
+    expected.SetLoginUrl("http://cornerstone.mris.com:6103/platinum/login");
+    expected.SetLoginCompleteUrl("");
+    expected.SetLogoutUrl("logout");
+    expected.SetSearchUrl("search");
+    expected.SetGetMetadataUrl("getmetadata");
+    expected.SetServerInformationUrl("");
+    expected.SetUpdateUrl("");
+    
+    CapabilityUrlsPtr actual = response.GetCapabilityUrls(
+        "http://cornerstone.mris.com:6103/platinum/login");
+    CPPUNIT_ASSERT_EQUAL(expected, *actual);
+}    

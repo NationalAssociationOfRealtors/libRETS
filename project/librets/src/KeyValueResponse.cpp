@@ -37,75 +37,6 @@ CLASS::~CLASS()
 {
 }
 
-RetsXmlEventPtr CLASS::getNextSkippingEmptyText(RetsXmlParserPtr xmlParser)
-{
-    if (!xmlParser->HasNext())
-    {
-        throw RetsException("No more XML events");
-    }
-
-    RetsXmlEventPtr event = xmlParser->GetNextEvent();
-    RetsXmlTextEventPtr textEvent =
-        b::dynamic_pointer_cast<RetsXmlTextEvent>(event);
-    if (!textEvent)
-    {
-        return event;
-    }
-
-    string text = textEvent->GetText();
-    if (isEmpty(text))
-    {
-        return getNextSkippingEmptyText(xmlParser);
-    }
-    else
-    {
-        return event;
-    }
-}
-
-RetsXmlStartElementEventPtr CLASS::assertNextIsStart(
-    RetsXmlParserPtr xmlParser)
-{
-    RetsXmlEventPtr event = getNextSkippingEmptyText(xmlParser);
-    RetsXmlStartElementEventPtr startEvent =
-        b::dynamic_pointer_cast<RetsXmlStartElementEvent>(event);
-    if (!startEvent)
-    {
-        ostringstream message;
-        message << "Event is not a start event: " << event;
-        throw RetsException(message.str());
-    }
-    return startEvent;
-}
-
-RetsXmlEndElementEventPtr CLASS::assertNextIsEnd(RetsXmlParserPtr xmlParser)
-{
-    RetsXmlEventPtr event = getNextSkippingEmptyText(xmlParser);
-    RetsXmlEndElementEventPtr endEvent =
-        b::dynamic_pointer_cast<RetsXmlEndElementEvent>(event);
-    if (!endEvent)
-    {
-        ostringstream message;
-        message << "Event is not an end event: " << event;
-        throw RetsException(message.str());
-    }
-    return endEvent;
-}
-
-RetsXmlTextEventPtr CLASS::assertNextIsText(RetsXmlParserPtr xmlParser)
-{
-    RetsXmlEventPtr event = getNextSkippingEmptyText(xmlParser);
-    RetsXmlTextEventPtr textEvent =
-        b::dynamic_pointer_cast<RetsXmlTextEvent>(event);
-    if (!textEvent)
-    {
-        ostringstream message;
-        message << "Event is not a text event: " << event;
-        throw RetsException(message.str());
-    }
-    return textEvent;
-}
-
 void CLASS::assertEquals(const string & expected, const string & actual)
 {
     if (expected != actual)
@@ -119,35 +50,44 @@ void CLASS::assertEquals(const string & expected, const string & actual)
 
 void CLASS::Parse(istreamPtr inputStream)
 {
+    Parse(inputStream, RETS_1_5);
+}
+
+void CLASS::Parse(istreamPtr inputStream, RetsVersion retsVersion)
+{
     RetsXmlParserPtr xmlParser(new ExpatXmlParser(inputStream));
     RetsXmlStartElementEventPtr startEvent;
     RetsXmlEndElementEventPtr endEvent;
     RetsXmlTextEventPtr textEvent;
     string body;
 
-    startEvent = assertNextIsStart(xmlParser);
+    startEvent = xmlParser->AssertNextIsStartEvent();
     assertEquals("RETS", startEvent->GetName());
     assertEquals("0", startEvent->GetAttributeValue("ReplyCode"));
-    RetsXmlEventPtr event = getNextSkippingEmptyText(xmlParser);
-    startEvent = b::dynamic_pointer_cast<RetsXmlStartElementEvent>(event);
-    if (!startEvent)
+    RetsXmlEventPtr event = xmlParser->GetNextSkippingEmptyText();
+    endEvent = b::dynamic_pointer_cast<RetsXmlEndElementEvent>(event);
+    if (endEvent)
     {
-        endEvent = b::dynamic_pointer_cast<RetsXmlEndElementEvent>(event);
-        if (!endEvent)
-        {
-            ostringstream message;
-            message << "Event is not an end event: " << event;
-            throw RetsException(message.str());
-        }
-        // Success
+        // Short response, no body
         return;
     }
-    assertEquals("RETS-RESPONSE", startEvent->GetName());
-    textEvent = assertNextIsText(xmlParser);
+    if (retsVersion != RETS_1_0)
+    {
+        startEvent = xmlParser->AssertStartEvent(event);
+        assertEquals("RETS-RESPONSE", startEvent->GetName());
+        textEvent = xmlParser->AssertNextIsTextEvent();
+    }
+    else
+    {
+        textEvent = xmlParser->AssertTextEvent(event);
+    }
     body = textEvent->GetText();
-    endEvent = assertNextIsEnd(xmlParser);
-    assertEquals("RETS-RESPONSE", endEvent->GetName());
-    endEvent = assertNextIsEnd(xmlParser);
+    if (retsVersion != RETS_1_0)
+    {
+        endEvent = xmlParser->AssertNextIsEndEvent();
+        assertEquals("RETS-RESPONSE", endEvent->GetName());
+    }
+    endEvent = xmlParser->AssertNextIsEndEvent();
     assertEquals("RETS", endEvent->GetName());
     
     StringVector lines;

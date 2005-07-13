@@ -14,38 +14,19 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#ifndef LIBRETS_KEY_VALUE_RESPONSE_H
-#define LIBRETS_KEY_VALUE_RESPONSE_H
 
-#include "librets/std_forward.h"
-#include "librets/xml_forward.h"
-#include "librets/RetsObject.h"
-#include "librets/REtsVersion.h"
+#ifndef LIBRETS_RETS_VERSION_H
+#define LIBRETS_RETS_VERSION_H
 
 namespace librets {
 
-class KeyValueResponse : public RetsObject
+enum RetsVersion
 {
-  public:
-    virtual ~KeyValueResponse();
-
-    void Parse(istreamPtr inputStream);
-
-    void Parse(istreamPtr inputStream, RetsVersion retsVersion);
-
-    std::string GetValue(std::string key) const;
-
-  protected:
-    virtual void ParsingFinished();
-
-  private:
-    static void assertEquals(const std::string & expected,
-                             const std::string & actual);
-
-    StringMap mValues;
+    RETS_1_0,
+    RETS_1_5
 };
 
-};
+}
 
 #endif
 

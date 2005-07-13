@@ -43,7 +43,13 @@ class RetsXmlParser
     
     RetsXmlStartElementEventPtr AssertNextIsStartEvent(std::string prefix = "");
 
+    RetsXmlStartElementEventPtr AssertStartEvent(RetsXmlEventPtr event,
+                                                 std::string prefix = "");
+
     RetsXmlEndElementEventPtr AssertNextIsEndEvent(std::string prefix = "");
+    
+    RetsXmlEndElementEventPtr AssertEndEvent(RetsXmlEventPtr event,
+                                             std::string prefix = "");
 
     RetsXmlTextEventPtr AssertNextIsTextEvent(std::string prefix = "");
     

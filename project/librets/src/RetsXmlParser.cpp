@@ -71,9 +71,14 @@ RetsXmlEventPtr CLASS::GetNextSkippingEmptyText()
 
 RetsXmlStartElementEventPtr CLASS::AssertNextIsStartEvent(string prefix)
 {
-    RetsXmlEventPtr event = GetNextSkippingEmptyText();
+    return AssertStartEvent(GetNextSkippingEmptyText(), prefix);
+}
+
+RetsXmlStartElementEventPtr CLASS::AssertStartEvent(RetsXmlEventPtr event,
+                                                    string prefix)
+{
     RetsXmlStartElementEventPtr startEvent =
-        b::dynamic_pointer_cast<RetsXmlStartElementEvent>(event);
+    b::dynamic_pointer_cast<RetsXmlStartElementEvent>(event);
     if (!startEvent)
     {
         ostringstream message;
@@ -85,7 +90,12 @@ RetsXmlStartElementEventPtr CLASS::AssertNextIsStartEvent(string prefix)
 
 RetsXmlEndElementEventPtr CLASS::AssertNextIsEndEvent(string prefix)
 {
-    RetsXmlEventPtr event = GetNextSkippingEmptyText();
+    return AssertEndEvent(GetNextSkippingEmptyText(), prefix);
+}
+
+RetsXmlEndElementEventPtr CLASS::AssertEndEvent(RetsXmlEventPtr event,
+                                                string prefix)
+{
     RetsXmlEndElementEventPtr endEvent =
         b::dynamic_pointer_cast<RetsXmlEndElementEvent>(event);
     if (!endEvent)
