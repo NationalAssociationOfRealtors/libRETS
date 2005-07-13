@@ -161,8 +161,7 @@
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = CapabilityUrls.h;
-			path = librets/CapabilityUrls.h;
+			path = CapabilityUrls.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -290,8 +289,7 @@
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = KeyValueResponse.h;
-			path = librets/KeyValueResponse.h;
+			path = KeyValueResponse.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -307,8 +305,7 @@
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = LoginResponse.h;
-			path = librets/LoginResponse.h;
+			path = LoginResponse.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -316,8 +313,7 @@
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = LogoutResponse.h;
-			path = librets/LogoutResponse.h;
+			path = LogoutResponse.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -525,8 +521,7 @@
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = protocol_forward.h;
-			path = librets/protocol_forward.h;
+			path = protocol_forward.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -590,8 +585,7 @@
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = RetsReplyException.h;
-			path = librets/RetsReplyException.h;
+			path = RetsReplyException.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -599,8 +593,7 @@
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = RetsSession.h;
-			path = librets/RetsSession.h;
+			path = RetsSession.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -664,17 +657,15 @@
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = SearchRequest.h;
-			path = librets/SearchRequest.h;
+			path = SearchRequest.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
 		554A9EF707F9F2D200402C35 = {
+			explicitFileType = sourcecode.cpp.h;
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SearchResultSet.h;
-			path = librets/SearchResultSet.h;
+			path = SearchResultSet.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -1419,6 +1410,7 @@
 				5504F1B9081D79BF0043B5CF,
 				55F23736087C75710090B325,
 				55F237A4087C7D030090B325,
+				55F23ACD0885AFA90090B325,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3253,8 +3245,7 @@
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = GetObjectRequest.h;
-			path = librets/GetObjectRequest.h;
+			path = GetObjectRequest.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -3512,8 +3503,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = ObjectDescriptor.h;
-			path = librets/ObjectDescriptor.h;
+			path = ObjectDescriptor.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -3527,8 +3517,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = GetObjectResponse.h;
-			path = librets/GetObjectResponse.h;
+			path = GetObjectResponse.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -3723,6 +3712,7 @@
 		};
 		558F6AC807FE06DA00CE8AF2 = {
 			children = (
+				55F23ACC0885AFA90090B325,
 				554A9EE507F9F2D200402C35,
 				5552AA91080467F8002288F1,
 				558F6AB207FE03A700CE8AF2,
@@ -3737,8 +3727,8 @@
 				554A9EF707F9F2D200402C35,
 			);
 			isa = PBXGroup;
-			name = Protocol;
-			path = ..;
+			name = librets;
+			path = "";
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -4038,6 +4028,7 @@
 				55BD578407FDAAFD00526D69,
 				55BD578507FDAAFD00526D69,
 				55BD578607FDAAFD00526D69,
+				55F23B200885B9300090B325,
 				55BD578707FDAAFD00526D69,
 				55BD578807FDAAFD00526D69,
 				55BD578907FDAAFD00526D69,
@@ -4777,6 +4768,28 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
+		};
+		55F23ACC0885AFA90090B325 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = RetsVersion.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F23ACD0885AFA90090B325 = {
+			fileRef = 55F23ACC0885AFA90090B325;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F23B200885B9300090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = login_valid10.xml;
+			refType = 4;
+			sourceTree = "<group>";
 		};
 	};
 	rootObject = 554A9EA607F9F27F00402C35;
