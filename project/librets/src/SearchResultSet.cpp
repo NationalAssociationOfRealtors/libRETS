@@ -14,8 +14,10 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <sstream>
 #include <boost/algorithm/string.hpp>
+#include <stdexcept>
 #include "librets/SearchResultSet.h"
 #include "librets/ExpatXmlParser.h"
 #include "librets/RetsXmlStartElementEvent.h"
@@ -31,6 +33,7 @@ using std::string;
 using std::vector;
 using std::istringstream;
 using std::ostringstream;
+using std::invalid_argument;
 namespace b = boost;
 namespace ba = boost::algorithm;
 
@@ -157,5 +160,10 @@ string SearchResultSet::GetString(int columnIndex)
 
 string SearchResultSet::GetString(string columnName)
 {
-    return GetString(mColumnToIndex[columnName]);
+    ColumnToIndexMap::const_iterator i = mColumnToIndex.find(columnName);
+    if (i == mColumnToIndex.end())
+    {
+        throw invalid_argument("Invalid columnName: " + columnName);
+    }
+    return GetString(i->second);
 }

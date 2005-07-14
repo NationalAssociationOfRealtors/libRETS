@@ -15,6 +15,7 @@
  * appear in supporting documentation.
  */
 #include <cppunit/extensions/HelperMacros.h>
+#include <stdexcept>
 #include "testUtil.h"
 #include "librets/SearchResultSet.h"
 #include "librets/RetsReplyException.h"
@@ -31,6 +32,8 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testNoRecordsFound);
     CPPUNIT_TEST(testErrorResponse);
     CPPUNIT_TEST(testSingleColumn);
+    CPPUNIT_TEST(testOutOfBoundsColumnNumber);
+    CPPUNIT_TEST(testInvalidColumnName);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -38,6 +41,8 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testNoRecordsFound();
     void testErrorResponse();
     void testSingleColumn();
+    void testOutOfBoundsColumnNumber();
+    void testInvalidColumnName();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -125,4 +130,42 @@ void CLASS::testSingleColumn()
     ASSERT_STRING_EQUAL("LN000004", resultSet.GetString(0));
 
     CPPUNIT_ASSERT(!resultSet.HasNext());
+}
+
+void CLASS::testOutOfBoundsColumnNumber()
+{
+    SearchResultSet resultSet;
+    istreamPtr inputStream = getResource("search-response.xml");
+    resultSet.Parse(inputStream);
+    CPPUNIT_ASSERT(resultSet.HasNext());
+    try
+    {
+        resultSet.GetString(100);
+        CPPUNIT_FAIL("Should have thrown exception");
+    }
+    catch (out_of_range &)
+    {
+        // Expected
+    }
+}
+
+void CLASS::testInvalidColumnName()
+{
+    SearchResultSet resultSet;
+    istreamPtr inputStream = getResource("search-response.xml");
+    resultSet.Parse(inputStream);
+    CPPUNIT_ASSERT(resultSet.HasNext());
+#if 0
+    try
+    {
+#endif
+        resultSet.GetString("foo");
+        CPPUNIT_FAIL("Should have thrown exception");
+#if 0
+    }
+    catch (invalid_argument &)
+    {
+        // Expected
+    }
+#endif
 }
