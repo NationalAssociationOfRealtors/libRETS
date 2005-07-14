@@ -15,39 +15,46 @@
  * appear in supporting documentation.
  */
 
-#ifndef LIBRETS_EXAMPLES_OPTIONS_H
-#define LIBRETS_EXAMPLES_OPTIONS_H
+#ifndef LIBRETS_STR_STREAM_H
+#define LIBRETS_STR_STREAM_H
 
-#include <boost/program_options.hpp>
-#include "librets.h"
 #include <string>
-#include <fstream>
+#include <sstream>
 
-class Options
+namespace librets
+{
+
+class str_stream
 {
   public:
-    boost::program_options::options_description descriptions;
-    boost::program_options::variables_map options;
+    str_stream() : mStreamOut() { }
 
-    std::string loginUrl;
-    std::string username;
-    std::string password;
-    std::string userAgent;
-    bool useHttpGet;
-    librets::RetsVersion retsVersion;
+    // This copy constructor is necessary because stringstream does
+    // not provide a copy constructor.  gcc 3.4 transparently copies
+    // str_streams, and hence triggers this situation.
+    str_stream(const str_stream & s) : mStreamOut(s.mStreamOut.str()) { }
 
-    Options();
+    std::stringstream & underlying_stream() const
+    { return mStreamOut; }
 
-    bool ParseCommandLine(int argc, char * argv[]);
-
-    librets::RetsSessionPtr RetsLogin();
+    operator std::string() const
+    {
+        return mStreamOut.str();
+    }
 
   private:
-    std::string mLogFile;
-    std::string mRetsVersionString;
-    std::ofstream mLogStream;
-    librets::RetsHttpLoggerPtr mLogger;
+    mutable std::stringstream mStreamOut;
 };
+
+template <class type>
+    const str_stream & operator<< (const str_stream & out, const type & value)
+{
+    out.underlying_stream() << value;
+    return out;
+}
+    
+
+}
 
 #endif
 

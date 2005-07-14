@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_RETS_SESSION_H
 #define LIBRETS_RETS_SESSION_H
 
@@ -21,6 +22,7 @@
 #include "librets/protocol_forward.h"
 #include "librets/RetsHttpRequest.h"
 #include "librets/http_forward.h"
+#include "librets/RetsVersion.h"
 
 /**
  * The main librets namespace.  See RetsSession.
@@ -60,6 +62,18 @@ class RetsSession
      */
     std::string GetAction();
 
+    /**
+     * Create a new search request with correct query type based on the 
+     * detected version.
+     *
+     * @param searchType RETS resource name
+     * @param searchClass RETS class name
+     * @param query DMQL(2) query
+     */
+    SearchRequestPtr CreateSearchRequest(std::string searchType, 
+                                         std::string searchClass,
+                                         std::string query);
+    
     /**
      * Performs a search on the server.
      *
@@ -107,14 +121,47 @@ class RetsSession
     void UseHttpGet(bool useHttpGet);
     
     void SetHttpLogger(RetsHttpLogger * logger);
+    
+    /**
+     * Return the RETS version to use when first logging in.
+     *
+     * @return RETS version to use when first logging in
+     */
+    RetsVersion GetRetsVersion() const;
+    
+    /**
+     * Sets the RETS version to use when first logging in.
+     *
+     * @param retsVersion RETS version to use when first logging in.
+     */
+    void SetRetsVersion(RetsVersion retsVersion);
+    
+    /** The default RETS version when logging in, 1.5 */
+    static const RetsVersion DEFAULT_RETS_VERSION;
+    
+    /**
+     * Returns the RETS version detected by the login transaction and
+     * used by all subsequent transactions.
+     *
+     * @return the detected RETS version
+     */
+    RetsVersion GetDetectedRetsVersion() const;                                
 
   private:
+    static const char * RETS_VERSION_HEADER;
+    static const char * RETS_1_0_STRING;
+    static const char * RETS_1_5_STRING;
+    
     void RetrieveAction();
 
     void RetrieveMetadata();
 
     void AssertSuccessfulResponse(RetsHttpResponsePtr response,
                                   std::string url);
+    
+    std::string RetsVersionToString(RetsVersion retsVersion);
+    
+    RetsVersion RetsVersionFromString(std::string versionString);
 
     RetsHttpClientPtr mHttpClient;
 
@@ -127,6 +174,10 @@ class RetsSession
     RetsMetadataPtr mMetadata;
     
     RetsHttpRequest::Method mHttpMethod;
+    
+    RetsVersion mRetsVersion;
+    
+    RetsVersion mDetectedRetsVersion;
 };
 
 };

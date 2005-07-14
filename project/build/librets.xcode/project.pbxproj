@@ -1411,6 +1411,7 @@
 				55F23736087C75710090B325,
 				55F237A4087C7D030090B325,
 				55F23ACD0885AFA90090B325,
+				55F23CC40886E7AC0090B325,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3647,6 +3648,7 @@
 				554A9EFC07F9F2D200402C35,
 				554A9EFD07F9F2D200402C35,
 				554A9EFE07F9F2D200402C35,
+				55F23CC30886E7AC0090B325,
 			);
 			isa = PBXGroup;
 			name = General;
@@ -4790,6 +4792,20 @@
 			path = login_valid10.xml;
 			refType = 4;
 			sourceTree = "<group>";
+		};
+		55F23CC30886E7AC0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = str_stream.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F23CC40886E7AC0090B325 = {
+			fileRef = 55F23CC30886E7AC0090B325;
+			isa = PBXBuildFile;
+			settings = {
+			};
 		};
 	};
 	rootObject = 554A9EA607F9F27F00402C35;

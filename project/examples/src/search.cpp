@@ -14,7 +14,9 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include "librets.h"
+#include "Options.h"
 #include <iostream>
 
 using namespace librets;
@@ -26,20 +28,28 @@ int main(int argc, char * argv[])
 {
     try
     {
-        RetsSessionPtr session(
-            new RetsSession("http://demo.crt.realtors.org:6103/rets/login"));
-        session->Login("Joe", "Schmoe");
+        Options options;
+        if (!options.ParseCommandLine(argc, argv))
+        {
+            return 0;
+        }
+
+        RetsSessionPtr session = options.RetsLogin();
+        if (!session)
+        {
+            cout << "Login failed\n";
+            return -1;
+        }
         
-        SearchRequestPtr searchRequest(
-            new SearchRequest("Property", "ResidentialProperty", 
-                              "(ListPrice=300000-)"));
+        SearchRequestPtr searchRequest = session->CreateSearchRequest(
+            "Property", "ResidentialProperty", "(ListPrice=300000-)");
         
         SearchResultSetPtr results = session->Search(searchRequest);
         while (results->HasNext())
         {
             cout << "ListingID: " << results->GetString("ListingID") << endl;
             cout << "ListPrice: " << results->GetString("ListPrice") << endl;
-            cout << " Bedrooms: " << results->GetString("Bedrooms") << endl;
+            cout << "     Beds: " << results->GetString("Beds") << endl;
             cout << "     City: " << results->GetString("City") << endl;
             cout << endl;
         }
@@ -49,5 +59,9 @@ int main(int argc, char * argv[])
     catch (RetsException & e)
     {
         e.PrintFullReport(cerr);
+    }
+    catch (std::exception & e)
+    {
+        cerr << e.what() << endl;
     }
 }

@@ -60,11 +60,6 @@ void CLASS::AssertEquals(int expected, int actual)
     }
 }
 
-void CLASS::Parse(istreamPtr inputStream)
-{
-    Parse(inputStream, RETS_1_5);
-}
-
 void CLASS::Parse(istreamPtr inputStream, RetsVersion retsVersion)
 {
     RetsXmlParserPtr xmlParser(new ExpatXmlParser(inputStream));

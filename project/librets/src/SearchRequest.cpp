@@ -32,8 +32,8 @@ SearchRequest::SearchRequest(string searchType, string searchClass,
                              string query)
 {
     SetQueryParameter(FORMAT_PARAMETER, "COMPACT-DECODED");
-    SetQueryParameter(STANDARD_NAMES_PARAMETER, "1");
-    SetQueryParameter(QUERY_TYPE_PARAMETER, "DMQL2");
+    SetStandardNames(true);
+    SetQueryType(DMQL2);
     SetQueryParameter(SEARCH_TYPE_PARAMETER, searchType);
     SetQueryParameter(CLASS_PARAMETER, searchClass);
     SetQueryParameter(QUERY_PARAMETER, query);
@@ -70,4 +70,18 @@ void SearchRequest::SetCountType(CountType countType)
 void SearchRequest::SetStandardNames(bool standardNames)
 {
     SetQueryParameter(STANDARD_NAMES_PARAMETER, standardNames ? "1" : "0");
+}
+
+void SearchRequest::SetQueryType(QueryType queryType)
+{
+    switch (queryType)
+    {
+        case DMQL:
+            SetQueryParameter(QUERY_TYPE_PARAMETER, "DMQL");
+            break;
+            
+        case DMQL2:
+            SetQueryParameter(QUERY_TYPE_PARAMETER, "DMQL2");
+            break;
+    }
 }

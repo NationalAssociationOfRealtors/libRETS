@@ -42,7 +42,7 @@ void CLASS::testValidResponse()
 {
     istreamPtr inputStream = getResource("logout_valid15.xml");
     LogoutResponse response;
-    response.Parse(inputStream);
+    response.Parse(inputStream, RETS_1_5);
 
     ASSERT_STRING_EQUAL("51", response.GetValue("ConnectTime"));
     ASSERT_STRING_EQUAL("51", response.GetValue("connecttime"));
@@ -57,6 +57,6 @@ void CLASS::testShortResponse()
 {
     istreamPtr inputStream = getResource("short-success-response.xml");
     LogoutResponse response;
-    response.Parse(inputStream);
+    response.Parse(inputStream, RETS_1_5);
     
 }

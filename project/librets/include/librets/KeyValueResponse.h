@@ -29,8 +29,6 @@ class KeyValueResponse : public RetsObject
   public:
     virtual ~KeyValueResponse();
 
-    void Parse(istreamPtr inputStream);
-
     void Parse(istreamPtr inputStream, RetsVersion retsVersion);
 
     std::string GetValue(std::string key) const;

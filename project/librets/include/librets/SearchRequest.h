@@ -68,6 +68,14 @@ class SearchRequest : public RetsHttpRequest
     
     void SetStandardNames(bool standardNames);
     
+    enum QueryType
+    {
+        DMQL,
+        DMQL2
+    };
+    
+    void SetQueryType(QueryType queryType);
+    
   private:
     
     static const char * FORMAT_PARAMETER;

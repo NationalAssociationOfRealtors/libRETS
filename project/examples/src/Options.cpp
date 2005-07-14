@@ -44,6 +44,8 @@ Options::Options()
         ("http-get,g", po::value<bool>(&useHttpGet)
          ->default_value(false, "")->implicit(), "Use HTTP GET")
         ("http-log,l", po::value<string>(&mLogFile), "HTTP log file")
+        ("rets-version,V", po::value<string>(&mRetsVersionString)
+         ->default_value("1.5", ""), "RETS Version");
         ;
 }
 
@@ -56,6 +58,14 @@ bool Options::ParseCommandLine(int argc, char * argv[])
         cout << descriptions << endl;
         return false;
     }
+    if (mRetsVersionString == "1.5")
+    {
+        retsVersion = RETS_1_5;
+    }
+    else
+    {
+        retsVersion = RETS_1_0;
+    }
     return true;
 }
 
@@ -64,6 +74,7 @@ RetsSessionPtr Options::RetsLogin()
     RetsSessionPtr session(new RetsSession(loginUrl));
     session->SetUserAgent(userAgent);
     session->UseHttpGet(useHttpGet);
+    session->SetRetsVersion(retsVersion);
     if (options.count("http-log"))
     {
         mLogStream.open(mLogFile.c_str());
