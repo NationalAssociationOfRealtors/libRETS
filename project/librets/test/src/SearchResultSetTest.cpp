@@ -155,17 +155,13 @@ void CLASS::testInvalidColumnName()
     istreamPtr inputStream = getResource("search-response.xml");
     resultSet.Parse(inputStream);
     CPPUNIT_ASSERT(resultSet.HasNext());
-#if 0
     try
     {
-#endif
         resultSet.GetString("foo");
         CPPUNIT_FAIL("Should have thrown exception");
-#if 0
     }
     catch (invalid_argument &)
     {
         // Expected
     }
-#endif
 }
