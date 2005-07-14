@@ -42,7 +42,7 @@ LOGIN_OBJS = $(DIROBJ)\login.obj $(OPTIONS_OBJS)
 
 METADATA_OBJS = $(DIROBJ)\metadata.obj $(OPTIONS_OBJS)
 
-SEARCH_OBJS = $(DIROBJ)\search.obj
+SEARCH_OBJS = $(DIROBJ)\search.obj $(OPTIONS_OBJS)
 
 SQL2DMQL_OBJS = $(DIROBJ)\sql2dmql.obj
 
