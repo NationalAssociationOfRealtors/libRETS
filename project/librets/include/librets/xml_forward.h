@@ -40,6 +40,11 @@ typedef boost::shared_ptr<RetsXmlEndElementEvent> RetsXmlEndElementEventPtr;
 class RetsXmlTextEvent;
 typedef boost::shared_ptr<RetsXmlTextEvent> RetsXmlTextEventPtr;
 
+/** A vector of RetsXmlEvent objects. */
+typedef std::vector<RetsXmlEventPtr> RetsXmlEventList;
+/** A smart pointer to RetsXmlEventList. */
+typedef boost::shared_ptr<RetsXmlEventList> RetsXmlEventListPtr;
+
 class ExpatXmlParser;
 typedef boost::shared_ptr<ExpatXmlParser> ExpatXmlParserPtr;
 

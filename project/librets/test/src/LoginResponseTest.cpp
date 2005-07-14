@@ -19,6 +19,7 @@
 #include "testUtil.h"
 #include "librets/LoginResponse.h"
 #include "librets/CapabilityUrls.h"
+#include "librets/RetsException.h"
 
 using namespace librets;
 using namespace std;
@@ -30,11 +31,13 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testValid15Response);
     CPPUNIT_TEST(testValid10Response);
+    CPPUNIT_TEST(testShortResponse);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
     void testValid15Response();
     void testValid10Response();
+    void testShortResponse();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -157,4 +160,19 @@ void CLASS::testValid10Response()
     CapabilityUrlsPtr actual = response.GetCapabilityUrls(
         "http://cornerstone.mris.com:6103/platinum/login");
     CPPUNIT_ASSERT_EQUAL(expected, *actual);
-}    
+}
+
+void CLASS::testShortResponse()
+{
+    istreamPtr inputStream = getResource("short-success-response.xml");
+    LoginResponse response;
+    try
+    {
+        response.Parse(inputStream, RETS_1_0);
+        CPPUNIT_FAIL("Should have thrown exception");
+    }
+    catch (RetsException &)
+    {
+        // Expected
+    }
+}

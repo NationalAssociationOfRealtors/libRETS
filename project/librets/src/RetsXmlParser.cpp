@@ -69,6 +69,26 @@ RetsXmlEventPtr CLASS::GetNextSkippingEmptyText()
     }
 }
 
+RetsXmlEventListPtr CLASS::GetEventList()
+{
+    RetsXmlEventListPtr eventList(new RetsXmlEventList());
+    while (HasNext())
+    {
+        eventList->push_back(GetNextEvent());
+    }
+    return eventList;
+}
+
+RetsXmlEventListPtr CLASS::GetEventListSkippingEmptyText()
+{
+    RetsXmlEventListPtr eventList(new RetsXmlEventList());
+    while (HasNext())
+    {
+        eventList->push_back(GetNextSkippingEmptyText());
+    }
+    return eventList;
+}
+
 RetsXmlStartElementEventPtr CLASS::AssertNextIsStartEvent(string prefix)
 {
     return AssertStartEvent(GetNextSkippingEmptyText(), prefix);

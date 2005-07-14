@@ -52,6 +52,9 @@ class LogoutResponse : public KeyValueResponse
 
   private:
     virtual void ParsingFinished();
+    
+    virtual RetsXmlTextEventPtr GetBodyEvent(RetsXmlEventListPtr eventList,
+                                             RetsVersion retsVersion);
 
     int mConnectTime;
 };

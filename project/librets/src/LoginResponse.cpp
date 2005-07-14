@@ -140,4 +140,16 @@ CapabilityUrlsPtr CLASS::GetCapabilityUrls(string baseUrl) const
     urls->SetUpdateUrl(GetUpdateUrl());
     return urls;
 }
-        
+
+RetsXmlTextEventPtr CLASS::GetBodyEvent(RetsXmlEventListPtr eventList,
+                                        RetsVersion retsVersion)
+{
+    if (retsVersion != RETS_1_0)
+    {
+        return GetBodyEventFromStandardResponse(eventList);
+    }
+    else
+    {
+        return GetBodyEventFromResponseWithNoRetsResponse(eventList);
+    }
+}

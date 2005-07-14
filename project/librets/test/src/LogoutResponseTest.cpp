@@ -55,7 +55,7 @@ void CLASS::testValidResponse()
 
 void CLASS::testShortResponse()
 {
-    istreamPtr inputStream = getResource("logout-short.xml");
+    istreamPtr inputStream = getResource("short-success-response.xml");
     LogoutResponse response;
     response.Parse(inputStream);
     

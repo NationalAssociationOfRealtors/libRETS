@@ -21,7 +21,7 @@
 #include "librets/xml_forward.h"
 
 namespace librets {
-
+    
 class RetsXmlParser
 {
   public:
@@ -38,23 +38,38 @@ class RetsXmlParser
      * @throw RetsException
      */
     virtual RetsXmlEventPtr GetNextEvent() = 0;
+    
+    /**
+     * Returns all remaining events as a vector.
+     *
+     * @return Vector of events.
+     */
+    RetsXmlEventListPtr GetEventList();
 
     RetsXmlEventPtr GetNextSkippingEmptyText();
     
+    /**
+     * Returns all remaining events as a vector, ingoring all non-empty
+     * text events.
+     *
+     * @return Vector of events.
+     */
+    RetsXmlEventListPtr GetEventListSkippingEmptyText();
+
     RetsXmlStartElementEventPtr AssertNextIsStartEvent(std::string prefix = "");
 
-    RetsXmlStartElementEventPtr AssertStartEvent(RetsXmlEventPtr event,
-                                                 std::string prefix = "");
+    static RetsXmlStartElementEventPtr
+        AssertStartEvent(RetsXmlEventPtr event, std::string prefix = "");
 
     RetsXmlEndElementEventPtr AssertNextIsEndEvent(std::string prefix = "");
     
-    RetsXmlEndElementEventPtr AssertEndEvent(RetsXmlEventPtr event,
-                                             std::string prefix = "");
+    static RetsXmlEndElementEventPtr
+        AssertEndEvent(RetsXmlEventPtr event, std::string prefix = "");
 
     RetsXmlTextEventPtr AssertNextIsTextEvent(std::string prefix = "");
     
-    RetsXmlTextEventPtr AssertTextEvent(RetsXmlEventPtr event,
-                                        std::string prefix = "");
+    static RetsXmlTextEventPtr
+        AssertTextEvent(RetsXmlEventPtr event, std::string prefix = "");
 };
 
 };

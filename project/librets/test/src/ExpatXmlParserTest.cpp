@@ -27,8 +27,6 @@
 using namespace librets;
 using namespace std;
 
-typedef vector<RetsXmlEventPtr> EventVector;
-
 #define CLASS ExpatXmlParserTest
 
 class CLASS : public CPPUNIT_NS::TestFixture
@@ -51,8 +49,7 @@ void CLASS::testSimple()
         "</one>\n";
     RetsXmlParserPtr xmlParser(new ExpatXmlParser(xml));
     
-    EventVector expected;
-    EventVector actual;
+    RetsXmlEventList expected;
     
     RetsXmlStartElementEventPtr start;
     RetsXmlAttributePtr attribute;
@@ -89,10 +86,7 @@ void CLASS::testSimple()
     end->SetName("one");
     expected.push_back(end);
 
-    while (xmlParser->HasNext())
-    {
-        actual.push_back(xmlParser->GetNextEvent());
-    }
+    RetsXmlEventListPtr actual = xmlParser->GetEventList();
 
-    ASSERT_VECTOR_EQUAL(expected, actual);
+    ASSERT_VECTOR_EQUAL(expected, *actual);
 }

@@ -20,7 +20,7 @@
 #include "librets/std_forward.h"
 #include "librets/xml_forward.h"
 #include "librets/RetsObject.h"
-#include "librets/REtsVersion.h"
+#include "librets/RetsVersion.h"
 
 namespace librets {
 
@@ -36,12 +36,28 @@ class KeyValueResponse : public RetsObject
     std::string GetValue(std::string key) const;
 
   protected:
+    virtual RetsXmlTextEventPtr GetBodyEvent(RetsXmlEventListPtr eventList,
+                                             RetsVersion retsVersion) = 0;
+    
+    RetsXmlTextEventPtr GetBodyEventFromStandardResponse(
+        RetsXmlEventListPtr eventList);
+    
+    RetsXmlTextEventPtr GetBodyEventFromResponseWithNoRetsResponse(
+        RetsXmlEventListPtr eventList);
+
+    RetsXmlTextEventPtr GetBodyEventFromShortResponse(
+        RetsXmlEventListPtr eventList);
+    
     virtual void ParsingFinished();
 
   private:
-    static void assertEquals(const std::string & expected,
+    void ParseBody(std::string body);
+    
+    static void AssertEquals(const std::string & expected,
                              const std::string & actual);
 
+    static void AssertEquals(int expected, int actual);
+    
     StringMap mValues;
 };
 

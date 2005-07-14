@@ -43,3 +43,18 @@ int CLASS::GetConnectTime() const
 {
     return mConnectTime;
 }
+
+RetsXmlTextEventPtr CLASS::GetBodyEvent(RetsXmlEventListPtr eventList,
+                                        RetsVersion retsVersion)
+{
+    RetsXmlTextEventPtr bodyEvent;
+    if (eventList->size() != 2)
+    {
+        bodyEvent = GetBodyEventFromStandardResponse(eventList);
+    }
+    else
+    {
+        bodyEvent = GetBodyEventFromShortResponse(eventList);
+    }
+    return bodyEvent;
+}
