@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <vector>
 #include "librets/LoginResponse.h"
 #include "librets/CapabilityUrls.h"

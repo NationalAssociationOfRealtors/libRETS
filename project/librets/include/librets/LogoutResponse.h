@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_LOGOUT_RESPONSE_H
 #define LIBRETS_LOGOUT_RESPONSE_H
 

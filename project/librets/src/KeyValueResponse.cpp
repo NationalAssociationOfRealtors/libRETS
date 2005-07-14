@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <sstream>
 #include <boost/algorithm/string.hpp>
 #include "librets/KeyValueResponse.h"

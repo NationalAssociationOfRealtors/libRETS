@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_LOGIN_RESPONSE_H
 #define LIBRETS_LOGIN_RESPONSE_H
 
@@ -67,12 +68,10 @@ class LoginResponse : public KeyValueResponse
 
     CapabilityUrlsPtr GetCapabilityUrls(std::string baseUrl) const;
     
-  protected:
+  private:
     virtual RetsXmlTextEventPtr GetBodyEvent(RetsXmlEventListPtr eventList,
                                              RetsVersion retsVersion);
 
-
-  private:
     CapabilityUrlsPtr mCapabilityUrls;
 };
 
