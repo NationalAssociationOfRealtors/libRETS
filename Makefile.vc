@@ -4,13 +4,14 @@ all:
 	nmake /nologo /f Makefile.vc
 	cd ..\..\examples\src
 	nmake /nologo /f Makefile.vc
-	cd ..\..
+	cd ..\..\..
 
 clean:
 	cd project\librets\src
 	nmake /nologo /f Makefile.vc clean
 	cd ..\..\examples\src
 	nmake /nologo /f Makefile.vc clean
+	cd ..\..\..
 
 test:
 	cd project\librets\test\src

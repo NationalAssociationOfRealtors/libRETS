@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_RETS_XML_PARSER_H
 #define LIBRETS_RETS_XML_PARSER_H
 
@@ -21,7 +22,7 @@
 #include "librets/xml_forward.h"
 
 namespace librets {
-    
+
 class RetsXmlParser
 {
   public:

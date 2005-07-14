@@ -14,10 +14,12 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_XML_FORWARD_H
 #define LIBRETS_XML_FORWARD_H
 
 #include <boost/shared_ptr.hpp>
+#include <vector>
 
 namespace librets {
 
@@ -39,7 +41,7 @@ typedef boost::shared_ptr<RetsXmlEndElementEvent> RetsXmlEndElementEventPtr;
 
 class RetsXmlTextEvent;
 typedef boost::shared_ptr<RetsXmlTextEvent> RetsXmlTextEventPtr;
-
+    
 /** A vector of RetsXmlEvent objects. */
 typedef std::vector<RetsXmlEventPtr> RetsXmlEventList;
 /** A smart pointer to RetsXmlEventList. */
