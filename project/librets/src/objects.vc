@@ -2,6 +2,7 @@
 X_OBJS = \
 	$(DIROBJ)\AndCriterion.obj \
 	$(DIROBJ)\CapabilityUrls.obj \
+	$(DIROBJ)\CurlEasy.obj \
 	$(DIROBJ)\CurlHttpClient.obj \
 	$(DIROBJ)\CurlHttpResponse.obj \
 	$(DIROBJ)\CurlSlist.obj \
