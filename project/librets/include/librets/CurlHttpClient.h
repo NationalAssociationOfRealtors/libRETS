@@ -19,7 +19,7 @@
 
 #include <sstream>
 #include <istream>
-#include "librets/curl.h"
+#include "librets/CurlEasy.h"
 #include "librets/std_forward.h"
 #include "librets/RetsHttpClient.h"
 #include "librets/CurlSlist.h"
@@ -34,8 +34,6 @@ class CurlHttpClient : public RetsHttpClient
   public:
     CurlHttpClient();
     
-    virtual ~CurlHttpClient();
-
     virtual void SetUserCredentials(std::string userName,
                                     std::string password);
 
@@ -50,18 +48,15 @@ class CurlHttpClient : public RetsHttpClient
     virtual void SetLogger(RetsHttpLogger * logger);
 
   private:
-    void CurlAssert(const RetsExceptionContext & context, CURLcode errorCode,
-                    bool useErrorBuffer = true);
-    
-    static size_t StaticWriteData(void * buffer, size_t size, size_t nmemb,
+    static size_t StaticWriteData(char * buffer, size_t size, size_t nmemb,
                                   void * userData);
         
-    size_t WriteData(void * buffer, size_t size, size_t nmemb);
+    size_t WriteData(char * buffer, size_t size, size_t nmemb);
 
-    static size_t StaticWriteHeader(void * buffer, size_t size, size_t nmemb,
+    static size_t StaticWriteHeader(char * buffer, size_t size, size_t nmemb,
                                     void * userData);
     
-    size_t WriteHeader(void * buffer, size_t size, size_t nmemb);
+    size_t WriteHeader(char * buffer, size_t size, size_t nmemb);
     
     static int StaticDebug(CURL * handle, curl_infotype type, char * data,
                            size_t size, void * userData);
@@ -69,19 +64,16 @@ class CurlHttpClient : public RetsHttpClient
     int Debug(CURL * handle, curl_infotype type, char * data, size_t size);
     
     void GenerateHeaderSlist();
+    
+    CurlEasy mCurl;
+    
+    StringMap mDefaultHeaders;                                                 
 
-    CURL * mCurl;
-    char * mCurlErrorBuffer[CURL_ERROR_SIZE];
     CurlSlist mHeaders;
+    
     CurlHttpResponsePtr mResponse;
+    
     RetsHttpLogger * mLogger;
-
-    // Need to keep copies of strings we pass to curl, as it just stores
-    // a pointer (i.e. it does not copy the contents into the library)
-    std::string mCurlUserpwd;
-    std::string mCurlUrl;
-    std::string mQueryString;
-    StringMap mDefaultHeaders;
 };
 
 };

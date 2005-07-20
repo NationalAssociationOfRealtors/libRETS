@@ -1412,6 +1412,7 @@
 				55F237A4087C7D030090B325,
 				55F23ACD0885AFA90090B325,
 				55F23CC40886E7AC0090B325,
+				55F23D63088EAA290090B325,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1495,6 +1496,7 @@
 				55F23659087B2AB00090B325,
 				55F23738087C76A50090B325,
 				55F237A6087C7DA30090B325,
+				55F23D85088EACDE0090B325,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3134,6 +3136,7 @@
 		};
 		5552A8830803311C002288F1 = {
 			children = (
+				55F23D84088EACDE0090B325,
 				554A9F5607F9F2E700402C35,
 				554A9F5707F9F2E700402C35,
 				554A9F5807F9F2E700402C35,
@@ -3756,6 +3759,7 @@
 			children = (
 				554A9EC607F9F2D200402C35,
 				554A9EB807F9F2D200402C35,
+				55F23D62088EAA290090B325,
 				554A9EB907F9F2D200402C35,
 				554A9EBA07F9F2D200402C35,
 				554A9EBB07F9F2D200402C35,
@@ -4803,6 +4807,34 @@
 		};
 		55F23CC40886E7AC0090B325 = {
 			fileRef = 55F23CC30886E7AC0090B325;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F23D62088EAA290090B325 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = CurlEasy.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F23D63088EAA290090B325 = {
+			fileRef = 55F23D62088EAA290090B325;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F23D84088EACDE0090B325 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = CurlEasy.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F23D85088EACDE0090B325 = {
+			fileRef = 55F23D84088EACDE0090B325;
 			isa = PBXBuildFile;
 			settings = {
 			};

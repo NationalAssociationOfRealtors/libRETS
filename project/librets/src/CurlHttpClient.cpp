@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <sstream>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
@@ -29,65 +30,18 @@ using namespace librets::util;
 using namespace std;
 namespace ba = boost::algorithm;
 
-#define CURL_ASSERT(_X_) CurlAssert(LIBRETS_ECTXT(), _X_)
-
 CurlHttpClient::CurlHttpClient()
 {
-    mCurl = curl_easy_init();
-    if (!mCurl)
-    {
-        throw RetsException("Could not allocate Curl handle");
-    }
-
-    try
-    {
-        mLogger = NullHttpLogger::GetInstance();
-        CurlAssert(
-            LIBRETS_ECTXT(),
-            curl_easy_setopt(mCurl, CURLOPT_ERRORBUFFER, mCurlErrorBuffer),
-            false);
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_VERBOSE, false));
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_DEBUGFUNCTION,
-                                     CurlHttpClient::StaticDebug));
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_DEBUGDATA, this));
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_HTTPAUTH, CURLAUTH_ANY));
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_COOKIEFILE, ""));
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_WRITEDATA, this));
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_WRITEFUNCTION,
-                                     CurlHttpClient::StaticWriteData));
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_WRITEHEADER, this));
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_HEADERFUNCTION,
-                                     CurlHttpClient::StaticWriteHeader));
-    }
-    catch (RetsException &)
-    {
-        curl_easy_cleanup(mCurl);
-        throw;
-    }
-}
-
-CurlHttpClient::~CurlHttpClient()
-{
-    curl_easy_cleanup(mCurl);
-}
-
-void CurlHttpClient::CurlAssert(const RetsExceptionContext & context,
-                                CURLcode errorCode, bool useErrorBuffer)
-{
-    if (errorCode != CURLE_OK)
-    {
-        const char * curlError = curl_easy_strerror(errorCode);
-        ostringstream message;
-        message << "curl error #" << errorCode  << " (" << curlError
-                << ")";
-        if (useErrorBuffer)
-        {
-            message << ": " << (char *)(mCurlErrorBuffer);
-        }
-        RetsException e(message.str());
-        e.SetContext(context);
-        throw e;
-    }
+    mLogger = NullHttpLogger::GetInstance();
+    mCurl.SetVerbose(false);
+    mCurl.SetDebugData(this);
+    mCurl.SetDebugFunction(CurlHttpClient::StaticDebug);
+    mCurl.SetHttpAuth(CURLAUTH_ANY);
+    mCurl.SetCookieFile("");
+    mCurl.SetWriteData(this);
+    mCurl.SetWriteFunction(CurlHttpClient::StaticWriteData);
+    mCurl.SetWriteHeaderData(this);
+    mCurl.SetWriteHeaderFunction(CurlHttpClient::StaticWriteHeader);
 }
 
 void CurlHttpClient::SetDefaultHeader(string name, string value)
@@ -120,39 +74,33 @@ void CurlHttpClient::SetUserAgent(string userAgent)
 
 void CurlHttpClient::SetUserCredentials(string userName, string password)
 {
-    mCurlUserpwd = userName + ":" + password;
-    CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_USERPWD,
-                                 mCurlUserpwd.c_str()));
+    mCurl.SetUserCredentials(userName, password);
 }
 
 RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequestPtr request)
 {
-    mCurlUrl = request->GetUrl();
-    mQueryString = request->GetQueryString();
+    string url = request->GetUrl();
+    string queryString = request->GetQueryString();
     if (request->GetMethod() == RetsHttpRequest::GET)
     {
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_HTTPGET, 1));
-        if (mQueryString != "")
+        mCurl.SetHttpGet(true);
+        if (!queryString.empty())
         {
-            mCurlUrl = mCurlUrl + "?" + mQueryString;
+            url += "?" + queryString;  
         }
     }
     else
     {
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_POSTFIELDS,
-                                     mQueryString.c_str()));
+        mCurl.SetPostFields(queryString);
     }
-    CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_HTTPHEADER, mHeaders.slist()));
-    CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_URL, mCurlUrl.c_str()));
+    mCurl.SetHttpHeaders(mHeaders.slist());
+    mCurl.SetUrl(url);
     mResponse.reset(new CurlHttpResponse());
     iostreamPtr dataStream(new stringstream());
     mResponse->SetStream(dataStream);
-    CURL_ASSERT(curl_easy_perform(mCurl));
+    mCurl.Perform();
     mResponse->SetUrl(request->GetUrl());
-    long responseCode;
-    CURL_ASSERT(
-        curl_easy_getinfo(mCurl, CURLINFO_RESPONSE_CODE, &responseCode));
-    mResponse->SetResponseCode(responseCode);
+    mResponse->SetResponseCode(mCurl.GetResponseCode());
     return mResponse;
 }
 
@@ -160,42 +108,42 @@ void CurlHttpClient::SetLogger(RetsHttpLogger * logger)
 {
     if (logger == 0)
     {
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_VERBOSE, false));
+        mCurl.SetVerbose(false);
         mLogger = NullHttpLogger::GetInstance();
     }
     else
     {
         mLogger = logger;
-        CURL_ASSERT(curl_easy_setopt(mCurl, CURLOPT_VERBOSE, true));
+        mCurl.SetVerbose(true);
     }
 }
 
-size_t CurlHttpClient::StaticWriteData(void * buffer, size_t size, size_t nmemb,
+size_t CurlHttpClient::StaticWriteData(char * buffer, size_t size, size_t nmemb,
                                        void * userData)
 {
     CurlHttpClient * client = (CurlHttpClient *) userData;
     return client->WriteData(buffer, size, nmemb);
 }
 
-size_t CurlHttpClient::WriteData(void * buffer, size_t size, size_t nmemb)
+size_t CurlHttpClient::WriteData(char * buffer, size_t size, size_t nmemb)
 {
     size_t bytes = size * nmemb;
-    mResponse->WriteData((const char *) buffer, bytes);
+    mResponse->WriteData(buffer, bytes);
     return bytes;
 }
 
-size_t CurlHttpClient::StaticWriteHeader(void * buffer, size_t size,
+size_t CurlHttpClient::StaticWriteHeader(char * buffer, size_t size,
                                          size_t nmemb, void * userData)
 {
     CurlHttpClient * client = (CurlHttpClient *) userData;
     return client->WriteHeader(buffer, size, nmemb);
 }
 
-size_t CurlHttpClient::WriteHeader(void * buffer, size_t size, size_t nmemb)
+size_t CurlHttpClient::WriteHeader(char * buffer, size_t size, size_t nmemb)
 {
     size_t bytes = size * nmemb;
 
-    string header((const char *) buffer, bytes);
+    string header(buffer, bytes);
     string name;
     string value;
     if (splitField(header, ":", name, value))
