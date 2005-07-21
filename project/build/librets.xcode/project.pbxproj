@@ -3190,14 +3190,6 @@
 			settings = {
 			};
 		};
-		5552A8E9080338C3002288F1 = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = text;
-			path = "test-response.txt";
-			refType = 4;
-			sourceTree = "<group>";
-		};
 		5552A92B08033C19002288F1 = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
@@ -3211,14 +3203,6 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
-		};
-		5552A94C08033DF8002288F1 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text;
-			path = "get-object-response-single.txt";
-			refType = 4;
-			sourceTree = "<group>";
 		};
 		5552AA6108046478002288F1 = {
 			fileEncoding = 4;
@@ -4024,12 +4008,11 @@
 		};
 		55BD577E07FDAAFD00526D69 = {
 			children = (
+				55F2405A08904EE40090B325,
 				55F23F8A089003B60090B325,
 				55F23F8B089003B60090B325,
 				5552AA6108046478002288F1,
-				5552A94C08033DF8002288F1,
 				5552A92B08033C19002288F1,
-				5552A8E9080338C3002288F1,
 				5552A8BD080335E6002288F1,
 				5552A886080331CB002288F1,
 				5552A8840803319B002288F1,
@@ -4041,17 +4024,11 @@
 				55BD578307FDAAFD00526D69,
 				55BD578407FDAAFD00526D69,
 				55BD578507FDAAFD00526D69,
-				55BD578607FDAAFD00526D69,
-				55F23B200885B9300090B325,
 				55BD578707FDAAFD00526D69,
-				55BD578807FDAAFD00526D69,
 				55BD578907FDAAFD00526D69,
 				55F23F09088FFC720090B325,
 				55BD578A07FDAAFD00526D69,
 				55BD578B07FDAAFD00526D69,
-				55BD578C07FDAAFD00526D69,
-				55BD578D07FDAAFD00526D69,
-				55BD578E07FDAAFD00526D69,
 				55BD578F07FDAAFD00526D69,
 				55BD579007FDAAFD00526D69,
 				55BD579107FDAAFD00526D69,
@@ -4060,13 +4037,8 @@
 				55BD579407FDAAFD00526D69,
 				55BD579507FDAAFD00526D69,
 				55BD579607FDAAFD00526D69,
-				55BD579707FDAAFD00526D69,
-				55BD579807FDAAFD00526D69,
-				55BD579907FDAAFD00526D69,
-				55BD579A07FDAAFD00526D69,
 				55BD579B07FDAAFD00526D69,
 				55BD579C07FDAAFD00526D69,
-				55BD579D07FDAAFD00526D69,
 				55BD579E07FDAAFD00526D69,
 				55BD579F07FDAAFD00526D69,
 				55BD57A007FDAAFD00526D69,
@@ -4136,27 +4108,11 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
-		55BD578607FDAAFD00526D69 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.xml;
-			path = login_valid15.xml;
-			refType = 4;
-			sourceTree = "<group>";
-		};
 		55BD578707FDAAFD00526D69 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			path = LoginResponseTest.cpp;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		55BD578807FDAAFD00526D69 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.xml;
-			path = logout_valid15.xml;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -4181,30 +4137,6 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			path = main.cpp;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		55BD578C07FDAAFD00526D69 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.xml;
-			path = "metadata-class.xml";
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		55BD578D07FDAAFD00526D69 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.xml;
-			path = "metadata-response.xml";
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		55BD578E07FDAAFD00526D69 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.xml;
-			path = "metadata-system.xml";
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -4272,38 +4204,6 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
-		55BD579707FDAAFD00526D69 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.xml;
-			path = "search-response-error.xml";
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		55BD579807FDAAFD00526D69 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.xml;
-			path = "search-response-no-records.xml";
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		55BD579907FDAAFD00526D69 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.xml;
-			path = "search-response-single-column.xml";
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		55BD579A07FDAAFD00526D69 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.xml;
-			path = "search-response.xml";
-			refType = 4;
-			sourceTree = "<group>";
-		};
 		55BD579B07FDAAFD00526D69 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -4317,14 +4217,6 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			path = SqlToDmqlCompilerTest.cpp;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		55BD579D07FDAAFD00526D69 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text;
-			path = template.cpp.bak;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -4800,14 +4692,6 @@
 			settings = {
 			};
 		};
-		55F23B200885B9300090B325 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text.xml;
-			path = login_valid10.xml;
-			refType = 4;
-			sourceTree = "<group>";
-		};
 		55F23CC30886E7AC0090B325 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -4927,6 +4811,193 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
+		};
+		55F2405A08904EE40090B325 = {
+			children = (
+				55F2405B08904F0C0090B325,
+				55F2405C08904F0C0090B325,
+				55F2405D08904F0C0090B325,
+				55F2405E08904F0C0090B325,
+				55F2405F08904F0C0090B325,
+				55F2406008904F0C0090B325,
+				55F2406108904F0C0090B325,
+				55F2406208904F0C0090B325,
+				55F2406308904F0C0090B325,
+				55F2406408904F0C0090B325,
+				55F2406508904F0C0090B325,
+				55F2406608904F0C0090B325,
+				55F2406708904F0C0090B325,
+				55F2406808904F0C0090B325,
+				55F2406908904F0C0090B325,
+				55F2406A08904F0C0090B325,
+				55F2406B08904F0C0090B325,
+				55F2406C08904F0C0090B325,
+				55F2406D08904F0C0090B325,
+				55F2406E08904F0C0090B325,
+			);
+			isa = PBXGroup;
+			path = resources;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2405B08904F0C0090B325 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.gif;
+			path = "abc123-1.gif";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2405C08904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text;
+			path = "get-object-response-multi-location.txt";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2405D08904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text;
+			path = "get-object-response-no-object-variman.txt";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2405E08904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text;
+			path = "get-object-response-no-object.txt";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2405F08904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text;
+			path = "get-object-response-single-location.txt";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406008904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text;
+			path = "get-object-response-single.txt";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406108904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text;
+			path = "invalid-http-response.txt";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406208904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = login_valid10.xml;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406308904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = login_valid15.xml;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406408904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = logout_valid15.xml;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406508904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = "metadata-blank-data.xml";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406608904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = "metadata-class.xml";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406708904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = "metadata-response.xml";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406808904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = "metadata-system.xml";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406908904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = "search-response-error.xml";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406A08904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = "search-response-no-records.xml";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406B08904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = "search-response-single-column.xml";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406C08904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = "search-response.xml";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406D08904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = "short-success-response.xml";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F2406E08904F0C0090B325 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text;
+			path = "test-response.txt";
+			refType = 4;
+			sourceTree = "<group>";
 		};
 	};
 	rootObject = 554A9EA607F9F27F00402C35;

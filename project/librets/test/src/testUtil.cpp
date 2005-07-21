@@ -44,7 +44,7 @@ void librets::checkStringEquals(string expected, string actual,
 
 istreamPtr NS::getResource(string resourceName, ios_base::openmode mode)
 {
-    string fileName = "project/librets/test/src/" + resourceName;
+    string fileName = "project/librets/test/src/resources/" + resourceName;
     ifstreamPtr inputStream(new ifstream(fileName.c_str(), mode));
     if (!(*inputStream))
     {
