@@ -62,6 +62,14 @@ class MetadataClass : public MetadataElement
     std::string GetStandardName() const;
 
     /**
+     * Returns the description of the class metadata.  If no description is
+     * given, then an empty string is returned.
+     *
+     * @return Description of this class.
+     */
+    std::string GetDescription() const;
+
+    /**
      * Returns all tables.
      *
      * @return All tables

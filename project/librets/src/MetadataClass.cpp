@@ -33,3 +33,8 @@ string MetadataClass::GetStandardName() const
 {
     return GetStringAttribute("StandardName");
 }
+
+string MetadataClass::GetDescription() const
+{
+    return GetStringAttribute("Description");
+}
