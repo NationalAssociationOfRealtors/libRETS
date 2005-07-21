@@ -14,8 +14,10 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <sstream>
 #include <boost/algorithm/string.hpp>
+#include <antlr/NoViableAltException.hpp>
 #include "librets/SqlToDmqlCompiler.h"
 #include "librets/RetsSqlException.h"
 #include "RetsSqlLexer.hpp"
@@ -33,9 +35,15 @@ using antlr::ASTFactory;
 using antlr::RecognitionException;
 using antlr::RefToken;
 using antlr::SemanticException;
+using antlr::NoViableAltException;
 using antlr::ANTLRException;
 
 namespace ba = boost::algorithm;
+
+void SqlToDmqlCompiler::SetMetadata(SqlMetadataPtr metadata)
+{
+    mMetadata = metadata;
+}
 
 SqlToDmqlCompiler::QueryType SqlToDmqlCompiler::sqlToDmql(string sql)
 {
@@ -56,12 +64,13 @@ SqlToDmqlCompiler::QueryType SqlToDmqlCompiler::sqlToDmql(istream & inputStream)
 
         parser.sql_statements();
         string tableName = parser.getTableName()->getText();
-        // std::cout << parser.getAST()->toStringList() << std::endl;
+        // std::cerr << parser.getAST()->toStringList() << std::endl;
         if (ba::starts_with(tableName, "data:"))
         {
             DmqlTreeParser treeParser;
             treeParser.initializeASTFactory(astFactory);
             treeParser.setASTFactory(&astFactory);
+            treeParser.setMetadata(mMetadata);
             
             RefRetsAST ast = RefRetsAST(parser.getAST());
             mDmqlQuery = treeParser.statement(ast);
@@ -83,6 +92,21 @@ SqlToDmqlCompiler::QueryType SqlToDmqlCompiler::sqlToDmql(istream & inputStream)
             throw SemanticException("Invalid table: " + tableName, "",
                                     token->getLine(), token->getColumn());
         }
+    }
+    catch (NoViableAltException & e)
+    {
+        ostringstream message;
+        int line = e.getLine();
+        int column = e.getColumn();
+        if ((line == -1) && (column == -1) && (e.node))
+        {
+            RefRetsAST retsNode = RefRetsAST(e.node);
+            line = retsNode->getLine();
+            column = retsNode->getColumn();
+        }
+        message << "line " << line << ":" << column
+            << ": " << e.getMessage();
+        LIBRETS_THROW(RetsSqlException, (message.str()));
     }
     catch(RecognitionException & e)
     {

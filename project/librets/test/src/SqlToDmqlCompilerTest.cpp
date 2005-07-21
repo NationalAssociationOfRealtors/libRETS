@@ -17,6 +17,7 @@
 #include <sstream>
 #include <cppunit/extensions/HelperMacros.h>
 #include "testUtil.h"
+#include "TestSqlMetadata.h"
 #include "librets/SqlToDmqlCompiler.h"
 #include "librets/DmqlQuery.h"
 #include "librets/GetObjectQuery.h"
@@ -43,6 +44,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testStringEquals);
     CPPUNIT_TEST(testLessThanOrEquals);
     CPPUNIT_TEST(testGreaterThanOrEquals);
+    CPPUNIT_TEST(testLookupEquals);
     CPPUNIT_TEST(testInvalidTableNames);
     CPPUNIT_TEST(testComments);
     CPPUNIT_TEST(testOr);
@@ -54,6 +56,9 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGetTwoObjects);
     CPPUNIT_TEST_SUITE_END();
 
+  public:
+    CLASS();
+    
   protected:
     void testGreaterThan();
     void testSelectColumns();
@@ -65,6 +70,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testStringEquals();
     void testLessThanOrEquals();
     void testGreaterThanOrEquals();
+    void testLookupEquals();
     void testInvalidTableNames();
     void testComments();
     void testOr();
@@ -79,28 +85,34 @@ class CLASS : public CPPUNIT_NS::TestFixture
     GetObjectQueryPtr sqlToGetObject(string sql);
     void assertInvalidSql(string sql,
                           const CPPUNIT_NS::SourceLine & sourceLine);
+
+    SqlToDmqlCompiler mCompiler;
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
 
+CLASS::CLASS()
+{
+    TestSqlMetadataPtr metadata(new TestSqlMetadata());
+    mCompiler.SetMetadata(metadata);
+}
+
 DmqlQueryPtr CLASS::sqlToDmql(string sql)
 {
-    SqlToDmqlCompiler compiler;
-    if (compiler.sqlToDmql(sql) != SqlToDmqlCompiler::DMQL_QUERY)
+    if (mCompiler.sqlToDmql(sql) != SqlToDmqlCompiler::DMQL_QUERY)
     {
         CPPUNIT_FAIL("Not a DMQL query");
     }
-    return compiler.GetDmqlQuery();
+    return mCompiler.GetDmqlQuery();
 }
 
 GetObjectQueryPtr CLASS::sqlToGetObject(string sql)
 {
-    SqlToDmqlCompiler compiler;
-    if (compiler.sqlToDmql(sql) != SqlToDmqlCompiler::GET_OBJECT_QUERY)
+    if (mCompiler.sqlToDmql(sql) != SqlToDmqlCompiler::GET_OBJECT_QUERY)
     {
         CPPUNIT_FAIL("Not a GetObject query");
     }
-    return compiler.GetGetObjectQuery();
+    return mCompiler.GetGetObjectQuery();
 }
 
 #define ASSERT_INVALID_SQL(_SQL_) assertInvalidSql(_SQL_, CPPUNIT_SOURCELINE())
@@ -153,6 +165,22 @@ void CLASS::testGreaterThan()
     DmqlCriterionPtr criterion =
         logicAnd(gt("ListPrice", literal(300000)),
                  logicNot(eq("ListPrice", literal(300000))));;
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+}
+
+void CLASS::testLookupEquals()
+{
+    DmqlQueryPtr query =
+    sqlToDmql("select * "
+              " from data:Property:RES "
+              " where Status = 'Active';");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+    
+    StringVector columns;
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+    
+    DmqlCriterionPtr criterion = lookupOr("Status", literal("Active"));
     ASSERT_EQUAL(*criterion, *query->GetCriterion());
 }
 

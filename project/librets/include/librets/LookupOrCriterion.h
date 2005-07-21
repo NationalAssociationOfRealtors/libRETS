@@ -15,37 +15,27 @@
  * appear in supporting documentation.
  */
 
-#ifndef LIBRETS_SQL_TO_DMQL_COMPILER_H
-#define LIBRETS_SQL_TO_DMQL_COMPILER_H
+#ifndef LIBRETS_IN_CRITERION_H
+#define LIBRETS_IN_CRITERION_H
 
-#include <iosfwd>
+#include <string>
 #include "librets/sql_forward.h"
-#include "librets/RetsObject.h"
+#include "librets/FieldCriterion.h"
 
 namespace librets {
 
-class SqlToDmqlCompiler : public RetsObject
+class LookupOrCriterion : public FieldCriterion
 {
   public:
-    void SetMetadata(SqlMetadataPtr metadata);
+    LookupOrCriterion(std::string field, DmqlCriterionPtr value);
     
-    enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY};
+    virtual std::ostream & ToDmql(std::ostream & outputStream) const;
     
-    QueryType sqlToDmql(std::string sql);
-    
-    QueryType sqlToDmql(std::istream & inputStream);
-    
-    DmqlQueryPtr GetDmqlQuery() const;
-    
-    GetObjectQueryPtr GetGetObjectQuery() const;
-    
- private:
-    SqlMetadataPtr mMetadata;
-    DmqlQueryPtr mDmqlQuery;
-    GetObjectQueryPtr mGetObjectQuery;
+  protected:
+    virtual std::string OperationName() const;
 };
-
-};
+    
+}
 
 #endif
 

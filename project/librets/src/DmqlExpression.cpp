@@ -20,6 +20,7 @@
 #include "librets/EqCriterion.h"
 #include "librets/GtCriterion.h"
 #include "librets/LtCriterion.h"
+#include "librets/LookupOrCriterion.h"
 #include "librets/OrCriterion.h"
 #include "librets/AndCriterion.h"
 #include "librets/NotCriterion.h"
@@ -61,6 +62,12 @@ DmqlCriterionPtr NS::lt(string field, DmqlCriterionPtr value)
 {
     LtCriterionPtr lt(new LtCriterion(field, value));
     return lt;
+}
+
+DmqlCriterionPtr NS::lookupOr(string field, DmqlCriterionPtr value)
+{
+    LookupOrCriterionPtr lookupOr(new LookupOrCriterion(field, value));
+    return lookupOr;
 }
 
 DmqlCriterionPtr NS::logicOr(DmqlCriterionPtr first, DmqlCriterionPtr second)

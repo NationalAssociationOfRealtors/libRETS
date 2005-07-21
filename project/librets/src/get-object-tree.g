@@ -118,19 +118,20 @@ table_name [GetObjectQueryPtr q]
     ;
 
 criteria [GetObjectQueryPtr q]
+    { RefRetsAST n; }
     : #(OR criteria[q] criteria[q])
     | #(AND criteria[q] criteria[q])
     | #(NOT criteria[q])
-    | #(QUERY_ELEMENT query_element[q])
+    | #(QUERY_ELEMENT n=field_name query_element[q, n])
     ;
 
-query_element [GetObjectQueryPtr q]
-    { RefRetsAST n, v; }
-    : #(GREATER n=field_name v=field_value)
-    | #(LESS n=field_name v=field_value)
-    | #(EQ n=field_name v=field_value) { handleEquals(q, n, v); }
-    | #(LTE n=field_name v=field_value)
-    | #(GTE n=field_name v=field_value)
+query_element [GetObjectQueryPtr q, RefRetsAST n]
+    { RefRetsAST v; }
+    : #(GREATER v=field_value)
+    | #(LESS v=field_value)
+    | #(EQ v=field_value)  { handleEquals(q, n, v); }
+    | #(LTE v=field_value)
+    | #(GTE v=field_value)
     ;
 
 field_name returns [RefRetsAST name]

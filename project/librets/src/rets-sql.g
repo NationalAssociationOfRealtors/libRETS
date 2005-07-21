@@ -66,20 +66,20 @@ select_statement
     :! SELECT^ c:column_names
         FROM! t:table_name
         (WHERE! w:where_condition)?
-        { #select_statement = #([SELECT], t_AST, c_AST, w_AST); }
+        { #select_statement = #([SELECT], #t, #c, #w); }
         (order_by)?
     ;
 
 column_names
-    : STAR { #column_names = #([COLUMNS]); }
+    : STAR { #column_names = #([COLUMNS, "COLS"]); }
     | column_name (COMMA! column_name)*
-        { #column_names = #([COLUMNS], #column_names); }
+        { #column_names = #([COLUMNS, "COLS"], #column_names); }
     ;
 
 column_name!
-    : id:ID         { #column_name = #([COLUMN], #[ID, ""], #id);  }
+    : id:ID         { #column_name = #([COLUMN, "COL"], #[ID, ""], #id);  }
     | table:ID DOT col:ID
-        { #column_name = #([COLUMN], #table, #col); }
+        { #column_name = #([COLUMN, "COL"], #table, #col); }
     ;
 
 table_name
@@ -105,13 +105,13 @@ not_clause
 
 query_element
     : LPAREN! where_condition RPAREN!
-    | numeric_condition
-        { #query_element = #([QUERY_ELEMENT], #query_element); }
+    |! c:column_name o:numeric_operator v:field_value
+        { #query_element = #([QUERY_ELEMENT, "QE"], #c, (#o, #v)); }
 
     ;
 
-numeric_condition
-    : column_name (EQ^ | LESS^ | LTE^ | GREATER^ | GTE^) field_value
+numeric_operator
+    : (EQ | LESS | LTE | GREATER | GTE)
     ;
 
 field_value

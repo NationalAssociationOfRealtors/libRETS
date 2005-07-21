@@ -15,40 +15,26 @@
  * appear in supporting documentation.
  */
 
-#ifndef LIBRETS_SQL_TO_DMQL_COMPILER_H
-#define LIBRETS_SQL_TO_DMQL_COMPILER_H
+#include <ostream>
+#include "librets/LookupOrCriterion.h"
 
-#include <iosfwd>
-#include "librets/sql_forward.h"
-#include "librets/RetsObject.h"
+using namespace librets;
+using std::string;
+using std::ostream;
 
-namespace librets {
-
-class SqlToDmqlCompiler : public RetsObject
+LookupOrCriterion::LookupOrCriterion(string field, DmqlCriterionPtr value)
+    : FieldCriterion(field, value)
 {
-  public:
-    void SetMetadata(SqlMetadataPtr metadata);
-    
-    enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY};
-    
-    QueryType sqlToDmql(std::string sql);
-    
-    QueryType sqlToDmql(std::istream & inputStream);
-    
-    DmqlQueryPtr GetDmqlQuery() const;
-    
-    GetObjectQueryPtr GetGetObjectQuery() const;
-    
- private:
-    SqlMetadataPtr mMetadata;
-    DmqlQueryPtr mDmqlQuery;
-    GetObjectQueryPtr mGetObjectQuery;
-};
+}
 
-};
+ostream & LookupOrCriterion::ToDmql(ostream & out) const
+{
+    out << "(" << mField << "=|";
+    return mValue->ToDmql(out) << ")";
+}
 
-#endif
+string LookupOrCriterion::OperationName() const
+{
+    return "lookup or";
+}
 
-/* Local Variables: */
-/* mode: c++ */
-/* End: */

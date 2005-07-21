@@ -23,6 +23,7 @@ header "post_include_hpp"
 #include "librets/sql_forward.h"
 #include "librets/DmqlQuery.h"
 #include "librets/DmqlExpression.h"
+#include "librets/SqlMetadata.h"
 }
 
 header "post_include_cpp"
@@ -41,6 +42,11 @@ options
 }
 
 {
+
+void DmqlTreeParser::setMetadata(SqlMetadataPtr metadata)
+{
+    mMetadata = metadata;
+}
 
 void DmqlTreeParser::setTable(DmqlQueryPtr query, RefRetsAST ast)
 {
@@ -63,6 +69,11 @@ void DmqlTreeParser::assertValidTable(RefRetsAST ast)
     }
 }
 
+bool DmqlTreeParser::fieldIsLookup(std::string field)
+{
+    return mMetadata->IsLookupColumn(mTable, field);
+}
+
 void DmqlTreeParser::throwSemanticException(std::string message,
                                             RefRetsAST ast)
 {
@@ -82,10 +93,16 @@ options
 }
 
 {
+  public:
+    void setMetadata(SqlMetadataPtr metadata);
+
+  private:
     void setTable(DmqlQueryPtr query, RefRetsAST ast);
     void assertValidTable(RefRetsAST ast);
     void throwSemanticException(std::string message, RefRetsAST ast);
+    bool fieldIsLookup(std::string field);
     std::string mTable;
+    SqlMetadataPtr mMetadata;
 }
 
 statement returns [DmqlQueryPtr q]
@@ -109,27 +126,40 @@ table_name [DmqlQueryPtr q]
     ;
 
 criteria returns [DmqlCriterionPtr criterion]
-    { DmqlCriterionPtr c1; DmqlCriterionPtr c2; }
+    { DmqlCriterionPtr c1; DmqlCriterionPtr c2; std::string n; }
     : #(OR c1=criteria c2=criteria)     { criterion = logicOr(c1, c2); }
     | #(AND c1=criteria c2=criteria)    { criterion = logicAnd(c1, c2); }
     | #(NOT c1=criteria)                { criterion = logicNot(c1); }
-    | #(QUERY_ELEMENT c1=query_element) { criterion = c1; }
+    | #(QUERY_ELEMENT n=field_name c1=query_element[n]) { criterion = c1; }
     ;
 
-get_object returns [DmqlCriterionPtr criterion]
-    : #(QUERY_ELEMENT criterion=query_element)
-        { std::cout << "Get object!" << std::endl; }
+query_element [std::string n] returns [DmqlCriterionPtr criterion]
+    { DmqlCriterionPtr c; }
+    : {fieldIsLookup(n)}?
+        c=lookup_element[n]   { criterion = c; }
+    | c=standard_element[n]   { criterion = c; }
     ;
 
-query_element returns [DmqlCriterionPtr criterion]
-    { std::string n; DmqlCriterionPtr c; }
-    : #(GREATER n=field_name c=field_value)
+lookup_element [std::string n] returns [DmqlCriterionPtr criterion]
+    { DmqlCriterionPtr c; }
+    : #(GREATER c=field_value)
         { criterion = logicAnd(gt(n, c), logicNot(eq(n, c))); }
-    | #(LESS n=field_name c=field_value)
+    | #(LESS c=field_value)
         { criterion = logicAnd(lt(n, c), logicNot(eq(n, c))); }
-    | #(EQ n=field_name c=field_value)      { criterion = eq(n, c); }
-    | #(LTE n=field_name c=field_value)     { criterion = lt(n, c); }
-    | #(GTE n=field_name c=field_value)     { criterion = gt(n, c); }
+    | #(EQ c=field_value)      { criterion = lookupOr(n, c); }
+    | #(LTE c=field_value)     { criterion = lt(n, c); }
+    | #(GTE c=field_value)     { criterion = gt(n, c); }
+    ;
+
+standard_element [std::string n] returns [DmqlCriterionPtr criterion]
+    { DmqlCriterionPtr c; }
+    : #(GREATER c=field_value)
+        { criterion = logicAnd(gt(n, c), logicNot(eq(n, c))); }
+    | #(LESS c=field_value)
+        { criterion = logicAnd(lt(n, c), logicNot(eq(n, c))); }
+    | #(EQ c=field_value)      { criterion = eq(n, c); }
+    | #(LTE c=field_value)     { criterion = lt(n, c); }
+    | #(GTE c=field_value)     { criterion = gt(n, c); }
     ;
 
 field_name returns [std::string name]

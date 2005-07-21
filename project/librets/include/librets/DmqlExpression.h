@@ -32,6 +32,8 @@ DmqlCriterionPtr gt(std::string field, DmqlCriterionPtr value);
 
 DmqlCriterionPtr lt(std::string field, DmqlCriterionPtr value);
 
+DmqlCriterionPtr lookupOr(std::string field, DmqlCriterionPtr value);
+
 DmqlCriterionPtr logicOr(DmqlCriterionPtr first, DmqlCriterionPtr second);
 
 DmqlCriterionPtr logicAnd(DmqlCriterionPtr first, DmqlCriterionPtr second);

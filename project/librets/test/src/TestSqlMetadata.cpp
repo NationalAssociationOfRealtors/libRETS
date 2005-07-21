@@ -15,40 +15,16 @@
  * appear in supporting documentation.
  */
 
-#ifndef LIBRETS_SQL_TO_DMQL_COMPILER_H
-#define LIBRETS_SQL_TO_DMQL_COMPILER_H
+#include "TestSqlMetadata.h"
 
-#include <iosfwd>
-#include "librets/sql_forward.h"
-#include "librets/RetsObject.h"
+using namespace librets;
+using std::string;
 
-namespace librets {
-
-class SqlToDmqlCompiler : public RetsObject
+bool TestSqlMetadata::IsLookupColumn(string tableName, string columnName)
 {
-  public:
-    void SetMetadata(SqlMetadataPtr metadata);
-    
-    enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY};
-    
-    QueryType sqlToDmql(std::string sql);
-    
-    QueryType sqlToDmql(std::istream & inputStream);
-    
-    DmqlQueryPtr GetDmqlQuery() const;
-    
-    GetObjectQueryPtr GetGetObjectQuery() const;
-    
- private:
-    SqlMetadataPtr mMetadata;
-    DmqlQueryPtr mDmqlQuery;
-    GetObjectQueryPtr mGetObjectQuery;
-};
-
-};
-
-#endif
-
-/* Local Variables: */
-/* mode: c++ */
-/* End: */
+    if ((tableName == "data:Property:RES") && (columnName == "Status"))
+    {
+        return true;
+    }
+    return false;
+}

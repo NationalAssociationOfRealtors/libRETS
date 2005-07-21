@@ -48,6 +48,9 @@ typedef boost::shared_ptr<AndCriterion> AndCriterionPtr;
 class NotCriterion;
 typedef boost::shared_ptr<NotCriterion> NotCriterionPtr;
 
+class LookupOrCriterion;
+typedef boost::shared_ptr<LookupOrCriterion> LookupOrCriterionPtr;
+
 class DmqlQuery;
 typedef boost::shared_ptr<DmqlQuery> DmqlQueryPtr;
 
@@ -56,6 +59,9 @@ typedef boost::shared_ptr<GetObjectQuery> GetObjectQueryPtr;
 
 class SqlToDmqlCompiler;
 typedef boost::shared_ptr<SqlToDmqlCompiler> SqlToDmqlCompilerPtr;
+
+class SqlMetadata;
+typedef boost::shared_ptr<SqlMetadata> SqlMetadataPtr;
 
 };
 

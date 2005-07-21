@@ -15,37 +15,23 @@
  * appear in supporting documentation.
  */
 
-#ifndef LIBRETS_SQL_TO_DMQL_COMPILER_H
-#define LIBRETS_SQL_TO_DMQL_COMPILER_H
+#ifndef LIBRETS_TEST_SQL_METADATA_H
+#define LIBRETS_TEST_SQL_METADATA_H
 
-#include <iosfwd>
 #include "librets/sql_forward.h"
-#include "librets/RetsObject.h"
+#include "librets/SqlMetadata.h"
 
 namespace librets {
 
-class SqlToDmqlCompiler : public RetsObject
+class TestSqlMetadata : public SqlMetadata
 {
   public:
-    void SetMetadata(SqlMetadataPtr metadata);
-    
-    enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY};
-    
-    QueryType sqlToDmql(std::string sql);
-    
-    QueryType sqlToDmql(std::istream & inputStream);
-    
-    DmqlQueryPtr GetDmqlQuery() const;
-    
-    GetObjectQueryPtr GetGetObjectQuery() const;
-    
- private:
-    SqlMetadataPtr mMetadata;
-    DmqlQueryPtr mDmqlQuery;
-    GetObjectQueryPtr mGetObjectQuery;
+    virtual bool IsLookupColumn(std::string tableName, std::string columnName);
 };
 
-};
+typedef boost::shared_ptr<TestSqlMetadata> TestSqlMetadataPtr;
+    
+}
 
 #endif
 
