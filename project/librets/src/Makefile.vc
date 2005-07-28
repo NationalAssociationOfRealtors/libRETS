@@ -2,16 +2,15 @@
 
 ##############################################################
 
-LIB_NAME = librets
+LIB_NAME = $(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
 
 ANTLR_DIR = $(DIROBJ)\antlr
 
-TARGET 	= $(LIB_NAME).$(TARGET_SUFFIX)
+TARGET 	= $(BUILD_DIR)\$(LIB_NAME)
 CFLAGS  = $(CFLAGS_STD) /I../include /I$(ANTLR_DIR) $(BOOST_CFLAGS) \
 	/DBOOST_ALL_NO_LIB $(CURL_CFLAGS) $(EXPAT_CFLAGS) $(ANTLR_CFLAGS)
 LDFLAGS = $(LDFLAGS_STD) $(BOOST_LDFLAGS) $(BOOST_FILESYSTEM_LIB) \
 	$(CURL_LDFLAGS) $(EXPAT_LDFLAGS) $(ANTLR_LDFLAGS)
-LINK    = $(LINK_EXE) $(LINK_STD) $(LDFLAGS) /out:$(DIROBJ)\$(TARGET)
 
 ########################################################################
 #
@@ -40,7 +39,7 @@ X_OBJS = $(ANTLR_OBJS) $(X_OBJS)
 all: $(TARGET)
 
 $(TARGET): $(X_OBJS)
-	$(LINK_LIB) /out:$(DIROBJ)\$(TARGET) /NODEFAULTLIB $(LINK_STD) $(LDFLAGS) $(X_OBJS)
+	$(LINK_LIB) /out:$(TARGET) $(LINK_STD) $(LDFLAGS) $(X_OBJS)
 
 $(X_OBJS): $(DIROBJ)
 

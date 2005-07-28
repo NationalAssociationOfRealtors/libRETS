@@ -10,11 +10,13 @@ DEBUG_RUNTIME_LIBS = 0
 
 !if "$(TYPE)" == "static"
 LINK_LIB_FLAG = /lib
-TARGET_SUFFIX = lib
+LIB_PREFIX = lib
+LIB_EXT = lib
 OBJDIR_TYPE = -static
 !else if "$(TYPE)" == "dynamic"
 LINK_LIB_FLAG = /dll
-TARGET_SUFFIX = dll
+LIB_PREFIX = 
+LIB_EXT = dll
 OBJDIR_TYPE = -shared
 !else
 !error "Unknown TYPE: $(TYPE)"
@@ -24,27 +26,33 @@ OBJDIR_TYPE = -shared
 OPTIMIZE_FLAG = /O2
 RTC_FLAG =
 OBJDIR_BUILD = release
+LINK_DEBUG_FLAG =
 !endif
 !if "$(BUILD)" == "debug"
 OPTIMIZE_FLAG = /Od
 RTC_FLAG = /GZ
 OBJDIR_BUILD = debug
+LINK_DEBUG_FLAG = /DEBUG
 !endif
 
 !if "$(DEBUG_RUNTIME_LIBS)" == "0"
 DEBUG_RUNTIME = 
 OBJDIR_DEBUG_RUNTIME = 
+LIB_DEBUG_RUNTIME = 
 !else if "$(DEBUG_RUNTIME_LIBS)" == "1"
 DEBUG_RUNTIME = d
 OBJDIR_DEBUG_RUNTIME = -g
+LIB_DEBUG_RUNTIME = d
 !endif
 
 !if "$(RUNTIME_LIBS)" == "dynamic"
 RUNTIME_FLAGS = /MD$(DEBUG_RUNTIME)
 OBJDIR_RUNTIME = 
+LIB_RUNTIME = 
 !else if "$(RUNTIME_LIBS)" == "static"
 RUNTIME_FLAGS = /MT$(DEBUG_RUNTIME)
 OBJDIR_RUNTIME = -mt
+LIB_RUNTIME = mt
 !endif
 
 BUILD_DIR = build
@@ -52,12 +60,12 @@ DIROBJ = $(BUILD_DIR)\$(OBJDIR_BUILD)$(OBJDIR_TYPE)$(OBJDIR_DEBUG_RUNTIME)$(OBJD
 
 CC = cl.exe
 CXX = cl.exe
-CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAGS) /Gm /Zi \
+CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAG) /Gm /Zi \
 	$(RTC_FLAG) /I. \
 	/W3 /GX /YX /GR /c
 
 LINK_LIB = link.exe $(LINK_LIB_FLAG) /nologo
-LINK_EXE = link.exe
+LINK_EXE = link.exe /nologo
 
 ########################################################################
 #

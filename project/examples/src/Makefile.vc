@@ -1,6 +1,6 @@
 !include <../../build/Makefile.vc>
 
-LIBRETS_LIB = ../../librets/src/$(DIROBJ)/librets.$(TARGET_SUFFIX)
+LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
 
 ########################################################################
 #
@@ -18,7 +18,7 @@ TARGET  = $(XML_EXE) $(HTTP_EXE) $(RAW_RETS_EXE) $(LOGIN_EXE) $(METADATA_EXE) \
 CFLAGS  = $(CFLAGS_STD) /I../../librets/include $(BOOST_CFLAGS)
 LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS)
 
-LINK    = link.exe /nologo $(LDFLAGS)
+LINK = $(LINK_EXE) $(LDFLAGS)
 
 ########################################################################
 #
