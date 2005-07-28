@@ -1,30 +1,24 @@
-LIB_NAME   = librets
+!include <../../build/Makefile.vc>
 
-BOOST_PATH = ../../../../boost_1_32_0
-
-CCNODBG    = cl.exe /MT /O2 /DNDEBUG
-CCDEBUG    = cl.exe /MTd /Od /Gm /Zi /D_DEBUG /GZ
-CFLAGS_STD = /I. /I../include /I../../librets/include /nologo /W3 /GX /YX /FD /c /GR
-LINKDLL    = link.exe /DLL
-LINKLIB    = link.exe /lib
-LDFLAGS_STD = /nologo
-
-BOOST_CFLAGS = /I "$(BOOST_PATH)"
-BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib"
+LIBRETS_LIB = ../../librets/src/$(DIROBJ)/librets.$(TARGET_SUFFIX)
 
 ########################################################################
 #
 
-TARGET  = xml.exe http.exe raw-rets.exe login.exe metadata.exe search.exe \
-	sql2dmql.exe
-DIROBJ 	= release
-CC 	= $(CCDEBUG)
-CXX 	= $(CCDEBUG)
-CFLAGS  = $(CFLAGS_STD) $(BOOST_CFLAGS)
-LDFLAGS = $(LDFLAGS_STD) ../../librets/src/release/librets.lib \
-	$(BOOST_LDFLAGS) /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:LIBCMT
+XML_EXE = $(DIROBJ)\xml.exe
+HTTP_EXE = $(DIROBJ)\http.exe
+RAW_RETS_EXE = $(DIROEJB)\raw_rets.exe
+LOGIN_EXE = $(DIROBJ)\login.exe
+METADATA_EXE = $(DIROBJ)\metadata.exe
+SEARCH_EXE = $(DIROBJ)\search.exe
+SQL2DMQL_EXE = $(DIROBJ)\sql2dmql.exe
 
-LINK    = link.exe $(LDFLAGS)
+TARGET  = $(XML_EXE) $(HTTP_EXE) $(RAW_RETS_EXE) $(LOGIN_EXE) $(METADATA_EXE) \
+	$(SEARCH_EXE) $(SQL2DMQL_EXE)
+CFLAGS  = $(CFLAGS_STD) /I../../librets/include $(BOOST_CFLAGS)
+LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS)
+
+LINK    = link.exe /nologo $(LDFLAGS)
 
 ########################################################################
 #
@@ -51,28 +45,35 @@ X_OBJS = $(XML_OBJS) $(HTTP_OBJS) $(RAW_RETS_OBJS) $(LOGIN_OBJS) \
 
 all: $(TARGET)
 
-xml.exe: $(XML_OBJS)
-	$(LINK) /out:$(DIROBJ)\xml.exe $(XML_OBJS)
+$(XML_EXE): $(XML_OBJS)
+	$(LINK) /out:$(XML_EXE) $(XML_OBJS)
 
-http.exe: $(HTTP_OBJS)
-	$(LINK) /out:$(DIROBJ)\http.exe $(HTTP_OBJS) wsock32.lib winmm.lib
+$(HTTP_EXE): $(HTTP_OBJS)
+	$(LINK) /out:$(HTTP_EXE) $(HTTP_OBJS) wsock32.lib winmm.lib
 
-raw-rets.exe: $(RAW_RETS_OBJS)
-	$(LINK) /out:$(DIROBJ)\raw-rets.exe $(RAW_RETS_OBJS) wsock32.lib winmm.lib
+$(RAW_RETS_EXE): $(RAW_RETS_OBJS)
+	$(LINK) /out:$(RAW_RETS_EXE) $(RAW_RETS_OBJS) wsock32.lib winmm.lib
 
-login.exe: $(LOGIN_OBJS)
-	$(LINK) /out:$(DIROBJ)\login.exe $(LOGIN_OBJS) wsock32.lib winmm.lib
+$(LOGIN_EXE): $(LOGIN_OBJS)
+	$(LINK) /out:$(LOGIN_EXE) $(LOGIN_OBJS) \
+	wsock32.lib winmm.lib
 
-metadata.exe: $(METADATA_OBJS)
-	$(LINK) /out:$(DIROBJ)\metadata.exe $(METADATA_OBJS) wsock32.lib winmm.lib
+$(METADATA_EXE): $(METADATA_OBJS)
+	$(LINK) /out:$(METADATA_EXE) $(METADATA_OBJS) \
+	wsock32.lib winmm.lib
 
-search.exe: $(SEARCH_OBJS)
-	$(LINK) /out:$(DIROBJ)\search.exe $(SEARCH_OBJS) wsock32.lib winmm.lib
+$(SEARCH_EXE): $(SEARCH_OBJS) $(SQL2DMQL_OBJS)
+	$(LINK) /out:$(SEARCH_EXE) $(SEARCH_OBJS) \
+	wsock32.lib winmm.lib
 
-sql2dmql.exe: $(SQL2DMQL_OBJS)
-	link.exe /out:$(DIROBJ)\sql2dmql.exe $(SQL2DMQL_OBJS) $(LDFLAGS) wsock32.lib winmm.lib
+$(SQL2DMQL_EXE): $(SQL2DMQL_OBJS)
+	$(LINK) /out:$(SQL2DMQL_EXE) $(SQL2DMQL_OBJS) \
+	wsock32.lib winmm.lib
 
-$(X_OBJS): $(DIROBJ) ../../librets/src/release/librets.lib
+$(X_OBJS): $(DIROBJ) $(LIBRETS_LIB)
+
+$(BUILD_DIR):
+	@if not exist "$(BUILD_DIR)" mkdir $(BUILD_DIR)
 
 $(DIROBJ):
 	@if not exist "$(DIROBJ)" mkdir $(DIROBJ)

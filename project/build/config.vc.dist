@@ -1,0 +1,20 @@
+# Point to vendor code, checked out from svn.  Must be an absolute path.
+BASE_PATH = c:/vendor
+
+# [debug, release]
+BUILD = debug
+
+# [dynamic, static]
+TYPE = static
+
+# [0, 1, default]
+DEBUG_RUNTIME_LIBS = default
+
+# [dynamic, static]
+THIRD_PARTY_LIBS = static
+
+# [dynamic, static]
+#
+# WARNING: Curl has no option to build againts static runtime
+# libraries.  You must edit the makefiles and change /MD to /MT
+RUNTIME_LIBS = static

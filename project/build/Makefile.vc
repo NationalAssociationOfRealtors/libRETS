@@ -1,0 +1,174 @@
+!include config.vc
+
+!if "$(BUILD)" == "debug" && "$(DEBUG_RUNTIME_LIBS)" == "default"
+DEBUG_RUNTIME_LIBS = 1
+!endif
+
+!if "$(BUILD)" == "release" && "$(DEBUG_RUNTIME_LIBS)" == "default"
+DEBUG_RUNTIME_LIBS = 0
+!endif
+
+!if "$(TYPE)" == "static"
+LINK_LIB_FLAG = /lib
+TARGET_SUFFIX = lib
+OBJDIR_TYPE = -static
+!else if "$(TYPE)" == "dynamic"
+LINK_LIB_FLAG = /dll
+TARGET_SUFFIX = dll
+OBJDIR_TYPE = -shared
+!else
+!error "Unknown TYPE: $(TYPE)"
+!endif
+
+!if "$(BUILD)" == "release"
+OPTIMIZE_FLAG = /O2
+RTC_FLAG =
+OBJDIR_BUILD = release
+!endif
+!if "$(BUILD)" == "debug"
+OPTIMIZE_FLAG = /Od
+RTC_FLAG = /GZ
+OBJDIR_BUILD = debug
+!endif
+
+!if "$(DEBUG_RUNTIME_LIBS)" == "0"
+DEBUG_RUNTIME = 
+OBJDIR_DEBUG_RUNTIME = 
+!else if "$(DEBUG_RUNTIME_LIBS)" == "1"
+DEBUG_RUNTIME = d
+OBJDIR_DEBUG_RUNTIME = -g
+!endif
+
+!if "$(RUNTIME_LIBS)" == "dynamic"
+RUNTIME_FLAGS = /MD$(DEBUG_RUNTIME)
+OBJDIR_RUNTIME = 
+!else if "$(RUNTIME_LIBS)" == "static"
+RUNTIME_FLAGS = /MT$(DEBUG_RUNTIME)
+OBJDIR_RUNTIME = -mt
+!endif
+
+BUILD_DIR = build
+DIROBJ = $(BUILD_DIR)\$(OBJDIR_BUILD)$(OBJDIR_TYPE)$(OBJDIR_DEBUG_RUNTIME)$(OBJDIR_RUNTIME)
+
+CC = cl.exe
+CXX = cl.exe
+CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAGS) /Gm /Zi \
+	$(RTC_FLAG) /I. \
+	/W3 /GX /YX /GR /c
+
+LINK_LIB = link.exe $(LINK_LIB_FLAG) /nologo
+LINK_EXE = link.exe
+
+########################################################################
+#
+# Boost Configuration
+
+BOOST_PATH = ../../../../boost_1_32_0
+
+BOOST_RUNTIME_PREFIX = 
+
+!if "$(DEBUG_RUNTIME_LIBS)" == "1"
+BOOST_DEBUG = gd
+BOOST_RUNTIME_PREFIX = -
+!else
+BOOST_DEBUG  = 
+!endif
+
+!if "$(RUNTIME_LIBS)" == "static"
+BOOST_STATIC = s
+BOOST_RUNTIME_PREFIX = -
+!else
+BOOST_STATIC = 
+!endif
+
+!if "$(THIRD_PARTY_LIBS)" == "static"
+BOOST_PREFIX = lib
+!else
+BOOST_PREFIX = 
+!endif
+
+BOOST_RUNTIME = $(BOOST_RUNTIME_PREFIX)$(BOOST_STATIC)$(BOOST_DEBUG)
+
+BOOST_FILESYSTEM_LIB = $(BOOST_PREFIX)boost_filesystem-vc71-mt$(BOOST_RUNTIME)-1_32.lib
+BOOST_PROGRAM_OPTIONS_LIB = $(BOOST_PREFIX)boost_program_options-vc71-mt-$(BOOST_RUNTIME)-1_32.lib
+
+BOOST_CFLAGS = /I "$(BOOST_PATH)"
+BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib"
+
+########################################################################
+#
+# Curl Configuration
+
+CURL_PATH  = $(BASE_PATH)/curl
+
+CURL_STATIC = /DCURL_STATICLIB
+
+!if "$(RUNTIME_LIBS)" == "dynamic"
+CURL_RUNTIME = 
+!else
+CURL_RUNTIME = MT
+!endif
+
+!if "$(DEBUG_RUNTIME_LIBS)" == "0"
+CURL_DEBUG_RUNTIME = 
+!else
+CURL_DEBUG_RUNTIME = d
+!endif
+
+CURL_LIB = libcurl$(CURL_RUNTIME)$(CURL_DEBUG_RUNTIME).lib
+
+CURL_CFLAGS = /I "$(CURL_PATH)/include" $(CURL_STATIC)
+CURL_LDFLAGS = "/LIBPATH:$(CURL_PATH)/lib" $(CURL_LIB)
+
+#########################################################################
+#
+# Expat Configuration
+
+EXPAT_PATH = $(BASE_PATH)/expat
+
+!if "$(RUNTIME_LIBS)" == "dynamic"
+EXPAT_RUNTIME =
+!else
+EXPAT_RUNTIME = mt
+!endif
+
+!if "$(DEBUG_RUNTIME_LIBS)" == "0"
+EXPAT_DEBUG_RUNTIME =
+!else
+EXPAT_DEBUG_RUNTIME = d
+!endif
+
+!if "$(THIRD_PARTY_LIBS)" == "static"
+EXPAT_XML_STATIC = /DXML_STATIC
+EXPAT_LIB_PREFIX = lib
+!else if "$(THIRD_PARTY_LIBS)" == "dynamic"
+EXPAT_XML_STATIC =
+EXPAT_LIB_PREFIX = 
+!endif
+
+EXPAT_CFLAGS = /I "$(EXPAT_PATH)/lib" $(EXPAT_XML_STATIC)
+EXPAT_LDFLAGS = "/LIBPATH:$(EXPAT_PATH)/lib/lib" \
+	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME)$(EXPAT_DEBUG_RUNTIME).lib
+
+########################################################################
+#
+# ANTLR Configuration
+
+ANTLR_PATH = $(BASE_PATH)/antlr/install
+
+!if "$(RUNTIME_LIBS)" == "dynamic"
+ANTLR_RUNTIME = 
+!else
+ANTLR_RUNTIME = mt
+!endif
+
+!if "$(DEBUG_RUNTIME_LIBS)" == "0"
+ANTLR_DEBUG_RUNTIME = 
+!else
+ANTLR_DEBUG_RUNTIME = d
+!endif
+
+ANTLR = java -classpath $(ANTLR_PATH)/lib/antlr.jar antlr.Tool
+ANTLR_CFLAGS = /I "$(ANTLR_PATH)/include"
+ANTLR_LDFLAGS = "/LIBPATH:$(ANTLR_PATH)/lib" \
+	antlr$(ANTLR_RUNTIME)$(ANTLR_DEBUG_RUNTIME).lib

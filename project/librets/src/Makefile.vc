@@ -1,49 +1,21 @@
-LIB_NAME   = librets
+!include <../../build/Makefile.vc>
 
-BOOST_PATH = ../../../../boost_1_32_0
-CURL_PATH  = ../../../../curl-7.13.2
-EXPAT_PATH = C:/Expat-1.95.8
-ANTLR_PATH = C:/antlr/antlr-2.7.5
+##############################################################
 
-CCNODBG    = cl.exe /MT /O2 /DNDEBUG
-CCDEBUG    = cl.exe /MTd /Od /Gm /Zi /D_DEBUG /GZ
-CFLAGS_STD = /I. /I../include /nologo /W3 /GX /YX /FD /c /GR
-LINKDLL    = link.exe /DLL
-LINKLIB    = link.exe /lib
-LDFLAGS_STD = /nologo
-
-BOOST_CFLAGS = /I "$(BOOST_PATH)" /DBOOST_ALL_NO_LIB
-BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib" \
-	libboost_filesystem-vc71-mt-sgd-1_32.lib
-
-CURL_CFLAGS = /I "$(CURL_PATH)/include" /DCURL_STATICLIB
-CURL_LDFLAGS = "/LIBPATH:$(CURL_PATH)/lib" libcurl.lib
-
-EXPAT_CFLAGS = /I "$(EXPAT_PATH)/Source/lib" /DXML_STATIC
-EXPAT_LDFLAGS = "/LIBPATH:$(EXPAT_PATH)/StaticLibs" libexpatMT.lib
-
-ANTLR = java -classpath $(ANTLR_PATH)/lib/antlr.jar antlr.Tool
-ANTLR_CFLAGS = /I "$(ANTLR_PATH)/include" /I release\antlr
-ANTLR_LDFLAGS = "/LIBPATH:$(ANTLR_PATH)/lib" antlr.lib
-
-########################################################################
-#
-
-TARGET = $(LIB_NAME).lib
-DIROBJ 	= release
-CC 	= $(CCDEBUG)
-CXX 	= $(CCDEBUG)
-CFLAGS  = $(CFLAGS_STD) $(BOOST_CFLAGS) $(CURL_CFLAGS) $(EXPAT_CFLAGS) \
-	$(ANTLR_CFLAGS)
-LDFLAGS = $(LDFLAGS_STD) $(BOOST_LDFLAGS) $(CURL_LDFLAGS) $(EXPAT_LDFLAGS) \
-	$(ANTLR_LDFLAGS)
-LINK    = $(LINKLIB) $(LDFLAGS) /out:$(DIROBJ)\$(TARGET)
-
-########################################################################
-#
-
+LIB_NAME = librets
 
 ANTLR_DIR = $(DIROBJ)\antlr
+
+TARGET 	= $(LIB_NAME).$(TARGET_SUFFIX)
+CFLAGS  = $(CFLAGS_STD) /I../include /I$(ANTLR_DIR) $(BOOST_CFLAGS) \
+	/DBOOST_ALL_NO_LIB $(CURL_CFLAGS) $(EXPAT_CFLAGS) $(ANTLR_CFLAGS)
+LDFLAGS = $(LDFLAGS_STD) $(BOOST_LDFLAGS) $(BOOST_FILESYSTEM_LIB) \
+	$(CURL_LDFLAGS) $(EXPAT_LDFLAGS) $(ANTLR_LDFLAGS)
+LINK    = $(LINK_EXE) $(LINK_STD) $(LDFLAGS) /out:$(DIROBJ)\$(TARGET)
+
+########################################################################
+#
+
 
 ANTLR_SRCS = \
 	$(ANTLR_DIR)\RetsSqlLexer.hpp \
@@ -68,7 +40,7 @@ X_OBJS = $(ANTLR_OBJS) $(X_OBJS)
 all: $(TARGET)
 
 $(TARGET): $(X_OBJS)
-	$(LINK) $(X_OBJS)
+	$(LINK_LIB) /out:$(DIROBJ)\$(TARGET) /NODEFAULTLIB $(LINK_STD) $(LDFLAGS) $(X_OBJS)
 
 $(X_OBJS): $(DIROBJ)
 
@@ -79,23 +51,18 @@ $(ANTLR_SRCS): rets-sql.g dmql-tree.g get-object-tree.g $(ANTLR_DIR)
 	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g dmql-tree.g
 	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g get-object-tree.g
 
-$(DIROBJ):
+$(BUILD_DIR):
+	@if not exist "$(BUILD_DIR)" mkdir $(BUILD_DIR)
+
+$(DIROBJ): $(BUILD_DIR)
 	@if not exist "$(DIROBJ)" mkdir $(DIROBJ)
 
 $(ANTLR_DIR): $(DIROBJ)
 	@if not exist "$(ANTLR_DIR)" mkdir $(ANTLR_DIR)
 
 clean:
-	@-erase /q $(ANTLR_DIR) 2> NUL
-	@-erase /q $(DIROBJ) 2> NUL
-	@-erase /s *.dll 2> NUL
-	@-erase /s *.exp 2> NUL
-	@-erase /s *.idb 2> NUL
-	@-erase /s *.lib 2> NUL
-	@-erase /s *.obj 2> NUL
+	@-rmdir /q /s $(BUILD_DIR) 2> NUL
 	@-erase /s vc*.pch 2> NUL
-	@-erase /s *.pdb 2> NUL
-	@-erase /s *.res 2> NUL
 
 .SUFFIXES: .c .cpp .obj .res
 
