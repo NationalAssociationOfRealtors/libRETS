@@ -62,6 +62,8 @@ $(ANTLR_DIR): $(DIROBJ)
 clean:
 	@-rmdir /q /s $(BUILD_DIR) 2> NUL
 	@-erase /s vc*.pch 2> NUL
+	@-erase /s vc*.idb 2> NUL
+	@-erase /s vc*.pdb 2> NUL
 
 .SUFFIXES: .c .cpp .obj .res
 
