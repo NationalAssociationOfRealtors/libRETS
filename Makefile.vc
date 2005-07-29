@@ -1,3 +1,4 @@
+!include <project/build/Makefile.vc>
 
 all:
 	cd project\librets\src
@@ -17,5 +18,5 @@ test:
 	cd project\librets\test\src
 	nmake /nologo /f Makefile.vc
 	cd ..\..\..\..
-	project\librets\test\src\release\test.exe
+	project\librets\test\src\$(DIROBJ)\test.exe
 
