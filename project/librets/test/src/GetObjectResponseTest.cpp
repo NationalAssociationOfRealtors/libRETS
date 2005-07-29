@@ -110,7 +110,7 @@ void CLASS::testUnsuccessfulResponse()
         response.Parse(httpResponse);
         CPPUNIT_FAIL("Should have thrown exception");
     }
-    catch (const RetsException & e)
+    catch (const RetsException &)
     {
         // Expetcted
     }

@@ -171,3 +171,12 @@ ANTLR = java -classpath $(ANTLR_PATH)/lib/antlr.jar antlr.Tool
 ANTLR_CFLAGS = /I "$(ANTLR_PATH)/include"
 ANTLR_LDFLAGS = "/LIBPATH:$(ANTLR_PATH)/lib" \
 	antlr$(ANTLR_RUNTIME)$(ANTLR_DEBUG_RUNTIME).lib
+
+########################################################################
+#
+# CppUnit Configuration
+
+CPPUNIT_PATH = $(BASE_PATH)/cppunit
+CPPUNIT_LIB = cppunit$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).lib
+CPPUNIT_CFLAGS = /I "$(CPPUNIT_PATH)/include"
+CPPUNIT_LDFLAGS = "/LIBPATH:$(CPPUNIT_PATH)/lib" $(CPPUNIT_LIB)

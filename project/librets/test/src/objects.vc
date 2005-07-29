@@ -1,0 +1,34 @@
+# Automatically generated file list.  Edits will be overwritten.
+X_OBJS = \
+	$(DIROBJ)\AndCriterionTest.obj \
+	$(DIROBJ)\CapabilityUrlsTest.obj \
+	$(DIROBJ)\DefaultMetadataElementFactoryTest.obj \
+	$(DIROBJ)\EqCriterionTest.obj \
+	$(DIROBJ)\ExpatXmlParserTest.obj \
+	$(DIROBJ)\GetObjectRequestTest.obj \
+	$(DIROBJ)\GetObjectResponseTest.obj \
+	$(DIROBJ)\GtCriterionTest.obj \
+	$(DIROBJ)\LiteralCriterionTest.obj \
+	$(DIROBJ)\LoginResponseTest.obj \
+	$(DIROBJ)\LogoutResponseTest.obj \
+	$(DIROBJ)\LookupOrCriterionTest.obj \
+	$(DIROBJ)\LtCriterionTest.obj \
+	$(DIROBJ)\MetadataByLevelCollectorTest.obj \
+	$(DIROBJ)\NotCriterionTest.obj \
+	$(DIROBJ)\OrCriterionTest.obj \
+	$(DIROBJ)\RetsHttpRequestTest.obj \
+	$(DIROBJ)\RetsMetadataTest.obj \
+	$(DIROBJ)\RetsObjectTest.obj \
+	$(DIROBJ)\RetsXmlAttributeTest.obj \
+	$(DIROBJ)\RetsXmlStartElementEventTest.obj \
+	$(DIROBJ)\SearchResultSetTest.obj \
+	$(DIROBJ)\SqlToDmqlCompilerTest.obj \
+	$(DIROBJ)\TestHttpResponse.obj \
+	$(DIROBJ)\TestHttpResponseTest.obj \
+	$(DIROBJ)\TestObject.obj \
+	$(DIROBJ)\TestSqlMetadata.obj \
+	$(DIROBJ)\UriTest.obj \
+	$(DIROBJ)\XmlMetadataParserTest.obj \
+	$(DIROBJ)\main.obj \
+	$(DIROBJ)\testUtil.obj \
+	$(DIROBJ)\utilTest.obj

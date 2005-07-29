@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <sstream>
 #include <cppunit/extensions/HelperMacros.h>
 #include "testUtil.h"
@@ -130,7 +131,7 @@ void CLASS::assertInvalidSql(string sql,
                                 "should have throw exception"),
             sourceLine);
     }
-    catch (RetsSqlException & e)
+    catch (RetsSqlException &)
     {
         // Expected
     }
