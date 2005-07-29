@@ -1,13 +1,5 @@
 !include config.vc
 
-!if "$(BUILD)" == "debug" && "$(DEBUG_RUNTIME_LIBS)" == "default"
-DEBUG_RUNTIME_LIBS = 1
-!endif
-
-!if "$(BUILD)" == "release" && "$(DEBUG_RUNTIME_LIBS)" == "default"
-DEBUG_RUNTIME_LIBS = 0
-!endif
-
 !if "$(TYPE)" == "static"
 LINK_LIB_FLAG = /lib
 LIB_PREFIX = lib
@@ -27,22 +19,19 @@ OPTIMIZE_FLAG = /O2
 RTC_FLAG =
 OBJDIR_BUILD = release
 LINK_DEBUG_FLAG =
-!endif
-!if "$(BUILD)" == "debug"
+
+DEBUG_RUNTIME = 
+LIB_DEBUG_RUNTIME = 
+!else if "$(BUILD)" == "debug"
 OPTIMIZE_FLAG = /Od
 RTC_FLAG = /GZ
 OBJDIR_BUILD = debug
 LINK_DEBUG_FLAG = /DEBUG
-!endif
 
-!if "$(DEBUG_RUNTIME_LIBS)" == "0"
-DEBUG_RUNTIME = 
-OBJDIR_DEBUG_RUNTIME = 
-LIB_DEBUG_RUNTIME = 
-!else if "$(DEBUG_RUNTIME_LIBS)" == "1"
 DEBUG_RUNTIME = d
-OBJDIR_DEBUG_RUNTIME = -g
 LIB_DEBUG_RUNTIME = d
+!else
+!error "Unknown BUILD: $(BUILD)"
 !endif
 
 !if "$(RUNTIME_LIBS)" == "dynamic"
@@ -53,10 +42,12 @@ LIB_RUNTIME =
 RUNTIME_FLAGS = /MT$(DEBUG_RUNTIME)
 OBJDIR_RUNTIME = -mt
 LIB_RUNTIME = mt
+!else
+!error "Unknown RUNTIME_LIBS: $(RUNTIME_LIBS)"
 !endif
 
 BUILD_DIR = build
-DIROBJ = $(BUILD_DIR)\$(OBJDIR_BUILD)$(OBJDIR_TYPE)$(OBJDIR_DEBUG_RUNTIME)$(OBJDIR_RUNTIME)
+DIROBJ = $(BUILD_DIR)\$(OBJDIR_BUILD)$(OBJDIR_TYPE)$(OBJDIR_RUNTIME)
 
 CC = cl.exe
 CXX = cl.exe
@@ -71,15 +62,15 @@ LINK_EXE = link.exe /nologo
 #
 # Boost Configuration
 
-BOOST_PATH = ../../../../boost_1_32_0
+BOOST_PATH = $(BASE_PATH)/boost
 
 BOOST_RUNTIME_PREFIX = 
 
-!if "$(DEBUG_RUNTIME_LIBS)" == "1"
+!if "$(BUILD)" == "release"
+BOOST_DEBUG  = 
+!else
 BOOST_DEBUG = gd
 BOOST_RUNTIME_PREFIX = -
-!else
-BOOST_DEBUG  = 
 !endif
 
 !if "$(RUNTIME_LIBS)" == "static"
@@ -117,7 +108,7 @@ CURL_RUNTIME =
 CURL_RUNTIME = MT
 !endif
 
-!if "$(DEBUG_RUNTIME_LIBS)" == "0"
+!if "$(BUILD)" == "release"
 CURL_DEBUG_RUNTIME = 
 !else
 CURL_DEBUG_RUNTIME = d
@@ -140,7 +131,7 @@ EXPAT_RUNTIME =
 EXPAT_RUNTIME = mt
 !endif
 
-!if "$(DEBUG_RUNTIME_LIBS)" == "0"
+!if "$(BUILD)" == "release"
 EXPAT_DEBUG_RUNTIME =
 !else
 EXPAT_DEBUG_RUNTIME = d
@@ -170,7 +161,7 @@ ANTLR_RUNTIME =
 ANTLR_RUNTIME = mt
 !endif
 
-!if "$(DEBUG_RUNTIME_LIBS)" == "0"
+!if "$(BUILD)" == "release"
 ANTLR_DEBUG_RUNTIME = 
 !else
 ANTLR_DEBUG_RUNTIME = d

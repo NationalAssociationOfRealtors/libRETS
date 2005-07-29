@@ -7,9 +7,6 @@ BUILD = debug
 # [dynamic, static]
 TYPE = static
 
-# [0, 1, default]
-DEBUG_RUNTIME_LIBS = default
-
 # [dynamic, static]
 THIRD_PARTY_LIBS = static
 
