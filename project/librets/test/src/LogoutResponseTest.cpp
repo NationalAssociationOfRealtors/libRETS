@@ -29,11 +29,13 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testValidResponse);
     CPPUNIT_TEST(testShortResponse);
+    CPPUNIT_TEST(testTarasoftResponse);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
     void testValidResponse();
     void testShortResponse();
+    void testTarasoftResponse();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -58,5 +60,11 @@ void CLASS::testShortResponse()
     istreamPtr inputStream = getResource("short-success-response.xml");
     LogoutResponse response;
     response.Parse(inputStream, RETS_1_5);
-    
+}
+
+void CLASS::testTarasoftResponse()
+{
+    istreamPtr inputStream = getResource("logout_tarasoft.xml");
+    LogoutResponse response;
+    response.Parse(inputStream, RETS_1_5);
 }

@@ -57,6 +57,9 @@ class LogoutResponse : public KeyValueResponse
     virtual RetsXmlTextEventPtr GetBodyEvent(RetsXmlEventListPtr eventList,
                                              RetsVersion retsVersion);
 
+    RetsXmlTextEventPtr GetBodyEventFromEmptyLogoutResponse(
+        RetsXmlEventListPtr eventList);
+    
     int mConnectTime;
 };
 

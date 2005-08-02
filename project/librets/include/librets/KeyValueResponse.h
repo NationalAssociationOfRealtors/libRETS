@@ -47,14 +47,14 @@ class KeyValueResponse : public RetsObject
         RetsXmlEventListPtr eventList);
     
     virtual void ParsingFinished();
-
-  private:
-    void ParseBody(std::string body);
     
     static void AssertEquals(const std::string & expected,
                              const std::string & actual);
-
+    
     static void AssertEquals(int expected, int actual);
+
+  private:
+    void ParseBody(std::string body);
     
     StringMap mValues;
 };

@@ -3722,7 +3722,7 @@
 				554A9EF707F9F2D200402C35,
 			);
 			isa = PBXGroup;
-			name = librets;
+			name = Protocol;
 			path = "";
 			refType = 4;
 			sourceTree = "<group>";

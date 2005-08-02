@@ -17,6 +17,9 @@
 
 #include <sstream>
 #include "librets/LogoutResponse.h"
+#include "librets/ExpatXmlParser.h"
+#include "librets/RetsXmlStartElementEvent.h"
+#include "librets/RetsXmlEndElementEvent.h"
 
 using namespace librets;
 using std::string;
@@ -45,11 +48,33 @@ int CLASS::GetConnectTime() const
     return mConnectTime;
 }
 
+RetsXmlTextEventPtr CLASS::GetBodyEventFromEmptyLogoutResponse(
+    RetsXmlEventListPtr eventList)
+{
+    RetsXmlTextEventPtr bodyEvent;
+    RetsXmlStartElementEventPtr startEvent;
+    RetsXmlEndElementEventPtr endEvent;
+    
+    startEvent = RetsXmlParser::AssertStartEvent(eventList->at(0));
+    AssertEquals("RETS", startEvent->GetName());
+    AssertEquals("0", startEvent->GetAttributeValue("ReplyCode"));
+    RetsXmlParser::AssertTextEvent(eventList->at(1));
+    endEvent = RetsXmlParser::AssertEndEvent(eventList->at(2));
+    AssertEquals("RETS", endEvent->GetName());
+    AssertEquals(3, eventList->size());
+    
+    return bodyEvent;
+}
+
 RetsXmlTextEventPtr CLASS::GetBodyEvent(RetsXmlEventListPtr eventList,
                                         RetsVersion retsVersion)
 {
     RetsXmlTextEventPtr bodyEvent;
-    if (eventList->size() != 2)
+    if (eventList->size() == 3)
+    {
+        bodyEvent = GetBodyEventFromEmptyLogoutResponse(eventList);
+    }
+    else if (eventList->size() != 2)
     {
         bodyEvent = GetBodyEventFromStandardResponse(eventList);
     }
