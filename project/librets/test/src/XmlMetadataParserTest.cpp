@@ -35,6 +35,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testParseSystem);
+    CPPUNIT_TEST(testParseSystemWithEmptyComments);
     CPPUNIT_TEST(testParseTabularData);
     CPPUNIT_TEST(testParseRetsResponse);
     CPPUNIT_TEST(testBlankDataTag);
@@ -42,6 +43,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
 
   protected:
     void testParseSystem();
+    void testParseSystemWithEmptyComments();
     void testParseTabularData();
     void testParseRetsResponse();
     void testBlankDataTag();
@@ -132,6 +134,24 @@ void CLASS::testParseSystem()
                         element->GetStringAttribute("SystemDescription"));
     ASSERT_STRING_EQUAL("The reference implementation of a RETS Server",
                         element->GetStringAttribute("COMMENTS"));
+}
+
+void CLASS::testParseSystemWithEmptyComments()
+{
+    TestElementFactoryPtr elementFactory(new TestElementFactory());
+    XmlMetadataParser parser(elementFactory);
+    parser.SetElementFactory(elementFactory);
+    istreamPtr inputStream = getResource("metadata-system-empty-comments.xml");
+    parser.Parse(inputStream);
+    
+    TestMetadataElementList elements = elementFactory->GetCreatedElements();
+    ASSERT_EQUAL(size_t(1), elements.size());
+    TestMetadataElementPtr element = elements[0];
+    ASSERT_STRING_EQUAL("METADATA-SYSTEM", element->GetTypeName());
+    ASSERT_STRING_EQUAL("RMLS-RETS", element->GetStringAttribute("SystemID"));
+    ASSERT_STRING_EQUAL("RMLS RETS System",
+                        element->GetStringAttribute("SystemDescription"));
+    ASSERT_STRING_EQUAL("", element->GetStringAttribute("COMMENTS"));
 }
 
 void CLASS::testParseTabularData()

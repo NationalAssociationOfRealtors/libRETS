@@ -98,10 +98,16 @@ void CLASS::HandleSystemMetadata(RetsXmlStartElementEventPtr metadataEvent)
             }
             else if (startEvent->GetName() == "COMMENTS")
             {
+                RetsXmlEventPtr commentEvent =
+                    mXmlParser->GetNextSkippingEmptyText();
                 RetsXmlTextEventPtr textEvent =
-                    mXmlParser->AssertNextIsTextEvent("COMMENTS: ");
-                element->SetAttribute("COMMENTS", textEvent->GetText());
-                mXmlParser->AssertNextIsEndEvent("COMMENTS: ");
+                    b::dynamic_pointer_cast<RetsXmlTextEvent>(commentEvent);
+                if (textEvent)
+                {
+                    element->SetAttribute("COMMENTS", textEvent->GetText());
+                    commentEvent = mXmlParser->GetNextSkippingEmptyText();
+                }
+                mXmlParser->AssertEndEvent(commentEvent, "COMMENTS: ");
             }
         }
         else if (endEvent && endEvent->GetName() == "METADATA-SYSTEM")
