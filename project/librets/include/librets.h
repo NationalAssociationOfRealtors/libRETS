@@ -80,6 +80,7 @@
 #include "librets/StreamHttpLogger.h"
 
 #include "librets/SqlToDmqlCompiler.h"
+#include "librets/SqlMetadata.h"
 #include "librets/DmqlQuery.h"
 #include "librets/DmqlCriterion.h"
 

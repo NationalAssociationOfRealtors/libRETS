@@ -25,12 +25,23 @@ using std::ifstream;
 using std::cin;
 using std::cout;
 using std::endl;
+using std::string;
+
+class SimpleSqlMetadata : public SqlMetadata
+{
+  public:
+    bool IsLookupColumn(string tableName, string columnName)
+    {
+        return false;
+    }
+};
 
 int main(int argc, char * argv[])
 {
     try
     {
-        SqlToDmqlCompiler compiler;
+        SqlMetadataPtr metadata(new SimpleSqlMetadata());
+        SqlToDmqlCompiler compiler(metadata);;
         istream * inputStream;
         istreamPtr fileInputStream;
         if (argc == 1)

@@ -40,9 +40,10 @@ using antlr::ANTLRException;
 
 namespace ba = boost::algorithm;
 
-void SqlToDmqlCompiler::SetMetadata(SqlMetadataPtr metadata)
+
+SqlToDmqlCompiler::SqlToDmqlCompiler(SqlMetadataPtr metadata)
+  : mMetadata(metadata)
 {
-    mMetadata = metadata;
 }
 
 SqlToDmqlCompiler::QueryType SqlToDmqlCompiler::sqlToDmql(string sql)

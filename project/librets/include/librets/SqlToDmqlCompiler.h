@@ -27,7 +27,7 @@ namespace librets {
 class SqlToDmqlCompiler : public RetsObject
 {
   public:
-    void SetMetadata(SqlMetadataPtr metadata);
+    SqlToDmqlCompiler(SqlMetadataPtr metadata);
     
     enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY};
     

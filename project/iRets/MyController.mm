@@ -21,6 +21,15 @@
 
 using namespace librets;
 
+class SimpleSqlMetadata : public SqlMetadata
+{
+  public:
+    bool IsLookupColumn(std::string tableName, std::string columnName)
+    {
+        return false;
+    }
+};
+
 @interface MyController (Private)
 
 - (void) terminateApplication: (NSNotification *) notification;
@@ -483,7 +492,8 @@ NSString * toNSString(const std::string aString)
             return;
         }
 
-        SqlToDmqlCompiler compiler;
+        SqlMetadataPtr metadata(new SimpleSqlMetadata());
+        SqlToDmqlCompiler compiler(metadata);
         std::string cppQuery = [sqlQueryString cString];
         SqlToDmqlCompiler::QueryType queryType = compiler.sqlToDmql(cppQuery);
         if (queryType != SqlToDmqlCompiler::DMQL_QUERY)

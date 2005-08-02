@@ -87,7 +87,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void assertInvalidSql(string sql,
                           const CPPUNIT_NS::SourceLine & sourceLine);
 
-    SqlToDmqlCompiler mCompiler;
+    SqlToDmqlCompilerPtr mCompiler;
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -95,25 +95,25 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
 CLASS::CLASS()
 {
     TestSqlMetadataPtr metadata(new TestSqlMetadata());
-    mCompiler.SetMetadata(metadata);
+    mCompiler.reset(new SqlToDmqlCompiler(metadata));
 }
 
 DmqlQueryPtr CLASS::sqlToDmql(string sql)
 {
-    if (mCompiler.sqlToDmql(sql) != SqlToDmqlCompiler::DMQL_QUERY)
+    if (mCompiler->sqlToDmql(sql) != SqlToDmqlCompiler::DMQL_QUERY)
     {
         CPPUNIT_FAIL("Not a DMQL query");
     }
-    return mCompiler.GetDmqlQuery();
+    return mCompiler->GetDmqlQuery();
 }
 
 GetObjectQueryPtr CLASS::sqlToGetObject(string sql)
 {
-    if (mCompiler.sqlToDmql(sql) != SqlToDmqlCompiler::GET_OBJECT_QUERY)
+    if (mCompiler->sqlToDmql(sql) != SqlToDmqlCompiler::GET_OBJECT_QUERY)
     {
         CPPUNIT_FAIL("Not a GetObject query");
     }
-    return mCompiler.GetGetObjectQuery();
+    return mCompiler->GetGetObjectQuery();
 }
 
 #define ASSERT_INVALID_SQL(_SQL_) assertInvalidSql(_SQL_, CPPUNIT_SOURCELINE())
@@ -123,12 +123,11 @@ void CLASS::assertInvalidSql(string sql,
 {
     try
     {
-        SqlToDmqlCompiler compiler;
         istringstream inputStream(sql);
-        compiler.sqlToDmql(inputStream);
+        mCompiler->sqlToDmql(inputStream);
         CPPUNIT_NS::Asserter::fail(
             CPPUNIT_NS::Message("forced failure",
-                                "should have throw exception"),
+                                "should have thrown exception"),
             sourceLine);
     }
     catch (RetsSqlException &)
