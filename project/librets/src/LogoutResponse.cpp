@@ -16,6 +16,7 @@
  */
 
 #include <sstream>
+#include <boost/lexical_cast.hpp>                                               
 #include "librets/LogoutResponse.h"
 #include "librets/ExpatXmlParser.h"
 #include "librets/RetsXmlStartElementEvent.h"
@@ -24,13 +25,21 @@
 using namespace librets;
 using std::string;
 using std::istringstream;
+using boost::lexical_cast;
+using boost::bad_lexical_cast;
 
 #define CLASS LogoutResponse
 
 void CLASS::ParsingFinished()
 {
-    istringstream connectTimeString(GetValue("ConnectTime"));
-    connectTimeString >> mConnectTime;
+    try
+    {
+        mConnectTime = lexical_cast<int>(GetValue("ConnectTime"));
+    }
+    catch(bad_lexical_cast &)
+    {
+        mConnectTime = 0;
+    }
 }
 
 string CLASS::GetBillingInfo() const

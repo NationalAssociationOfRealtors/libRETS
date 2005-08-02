@@ -60,6 +60,9 @@ void CLASS::testShortResponse()
     istreamPtr inputStream = getResource("short-success-response.xml");
     LogoutResponse response;
     response.Parse(inputStream, RETS_1_5);
+    ASSERT_STRING_EQUAL("", response.GetBillingInfo());
+    ASSERT_STRING_EQUAL("", response.GetLogoutMessage());
+    ASSERT_EQUAL(0, response.GetConnectTime());
 }
 
 void CLASS::testTarasoftResponse()
@@ -67,4 +70,7 @@ void CLASS::testTarasoftResponse()
     istreamPtr inputStream = getResource("logout_tarasoft.xml");
     LogoutResponse response;
     response.Parse(inputStream, RETS_1_5);
+    ASSERT_STRING_EQUAL("", response.GetBillingInfo());
+    ASSERT_STRING_EQUAL("", response.GetLogoutMessage());
+    ASSERT_EQUAL(0, response.GetConnectTime());
 }
