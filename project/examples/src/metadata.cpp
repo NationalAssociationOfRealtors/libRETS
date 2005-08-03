@@ -26,6 +26,7 @@ using std::endl;
 using std::exception;
 
 void dumpSystem(RetsMetadataPtr metadata);
+void dumpAllResources(RetsMetadataPtr metadata);
 void dumpAllClasses(RetsMetadataPtr metadata);
 void dumpAllTables(RetsMetadataPtr metadata, MetadataClassPtr aClass);
 
@@ -48,6 +49,7 @@ int main(int argc, char * argv[])
 
         RetsMetadataPtr metadata = session->GetMetadata();
         dumpSystem(metadata);
+        dumpAllResources(metadata);
         dumpAllClasses(metadata);
 
         session->Logout();
@@ -71,6 +73,19 @@ void dumpSystem(RetsMetadataPtr metadata)
     cout << "System ID: " << system->GetSystemID() << endl;
     cout << "System Description: " << system->GetSystemDescription() << endl;
     cout << "Comments: " << system->GetComments() << endl;
+}
+
+void dumpAllResources(RetsMetadataPtr metadata)
+{
+    MetadataResourceListPtr resources = metadata->GetAllResources();
+    MetadataResourceList::iterator i;
+    cout << endl;
+    for (i = resources->begin(); i != resources->end(); i++)
+    {
+        MetadataResourcePtr resource(*i);
+        cout << "Resource name: " << resource->GetResourceID() << " ["
+             << resource->GetStandardName() << "]" << endl;
+    }
 }
 
 void dumpAllClasses(RetsMetadataPtr metadata)
