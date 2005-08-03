@@ -24,7 +24,9 @@ ANTLR_SRCS = \
 	$(ANTLR_DIR)\DmqlTreeParser.hpp \
 	$(ANTLR_DIR)\DmqlTreeParser.cpp \
 	$(ANTLR_DIR)\GetObjectTreeParser.hpp \
-	$(ANTL_DIR)\GetObjectTreeParser.cpp
+	$(ANTLR_DIR)\GetObjectTreeParser.cpp
+
+ANTLR_TRIGGER = $(ANTLR_DIR)\antlr.txt
 
 ANTLR_OBJS = \
 	$(DIROBJ)\RetsSqlLexer.obj \
@@ -45,10 +47,13 @@ $(X_OBJS): $(DIROBJ)
 
 $(ANTLR_OBJS): $(ANTLR_SRCS)
 
-$(ANTLR_SRCS): rets-sql.g dmql-tree.g get-object-tree.g $(ANTLR_DIR)
+$(ANTLR_SRCS): $(ANTLR_TRIGGER)
+
+$(ANTLR_TRIGGER): rets-sql.g dmql-tree.g get-object-tree.g $(ANTLR_DIR)
 	$(ANTLR) -o $(ANTLR_DIR) rets-sql.g
 	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g dmql-tree.g
 	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g get-object-tree.g
+	@echo "ANTLR Trigger" > $(ANTLR_TRIGGER)
 
 $(BUILD_DIR):
 	@if not exist "$(BUILD_DIR)" mkdir $(BUILD_DIR)
