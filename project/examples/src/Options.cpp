@@ -26,6 +26,7 @@ using std::string;
 using std::cout;
 using std::endl;
 using std::ofstream;
+using std::ifstream;
 
 Options::Options()
     : descriptions("Allowed options")
@@ -44,8 +45,10 @@ Options::Options()
         ("http-get,g", po::value<bool>(&useHttpGet)
          ->default_value(false, "")->implicit(), "Use HTTP GET")
         ("http-log,l", po::value<string>(&mLogFile), "HTTP log file")
+        ("config-file,c", po::value<string>(&mConfigFile),
+         "Use configuration file")
         ("rets-version,V", po::value<string>(&mRetsVersionString)
-         ->default_value("1.5", ""), "RETS Version");
+         ->default_value("1.5", ""), "RETS Version")
         ;
 }
 
@@ -53,6 +56,12 @@ bool Options::ParseCommandLine(int argc, char * argv[])
 {
     po::store(po::parse_command_line(argc, argv, descriptions), options);
     po::notify(options);
+    if (options.count("config-file"))
+    {
+        ifstream ifs(mConfigFile.c_str());
+        po::store(parse_config_file(ifs, descriptions), options);
+        po::notify(options);
+    }
     if (options.count("help"))
     {
         cout << descriptions << endl;
@@ -86,4 +95,9 @@ RetsSessionPtr Options::RetsLogin()
         session.reset();
     }
     return session;
+}
+
+unsigned Options::count(const char * name) const
+{
+    return options.count(name);
 }

@@ -25,7 +25,7 @@
  * is through the librets::RetsSession class.  Here is a example
  * demonstrationg searching:
  *
- * @verbinclude "search.cpp"
+ * @verbinclude "demo-search.cpp"
  *
  * Here is an example showing how to use metadata:
  *

@@ -18,17 +18,39 @@
 #include "librets.h"
 #include "Options.h"
 #include <iostream>
+#include <iomanip>
 
 using namespace librets;
 using std::cout;
 using std::cerr;
 using std::endl;
+using std::string;
+using std::setw;
+namespace po = boost::program_options;
 
 int main(int argc, char * argv[])
 {
     try
     {
+        string resource;
+        string searchClass;
+        string select;
+        string query;
+        bool standardNames;
+        
         Options options;
+        options.descriptions.add_options()
+            ("resource,r", po::value<string>(&resource)
+             ->default_value("Property"), "Search resource")
+            ("class,C", po::value<string>(&searchClass)
+             ->default_value("ResidentialProperty"), "Search class")
+            ("select,s", po::value<string>(&select)
+             ->default_value("ListingID,ListPrice,Beds,City"), "Search select")
+            ("query,q", po::value<string>(&query)
+             ->default_value("(ListPrice=300000-)"), "Search query")
+            ("standard-names,n", po::value<bool>(&standardNames)
+             ->default_value(true)->implicit(), "Use standard names")
+            ;
         if (!options.ParseCommandLine(argc, argv))
         {
             return 0;
@@ -42,15 +64,21 @@ int main(int argc, char * argv[])
         }
         
         SearchRequestPtr searchRequest = session->CreateSearchRequest(
-            "Property", "ResidentialProperty", "(ListPrice=300000-)");
+            resource, searchClass, query);
+        searchRequest->SetSelect(select);
+        searchRequest->SetStandardNames(standardNames);
         
         SearchResultSetPtr results = session->Search(searchRequest);
+        StringVectorPtr columns = results->GetColumns();
         while (results->HasNext())
         {
-            cout << "ListingID: " << results->GetString("ListingID") << endl;
-            cout << "ListPrice: " << results->GetString("ListPrice") << endl;
-            cout << "     Beds: " << results->GetString("Beds") << endl;
-            cout << "     City: " << results->GetString("City") << endl;
+            StringVector::iterator i;
+            for (i = columns->begin(); i != columns->end(); i++)
+            {
+                string column = *i;
+                cout << setw(15) << column << ": "
+                     << setw(0) << results->GetString(column) << endl;
+            }
             cout << endl;
         }
         

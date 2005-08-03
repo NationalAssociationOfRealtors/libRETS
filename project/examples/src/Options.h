@@ -42,11 +42,14 @@ class Options
 
     librets::RetsSessionPtr RetsLogin();
 
+    unsigned count(const char * name) const;
+
   private:
     std::string mLogFile;
     std::string mRetsVersionString;
     std::ofstream mLogStream;
     librets::RetsHttpLoggerPtr mLogger;
+    std::string mConfigFile;
 };
 
 #endif
