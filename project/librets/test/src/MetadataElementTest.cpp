@@ -32,7 +32,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGetBoolAttribute);
     CPPUNIT_TEST_SUITE_END();
     
-protected:
+  protected:
     void testGetIntAttribute();
     void testGetBoolAttribute();
 };
@@ -56,8 +56,13 @@ void CLASS::testGetBoolAttribute()
     element.SetAttribute("field2", "0");
     element.SetAttribute("field3", "true");
     element.SetAttribute("field4", "false");
+    element.SetAttribute("field5", "True");
+    element.SetAttribute("field6", "False");
     ASSERT_EQUAL(true,  element.GetBoolAttribute("field1"));
     ASSERT_EQUAL(false, element.GetBoolAttribute("field2"));
-//    ASSERT_EQUAL(true,  element.GetBoolAttribute("field3"));
-//    ASSERT_EQUAL(false, element.GetBoolAttribute("field4"));
+    ASSERT_EQUAL(true,  element.GetBoolAttribute("field3"));
+    ASSERT_EQUAL(false, element.GetBoolAttribute("field4"));
+    ASSERT_EQUAL(true,  element.GetBoolAttribute("field5"));
+    ASSERT_EQUAL(false, element.GetBoolAttribute("field6"));
+    ASSERT_EQUAL(false, element.GetBoolAttribute("field7"));
 }
