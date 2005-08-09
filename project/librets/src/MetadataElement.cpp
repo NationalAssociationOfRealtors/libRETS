@@ -16,6 +16,7 @@
  */
 #include <iostream>
 #include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>                                           
 #include "librets/MetadataElement.h"
 #include "librets/util.h"
 
@@ -24,6 +25,7 @@ using namespace librets::util;
 using std::string;
 using std::vector;
 using boost::lexical_cast;
+namespace ba = boost::algorithm;
 
 #define CLASS MetadataElement
 
@@ -52,7 +54,7 @@ string CLASS::GetStringAttribute(string attributeName,
 int CLASS::GetIntAttribute(string attributeName, int defaultValue) const
 {
     StringMap::const_iterator i = mAttributes.find(attributeName);
-    if (i != mAttributes.end())
+    if (i != mAttributes.end() && !(i->second.empty()))
     {
         return lexical_cast<int>(i->second);
     }
@@ -67,7 +69,8 @@ bool CLASS::GetBoolAttribute(string attributeName, bool defaultValue) const
     StringMap::const_iterator i = mAttributes.find(attributeName);
     if (i != mAttributes.end())
     {
-        return lexical_cast<bool>(i->second);
+        string value = ba::to_lower_copy(i->second);
+        return ((value == "1") || (value == "true"));
     }
     else
     {

@@ -14,10 +14,12 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <cppunit/extensions/HelperMacros.h>
 #include <sstream>
 #include <vector>
 #include "testUtil.h"
+#include "TestMetadataElement.h"
 #include "librets/XmlMetadataParser.h"
 #include "librets/XmlMetadataElementFactory.h"
 #include "librets/MetadataElementCollector.h"
@@ -48,31 +50,6 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testParseRetsResponse();
     void testBlankDataTag();
 };
-
-class TestMetadataElement : public MetadataElement
-{
-  public:
-    virtual MetadataType GetType() const { return SYSTEM; }
-    std::string GetTypeName() const;
-    void SetTypeName(std::string typeName);
-
-  private:
-    std::string mTypeName;
-
-};
-typedef boost::shared_ptr<TestMetadataElement> TestMetadataElementPtr;
-
-string TestMetadataElement::GetTypeName() const
-{
-    return mTypeName;
-}
-
-void TestMetadataElement::SetTypeName(string typeName)
-{
-    mTypeName = typeName;
-}
-
-typedef vector<TestMetadataElementPtr> TestMetadataElementList;
 
 class TestElementFactory :
     public XmlMetadataElementFactory, public MetadataElementCollector

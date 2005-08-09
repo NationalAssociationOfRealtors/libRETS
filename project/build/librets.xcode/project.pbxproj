@@ -75,6 +75,43 @@
 			settings = {
 			};
 		};
+		55083EAD08A92BA2004B3699 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MetadataElementTest.cpp;
+			path = /Users/dave/work/nar/rets/odbc/librets/librets/project/librets/test/src/MetadataElementTest.cpp;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		55083EAE08A92BA2004B3699 = {
+			fileRef = 55083EAD08A92BA2004B3699;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55083EC708A92D80004B3699 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = TestMetadataElement.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55083EC808A92D80004B3699 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = TestMetadataElement.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55083EC908A92D80004B3699 = {
+			fileRef = 55083EC808A92D80004B3699;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		554A9EA207F9F27F00402C35 = {
 			children = (
 				554AA18C07FA110900402C35,
@@ -4009,13 +4046,16 @@
 		55BD577E07FDAAFD00526D69 = {
 			children = (
 				55F2405A08904EE40090B325,
+				55083EC708A92D80004B3699,
+				55083EC808A92D80004B3699,
+				55083EAD08A92BA2004B3699,
 				55F23F8A089003B60090B325,
 				55F23F8B089003B60090B325,
 				5552AA6108046478002288F1,
 				5552A92B08033C19002288F1,
 				5552A8BD080335E6002288F1,
-				5552A886080331CB002288F1,
 				5552A8840803319B002288F1,
+				5552A886080331CB002288F1,
 				558F6A4007FDE89900CE8AF2,
 				55BD577F07FDAAFD00526D69,
 				55BD578007FDAAFD00526D69,
@@ -4319,6 +4359,8 @@
 				5552AA6208046478002288F1,
 				55F23F0A088FFC720090B325,
 				55F23F8C089003B60090B325,
+				55083EAE08A92BA2004B3699,
+				55083EC908A92D80004B3699,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
