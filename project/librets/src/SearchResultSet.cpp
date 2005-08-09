@@ -50,6 +50,7 @@ void SearchResultSet::Parse(istreamPtr inputStream)
 {
     ExpatXmlParserPtr mXmlParser(new ExpatXmlParser(inputStream));
     RetsXmlStartElementEventPtr metadataEvent;
+    string delimiter = "\t";
     while (mXmlParser->HasNext())
     {
         RetsXmlEventPtr event = mXmlParser->GetNextSkippingEmptyText();
@@ -88,7 +89,7 @@ void SearchResultSet::Parse(istreamPtr inputStream)
                 mXmlParser->AssertNextIsTextEvent();
             string text = textEvent->GetText();
             StringVector columns;
-            ba::split(columns, text, ba::is_any_of("\t"));
+            ba::split(columns, text, ba::is_any_of(delimiter));
             if (columns.size() < 1)
             {
                 ostringstream message;
@@ -110,7 +111,7 @@ void SearchResultSet::Parse(istreamPtr inputStream)
                 mXmlParser->AssertNextIsTextEvent();
             string text = textEvent->GetText();
             StringVectorPtr data(new StringVector());
-            ba::split(*data, text, ba::is_any_of("\t"));
+            ba::split(*data, text, ba::is_any_of(delimiter));
             if (data->size() < 1)
             {
                 ostringstream message;
@@ -122,6 +123,16 @@ void SearchResultSet::Parse(istreamPtr inputStream)
             data->erase(data->begin());
             mRows.push_back(data);
             mXmlParser->AssertNextIsEndEvent();
+        }
+        else if (name == "DELIMITER")
+        {
+            istringstream hexString(startEvent->GetAttributeValue("value"));
+            // Must go into an int, not a char, due to the special handling of
+            // chars in istringstream
+            int delimiterChar;
+            hexString >> std::hex >> delimiterChar;
+            delimiter.clear();
+            delimiter += (char) delimiterChar;
         }
     }
     mNextRow = mRows.begin();

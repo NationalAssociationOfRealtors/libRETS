@@ -1,0 +1,5 @@
+<RETS ReplyCode="0" ReplyText="Success" >
+<DELIMITER value="7C" />
+<COLUMNS>|CITY|</COLUMNS>
+<DATA>|AURORA|</DATA>
+</RETS>

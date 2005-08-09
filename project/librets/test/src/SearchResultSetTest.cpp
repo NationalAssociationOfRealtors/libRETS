@@ -34,6 +34,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSingleColumn);
     CPPUNIT_TEST(testOutOfBoundsColumnNumber);
     CPPUNIT_TEST(testInvalidColumnName);
+    CPPUNIT_TEST(testPipeDelimiter);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -43,6 +44,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testSingleColumn();
     void testOutOfBoundsColumnNumber();
     void testInvalidColumnName();
+    void testPipeDelimiter();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -164,4 +166,20 @@ void CLASS::testInvalidColumnName()
     {
         // Expected
     }
+}
+
+void CLASS::testPipeDelimiter()
+{
+    SearchResultSet resultSet;
+    istreamPtr inputStream = getResource("search-response-pipe.xml");
+    resultSet.Parse(inputStream);
+    StringVectorPtr columns = resultSet.GetColumns();
+    ASSERT_EQUAL(StringVector::size_type(1), columns->size());
+    ASSERT_STRING_EQUAL("CITY", columns->at(0));
+    
+    CPPUNIT_ASSERT(resultSet.HasNext());
+    ASSERT_STRING_EQUAL("AURORA", resultSet.GetString("CITY"));
+    ASSERT_STRING_EQUAL("AURORA", resultSet.GetString(0));
+    
+    CPPUNIT_ASSERT(!resultSet.HasNext());
 }
