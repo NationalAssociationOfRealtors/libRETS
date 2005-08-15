@@ -40,6 +40,17 @@ class SearchRequest : public RetsHttpRequest
                   std::string query);
 
     /**
+     * This requests the server default limit.  This should be the same as
+     * NONE, but some servers do not adhere.
+     */
+    static const int LIMIT_DEFAULT = -1;
+    
+    /**
+     * This requests the server to set the limit to NONE.
+     */
+    static const int LIMIT_NONE = 0;
+    
+    /**
      * Sets the limit on the number records returned.  By default, all
      * matching records are returned.  Setting the limit to
      * <code>0</code> means all matching records should be returned.
@@ -86,6 +97,7 @@ class SearchRequest : public RetsHttpRequest
     static const char * QUERY_PARAMETER;
     static const char * COUNT_PARAMETER;
     static const char * SELECT_PARAMETER;
+    static const char * LIMIT_PARAMETER;
 };
 
 };

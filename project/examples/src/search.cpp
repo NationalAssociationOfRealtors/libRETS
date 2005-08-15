@@ -37,6 +37,7 @@ int main(int argc, char * argv[])
         string select;
         string query;
         bool standardNames;
+        int limit;
         
         Options options;
         options.descriptions.add_options()
@@ -50,6 +51,8 @@ int main(int argc, char * argv[])
              ->default_value("(ListPrice=300000-)"), "Search query")
             ("standard-names,n", po::value<bool>(&standardNames)
              ->default_value(true)->implicit(), "Use standard names")
+            ("limit,L", po::value<int>(&limit)
+             ->default_value(SearchRequest::LIMIT_DEFAULT), "Set the limit")
             ;
         if (!options.ParseCommandLine(argc, argv))
         {
@@ -67,6 +70,7 @@ int main(int argc, char * argv[])
             resource, searchClass, query);
         searchRequest->SetSelect(select);
         searchRequest->SetStandardNames(standardNames);
+        searchRequest->SetLimit(limit);
         
         SearchResultSetPtr results = session->Search(searchRequest);
         StringVectorPtr columns = results->GetColumns();

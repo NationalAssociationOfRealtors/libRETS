@@ -29,6 +29,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testQueryStringNoParameters);
     CPPUNIT_TEST(testQueryStringSingleParameter);
+    CPPUNIT_TEST(testQueryStringIntParameter);
     CPPUNIT_TEST(testQueryStringMultipleParameters);
     CPPUNIT_TEST(testQueryStringRemoveParameter);
     CPPUNIT_TEST_SUITE_END();
@@ -36,6 +37,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
   protected:
     void testQueryStringNoParameters();
     void testQueryStringSingleParameter();
+    void testQueryStringIntParameter();
     void testQueryStringMultipleParameters();
     void testQueryStringRemoveParameter();
 };
@@ -53,6 +55,13 @@ void CLASS::testQueryStringSingleParameter()
     RetsHttpRequest request;
     request.SetQueryParameter("name", "value");
     ASSERT_STRING_EQUAL("name=value", request.GetQueryString());
+}
+
+void CLASS::testQueryStringIntParameter()
+{
+    RetsHttpRequest request;
+    request.SetQueryParameter("name", 42);
+    ASSERT_STRING_EQUAL("name=42", request.GetQueryString());
 }
 
 void CLASS::testQueryStringMultipleParameters()

@@ -27,6 +27,7 @@ const char * SearchRequest::CLASS_PARAMETER = "Class";
 const char * SearchRequest::QUERY_PARAMETER = "Query";
 const char * SearchRequest::SELECT_PARAMETER = "Select";
 const char * SearchRequest::COUNT_PARAMETER = "Count";
+const char * SearchRequest::LIMIT_PARAMETER = "Limit";
 
 SearchRequest::SearchRequest(string searchType, string searchClass,
                              string query)
@@ -37,11 +38,24 @@ SearchRequest::SearchRequest(string searchType, string searchClass,
     SetQueryParameter(SEARCH_TYPE_PARAMETER, searchType);
     SetQueryParameter(CLASS_PARAMETER, searchClass);
     SetQueryParameter(QUERY_PARAMETER, query);
+    SetCountType(RECORD_COUNT_AND_RESULTS);
+    SetLimit(LIMIT_DEFAULT);
 }
 
 void SearchRequest::SetLimit(int limit)
 {
-    
+    if (limit == LIMIT_DEFAULT)
+    {
+        SetQueryParameter(LIMIT_PARAMETER, "");
+    }
+    else if (limit == LIMIT_NONE)
+    {
+        SetQueryParameter(LIMIT_PARAMETER, "NONE");
+    }
+    else
+    {
+        SetQueryParameter(LIMIT_PARAMETER, limit);
+    }
 }
 
 void SearchRequest::SetSelect(string select)

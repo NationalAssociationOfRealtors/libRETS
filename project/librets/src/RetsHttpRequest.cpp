@@ -15,15 +15,18 @@
  * appear in supporting documentation.
  */
 #include <sstream>
+#include <boost/lexical_cast.hpp>                                               
 #include "librets/RetsHttpRequest.h"
 #include "librets/util.h"
 
 using namespace librets;
 using namespace librets::util;
-using namespace std;
+using std::string;
+using std::ostringstream;
+using boost::lexical_cast; 
 
 RetsHttpRequest::RetsHttpRequest()
-    : mQueryParameters()
+    : mQueryParameters(), mQueryParametersChanged(false)
 {
     mMethod = GET;
 }
@@ -56,9 +59,14 @@ void RetsHttpRequest::SetHeader(string name, string value)
 {
 }
 
+void RetsHttpRequest::SetQueryParameter(string name, int value)
+{
+    SetQueryParameter(name, lexical_cast<string>(value));
+}
+
 void RetsHttpRequest::SetQueryParameter(string name, string value)
 {
-    if (value != "")
+    if (!value.empty())
     {
         mQueryParameters[name] = urlEncode(value);
     }
@@ -66,11 +74,14 @@ void RetsHttpRequest::SetQueryParameter(string name, string value)
     {
         mQueryParameters.erase(name);
     }
+    mQueryParametersChanged = true;
 }
 
-std::string RetsHttpRequest::GetQueryString() const
+void RetsHttpRequest::GenerateQueryString() const
 {
-    // return mQueryString;
+    if (!mQueryParametersChanged)
+        return;
+    
     ostringstream queryString;
     string separator = "";
     StringMap::const_iterator i;
@@ -81,5 +92,12 @@ std::string RetsHttpRequest::GetQueryString() const
         queryString << separator << name << "=" << value;
         separator = "&";
     }
-    return queryString.str();
+    mQueryString = queryString.str();
+    mQueryParametersChanged = false;
+}
+
+std::string RetsHttpRequest::GetQueryString() const
+{
+    GenerateQueryString();
+    return mQueryString;
 }
