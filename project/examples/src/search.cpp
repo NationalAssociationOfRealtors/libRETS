@@ -38,6 +38,11 @@ int main(int argc, char * argv[])
         string query;
         bool standardNames;
         int limit;
+
+        // GCC on FC3 for season does not like using
+        // SearchRequest::LIMIT_DEFAULT in the default_value calls below.
+        // This is a really crappy work around until gcc unhorks itself.
+        int defaultLimit = SearchRequest::LIMIT_DEFAULT;
         
         Options options;
         options.descriptions.add_options()
@@ -52,7 +57,7 @@ int main(int argc, char * argv[])
             ("standard-names,n", po::value<bool>(&standardNames)
              ->default_value(true)->implicit(), "Use standard names")
             ("limit,L", po::value<int>(&limit)
-             ->default_value(SearchRequest::LIMIT_DEFAULT), "Set the limit")
+             ->default_value(defaultLimit), "Set the limit")
             ;
         if (!options.ParseCommandLine(argc, argv))
         {
