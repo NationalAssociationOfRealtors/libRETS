@@ -1,0 +1,91 @@
+#! /bin/sh
+#
+# The idea to this kind of setup info script was stolen from numerous
+# other packages, such as neon, libxml and gnome.
+#
+builddir=@abs_top_builddir@/build
+includedir=@abs_top_srcdir@/project/librets/include
+librets_ldflags="@LIBRETS_LDFLAGS@"
+
+usage()
+{
+    cat <<EOF
+Usage: curl-config [OPTION]
+
+Available values for OPTION include:
+
+  --cflags    pre-processor and compiler flags
+  --help      display this help and exit
+  --libs      library linking information
+  --version   output version information
+  --vernum    output the version information as a number (hexadecimal)
+EOF
+
+    exit $1
+}
+
+output=""
+output_separator=""
+
+append_to_output()
+{
+    output="${output}${output_separator}${1}"
+    output_separator=" "
+}
+
+if test $# -eq 0; then
+    usage 1
+fi
+
+while test $# -gt 0; do
+    case "$1" in
+    # this deals with options in the style
+    # --option=value and extracts the value part
+    # [not currently used]
+    -*=*) value=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+    *) value= ;;
+    esac
+
+    case "$1" in
+        --version)
+	    echo libcurl @VERSION@
+	    exit 0
+	    ;;
+
+        --vernum)
+	    echo @VERSIONNUM@
+	    exit 0
+	    ;;
+
+        --help)
+	    usage 0
+	    ;;
+
+        --cflags)
+	    show_cflags="yes"
+       	    ;;
+
+        --libs)
+            show_libs="yes"
+       	    ;;
+
+        *)
+            echo "unknown option: $1"
+	    usage 1
+	    ;;
+    esac
+    shift
+done
+
+if test "$show_cflags" = "yes"; then
+    append_to_output -I${includedir}
+fi
+
+if test "$show_libs" = "yes"; then
+    append_to_output ${builddir}/librets/lib/librets.a
+    append_to_output "$librets_ldflags"
+fi
+
+echo $output
+
+exit 0

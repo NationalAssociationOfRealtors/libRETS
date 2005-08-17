@@ -11,11 +11,21 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_INSTALL
 AC_CHECK_PROG(my_have_perl, perl, yes, no)
+if test x"$my_have_perl" != x"yes"; then
+    AC_MSG_ERROR([perl is required to build librets])
+fi
 AC_CHECK_PROG(my_have_doxygen, doxygen, yes, no)
 MY_PROG_CCACHE
 AC_CACHE_SAVE
 
 MY_TEST_DEPENDS
+MY_TEST_CURL
+MY_TEST_EXPAT
+MY_TEST_BOOST
+MY_TEST_ANTLR
+
+LIBRETS_LDFLAGS="$BOOST_LIBS $BOOST_FILESYSTEM $CURL_LIBS $EXPAT_LIBS $ANTLR_LIBS"
+AC_SUBST(LIBRETS_LDFLAGS)
 
 AC_ARG_ENABLE(debug,
               AC_HELP_STRING([--enable-debug],
@@ -35,7 +45,10 @@ fi
 AC_CONFIG_FILES([
   Makefile
   project/build/Doxyfile
-])
+  librets-config
+  librets-config-inplace
+], [chmod +x librets-config librets-config-inplace]
+)
 
 AC_OUTPUT
 
