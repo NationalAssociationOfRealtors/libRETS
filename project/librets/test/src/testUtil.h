@@ -81,6 +81,8 @@ void checkVectorEquals(const std::vector<int> & expected,
 #define ASSERT_VECTOR_EQUAL(expected, actual) \
     checkVectorEquals(expected, actual, CPPUNIT_SOURCELINE());
 
+void setResourceRoot(std::string resourceRoot);
+
 istreamPtr getResource(std::string resourceName,
 		       std::ios_base::openmode mode = std::ios_base::out);
 

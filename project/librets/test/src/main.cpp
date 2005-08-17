@@ -20,10 +20,15 @@
 #include <cppunit/TestResult.h>
 #include <cppunit/TestResultCollector.h>
 #include <cppunit/TestRunner.h>
+#include "testUtil.h"
 
+using namespace librets;
 
 int main(int argc, char* argv[])
 {
+    if (argc > 1)
+        setResourceRoot(argv[1]);
+
     // Create the event manager and test controller
     CPPUNIT_NS::TestResult controller;
 

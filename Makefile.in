@@ -1,5 +1,4 @@
-srcdir=@srcdir@
-VPATH=@srcdir@
+top_srcdir=@top_srcdir@
 
 SHELL = /bin/sh
 
@@ -68,5 +67,5 @@ clean: _clean
 distclean: _distclean
 maintainer-clean: _maintainer-clean
 
-include $(srcdir)/project/build/sources.mk
-include $(srcdir)/project/build/rules.mk
+include $(top_srcdir)/project/build/sources.mk
+include $(top_srcdir)/project/build/rules.mk

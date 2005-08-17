@@ -3,7 +3,7 @@
 # librets
 #
 
-LIBRETS_ANTLR_GRAMMAR_DIR = project/librets/src
+LIBRETS_ANTLR_GRAMMAR_DIR = $(top_srcdir)/project/librets/src
 LIBRETS_ANTLR_PARSER = $(LIBRETS_ANTLR_GRAMMAR_DIR)/rets-sql.g
 LIBRETS_ANTLR_TREE_PARSER = $(LIBRETS_ANTLR_GRAMMAR_DIR)/dmql-tree.g
 LIBRETS_ANTLR_GET_OBJECT_TREE_PARSER = \
@@ -48,8 +48,8 @@ $(LIBRETS_ANTLR_DEPENDS): \
 	@$(CC) -MM $(CFLAGS) -I$(LIBRETS_INC_DIR) $< \
 	| $(FIXDEP) $(LIBRETS_ANTLR_SRC_DIR) $(LIBRETS_ANTLR_OBJ_DIR) > $@
 
-LIBRETS_SRC_DIR = project/librets/src
-LIBRETS_INC_DIR = project/librets/include
+LIBRETS_SRC_DIR = $(top_srcdir)/project/librets/src
+LIBRETS_INC_DIR = $(top_srcdir)/project/librets/include
 LIBRETS_OBJ_DIR = build/librets/objects
 LIBRETS_SRC_FILES := $(wildcard ${LIBRETS_SRC_DIR}/*.cpp)
 LIBRETS_OBJECTS	:= $(LIBRETS_ANTLR_OBJECTS) $(patsubst $(LIBRETS_SRC_DIR)/%.cpp, \
@@ -79,7 +79,7 @@ $(LIBRETS_LIB): $(LIBRETS_OBJECTS)
 # librets test
 #
 
-LIBRETS_TEST_SRC_DIR	= project/librets/test/src
+LIBRETS_TEST_SRC_DIR	= $(top_srcdir)/project/librets/test/src
 LIBRETS_TEST_INC_DIR	= 
 LIBRETS_TEST_OBJ_DIR	= build/librets/test/objects
 LIBRETS_TEST_SRC_FILES	:= $(wildcard $(LIBRETS_TEST_SRC_DIR)/*.cpp)
@@ -107,7 +107,7 @@ $(LIBRETS_TEST_EXE): $(LIBRETS_TEST_OBJECTS) $(LIBRETS_LIB)
 # examples
 #
 
-EXAMPLES_SRC_DIR = project/examples/src
+EXAMPLES_SRC_DIR = $(top_srcdir)/project/examples/src
 EXAMPLES_OBJ_DIR = build/examples/objects
 EXAMPLES_LDFLAGS = $(LIBRETS_LDFLAGS) \
 	$(BOOST_LIB_PATH)/libboost_program_options.a

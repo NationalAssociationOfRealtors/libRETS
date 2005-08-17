@@ -9,7 +9,7 @@ CFLAGS		+= $(TARGET_CFLAGS) -DLIBRETS_VERSION='"$(VERSION)"'
 LIBRETS_LDFLAGS = $(BOOST_LDFLAGS) $(CURL_LDFLAGS) $(EXPAT_LDFLAGS) \
 	$(ANTLR_LDFLAGS)
 
-FIXDEP		= perl $(srcdir)/project/build/fixdep.pl
+FIXDEP		= perl $(top_srcdir)/project/build/fixdep.pl
 ALL_DEPENDS 	= $(LIBRETS_DEPENDS) $(LIBRETS_TEST_DEPENDS) \
 	$(EXAMPLES_DEPENDS)
 ALL_OBJ_DIRS	= \
@@ -65,7 +65,7 @@ _distclean: _clean
 _veryclean: _distclean
 
 _test: prepare $(LIBRETS_TEST_EXE)
-	./$(LIBRETS_TEST_EXE)
+	./$(LIBRETS_TEST_EXE) $(top_srcdir)
 
 _maintainer-clean: _veryclean
 	$(RM) configure

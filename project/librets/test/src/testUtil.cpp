@@ -42,9 +42,17 @@ void librets::checkStringEquals(string expected, string actual,
                                        sourceLine);
 }
 
+static string sResourceRoot(".");
+
+void NS::setResourceRoot(string resourceRoot)
+{
+    sResourceRoot = resourceRoot;
+}
+
 istreamPtr NS::getResource(string resourceName, ios_base::openmode mode)
 {
-    string fileName = "project/librets/test/src/resources/" + resourceName;
+    string fileName = sResourceRoot + "/project/librets/test/src/resources/" +
+        resourceName;
     ifstreamPtr inputStream(new ifstream(fileName.c_str(), mode));
     if (!(*inputStream))
     {
