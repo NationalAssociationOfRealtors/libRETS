@@ -6,11 +6,7 @@ AC_DEFUN(MY_CHECK_EXAMPLES, [
     examples,
     AC_HELP_STRING([--enable-examples],
       [build example programs (default: disabled)]),
-    [
-      if test "$enableval" = "yes"; then
-        my_enable_examples=yes
-      fi
-    ],
+    [test "$enableval" = "yes" && my_enable_examples=yes],
     [my_enable_examples=no])
 
     my_use_examples=no
@@ -21,6 +17,7 @@ AC_DEFUN(MY_CHECK_EXAMPLES, [
         my_use_examples=yes
       else
         AC_MSG_WARN([*** Examples require Boost program options ***])
+        AC_MSG_WARN([***  Not compiling examples ***])
       fi
     fi
     AC_SUBST(USE_EXAMPLES)
