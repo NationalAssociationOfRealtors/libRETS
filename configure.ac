@@ -21,8 +21,18 @@ AC_CACHE_SAVE
 MY_TEST_DEPENDS
 MY_TEST_CURL
 MY_TEST_EXPAT
+
 MY_TEST_BOOST
+if test "$HAVE_BOOST" != "1"; then
+  AC_MSG_ERROR([Boost headers are required to build librets])
+fi
+if test -z "$BOOST_FILESYSTEM"; then
+  AC_MSG_ERROR("Boost filesystem static library is required to build librets")
+fi
+
 MY_TEST_ANTLR
+
+MY_CHECK_EXAMPLES
 
 LIBRETS_LDFLAGS="$BOOST_LIBS $BOOST_FILESYSTEM $CURL_LIBS $EXPAT_LIBS $ANTLR_LIBS"
 AC_SUBST(LIBRETS_LDFLAGS)
@@ -58,4 +68,5 @@ echo
 echo Use ccache .................: $my_use_ccache
 echo Use dependency checking ....: $my_use_depends
 echo Compile type................: $my_compile_type
+echo Compile examples............: $my_use_examples
 echo

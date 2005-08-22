@@ -22,7 +22,10 @@ ALL_OBJ_DIRS	= \
 	build/examples/bin \
 	build/doc/api
 
-ALL		= $(LIBRETS_LIB) $(EXAMPLES_EXE)
+ALL = $(LIBRETS_LIB)
+ifeq ($(USE_EXAMPLES),1)
+ALL += $(EXAMPLES_EXE)
+endif
 
 _all: _build
 
