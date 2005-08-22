@@ -5,6 +5,7 @@
 #
 builddir=@abs_top_builddir@/build
 includedir=@abs_top_srcdir@/project/librets/include
+librets_cflags="@LIBRETS_CFLAGS@"
 librets_ldflags="@LIBRETS_LDFLAGS@"
 
 usage()
@@ -79,6 +80,7 @@ done
 
 if test "$show_cflags" = "yes"; then
     append_to_output -I${includedir}
+    append_to_output "$librets_cflags"
 fi
 
 if test "$show_libs" = "yes"; then
