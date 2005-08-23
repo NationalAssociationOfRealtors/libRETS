@@ -1,5 +1,3 @@
-VERSION		= 1.0.0b1
-
 DIST_SRC	= librets-$(VERSION)
 SRC_TGZ		= librets-$(VERSION).tar.gz
 SRC_ZIP		= librets-$(VERSION).zip
@@ -56,6 +54,19 @@ _dist: _build _doc-api
 	cd dist; zip -r -q $(SRC_ZIP) $(DIST_SRC)
 	cd dist; tar --gzip -cf $(SRC_TGZ) $(DIST_SRC)
 	$(RM) -r dist/$(DIST_SRC)
+
+_install: _build
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(libdir)"
+	$(INSTALL_DATA) $(LIBRETS_LIB) "$(DESTDIR)$(libdir)"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(includedir)/librets"
+
+	$(INSTALL_DATA) $(LIBRETS_INC_FILE) "$(DESTDIR)$(includedir)"
+	@list='$(LIBRETS_INC_FILES)'; for p in $$list; do \
+	  $(INSTALL_DATA) "$$p" "$(DESTDIR)$(includedir)/librets"; \
+	done
+
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(bindir)"
+	$(INSTALL_PROGRAM) $(top_srcdir)/librets-config "$(DESTDIR)$(bindir)"
 
 _clean:
 	$(RM) -r build dist

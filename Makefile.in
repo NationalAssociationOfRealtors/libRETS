@@ -9,10 +9,13 @@ bindir=@bindir@
 mandir=@mandir@
 sysconfdir=@sysconfdir@
 docdir=$(datadir)/doc
+libdir=@libdir@
+includedir=@includedir@
 
 INSTALL=@INSTALL@
 INSTALL_PROGRAM=@INSTALL_PROGRAM@
 INSTALL_DATA=@INSTALL_DATA@
+MKINSTALLDIRS=$(top_srcdir)/project/build/mkinstalldirs
 
 CC=@CC@
 CXX=@CXX@
@@ -49,6 +52,7 @@ CPPUNIT_LDFLAGS=@CPPUNIT_LIBS@
 all: _all
 debug: _debug
 build: _build
+install: _install
 
 doc: _doc
 doc-api: _doc-api
@@ -60,5 +64,6 @@ clean: _clean
 distclean: _distclean
 maintainer-clean: _maintainer-clean
 
+include $(top_srcdir)/project/build/version.mk
 include $(top_srcdir)/project/build/sources.mk
 include $(top_srcdir)/project/build/rules.mk

@@ -19,7 +19,6 @@ Available values for OPTION include:
   --help      display this help and exit
   --libs      library linking information
   --version   output version information
-  --vernum    output the version information as a number (hexadecimal)
 EOF
 
     exit $1
@@ -49,12 +48,7 @@ while test $# -gt 0; do
 
     case "$1" in
         --version)
-	    echo libcurl @VERSION@
-	    exit 0
-	    ;;
-
-        --vernum)
-	    echo @VERSIONNUM@
+	    echo @VERSION@
 	    exit 0
 	    ;;
 

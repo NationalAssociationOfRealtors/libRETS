@@ -3,9 +3,13 @@
 # The idea to this kind of setup info script was stolen from numerous
 # other packages, such as neon, libxml and gnome.
 #
+
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 includedir=@includedir@
+libdir=@libdir@
+librets_cflags="@LIBRETS_CFLAGS@"
+librets_ldflags="@LIBRETS_LDFLAGS@"
 
 usage()
 {
@@ -14,16 +18,22 @@ Usage: curl-config [OPTION]
 
 Available values for OPTION include:
 
-  --cc        compiler
   --cflags    pre-processor and compiler flags
   --help      display this help and exit
   --libs      library linking information
-  --prefix    curl install prefix
   --version   output version information
-  --vernum    output the version information as a number (hexadecimal)
 EOF
 
     exit $1
+}
+
+output=""
+output_separator=""
+
+append_to_output()
+{
+    output="${output}${output_separator}${1}"
+    output_separator=" "
 }
 
 if test $# -eq 0; then
@@ -40,46 +50,41 @@ while test $# -gt 0; do
     esac
 
     case "$1" in
-    --cc)
-	echo "@CC@"
-	;;
+        --version)
+	    echo @VERSION@
+	    exit 0
+	    ;;
 
-    --prefix)
-	echo "$prefix"
-	;;
+        --help)
+	    usage 0
+	    ;;
 
-    --version)
-	echo libcurl @VERSION@
-	exit 0
-	;;
+        --cflags)
+	    show_cflags="yes"
+       	    ;;
 
-    --vernum)
-	echo @VERSIONNUM@
-	exit 0
-	;;
+        --libs)
+            show_libs="yes"
+       	    ;;
 
-    --help)
-	usage 0
-	;;
-
-    --cflags)
-       	if test "X@includedir@" = "X/usr/include"; then
-          echo ""
-        else
-          echo "-I@includedir@"
-        fi
-       	;;
-
-    --libs)
-       	echo -L@libdir@ -lcurl @LDFLAGS@ @LIBS@
-       	;;
-
-    *)
-        echo "unknown option: $1"
-	usage 1
-	;;
+        *)
+            echo "unknown option: $1"
+	    usage 1
+	    ;;
     esac
     shift
 done
+
+if test "$show_cflags" = "yes"; then
+    append_to_output -I${includedir}
+    append_to_output "$librets_cflags"
+fi
+
+if test "$show_libs" = "yes"; then
+    append_to_output ${libdir}/librets.a
+    append_to_output "$librets_ldflags"
+fi
+
+echo $output
 
 exit 0

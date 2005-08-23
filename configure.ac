@@ -14,6 +14,12 @@ AC_CHECK_PROG(my_have_perl, perl, yes, no)
 if test x"$my_have_perl" != x"yes"; then
     AC_MSG_ERROR([perl is required to build librets])
 fi
+
+VERSION=`perl -ane 'print $1 if /VERSION\s+\=\s+(\S+)/' ${ac_top_builddir}project/build/version.mk`
+AC_MSG_CHECKING([librets version])
+AC_MSG_RESULT($VERSION)
+AC_SUBST(VERSION)
+
 AC_CHECK_PROG(my_have_doxygen, doxygen, yes, no)
 MY_PROG_CCACHE
 AC_CACHE_SAVE
