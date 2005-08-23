@@ -67,8 +67,13 @@ _distclean: _clean
 
 _veryclean: _distclean
 
+ifeq ($(HAVE_CPPUNIT),1)
 _test: prepare $(LIBRETS_TEST_EXE)
 	./$(LIBRETS_TEST_EXE) $(top_srcdir)
+else
+_test:
+	@echo "tests require cppunit"
+endif
 
 _maintainer-clean: _veryclean
 	$(RM) configure

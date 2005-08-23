@@ -40,9 +40,9 @@ EXPAT_LDFLAGS=@EXPAT_LIBS@
 ANTLR=@ANTLR@
 ANTLR_LDFLAGS=@ANTLR_LIBS@
 
-CPPUNIT_PREFIX=/usr/local
-CPPUNIT_LDFLAGS=-lcppunit
-
+HAVE_CPPUNIT=@HAVE_CPPUNIT@
+CPPUNIT_CFLAGS=@CPPUNIT_CFLAGS@
+CPPUNIT_LDFLAGS=@CPPUNIT_LIBS@
 
 # Put targets here so that zsh can complete on them, as zsh won't
 # follow the include directives.
