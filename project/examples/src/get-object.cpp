@@ -15,6 +15,7 @@
  * appear in supporting documentation.
  */
 #include "librets.h"
+#include "Options.h"
 #include <iostream>
 #include <boost/lexical_cast.hpp>
 
@@ -22,34 +23,79 @@ using namespace librets;
 using namespace librets::util;
 using namespace std;
 using boost::lexical_cast;
+namespace po = boost::program_options;
 
 int main(int argc, char * argv[])
 {
     try
     {
-        RetsSessionPtr session(
-            new RetsSession("http://demo.crt.realtors.org:6103/rets/login"));
-        session->Login("Joe", "Schmoe");
+        string resource;
+        string type;
+        string resourceEntity;
+        string objectId;
+        string outputPrefix;
+        
+        Options options;
+        options.descriptions.add_options()
+            ("resource,r", po::value<string>(&resource)
+             ->default_value("Property"), "Object resource")
+            ("type,t", po::value<string>(&type)
+             ->default_value("Photo"), "Object type")
+            ("resource-entity,e", po::value<string>(&resourceEntity)
+             ->default_value("LN000001"), "Search select")
+            ("object-id,i", po::value<string>(&objectId)
+             ->default_value("*"), "Object ID")
+            ("output-prefix,P", po::value<string>(&outputPrefix)
+             ->default_value(""), "Output file prefix")
+            ;
+        if (!options.ParseCommandLine(argc, argv))
+        {
+            return 0;
+        }
+
+        RetsSessionPtr session = options.RetsLogin();
+        if (!session)
+        {
+            cout << "Login failed\n";
+            return -1;
+        }
     
         GetObjectRequestPtr getObjectRequest(
-            new GetObjectRequest("Property", "Photo"));
+            new GetObjectRequest(resource, type));
     
-        if (argc == 3)
+        if (objectId == "*")
         {
-            getObjectRequest->AddObject(argv[1], lexical_cast<int>(argv[2]));
+            getObjectRequest->AddAllObjects(resourceEntity);
+        }
+        else
+        {
+            getObjectRequest->AddObject(resourceEntity,
+                                        lexical_cast<int>(objectId));
         }
     
         GetObjectResponsePtr getObjectResponse =
             session->GetObject(getObjectRequest);
     
+        StringMap contentTypeSuffixes;
+        contentTypeSuffixes["image/jpeg"] = "jpg";
         ObjectDescriptorPtr objectDescriptor;
         while (objectDescriptor = getObjectResponse->NextObject())
         {
-            cerr << objectDescriptor->GetObjectKey() << endl;
-            cerr << objectDescriptor->GetObjectId() << endl;
-            cerr << objectDescriptor->GetContentType() << endl;
+            string objectKey = objectDescriptor->GetObjectKey();
+            int objectId = objectDescriptor->GetObjectId();
+            string contentType = objectDescriptor->GetContentType();
+            string description = objectDescriptor->GetDescription();
+            cout << objectKey << " object #" << objectId;
+            if (!description.empty())
+                cout << ", description: " << description;
+            cout << endl;
+
+            string suffix = contentTypeSuffixes[contentType];
+            string outputFileName = outputPrefix + objectKey + "-" +
+                lexical_cast<string>(objectId) + "." + suffix;
+            ofstream outputStream(outputFileName.c_str());
             istreamPtr inputStream = objectDescriptor->GetData();
-            readUntilEof(*inputStream, cout);
+            readUntilEof(*inputStream, outputStream);
         }
     
         session->Logout();
@@ -57,5 +103,9 @@ int main(int argc, char * argv[])
     catch (RetsException & e)
     {
         e.PrintFullReport(cerr);
+    }
+    catch (std::exception & e)
+    {
+        cerr << e.what() << endl;
     }
 }
