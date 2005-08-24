@@ -14,6 +14,7 @@ X_OBJS = \
 	$(DIROBJ)\LookupOrCriterionTest.obj \
 	$(DIROBJ)\LtCriterionTest.obj \
 	$(DIROBJ)\MetadataByLevelCollectorTest.obj \
+	$(DIROBJ)\MetadataElementTest.obj \
 	$(DIROBJ)\NotCriterionTest.obj \
 	$(DIROBJ)\OrCriterionTest.obj \
 	$(DIROBJ)\RetsHttpRequestTest.obj \
@@ -25,6 +26,7 @@ X_OBJS = \
 	$(DIROBJ)\SqlToDmqlCompilerTest.obj \
 	$(DIROBJ)\TestHttpResponse.obj \
 	$(DIROBJ)\TestHttpResponseTest.obj \
+	$(DIROBJ)\TestMetadataElement.obj \
 	$(DIROBJ)\TestObject.obj \
 	$(DIROBJ)\TestSqlMetadata.obj \
 	$(DIROBJ)\UriTest.obj \
