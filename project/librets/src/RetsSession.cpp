@@ -31,7 +31,7 @@ using std::string;
 
 #define CLASS RetsSession
 
-const char * CLASS::DEFAULT_USER_AGENT = "librets/0.1";
+const char * CLASS::DEFAULT_USER_AGENT = "librets/" LIBRETS_VERSION;
 const RetsVersion CLASS::DEFAULT_RETS_VERSION = RETS_1_5;
 const char * CLASS::RETS_VERSION_HEADER = "RETS-Version";
 const char * CLASS::RETS_1_0_STRING = "RETS/1.0";

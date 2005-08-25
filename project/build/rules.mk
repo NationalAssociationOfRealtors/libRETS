@@ -25,6 +25,18 @@ ifeq ($(USE_EXAMPLES),1)
 ALL += $(EXAMPLES_EXE)
 endif
 
+cppunit:
+ifeq ($(HAVE_CPPUNIT),0)
+	@echo "cppunit is not installed"
+	@false
+endif
+
+doxygen:
+ifeq ($(HAVE_DOXYGEN),0)
+	@echo "doxgyen is not installed"
+	@false
+endif
+
 _all: _build
 
 _debug:
@@ -37,9 +49,9 @@ _build: prepare $(ALL)
 
 _doc: prepare $(DOC_FILES_TO_GEN)
 
-_doc-api: prepare
+_doc-api: doxygen prepare
 	$(RM) -r build/doc/api
-	doxygen project/build/Doxyfile
+	$(DOXYGEN) project/build/Doxyfile
 
 # (Ab)use rsync as a recursive copy with exclude.  Yeah, rsync is
 # "non-standard", but screw it.  It's unfortunately the easiest way to
@@ -78,13 +90,8 @@ _distclean: _clean
 
 _veryclean: _distclean
 
-ifeq ($(HAVE_CPPUNIT),1)
-_test: prepare $(LIBRETS_TEST_EXE)
+_test: cppunit prepare $(LIBRETS_TEST_EXE)
 	./$(LIBRETS_TEST_EXE) $(top_srcdir)
-else
-_test:
-	@echo "tests require cppunit"
-endif
 
 _maintainer-clean: _veryclean
 	$(RM) configure

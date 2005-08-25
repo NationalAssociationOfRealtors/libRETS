@@ -21,6 +21,13 @@ AC_MSG_RESULT($VERSION)
 AC_SUBST(VERSION)
 
 AC_CHECK_PROG(my_have_doxygen, doxygen, yes, no)
+if test x"$my_have_doxygen" = "xyes"; then
+  HAVE_DOXGYEN=1
+else
+  HAVE_DOXYGEN=0
+fi
+AC_SUBST(HAVE_DOXYGEN)
+
 MY_PROG_CCACHE
 AC_CACHE_SAVE
 
