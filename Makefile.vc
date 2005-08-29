@@ -13,6 +13,8 @@ clean:
 	cd ..\..\examples\src
 	nmake /nologo /f Makefile.vc clean
 	cd ..\..\..
+	@-rmdir /q  /s build 2>NUL
+	@-rmdir /q  /s dist 2>NUL
 
 test:
 	cd project\librets\test\src
@@ -20,3 +22,39 @@ test:
 	cd ..\..\..\..
 	project\librets\test\src\$(DIROBJ)\test.exe
 
+DIST_BASE = librets-$(VERSION)
+DISTDIR = build/$(DIST_BASE)
+DIST_ZIP = dist/$(DIST_BASE).zip
+DOXYGEN = "C:\Program Files\doxygen\bin\doxygen.exe"
+MKDIR_P = c:\cygwin\bin\mkdir.exe -p
+RSYNC = rsync -a --exclude-from project/build/dist-win-exclude
+
+prepare:
+	@if not exist build\doc\api mkdir build\doc\api
+	@if not exist dist mkdir dist
+	@$(MKDIR_P) $(DISTDIR)
+	@$(MKDIR_P) $(DISTDIR)/doc/api
+	@$(MKDIR_P) $(DISTDIR)/lib
+
+docs: prepare
+	rm -rf build/doc/api
+	$(DOXYGEN) project\build\Doxyfile.in
+
+lib-all-variants:
+	cd project\librets\src
+	nmake /nologo /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
+	nmake /nologo /f Makefile.vc BUILD=release RUNTIME_LIBS=static
+	nmake /nologo /f Makefile.vc BUILD=debug RUNTIME_LIBS=dynamic
+	nmake /nologo /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
+	cd ..\..\..
+
+dist: docs lib-all-variants _dist
+
+_dist:
+	$(RSYNC) --delete build/doc/api/html $(DISTDIR)/doc/api
+	$(RSYNC) --delete project/librets/include $(DISTDIR)
+	cp -u project/librets/src/build/*.lib $(DISTDIR)/lib
+	rm -f $(DIST_ZIP)
+	cd build
+	zip -rq ../$(DIST_ZIP) $(DIST_BASE)
+	cd ..
