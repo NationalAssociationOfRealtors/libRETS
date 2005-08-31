@@ -32,6 +32,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testQueryStringIntParameter);
     CPPUNIT_TEST(testQueryStringMultipleParameters);
     CPPUNIT_TEST(testQueryStringRemoveParameter);
+    CPPUNIT_TEST(testHeaders);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -40,6 +41,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testQueryStringIntParameter();
     void testQueryStringMultipleParameters();
     void testQueryStringRemoveParameter();
+    void testHeaders();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -80,4 +82,19 @@ void CLASS::testQueryStringRemoveParameter()
     // This should remove name
     request.SetQueryParameter("name", "");
     ASSERT_STRING_EQUAL("foo=bar", request.GetQueryString());
+}
+
+void CLASS::testHeaders()
+{
+    RetsHttpRequest request;
+    request.SetHeader("foo", "one");
+    request.SetHeader("bar", "two");
+    request.SetHeader("baz", "three");
+    request.SetHeader("bar", "four");
+    request.ClearHeader("baz");
+    
+    StringMap headerMap = request.GetHeaderMap();
+    ASSERT_EQUAL((size_t) 2, headerMap.size());
+    ASSERT_STRING_EQUAL("one", headerMap["foo"]);
+    ASSERT_STRING_EQUAL("four", headerMap["bar"]);
 }

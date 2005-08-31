@@ -47,20 +47,22 @@ CurlHttpClient::CurlHttpClient()
 void CurlHttpClient::SetDefaultHeader(string name, string value)
 {
     mDefaultHeaders[name] = value;
-    GenerateHeaderSlist();
 }
 
 void CurlHttpClient::ClearDefaultHeader(string name)
 {
     mDefaultHeaders.erase(name);
-    GenerateHeaderSlist();
 }
 
-void CurlHttpClient::GenerateHeaderSlist()
+void CurlHttpClient::GenerateHeadersSlist(const StringMap & requestHeaders)
 {
+    // Start by copying default headers, then add request headers
+    StringMap allHeaders = mDefaultHeaders;
+    allHeaders.insert(requestHeaders.begin(), requestHeaders.end());
+
     mHeaders.free_all();
     StringMap::const_iterator i;
-    for (i = mDefaultHeaders.begin(); i != mDefaultHeaders.end(); i++)
+    for (i = allHeaders.begin(); i != allHeaders.end(); i++)
     {
         string header = (*i).first + ": " + (*i).second;
         mHeaders.append(header.c_str());
@@ -93,6 +95,7 @@ RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequestPtr request)
     {
         mCurl.SetPostFields(queryString);
     }
+    GenerateHeadersSlist(request->GetHeaderMap());
     mCurl.SetHttpHeaders(mHeaders.slist());
     mCurl.SetUrl(url);
     mResponse.reset(new CurlHttpResponse());

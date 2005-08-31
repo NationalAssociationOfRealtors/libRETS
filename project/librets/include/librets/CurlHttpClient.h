@@ -63,7 +63,7 @@ class CurlHttpClient : public RetsHttpClient
     
     int Debug(CURL * handle, curl_infotype type, char * data, size_t size);
     
-    void GenerateHeaderSlist();
+    void GenerateHeadersSlist(const StringMap & requestHeaders);
     
     CurlEasy mCurl;
     

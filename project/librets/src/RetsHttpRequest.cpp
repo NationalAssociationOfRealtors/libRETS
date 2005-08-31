@@ -57,6 +57,17 @@ RetsHttpRequest::Method RetsHttpRequest::GetMethod() const
 
 void RetsHttpRequest::SetHeader(string name, string value)
 {
+    mHeaders[name] = value;
+}
+
+void RetsHttpRequest::ClearHeader(string name)
+{
+    mHeaders.erase(name);
+}
+
+StringMap RetsHttpRequest::GetHeaderMap() const
+{
+    return mHeaders;
 }
 
 void RetsHttpRequest::SetQueryParameter(string name, int value)

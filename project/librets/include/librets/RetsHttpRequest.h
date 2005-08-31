@@ -48,6 +48,10 @@ class RetsHttpRequest : public virtual RetsObject
     virtual void SetUrl(std::string url);
 
     virtual void SetHeader(std::string name, std::string value);
+    
+    virtual void ClearHeader(std::string name);
+    
+    StringMap GetHeaderMap() const;
 
     virtual void SetQueryParameter(std::string, std::string value);
     
@@ -63,6 +67,7 @@ class RetsHttpRequest : public virtual RetsObject
     StringMap mQueryParameters;
     mutable bool mQueryParametersChanged;
     mutable std::string mQueryString;
+    StringMap mHeaders;
 };
 
 };
