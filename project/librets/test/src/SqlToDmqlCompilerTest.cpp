@@ -52,6 +52,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testAnd);
     CPPUNIT_TEST(testNot);
     CPPUNIT_TEST(testEmptyWhere);
+    CPPUNIT_TEST(testQuotedLiterals);
     CPPUNIT_TEST(testGetAllObjects);
     CPPUNIT_TEST(testGetOneObject);
     CPPUNIT_TEST(testGetTwoObjects);
@@ -78,6 +79,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testAnd();
     void testNot();
     void testEmptyWhere();
+    void testQuotedLiterals();
     void testGetAllObjects();
     void testGetOneObject();
     void testGetTwoObjects();
@@ -406,6 +408,23 @@ void CLASS::testEmptyWhere()
     CPPUNIT_ASSERT(!criterion);
 }
 
+void CLASS::testQuotedLiterals()
+{
+    DmqlQueryPtr query =
+        sqlToDmql("select ListingID, \"data:Property:RES\".ListPrice "
+                  " from \"data:Property:RES\" "
+                  " where \"data:Property:RES\".ListPrice >= 300000;");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+    
+    StringVector columns;
+    columns.push_back("ListingID");
+    columns.push_back("ListPrice");
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+    
+    DmqlCriterionPtr criterion = gt("ListPrice", literal("300000"));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+}
 
 void CLASS::testGetAllObjects()
 {

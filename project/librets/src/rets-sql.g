@@ -180,6 +180,7 @@ options
 	testLiterals = true;
 }
 	:	(ALPHA | '_') (ALPHA | DIGIT | '_' | ':')*
+    | '\"'! (~'\"')* '\"'!
 	;
 
 STRING
