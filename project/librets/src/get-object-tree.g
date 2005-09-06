@@ -114,7 +114,8 @@ columns
     ;
 
 table_name [GetObjectQueryPtr q]
-    : id:ID { setResource(q, id); tableName = id->getText();}
+    : #(TABLE table:ID alias:ID)
+        { setResource(q, alias); tableName = alias->getText();}
     ;
 
 criteria [GetObjectQueryPtr q]

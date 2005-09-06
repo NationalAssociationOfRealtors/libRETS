@@ -41,8 +41,8 @@ options
 tokens
 {
     SELECT = "select"; FROM = "from"; WHERE = "where";
-    OR = "or"; AND = "and"; NOT = "not"; ORDER = "order"; BY = "by";
-    COLUMNS; COLUMN; QUERY_ELEMENT;
+    OR = "or"; AND = "and"; NOT = "not"; ORDER = "order"; BY = "by"; AS = "as";
+    COLUMNS; COLUMN; QUERY_ELEMENT; TABLE;
 }
 
 {
@@ -82,8 +82,17 @@ column_name!
         { #column_name = #([COLUMN, "COL"], #table, #col); }
     ;
 
-table_name
-    : id:ID { mTableName = id; }
+table_name!
+{ RefRetsAST tableAst; }
+    : id:ID 
+        { mTableName = id;
+          // Must clone #id, rather than use #(... #id, #id) which
+          // creates an infinite loop.  I'm sure there is a better way
+          // to clone #id, but I can't figure it out.
+          #table_name = #([TABLE, "TABLE"], #id, #[ID, #id->getText()]); }
+    | table:ID (AS)? alias:ID
+        { mTableName = table;
+          #table_name = #([TABLE, "TABLE"], #table, #alias); }
     ;
 
 order_by!

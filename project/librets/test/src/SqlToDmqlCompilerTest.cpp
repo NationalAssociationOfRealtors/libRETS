@@ -53,6 +53,9 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testNot);
     CPPUNIT_TEST(testEmptyWhere);
     CPPUNIT_TEST(testQuotedLiterals);
+    CPPUNIT_TEST(testTableAlias);
+    CPPUNIT_TEST(testTableAliasWithoutAs);
+    CPPUNIT_TEST(testInvalidTableAliases);
     CPPUNIT_TEST(testGetAllObjects);
     CPPUNIT_TEST(testGetOneObject);
     CPPUNIT_TEST(testGetTwoObjects);
@@ -80,6 +83,9 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testNot();
     void testEmptyWhere();
     void testQuotedLiterals();
+    void testTableAlias();
+    void testTableAliasWithoutAs();
+    void testInvalidTableAliases();
     void testGetAllObjects();
     void testGetOneObject();
     void testGetTwoObjects();
@@ -424,6 +430,58 @@ void CLASS::testQuotedLiterals()
     
     DmqlCriterionPtr criterion = gt("ListPrice", literal("300000"));
     ASSERT_EQUAL(*criterion, *query->GetCriterion());
+}
+
+void CLASS::testTableAlias()
+{
+    DmqlQueryPtr query =
+        sqlToDmql("select res.ListingID, res.ListPrice "
+                  " from \"data:Property:RES\" as res"
+                  " where res.ListPrice >= 300000;");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+    
+    StringVector columns;
+    columns.push_back("ListingID");
+    columns.push_back("ListPrice");
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+    
+    DmqlCriterionPtr criterion = gt("ListPrice", literal("300000"));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+}
+
+void CLASS::testTableAliasWithoutAs()
+{
+    DmqlQueryPtr query =
+        sqlToDmql("select res.ListingID, res.ListPrice "
+                  " from \"data:Property:RES\" res"
+                  " where res.ListPrice >= 300000;");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+    
+    StringVector columns;
+    columns.push_back("ListingID");
+    columns.push_back("ListPrice");
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+    
+    DmqlCriterionPtr criterion = gt("ListPrice", literal("300000"));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+}
+
+void CLASS::testInvalidTableAliases()
+{
+    // If you use an alias, you can no longer use the original table name
+    ASSERT_INVALID_SQL("select * "
+                       "from data:Property:RES r "
+                       "where data:Property:RES.ListPrice > 0");
+    
+    ASSERT_INVALID_SQL("select  "
+                       "from data:Property:RES r "
+                       "where res.ListPrice > 0");
+    
+    ASSERT_INVALID_SQL("select res.ListPrice "
+                       "from data:Property:RES r "
+                       "where r.ListPrice > 0");
 }
 
 void CLASS::testGetAllObjects()

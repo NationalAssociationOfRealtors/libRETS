@@ -48,13 +48,15 @@ void DmqlTreeParser::setMetadata(SqlMetadataPtr metadata)
     mMetadata = metadata;
 }
 
-void DmqlTreeParser::setTable(DmqlQueryPtr query, RefRetsAST ast)
+void DmqlTreeParser::setTable(DmqlQueryPtr query, RefRetsAST tableAst,
+                              RefRetsAST aliasAst)
 {
-    mTable = ast->getText();
+    mTable = tableAst->getText();
+    mAlias = aliasAst->getText();
     StringVector components;
     split(components, mTable, is_any_of(":"));
     if ((components.size() != 3) || (components.at(0) != "data")) {
-        throwSemanticException("Invalid table: " + mTable, ast);
+        throwSemanticException("Invalid table: " + mTable, tableAst);
     }
 
     query->SetResource(components.at(1));
@@ -64,7 +66,7 @@ void DmqlTreeParser::setTable(DmqlQueryPtr query, RefRetsAST ast)
 void DmqlTreeParser::assertValidTable(RefRetsAST ast)
 {
     std::string table = ast->getText();
-    if (!table.empty() && (table != mTable)) {
+    if (!table.empty() && (table != mAlias)) {
         throwSemanticException("Invalid table: " + table, ast);
     }
 }
@@ -97,11 +99,13 @@ options
     void setMetadata(SqlMetadataPtr metadata);
 
   private:
-    void setTable(DmqlQueryPtr query, RefRetsAST ast);
+    void setTable(DmqlQueryPtr query, RefRetsAST tableAst,
+                  RefRetsAST aliasAst);
     void assertValidTable(RefRetsAST ast);
     void throwSemanticException(std::string message, RefRetsAST ast);
     bool fieldIsLookup(std::string field);
     std::string mTable;
+    std::string mAlias;
     SqlMetadataPtr mMetadata;
 }
 
@@ -122,7 +126,7 @@ column [DmqlQueryPtr q]
     ;
 
 table_name [DmqlQueryPtr q]
-    : id:ID { setTable(q, id); }
+    : #(TABLE table:ID alias:ID)  { setTable(q, table, alias); }
     ;
 
 criteria returns [DmqlCriterionPtr criterion]
