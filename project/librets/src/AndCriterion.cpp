@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <iostream>
 #include "librets/AndCriterion.h"
 
@@ -38,5 +39,5 @@ string AndCriterion::Operator() const
 
 string AndCriterion::OperationName() const
 {
-    return "locical and";
+    return "logical and";
 }
