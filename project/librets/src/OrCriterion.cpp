@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <iostream>
 #include "librets/OrCriterion.h"
 
@@ -38,5 +39,5 @@ string OrCriterion::Operator() const
 
 string OrCriterion::OperationName() const
 {
-    return "locical or";
+    return "logical or";
 }
