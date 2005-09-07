@@ -1,0 +1,9 @@
+Version 1.0.0b2 - xxx
+
+  * Add support for SQL quoted literals.
+  * Add support for SQL table aliaes.
+  * Add support for SQL IN clause.
+
+Version 1.0.0b1 - 30 August 2005
+
+  * First public release.
