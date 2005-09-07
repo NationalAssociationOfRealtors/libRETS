@@ -23,14 +23,14 @@ using std::string;
 using std::ostream;
 
 LookupOrCriterion::LookupOrCriterion(string field, DmqlCriterionPtr value)
-    : FieldCriterion(field, value)
+    : LookupCriterion(field)
 {
+    add(value);
 }
 
-ostream & LookupOrCriterion::ToDmql(ostream & out) const
+string LookupOrCriterion::Operator() const
 {
-    out << "(" << mField << "=|";
-    return mValue->ToDmql(out) << ")";
+    return "=|";
 }
 
 string LookupOrCriterion::OperationName() const

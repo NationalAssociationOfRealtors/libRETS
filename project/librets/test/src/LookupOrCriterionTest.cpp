@@ -32,11 +32,13 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testEquals);
     CPPUNIT_TEST(testToDmql);
+    CPPUNIT_TEST(testCoalescing);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
     void testEquals();
     void testToDmql();
+    void testCoalescing();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -63,4 +65,24 @@ void CLASS::testToDmql()
 {
     LookupOrCriterion lookupOr("field", literal("foo"));
     ASSERT_STRING_EQUAL("(field=|foo)", lookupOr.ToDmqlString());
+    lookupOr.add(literal("bar"));
+    ASSERT_STRING_EQUAL("(field=|foo,bar)", lookupOr.ToDmqlString());
+}
+
+void CLASS::testCoalescing()
+{
+#if 0
+    DmqlCriterionPtr foo = literal("foo");
+    DmqlCriterionPtr bar = literal("bar");
+    
+    // Lookups on the same field should coalesce
+    LookupOrCriterionPtr c1(new LookupOrCriterion("field", foo));
+    c1->add(bar);
+    DmqlCriterionPtr c2 = lookupOr("field", foo, lookupOr("field", bar))
+    ASSERT_EQUAL(*DmqlCriterionPtr(c1), *c2);
+    
+    // Lookups on different fields should not
+    c2 = lookupOr("field", foo, lookupOr("field2", bar));
+    ASSERT_NOT_EQUAL(*DmqlCriterionPtr(c1), *c2);
+#endif
 }

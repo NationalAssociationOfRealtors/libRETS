@@ -67,10 +67,10 @@ void CLASS::testEquals()
 
 void CLASS::testToDmql()
 {
-    OrCriterionPtr criterion(new OrCriterion(literal("foo"), literal("bar")));
-    ASSERT_STRING_EQUAL("(foo|bar)", criterion->ToDmqlString());
-    criterion->add(literal("baz"));
-    ASSERT_STRING_EQUAL("(foo|bar|baz)", criterion->ToDmqlString());
+    OrCriterion criterion(literal("foo"), literal("bar"));
+    ASSERT_STRING_EQUAL("(foo|bar)", criterion.ToDmqlString());
+    criterion.add(literal("baz"));
+    ASSERT_STRING_EQUAL("(foo|bar|baz)", criterion.ToDmqlString());
 }
 
 void CLASS::testDmqlExpression()

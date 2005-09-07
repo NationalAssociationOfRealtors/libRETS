@@ -15,26 +15,43 @@
  * appear in supporting documentation.
  */
 
-#ifndef LIBRETS_IN_CRITERION_H
-#define LIBRETS_IN_CRITERION_H
+#ifndef LIBRETS_LOOKUP_CRITERION_H
+#define LIBRETS_LOOKUP_CRITERION_H
 
 #include <string>
+#include <vector>
 #include "librets/sql_forward.h"
-#include "librets/LookupCriterion.h"
+#include "librets/DmqlCriterion.h"
 
 namespace librets {
-
-class LookupOrCriterion : public LookupCriterion
+    
+class LookupCriterion : public DmqlCriterion
 {
   public:
-    LookupOrCriterion(std::string field, DmqlCriterionPtr value);
+    LookupCriterion(std::string field);
+    
+    void add(DmqlCriterionPtr criterion);
+    
+    virtual std::ostream & ToDmql(std::ostream & outputStream) const;
+    
+    virtual std::ostream & Print(std::ostream & outputStream) const;
+    
+    bool Equals(const RetsObject * object) const;
     
   protected:
-    virtual std::string Operator() const;
-    virtual std::string OperationName() const;
-};
+    typedef std::vector<DmqlCriterionPtr> CriterionList;
     
-}
+    void addAll(LookupCriterionPtr lookup);
+    void addAll(const CriterionList & criteria);
+    
+    virtual std::string OperationName() const = 0;
+    virtual std::string Operator() const = 0;
+    
+    std::string mField;
+    CriterionList mCriteria;
+};
+
+};
 
 #endif
 

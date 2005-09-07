@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_JUNCTION_CRITERION_H
 #define LIBRETS_JUNCTION_CRITERION_H
 
@@ -28,7 +29,6 @@ class JunctionCriterion : public DmqlCriterion
 {
   public:
     JunctionCriterion();
-    JunctionCriterion(DmqlCriterionPtr first, DmqlCriterionPtr second);
 
     void add(DmqlCriterionPtr criterion);
 

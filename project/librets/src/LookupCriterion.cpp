@@ -16,7 +16,7 @@
  */
 
 #include <iostream>
-#include "librets/JunctionCriterion.h"
+#include "librets/LookupCriterion.h"
 #include "librets/AndCriterion.h"
 #include "librets/OrCriterion.h"
 #include "librets/util.h"
@@ -27,12 +27,12 @@ using std::string;
 using std::ostream;
 namespace b = boost;
 
-JunctionCriterion::JunctionCriterion()
-    : mCriteria()
+LookupCriterion::LookupCriterion(string field)
+    : mField(field), mCriteria()
 {
 }
 
-void JunctionCriterion::add(DmqlCriterionPtr criterion)
+void LookupCriterion::add(DmqlCriterionPtr criterion)
 {
     /*
      * Take advantage of the associative law to merge like operations
@@ -41,21 +41,13 @@ void JunctionCriterion::add(DmqlCriterionPtr criterion)
      *  (A + B) + C = A + (B + C) = A + B + C
      *  (A * B) * C = A * (B * C) = A * B * C
      */
-    JunctionCriterionPtr junction =
-        b::dynamic_pointer_cast<JunctionCriterion>(criterion);
-    if (junction)
+    LookupCriterionPtr lookup =
+        b::dynamic_pointer_cast<LookupCriterion>(criterion);
+    if (lookup)
     {
-        /*
-         * I could not, for the life of me, get this typeid()
-         * comparison to work, even though it seems like it should.
-         * typeid() was basically acting non-virtual.
-         *
-         * if ((typeid(this) == typeid(junction.get())))
-         */
-
-        if (OperationName() == junction->OperationName())
+        if (OperationName() == lookup->OperationName())
         {
-            addAll(junction);
+            addAll(lookup);
         }
         else
         {
@@ -69,12 +61,12 @@ void JunctionCriterion::add(DmqlCriterionPtr criterion)
 }
 
 
-void JunctionCriterion::addAll(JunctionCriterionPtr junction)
+void LookupCriterion::addAll(LookupCriterionPtr lookup)
 {
-    addAll(junction->mCriteria);
+    addAll(lookup->mCriteria);
 }
 
-void JunctionCriterion::addAll(const CriterionList & criteria)
+void LookupCriterion::addAll(const CriterionList & criteria)
 {
     CriterionList::const_iterator i;
     for (i = criteria.begin(); i != criteria.end(); i++)
@@ -83,9 +75,9 @@ void JunctionCriterion::addAll(const CriterionList & criteria)
     }
 }
 
-ostream & JunctionCriterion::ToDmql(ostream & out) const
+ostream & LookupCriterion::ToDmql(ostream & out) const
 {
-    out << "(";
+    out << "(" << mField << Operator();
     CriterionList::const_iterator i;
     string  separator = "";
     for (i = mCriteria.begin(); i != mCriteria.end(); i++)
@@ -93,27 +85,28 @@ ostream & JunctionCriterion::ToDmql(ostream & out) const
         out << separator;
         DmqlCriterionPtr criterion = *i;
         criterion->ToDmql(out);
-        separator = Operator();
+        separator = ",";
     }
     return out << ")";
 }
 
-ostream & JunctionCriterion::Print(ostream & outputStream) const
+ostream & LookupCriterion::Print(ostream & outputStream) const
 {
     return outputStream << "(<" << OperationName() << "> <"
-                        << Output(mCriteria) << ">)";
+        << mField << "> <" << Output(mCriteria) << ">)";
 }
 
-bool JunctionCriterion::Equals(const RetsObject * object) const
+bool LookupCriterion::Equals(const RetsObject * object) const
 {
-    const JunctionCriterion * rhs =
-        dynamic_cast<const JunctionCriterion *>(object);
+    const LookupCriterion * rhs =
+        dynamic_cast<const LookupCriterion *>(object);
     if (rhs == 0)
     {
         return false;
     }
-
+    
     bool equals = true;
+    equals &= (mField == rhs->mField);
     equals &= (OperationName() == rhs->OperationName());
     equals &= VectorEquals(mCriteria, rhs->mCriteria);
     return equals;

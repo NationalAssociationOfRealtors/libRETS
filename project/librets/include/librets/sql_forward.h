@@ -27,6 +27,9 @@ typedef boost::shared_ptr<DmqlCriterion> DmqlCriterionPtr;
 class JunctionCriterion;
 typedef boost::shared_ptr<JunctionCriterion> JunctionCriterionPtr;
 
+class LookupCriterion;
+typedef boost::shared_ptr<LookupCriterion> LookupCriterionPtr;
+
 class LiteralCriterion;
 typedef boost::shared_ptr<LiteralCriterion> LiteralCriterionPtr;
 

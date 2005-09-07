@@ -24,6 +24,7 @@
 #include "librets/GetObjectQuery.h"
 #include "librets/DmqlCriterion.h"
 #include "librets/DmqlExpression.h"
+#include "librets/LookupOrCriterion.h"
 #include "librets/RetsSqlException.h"
 
 using namespace librets;
@@ -51,6 +52,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testOr);
     CPPUNIT_TEST(testIn);
     CPPUNIT_TEST(testInWithSingleValue);
+    CPPUNIT_TEST(testLookupIn);
     CPPUNIT_TEST(testAnd);
     CPPUNIT_TEST(testNot);
     CPPUNIT_TEST(testEmptyWhere);
@@ -83,6 +85,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testOr();
     void testIn();
     void testInWithSingleValue();
+    void testLookupIn();
     void testAnd();
     void testNot();
     void testEmptyWhere();
@@ -403,6 +406,24 @@ void CLASS::testInWithSingleValue()
     
     DmqlCriterionPtr criterion = eq("ListingID", literal("LN1"));
     ASSERT_EQUAL(*criterion, *query->GetCriterion());
+}
+
+void CLASS::testLookupIn()
+{
+    DmqlQueryPtr query =
+    sqlToDmql("select * "
+              "  from data:Property:RES "
+              " where Status IN ('Active', 'Closed');");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+    
+    StringVector columns;
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+    
+    LookupOrCriterionPtr criterion(new LookupOrCriterion("Status", literal("Active")));
+    criterion->add(literal("Closed"));
+    DmqlCriterionPtr dmql = criterion;
+    ASSERT_EQUAL(*dmql, *query->GetCriterion());
 }
 
 void CLASS::testAnd()

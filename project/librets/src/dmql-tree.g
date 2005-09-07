@@ -23,6 +23,7 @@ header "post_include_hpp"
 #include "librets/sql_forward.h"
 #include "librets/DmqlQuery.h"
 #include "librets/DmqlExpression.h"
+#include "librets/LookupOrCriterion.h"
 #include "librets/SqlMetadata.h"
 }
 
@@ -181,9 +182,9 @@ standard_or_list [std::string n] returns [DmqlCriterionPtr criterion]
     ;
 
 lookup_or_list [std::string n] returns [DmqlCriterionPtr criterion]
-    { DmqlCriterionPtr c; }
-    : c=field_value { criterion = eq(n, c); }
-        (c=field_value {criterion = logicOr(criterion, eq(n, c)); })*
+    { DmqlCriterionPtr c; LookupOrCriterionPtr l;}
+    : c=field_value { l.reset(new LookupOrCriterion(n, c)); criterion = l; }
+        (c=field_value { l->add(c); })*
     ;
 
 field_name returns [std::string name]

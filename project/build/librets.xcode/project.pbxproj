@@ -1452,6 +1452,7 @@
 				55F23D63088EAA290090B325,
 				55F23E6E088EECB80090B325,
 				55F23EF1088FFB900090B325,
+				555970C308CF5034003A6B24,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1537,6 +1538,7 @@
 				55F237A6087C7DA30090B325,
 				55F23D85088EACDE0090B325,
 				55F23F00088FFC2D0090B325,
+				555970C508CF520F003A6B24,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3466,6 +3468,34 @@
 			settings = {
 			};
 		};
+		555970C208CF5034003A6B24 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = LookupCriterion.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		555970C308CF5034003A6B24 = {
+			fileRef = 555970C208CF5034003A6B24;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		555970C408CF520F003A6B24 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = LookupCriterion.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		555970C508CF520F003A6B24 = {
+			fileRef = 555970C408CF520F003A6B24;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		558F690707FDB68E00CE8AF2 = {
 			containerPortal = 554A9EA607F9F27F00402C35;
 			isa = PBXContainerItemProxy;
@@ -3577,6 +3607,7 @@
 		};
 		558F6AC107FE054300CE8AF2 = {
 			children = (
+				555970C408CF520F003A6B24,
 				55F23EFF088FFC2D0090B325,
 				554A9F6707F9F2E700402C35,
 				554A9F5207F9F2E700402C35,
@@ -3718,6 +3749,7 @@
 		};
 		558F6AC707FE06D300CE8AF2 = {
 			children = (
+				555970C208CF5034003A6B24,
 				554A9EF807F9F2D200402C35,
 				554A9EB607F9F2D200402C35,
 				554A9EBD07F9F2D200402C35,
