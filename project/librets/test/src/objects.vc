@@ -3,6 +3,7 @@ X_OBJS = \
 	$(DIROBJ)\AndCriterionTest.obj \
 	$(DIROBJ)\CapabilityUrlsTest.obj \
 	$(DIROBJ)\DefaultMetadataElementFactoryTest.obj \
+	$(DIROBJ)\DmqlExpressionTest.obj \
 	$(DIROBJ)\EqCriterionTest.obj \
 	$(DIROBJ)\ExpatXmlParserTest.obj \
 	$(DIROBJ)\GetObjectRequestTest.obj \

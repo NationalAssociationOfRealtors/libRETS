@@ -22,6 +22,7 @@ X_OBJS = \
 	$(DIROBJ)\LiteralCriterion.obj \
 	$(DIROBJ)\LoginResponse.obj \
 	$(DIROBJ)\LogoutResponse.obj \
+	$(DIROBJ)\LookupCriterion.obj \
 	$(DIROBJ)\LookupOrCriterion.obj \
 	$(DIROBJ)\LtCriterion.obj \
 	$(DIROBJ)\MetadataByLevelCollector.obj \
