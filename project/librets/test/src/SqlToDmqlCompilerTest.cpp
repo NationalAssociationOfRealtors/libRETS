@@ -24,7 +24,6 @@
 #include "librets/GetObjectQuery.h"
 #include "librets/DmqlCriterion.h"
 #include "librets/DmqlExpression.h"
-#include "librets/LookupOrCriterion.h"
 #include "librets/RetsSqlException.h"
 
 using namespace librets;
@@ -420,10 +419,9 @@ void CLASS::testLookupIn()
     StringVector columns;
     ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
     
-    LookupOrCriterionPtr criterion(new LookupOrCriterion("Status", literal("Active")));
-    criterion->add(literal("Closed"));
-    DmqlCriterionPtr dmql = criterion;
-    ASSERT_EQUAL(*dmql, *query->GetCriterion());
+    DmqlCriterionPtr criterion = logicOr(lookupOr("Status", literal("Active")),
+                                         lookupOr("Status", literal("Closed")));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
 }
 
 void CLASS::testAnd()

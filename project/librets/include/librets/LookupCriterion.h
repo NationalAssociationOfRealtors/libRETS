@@ -30,7 +30,11 @@ class LookupCriterion : public DmqlCriterion
   public:
     LookupCriterion(std::string field);
     
+    std::string getField() const;
+    
     void add(DmqlCriterionPtr criterion);
+
+    void addAll(LookupCriterionPtr lookup);
     
     virtual std::ostream & ToDmql(std::ostream & outputStream) const;
     
@@ -41,7 +45,6 @@ class LookupCriterion : public DmqlCriterion
   protected:
     typedef std::vector<DmqlCriterionPtr> CriterionList;
     
-    void addAll(LookupCriterionPtr lookup);
     void addAll(const CriterionList & criteria);
     
     virtual std::string OperationName() const = 0;

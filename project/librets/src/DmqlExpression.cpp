@@ -29,6 +29,7 @@ using namespace librets;
 using namespace librets::DmqlExpression;
 using std::string;
 using std::ostringstream;
+namespace b = boost;
 
 #define NS librets::DmqlExpression
 
@@ -72,6 +73,16 @@ DmqlCriterionPtr NS::lookupOr(string field, DmqlCriterionPtr value)
 
 DmqlCriterionPtr NS::logicOr(DmqlCriterionPtr first, DmqlCriterionPtr second)
 {
+    LookupOrCriterionPtr lookupOrFirst =
+        b::dynamic_pointer_cast<LookupOrCriterion>(first);
+    LookupOrCriterionPtr lookupOrSecond =
+        b::dynamic_pointer_cast<LookupOrCriterion>(second);
+    if ((lookupOrFirst && lookupOrSecond) &&
+        (lookupOrFirst->getField() == lookupOrSecond->getField()))
+    {
+        lookupOrFirst->addAll(lookupOrSecond);
+        return lookupOrFirst;
+    }
     OrCriterionPtr logicOr(new OrCriterion(first, second));
     return logicOr;
 }

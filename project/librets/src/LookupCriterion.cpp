@@ -32,6 +32,11 @@ LookupCriterion::LookupCriterion(string field)
 {
 }
 
+string LookupCriterion::getField() const
+{
+    return mField;
+}
+
 void LookupCriterion::add(DmqlCriterionPtr criterion)
 {
     /*
@@ -59,7 +64,6 @@ void LookupCriterion::add(DmqlCriterionPtr criterion)
         mCriteria.push_back(criterion);
     }
 }
-
 
 void LookupCriterion::addAll(LookupCriterionPtr lookup)
 {

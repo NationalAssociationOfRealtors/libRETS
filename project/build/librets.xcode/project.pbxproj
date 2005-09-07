@@ -3496,6 +3496,20 @@
 			settings = {
 			};
 		};
+		5559722808CF66F6003A6B24 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = DmqlExpressionTest.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		5559722908CF66F6003A6B24 = {
+			fileRef = 5559722808CF66F6003A6B24;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		558F690707FDB68E00CE8AF2 = {
 			containerPortal = 554A9EA607F9F27F00402C35;
 			isa = PBXContainerItemProxy;
@@ -4079,6 +4093,7 @@
 		55BD577E07FDAAFD00526D69 = {
 			children = (
 				55F2405A08904EE40090B325,
+				5559722808CF66F6003A6B24,
 				55083EC708A92D80004B3699,
 				55083EC808A92D80004B3699,
 				55083EAD08A92BA2004B3699,
@@ -4394,6 +4409,7 @@
 				55F23F8C089003B60090B325,
 				55083EAE08A92BA2004B3699,
 				55083EC908A92D80004B3699,
+				5559722908CF66F6003A6B24,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
