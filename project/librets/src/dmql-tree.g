@@ -135,6 +135,7 @@ criteria returns [DmqlCriterionPtr criterion]
     | #(AND c1=criteria c2=criteria)    { criterion = logicAnd(c1, c2); }
     | #(NOT c1=criteria)                { criterion = logicNot(c1); }
     | #(QUERY_ELEMENT n=field_name c1=query_element[n]) { criterion = c1; }
+    | #(IN n=field_name c1=or_list[n]) { criterion = c1; }
     ;
 
 query_element [std::string n] returns [DmqlCriterionPtr criterion]
@@ -164,6 +165,25 @@ standard_element [std::string n] returns [DmqlCriterionPtr criterion]
     | #(EQ c=field_value)      { criterion = eq(n, c); }
     | #(LTE c=field_value)     { criterion = lt(n, c); }
     | #(GTE c=field_value)     { criterion = gt(n, c); }
+    ;
+
+or_list [std::string n] returns [DmqlCriterionPtr criterion]
+    { DmqlCriterionPtr c; }
+    : {fieldIsLookup(n)}?
+        c=lookup_or_list[n]   { criterion = c; }
+    | c=standard_or_list[n]   { criterion = c; }
+    ;
+
+standard_or_list [std::string n] returns [DmqlCriterionPtr criterion]
+    { DmqlCriterionPtr c; }
+    : c=field_value { criterion = eq(n, c); }
+        (c=field_value {criterion = logicOr(criterion, eq(n, c)); })*
+    ;
+
+lookup_or_list [std::string n] returns [DmqlCriterionPtr criterion]
+    { DmqlCriterionPtr c; }
+    : c=field_value { criterion = eq(n, c); }
+        (c=field_value {criterion = logicOr(criterion, eq(n, c)); })*
     ;
 
 field_name returns [std::string name]

@@ -42,6 +42,7 @@ tokens
 {
     SELECT = "select"; FROM = "from"; WHERE = "where";
     OR = "or"; AND = "and"; NOT = "not"; ORDER = "order"; BY = "by"; AS = "as";
+    IN = "in";
     COLUMNS; COLUMN; QUERY_ELEMENT; TABLE;
 }
 
@@ -114,9 +115,18 @@ not_clause
 
 query_element
     : LPAREN! where_condition RPAREN!
-    |! c:column_name o:numeric_operator v:field_value
-        { #query_element = #([QUERY_ELEMENT, "QE"], #c, (#o, #v)); }
+    |! c:column_name cc:column_condition[#c] {#query_element = #cc; }
+    ;
 
+column_condition [RefRetsAST c]
+    :! o:numeric_operator v:field_value
+        { #column_condition = #([QUERY_ELEMENT, "QE"], #c, (#o, #v)); }
+    |! IN fvl:field_value_list
+        { #column_condition = #([IN], #c, (#fvl)); }
+    ;
+
+field_value_list
+    : LPAREN! field_value (COMMA! field_value)* RPAREN!
     ;
 
 numeric_operator
