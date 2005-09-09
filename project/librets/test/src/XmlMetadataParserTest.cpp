@@ -25,7 +25,7 @@
 #include "librets/MetadataElementCollector.h"
 #include "librets/MetadataElement.h"
 #include "librets/RetsXmlStartElementEvent.h"
-#include "librets/RetsException.h"
+#include "librets/RetsUnknownMetadataException.h"
 
 using namespace librets;
 using namespace std;
@@ -41,6 +41,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testParseTabularData);
     CPPUNIT_TEST(testParseRetsResponse);
     CPPUNIT_TEST(testBlankDataTag);
+    CPPUNIT_TEST(testIgnoreUnknownMetadata);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -49,6 +50,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testParseTabularData();
     void testParseRetsResponse();
     void testBlankDataTag();
+    void testIgnoreUnknownMetadata();
 };
 
 class TestElementFactory :
@@ -84,8 +86,13 @@ void TestElementFactory::AddElement(MetadataElementPtr element)
         b::dynamic_pointer_cast<TestMetadataElement>(element);
     if (!testElement)
     {
-        throw RetsException("Unknown element");
+        throw RetsUnknownMetadataException("Unknown element");
     }
+    if (testElement->GetTypeName().compare("METADATA-CLASSS") == 0)
+    {
+        throw RetsUnknownMetadataException("Unknown element");
+    }
+
     mElements.push_back(testElement);
 }
 
@@ -210,4 +217,38 @@ void CLASS::testBlankDataTag()
     TestMetadataElementPtr element = elements[0];
     ASSERT_STRING_EQUAL("METADATA-CLASS", element->GetTypeName());
     ASSERT_STRING_EQUAL("CON", element->GetStringAttribute("ClassName"));
+}
+
+void CLASS::testIgnoreUnknownMetadata()
+{
+    bool exceptionThrown = false;
+
+    try
+    {
+        TestElementFactoryPtr elementFactory(new TestElementFactory());
+        XmlMetadataParser parser(elementFactory);
+        parser.SetElementFactory(elementFactory);
+        istreamPtr inputStream = getResource("metadata-class-broken.xml");
+        parser.Parse(inputStream);
+    }
+    catch(RetsUnknownMetadataException & )
+    {
+        exceptionThrown = true;
+    }
+    ASSERT_EQUAL(true, exceptionThrown);
+
+    exceptionThrown = false;
+    try
+    {
+        TestElementFactoryPtr elementFactory(new TestElementFactory());
+        XmlMetadataParser parser(elementFactory, true);
+        parser.SetElementFactory(elementFactory);
+        istreamPtr inputStream = getResource("metadata-class-broken.xml");
+        parser.Parse(inputStream);
+    }
+    catch(RetsUnknownMetadataException & )
+    {
+        exceptionThrown = true;
+    }
+    ASSERT_EQUAL(false, exceptionThrown);
 }

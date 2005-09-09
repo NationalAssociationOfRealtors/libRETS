@@ -26,6 +26,7 @@
 #include "librets/RetsXmlTextEvent.h"
 #include "librets/MetadataElement.h"
 #include "librets/RetsException.h"
+#include "librets/RetsUnknownMetadataException.h"
 #include "librets/util.h"
 
 using namespace librets;
@@ -37,7 +38,9 @@ namespace ba = boost::algorithm;
 
 #define CLASS XmlMetadataParser
 
-CLASS::CLASS(MetadataElementCollectorPtr elementCollector)
+CLASS::CLASS(MetadataElementCollectorPtr elementCollector,
+             bool ignoreUnknownMetadata)
+    : mIgnoreUnknownMetadata(ignoreUnknownMetadata)
 {
     mElementCollector = elementCollector;
     mElementFactory.reset(new DefaultMetadataElementFactory());
@@ -186,14 +189,25 @@ void CLASS::HandleData(RetsXmlStartElementEventPtr metadataEvent)
         message << "Unknown data format: " << Output(data);
         throw RetsException(message.str());
     }
-    MetadataElementPtr element =
-        mElementFactory->CreateMetadataElement(metadataEvent);
-    for (StringVector::size_type index = 1;
-         index < mColumns.size(); index++)
+
+    try
     {
-        string name = mColumns.at(index);
-        string value = data.at(index);
-        element->SetAttribute(name, value);
+        MetadataElementPtr element =
+            mElementFactory->CreateMetadataElement(metadataEvent);
+        for (StringVector::size_type index = 1;
+             index < mColumns.size(); index++)
+        {
+            string name = mColumns.at(index);
+            string value = data.at(index);
+            element->SetAttribute(name, value);
+        }
+        mElementCollector->AddElement(element);
     }
-    mElementCollector->AddElement(element);
+    catch (RetsUnknownMetadataException & e)
+    {
+        if (!mIgnoreUnknownMetadata)
+        {
+            throw e;
+        }
+    }
 }

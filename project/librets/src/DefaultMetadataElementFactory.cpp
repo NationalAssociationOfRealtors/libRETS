@@ -37,7 +37,7 @@
 #include "librets/MetadataValidationExternalType.h"
 #include "librets/MetadataValidationExpression.h"
 #include "librets/MetadataForeignKey.h"
-#include "librets/RetsException.h"
+#include "librets/RetsUnknownMetadataException.h"
 
 using namespace librets;
 using std::string;
@@ -276,7 +276,7 @@ MetadataElementPtr CLASS::CreateMetadataElement(
     }
     else
     {
-        throw RetsException("Unknown element name: " + name);
+        throw RetsUnknownMetadataException("Unknown element name: " + name);
     }
 }
 

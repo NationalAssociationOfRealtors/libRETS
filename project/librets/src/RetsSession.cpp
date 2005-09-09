@@ -38,6 +38,7 @@ const char * CLASS::RETS_1_0_STRING = "RETS/1.0";
 const char * CLASS::RETS_1_5_STRING = "RETS/1.5";
 
 CLASS::CLASS(string login_url)
+    : mIgnoreUnknownMetadata(false)
 {
     mLoginUrl = login_url;
     mHttpMethod = RetsHttpRequest::POST;
@@ -134,7 +135,8 @@ void CLASS::RetrieveMetadata()
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
     
     MetadataByLevelCollectorPtr collector(new MetadataByLevelCollector());
-    XmlMetadataParserPtr parser(new XmlMetadataParser(collector));
+    XmlMetadataParserPtr parser(
+        new XmlMetadataParser(collector, mIgnoreUnknownMetadata));
     parser->Parse(httpResponse->GetInputStream());
 
     mMetadata.reset(new RetsMetadata(collector));

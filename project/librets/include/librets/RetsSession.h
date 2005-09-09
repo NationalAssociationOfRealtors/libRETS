@@ -145,7 +145,13 @@ class RetsSession
      *
      * @return the detected RETS version
      */
-    RetsVersion GetDetectedRetsVersion() const;                                
+    RetsVersion GetDetectedRetsVersion() const;
+
+    /**
+     * Tells RetsSession to make the XML parser throw an exception on
+     * unknown metadata or to ignore it.
+     */
+    void setIgnoreUnknownMetadata(bool ignoreUnknownMetadata);
 
   private:
     static const char * RETS_VERSION_HEADER;
@@ -178,6 +184,8 @@ class RetsSession
     RetsVersion mRetsVersion;
     
     RetsVersion mDetectedRetsVersion;
+
+    bool mIgnoreUnknownMetadata;
 };
 
 };

@@ -27,7 +27,8 @@ namespace librets {
 class XmlMetadataParser : public RetsObject
 {
   public:
-    XmlMetadataParser(MetadataElementCollectorPtr elementCollector);
+    XmlMetadataParser(MetadataElementCollectorPtr elementCollector,
+                      bool ignoreUnknownMetadata = false);
 
     void SetElementFactory(XmlMetadataElementFactoryPtr elementFactory);
 
@@ -43,6 +44,7 @@ class XmlMetadataParser : public RetsObject
     XmlMetadataElementFactoryPtr mElementFactory;
     RetsXmlParserPtr mXmlParser;
     StringVector mColumns;
+    bool mIgnoreUnknownMetadata;
 };
 
 };
