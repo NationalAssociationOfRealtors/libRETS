@@ -151,7 +151,7 @@ class RetsSession
      * Tells RetsSession to make the XML parser throw an exception on
      * unknown metadata or to ignore it.
      */
-    void setIgnoreUnknownMetadata(bool ignoreUnknownMetadata);
+    void SetIgnoreUnknownMetadata(bool ignoreUnknownMetadata);
 
   private:
     static const char * RETS_VERSION_HEADER;

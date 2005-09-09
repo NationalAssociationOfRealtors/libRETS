@@ -279,3 +279,8 @@ RetsVersion CLASS::RetsVersionFromString(string versionString)
                             << versionString);
     }
 }
+
+void CLASS::SetIgnoreUnknownMetadata(bool ignoreUnknownMetadata)
+{
+    mIgnoreUnknownMetadata = ignoreUnknownMetadata;
+}
