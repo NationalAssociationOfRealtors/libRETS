@@ -14,28 +14,26 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#include "librets/RetsUnknownMetadataException.h"
 
-using namespace librets;
-using std::string;
+#ifndef LIBRETS_ERROR_FORWARD_H
+#define LIBRETS_ERROR_FORWARD_H
 
-#define CLASS RetsUnknownMetadataException
+#include <boost/shared_ptr.hpp>
 
-CLASS::CLASS(string metadataName)
-    : RetsException(metadataName), mMetadataName(metadataName)
-{
-}
+namespace librets {
 
-CLASS::~CLASS() throw()
-{
-}
+class RetsErrorHandler;
+    
+class NullErroHandler;
 
-string CLASS::GetName() const throw()
-{
-    return "RetsUnknownMetadataException";
-}
+class ExceptionErrorHandler;
 
-string CLASS::GetMetadataName() const throw()
-{
-    return mMetadataName;
-}
+class RetsUnknownMetadataException;
+
+};
+
+#endif
+
+/* Local Variables: */
+/* mode: c++ */
+/* End: */

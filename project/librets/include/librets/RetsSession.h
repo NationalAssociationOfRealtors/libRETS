@@ -23,6 +23,7 @@
 #include "librets/RetsHttpRequest.h"
 #include "librets/http_forward.h"
 #include "librets/RetsVersion.h"
+#include "librets/error_forward.h"
 
 /**
  * The main librets namespace.  See RetsSession.
@@ -148,10 +149,12 @@ class RetsSession
     RetsVersion GetDetectedRetsVersion() const;
 
     /**
-     * Tells RetsSession to make the XML parser throw an exception on
-     * unknown metadata or to ignore it.
+     * Changes the error handler. The default error handler throws exceptions
+     * in error conditions, which may not be desireable for some clients.
+     *
+     * @param errorHandler the new error handler.
      */
-    void SetIgnoreUnknownMetadata(bool ignoreUnknownMetadata);
+    void SetErrorHandler(RetsErrorHandler * errorHandler);
 
   private:
     static const char * RETS_VERSION_HEADER;
@@ -185,7 +188,7 @@ class RetsSession
     
     RetsVersion mDetectedRetsVersion;
 
-    bool mIgnoreUnknownMetadata;
+    RetsErrorHandler * mErrorHandler;
 };
 
 };

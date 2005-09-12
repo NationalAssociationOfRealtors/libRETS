@@ -18,6 +18,7 @@
 #define LIBRETS_XML_METADATA_ELEMENT_FACTORY_H
 
 #include "librets/xml_forward.h"
+#include "librets/error_forward.h"
 #include "librets/metadata_forward.h"
 #include "librets/RetsObject.h"
 
@@ -27,6 +28,8 @@ class XmlMetadataElementFactory : public RetsObject
 {
   public:
     virtual ~XmlMetadataElementFactory();
+    
+    virtual void SetErrorHandler(RetsErrorHandler * errorHandler) = 0;
 
     virtual MetadataElementPtr CreateMetadataElement(
         RetsXmlStartElementEventPtr startElementEvent) = 0;

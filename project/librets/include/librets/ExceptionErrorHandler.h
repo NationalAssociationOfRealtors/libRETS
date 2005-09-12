@@ -14,28 +14,33 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#include "librets/RetsUnknownMetadataException.h"
 
-using namespace librets;
-using std::string;
+#ifndef LIBRETS_EXCEPTION_ERROR_HANDLER_H
+#define LIBRETS_EXCEPTION_ERROR_HANDLER_H
 
-#define CLASS RetsUnknownMetadataException
+#include "librets/RetsErrorHandler.h"
 
-CLASS::CLASS(string metadataName)
-    : RetsException(metadataName), mMetadataName(metadataName)
+namespace librets {
+
+/**
+ * An implementation of RetsErrorHandler that throws exception on error
+ * conditions.
+ */
+class ExceptionErrorHandler : public RetsErrorHandler
 {
-}
+  public:
+    static ExceptionErrorHandler * GetInstance();
+    
+    void HandleUnknownMetadata(std::string name) const;
+    
+  private:
+    static ExceptionErrorHandler * sInstance;
+};
 
-CLASS::~CLASS() throw()
-{
-}
+};
 
-string CLASS::GetName() const throw()
-{
-    return "RetsUnknownMetadataException";
-}
+#endif
 
-string CLASS::GetMetadataName() const throw()
-{
-    return mMetadataName;
-}
+/* Local Variables: */
+/* mode: c++ */
+/* End: */

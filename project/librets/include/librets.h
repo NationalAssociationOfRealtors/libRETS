@@ -36,6 +36,7 @@
 
 #include "librets/RetsSession.h"
 #include "librets/RetsException.h"
+#include "librets/RetsErrorHandler.h"
 #include "librets/CapabilityUrls.h"
 #include "librets/LoginResponse.h"
 #include "librets/LogoutResponse.h"
@@ -65,6 +66,7 @@
 #include "librets/MetadataValidationExternalType.h"
 #include "librets/MetadataValidationExpression.h"
 #include "librets/MetadataForeignKey.h"
+#include "librets/RetsUnknownMetadataException.h"
 
 #include "librets/RetsXmlParser.h"
 #include "librets/RetsXmlAttribute.h"

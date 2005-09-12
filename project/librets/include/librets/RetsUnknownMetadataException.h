@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_RETS_UNKNOWN_METADATA_EXCEPTION_H
 #define LIBRETS_RETS_UNKNOWN_METADATA_EXCEPTION_H
 
@@ -24,11 +25,17 @@ namespace librets {
 class RetsUnknownMetadataException : public RetsException
 {
   public:
-    RetsUnknownMetadataException(std::string message);
+    RetsUnknownMetadataException(std::string metadataName);
 
     virtual ~RetsUnknownMetadataException() throw();
 
     virtual std::string GetName() const throw();
+    
+    std::string GetMetadataName() const throw();
+    
+  private:
+    std::string mMetadataName;
+        
 };
 
 };

@@ -37,7 +37,7 @@
 #include "librets/MetadataValidationExternalType.h"
 #include "librets/MetadataValidationExpression.h"
 #include "librets/MetadataForeignKey.h"
-#include "librets/RetsUnknownMetadataException.h"
+#include "librets/RetsErrorHandler.h"
 
 using namespace librets;
 using std::string;
@@ -117,6 +117,11 @@ void CLASS::AddMappings(string name, CreatorPointer creator,
 
 CLASS::~CLASS()
 {
+}
+
+void CLASS::SetErrorHandler(RetsErrorHandler * errorHandler)
+{
+    mErrorHandler = errorHandler;
 }
 
 string CLASS::LevelBuilder(RetsXmlStartElementEventPtr startEvent,
@@ -262,22 +267,22 @@ MetadataElementPtr CLASS::CreateForeignKey(
 MetadataElementPtr CLASS::CreateMetadataElement(
         RetsXmlStartElementEventPtr startElementEvent)
 {
+    MetadataElementPtr element;
     string name = startElementEvent->GetName();
     CreatorMap::iterator creator = mCreatorMap.find(name);
     if (creator != mCreatorMap.end())
     {
         CreatorPointer creatorPointer = creator->second;
-        MetadataElementPtr element =
-            (this->*creatorPointer)(startElementEvent);
+        element = (this->*creatorPointer)(startElementEvent);
         AttributeMap::iterator i = mAttributeMap.find(name);
         string level = LevelBuilder(startElementEvent, mAttributeMap[name]);
         element->SetLevel(level);
-        return element;
     }
     else
     {
-        throw RetsUnknownMetadataException("Unknown element name: " + name);
+        mErrorHandler->HandleUnknownMetadata(name);
     }
+    return element;
 }
 
 void CLASS::AddElement(MetadataElementPtr element, string level)

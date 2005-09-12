@@ -23,6 +23,7 @@
 #include "librets/GetObjectRequest.h"
 #include "librets/GetObjectResponse.h"
 #include "librets/str_stream.h"
+#include "librets/ExceptionErrorHandler.h"
 
 using namespace librets;
 using namespace librets::util;
@@ -38,13 +39,13 @@ const char * CLASS::RETS_1_0_STRING = "RETS/1.0";
 const char * CLASS::RETS_1_5_STRING = "RETS/1.5";
 
 CLASS::CLASS(string login_url)
-    : mIgnoreUnknownMetadata(false)
 {
     mLoginUrl = login_url;
     mHttpMethod = RetsHttpRequest::POST;
     mHttpClient.reset(new CurlHttpClient());
     mHttpClient->SetUserAgent(DEFAULT_USER_AGENT);
     mRetsVersion = DEFAULT_RETS_VERSION;
+    mErrorHandler = ExceptionErrorHandler::GetInstance();
 }
 
 void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
@@ -136,7 +137,7 @@ void CLASS::RetrieveMetadata()
     
     MetadataByLevelCollectorPtr collector(new MetadataByLevelCollector());
     XmlMetadataParserPtr parser(
-        new XmlMetadataParser(collector, mIgnoreUnknownMetadata));
+        new XmlMetadataParser(collector, mErrorHandler));
     parser->Parse(httpResponse->GetInputStream());
 
     mMetadata.reset(new RetsMetadata(collector));
@@ -280,7 +281,7 @@ RetsVersion CLASS::RetsVersionFromString(string versionString)
     }
 }
 
-void CLASS::SetIgnoreUnknownMetadata(bool ignoreUnknownMetadata)
+void CLASS::SetErrorHandler(RetsErrorHandler * errorHandler)
 {
-    mIgnoreUnknownMetadata = ignoreUnknownMetadata;
+    mErrorHandler = errorHandler;
 }

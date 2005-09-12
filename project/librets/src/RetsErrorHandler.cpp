@@ -14,28 +14,32 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#include "librets/RetsUnknownMetadataException.h"
+
+#include "librets/RetsErrorHandler.h"
 
 using namespace librets;
 using std::string;
 
-#define CLASS RetsUnknownMetadataException
+#define CLASS RetsErrorHandler
 
-CLASS::CLASS(string metadataName)
-    : RetsException(metadataName), mMetadataName(metadataName)
+CLASS::~CLASS()
 {
 }
 
-CLASS::~CLASS() throw()
+#undef CLASS
+#define CLASS NullErrorHandler
+
+NullErrorHandler * CLASS::sInstance = 0;
+
+NullErrorHandler * CLASS::GetInstance()
 {
+    if (sInstance == 0)
+    {
+        sInstance = new NullErrorHandler();
+    }
+    return sInstance;
 }
 
-string CLASS::GetName() const throw()
+void CLASS::HandleUnknownMetadata(string name) const
 {
-    return "RetsUnknownMetadataException";
-}
-
-string CLASS::GetMetadataName() const throw()
-{
-    return mMetadataName;
 }

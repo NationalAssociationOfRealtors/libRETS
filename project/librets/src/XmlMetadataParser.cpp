@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <sstream>
 #include <boost/algorithm/string.hpp>
 #include "librets/XmlMetadataParser.h"
@@ -39,16 +40,24 @@ namespace ba = boost::algorithm;
 #define CLASS XmlMetadataParser
 
 CLASS::CLASS(MetadataElementCollectorPtr elementCollector,
-             bool ignoreUnknownMetadata)
-    : mIgnoreUnknownMetadata(ignoreUnknownMetadata)
+             RetsErrorHandler * errorHandler)
+    : mErrorHandler(errorHandler)
 {
     mElementCollector = elementCollector;
     mElementFactory.reset(new DefaultMetadataElementFactory());
+    mElementFactory->SetErrorHandler(mErrorHandler);
 }
 
 void CLASS::SetElementFactory(XmlMetadataElementFactoryPtr elementFactory)
 {
     mElementFactory = elementFactory;
+    mElementFactory->SetErrorHandler(mErrorHandler);
+}
+
+void CLASS::SetErrorHandler(RetsErrorHandler * errorHandler)
+{
+    mErrorHandler = errorHandler;
+    mElementFactory->SetErrorHandler(mErrorHandler);
 }
 
 void CLASS::Parse(istreamPtr inputStream)
@@ -190,24 +199,18 @@ void CLASS::HandleData(RetsXmlStartElementEventPtr metadataEvent)
         throw RetsException(message.str());
     }
 
-    try
+    MetadataElementPtr element =
+        mElementFactory->CreateMetadataElement(metadataEvent);
+    // Ignore unknown elements
+    if (!element)
+        return;
+
+    for (StringVector::size_type index = 1;
+         index < mColumns.size(); index++)
     {
-        MetadataElementPtr element =
-            mElementFactory->CreateMetadataElement(metadataEvent);
-        for (StringVector::size_type index = 1;
-             index < mColumns.size(); index++)
-        {
-            string name = mColumns.at(index);
-            string value = data.at(index);
-            element->SetAttribute(name, value);
-        }
-        mElementCollector->AddElement(element);
+        string name = mColumns.at(index);
+        string value = data.at(index);
+        element->SetAttribute(name, value);
     }
-    catch (RetsUnknownMetadataException & e)
-    {
-        if (!mIgnoreUnknownMetadata)
-        {
-            throw e;
-        }
-    }
+    mElementCollector->AddElement(element);
 }

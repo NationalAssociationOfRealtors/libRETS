@@ -30,6 +30,8 @@ class DefaultMetadataElementFactory : public XmlMetadataElementFactory
 
     virtual ~DefaultMetadataElementFactory();
 
+    virtual void SetErrorHandler(RetsErrorHandler * errorHandler);
+
     virtual MetadataElementPtr CreateMetadataElement(
         RetsXmlStartElementEventPtr startElementEvent);
 
@@ -113,6 +115,7 @@ class DefaultMetadataElementFactory : public XmlMetadataElementFactory
     TypeMap mTypeMap;
     CreatorMap mCreatorMap;
     AttributeMap mAttributeMap;
+    RetsErrorHandler * mErrorHandler;
 
     static char * SYSTEM_ATTRIBUTES[];
     static char * RESOURCE_ATTRIBUTES[];

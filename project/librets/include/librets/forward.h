@@ -19,6 +19,7 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include "librets/error_forward.h"
 #include "librets/protocol_forward.h"
 #include "librets/metadata_forward.h"
 #include "librets/xml_forward.h"

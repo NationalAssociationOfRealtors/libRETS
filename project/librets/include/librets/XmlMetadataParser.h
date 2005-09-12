@@ -20,6 +20,7 @@
 #include "librets/std_forward.h"
 #include "librets/xml_forward.h"
 #include "librets/metadata_forward.h"
+#include "librets/error_forward.h"
 #include "librets/RetsObject.h"
 
 namespace librets {
@@ -28,9 +29,11 @@ class XmlMetadataParser : public RetsObject
 {
   public:
     XmlMetadataParser(MetadataElementCollectorPtr elementCollector,
-                      bool ignoreUnknownMetadata = false);
+                      RetsErrorHandler * errorHandler);
 
     void SetElementFactory(XmlMetadataElementFactoryPtr elementFactory);
+    
+    void SetErrorHandler(RetsErrorHandler * errorHandler);
 
     void Parse(istreamPtr inputStream);
 
@@ -42,9 +45,9 @@ class XmlMetadataParser : public RetsObject
 
     MetadataElementCollectorPtr mElementCollector;
     XmlMetadataElementFactoryPtr mElementFactory;
+    RetsErrorHandler * mErrorHandler;
     RetsXmlParserPtr mXmlParser;
     StringVector mColumns;
-    bool mIgnoreUnknownMetadata;
 };
 
 };

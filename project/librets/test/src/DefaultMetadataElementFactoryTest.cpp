@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <cppunit/extensions/HelperMacros.h>
 #include <sstream>
 #include <vector>
@@ -39,6 +40,8 @@
 #include "librets/MetadataValidationExpression.h"
 #include "librets/MetadataForeignKey.h"
 #include "librets/RetsXmlStartElementEvent.h"
+#include "librets/RetsUnknownMetadataException.h"
+#include "librets/ExceptionErrorHandler.h"
 
 using namespace librets;
 using namespace std;
@@ -66,6 +69,7 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testCreateValidationExternalType);
     CPPUNIT_TEST(testCreateValidationExpression);
     CPPUNIT_TEST(testCreateForeignKey);
+    CPPUNIT_TEST(testUnknownMetadata);
     CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -90,6 +94,7 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     void testCreateValidationExternalType();
     void testCreateValidationExpression();
     void testCreateForeignKey();
+    void testUnknownMetadata();
 
     void runTest(RetsXmlStartElementEventPtr startElement,
                  const type_info & typeInfo,
@@ -103,6 +108,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CLASS_);
 void CLASS_::setUp()
 {
     mFactory.reset(new DefaultMetadataElementFactory());
+    mFactory->SetErrorHandler(ExceptionErrorHandler::GetInstance());
 }
 
 void CLASS_::runTest(RetsXmlStartElementEventPtr startElement,
@@ -298,4 +304,22 @@ void CLASS_::testCreateForeignKey()
     
     runTest(startElement, typeid(MetadataForeignKey),
             MetadataElement::FOREIGN_KEY, "");
+}
+
+void CLASS_::testUnknownMetadata()
+{
+    try
+    {
+        RetsXmlStartElementEventPtr startElement(new RetsXmlStartElementEvent());
+        startElement->SetName("METADATA-UNKNOWN");
+        
+        MetadataElementPtr element =
+            mFactory->CreateMetadataElement(startElement);
+        CPPUNIT_FAIL("Should have thrown an exception");
+    }
+    catch (RetsUnknownMetadataException & e)
+    {
+        // Expected
+        ASSERT_STRING_EQUAL("METADATA-UNKNOWN", e.GetMetadataName());
+    }
 }
