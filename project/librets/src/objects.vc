@@ -11,6 +11,7 @@ X_OBJS = \
 	$(DIROBJ)\DmqlExpression.obj \
 	$(DIROBJ)\DmqlQuery.obj \
 	$(DIROBJ)\EqCriterion.obj \
+	$(DIROBJ)\ExceptionErrorHandler.obj \
 	$(DIROBJ)\ExpatXmlParser.obj \
 	$(DIROBJ)\FieldCriterion.obj \
 	$(DIROBJ)\GetObjectQuery.obj \
@@ -50,6 +51,7 @@ X_OBJS = \
 	$(DIROBJ)\ObjectDescriptor.obj \
 	$(DIROBJ)\OrCriterion.obj \
 	$(DIROBJ)\RetsAST.obj \
+	$(DIROBJ)\RetsErrorHandler.obj \
 	$(DIROBJ)\RetsException.obj \
 	$(DIROBJ)\RetsExceptionContext.obj \
 	$(DIROBJ)\RetsHttpClient.obj \
