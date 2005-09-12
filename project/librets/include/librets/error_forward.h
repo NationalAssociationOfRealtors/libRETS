@@ -28,8 +28,6 @@ class NullErroHandler;
 
 class ExceptionErrorHandler;
 
-class RetsUnknownMetadataException;
-
 };
 
 #endif

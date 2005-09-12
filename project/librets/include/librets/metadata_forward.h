@@ -125,6 +125,8 @@ class MetadataByLevelCollector;
 typedef boost::shared_ptr<MetadataByLevelCollector>
     MetadataByLevelCollectorPtr;
 
+class RetsUnknownMetadataException;
+
 };
 
 #endif
