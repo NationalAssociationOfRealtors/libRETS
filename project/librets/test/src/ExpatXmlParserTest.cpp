@@ -33,10 +33,12 @@ class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testSimple);
+    CPPUNIT_TEST(test512ByteDocument);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
     void testSimple();
+    void test512ByteDocument();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -88,5 +90,36 @@ void CLASS::testSimple()
 
     RetsXmlEventListPtr actual = xmlParser->GetEventList();
 
+    ASSERT_VECTOR_EQUAL(expected, *actual);
+}
+
+void CLASS::test512ByteDocument()
+{
+    string startTag = "<tag>";
+    string endTag = "</tag>";
+    int contentSize = 512 - startTag.length() - endTag.length(); 
+    string content(contentSize, 'a');
+    string xml = startTag + content + endTag;
+
+    RetsXmlEventList expected;
+    
+    RetsXmlStartElementEventPtr start;
+    RetsXmlTextEventPtr text;
+    RetsXmlEndElementEventPtr end;
+    
+    start.reset(new RetsXmlStartElementEvent());
+    start->SetName("tag");
+    expected.push_back(start);
+    
+    text.reset(new RetsXmlTextEvent());
+    text->AppendText(content);
+    expected.push_back(text);
+    
+    end.reset(new RetsXmlEndElementEvent());
+    end->SetName("tag");
+    expected.push_back(end);
+    
+    RetsXmlParserPtr xmlParser(new ExpatXmlParser(xml));
+    RetsXmlEventListPtr actual = xmlParser->GetEventList();
     ASSERT_VECTOR_EQUAL(expected, *actual);
 }

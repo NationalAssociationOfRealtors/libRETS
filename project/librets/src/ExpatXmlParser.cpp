@@ -28,6 +28,7 @@ using namespace librets;
 using std::string;
 using std::stringstream;
 using std::ostringstream;
+using std::istream;
 namespace b = boost;
 
 ExpatXmlParser::ExpatXmlParser(string inputString)
@@ -78,12 +79,18 @@ RetsXmlEventPtr ExpatXmlParser::GetNextEvent()
         CoalesceTextEvents(textEvent);
     }
 
-    if (mEvents.empty() && mInputStream->eof())
+    if (mEvents.empty() && IsStreamAtEof())
     {
         mIsDone = true;
     }
 
     return event;
+}
+
+bool ExpatXmlParser::IsStreamAtEof() const
+{
+    bool nextIsEof = (mInputStream->peek() == istream::traits_type::eof());
+    return (mInputStream->eof() || nextIsEof);
 }
 
 void ExpatXmlParser::CoalesceTextEvents(RetsXmlTextEventPtr textEvent)
