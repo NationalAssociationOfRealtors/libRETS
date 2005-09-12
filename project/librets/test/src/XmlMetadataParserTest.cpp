@@ -99,7 +99,7 @@ MetadataElementPtr TestElementFactory::CreateMetadataElement(
 {
     string metadataName = startElementEvent->GetName();
     TestMetadataElementPtr element;
-    if (metadataName == "METADATA-UNKNOWN1")
+    if (metadataName == "METADATA-UNKNOWN")
     {
         mErrorHandler->HandleUnknownMetadata(metadataName);
     }
@@ -245,13 +245,12 @@ void CLASS::testUnknownMetadataException()
     catch(RetsUnknownMetadataException & e)
     {
         // Expected
-        ASSERT_STRING_EQUAL("METADATA-UNKNOWN1", e.GetMetadataName());
+        ASSERT_STRING_EQUAL("METADATA-UNKNOWN", e.GetMetadataName());
     }
 }
 
 void CLASS::testUnknownMetadataIgnored()
 {
-    try {
     mParser->SetErrorHandler(NullErrorHandler::GetInstance());
     istreamPtr inputStream = getResource("metadata-unknown.xml");
     mParser->Parse(inputStream);
@@ -259,10 +258,4 @@ void CLASS::testUnknownMetadataIgnored()
     TestMetadataElementList elements = mElementFactory->GetCreatedElements();
     // No rows should be appear, as the error should be ignored
     ASSERT_EQUAL(size_t(0), elements.size());
-    }
-    catch (RetsException & e)
-    {
-        e.PrintFullReport(cerr);
-        throw;
-    }
 }
