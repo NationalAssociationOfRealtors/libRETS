@@ -907,14 +907,6 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
-		554A9F5107F9F2E700402C35 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = text;
-			path = .cvsignore;
-			refType = 4;
-			sourceTree = "<group>";
-		};
 		554A9F5207F9F2E700402C35 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -3804,7 +3796,6 @@
 				551131FC08D5DEB300CC048D,
 				551131F208D5DAD500CC048D,
 				554AA20B07FA174200402C35,
-				554A9F5107F9F2E700402C35,
 				554A9F5407F9F2E700402C35,
 				554A9F5507F9F2E700402C35,
 				554A9F6807F9F2E700402C35,
