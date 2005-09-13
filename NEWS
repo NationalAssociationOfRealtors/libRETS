@@ -1,8 +1,9 @@
-Version 1.0.0b2 - xxx
+Version 1.0.0b2 - 13 September 2005
 
   * Add support for SQL quoted literals.
   * Add support for SQL table aliaes.
   * Add support for SQL IN clause.
+  * Fix bug parsing 512-byte XML documents.
 
 Version 1.0.0b1 - 30 August 2005
 
