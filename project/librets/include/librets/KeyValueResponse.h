@@ -52,6 +52,9 @@ class KeyValueResponse : public RetsObject
                              const std::string & actual);
     
     static void AssertEquals(int expected, int actual);
+    
+    static void AssertEventListSize(int expected,
+                                    RetsXmlEventListPtr eventList);
 
   private:
     void ParseBody(std::string body);

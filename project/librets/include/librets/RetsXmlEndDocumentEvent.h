@@ -14,40 +14,27 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#ifndef LIBRETS_RETS_XML_EVENT_H
-#define LIBRETS_RETS_XML_EVENT_H
 
-#include <string>
-#include "librets/RetsObject.h"
+#ifndef LIBRETS_RETS_XML_END_DOCUMENT_EVENT_H
+#define LIBRETS_RETS_XML_END_DOCUMENT_EVENT_H
+
+#include "librets/RetsXmlEvent.h"
 
 namespace librets {
-
-class RetsXmlEvent : public RetsObject
+    
+class RetsXmlEndDocumentEvent : public RetsXmlEvent
 {
   public:
-    enum Type {
-        START_ELEMENT,
-        END_ELEMENT,
-        TEXT,
-        END_DOCUMENT,
-    };
+    RetsXmlEndDocumentEvent(int lineNumber = -1, int columnNumber = -1);
     
-    RetsXmlEvent();
-    RetsXmlEvent(int lineNumber, int columnNumber);
+    virtual Type GetType() const;
     
-    virtual ~RetsXmlEvent();
-
-    virtual Type GetType() const = 0;
+    virtual std::ostream & Print(std::ostream & outputStream) const;
     
-    int GetLineNumber() const;
+    virtual bool Equals(const RetsObject * rhs) const;
     
-    int GetColumnNumber() const;
-    
-  protected:
-    std::ostream & PrintLineAndColumn(std::ostream & out) const;
-    
-    int mLineNumber;
-    int mColumnNumber;
+  private:
+     std::string mName;
 };
 
 };

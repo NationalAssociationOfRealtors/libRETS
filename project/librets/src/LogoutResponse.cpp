@@ -64,13 +64,14 @@ RetsXmlTextEventPtr CLASS::GetBodyEventFromEmptyLogoutResponse(
     RetsXmlStartElementEventPtr startEvent;
     RetsXmlEndElementEventPtr endEvent;
     
+    AssertEventListSize(4, eventList);
     startEvent = RetsXmlParser::AssertStartEvent(eventList->at(0));
     AssertEquals("RETS", startEvent->GetName());
     AssertEquals("0", startEvent->GetAttributeValue("ReplyCode"));
     RetsXmlParser::AssertTextEvent(eventList->at(1));
     endEvent = RetsXmlParser::AssertEndEvent(eventList->at(2));
     AssertEquals("RETS", endEvent->GetName());
-    AssertEquals(3, eventList->size());
+    RetsXmlParser::AssertEndDocumentEvent(eventList->at(3));
     
     return bodyEvent;
 }
@@ -79,11 +80,11 @@ RetsXmlTextEventPtr CLASS::GetBodyEvent(RetsXmlEventListPtr eventList,
                                         RetsVersion retsVersion)
 {
     RetsXmlTextEventPtr bodyEvent;
-    if (eventList->size() == 3)
+    if (eventList->size() == 4)
     {
         bodyEvent = GetBodyEventFromEmptyLogoutResponse(eventList);
     }
-    else if (eventList->size() != 2)
+    else if (eventList->size() != 3)
     {
         bodyEvent = GetBodyEventFromStandardResponse(eventList);
     }

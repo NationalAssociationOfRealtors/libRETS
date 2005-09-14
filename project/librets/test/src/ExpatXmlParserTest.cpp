@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <cppunit/extensions/HelperMacros.h>
 #include <vector>
 #include <sstream>
@@ -22,6 +23,7 @@
 #include "librets/RetsXmlStartElementEvent.h"
 #include "librets/RetsXmlEndElementEvent.h"
 #include "librets/RetsXmlTextEvent.h"
+#include "librets/RetsXmlEndDocumentEvent.h"
 #include "librets/RetsXmlAttribute.h"
 
 using namespace librets;
@@ -49,7 +51,6 @@ void CLASS::testSimple()
         "<one attr=\"value\">foo"
         "  <two attr1=\"value1\" attr2=\"value2\">bar</two>"
         "</one>\n";
-    RetsXmlParserPtr xmlParser(new ExpatXmlParser(xml));
     
     RetsXmlEventList expected;
     
@@ -87,7 +88,11 @@ void CLASS::testSimple()
     end.reset(new RetsXmlEndElementEvent());
     end->SetName("one");
     expected.push_back(end);
+    
+    RetsXmlEndDocumentEventPtr endDocument(new RetsXmlEndDocumentEvent());
+    expected.push_back(endDocument);
 
+    RetsXmlParserPtr xmlParser(new ExpatXmlParser(xml));
     RetsXmlEventListPtr actual = xmlParser->GetEventList();
 
     ASSERT_VECTOR_EQUAL(expected, *actual);
@@ -118,6 +123,9 @@ void CLASS::test512ByteDocument()
     end.reset(new RetsXmlEndElementEvent());
     end->SetName("tag");
     expected.push_back(end);
+    
+    RetsXmlEndDocumentEventPtr endDocument(new RetsXmlEndDocumentEvent());
+    expected.push_back(endDocument);
     
     RetsXmlParserPtr xmlParser(new ExpatXmlParser(xml));
     RetsXmlEventListPtr actual = xmlParser->GetEventList();

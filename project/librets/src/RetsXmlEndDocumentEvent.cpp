@@ -14,46 +14,37 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#ifndef LIBRETS_RETS_XML_EVENT_H
-#define LIBRETS_RETS_XML_EVENT_H
 
-#include <string>
-#include "librets/RetsObject.h"
+#include <sstream>
+#include "librets/RetsXmlEndDocumentEvent.h"
 
-namespace librets {
+using namespace librets;
+using namespace std;
 
-class RetsXmlEvent : public RetsObject
+RetsXmlEndDocumentEvent::RetsXmlEndDocumentEvent(int lineNumber, int columnNumber)
+  : RetsXmlEvent(lineNumber, columnNumber)
 {
-  public:
-    enum Type {
-        START_ELEMENT,
-        END_ELEMENT,
-        TEXT,
-        END_DOCUMENT,
-    };
-    
-    RetsXmlEvent();
-    RetsXmlEvent(int lineNumber, int columnNumber);
-    
-    virtual ~RetsXmlEvent();
+}
 
-    virtual Type GetType() const = 0;
-    
-    int GetLineNumber() const;
-    
-    int GetColumnNumber() const;
-    
-  protected:
-    std::ostream & PrintLineAndColumn(std::ostream & out) const;
-    
-    int mLineNumber;
-    int mColumnNumber;
-};
+RetsXmlEvent::Type RetsXmlEndDocumentEvent::GetType() const
+{
+    return END_DOCUMENT;
+}
 
-};
+ostream & RetsXmlEndDocumentEvent::Print(ostream & outputStream) const
+{
+    outputStream << "XML end document";
+    return PrintLineAndColumn(outputStream);
+}
 
-#endif
+bool RetsXmlEndDocumentEvent::Equals(const RetsObject * object) const
+{
+    const RetsXmlEndDocumentEvent * rhs =
+    dynamic_cast<const RetsXmlEndDocumentEvent *> (object);
+    if (rhs == 0)
+    {
+        return false;
+    }
 
-/* Local Variables: */
-/* mode: c++ */
-/* End: */
+    return true;
+}

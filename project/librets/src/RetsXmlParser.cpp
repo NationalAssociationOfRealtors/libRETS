@@ -14,11 +14,13 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <sstream>
 #include "librets/RetsXmlParser.h"
 #include "librets/RetsXmlStartElementEvent.h"
 #include "librets/RetsXmlEndElementEvent.h"
 #include "librets/RetsXmlTextEvent.h"
+#include "librets/RetsXmlEndDocumentEvent.h"
 #include "librets/RetsException.h"
 #include "librets/ExpatXmlParser.h"
 #include "librets/util.h"
@@ -143,4 +145,23 @@ RetsXmlTextEventPtr CLASS::AssertTextEvent(RetsXmlEventPtr event, string prefix)
         throw RetsException(message.str());
     }
     return textEvent;
+}
+
+RetsXmlEndDocumentEventPtr CLASS::AssertNextIsEndDocumentEvent(string prefix)
+{
+    return AssertEndDocumentEvent(GetNextSkippingEmptyText(), prefix);
+}
+
+RetsXmlEndDocumentEventPtr CLASS::AssertEndDocumentEvent(RetsXmlEventPtr event,
+                                                         string prefix)
+{
+    RetsXmlEndDocumentEventPtr endDocumentEvent =
+    b::dynamic_pointer_cast<RetsXmlEndDocumentEvent>(event);
+    if (!endDocumentEvent)
+    {
+        ostringstream message;
+        message << prefix <<  "Event is not an end document event: " << event;
+        throw RetsException(message.str());
+    }
+    return endDocumentEvent;
 }

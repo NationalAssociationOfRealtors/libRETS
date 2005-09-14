@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <sstream>
 #include <iostream>
 #include "librets/ExpatXmlParser.h"
@@ -22,6 +23,7 @@
 #include "librets/RetsXmlStartElementEvent.h"
 #include "librets/RetsXmlEndElementEvent.h"
 #include "librets/RetsXmlTextEvent.h"
+#include "librets/RetsXmlEndDocumentEvent.h"
 #include "librets/RetsException.h"
 
 using namespace librets;
@@ -79,7 +81,7 @@ RetsXmlEventPtr ExpatXmlParser::GetNextEvent()
         CoalesceTextEvents(textEvent);
     }
 
-    if (mEvents.empty() && IsStreamAtEof())
+    if (event->GetType() == RetsXmlEvent::END_DOCUMENT)
     {
         mIsDone = true;
     }
@@ -87,30 +89,22 @@ RetsXmlEventPtr ExpatXmlParser::GetNextEvent()
     return event;
 }
 
-bool ExpatXmlParser::IsStreamAtEof() const
-{
-    bool nextIsEof = (mInputStream->peek() == istream::traits_type::eof());
-    return (mInputStream->eof() || nextIsEof);
-}
-
 void ExpatXmlParser::CoalesceTextEvents(RetsXmlTextEventPtr textEvent)
 {
-    bool done = mIsDone;
-    while (!done)
+    while (true)
     {
         RetsXmlEventPtr event = GetNextEventWithoutCoalescing();
         if (event->GetType() != RetsXmlEvent::TEXT)
         {
             // Put it back
             mEvents.push_front(event);
-            done = true;
+            break;
         }
         else
         {
-            RetsXmlTextEventPtr textEvent2 =
+            RetsXmlTextEventPtr nextTextEvent =
                 b::dynamic_pointer_cast<RetsXmlTextEvent>(event);
-            textEvent->AppendText(textEvent2->GetText());
-            done = mIsDone;
+            textEvent->AppendText(nextTextEvent->GetText());
         }
     }
 }
@@ -129,7 +123,8 @@ RetsXmlEventPtr ExpatXmlParser::GetNextEventWithoutCoalescing()
             char buf[512];
             mInputStream->read(buf, sizeof(buf));
             int len = mInputStream->gcount();
-            if (XML_Parse(mParser, buf, len, false) == XML_STATUS_ERROR)
+            bool isLast = mInputStream->eof();
+            if (XML_Parse(mParser, buf, len, isLast) == XML_STATUS_ERROR)
             {
                 int lineNumber = GetCurrentLineNumber();
                 int columnNumber = GetCurrentColumnNumber();
@@ -139,6 +134,12 @@ RetsXmlEventPtr ExpatXmlParser::GetNextEventWithoutCoalescing()
                 message << "XML parse error at " << lineNumber << ":"
                         << columnNumber << ": " + errorString;
                 throw RetsException(message.str());
+            }
+            if (isLast)
+            {
+                RetsXmlEndDocumentEventPtr endDocument(
+                    new RetsXmlEndDocumentEvent());
+                mEvents.push_back(endDocument);
             }
         }
         else

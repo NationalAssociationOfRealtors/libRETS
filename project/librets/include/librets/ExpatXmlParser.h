@@ -55,7 +55,6 @@ class ExpatXmlParser : public RetsXmlParser
     
     int GetCurrentLineNumber() const;
     int GetCurrentColumnNumber() const;
-    bool IsStreamAtEof() const;
 
     XmlEventList mEvents;
     istreamPtr mInputStream;

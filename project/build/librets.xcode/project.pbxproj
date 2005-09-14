@@ -1547,6 +1547,7 @@
 				551131F708D5DDFC00CC048D,
 				551131F908D5DE7800CC048D,
 				5511327608D5E32D00CC048D,
+				55766CBD08D873F50035838D,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1636,6 +1637,7 @@
 				551131F308D5DAD500CC048D,
 				551131FB08D5DE9100CC048D,
 				551131FD08D5DEB300CC048D,
+				55766CBF08D874450035838D,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3607,6 +3609,34 @@
 			settings = {
 			};
 		};
+		55766CBC08D873F50035838D = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = RetsXmlEndDocumentEvent.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55766CBD08D873F50035838D = {
+			fileRef = 55766CBC08D873F50035838D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55766CBE08D874450035838D = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = RetsXmlEndDocumentEvent.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55766CBF08D874450035838D = {
+			fileRef = 55766CBE08D874450035838D;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		558F690707FDB68E00CE8AF2 = {
 			containerPortal = 554A9EA607F9F27F00402C35;
 			isa = PBXContainerItemProxy;
@@ -3776,6 +3806,7 @@
 		};
 		558F6AC307FE059B00CE8AF2 = {
 			children = (
+				55766CBE08D874450035838D,
 				554A9F5F07F9F2E700402C35,
 				554A9F8A07F9F2E700402C35,
 				554A9F8B07F9F2E700402C35,
@@ -3916,7 +3947,7 @@
 		};
 		558F6AC907FE06F100CE8AF2 = {
 			children = (
-				554A9EFF07F9F2D200402C35,
+				55766CBC08D873F50035838D,
 				554A9EC107F9F2D200402C35,
 				554A9EF007F9F2D200402C35,
 				554A9EF107F9F2D200402C35,
@@ -3926,6 +3957,7 @@
 				554A9EF507F9F2D200402C35,
 				554A9F0007F9F2D200402C35,
 				554A9F0107F9F2D200402C35,
+				554A9EFF07F9F2D200402C35,
 			);
 			isa = PBXGroup;
 			name = XML;
