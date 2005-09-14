@@ -43,7 +43,7 @@ int main(int argc, char * argv[])
         request->SetQueryParameter("Format", "COMPACT-DECODED");
         request->SetQueryParameter("StandardNames", "1");
         request->SetQueryParameter("SearchType", "Property");
-        request->SetQueryParameter("Class", "RES");
+        request->SetQueryParameter("Class", "ResidentialProperty");
         request->SetQueryParameter("Count", "1");
         request->SetQueryParameter("QueryType", "DMQL2");
         request->SetQueryParameter(
