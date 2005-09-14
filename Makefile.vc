@@ -24,7 +24,7 @@ test:
 
 DIST_BASE = librets-$(VERSION)
 DISTDIR = build/$(DIST_BASE)
-DIST_ZIP = dist/$(DIST_BASE).zip
+DIST_ZIP = dist/librets-win32-$(VERSION).zip
 DOXYGEN = "C:\Program Files\doxygen\bin\doxygen.exe"
 MKDIR_P = c:\cygwin\bin\mkdir.exe -p
 RSYNC = rsync -a --exclude-from project/build/dist-win-exclude

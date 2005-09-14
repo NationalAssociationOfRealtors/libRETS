@@ -65,6 +65,7 @@ X_OBJS = \
 	$(DIROBJ)\RetsSqlException.obj \
 	$(DIROBJ)\RetsUnknownMetadataException.obj \
 	$(DIROBJ)\RetsXmlAttribute.obj \
+	$(DIROBJ)\RetsXmlEndDocumentEvent.obj \
 	$(DIROBJ)\RetsXmlEndElementEvent.obj \
 	$(DIROBJ)\RetsXmlEvent.obj \
 	$(DIROBJ)\RetsXmlParser.obj \
