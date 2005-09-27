@@ -43,7 +43,7 @@ class CurlHttpClient : public RetsHttpClient
     
     virtual void SetUserAgent(std::string userAgent);
 
-    virtual RetsHttpResponsePtr DoRequest(RetsHttpRequestPtr request);
+    virtual RetsHttpResponsePtr DoRequest(RetsHttpRequest request);
     
     virtual void SetLogger(RetsHttpLogger * logger);
 

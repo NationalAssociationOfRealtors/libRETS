@@ -16,7 +16,7 @@
  */
 #include <sstream>
 #include <boost/lexical_cast.hpp>                                               
-#include "librets/RetsHttpRequest.h"
+#include "librets/RetsHttpRequestImpl.h"
 #include "librets/util.h"
 
 using namespace librets;
@@ -25,57 +25,55 @@ using std::string;
 using std::ostringstream;
 using boost::lexical_cast; 
 
-RetsHttpRequest::RetsHttpRequest()
+#define CLASS RetsHttpRequestImpl
+
+CLASS::CLASS()
     : mQueryParameters(), mQueryParametersChanged(false)
 {
     mMethod = GET;
 }
 
-RetsHttpRequest::~RetsHttpRequest()
-{
-}
-
-void RetsHttpRequest::SetUrl(string url)
+void CLASS::SetUrl(string url)
 {
     mUrl = url;
 }
 
-string RetsHttpRequest::GetUrl() const
+string CLASS::GetUrl() const
 {
     return mUrl;
 }
 
-void RetsHttpRequest::SetMethod(Method method)
+void CLASS::SetMethod(Method method)
 {
     mMethod = method;
 }
 
-RetsHttpRequest::Method RetsHttpRequest::GetMethod() const
+CLASS::Method CLASS::GetMethod() const
 {
     return mMethod;
 }
 
-void RetsHttpRequest::SetHeader(string name, string value)
+void CLASS::SetHeader(string name, string value)
 {
     mHeaders[name] = value;
 }
 
-void RetsHttpRequest::ClearHeader(string name)
+void CLASS::ClearHeader(string name)
 {
     mHeaders.erase(name);
 }
 
-StringMap RetsHttpRequest::GetHeaderMap() const
+StringMap CLASS::GetHeaderMap() const
 {
     return mHeaders;
 }
 
-void RetsHttpRequest::SetQueryParameter(string name, int value)
+void CLASS::SetQueryParameter(string name, int value)
 {
     SetQueryParameter(name, lexical_cast<string>(value));
 }
 
-void RetsHttpRequest::SetQueryParameter(string name, string value)
+void CLASS::SetQueryParameter(string name, string value)
 {
     if (!value.empty())
     {
@@ -88,7 +86,7 @@ void RetsHttpRequest::SetQueryParameter(string name, string value)
     mQueryParametersChanged = true;
 }
 
-void RetsHttpRequest::GenerateQueryString() const
+void CLASS::GenerateQueryString() const
 {
     if (!mQueryParametersChanged)
         return;
@@ -107,8 +105,72 @@ void RetsHttpRequest::GenerateQueryString() const
     mQueryParametersChanged = false;
 }
 
-std::string RetsHttpRequest::GetQueryString() const
+std::string CLASS::GetQueryString() const
 {
     GenerateQueryString();
     return mQueryString;
 }
+
+#undef CLASS
+#define CLASS RetsHttpRequest
+
+CLASS::CLASS()
+    : mImpl(new RetsHttpRequestImpl())
+{
+}
+
+void CLASS::SetRetsHttpRequestImpl(RetsHttpRequestImplPtr impl)
+{
+     mImpl = impl;
+}
+
+CLASS::Method CLASS::GetMethod() const
+{
+    return mImpl->GetMethod();
+}
+
+void CLASS::SetMethod(CLASS::Method method)
+{
+    mImpl->SetMethod(method);
+}
+
+string CLASS::GetUrl() const
+{
+    return mImpl->GetUrl();
+}
+
+void CLASS::SetUrl(string url)
+{
+    mImpl->SetUrl(url);
+}
+
+void CLASS::SetHeader(string name, string value)
+{
+    mImpl->SetHeader(name, value);
+}
+
+void CLASS::ClearHeader(string name)
+{
+    mImpl->ClearHeader(name);
+}
+
+StringMap CLASS::GetHeaderMap() const
+{
+    return mImpl->GetHeaderMap();
+}
+
+void CLASS::SetQueryParameter(string name, string value)
+{
+    mImpl->SetQueryParameter(name, value);
+}
+
+void CLASS::SetQueryParameter(string name, int value)
+{
+    mImpl->SetQueryParameter(name, value);
+}
+
+string CLASS::GetQueryString() const
+{
+    return mImpl->GetQueryString();
+}
+

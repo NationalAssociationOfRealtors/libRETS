@@ -23,10 +23,42 @@
 
 namespace librets {
 
+class SearchRequestImpl;
+/** Smart pointer to SearchRequestImpl. */
+typedef boost::shared_ptr<SearchRequestImpl> SearchRequestImplPtr;
+
+class SearchRequestConstants
+{
+  public:
+    /**
+     * This requests the server default limit.  This should be the same as
+     * NONE, but some servers do not adhere.
+     */
+    static const int LIMIT_DEFAULT = -1;
+    
+    /**
+     * This requests the server to set the limit to NONE.
+     */
+    static const int LIMIT_NONE = 0;
+
+    enum CountType
+    {
+        NO_RECORD_COUNT,
+        RECORD_COUNT_AND_RESULTS,
+        RECORD_COUNT_ONLY
+    };
+
+    enum QueryType
+    {
+        DMQL,
+        DMQL2
+    };
+};
+
 /**
  * A search request.
  */
-class SearchRequest : public RetsHttpRequest
+class SearchRequest : public RetsHttpRequest, public SearchRequestConstants
 {
   public:
     /**
@@ -39,17 +71,6 @@ class SearchRequest : public RetsHttpRequest
     SearchRequest(std::string searchType, std::string searchClass,
                   std::string query);
 
-    /**
-     * This requests the server default limit.  This should be the same as
-     * NONE, but some servers do not adhere.
-     */
-    static const int LIMIT_DEFAULT = -1;
-    
-    /**
-     * This requests the server to set the limit to NONE.
-     */
-    static const int LIMIT_NONE = 0;
-    
     /**
      * Sets the limit on the number records returned.  By default, all
      * matching records are returned.  Setting the limit to
@@ -68,36 +89,14 @@ class SearchRequest : public RetsHttpRequest
      */
     void SetSelect(std::string select);
 
-    enum CountType
-    {
-        NO_RECORD_COUNT,
-        RECORD_COUNT_AND_RESULTS,
-        RECORD_COUNT_ONLY
-    };
-
     void SetCountType(CountType countType);
     
     void SetStandardNames(bool standardNames);
     
-    enum QueryType
-    {
-        DMQL,
-        DMQL2
-    };
-    
     void SetQueryType(QueryType queryType);
     
   private:
-    
-    static const char * FORMAT_PARAMETER;
-    static const char * STANDARD_NAMES_PARAMETER;
-    static const char * QUERY_TYPE_PARAMETER;
-    static const char * SEARCH_TYPE_PARAMETER;
-    static const char * CLASS_PARAMETER;
-    static const char * QUERY_PARAMETER;
-    static const char * COUNT_PARAMETER;
-    static const char * SELECT_PARAMETER;
-    static const char * LIMIT_PARAMETER;
+    SearchRequestImplPtr mImpl;
 };
 
 };

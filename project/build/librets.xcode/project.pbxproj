@@ -1549,6 +1549,8 @@
 				5511327608D5E32D00CC048D,
 				55766CBD08D873F50035838D,
 				55E8596208E9BBB10012DA70,
+				55E85A2008E9E65C0012DA70,
+				55E85A4B08E9EA3C0012DA70,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3938,6 +3940,7 @@
 				554A9EED07F9F2D200402C35,
 				554A9EEE07F9F2D200402C35,
 				554A9EF607F9F2D200402C35,
+				55E85A4A08E9EA3C0012DA70,
 				554A9EF707F9F2D200402C35,
 				554A9EE507F9F2D200402C35,
 			);
@@ -3976,6 +3979,7 @@
 				554A9EBB07F9F2D200402C35,
 				554A9EE807F9F2D200402C35,
 				554A9EE907F9F2D200402C35,
+				55E85A1F08E9E65C0012DA70,
 				554A9EEA07F9F2D200402C35,
 				55F23735087C75710090B325,
 				55F237A3087C7D030090B325,
@@ -4790,6 +4794,34 @@
 		};
 		55E8596208E9BBB10012DA70 = {
 			fileRef = 55E8596108E9BBB10012DA70;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55E85A1F08E9E65C0012DA70 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = RetsHttpRequestImpl.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55E85A2008E9E65C0012DA70 = {
+			fileRef = 55E85A1F08E9E65C0012DA70;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55E85A4A08E9EA3C0012DA70 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = SearchRequestImpl.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55E85A4B08E9EA3C0012DA70 = {
+			fileRef = 55E85A4A08E9EA3C0012DA70;
 			isa = PBXBuildFile;
 			settings = {
 			};

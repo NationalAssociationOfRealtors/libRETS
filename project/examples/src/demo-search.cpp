@@ -14,9 +14,8 @@ int main(int argc, char * argv[])
             new RetsSession("http://demo.crt.realtors.org:6103/rets/login"));
         session->Login("Joe", "Schmoe");
         
-        SearchRequestPtr searchRequest(
-            new SearchRequest("Property", "ResidentialProperty", 
-                              "(ListPrice=300000-)"));
+        SearchRequest searchRequest("Property", "ResidentialProperty", 
+                                    "(ListPrice=300000-)");
         
         SearchResultSetPtr results = session->Search(searchRequest);
         while (results->HasNext())

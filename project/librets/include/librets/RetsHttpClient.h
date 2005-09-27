@@ -19,6 +19,7 @@
 
 #include <string>
 #include "librets/http_forward.h"
+#include "librets/RetsHttpRequest.h"
 
 namespace librets {
 
@@ -38,7 +39,12 @@ class RetsHttpClient
     
     virtual void SetUserAgent(std::string userAgent) = 0;
 
-    virtual RetsHttpResponsePtr DoRequest(RetsHttpRequestPtr request) = 0;
+    virtual RetsHttpResponsePtr DoRequest(RetsHttpRequest request) = 0;
+    
+    virtual RetsHttpResponsePtr DoRequest(RetsHttpRequestPtr request)
+    {
+        return DoRequest(*request);
+    }
     
     virtual void SetLogger(RetsHttpLogger * logger) = 0;
 };

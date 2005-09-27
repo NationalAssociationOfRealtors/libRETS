@@ -14,23 +14,25 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#include "librets/SearchRequest.h"
+
+#include "librets/SearchRequestImpl.h"
 
 using namespace librets;
 using std::string;
 
-const char * SearchRequest::FORMAT_PARAMETER = "Format";
-const char * SearchRequest::STANDARD_NAMES_PARAMETER = "StandardNames";
-const char * SearchRequest::QUERY_TYPE_PARAMETER = "QueryType";
-const char * SearchRequest::SEARCH_TYPE_PARAMETER = "SearchType";
-const char * SearchRequest::CLASS_PARAMETER = "Class";
-const char * SearchRequest::QUERY_PARAMETER = "Query";
-const char * SearchRequest::SELECT_PARAMETER = "Select";
-const char * SearchRequest::COUNT_PARAMETER = "Count";
-const char * SearchRequest::LIMIT_PARAMETER = "Limit";
+#define CLASS SearchRequestImpl
 
-SearchRequest::SearchRequest(string searchType, string searchClass,
-                             string query)
+const char * CLASS::FORMAT_PARAMETER = "Format";
+const char * CLASS::STANDARD_NAMES_PARAMETER = "StandardNames";
+const char * CLASS::QUERY_TYPE_PARAMETER = "QueryType";
+const char * CLASS::SEARCH_TYPE_PARAMETER = "SearchType";
+const char * CLASS::CLASS_PARAMETER = "Class";
+const char * CLASS::QUERY_PARAMETER = "Query";
+const char * CLASS::SELECT_PARAMETER = "Select";
+const char * CLASS::COUNT_PARAMETER = "Count";
+const char * CLASS::LIMIT_PARAMETER = "Limit";
+
+CLASS::CLASS(string searchType, string searchClass, string query)
 {
     SetQueryParameter(FORMAT_PARAMETER, "COMPACT-DECODED");
     SetStandardNames(true);
@@ -42,7 +44,7 @@ SearchRequest::SearchRequest(string searchType, string searchClass,
     SetLimit(LIMIT_DEFAULT);
 }
 
-void SearchRequest::SetLimit(int limit)
+void CLASS::SetLimit(int limit)
 {
     if (limit == LIMIT_DEFAULT)
     {
@@ -58,12 +60,12 @@ void SearchRequest::SetLimit(int limit)
     }
 }
 
-void SearchRequest::SetSelect(string select)
+void CLASS::SetSelect(string select)
 {
     SetQueryParameter(SELECT_PARAMETER, select);
 }
 
-void SearchRequest::SetCountType(CountType countType)
+void CLASS::SetCountType(CountType countType)
 {
     switch (countType)
     {
@@ -81,12 +83,12 @@ void SearchRequest::SetCountType(CountType countType)
     }
 }
 
-void SearchRequest::SetStandardNames(bool standardNames)
+void CLASS::SetStandardNames(bool standardNames)
 {
     SetQueryParameter(STANDARD_NAMES_PARAMETER, standardNames ? "1" : "0");
 }
 
-void SearchRequest::SetQueryType(QueryType queryType)
+void CLASS::SetQueryType(QueryType queryType)
 {
     switch (queryType)
     {
@@ -98,4 +100,38 @@ void SearchRequest::SetQueryType(QueryType queryType)
             SetQueryParameter(QUERY_TYPE_PARAMETER, "DMQL2");
             break;
     }
+}
+
+#undef CLASS
+#define CLASS SearchRequest
+
+CLASS::CLASS(string searchType, string searchClass, string query)
+    : mImpl(new SearchRequestImpl(searchType, searchClass, query))
+{
+    SetRetsHttpRequestImpl(mImpl);
+}
+
+void CLASS::SetLimit(int limit)
+{
+    mImpl->SetLimit(limit);
+}
+
+void CLASS::SetSelect(string select)
+{
+    mImpl->SetSelect(select);
+}
+
+void CLASS::SetCountType(CountType countType)
+{
+    mImpl->SetCountType(countType);
+}
+
+void CLASS::SetStandardNames(bool standardNames)
+{
+    mImpl->SetStandardNames(standardNames);
+}
+
+void CLASS::SetQueryType(QueryType queryType)
+{
+    mImpl->SetQueryType(queryType);
 }

@@ -71,11 +71,11 @@ int main(int argc, char * argv[])
             return -1;
         }
         
-        SearchRequestPtr searchRequest = session->CreateSearchRequest(
+        SearchRequest searchRequest = session->CreateSearchRequest(
             resource, searchClass, query);
-        searchRequest->SetSelect(select);
-        searchRequest->SetStandardNames(standardNames);
-        searchRequest->SetLimit(limit);
+        searchRequest.SetSelect(select);
+        searchRequest.SetStandardNames(standardNames);
+        searchRequest.SetLimit(limit);
         
         SearchResultSetPtr results = session->Search(searchRequest);
         StringVectorPtr columns = results->GetColumns();

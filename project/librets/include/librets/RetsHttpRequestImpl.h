@@ -14,37 +14,22 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#ifndef LIBRETS_RETS_HTTP_REQUEST_H
-#define LIBRETS_RETS_HTTP_REQUEST_H
+#ifndef LIBRETS_RETS_HTTP_REQUEST_IMPL_H
+#define LIBRETS_RETS_HTTP_REQUEST_IMPL_H
 
 #include <string>
 #include <map>
 
-#include "librets/std_forward.h"
-#include "librets/RetsObject.h"
+#include "librets/RetsHttpRequest.h"
 
 namespace librets {
 
-class RetsHttpRequestImpl;
-/** Smart pointer to RetsHttpRequestImpl. */
-typedef boost::shared_ptr<RetsHttpRequestImpl> RetsHttpRequestImplPtr;
-    
-class RetsHttpRequestConstants
-{
-  public:
-    enum Method
-    {
-        GET,
-        POST
-    };
-};
-
-class RetsHttpRequest : public virtual RetsObject,
+class RetsHttpRequestImpl : public virtual RetsObject,
     public RetsHttpRequestConstants
 {
   public:
-    RetsHttpRequest();
-
+    RetsHttpRequestImpl();
+    
     virtual Method GetMethod() const;
 
     virtual void SetMethod(Method method);
@@ -65,11 +50,15 @@ class RetsHttpRequest : public virtual RetsObject,
 
     virtual std::string GetQueryString() const;
 
-  protected:
-    void SetRetsHttpRequestImpl(RetsHttpRequestImplPtr impl);
-    
   private:
-    RetsHttpRequestImplPtr mImpl;
+    void GenerateQueryString() const;
+    
+    Method mMethod;
+    std::string mUrl;
+    StringMap mQueryParameters;
+    mutable bool mQueryParametersChanged;
+    mutable std::string mQueryString;
+    StringMap mHeaders;
 };
 
 };

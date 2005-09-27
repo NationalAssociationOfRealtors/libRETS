@@ -27,9 +27,8 @@
 namespace librets {
 
 class LogoutResponseImpl;
-/** Smart pointer to LogoutResponseImplt. */
+/** Smart pointer to LogoutResponseImpl. */
 typedef boost::shared_ptr<LogoutResponseImpl> LogoutResponseImplPtr;
-
     
 /**
  *  Logout information.

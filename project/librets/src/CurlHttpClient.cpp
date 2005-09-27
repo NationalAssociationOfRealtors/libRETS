@@ -79,11 +79,11 @@ void CurlHttpClient::SetUserCredentials(string userName, string password)
     mCurl.SetUserCredentials(userName, password);
 }
 
-RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequestPtr request)
+RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequest request)
 {
-    string url = request->GetUrl();
-    string queryString = request->GetQueryString();
-    if (request->GetMethod() == RetsHttpRequest::GET)
+    string url = request.GetUrl();
+    string queryString = request.GetQueryString();
+    if (request.GetMethod() == RetsHttpRequest::GET)
     {
         mCurl.SetHttpGet(true);
         if (!queryString.empty())
@@ -95,14 +95,14 @@ RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequestPtr request)
     {
         mCurl.SetPostFields(queryString);
     }
-    GenerateHeadersSlist(request->GetHeaderMap());
+    GenerateHeadersSlist(request.GetHeaderMap());
     mCurl.SetHttpHeaders(mHeaders.slist());
     mCurl.SetUrl(url);
     mResponse.reset(new CurlHttpResponse());
     iostreamPtr dataStream(new stringstream());
     mResponse->SetStream(dataStream);
     mCurl.Perform();
-    mResponse->SetUrl(request->GetUrl());
+    mResponse->SetUrl(request.GetUrl());
     mResponse->SetResponseCode(mCurl.GetResponseCode());
     return mResponse;
 }

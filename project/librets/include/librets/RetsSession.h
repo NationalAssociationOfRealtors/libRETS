@@ -72,9 +72,9 @@ class RetsSession
      * @param searchClass RETS class name
      * @param query DMQL(2) query
      */
-    SearchRequestPtr CreateSearchRequest(std::string searchType, 
-                                         std::string searchClass,
-                                         std::string query);
+    SearchRequest CreateSearchRequest(std::string searchType, 
+                                      std::string searchClass,
+                                      std::string query);
     
     /**
      * Performs a search on the server.
@@ -83,7 +83,7 @@ class RetsSession
      * @return Search result set
      * @throws RetsException if an error occurs.
      */
-    SearchResultSetPtr Search(SearchRequestPtr request);
+    SearchResultSetPtr Search(SearchRequest request);
 
     /**
      * Returns the metadata for this server.  Only valid after logging

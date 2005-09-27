@@ -143,28 +143,27 @@ void CLASS::RetrieveMetadata()
     mMetadata.reset(new RetsMetadata(collector));
 }
 
-SearchRequestPtr CLASS::CreateSearchRequest(string searchType, 
-                                            string searchClass,
-                                            string query)
+SearchRequest CLASS::CreateSearchRequest(string searchType, 
+                                         string searchClass,
+                                         string query)
 {
-    SearchRequestPtr searchRequest(new SearchRequest(searchType, searchClass,
-                                                     query));
+    SearchRequest searchRequest(searchType, searchClass, query);
     if (mDetectedRetsVersion == RETS_1_0)
     {
-        searchRequest->SetQueryType(SearchRequest::DMQL);
+        searchRequest.SetQueryType(SearchRequest::DMQL);
     }
     else
     {
-        searchRequest->SetQueryType(SearchRequest::DMQL2);
+        searchRequest.SetQueryType(SearchRequest::DMQL2);
     }
     return searchRequest;
 }
 
-SearchResultSetPtr CLASS::Search(SearchRequestPtr request)
+SearchResultSetPtr CLASS::Search(SearchRequest request)
 {
     string searchUrl = mCapabilityUrls->GetSearchUrl();
-    request->SetUrl(searchUrl);
-    request->SetMethod(mHttpMethod);
+    request.SetUrl(searchUrl);
+    request.SetMethod(mHttpMethod);
     RetsHttpResponsePtr httpResponse = mHttpClient->DoRequest(request);
     AssertSuccessfulResponse(httpResponse, searchUrl);
     
