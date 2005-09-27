@@ -150,6 +150,13 @@ class MetadataResource : public MetadataElement
      * @return All validation expressions
      */
     MetadataValidationExpressionListPtr GetValidationExpressions() const;
+
+    /**
+     * Returns the Resource's KeyField name.
+     *
+     * @return KeyField name.
+     */
+    std::string GetKeyField() const;
 };
 
 };

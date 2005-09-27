@@ -35,3 +35,8 @@ string CLASS::GetStandardName() const
 {
     return GetStringAttribute("StandardName");
 }
+
+string CLASS::GetKeyField() const
+{
+    return GetStringAttribute("KeyField");
+}
