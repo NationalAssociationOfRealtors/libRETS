@@ -187,9 +187,9 @@ GetObjectResponsePtr CLASS::GetObject(GetObjectRequestPtr request)
     return response;
 }
 
-LogoutResponsePtr CLASS::Logout()
+LogoutResponse CLASS::Logout()
 {
-    LogoutResponsePtr logoutResponse;
+    LogoutResponse logoutResponse;
     string logoutUrl = mCapabilityUrls->GetLogoutUrl();
     if (logoutUrl == "")
     {
@@ -201,8 +201,7 @@ LogoutResponsePtr CLASS::Logout()
     RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
     AssertSuccessfulResponse(httpResponse, logoutUrl);
 
-    logoutResponse.reset(new LogoutResponse());
-    logoutResponse->Parse(httpResponse->GetInputStream(), mDetectedRetsVersion);
+    logoutResponse.Parse(httpResponse->GetInputStream(), mDetectedRetsVersion);
     return logoutResponse;
 }
 

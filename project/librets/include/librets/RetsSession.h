@@ -23,6 +23,7 @@
 #include "librets/RetsHttpRequest.h"
 #include "librets/http_forward.h"
 #include "librets/RetsVersion.h"
+#include "librets/LogoutResponse.h"
 #include "librets/error_forward.h"
 
 /**
@@ -101,7 +102,7 @@ class RetsSession
      * @return Logout information
      * @throws RetsException if an error occurs.
      */
-    LogoutResponsePtr Logout();
+    LogoutResponse Logout();
     
     /**
      * Sets the HTTP user agent.

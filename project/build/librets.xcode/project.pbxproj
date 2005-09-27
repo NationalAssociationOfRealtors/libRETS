@@ -1548,6 +1548,7 @@
 				551131F908D5DE7800CC048D,
 				5511327608D5E32D00CC048D,
 				55766CBD08D873F50035838D,
+				55E8596208E9BBB10012DA70,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3933,6 +3934,7 @@
 				554A9EC807F9F2D200402C35,
 				554A9ECA07F9F2D200402C35,
 				554A9ECB07F9F2D200402C35,
+				55E8596108E9BBB10012DA70,
 				554A9EED07F9F2D200402C35,
 				554A9EEE07F9F2D200402C35,
 				554A9EF607F9F2D200402C35,
@@ -4774,6 +4776,20 @@
 		};
 		55BD580C07FDB03100526D69 = {
 			fileRef = 55BD57C107FDAB4500526D69;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55E8596108E9BBB10012DA70 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = LogoutResponseImpl.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55E8596208E9BBB10012DA70 = {
+			fileRef = 55E8596108E9BBB10012DA70;
 			isa = PBXBuildFile;
 			settings = {
 			};

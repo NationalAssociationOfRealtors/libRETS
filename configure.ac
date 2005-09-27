@@ -72,10 +72,9 @@ fi
 AC_CONFIG_FILES([
   Makefile
   project/build/Doxyfile
-  librets-config
-  librets-config-inplace
-], [chmod +x librets-config librets-config-inplace]
-)
+])
+AC_CONFIG_FILES([librets-config], [chmod +x librets-config])
+AC_CONFIG_FILES([librets-config-inplace], [chmod +x librets-config-inplace])
 
 AC_OUTPUT
 

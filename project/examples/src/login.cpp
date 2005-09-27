@@ -48,14 +48,14 @@ int main(int argc, char * argv[])
 
         cout << "Action:\n" << session->GetAction() << endl;
 
-        LogoutResponsePtr logout = session->Logout();
+        LogoutResponse logout = session->Logout();
         cout << "Logged out\n";
-        if (logout)
+        if (logout.ReceivedResponse())
         {
-            cout << "Billing information: " << logout->GetBillingInfo()
+            cout << "Billing information: " << logout.GetBillingInfo()
                  << endl;
-            cout << "Connect time: " << logout->GetConnectTime() << endl;
-            cout << "Message: " << logout->GetLogoutMessage() << endl;
+            cout << "Connect time: " << logout.GetConnectTime() << endl;
+            cout << "Message: " << logout.GetLogoutMessage() << endl;
         }
     }
     catch (RetsException & e)

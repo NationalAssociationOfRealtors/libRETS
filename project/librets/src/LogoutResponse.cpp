@@ -18,6 +18,7 @@
 #include <sstream>
 #include <boost/lexical_cast.hpp>                                               
 #include "librets/LogoutResponse.h"
+#include "librets/LogoutResponseImpl.h"
 #include "librets/ExpatXmlParser.h"
 #include "librets/RetsXmlStartElementEvent.h"
 #include "librets/RetsXmlEndElementEvent.h"
@@ -28,7 +29,12 @@ using std::istringstream;
 using boost::lexical_cast;
 using boost::bad_lexical_cast;
 
-#define CLASS LogoutResponse
+#define CLASS LogoutResponseImpl
+
+CLASS::CLASS()
+{
+    mReceivedResponse = false;
+}
 
 void CLASS::ParsingFinished()
 {
@@ -40,6 +46,12 @@ void CLASS::ParsingFinished()
     {
         mConnectTime = 0;
     }
+    mReceivedResponse = true;
+}
+
+bool CLASS::ReceivedResponse() const
+{
+    return mReceivedResponse;
 }
 
 string CLASS::GetBillingInfo() const
@@ -93,4 +105,42 @@ RetsXmlTextEventPtr CLASS::GetBodyEvent(RetsXmlEventListPtr eventList,
         bodyEvent = GetBodyEventFromShortResponse(eventList);
     }
     return bodyEvent;
+}
+
+#undef CLASS
+#define CLASS LogoutResponse
+
+CLASS::LogoutResponse()
+    : mImpl(new LogoutResponseImpl())
+{
+}
+
+void CLASS::Parse(istreamPtr inputStream, RetsVersion retsVersion)
+{
+    mImpl->Parse(inputStream, retsVersion);
+}
+
+string CLASS::GetValue(string key) const
+{
+    return mImpl->GetValue(key);
+}
+
+bool CLASS::ReceivedResponse() const
+{
+    return mImpl->ReceivedResponse();
+}
+
+string CLASS::GetBillingInfo() const
+{
+    return mImpl->GetBillingInfo();
+}
+
+string CLASS::GetLogoutMessage() const
+{
+    return mImpl->GetLogoutMessage();
+}
+
+int CLASS::GetConnectTime() const
+{
+    return mImpl->GetConnectTime();
 }

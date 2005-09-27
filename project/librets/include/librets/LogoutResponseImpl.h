@@ -15,59 +15,57 @@
  * appear in supporting documentation.
  */
 
-#ifndef LIBRETS_LOGOUT_RESPONSE_H
-#define LIBRETS_LOGOUT_RESPONSE_H
+#ifndef LIBRETS_LOGOUT_RESPONSE_IMPL_H
+#define LIBRETS_LOGOUT_RESPONSE_IMPL_H
 
 #include <string>
-#include <boost/shared_ptr.hpp>
-#include "librets/std_forward.h"
-#include "librets/RetsObject.h"
-#include "librets/RetsVersion.h"
+
+#include "librets/KeyValueResponse.h"
 
 namespace librets {
-
-class LogoutResponseImpl;
-/** Smart pointer to LogoutResponseImplt. */
-typedef boost::shared_ptr<LogoutResponseImpl> LogoutResponseImplPtr;
-
     
 /**
  *  Logout information.
  */
-class LogoutResponse : public RetsObject
+class LogoutResponseImpl : public KeyValueResponse
 {
   public:
-    LogoutResponse();
-
-    void Parse(istreamPtr inputStream, RetsVersion retsVersion);
-    
-    std::string GetValue(std::string key) const;
+    LogoutResponseImpl();
     
     bool ReceivedResponse() const;
     
     /**
-     * Returns billing information given by the server.
+    * Returns billing information given by the server.
      *
      * @return Billing informaiton
      */
     std::string GetBillingInfo() const;
-
+    
     /**
-     * Returns the logout message from the server.
+    * Returns the logout message from the server.
      *
      * @return logout message
      */
     std::string GetLogoutMessage() const;
-
+    
     /**
-     * Returns the number of seconds connected.
+    * Returns the number of seconds connected.
      *
      * @return The number of seconds connected
      */
     int GetConnectTime() const;
-
+    
   private:
-    LogoutResponseImplPtr mImpl;
+    virtual void ParsingFinished();
+    
+    virtual RetsXmlTextEventPtr GetBodyEvent(RetsXmlEventListPtr eventList,
+                                             RetsVersion retsVersion);
+    
+    RetsXmlTextEventPtr GetBodyEventFromEmptyLogoutResponse(
+        RetsXmlEventListPtr eventList);
+    
+    bool mReceivedResponse;
+    int mConnectTime;
 };
 
 };
