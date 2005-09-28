@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_RETS_HTTP_REQUEST_H
 #define LIBRETS_RETS_HTTP_REQUEST_H
 
@@ -66,7 +67,8 @@ class RetsHttpRequest : public virtual RetsObject,
     virtual std::string GetQueryString() const;
 
   protected:
-    void SetRetsHttpRequestImpl(RetsHttpRequestImplPtr impl);
+    RetsHttpRequest(RetsHttpRequestImplPtr impl);
+    RetsHttpRequestImplPtr GetRetsHttpRequestImpl() const;
     
   private:
     RetsHttpRequestImplPtr mImpl;

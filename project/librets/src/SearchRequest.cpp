@@ -106,9 +106,10 @@ void CLASS::SetQueryType(QueryType queryType)
 #define CLASS SearchRequest
 
 CLASS::CLASS(string searchType, string searchClass, string query)
-    : mImpl(new SearchRequestImpl(searchType, searchClass, query))
+    : RetsHttpRequest(
+        RetsHttpRequestImplPtr(new SearchRequestImpl(searchType, searchClass, query)))
 {
-    SetRetsHttpRequestImpl(mImpl);
+    mImpl = boost::dynamic_pointer_cast<SearchRequestImpl>(GetRetsHttpRequestImpl());
 }
 
 void CLASS::SetLimit(int limit)

@@ -113,15 +113,21 @@ std::string CLASS::GetQueryString() const
 
 #undef CLASS
 #define CLASS RetsHttpRequest
+#include <iostream>
 
 CLASS::CLASS()
     : mImpl(new RetsHttpRequestImpl())
 {
 }
 
-void CLASS::SetRetsHttpRequestImpl(RetsHttpRequestImplPtr impl)
+CLASS::CLASS(RetsHttpRequestImplPtr impl)
+    : mImpl(impl)
 {
-     mImpl = impl;
+}
+
+RetsHttpRequestImplPtr CLASS::GetRetsHttpRequestImpl() const
+{
+    return mImpl;
 }
 
 CLASS::Method CLASS::GetMethod() const

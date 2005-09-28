@@ -34,8 +34,8 @@ int main(int argc, char * argv[])
         }
 
         RetsHttpClientPtr client = RetsHttpClient::CreateDefault();
-        RetsHttpRequestPtr request(new RetsHttpRequest());
-        request->SetUrl(url);
+        RetsHttpRequest request;
+        request.SetUrl(url);
         RetsHttpResponsePtr response = client->DoRequest(request);
         dumpResponse(response);
     }

@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_RETS_HTTP_REQUEST_IMPL_H
 #define LIBRETS_RETS_HTTP_REQUEST_IMPL_H
 

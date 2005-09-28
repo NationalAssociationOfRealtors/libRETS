@@ -41,11 +41,6 @@ class RetsHttpClient
 
     virtual RetsHttpResponsePtr DoRequest(RetsHttpRequest request) = 0;
     
-    virtual RetsHttpResponsePtr DoRequest(RetsHttpRequestPtr request)
-    {
-        return DoRequest(*request);
-    }
-    
     virtual void SetLogger(RetsHttpLogger * logger) = 0;
 };
 

@@ -65,8 +65,8 @@ bool CLASS::Login(string user_name, string passwd)
 {
     mHttpClient->SetDefaultHeader(RETS_VERSION_HEADER,
                                   RetsVersionToString(mRetsVersion));
-    RetsHttpRequestPtr request(new RetsHttpRequest());
-    request->SetUrl(mLoginUrl);
+    RetsHttpRequest request;
+    request.SetUrl(mLoginUrl);
     mHttpClient->SetUserCredentials(user_name, passwd);
     RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
     if (httpResponse->GetResponseCode() == 401)
@@ -102,8 +102,8 @@ void CLASS::RetrieveAction()
         return;
     }
 
-    RetsHttpRequestPtr request(new RetsHttpRequest());
-    request->SetUrl(actionUrl);
+    RetsHttpRequest request;
+    request.SetUrl(actionUrl);
     RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
     AssertSuccessfulResponse(httpResponse, actionUrl);
     mAction = readIntoString(*httpResponse->GetInputStream());
@@ -126,12 +126,12 @@ RetsMetadataPtr CLASS::GetMetadata()
 void CLASS::RetrieveMetadata()
 {
     string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
-    RetsHttpRequestPtr request(new RetsHttpRequest());
-    request->SetUrl(getMetadataUrl);
-    request->SetMethod(mHttpMethod);
-    request->SetQueryParameter("Type", "METADATA-SYSTEM");
-    request->SetQueryParameter("ID", "*");
-    request->SetQueryParameter("Format", "COMPACT");
+    RetsHttpRequest request;
+    request.SetUrl(getMetadataUrl);
+    request.SetMethod(mHttpMethod);
+    request.SetQueryParameter("Type", "METADATA-SYSTEM");
+    request.SetQueryParameter("ID", "*");
+    request.SetQueryParameter("Format", "COMPACT");
     RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
     
@@ -178,7 +178,7 @@ GetObjectResponsePtr CLASS::GetObject(GetObjectRequestPtr request)
     string getObjectUrl = mCapabilityUrls->GetGetObjectUrl();
     httpRequest->SetUrl(getObjectUrl);
     httpRequest->SetMethod(mHttpMethod);
-    RetsHttpResponsePtr httpResponse = mHttpClient->DoRequest(httpRequest);
+    RetsHttpResponsePtr httpResponse = mHttpClient->DoRequest(*httpRequest);
     AssertSuccessfulResponse(httpResponse, getObjectUrl);
     
     GetObjectResponsePtr response(new GetObjectResponse());
@@ -195,8 +195,8 @@ LogoutResponse CLASS::Logout()
         return logoutResponse;
     }
     
-    RetsHttpRequestPtr request(new RetsHttpRequest());
-    request->SetUrl(logoutUrl);
+    RetsHttpRequest request;
+    request.SetUrl(logoutUrl);
     RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
     AssertSuccessfulResponse(httpResponse, logoutUrl);
 
