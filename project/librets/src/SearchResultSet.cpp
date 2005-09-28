@@ -18,7 +18,7 @@
 #include <sstream>
 #include <boost/algorithm/string.hpp>
 #include <stdexcept>
-#include "librets/SearchResultSet.h"
+#include "librets/SearchResultSetImpl.h"
 #include "librets/ExpatXmlParser.h"
 #include "librets/RetsXmlStartElementEvent.h"
 #include "librets/RetsXmlEndElementEvent.h"
@@ -37,16 +37,18 @@ using std::invalid_argument;
 namespace b = boost;
 namespace ba = boost::algorithm;
 
-SearchResultSet::SearchResultSet()
+#define CLASS SearchResultSetImpl
+
+CLASS::CLASS()
 {
     mColumns.reset(new StringVector());
 }
 
-SearchResultSet::~SearchResultSet()
+CLASS::~CLASS()
 {
 }
 
-void SearchResultSet::Parse(istreamPtr inputStream)
+void CLASS::Parse(istreamPtr inputStream)
 {
     ExpatXmlParserPtr mXmlParser(new ExpatXmlParser(inputStream));
     RetsXmlStartElementEventPtr metadataEvent;
@@ -139,7 +141,7 @@ void SearchResultSet::Parse(istreamPtr inputStream)
     mCurrentRow.reset();
 }
 
-bool SearchResultSet::HasNext()
+bool CLASS::HasNext()
 {
     if (mNextRow != mRows.end())
     {
@@ -154,22 +156,22 @@ bool SearchResultSet::HasNext()
     }
 }
 
-int SearchResultSet::GetCount()
+int CLASS::GetCount()
 {
     return mCount;
 }
 
-StringVectorPtr SearchResultSet::GetColumns()
+StringVectorPtr CLASS::GetColumns()
 {
     return mColumns;
 }
 
-string SearchResultSet::GetString(int columnIndex)
+string CLASS::GetString(int columnIndex)
 {
     return mCurrentRow->at(columnIndex);
 }
 
-string SearchResultSet::GetString(string columnName)
+string CLASS::GetString(string columnName)
 {
     ColumnToIndexMap::const_iterator i = mColumnToIndex.find(columnName);
     if (i == mColumnToIndex.end())
@@ -177,4 +179,42 @@ string SearchResultSet::GetString(string columnName)
         throw invalid_argument("Invalid columnName: " + columnName);
     }
     return GetString(i->second);
+}
+
+#undef CLASS
+#define CLASS SearchResultSet
+
+CLASS::CLASS()
+    : mImpl(new SearchResultSetImpl())
+{
+}
+
+void CLASS::Parse(istreamPtr inputStream)
+{
+    mImpl->Parse(inputStream);
+}
+
+bool CLASS::HasNext()
+{
+    return mImpl->HasNext();
+}
+
+int CLASS::GetCount()
+{
+    return mImpl->GetCount();
+}
+
+StringVectorPtr CLASS::GetColumns()
+{
+    return mImpl->GetColumns();
+}
+
+string CLASS::GetString(int columnIndex)
+{
+    return mImpl->GetString(columnIndex);
+}
+
+string CLASS::GetString(string columnName)
+{
+    return mImpl->GetString(columnName);
 }

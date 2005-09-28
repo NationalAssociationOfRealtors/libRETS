@@ -14,31 +14,30 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-
-#ifndef LIBRETS_SEARCH_RESULT_SET_H
-#define LIBRETS_SEARCH_RESULT_SET_H
+#ifndef LIBRETS_SEARCH_RESULT_SET_IMPL_H
+#define LIBRETS_SEARCH_RESULT_SET_IMPL_H
 
 #include <string>
 #include <vector>
-#include "librets/std_forward.h"
-#include "librets/RetsObject.h"
+#include "librets/SearchResultSet.h"
 
 namespace librets {
-
-class SearchResultSetImpl;
-/** Smart pointer to SearchResultSetImpl. */
-typedef boost::shared_ptr<SearchResultSetImpl> SearchResultSetImplPtr;
 
 /**
  * A search result set.
  */
-class SearchResultSet : public virtual RetsObject
+class SearchResultSetImpl : public virtual RetsObject
 {
   public:
     /**
      * Default constructor.
      */
-    SearchResultSet();
+    SearchResultSetImpl();
+
+    /**
+     * Virtual destructor.
+     */
+    virtual ~SearchResultSetImpl();
 
     void Parse(istreamPtr inputStream);
 
@@ -81,7 +80,15 @@ class SearchResultSet : public virtual RetsObject
     std::string GetString(std::string columnName);
 
   private:
-    SearchResultSetImplPtr mImpl;
+    typedef std::vector<StringVectorPtr> RowData;
+    typedef std::map<std::string, StringVector::size_type> ColumnToIndexMap;
+
+    int mCount;
+    StringVectorPtr mColumns;
+    ColumnToIndexMap mColumnToIndex;
+    RowData mRows;
+    RowData::iterator mNextRow;
+    StringVectorPtr mCurrentRow;
 };
 
 };

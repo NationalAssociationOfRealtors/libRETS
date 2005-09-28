@@ -77,16 +77,16 @@ int main(int argc, char * argv[])
         searchRequest.SetStandardNames(standardNames);
         searchRequest.SetLimit(limit);
         
-        SearchResultSetPtr results = session->Search(searchRequest);
-        StringVectorPtr columns = results->GetColumns();
-        while (results->HasNext())
+        SearchResultSet results = session->Search(searchRequest);
+        StringVectorPtr columns = results.GetColumns();
+        while (results.HasNext())
         {
             StringVector::iterator i;
             for (i = columns->begin(); i != columns->end(); i++)
             {
                 string column = *i;
                 cout << setw(15) << column << ": "
-                     << setw(0) << results->GetString(column) << endl;
+                     << setw(0) << results.GetString(column) << endl;
             }
             cout << endl;
         }

@@ -159,7 +159,7 @@ SearchRequest CLASS::CreateSearchRequest(string searchType,
     return searchRequest;
 }
 
-SearchResultSetPtr CLASS::Search(SearchRequest request)
+SearchResultSet CLASS::Search(SearchRequest request)
 {
     string searchUrl = mCapabilityUrls->GetSearchUrl();
     request.SetUrl(searchUrl);
@@ -167,8 +167,8 @@ SearchResultSetPtr CLASS::Search(SearchRequest request)
     RetsHttpResponsePtr httpResponse = mHttpClient->DoRequest(request);
     AssertSuccessfulResponse(httpResponse, searchUrl);
     
-    SearchResultSetPtr resultSet(new SearchResultSet());
-    resultSet->Parse(httpResponse->GetInputStream());
+    SearchResultSet resultSet;
+    resultSet.Parse(httpResponse->GetInputStream());
     return resultSet;
 }
 
