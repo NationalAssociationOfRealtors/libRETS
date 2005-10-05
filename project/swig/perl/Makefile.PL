@@ -5,8 +5,16 @@ $cflags = `../../../librets-config-inplace --cflags`;
 $libs = `../../../librets-config-inplace --libs`;
 $cc = $Config{'cc'};
 $ld = $Config{'ld'};
-$cc =~ s/cc/c\+\+/;
-$ld =~ s/cc/c\+\+/;
+if ($Config{'osname'} =~ /darwin/)
+{
+    $cc =~ s/cc/c\+\+/;
+    $ld =~ s/cc/c\+\+/;
+}
+elsif ($Config{'osname'} =~ /linux/)
+{
+    $cc =~ s/gcc/g\+\+/;
+    $ld =~ s/gcc/g\+\+/;
+}
 
 WriteMakefile(
     NAME            => 'librets',

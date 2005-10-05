@@ -10,12 +10,18 @@ GENERATED_SRC = \
 
 WRAP = 	librets_wrap.cpp
 
-LINK = g++ -bundle -undefined suppress -flat_namespace
-
 LIBRETS_CONFIG = ../../../librets-config-inplace
 LIBRETS_LIBS = `$(LIBRETS_CONFIG) --libs`
 CXXFLAGS = `$(LIBRETS_CONFIG) --cflags`
 LIBRETS_SHARP_DLL = librets-sharp.dll
+
+osname := $(shell perl -e 'use Config; print $$Config{osname};')
+
+ifeq ($(osname), darwin)
+LINK = g++ -bundle -undefined suppress -flat_namespace
+else
+LINK = g++ -shared
+endif
 
 all: librets.so Search.exe
 
