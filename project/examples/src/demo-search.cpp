@@ -17,13 +17,13 @@ int main(int argc, char * argv[])
         SearchRequest searchRequest("Property", "ResidentialProperty", 
                                     "(ListPrice=300000-)");
         
-        SearchResultSetPtr results = session->Search(searchRequest);
-        while (results->HasNext())
+        SearchResultSet results = session->Search(searchRequest);
+        while (results.HasNext())
         {
-            cout << "ListingID: " << results->GetString("ListingID") << endl;
-            cout << "ListPrice: " << results->GetString("ListPrice") << endl;
-            cout << " Bedrooms: " << results->GetString("Beds") << endl;
-            cout << "     City: " << results->GetString("City") << endl;
+            cout << "ListingID: " << results.GetString("ListingID") << endl;
+            cout << "ListPrice: " << results.GetString("ListPrice") << endl;
+            cout << " Bedrooms: " << results.GetString("Beds") << endl;
+            cout << "     City: " << results.GetString("City") << endl;
             cout << endl;
         }
         

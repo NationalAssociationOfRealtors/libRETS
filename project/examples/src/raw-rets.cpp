@@ -32,30 +32,30 @@ int main(int argc, char * argv[])
         client->SetDefaultHeader("RETS-Version", "RETS/1.5");
         client->SetUserCredentials("Joe", "Schmoe");
 
-        RetsHttpRequestPtr request(new RetsHttpRequest());
-        request->SetUrl("http://demo.crt.realtors.org:6103/rets/login");
-        RetsHttpResponsePtr response = client->DoRequest(request);
+        RetsHttpRequest request1;
+        request1.SetUrl("http://demo.crt.realtors.org:6103/rets/login");
+        RetsHttpResponsePtr response = client->DoRequest(request1);
         dumpResponse(response);
 
-        request.reset(new RetsHttpRequest());
-        request->SetMethod(RetsHttpRequest::POST);
-        request->SetUrl("http://demo.crt.realtors.org:6103/rets/search");
-        request->SetQueryParameter("Format", "COMPACT-DECODED");
-        request->SetQueryParameter("StandardNames", "1");
-        request->SetQueryParameter("SearchType", "Property");
-        request->SetQueryParameter("Class", "ResidentialProperty");
-        request->SetQueryParameter("Count", "1");
-        request->SetQueryParameter("QueryType", "DMQL2");
-        request->SetQueryParameter(
+        RetsHttpRequest request2;
+        request2.SetMethod(RetsHttpRequest::POST);
+        request2.SetUrl("http://demo.crt.realtors.org:6103/rets/search");
+        request2.SetQueryParameter("Format", "COMPACT-DECODED");
+        request2.SetQueryParameter("StandardNames", "1");
+        request2.SetQueryParameter("SearchType", "Property");
+        request2.SetQueryParameter("Class", "ResidentialProperty");
+        request2.SetQueryParameter("Count", "1");
+        request2.SetQueryParameter("QueryType", "DMQL2");
+        request2.SetQueryParameter(
             "Select", "ListingID,ListPrice,City,ListDate");
-        request->SetQueryParameter("Query", "(ListPrice=300000-)");
-        response = client->DoRequest(request);
+        request2.SetQueryParameter("Query", "(ListPrice=300000-)");
+        response = client->DoRequest(request2);
         dumpResponse(response);
 
-        request.reset(new RetsHttpRequest());
-        request->SetMethod(RetsHttpRequest::GET);
-        request->SetUrl("http://demo.crt.realtors.org:6103/rets/logout");
-        response = client->DoRequest(request);
+        RetsHttpRequest request3;
+        request3.SetMethod(RetsHttpRequest::GET);
+        request3.SetUrl("http://demo.crt.realtors.org:6103/rets/logout");
+        response = client->DoRequest(request3);
         dumpResponse(response);
     }
     catch (RetsException & e)
