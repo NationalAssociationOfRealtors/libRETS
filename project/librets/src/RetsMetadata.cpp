@@ -49,7 +49,7 @@ void RetsMetadata::InitSystem()
         throw RetsException(message.str());
     }
     MetadataElementPtr element = elements->at(0);
-    mSystem = b::dynamic_pointer_cast<MetadataSystem>(element);
+    mSystem = dynamic_cast<MetadataSystem *>(element.get());
 }
 
 void RetsMetadata::InitAllClasses()
@@ -69,8 +69,8 @@ void RetsMetadata::InitAllClasses()
         MetadataElementList::iterator j;
         for (j = classes->begin(); j != classes->end(); j++)
         {
-            MetadataClassPtr aClass =
-                b::dynamic_pointer_cast<MetadataClass>(*j);
+            MetadataClass * aClass =
+                dynamic_cast<MetadataClass *>((*j).get());
             mAllClasses->push_back(aClass);
         }
     }
@@ -84,103 +84,32 @@ void RetsMetadata::InitAllResources()
     MetadataElementList::iterator i;
     for (i = resources->begin(); i != resources->end(); i++)
     {
-        MetadataResourcePtr resource =
-            b::dynamic_pointer_cast<MetadataResource>(*i);
+        MetadataResource * resource =
+            dynamic_cast<MetadataResource *>((*i).get());
         mAllResources->push_back(resource);
     }
 }
 
-MetadataSystemPtr RetsMetadata::GetSystem() const
+MetadataSystem * RetsMetadata::GetSystem() const
 {
     return mSystem;
 }
 
-MetadataClassListPtr RetsMetadata::GetAllClasses() const
+MetadataResourceList RetsMetadata::GetAllResources() const
 {
-    return mAllClasses;
+    return *mAllResources;
 }
 
-MetadataClassPtr RetsMetadata::GetClass(string resourceName, string className)
-    const
+MetadataResource * RetsMetadata::GetResource(string resourceName) const
 {
-    MetadataClassPtr metadataClass;
-
-    MetadataClassListPtr classList = GetClassesForResource(resourceName);
+    MetadataResource * metadataResource = 0;
     
-    bool found = false;
-    MetadataClassList::iterator i = classList->begin();
-    
-    while (i != classList->end() && !found)
-    {
-        MetadataClassPtr clazz = *i;
-        string testName = clazz->GetClassName();
-        if (testName == className)
-        {
-            metadataClass = clazz;
-            found = true;
-        }
-        i++;
-    }
-    
-    return metadataClass;
-}
-
-MetadataTableListPtr RetsMetadata::GetTablesForClass(
-    MetadataClassPtr metadataClass) const
-{
-    return GetTablesForClass(metadataClass->GetLevel(),
-                             metadataClass->GetClassName());
-}
-
-MetadataTableListPtr RetsMetadata::GetTablesForClass(
-    string resourceName, string className) const
-{
-    string level = resourceName + ":" + className;
-    MetadataElementListPtr elements =
-        mCollector->Find(MetadataElement::TABLE, level);
-    
-    MetadataTableListPtr tables(new MetadataTableList());
-    MetadataElementList::iterator i;
-    for (i = elements->begin(); i != elements->end(); i++)
-    {
-        MetadataTablePtr table = b::dynamic_pointer_cast<MetadataTable>(*i);
-        tables->push_back(table);
-    }
-    return tables;
-}
-
-MetadataResourceListPtr RetsMetadata::GetAllResources() const
-{
-    return mAllResources;
-}
-
-MetadataClassListPtr RetsMetadata::GetClassesForResource(
-    string resourceName) const
-{
-    MetadataElementListPtr elements =
-        mCollector->Find(MetadataElement::CLASS, resourceName);
-    
-    MetadataClassListPtr classes(new MetadataClassList());
-    MetadataElementList::iterator i;
-    for (i = elements->begin(); i != elements->end(); i++)
-    {
-        MetadataClassPtr aClass = b::dynamic_pointer_cast<MetadataClass>(*i);
-        classes->push_back(aClass);
-    }
-    
-    return classes;
-}
-
-MetadataResourcePtr RetsMetadata::GetResource(string resourceName) const
-{
-    MetadataResourcePtr metadataResource;
-
     bool found = false;
     MetadataResourceList::iterator i = mAllResources->begin();
     
     while (i != mAllResources->end() && !found)
     {
-        MetadataResourcePtr res = *i;
+        MetadataResource * res = *i;
         string testName = res->GetResourceID();
         if (testName == resourceName)
         {
@@ -193,20 +122,91 @@ MetadataResourcePtr RetsMetadata::GetResource(string resourceName) const
     return metadataResource;
 }
 
-MetadataTablePtr RetsMetadata::GetTable(string resourceName, string className,
+MetadataClassList RetsMetadata::GetAllClasses() const
+{
+    return *mAllClasses;
+}
+
+MetadataClass * RetsMetadata::GetClass(string resourceName, string className)
+    const
+{
+    MetadataClass * metadataClass = 0;
+
+    MetadataClassList classList = GetClassesForResource(resourceName);
+    
+    bool found = false;
+    MetadataClassList::iterator i = classList.begin();
+    
+    while (i != classList.end() && !found)
+    {
+        MetadataClass * clazz = *i;
+        string testName = clazz->GetClassName();
+        if (testName == className)
+        {
+            metadataClass = clazz;
+            found = true;
+        }
+        i++;
+    }
+    
+    return metadataClass;
+}
+
+MetadataClassList RetsMetadata::GetClassesForResource(
+    string resourceName) const
+{
+    MetadataElementListPtr elements =
+    mCollector->Find(MetadataElement::CLASS, resourceName);
+    
+    MetadataClassList classes;
+    MetadataElementList::iterator i;
+    for (i = elements->begin(); i != elements->end(); i++)
+    {
+        MetadataClass * aClass = dynamic_cast<MetadataClass *>((*i).get());
+        classes.push_back(aClass);
+    }
+    
+    return classes;
+}
+
+MetadataTableList RetsMetadata::GetTablesForClass(
+    MetadataClass * metadataClass) const
+{
+    return GetTablesForClass(metadataClass->GetLevel(),
+                             metadataClass->GetClassName());
+}
+
+MetadataTableList RetsMetadata::GetTablesForClass(
+    string resourceName, string className) const
+{
+    string level = resourceName + ":" + className;
+    MetadataElementListPtr elements =
+        mCollector->Find(MetadataElement::TABLE, level);
+    
+    MetadataTableList tables;
+    MetadataElementList::iterator i;
+    for (i = elements->begin(); i != elements->end(); i++)
+    {
+        MetadataTable * table = dynamic_cast<MetadataTable *>((*i).get());
+        tables.push_back(table);
+    }
+    return tables;
+}
+
+MetadataTable * RetsMetadata::GetTable(string resourceName, string className,
                                         string tableName) const
 {
-    MetadataTablePtr metadataTable;
+    MetadataTable * metadataTable = 0;
 
-    MetadataTableListPtr tableList =
+    MetadataTableList tableList =
         GetTablesForClass(resourceName, className);
     
     bool found = false;
-    MetadataTableList::iterator i = tableList->begin();
+    MetadataTableList::iterator i = tableList.begin();
     
-    while (i != tableList->end() && !found)
+    while (i != tableList.end() && !found)
     {
-        MetadataTablePtr table = *i;
+        MetadataTable * table = *i;
         string testName = table->GetSystemName();
         if (testName == tableName)
         {

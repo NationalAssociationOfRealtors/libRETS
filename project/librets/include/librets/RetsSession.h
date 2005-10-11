@@ -86,12 +86,13 @@ class RetsSession
 
     /**
      * Returns the metadata for this server.  Only valid after logging
-     * in.
+     * in.  This object is owned by the RetsSession and should not need
+     * to be deleted by the user.
      *
      * @return The metadata for this server
      * @throws RetsException if an error occurs.
      */
-    RetsMetadataPtr GetMetadata();
+    RetsMetadata * GetMetadata();
     
     GetObjectResponsePtr GetObject(GetObjectRequestPtr request);
 

@@ -24,17 +24,17 @@
 namespace librets {
 
 /** A vector of MetadataResource objects. */
-typedef std::vector<MetadataResourcePtr> MetadataResourceList;
+typedef std::vector<MetadataResource *> MetadataResourceList;
 /** A smart pointer to MetadataResourceList. */
 typedef boost::shared_ptr<MetadataResourceList> MetadataResourceListPtr;
 
 /** A vector of MetadataClass objects. */
-typedef std::vector<MetadataClassPtr> MetadataClassList;
+typedef std::vector<MetadataClass *> MetadataClassList;
 /** A smart pointer to MetadataClassList. */
 typedef boost::shared_ptr<MetadataClassList> MetadataClassListPtr;
 
 /** A vector of MetadataTables objects */
-typedef std::vector<MetadataTablePtr> MetadataTableList;
+typedef std::vector<MetadataTable *> MetadataTableList;
 /** A smart pointer to MetadataTableList. */
 typedef boost::shared_ptr<MetadataTableList> MetadataTableListPtr;
 
@@ -54,21 +54,21 @@ class RetsMetadata
      *
      * @return The system metadata element
      */
-    MetadataSystemPtr GetSystem() const;
+    MetadataSystem * GetSystem() const;
 
     /**
      * Returns all the class metadata elements.
      *
      * @return All the class metadata elements
      */
-    MetadataClassListPtr GetAllClasses() const;
+    MetadataClassList GetAllClasses() const;
 
     /**
      * Returns all the resource metadata elements.
      *
      * @return All the resource metadata elemens
      */
-    MetadataResourceListPtr GetAllResources() const;
+    MetadataResourceList GetAllResources() const;
 
     /**
      * Returns the metadata resource from its resource names.
@@ -76,7 +76,7 @@ class RetsMetadata
      * @param resourceName A resource name
      * @return A metadata class
      */
-    MetadataResourcePtr GetResource(std::string resourceName) const;
+    MetadataResource * GetResource(std::string resourceName) const;
 
     /**
      * Returns all metadata class elements for a specified metadata class.
@@ -84,7 +84,7 @@ class RetsMetadata
      * @param resourceName A resource name
      * @return All metadata class elements for that resource
      */
-    MetadataClassListPtr GetClassesForResource(std::string resourceName) const;
+    MetadataClassList GetClassesForResource(std::string resourceName) const;
     
     /**
      * Returns the metadata class from its resource and class names.
@@ -93,7 +93,7 @@ class RetsMetadata
      * @param className A class name
      * @return A metadata class
      */
-    MetadataClassPtr GetClass(std::string resourceName, std::string className)
+    MetadataClass * GetClass(std::string resourceName, std::string className)
         const;
 
     /**
@@ -104,8 +104,8 @@ class RetsMetadata
      * @param tableName A table name
      * @return A metadata class
      */
-    MetadataTablePtr GetTable(std::string resourceName, std::string className,
-                              std::string tableName) const;
+    MetadataTable * GetTable(std::string resourceName, std::string className,
+                             std::string tableName) const;
 
     /**
      * Returns all metadata table elements for a specified
@@ -114,10 +114,10 @@ class RetsMetadata
      * @param metadataClass A metadata class element
      * @return All metadata table elements
      */
-    MetadataTableListPtr
-        GetTablesForClass(MetadataClassPtr metadataClass) const;
+    MetadataTableList
+        GetTablesForClass(MetadataClass * metadataClass) const;
     
-    MetadataTableListPtr
+    MetadataTableList
         GetTablesForClass(std::string resourceName,
                           std::string className) const;
 
@@ -127,7 +127,7 @@ class RetsMetadata
     void InitAllResources();
 
     MetadataByLevelCollectorPtr mCollector;
-    MetadataSystemPtr mSystem;
+    MetadataSystem * mSystem;
     MetadataClassListPtr mAllClasses;
     MetadataResourceListPtr mAllResources;
 };

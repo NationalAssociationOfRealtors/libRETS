@@ -49,6 +49,11 @@ struct RetsObjectEqualTo
     {
         return (*o1 == *o2);
     }
+
+    bool operator()(const RetsObject * o1, const RetsObject * o2) const
+    {
+        return (*o1 == *o2);
+    }
 };
 
 template<class T>

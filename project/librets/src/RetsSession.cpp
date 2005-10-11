@@ -114,13 +114,13 @@ string CLASS::GetAction()
     return mAction;
 }
 
-RetsMetadataPtr CLASS::GetMetadata()
+RetsMetadata * CLASS::GetMetadata()
 {
     if (!mMetadata)
     {
         RetrieveMetadata();
     }
-    return mMetadata;
+    return mMetadata.get();
 }
 
 void CLASS::RetrieveMetadata()
