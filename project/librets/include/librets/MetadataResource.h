@@ -33,6 +33,8 @@ class MetadataResource : public MetadataElement
      * @return RESOURCE
      */
     virtual MetadataType GetType() const;
+    
+    std::string GetId() const;
 
     std::string GetResourceID() const;
 

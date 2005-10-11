@@ -21,11 +21,6 @@
 
 namespace librets {
 
-/** A vector of MetadataUpdateType objects. */
-typedef std::vector<MetadataUpdateTypePtr> MetadataUpdateTypeList;
-/** A smart pointer to MetadataUpdateTypeList. */
-typedef boost::shared_ptr<MetadataUpdateTypeList> MetadataUpdateTypeListPtr;
-
 /**
  * Update metadata.
  */
@@ -38,13 +33,10 @@ class MetadataUpdate : public MetadataElement
      * @return UPDATE
      */
     virtual MetadataType GetType() const;
-
-    /**
-     * Returns all update types.
-     *
-     * @return All update types
-     */
-    MetadataUpdateTypeListPtr GetUpdateTypes() const;
+    
+    virtual std::string GetId() const;
+    
+    std::string GetUpdateName() const;
 };
 
 };

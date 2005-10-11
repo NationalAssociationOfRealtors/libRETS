@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include "librets/MetadataObject.h"
 
 using namespace librets;
@@ -24,4 +25,14 @@ using std::string;
 MetadataElement::MetadataType CLASS::GetType() const
 {
     return OBJECT;
+}
+
+string CLASS::GetId() const
+{
+    return GetObjectType();
+}
+
+string CLASS::GetObjectType() const
+{
+    return GetStringAttribute("ObjectType");
 }

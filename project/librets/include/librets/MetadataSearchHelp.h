@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_METADATA_SEARCH_HELP_H
 #define LIBRETS_METADATA_SEARCH_HELP_H
 
@@ -33,6 +34,10 @@ class MetadataSearchHelp : public MetadataElement
      * @return SEARCH_HELP
      */
     virtual MetadataType GetType() const;
+    
+    virtual std::string GetId() const;
+    
+    std::string GetSearchHelpID() const;
 };
 
 };

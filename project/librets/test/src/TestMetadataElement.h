@@ -28,6 +28,8 @@ class TestMetadataElement : public MetadataElement
     virtual MetadataType GetType() const { return SYSTEM; }
     std::string GetTypeName() const;
     void SetTypeName(std::string typeName);
+
+    std::string GetId() const;
     
   private:
     std::string mTypeName;

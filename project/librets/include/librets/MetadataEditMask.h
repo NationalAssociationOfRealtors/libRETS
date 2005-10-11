@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_METADATA_EDIT_MASK_H
 #define LIBRETS_METADATA_EDIT_MASK_H
 
@@ -33,6 +34,10 @@ class MetadataEditMask : public MetadataElement
      * @return EDIT_MASK
      */
     virtual MetadataType GetType() const;
+    
+    virtual std::string GetId() const;
+    
+    std::string GetEditMaskID() const;
 };
 
 };

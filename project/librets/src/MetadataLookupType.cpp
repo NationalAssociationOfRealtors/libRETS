@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include "librets/MetadataLookupType.h"
 
 using namespace librets;
@@ -24,4 +25,14 @@ using std::string;
 MetadataElement::MetadataType CLASS::GetType() const
 {
     return LOOKUP_TYPE;
+}
+
+string CLASS::GetId() const
+{
+    return GetValue();
+}
+
+string CLASS::GetValue() const
+{
+    return GetStringAttribute("Value");
 }

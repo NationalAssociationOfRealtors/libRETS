@@ -96,9 +96,10 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     void testCreateForeignKey();
     void testUnknownMetadata();
 
-    void runTest(RetsXmlStartElementEventPtr startElement,
-                 const type_info & typeInfo,
-                 MetadataElement::MetadataType type, string level);
+    MetadataElementPtr runTest(RetsXmlStartElementEventPtr startElement,
+                               const type_info & typeInfo,
+                               MetadataElement::MetadataType type,
+                               string level);
 
     DefaultMetadataElementFactoryPtr mFactory;
 };
@@ -111,24 +112,26 @@ void CLASS_::setUp()
     mFactory->SetErrorHandler(ExceptionErrorHandler::GetInstance());
 }
 
-void CLASS_::runTest(RetsXmlStartElementEventPtr startElement,
-                     const type_info & typeInfo,
-                     MetadataElement::MetadataType type, string level)
+MetadataElementPtr CLASS_::runTest(RetsXmlStartElementEventPtr startElement,
+                                   const type_info & typeInfo,
+                                   MetadataElement::MetadataType type,
+                                   string level)
 {
     MetadataElementPtr element = mFactory->CreateMetadataElement(startElement);
     CPPUNIT_ASSERT(element);
     ASSERT_EQUAL(typeInfo.name(), typeid(*element).name());
     ASSERT_STRING_EQUAL(level, element->GetLevel());
+    return element;
 }
 
 void CLASS_::testCreateSystem()
 {
     RetsXmlStartElementEventPtr startElement(new RetsXmlStartElementEvent());
     startElement->SetName("METADATA-SYSTEM");
-    MetadataElementPtr element = mFactory->CreateMetadataElement(startElement);
-
-    runTest(startElement, typeid(MetadataSystem), MetadataElement::SYSTEM,
-            "");
+    MetadataElementPtr element = 
+        runTest(startElement, typeid(MetadataSystem), MetadataElement::SYSTEM,
+                "");
+    ASSERT_STRING_EQUAL("", element->GetPath());
 }
 
 void CLASS_::testCreateResource()
@@ -136,8 +139,11 @@ void CLASS_::testCreateResource()
     RetsXmlStartElementEventPtr startElement(new RetsXmlStartElementEvent());
     startElement->SetName("METADATA-RESOURCE");
 
-    runTest(startElement, typeid(MetadataResource), MetadataElement::RESOURCE,
-            "");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataResource),
+                MetadataElement::RESOURCE, "");
+    element->SetAttribute("ResourceID", "Property");
+    ASSERT_STRING_EQUAL("Property", element->GetPath());
 }
 
 void CLASS_::testCreateClass()
@@ -146,8 +152,11 @@ void CLASS_::testCreateClass()
     startElement->SetName("METADATA-CLASS");
     startElement->AddAttribute("Resource", "Property");
 
-    runTest(startElement, typeid(MetadataClass), MetadataElement::CLASS,
-            "Property");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataClass), MetadataElement::CLASS,
+                "Property");
+    element->SetAttribute("ClassName", "ResidentialProperty");
+    ASSERT_STRING_EQUAL("Property:ResidentialProperty", element->GetPath());
 }
 
 void CLASS_::testCreateTable()
@@ -157,8 +166,11 @@ void CLASS_::testCreateTable()
     startElement->AddAttribute("Resource", "Property");
     startElement->AddAttribute("Class", "RES");
 
-    runTest(startElement, typeid(MetadataTable), MetadataElement::TABLE,
-            "Property:RES");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataTable), MetadataElement::TABLE,
+                "Property:RES");
+    element->SetAttribute("SystemName", "ListPrice");
+    ASSERT_STRING_EQUAL("Property:RES:ListPrice", element->GetPath());
 }
 
 void CLASS_::testCreateUpdate()
@@ -168,8 +180,11 @@ void CLASS_::testCreateUpdate()
     startElement->AddAttribute("Resource", "Property");
     startElement->AddAttribute("Class", "RES");
 
-    runTest(startElement, typeid(MetadataUpdate), MetadataElement::UPDATE,
-            "Property:RES");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataUpdate), MetadataElement::UPDATE,
+                "Property:RES");
+    element->SetAttribute("UpdateName", "Add");
+    ASSERT_STRING_EQUAL("Property:RES:Add", element->GetPath());
 }
 
 void CLASS_::testCreateUpdateType()
@@ -180,8 +195,10 @@ void CLASS_::testCreateUpdateType()
     startElement->AddAttribute("Class", "RES");
     startElement->AddAttribute("Update", "Add");
 
-    runTest(startElement, typeid(MetadataUpdateType),
-            MetadataElement::UPDATE_TYPE, "Property:RES:Add");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataUpdateType),
+                MetadataElement::UPDATE_TYPE, "Property:RES:Add");
+    ASSERT_STRING_EQUAL("", element->GetPath());
 }
 
 void CLASS_::testCreateUpdateHelp()
@@ -190,8 +207,11 @@ void CLASS_::testCreateUpdateHelp()
     startElement->SetName("METADATA-UPDATE_HELP");
     startElement->AddAttribute("Resource", "Property");
 
-    runTest(startElement, typeid(MetadataUpdateHelp),
-            MetadataElement::UPDATE_HELP, "Property");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataUpdateHelp),
+                MetadataElement::UPDATE_HELP, "Property");
+    element->SetAttribute("UpdateHelpID", "1");
+    ASSERT_STRING_EQUAL("Property:1", element->GetPath());
 }
 
 void CLASS_::testCreateObject()
@@ -200,8 +220,11 @@ void CLASS_::testCreateObject()
     startElement->SetName("METADATA-OBJECT");
     startElement->AddAttribute("Resource", "Property");
 
-    runTest(startElement, typeid(MetadataObject),
-            MetadataElement::OBJECT, "Property");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataObject),
+                MetadataElement::OBJECT, "Property");
+    element->SetAttribute("ObjectType", "Photo");
+    ASSERT_STRING_EQUAL("Property:Photo", element->GetPath());
 }
 
 void CLASS_::testCreateSearchHelp()
@@ -210,8 +233,11 @@ void CLASS_::testCreateSearchHelp()
     startElement->SetName("METADATA-SEARCH_HELP");
     startElement->AddAttribute("Resource", "Property");
 
-    runTest(startElement, typeid(MetadataSearchHelp),
-            MetadataElement::SEARCH_HELP, "Property");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataSearchHelp),
+                MetadataElement::SEARCH_HELP, "Property");
+    element->SetAttribute("SearchHelpID", "1");
+    ASSERT_STRING_EQUAL("Property:1", element->GetPath());
 }
 
 void CLASS_::testCreateEditMask()
@@ -220,8 +246,11 @@ void CLASS_::testCreateEditMask()
     startElement->SetName("METADATA-EDITMASK");
     startElement->AddAttribute("Resource", "Property");
 
-    runTest(startElement, typeid(MetadataEditMask),
-            MetadataElement::EDIT_MASK, "Property");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataEditMask),
+                MetadataElement::EDIT_MASK, "Property");
+    element->SetAttribute("EditMaskID", "1");
+    ASSERT_STRING_EQUAL("Property:1", element->GetPath());
 }
 
 void CLASS_::testCreateLookup()
@@ -230,8 +259,11 @@ void CLASS_::testCreateLookup()
     startElement->SetName("METADATA-LOOKUP");
     startElement->AddAttribute("Resource", "Property");
 
-    runTest(startElement, typeid(MetadataLookup),
-            MetadataElement::LOOKUP, "Property");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataLookup),
+                MetadataElement::LOOKUP, "Property");
+    element->SetAttribute("LookupName", "AR");
+    ASSERT_STRING_EQUAL("Property:AR", element->GetPath());
 }
 
 void CLASS_::testCreateLookupType()
@@ -241,8 +273,11 @@ void CLASS_::testCreateLookupType()
     startElement->AddAttribute("Resource", "Property");
     startElement->AddAttribute("Lookup", "AR");
 
-    runTest(startElement, typeid(MetadataLookupType),
-            MetadataElement::LOOKUP_TYPE, "Property:AR");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataLookupType),
+                MetadataElement::LOOKUP_TYPE, "Property:AR");
+    element->SetAttribute("Value", "LOOP");
+    ASSERT_STRING_EQUAL("Property:AR:LOOP", element->GetPath());
 }
 
 void CLASS_::testCreateValidationLookup()
@@ -251,8 +286,10 @@ void CLASS_::testCreateValidationLookup()
     startElement->SetName("METADATA-VALIDATION_LOOKUP");
     startElement->AddAttribute("Resource", "Property");
 
-    runTest(startElement, typeid(MetadataValidationLookup),
-            MetadataElement::VALIDATION_LOOKUP, "Property");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataValidationLookup),
+                MetadataElement::VALIDATION_LOOKUP, "Property");
+    ASSERT_STRING_EQUAL("", element->GetPath());
 }
 
 void CLASS_::testCreateValidationLookupType()
@@ -262,8 +299,10 @@ void CLASS_::testCreateValidationLookupType()
     startElement->AddAttribute("Resource", "Property");
     startElement->AddAttribute("ValidationLookup", "School");
 
-    runTest(startElement, typeid(MetadataValidationLookupType),
-            MetadataElement::VALIDATION_LOOKUP_TYPE, "Property:School");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataValidationLookupType),
+                MetadataElement::VALIDATION_LOOKUP_TYPE, "Property:School");
+    ASSERT_STRING_EQUAL("", element->GetPath());
 }
 
 void CLASS_::testCreateValidationExternal()
@@ -272,8 +311,10 @@ void CLASS_::testCreateValidationExternal()
     startElement->SetName("METADATA-VALIDATION_EXTERNAL");
     startElement->AddAttribute("Resource", "Property");
 
-    runTest(startElement, typeid(MetadataValidationExternal),
-            MetadataElement::VALIDATION_EXTERNAL, "Property");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataValidationExternal),
+                MetadataElement::VALIDATION_EXTERNAL, "Property");
+    ASSERT_STRING_EQUAL("", element->GetPath());
 }
 
 void CLASS_::testCreateValidationExternalType()
@@ -283,8 +324,10 @@ void CLASS_::testCreateValidationExternalType()
     startElement->AddAttribute("Resource", "Property");
     startElement->AddAttribute("ValidationExternal", "VET1");
 
-    runTest(startElement, typeid(MetadataValidationExternalType),
-            MetadataElement::VALIDATION_EXTERNAL_TYPE, "Property:VET1");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataValidationExternalType),
+                MetadataElement::VALIDATION_EXTERNAL_TYPE, "Property:VET1");
+    ASSERT_STRING_EQUAL("", element->GetPath());
 }
 
 void CLASS_::testCreateValidationExpression()
@@ -293,8 +336,10 @@ void CLASS_::testCreateValidationExpression()
     startElement->SetName("METADATA-VALIDATION_EXPRESSION");
     startElement->AddAttribute("Resource", "Property");
 
-    runTest(startElement, typeid(MetadataValidationExpression),
-            MetadataElement::VALIDATION_EXPRESSION, "Property");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataValidationExpression),
+                MetadataElement::VALIDATION_EXPRESSION, "Property");
+    ASSERT_STRING_EQUAL("", element->GetPath());
 }
 
 void CLASS_::testCreateForeignKey()
@@ -302,8 +347,10 @@ void CLASS_::testCreateForeignKey()
     RetsXmlStartElementEventPtr startElement(new RetsXmlStartElementEvent());
     startElement->SetName("METADATA-FOREIGNKEYS");
     
-    runTest(startElement, typeid(MetadataForeignKey),
-            MetadataElement::FOREIGN_KEY, "");
+    MetadataElementPtr element =
+        runTest(startElement, typeid(MetadataForeignKey),
+                MetadataElement::FOREIGN_KEY, "");
+    ASSERT_STRING_EQUAL("", element->GetPath());
 }
 
 void CLASS_::testUnknownMetadata()

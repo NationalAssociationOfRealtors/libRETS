@@ -24,6 +24,11 @@ MetadataElement::MetadataType MetadataTable::GetType() const
     return TABLE;
 }
 
+string MetadataTable::GetId() const
+{
+    return GetSystemName();
+}
+
 string MetadataTable::GetSystemName() const
 {
     return GetStringAttribute("SystemName");

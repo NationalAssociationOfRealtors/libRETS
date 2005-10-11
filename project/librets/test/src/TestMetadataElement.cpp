@@ -30,3 +30,8 @@ void TestMetadataElement::SetTypeName(string typeName)
 {
     mTypeName = typeName;
 }
+
+string TestMetadataElement::GetId() const
+{
+    return GetStringAttribute("ID");
+}

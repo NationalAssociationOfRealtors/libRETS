@@ -26,6 +26,11 @@ MetadataElement::MetadataType CLASS::GetType() const
     return RESOURCE;
 }
 
+string CLASS::GetId() const
+{
+    return GetResourceID();
+}
+
 string CLASS::GetResourceID() const
 {
     return GetStringAttribute("ResourceID");

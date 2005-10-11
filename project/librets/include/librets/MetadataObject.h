@@ -33,6 +33,10 @@ class MetadataObject : public MetadataElement
      * @return OBJECT
      */
     virtual MetadataType GetType() const;
+    
+    virtual std::string GetId() const;
+    
+    std::string GetObjectType() const;
 };
 
 };

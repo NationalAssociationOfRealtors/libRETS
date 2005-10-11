@@ -35,6 +35,8 @@ class MetadataClass : public MetadataElement
      * @return CLASS
      */
     virtual MetadataType GetType() const;
+    
+    virtual std::string GetId() const;
 
     /**
      * Returns the name of the class metadata.

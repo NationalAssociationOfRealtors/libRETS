@@ -83,10 +83,9 @@ void CLASS::SetAttribute(string attributeName, string attributeValue)
     mAttributes[attributeName] = attributeValue;
 }
 
-vector<MetadataElementPtr> MetadataElement::GetChildren(MetadataType type)
+string CLASS::GetId() const
 {
-    vector<MetadataElementPtr> children;
-    return children;
+    return "";
 }
 
 string CLASS::GetLevel() const
@@ -97,6 +96,23 @@ string CLASS::GetLevel() const
 void CLASS::SetLevel(string level)
 {
     mLevel = level;
+}
+
+string CLASS::GetPath() const
+{
+    string id = GetId();
+    if (!id.empty())
+    {
+        string level = GetLevel();
+        if (level.empty())
+            return id;
+        else
+            return level + ":" + id;
+    }
+    else
+    {
+        return "";
+    }
 }
 
 std::ostream & CLASS::Print(std::ostream & outputStream) const

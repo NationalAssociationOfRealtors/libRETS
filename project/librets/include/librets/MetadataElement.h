@@ -107,19 +107,33 @@ class MetadataElement : public RetsObject
         const;
 
     void SetAttribute(std::string attributeName, std::string attributeValue);
-
+    
     /**
-     * Returns the children of this element matching the given type.
+     * Returns the ID attribute.  The ID attribute is a non-empty and unique
+     * field used to identify this element within the scope of elements
+     * of the same type.  Not all metadata elements have an identifying
+     * attribute.  In these cases, an empty string is returned.
+     * The default implementation returns an empty string.  Subclasses
+     * should override as needed. 
      *
-     * @param type The type of children to retrieve
-     * @return a vector of children
+     * @return the ID attribute, if there is one
      */
-    std::vector<MetadataElementPtr> GetChildren(MetadataType type);
+    virtual std::string GetId() const;
 
     std::string GetLevel() const;
 
     void SetLevel(std::string level);
-
+    
+    /**
+     * Returns the path of this element.  The path uniquely identifies this
+     * metadata element amongst all elements of the same type.  Since
+     * this relies on the ID attribute, only those elements with an ID
+     * attribute have a non-empty path.
+     *
+     * @return the unique path
+     */
+    std::string GetPath() const;
+    
     virtual std::ostream & Print(std::ostream & outputStream) const;
 
   protected:
