@@ -14,15 +14,20 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
+#include <iostream>
 #include "librets/MetadataByLevelCollector.h"
+#include "librets/util.h"
 
 using namespace librets;
+using namespace librets::util;
 using std::string;
+using std::endl;
 
 #define CLASS MetadataByLevelCollector
 
 CLASS::CLASS()
-    : mTypeMap()
+    : mTypeMapByLevel(), mTypeMapByPath()
 {
 }
 
@@ -34,53 +39,121 @@ void CLASS::AddElement(MetadataElementPtr element)
 {
     string level = element->GetLevel();
     MetadataElement::MetadataType type = element->GetType();
-    MetadataElementListPtr elements;
-    LevelMapPtr levelMap;
-    TypeMap::iterator i = mTypeMap.find(type);
-    if (i == mTypeMap.end())
+    LevelElementsPtr levelMap = GetLevelElementsByType(type);
+    MetadataElementListPtr elements = GetElementsByLevel(levelMap, level);
+    elements->push_back(element);
+    
+    string path = element->GetPath();
+    if (!path.empty())
     {
-        levelMap.reset(new LevelMap());
-        mTypeMap[type] = levelMap;
+        PathElementsPtr pathElements = GetPathElementsByType(type);
+        (*pathElements)[path] = element;
+    }
+}
+
+CLASS::LevelElementsPtr CLASS::GetLevelElementsByType(
+    MetadataElement::MetadataType type)
+{
+    LevelElementsPtr levelElements;
+    TypeMapByLevel::iterator i = mTypeMapByLevel.find(type);
+    if (i == mTypeMapByLevel.end())
+    {
+        levelElements.reset(new LevelElements());
+        mTypeMapByLevel[type] = levelElements;
     }
     else
     {
-        levelMap = i->second;
+        levelElements = i->second;
     }
+    return levelElements;
+}
 
-    LevelMap::iterator j = levelMap->find(level);
-    if (j == levelMap->end())
+MetadataElementListPtr CLASS::GetElementsByLevel(LevelElementsPtr levelElements,
+                                                 string level)
+{
+    MetadataElementListPtr elements;
+    LevelElements::iterator i = levelElements->find(level);
+    if (i == levelElements->end())
     {
         elements.reset(new MetadataElementList());
-        (*levelMap)[level] = elements;
+        (*levelElements)[level] = elements;
     }
     else
     {
-        elements = j->second;
+        elements = i->second;
     }
-
-    elements->push_back(element);
+    return elements;
 }
+
+CLASS::PathElementsPtr CLASS::GetPathElementsByType(
+    MetadataElement::MetadataType type)
+{
+    PathElementsPtr pathElements;
+    TypeMapByPath::iterator i = mTypeMapByPath.find(type);
+    if (i == mTypeMapByPath.end())
+    {
+        pathElements.reset(new PathElements());
+        mTypeMapByPath[type] = pathElements;
+    }
+    else
+    {
+        pathElements = i->second;
+    }
+    return pathElements;
+}
+
+std::ostream & CLASS::Print(std::ostream & outputStream) const
+{
+    outputStream << "By level:" << endl;
+    TypeMapByLevel::const_iterator i;
+    for (i = mTypeMapByLevel.begin(); i != mTypeMapByLevel.end(); i++)
+    {
+        outputStream << "  Type: " << i->first << endl;
+        LevelElementsPtr levelElements = i->second;
+        LevelElements::const_iterator j;
+        for (j = levelElements->begin(); j != levelElements->end(); j++)
+        {
+            outputStream << "  " << j->first << " -> " << Output(*j->second)
+                         << endl;
+        }
+    }
+    outputStream << endl;
     
+    outputStream << "By path:" << endl;
+    TypeMapByPath::const_iterator j;
+    for (j = mTypeMapByPath.begin(); j != mTypeMapByPath.end(); j++)
+    {
+        outputStream << "  Type: " << j->first << endl;
+        PathElementsPtr pathElements = j->second;
+        PathElements::const_iterator k;
+        for (k = pathElements->begin(); k != pathElements->end(); k++)
+        {
+            outputStream << "  " << k->first << " -> " << Output(*k->second)
+                         << endl;
+        }
+    }
+    outputStream << endl;
+
+    return outputStream;
+}
+
 MetadataElementListPtr CLASS::Find(MetadataElement::MetadataType type,
                                    string level)
 {
-    MetadataElementListPtr elements;
-
-    TypeMap::iterator i = mTypeMap.find(type);
-    if (i == mTypeMap.end())
-    {
-        elements.reset(new MetadataElementList());
-        return elements;
-    }
-
-    LevelMapPtr levelMap = i->second;
-    LevelMap::iterator j = levelMap->find(level);
-    if (j == levelMap->end())
-    {
-        elements.reset(new MetadataElementList());
-        return elements;
-    }
-
-    elements = j->second;
+    LevelElementsPtr levelElements = GetLevelElementsByType(type);
+    MetadataElementListPtr elements = GetElementsByLevel(levelElements, level);
     return elements;
+}
+
+MetadataElementPtr CLASS::FindByPath(MetadataElement::MetadataType type,
+                              std::string path)
+{
+    MetadataElementPtr element;
+    PathElementsPtr pathElements = GetPathElementsByType(type);
+    PathElements::iterator i = pathElements->find(path);
+    if (i != pathElements->end())
+    {
+        element = i->second;
+    }
+    return element;
 }

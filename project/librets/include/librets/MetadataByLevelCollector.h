@@ -36,16 +36,34 @@ class MetadataByLevelCollector :
     
     MetadataElementListPtr Find(MetadataElement::MetadataType type,
                                 std::string level);
-
+    
+    MetadataElementPtr FindByPath(MetadataElement::MetadataType type,
+                                  std::string path);
+    
+    virtual std::ostream & Print(std::ostream & outputStream) const;
+    
   private:
-    typedef std::map<std::string, MetadataElementListPtr> LevelMap;
+    typedef std::map< std::string, MetadataElementListPtr > LevelElements;
+    typedef std::map< std::string, MetadataElementPtr > PathElements;
 
-    typedef boost::shared_ptr<LevelMap> LevelMapPtr;
+    typedef boost::shared_ptr<LevelElements> LevelElementsPtr;
+    typedef boost::shared_ptr<PathElements> PathElementsPtr;
 
-    typedef std::map<MetadataElement::MetadataType, LevelMapPtr>
-        TypeMap;
+    typedef std::map< MetadataElement::MetadataType, LevelElementsPtr >
+        TypeMapByLevel;
+    
+    typedef std::map< MetadataElement::MetadataType, PathElementsPtr >
+        TypeMapByPath;
+    
+    LevelElementsPtr GetLevelElementsByType(MetadataElement::MetadataType type);
+    
+    MetadataElementListPtr GetElementsByLevel(LevelElementsPtr levelElements,
+                                               std::string level);
+    
+    PathElementsPtr GetPathElementsByType(MetadataElement::MetadataType type);
 
-    TypeMap mTypeMap;
+    TypeMapByLevel mTypeMapByLevel;
+    TypeMapByPath mTypeMapByPath;
 };
 
 };

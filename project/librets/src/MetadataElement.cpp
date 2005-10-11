@@ -117,7 +117,8 @@ string CLASS::GetPath() const
 
 std::ostream & CLASS::Print(std::ostream & outputStream) const
 {
-    return outputStream << "Type [" << GetType() << "], level [" << mLevel
+    return outputStream << "Type [" << GetType() << "], id [" << GetId()
+                        << "], level [" << mLevel << "], path [" << GetPath()
                         << "]";
 }
 

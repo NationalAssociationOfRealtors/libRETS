@@ -30,39 +30,82 @@ class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testFind);
+    CPPUNIT_TEST(testFindByPath);
     CPPUNIT_TEST_SUITE_END();
+    
+  public:
+    void setUp();
 
   protected:
     void testFind();
+    void testFindByPath();
+    
+    MetadataByLevelCollectorPtr mCollector;
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
 
-void CLASS::testFind()
+void CLASS::setUp()
 {
-    MetadataByLevelCollector collector;
+    mCollector.reset(new MetadataByLevelCollector());
     MetadataElementPtr element(new MetadataSystem());
     element->SetLevel("");
-    collector.AddElement(element);
-
+    mCollector->AddElement(element);
+    
     element.reset(new MetadataTable());
     element->SetLevel("Property:RES");
-    collector.AddElement(element);
-
+    element->SetAttribute("SystemName", "ListPrice");
+    mCollector->AddElement(element);
+    
     element.reset(new MetadataTable());
     element->SetLevel("Property:RES");
-    collector.AddElement(element);
+    element->SetAttribute("SystemName", "Beds");
+    mCollector->AddElement(element);
+}
 
-    MetadataElementListPtr elements =
-        collector.Find(MetadataElement::SYSTEM, "");
+void CLASS::testFind()
+{
+    MetadataElementListPtr elements;
+    MetadataElementPtr element;
+    
+    elements = mCollector->Find(MetadataElement::SYSTEM, "");
     ASSERT_EQUAL(size_t(1), elements->size());
+    element = elements->at(0);
+    ASSERT_EQUAL(MetadataElement::SYSTEM, element->GetType());
 
-    elements = collector.Find(MetadataElement::TABLE, "Property:RES");
+    elements = mCollector->Find(MetadataElement::TABLE, "Property:RES");
     ASSERT_EQUAL(size_t(2), elements->size());
+    element = elements->at(0);
+    ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
+    ASSERT_STRING_EQUAL("ListPrice", element->GetId());
+    element = elements->at(1);
+    ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
+    ASSERT_STRING_EQUAL("Beds", element->GetId());
 
-    elements = collector.Find(MetadataElement::TABLE, "Property:CON");
+    elements = mCollector->Find(MetadataElement::TABLE, "Property:CON");
     ASSERT_EQUAL(size_t(0), elements->size());
 
-    elements = collector.Find(MetadataElement::UPDATE, "Property:RES");
+    elements = mCollector->Find(MetadataElement::UPDATE, "Property:RES");
     ASSERT_EQUAL(size_t(0), elements->size());
+}
+
+
+void CLASS::testFindByPath()
+{
+    MetadataElementPtr element;
+    element = mCollector->FindByPath(MetadataElement::TABLE,
+                                     "Property:RES:ListPrice");
+    CPPUNIT_ASSERT(element);
+    ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
+    ASSERT_STRING_EQUAL("ListPrice", element->GetId());
+    
+    element = mCollector->FindByPath(MetadataElement::TABLE,
+                                     "Property:RES:Beds");
+    CPPUNIT_ASSERT(element);
+    ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
+    ASSERT_STRING_EQUAL("Beds", element->GetId());
+
+    element = mCollector->FindByPath(MetadataElement::TABLE,
+                                     "Property:CON:Beds");
+    CPPUNIT_ASSERT(!element);
 }
