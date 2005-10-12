@@ -14,7 +14,9 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <sstream>
+#include <algorithm>
 #include "librets/RetsMetadata.h"
 #include "librets/MetadataByLevelCollector.h"
 #include "librets/MetadataSystem.h"
@@ -27,14 +29,33 @@ using namespace librets;
 using std::string;
 using std::vector;
 using std::ostringstream;
+using std::find_if;
 namespace b = boost;
+
+template<typename DERIVED>
+struct ElementVectorCast
+{
+    typedef std::vector< DERIVED * > derived_vec_type;
+    typedef boost::shared_ptr< derived_vec_type > derived_vec_type_ptr;
+    
+    derived_vec_type_ptr operator()(const MetadataElementList & base_vec)
+    {
+        derived_vec_type_ptr derived_vec(new derived_vec_type());
+        MetadataElementList::const_iterator i;
+        for (i = base_vec.begin(); i != base_vec.end(); i++)
+        {
+            MetadataElement * element = (*i).get();
+            DERIVED * derived = dynamic_cast< DERIVED * >(element);
+            derived_vec->push_back(derived);
+        }
+        return derived_vec;
+    }
+};
 
 RetsMetadata::RetsMetadata(MetadataByLevelCollectorPtr collector)
 {
     mCollector = collector;
     InitSystem();
-    InitAllResources();
-    InitAllClasses();
 }
 
 void RetsMetadata::InitSystem()
@@ -52,44 +73,6 @@ void RetsMetadata::InitSystem()
     mSystem = dynamic_cast<MetadataSystem *>(element.get());
 }
 
-void RetsMetadata::InitAllClasses()
-{
-    mAllClasses.reset(new MetadataClassList());
-    MetadataElementListPtr resources =
-        mCollector->FindByLevel(MetadataElement::RESOURCE, "");
-    MetadataElementList::iterator i;
-    for (i = resources->begin(); i != resources->end(); i++)
-    {
-        MetadataResourcePtr resource =
-            b::dynamic_pointer_cast<MetadataResource>(*i);
-        string level = resource->GetResourceID();
-
-        MetadataElementListPtr classes =
-            mCollector->FindByLevel(MetadataElement::CLASS, level);
-        MetadataElementList::iterator j;
-        for (j = classes->begin(); j != classes->end(); j++)
-        {
-            MetadataClass * aClass =
-                dynamic_cast<MetadataClass *>((*j).get());
-            mAllClasses->push_back(aClass);
-        }
-    }
-}
-
-void RetsMetadata::InitAllResources()
-{
-    mAllResources.reset(new MetadataResourceList());
-    MetadataElementListPtr resources =
-        mCollector->FindByLevel(MetadataElement::RESOURCE, "");
-    MetadataElementList::iterator i;
-    for (i = resources->begin(); i != resources->end(); i++)
-    {
-        MetadataResource * resource =
-            dynamic_cast<MetadataResource *>((*i).get());
-        mAllResources->push_back(resource);
-    }
-}
-
 MetadataSystem * RetsMetadata::GetSystem() const
 {
     return mSystem;
@@ -97,57 +80,39 @@ MetadataSystem * RetsMetadata::GetSystem() const
 
 MetadataResourceList RetsMetadata::GetAllResources() const
 {
-    return *mAllResources;
+    MetadataElementListPtr elements =
+        mCollector->FindByLevel(MetadataElement::RESOURCE, "");
+    
+    ElementVectorCast<MetadataResource> cast;
+    MetadataResourceListPtr resources =  cast(*elements);
+    return *resources;
 }
 
 MetadataResource * RetsMetadata::GetResource(string resourceName) const
 {
     MetadataResource * metadataResource = 0;
-    
-    bool found = false;
-    MetadataResourceList::iterator i = mAllResources->begin();
-    
-    while (i != mAllResources->end() && !found)
-    {
-        MetadataResource * res = *i;
-        string testName = res->GetResourceID();
-        if (testName == resourceName)
-        {
-            metadataResource = res;
-            found = true;
-        }
-        i++;
-    }
-    
+    MetadataElementListPtr elements =
+        mCollector->FindByLevel(MetadataElement::RESOURCE, "");
+    MetadataElementList::iterator i;
+    i = find_if(elements->begin(), elements->end(),
+                MetadataElementIdEqual(resourceName));
+    if (i != elements->end())
+        metadataResource = dynamic_cast<MetadataResource *>((*i).get());
     return metadataResource;
-}
-
-MetadataClassList RetsMetadata::GetAllClasses() const
-{
-    return *mAllClasses;
 }
 
 MetadataClass * RetsMetadata::GetClass(string resourceName, string className)
     const
 {
     MetadataClass * metadataClass = 0;
+    MetadataElementListPtr elements =
+        mCollector->FindByLevel(MetadataElement::CLASS, resourceName);
 
-    MetadataClassList classList = GetClassesForResource(resourceName);
-    
-    bool found = false;
-    MetadataClassList::iterator i = classList.begin();
-    
-    while (i != classList.end() && !found)
-    {
-        MetadataClass * clazz = *i;
-        string testName = clazz->GetClassName();
-        if (testName == className)
-        {
-            metadataClass = clazz;
-            found = true;
-        }
-        i++;
-    }
+    MetadataElementList::iterator i;
+    i = find_if(elements->begin(), elements->end(),
+                MetadataElementIdEqual(className));
+    if (i != elements->end())
+        metadataClass = dynamic_cast<MetadataClass *>((*i).get());
     
     return metadataClass;
 }
@@ -156,17 +121,11 @@ MetadataClassList RetsMetadata::GetClassesForResource(
     string resourceName) const
 {
     MetadataElementListPtr elements =
-    mCollector->FindByLevel(MetadataElement::CLASS, resourceName);
-    
-    MetadataClassList classes;
-    MetadataElementList::iterator i;
-    for (i = elements->begin(); i != elements->end(); i++)
-    {
-        MetadataClass * aClass = dynamic_cast<MetadataClass *>((*i).get());
-        classes.push_back(aClass);
-    }
-    
-    return classes;
+        mCollector->FindByLevel(MetadataElement::CLASS, resourceName);
+
+    ElementVectorCast<MetadataClass> cast;
+    MetadataClassListPtr classes = cast(*elements);
+    return *classes;
 }
 
 MetadataTableList RetsMetadata::GetTablesForClass(
@@ -182,39 +141,25 @@ MetadataTableList RetsMetadata::GetTablesForClass(
     string level = resourceName + ":" + className;
     MetadataElementListPtr elements =
         mCollector->FindByLevel(MetadataElement::TABLE, level);
-    
-    MetadataTableList tables;
-    MetadataElementList::iterator i;
-    for (i = elements->begin(); i != elements->end(); i++)
-    {
-        MetadataTable * table = dynamic_cast<MetadataTable *>((*i).get());
-        tables.push_back(table);
-    }
-    return tables;
+
+    ElementVectorCast<MetadataTable> cast;
+    MetadataTableListPtr tables = cast(*elements);
+    return *tables;
 }
 
 MetadataTable * RetsMetadata::GetTable(string resourceName, string className,
                                         string tableName) const
 {
+    string level = resourceName + ":" + className;
     MetadataTable * metadataTable = 0;
-
-    MetadataTableList tableList =
-        GetTablesForClass(resourceName, className);
+    MetadataElementListPtr elements =
+        mCollector->FindByLevel(MetadataElement::TABLE, level);
     
-    bool found = false;
-    MetadataTableList::iterator i = tableList.begin();
-    
-    while (i != tableList.end() && !found)
-    {
-        MetadataTable * table = *i;
-        string testName = table->GetSystemName();
-        if (testName == tableName)
-        {
-            metadataTable = table;
-            found = true;
-        }
-        i++;
-    }
+    MetadataElementList::iterator i;
+    i = find_if(elements->begin(), elements->end(),
+                MetadataElementIdEqual(tableName));
+    if (i != elements->end())
+        metadataTable = dynamic_cast<MetadataTable *>((*i).get());
     
     return metadataTable;
 }

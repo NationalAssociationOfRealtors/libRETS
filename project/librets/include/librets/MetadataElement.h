@@ -19,6 +19,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "librets/std_forward.h"
 #include "librets/metadata_forward.h"
 #include "librets/RetsObject.h"
@@ -139,6 +140,24 @@ class MetadataElement : public RetsObject
   protected:
     StringMap mAttributes;
     std::string mLevel;
+};
+
+class MetadataElementIdEqual :
+    public std::unary_function<MetadataElement *, bool>
+{
+    std::string mId;
+
+  public:
+    MetadataElementIdEqual(std::string id) : mId(id) { }
+    bool operator()(const MetadataElement * element)
+    {
+        return (element->GetId() == mId);
+    }
+    
+    bool operator()(const MetadataElementPtr element)
+    {
+        return (*this)(element.get());
+    }
 };
 
 };

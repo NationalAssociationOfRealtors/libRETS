@@ -28,7 +28,7 @@ using std::exception;
 
 void dumpSystem(RetsMetadata * metadata);
 void dumpAllResources(RetsMetadata * metadata);
-void dumpAllClasses(RetsMetadata * metadata);
+void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource);
 void dumpAllTables(RetsMetadata * metadata, MetadataClass * aClass);
 
 int main(int argc, char * argv[])
@@ -51,7 +51,6 @@ int main(int argc, char * argv[])
         RetsMetadata * metadata = session->GetMetadata();
         dumpSystem(metadata);
         dumpAllResources(metadata);
-        dumpAllClasses(metadata);
 
         session->Logout();
     }
@@ -84,21 +83,26 @@ void dumpAllResources(RetsMetadata * metadata)
     for (i = resources.begin(); i != resources.end(); i++)
     {
         MetadataResource * resource = *i;
-        cout << "Resource name: " << resource->GetResourceID() << " ["
-             << resource->GetStandardName() << "]" << endl;
+        dumpAllClasses(metadata, resource);
     }
 }
 
-void dumpAllClasses(RetsMetadata * metadata)
+void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource)
 {
-    MetadataClassList classes = metadata->GetAllClasses();
+    string resourceName = resource->GetResourceID();
+    
+    MetadataClassList classes =
+        metadata->GetClassesForResource(resourceName);
     MetadataClassList::iterator i;
     for (i = classes.begin(); i != classes.end(); i++)
     {
         MetadataClass * aClass = *i;
-        cout << endl << "Class name: " << aClass->GetClassName() << " ["
+        cout << "Resource name: " << resourceName << " ["
+             << resource->GetStandardName() << "]" << endl;
+        cout << "Class name: " << aClass->GetClassName() << " ["
              << aClass->GetStandardName() << "]" << endl;
         dumpAllTables(metadata, aClass);
+        cout << endl;
     }
 }
 

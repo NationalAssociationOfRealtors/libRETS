@@ -57,13 +57,6 @@ class RetsMetadata
     MetadataSystem * GetSystem() const;
 
     /**
-     * Returns all the class metadata elements.
-     *
-     * @return All the class metadata elements
-     */
-    MetadataClassList GetAllClasses() const;
-
-    /**
      * Returns all the resource metadata elements.
      *
      * @return All the resource metadata elemens
@@ -123,13 +116,10 @@ class RetsMetadata
 
   private:
     void InitSystem();
-    void InitAllClasses();
     void InitAllResources();
 
     MetadataByLevelCollectorPtr mCollector;
     MetadataSystem * mSystem;
-    MetadataClassListPtr mAllClasses;
-    MetadataResourceListPtr mAllResources;
 };
 
 };
