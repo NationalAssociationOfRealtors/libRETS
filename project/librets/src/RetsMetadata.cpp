@@ -19,6 +19,7 @@
 #include <algorithm>
 #include "librets/RetsMetadata.h"
 #include "librets/MetadataByLevelCollector.h"
+#include "librets/MetadataLoader.h"
 #include "librets/MetadataSystem.h"
 #include "librets/MetadataResource.h"
 #include "librets/MetadataClass.h"
@@ -31,6 +32,8 @@ using std::vector;
 using std::ostringstream;
 using std::find_if;
 namespace b = boost;
+
+#define CLASS_ RetsMetadata
 
 template<typename DERIVED>
 struct ElementVectorCast
@@ -58,8 +61,18 @@ RetsMetadata::RetsMetadata(MetadataByLevelCollectorPtr collector)
     InitSystem();
 }
 
+RetsMetadata::RetsMetadata(MetadataByLevelCollectorPtr collector,
+                           MetadataLoader * loader)
+{
+    mCollector = collector;
+    mLoader = loader;
+    mLoader->SetCollector(mCollector);
+    InitSystem();
+}
+
 void RetsMetadata::InitSystem()
 {
+    EnsureLevelIsLoaded(MetadataElement::SYSTEM, "");
     MetadataElementListPtr elements =
         mCollector->FindByLevel(MetadataElement::SYSTEM, "");
     if (elements->size() != 1)
@@ -73,6 +86,30 @@ void RetsMetadata::InitSystem()
     mSystem = dynamic_cast<MetadataSystem *>(element.get());
 }
 
+string CLASS_::KeyForCache(MetadataElement::Type type, string level) const
+{
+    string key;
+    key += type + " " + level;
+    return key;
+}
+
+void CLASS_::EnsureLevelIsLoaded(MetadataElement::Type type, string level) const
+{
+    if (!mLoader)
+        return;
+    
+    string key = KeyForCache(type, level);
+
+    TypeLevelCache::const_iterator i;
+    i = mTypeLevelCache.find(key);
+    if (i == mTypeLevelCache.end())
+    {
+        mLoader->LoadMetadata(type, level);
+        mTypeLevelCache.insert(key);
+    }
+}
+
+
 MetadataSystem * RetsMetadata::GetSystem() const
 {
     return mSystem;
@@ -80,6 +117,7 @@ MetadataSystem * RetsMetadata::GetSystem() const
 
 MetadataResourceList RetsMetadata::GetAllResources() const
 {
+    EnsureLevelIsLoaded(MetadataElement::RESOURCE, "");
     MetadataElementListPtr elements =
         mCollector->FindByLevel(MetadataElement::RESOURCE, "");
     
@@ -91,6 +129,7 @@ MetadataResourceList RetsMetadata::GetAllResources() const
 MetadataResource * RetsMetadata::GetResource(string resourceName) const
 {
     MetadataResource * metadataResource = 0;
+    EnsureLevelIsLoaded(MetadataElement::RESOURCE, "");
     MetadataElementListPtr elements =
         mCollector->FindByLevel(MetadataElement::RESOURCE, "");
     MetadataElementList::iterator i;
@@ -105,6 +144,7 @@ MetadataClass * RetsMetadata::GetClass(string resourceName, string className)
     const
 {
     MetadataClass * metadataClass = 0;
+    EnsureLevelIsLoaded(MetadataElement::CLASS, resourceName);
     MetadataElementListPtr elements =
         mCollector->FindByLevel(MetadataElement::CLASS, resourceName);
 
@@ -120,6 +160,7 @@ MetadataClass * RetsMetadata::GetClass(string resourceName, string className)
 MetadataClassList RetsMetadata::GetClassesForResource(
     string resourceName) const
 {
+    EnsureLevelIsLoaded(MetadataElement::CLASS, resourceName);
     MetadataElementListPtr elements =
         mCollector->FindByLevel(MetadataElement::CLASS, resourceName);
 
@@ -139,6 +180,7 @@ MetadataTableList RetsMetadata::GetTablesForClass(
     string resourceName, string className) const
 {
     string level = resourceName + ":" + className;
+    EnsureLevelIsLoaded(MetadataElement::TABLE, level);
     MetadataElementListPtr elements =
         mCollector->FindByLevel(MetadataElement::TABLE, level);
 
@@ -152,6 +194,7 @@ MetadataTable * RetsMetadata::GetTable(string resourceName, string className,
 {
     string level = resourceName + ":" + className;
     MetadataTable * metadataTable = 0;
+    EnsureLevelIsLoaded(MetadataElement::TABLE, level);
     MetadataElementListPtr elements =
         mCollector->FindByLevel(MetadataElement::TABLE, level);
     

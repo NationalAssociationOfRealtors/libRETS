@@ -19,7 +19,9 @@
 
 #include <string>
 #include <vector>
+#include <set>
 #include "librets/metadata_forward.h"
+#include "librets/MetadataElement.h"
 
 namespace librets {
 
@@ -48,6 +50,9 @@ class RetsMetadata
      * Creates a metadata from a metadata by-level collector.
      */
     RetsMetadata(MetadataByLevelCollectorPtr collector);
+
+    RetsMetadata(MetadataByLevelCollectorPtr collector,
+                 MetadataLoader * loader);
 
     /**
      * Returns the system metdata element.
@@ -115,11 +120,18 @@ class RetsMetadata
                           std::string className) const;
 
   private:
+    typedef std::set<std::string> TypeLevelCache;
+        
     void InitSystem();
-    void InitAllResources();
+    std::string KeyForCache(MetadataElement::Type type,
+                            std::string level) const;
+    void EnsureLevelIsLoaded(MetadataElement::Type type,
+                             std::string level) const;
 
     MetadataByLevelCollectorPtr mCollector;
+    MetadataLoader * mLoader;
     MetadataSystem * mSystem;
+    mutable TypeLevelCache mTypeLevelCache;
 };
 
 };

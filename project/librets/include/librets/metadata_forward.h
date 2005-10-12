@@ -110,6 +110,9 @@ class MetadataElementCollector;
 typedef boost::shared_ptr<MetadataElementCollector>
     MetadataElementCollectorPtr;
 
+class MetadataLoader;
+typedef boost::shared_ptr<MetadataLoader> MetadataLoaderPtr;
+
 class XmlMetadataParser;
 typedef boost::shared_ptr<XmlMetadataParser> XmlMetadataParserPtr;
 

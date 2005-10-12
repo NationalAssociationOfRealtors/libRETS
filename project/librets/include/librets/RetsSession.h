@@ -24,6 +24,7 @@
 #include "librets/http_forward.h"
 #include "librets/RetsVersion.h"
 #include "librets/error_forward.h"
+#include "MetadataLoader.h"
 
 /**
  * The main librets namespace.  See RetsSession.
@@ -33,7 +34,7 @@ namespace librets {
 /**
  * Interface to RETS session.
  */
-class RetsSession
+class RetsSession : public MetadataLoader
 {
   public:
     /**
@@ -157,7 +158,12 @@ class RetsSession
      */
     void SetErrorHandler(RetsErrorHandler * errorHandler);
 
-  private:
+    virtual void SetCollector(MetadataElementCollectorPtr collector);
+    
+    virtual void LoadMetadata(MetadataElement::Type type,
+                              std::string level);
+
+private:
     static const char * RETS_VERSION_HEADER;
     static const char * RETS_1_0_STRING;
     static const char * RETS_1_5_STRING;
@@ -190,6 +196,8 @@ class RetsSession
     RetsVersion mDetectedRetsVersion;
 
     RetsErrorHandler * mErrorHandler;
+    
+    MetadataElementCollectorPtr mLoaderCollector;
 };
 
 };

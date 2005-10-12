@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <sstream>
 #include "librets.h"
 #include "librets/CurlHttpClient.h"
@@ -30,15 +31,15 @@ using namespace librets::util;
 using std::ostringstream;
 using std::string;
 
-#define CLASS RetsSession
+#define CLASS_ RetsSession
 
-const char * CLASS::DEFAULT_USER_AGENT = "librets/" LIBRETS_VERSION;
-const RetsVersion CLASS::DEFAULT_RETS_VERSION = RETS_1_5;
-const char * CLASS::RETS_VERSION_HEADER = "RETS-Version";
-const char * CLASS::RETS_1_0_STRING = "RETS/1.0";
-const char * CLASS::RETS_1_5_STRING = "RETS/1.5";
+const char * CLASS_::DEFAULT_USER_AGENT = "librets/" LIBRETS_VERSION;
+const RetsVersion CLASS_::DEFAULT_RETS_VERSION = RETS_1_5;
+const char * CLASS_::RETS_VERSION_HEADER = "RETS-Version";
+const char * CLASS_::RETS_1_0_STRING = "RETS/1.0";
+const char * CLASS_::RETS_1_5_STRING = "RETS/1.5";
 
-CLASS::CLASS(string login_url)
+CLASS_::CLASS_(string login_url)
 {
     mLoginUrl = login_url;
     mHttpMethod = RetsHttpRequest::POST;
@@ -48,7 +49,7 @@ CLASS::CLASS(string login_url)
     mErrorHandler = ExceptionErrorHandler::GetInstance();
 }
 
-void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
+void CLASS_::AssertSuccessfulResponse(RetsHttpResponsePtr response,
                                      string url)
 {
     int responseCode = response->GetResponseCode();
@@ -61,7 +62,7 @@ void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
     }
 }
 
-bool CLASS::Login(string user_name, string passwd)
+bool CLASS_::Login(string user_name, string passwd)
 {
     mHttpClient->SetDefaultHeader(RETS_VERSION_HEADER,
                                   RetsVersionToString(mRetsVersion));
@@ -93,7 +94,7 @@ bool CLASS::Login(string user_name, string passwd)
     return true;
 }
 
-void CLASS::RetrieveAction()
+void CLASS_::RetrieveAction()
 {
     string actionUrl = mCapabilityUrls->GetActionUrl();
     if (actionUrl == "")
@@ -109,12 +110,12 @@ void CLASS::RetrieveAction()
     mAction = readIntoString(*httpResponse->GetInputStream());
 }
 
-string CLASS::GetAction()
+string CLASS_::GetAction()
 {
     return mAction;
 }
 
-RetsMetadata * CLASS::GetMetadata()
+RetsMetadata * CLASS_::GetMetadata()
 {
     if (!mMetadata)
     {
@@ -123,8 +124,62 @@ RetsMetadata * CLASS::GetMetadata()
     return mMetadata.get();
 }
 
-void CLASS::RetrieveMetadata()
+void CLASS_::SetCollector(MetadataElementCollectorPtr collector)
 {
+    mLoaderCollector = collector;
+}
+
+void CLASS_::LoadMetadata(MetadataElement::Type type,
+                         std::string level)
+{
+    string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
+    RetsHttpRequestPtr request(new RetsHttpRequest());
+    request->SetUrl(getMetadataUrl);
+    request->SetMethod(mHttpMethod);
+    string retsType;
+    switch (type)
+    {
+        case MetadataElement::SYSTEM:
+            retsType = "METADATA-SYSTEM";
+            break;
+            
+        case MetadataElement::CLASS:
+            retsType = "METADATA-CLASS";
+            break;
+
+        case MetadataElement::RESOURCE:
+            retsType = "METADATA-RESOURCE";
+            break;
+            
+        case MetadataElement::TABLE:
+            retsType = "METADATA-TABLE";
+            break;
+            
+        default:
+            throw RetsException(str_stream() << "Invalid type: "
+                                << type);
+    }
+    
+    string id;
+    if (level.empty())
+        id  = "0";
+    else
+        id = level + ":0";
+
+    request->SetQueryParameter("Type", retsType);
+    request->SetQueryParameter("ID", id);
+    request->SetQueryParameter("Format", "COMPACT");
+    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
+    AssertSuccessfulResponse(httpResponse, getMetadataUrl);
+    
+    XmlMetadataParserPtr parser(new XmlMetadataParser(mLoaderCollector,
+                                                      mErrorHandler));
+    parser->Parse(httpResponse->GetInputStream());
+}
+
+void CLASS_::RetrieveMetadata()
+{
+#if 0
     string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
     RetsHttpRequestPtr request(new RetsHttpRequest());
     request->SetUrl(getMetadataUrl);
@@ -141,9 +196,12 @@ void CLASS::RetrieveMetadata()
     parser->Parse(httpResponse->GetInputStream());
 
     mMetadata.reset(new RetsMetadata(collector));
+#endif
+    MetadataByLevelCollectorPtr collector(new MetadataByLevelCollector());
+    mMetadata.reset(new RetsMetadata(collector, this));
 }
 
-SearchRequestPtr CLASS::CreateSearchRequest(string searchType, 
+SearchRequestPtr CLASS_::CreateSearchRequest(string searchType, 
                                             string searchClass,
                                             string query)
 {
@@ -160,7 +218,7 @@ SearchRequestPtr CLASS::CreateSearchRequest(string searchType,
     return searchRequest;
 }
 
-SearchResultSetPtr CLASS::Search(SearchRequestPtr request)
+SearchResultSetPtr CLASS_::Search(SearchRequestPtr request)
 {
     string searchUrl = mCapabilityUrls->GetSearchUrl();
     request->SetUrl(searchUrl);
@@ -173,7 +231,7 @@ SearchResultSetPtr CLASS::Search(SearchRequestPtr request)
     return resultSet;
 }
 
-GetObjectResponsePtr CLASS::GetObject(GetObjectRequestPtr request)
+GetObjectResponsePtr CLASS_::GetObject(GetObjectRequestPtr request)
 {
     RetsHttpRequestPtr httpRequest = request->CreateHttpRequest();
     string getObjectUrl = mCapabilityUrls->GetGetObjectUrl();
@@ -187,7 +245,7 @@ GetObjectResponsePtr CLASS::GetObject(GetObjectRequestPtr request)
     return response;
 }
 
-LogoutResponsePtr CLASS::Logout()
+LogoutResponsePtr CLASS_::Logout()
 {
     LogoutResponsePtr logoutResponse;
     string logoutUrl = mCapabilityUrls->GetLogoutUrl();
@@ -206,12 +264,12 @@ LogoutResponsePtr CLASS::Logout()
     return logoutResponse;
 }
 
-void CLASS::SetUserAgent(string userAgent)
+void CLASS_::SetUserAgent(string userAgent)
 {
     mHttpClient->SetUserAgent(userAgent);
 }
 
-void CLASS::UseHttpGet(bool useHttpGet)
+void CLASS_::UseHttpGet(bool useHttpGet)
 {
     if (useHttpGet)
     {
@@ -223,27 +281,27 @@ void CLASS::UseHttpGet(bool useHttpGet)
     }
 }
 
-void CLASS::SetHttpLogger(RetsHttpLogger * logger)
+void CLASS_::SetHttpLogger(RetsHttpLogger * logger)
 {
     mHttpClient->SetLogger(logger);
 }
 
-RetsVersion CLASS::GetRetsVersion() const
+RetsVersion CLASS_::GetRetsVersion() const
 {
     return mRetsVersion;
 }
 
-void CLASS::SetRetsVersion(RetsVersion retsVersion)
+void CLASS_::SetRetsVersion(RetsVersion retsVersion)
 {
     mRetsVersion = retsVersion;
 }
 
-RetsVersion CLASS::GetDetectedRetsVersion() const
+RetsVersion CLASS_::GetDetectedRetsVersion() const
 {
     return mDetectedRetsVersion;
 }
 
-string CLASS::RetsVersionToString(RetsVersion retsVersion)
+string CLASS_::RetsVersionToString(RetsVersion retsVersion)
 {
     if (retsVersion == RETS_1_0)
     {
@@ -260,7 +318,7 @@ string CLASS::RetsVersionToString(RetsVersion retsVersion)
     }
 }
 
-RetsVersion CLASS::RetsVersionFromString(string versionString)
+RetsVersion CLASS_::RetsVersionFromString(string versionString)
 {
     if (versionString == RETS_1_0_STRING)
     {
@@ -281,7 +339,7 @@ RetsVersion CLASS::RetsVersionFromString(string versionString)
     }
 }
 
-void CLASS::SetErrorHandler(RetsErrorHandler * errorHandler)
+void CLASS_::SetErrorHandler(RetsErrorHandler * errorHandler)
 {
     mErrorHandler = errorHandler;
 }

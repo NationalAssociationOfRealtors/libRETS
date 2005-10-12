@@ -80,6 +80,8 @@ class MetadataElement : public RetsObject
         /** Foreign key metadata. */
         FOREIGN_KEY
     };
+    
+    typedef MetadataType Type;
 
     MetadataElement();
 

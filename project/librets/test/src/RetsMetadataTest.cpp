@@ -16,6 +16,7 @@
  */
 #include <cppunit/extensions/HelperMacros.h>
 #include "testUtil.h"
+#include "TestMetadataLoader.h"
 #include "librets/RetsMetadata.h"
 #include "librets/MetadataByLevelCollector.h"
 #include "librets/MetadataElement.h"
@@ -28,11 +29,11 @@ using namespace librets;
 using namespace librets::util;
 using namespace std;
 
-#define CLASS RetsMetadataTest
+#define CLASS_ RetsMetadataTest
 
-class CLASS : public CPPUNIT_NS::TestFixture
+class CLASS_ : public CPPUNIT_NS::TestFixture
 {
-    CPPUNIT_TEST_SUITE(CLASS);
+    CPPUNIT_TEST_SUITE(CLASS_);
     CPPUNIT_TEST(testGetSystem);
     CPPUNIT_TEST(testGetAllResources);
     CPPUNIT_TEST(testGetResource);
@@ -58,6 +59,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void tearDown();
     
   private:
+    TestMetadataLoaderPtr loader;
     MetadataByLevelCollectorPtr collector;
     MetadataResourceList resources;
     MetadataClassList classes;
@@ -71,31 +73,33 @@ class CLASS : public CPPUNIT_NS::TestFixture
     RetsMetadataPtr metadata;
 };
 
-CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
+CPPUNIT_TEST_SUITE_REGISTRATION(CLASS_);
 
-void CLASS::setUp()
+void CLASS_::setUp()
 {
-    MetadataByLevelCollectorPtr collector(new MetadataByLevelCollector());
+    loader.reset(new TestMetadataLoader());
+    collector.reset(new MetadataByLevelCollector());
+    
     MetadataSystemPtr system(new MetadataSystem());
     system->SetLevel("");
-    collector->AddElement(system);
+    loader->AddElement(system);
     
     MetadataResourcePtr resource(new MetadataResource());
     resource->SetLevel("");
     resource->SetAttribute("ResourceID", "Property");
-    collector->AddElement(resource);
+    loader->AddElement(resource);
     resources.push_back(resource.get());
     resource.reset(new MetadataResource());
     resource->SetLevel("");
     resource->SetAttribute("ResourceID", "Agent");
-    collector->AddElement(resource);
+    loader->AddElement(resource);
     resources.push_back(resource.get());
     agentResource = resource.get();
     
     MetadataClassPtr aClass(new MetadataClass());
     aClass->SetLevel("Property");
     aClass->SetAttribute("ClassName", "RES");
-    collector->AddElement(aClass);
+    loader->AddElement(aClass);
     classes.push_back(aClass.get());
     propClasses.push_back(aClass.get());
     resClass = aClass.get();
@@ -104,34 +108,35 @@ void CLASS::setUp()
     aClass.reset(new MetadataClass());
     aClass->SetLevel("Property");
     aClass->SetAttribute("ClassName", "LND");
-    collector->AddElement(aClass);
+    loader->AddElement(aClass);
     classes.push_back(aClass.get());
     propClasses.push_back(aClass.get());
     
     aClass.reset(new MetadataClass());
     aClass->SetLevel("Agent");
     aClass->SetAttribute("ClassName", "AGT");
-    collector->AddElement(aClass);
+    loader->AddElement(aClass);
     classes.push_back(aClass.get());
     agentClasses.push_back(aClass.get());
     
     MetadataTablePtr table(new MetadataTable());
     table->SetLevel("Property:RES");
     table->SetAttribute("SystemName", "LP");
-    collector->AddElement(table);
+    loader->AddElement(table);
     tables.push_back(table.get());
     table.reset(new MetadataTable());
     table->SetLevel("Property:RES");
     table->SetAttribute("SystemName", "LD");
-    collector->AddElement(table);
+    loader->AddElement(table);
     tables.push_back(table.get());
     ldTable = table.get();
     
-    metadata.reset(new RetsMetadata(collector));
+    metadata.reset(new RetsMetadata(collector, loader.get()));
 }
 
-void CLASS::tearDown()
+void CLASS_::tearDown()
 {
+    loader.reset();
     collector.reset();
     resources.clear();
     classes.clear();
@@ -146,58 +151,78 @@ void CLASS::tearDown()
     metadata.reset();
 }
 
-void CLASS::testGetSystem()
+void CLASS_::testGetSystem()
 {
     MetadataSystem * actualSystem = metadata->GetSystem();
     CPPUNIT_ASSERT(actualSystem);
+    ASSERT_EQUAL(1, loader->GetTotalLoadCount());
+    ASSERT_EQUAL(1, loader->GetLoadCount(MetadataElement::SYSTEM));
 }
 
-void CLASS::testGetAllResources()
+void CLASS_::testGetAllResources()
 {
     MetadataResourceList actualResources = metadata->GetAllResources();
     ASSERT_VECTOR_EQUAL(resources, actualResources);
+    ASSERT_EQUAL(2, loader->GetTotalLoadCount());
+    ASSERT_EQUAL(1, loader->GetLoadCount(MetadataElement::RESOURCE));
 }
 
-void CLASS::testGetResource()
+void CLASS_::testGetResource()
 {
     MetadataResource * actualResource = metadata->GetResource("Agent");
     ASSERT_EQUAL(agentResource, actualResource);
+    ASSERT_EQUAL(2, loader->GetTotalLoadCount());
+    ASSERT_EQUAL(1, loader->GetLoadCount(MetadataElement::RESOURCE));
 }
 
-void CLASS::testGetClass()
+void CLASS_::testGetClass()
 {
     MetadataClass * actualClass = metadata->GetClass("Property", "RES");
+    CPPUNIT_ASSERT(actualClass);
     ASSERT_EQUAL(*resClass, *actualClass);
+    ASSERT_EQUAL(2, loader->GetTotalLoadCount());
+    ASSERT_EQUAL(1, loader->GetLoadCount(MetadataElement::CLASS));
 }
 
-void CLASS::testGetTablesByClassObject()
-{
-    MetadataClass * actualClass = metadata->GetClass("Property", "RES");
-    MetadataTableList actualTables =
-        metadata->GetTablesForClass(actualClass);
-    ASSERT_VECTOR_EQUAL(tables, actualTables);
-}
-
-void CLASS::testGetTablesByClassName()
-{
-    MetadataTableList actualTables =
-        metadata->GetTablesForClass("Property", "RES");
-    ASSERT_VECTOR_EQUAL(tables, actualTables);
-}
-
-void CLASS::testGetClassesForResource()
+void CLASS_::testGetClassesForResource()
 {
     MetadataClassList actualPropClasses =
-    metadata->GetClassesForResource("Property");
+        metadata->GetClassesForResource("Property");
     ASSERT_VECTOR_EQUAL(propClasses, actualPropClasses);
     
     MetadataClassList actualAgentClasses =
         metadata->GetClassesForResource("Agent");
     ASSERT_VECTOR_EQUAL(agentClasses, actualAgentClasses);
+    ASSERT_EQUAL(3, loader->GetTotalLoadCount());
+    ASSERT_EQUAL(2, loader->GetLoadCount(MetadataElement::CLASS));
 }
 
-void CLASS::testGetTable()
+void CLASS_::testGetTablesByClassObject()
+{
+    MetadataClass * actualClass = metadata->GetClass("Property", "RES");
+    CPPUNIT_ASSERT(actualClass);
+    MetadataTableList actualTables =
+        metadata->GetTablesForClass(actualClass);
+    ASSERT_VECTOR_EQUAL(tables, actualTables);
+    ASSERT_EQUAL(3, loader->GetTotalLoadCount());
+    ASSERT_EQUAL(1, loader->GetLoadCount(MetadataElement::CLASS));
+    ASSERT_EQUAL(1, loader->GetLoadCount(MetadataElement::TABLE));
+}
+
+void CLASS_::testGetTablesByClassName()
+{
+    MetadataTableList actualTables =
+        metadata->GetTablesForClass("Property", "RES");
+    ASSERT_VECTOR_EQUAL(tables, actualTables);
+    ASSERT_EQUAL(2, loader->GetTotalLoadCount());
+    ASSERT_EQUAL(1, loader->GetLoadCount(MetadataElement::TABLE));
+}
+
+void CLASS_::testGetTable()
 {
     MetadataTable * actualTable = metadata->GetTable("Property", "RES", "LD");
-    ASSERT_EQUAL(ldTable, actualTable);
+    CPPUNIT_ASSERT(actualTable);
+    ASSERT_EQUAL(*ldTable, *actualTable);
+    ASSERT_EQUAL(2, loader->GetTotalLoadCount());
+    ASSERT_EQUAL(1, loader->GetLoadCount(MetadataElement::TABLE));
 }
