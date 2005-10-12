@@ -40,7 +40,7 @@ RetsMetadata::RetsMetadata(MetadataByLevelCollectorPtr collector)
 void RetsMetadata::InitSystem()
 {
     MetadataElementListPtr elements =
-        mCollector->Find(MetadataElement::SYSTEM, "");
+        mCollector->FindByLevel(MetadataElement::SYSTEM, "");
     if (elements->size() != 1)
     {
         ostringstream message;
@@ -56,7 +56,7 @@ void RetsMetadata::InitAllClasses()
 {
     mAllClasses.reset(new MetadataClassList());
     MetadataElementListPtr resources =
-        mCollector->Find(MetadataElement::RESOURCE, "");
+        mCollector->FindByLevel(MetadataElement::RESOURCE, "");
     MetadataElementList::iterator i;
     for (i = resources->begin(); i != resources->end(); i++)
     {
@@ -65,7 +65,7 @@ void RetsMetadata::InitAllClasses()
         string level = resource->GetResourceID();
 
         MetadataElementListPtr classes =
-            mCollector->Find(MetadataElement::CLASS, level);
+            mCollector->FindByLevel(MetadataElement::CLASS, level);
         MetadataElementList::iterator j;
         for (j = classes->begin(); j != classes->end(); j++)
         {
@@ -80,7 +80,7 @@ void RetsMetadata::InitAllResources()
 {
     mAllResources.reset(new MetadataResourceList());
     MetadataElementListPtr resources =
-        mCollector->Find(MetadataElement::RESOURCE, "");
+        mCollector->FindByLevel(MetadataElement::RESOURCE, "");
     MetadataElementList::iterator i;
     for (i = resources->begin(); i != resources->end(); i++)
     {
@@ -156,7 +156,7 @@ MetadataClassList RetsMetadata::GetClassesForResource(
     string resourceName) const
 {
     MetadataElementListPtr elements =
-    mCollector->Find(MetadataElement::CLASS, resourceName);
+    mCollector->FindByLevel(MetadataElement::CLASS, resourceName);
     
     MetadataClassList classes;
     MetadataElementList::iterator i;
@@ -181,7 +181,7 @@ MetadataTableList RetsMetadata::GetTablesForClass(
 {
     string level = resourceName + ":" + className;
     MetadataElementListPtr elements =
-        mCollector->Find(MetadataElement::TABLE, level);
+        mCollector->FindByLevel(MetadataElement::TABLE, level);
     
     MetadataTableList tables;
     MetadataElementList::iterator i;

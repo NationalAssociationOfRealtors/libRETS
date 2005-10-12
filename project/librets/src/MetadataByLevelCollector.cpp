@@ -137,8 +137,8 @@ std::ostream & CLASS::Print(std::ostream & outputStream) const
     return outputStream;
 }
 
-MetadataElementListPtr CLASS::Find(MetadataElement::MetadataType type,
-                                   string level)
+MetadataElementListPtr CLASS::FindByLevel(MetadataElement::MetadataType type,
+                                          string level)
 {
     LevelElementsPtr levelElements = GetLevelElementsByType(type);
     MetadataElementListPtr elements = GetElementsByLevel(levelElements, level);

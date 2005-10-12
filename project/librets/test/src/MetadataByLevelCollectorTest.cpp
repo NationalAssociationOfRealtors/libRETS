@@ -29,7 +29,7 @@ using namespace std;
 class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
-    CPPUNIT_TEST(testFind);
+    CPPUNIT_TEST(testFindByLevel);
     CPPUNIT_TEST(testFindByPath);
     CPPUNIT_TEST_SUITE_END();
     
@@ -37,7 +37,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void setUp();
 
   protected:
-    void testFind();
+    void testFindByLevel();
     void testFindByPath();
     
     MetadataByLevelCollectorPtr mCollector;
@@ -63,17 +63,17 @@ void CLASS::setUp()
     mCollector->AddElement(element);
 }
 
-void CLASS::testFind()
+void CLASS::testFindByLevel()
 {
     MetadataElementListPtr elements;
     MetadataElementPtr element;
     
-    elements = mCollector->Find(MetadataElement::SYSTEM, "");
+    elements = mCollector->FindByLevel(MetadataElement::SYSTEM, "");
     ASSERT_EQUAL(size_t(1), elements->size());
     element = elements->at(0);
     ASSERT_EQUAL(MetadataElement::SYSTEM, element->GetType());
 
-    elements = mCollector->Find(MetadataElement::TABLE, "Property:RES");
+    elements = mCollector->FindByLevel(MetadataElement::TABLE, "Property:RES");
     ASSERT_EQUAL(size_t(2), elements->size());
     element = elements->at(0);
     ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
@@ -82,10 +82,10 @@ void CLASS::testFind()
     ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
     ASSERT_STRING_EQUAL("Beds", element->GetId());
 
-    elements = mCollector->Find(MetadataElement::TABLE, "Property:CON");
+    elements = mCollector->FindByLevel(MetadataElement::TABLE, "Property:CON");
     ASSERT_EQUAL(size_t(0), elements->size());
 
-    elements = mCollector->Find(MetadataElement::UPDATE, "Property:RES");
+    elements = mCollector->FindByLevel(MetadataElement::UPDATE, "Property:RES");
     ASSERT_EQUAL(size_t(0), elements->size());
 }
 

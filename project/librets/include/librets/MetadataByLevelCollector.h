@@ -34,8 +34,8 @@ class MetadataByLevelCollector :
 
     void AddElement(MetadataElementPtr element);
     
-    MetadataElementListPtr Find(MetadataElement::MetadataType type,
-                                std::string level);
+    MetadataElementListPtr FindByLevel(MetadataElement::MetadataType type,
+                                       std::string level);
     
     MetadataElementPtr FindByPath(MetadataElement::MetadataType type,
                                   std::string path);
