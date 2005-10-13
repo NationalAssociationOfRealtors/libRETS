@@ -35,6 +35,7 @@ class Options
     std::string userAgent;
     bool useHttpGet;
     librets::RetsVersion retsVersion;
+    bool useFullMetadata;
 
     Options();
 

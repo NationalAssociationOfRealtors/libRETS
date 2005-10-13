@@ -95,6 +95,20 @@ class RetsSession : public MetadataLoader
      */
     RetsMetadata * GetMetadata();
     
+    /**
+     * Returns true if metadata is retrieved incrementally.
+     *
+     * @eturn true if metadata is retreived incrementally.
+     */
+    bool IsIncrementalMetadata() const;
+    
+    /**
+     * Changes how metadata is fetched.  If true, metadata is retrieved
+     * incrementally, as needed.  If false, metadata is retreived all at once
+     * right after logging in.  The default is true (incremental).
+     */
+    void SetIncrementalMetadata(bool incrementalMetadata);
+    
     GetObjectResponsePtr GetObject(GetObjectRequestPtr request);
 
     /**
@@ -170,7 +184,9 @@ private:
     
     void RetrieveAction();
 
-    void RetrieveMetadata();
+    void InitializeMetadata();
+    
+    void RetrieveFullMetadata();
 
     void AssertSuccessfulResponse(RetsHttpResponsePtr response,
                                   std::string url);
@@ -189,6 +205,10 @@ private:
 
     RetsMetadataPtr mMetadata;
     
+    MetadataElementCollectorPtr mLoaderCollector;
+    
+    bool mIncrementalMetadata;
+    
     RetsHttpRequest::Method mHttpMethod;
     
     RetsVersion mRetsVersion;
@@ -196,8 +216,6 @@ private:
     RetsVersion mDetectedRetsVersion;
 
     RetsErrorHandler * mErrorHandler;
-    
-    MetadataElementCollectorPtr mLoaderCollector;
 };
 
 };

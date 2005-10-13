@@ -49,6 +49,9 @@ Options::Options()
          "Use configuration file")
         ("rets-version,V", po::value<string>(&mRetsVersionString)
          ->default_value("1.5", ""), "RETS Version")
+        ("full-metadata,F", po::value<bool>(&useFullMetadata)
+         ->default_value(false, "")->implicit(),
+         "Use full metadata (instead of incremental)")
         ;
 }
 
@@ -84,6 +87,7 @@ RetsSessionPtr Options::RetsLogin()
     session->SetUserAgent(userAgent);
     session->UseHttpGet(useHttpGet);
     session->SetRetsVersion(retsVersion);
+    session->SetIncrementalMetadata(!useFullMetadata);
     if (options.count("http-log"))
     {
         mLogStream.open(mLogFile.c_str());

@@ -31,15 +31,15 @@ using namespace librets::util;
 using std::ostringstream;
 using std::string;
 
-#define CLASS_ RetsSession
+typedef RetsSession CLASS;
 
-const char * CLASS_::DEFAULT_USER_AGENT = "librets/" LIBRETS_VERSION;
-const RetsVersion CLASS_::DEFAULT_RETS_VERSION = RETS_1_5;
-const char * CLASS_::RETS_VERSION_HEADER = "RETS-Version";
-const char * CLASS_::RETS_1_0_STRING = "RETS/1.0";
-const char * CLASS_::RETS_1_5_STRING = "RETS/1.5";
+const char * CLASS::DEFAULT_USER_AGENT = "librets/" LIBRETS_VERSION;
+const RetsVersion CLASS::DEFAULT_RETS_VERSION = RETS_1_5;
+const char * CLASS::RETS_VERSION_HEADER = "RETS-Version";
+const char * CLASS::RETS_1_0_STRING = "RETS/1.0";
+const char * CLASS::RETS_1_5_STRING = "RETS/1.5";
 
-CLASS_::CLASS_(string login_url)
+CLASS::RetsSession(string login_url)
 {
     mLoginUrl = login_url;
     mHttpMethod = RetsHttpRequest::POST;
@@ -47,9 +47,10 @@ CLASS_::CLASS_(string login_url)
     mHttpClient->SetUserAgent(DEFAULT_USER_AGENT);
     mRetsVersion = DEFAULT_RETS_VERSION;
     mErrorHandler = ExceptionErrorHandler::GetInstance();
+    mIncrementalMetadata = true;
 }
 
-void CLASS_::AssertSuccessfulResponse(RetsHttpResponsePtr response,
+void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
                                      string url)
 {
     int responseCode = response->GetResponseCode();
@@ -62,7 +63,7 @@ void CLASS_::AssertSuccessfulResponse(RetsHttpResponsePtr response,
     }
 }
 
-bool CLASS_::Login(string user_name, string passwd)
+bool CLASS::Login(string user_name, string passwd)
 {
     mHttpClient->SetDefaultHeader(RETS_VERSION_HEADER,
                                   RetsVersionToString(mRetsVersion));
@@ -94,7 +95,7 @@ bool CLASS_::Login(string user_name, string passwd)
     return true;
 }
 
-void CLASS_::RetrieveAction()
+void CLASS::RetrieveAction()
 {
     string actionUrl = mCapabilityUrls->GetActionUrl();
     if (actionUrl == "")
@@ -110,26 +111,36 @@ void CLASS_::RetrieveAction()
     mAction = readIntoString(*httpResponse->GetInputStream());
 }
 
-string CLASS_::GetAction()
+string CLASS::GetAction()
 {
     return mAction;
 }
 
-RetsMetadata * CLASS_::GetMetadata()
+RetsMetadata * CLASS::GetMetadata()
 {
     if (!mMetadata)
     {
-        RetrieveMetadata();
+        InitializeMetadata();
     }
     return mMetadata.get();
 }
 
-void CLASS_::SetCollector(MetadataElementCollectorPtr collector)
+bool CLASS::IsIncrementalMetadata() const
+{
+    return mIncrementalMetadata;
+}
+
+void CLASS::SetIncrementalMetadata(bool incrementalMetadata)
+{
+    mIncrementalMetadata = incrementalMetadata;
+}
+
+void CLASS::SetCollector(MetadataElementCollectorPtr collector)
 {
     mLoaderCollector = collector;
 }
 
-void CLASS_::LoadMetadata(MetadataElement::Type type,
+void CLASS::LoadMetadata(MetadataElement::Type type,
                          std::string level)
 {
     string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
@@ -177,9 +188,22 @@ void CLASS_::LoadMetadata(MetadataElement::Type type,
     parser->Parse(httpResponse->GetInputStream());
 }
 
-void CLASS_::RetrieveMetadata()
+
+void CLASS::InitializeMetadata()
 {
-#if 0
+    if (mIncrementalMetadata)
+    {
+        MetadataByLevelCollectorPtr collector(new MetadataByLevelCollector());
+        mMetadata.reset(new RetsMetadata(collector, this));
+    }
+    else
+    {
+        RetrieveFullMetadata();
+    }
+}
+
+void CLASS::RetrieveFullMetadata()
+{
     string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
     RetsHttpRequestPtr request(new RetsHttpRequest());
     request->SetUrl(getMetadataUrl);
@@ -196,12 +220,9 @@ void CLASS_::RetrieveMetadata()
     parser->Parse(httpResponse->GetInputStream());
 
     mMetadata.reset(new RetsMetadata(collector));
-#endif
-    MetadataByLevelCollectorPtr collector(new MetadataByLevelCollector());
-    mMetadata.reset(new RetsMetadata(collector, this));
 }
 
-SearchRequestPtr CLASS_::CreateSearchRequest(string searchType, 
+SearchRequestPtr CLASS::CreateSearchRequest(string searchType, 
                                             string searchClass,
                                             string query)
 {
@@ -218,7 +239,7 @@ SearchRequestPtr CLASS_::CreateSearchRequest(string searchType,
     return searchRequest;
 }
 
-SearchResultSetPtr CLASS_::Search(SearchRequestPtr request)
+SearchResultSetPtr CLASS::Search(SearchRequestPtr request)
 {
     string searchUrl = mCapabilityUrls->GetSearchUrl();
     request->SetUrl(searchUrl);
@@ -231,7 +252,7 @@ SearchResultSetPtr CLASS_::Search(SearchRequestPtr request)
     return resultSet;
 }
 
-GetObjectResponsePtr CLASS_::GetObject(GetObjectRequestPtr request)
+GetObjectResponsePtr CLASS::GetObject(GetObjectRequestPtr request)
 {
     RetsHttpRequestPtr httpRequest = request->CreateHttpRequest();
     string getObjectUrl = mCapabilityUrls->GetGetObjectUrl();
@@ -245,7 +266,7 @@ GetObjectResponsePtr CLASS_::GetObject(GetObjectRequestPtr request)
     return response;
 }
 
-LogoutResponsePtr CLASS_::Logout()
+LogoutResponsePtr CLASS::Logout()
 {
     LogoutResponsePtr logoutResponse;
     string logoutUrl = mCapabilityUrls->GetLogoutUrl();
@@ -264,12 +285,12 @@ LogoutResponsePtr CLASS_::Logout()
     return logoutResponse;
 }
 
-void CLASS_::SetUserAgent(string userAgent)
+void CLASS::SetUserAgent(string userAgent)
 {
     mHttpClient->SetUserAgent(userAgent);
 }
 
-void CLASS_::UseHttpGet(bool useHttpGet)
+void CLASS::UseHttpGet(bool useHttpGet)
 {
     if (useHttpGet)
     {
@@ -281,27 +302,27 @@ void CLASS_::UseHttpGet(bool useHttpGet)
     }
 }
 
-void CLASS_::SetHttpLogger(RetsHttpLogger * logger)
+void CLASS::SetHttpLogger(RetsHttpLogger * logger)
 {
     mHttpClient->SetLogger(logger);
 }
 
-RetsVersion CLASS_::GetRetsVersion() const
+RetsVersion CLASS::GetRetsVersion() const
 {
     return mRetsVersion;
 }
 
-void CLASS_::SetRetsVersion(RetsVersion retsVersion)
+void CLASS::SetRetsVersion(RetsVersion retsVersion)
 {
     mRetsVersion = retsVersion;
 }
 
-RetsVersion CLASS_::GetDetectedRetsVersion() const
+RetsVersion CLASS::GetDetectedRetsVersion() const
 {
     return mDetectedRetsVersion;
 }
 
-string CLASS_::RetsVersionToString(RetsVersion retsVersion)
+string CLASS::RetsVersionToString(RetsVersion retsVersion)
 {
     if (retsVersion == RETS_1_0)
     {
@@ -318,7 +339,7 @@ string CLASS_::RetsVersionToString(RetsVersion retsVersion)
     }
 }
 
-RetsVersion CLASS_::RetsVersionFromString(string versionString)
+RetsVersion CLASS::RetsVersionFromString(string versionString)
 {
     if (versionString == RETS_1_0_STRING)
     {
@@ -339,7 +360,7 @@ RetsVersion CLASS_::RetsVersionFromString(string versionString)
     }
 }
 
-void CLASS_::SetErrorHandler(RetsErrorHandler * errorHandler)
+void CLASS::SetErrorHandler(RetsErrorHandler * errorHandler)
 {
     mErrorHandler = errorHandler;
 }
