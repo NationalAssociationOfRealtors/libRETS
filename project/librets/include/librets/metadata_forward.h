@@ -131,9 +131,9 @@ class DefaultMetadataElementFactory;
 typedef boost::shared_ptr<DefaultMetadataElementFactory>
     DefaultMetadataElementFactoryPtr;
 
-class MetadataByLevelCollector;
-typedef boost::shared_ptr<MetadataByLevelCollector>
-    MetadataByLevelCollectorPtr;
+class DefaultMetadataCollector;
+typedef boost::shared_ptr<DefaultMetadataCollector>
+    DefaultMetadataCollectorPtr;
 
 class RetsUnknownMetadataException;
 

@@ -47,7 +47,7 @@ class IncrementalMetadataFinder : public RetsObject,
                              std::string level) const;
 
     MetadataLoader * mLoader;
-    MetadataByLevelCollectorPtr mLoadedMetadata;
+    DefaultMetadataCollectorPtr mLoadedMetadata;
     mutable TypeLevelCache mTypeLevelCache;
 };
 

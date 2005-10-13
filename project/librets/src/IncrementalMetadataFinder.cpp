@@ -16,7 +16,7 @@
  */
 
 #include "librets/IncrementalMetadataFinder.h"
-#include "librets/MetadataByLevelCollector.h"
+#include "librets/DefaultMetadataCollector.h"
 
 using namespace librets;
 using std::string;
@@ -24,7 +24,7 @@ using std::string;
 #define CLASS IncrementalMetadataFinder
 
 CLASS::CLASS(MetadataLoader * loader)
-  : mLoader(loader), mLoadedMetadata(new MetadataByLevelCollector())
+  : mLoader(loader), mLoadedMetadata(new DefaultMetadataCollector())
 {
     mLoader->SetCollector(mLoadedMetadata);
 }
@@ -48,7 +48,6 @@ void CLASS::EnsureLevelIsLoaded(MetadataElement::Type type, string level) const
         mTypeLevelCache.insert(key);
     }
 }
-
 
 MetadataElementListPtr CLASS::FindByLevel(MetadataElement::Type type,
                                           string level)

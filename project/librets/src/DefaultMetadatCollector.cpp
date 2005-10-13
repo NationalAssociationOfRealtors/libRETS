@@ -16,7 +16,7 @@
  */
 
 #include <iostream>
-#include "librets/MetadataByLevelCollector.h"
+#include "librets/DefaultMetadataCollector.h"
 #include "librets/util.h"
 
 using namespace librets;
@@ -24,7 +24,7 @@ using namespace librets::util;
 using std::string;
 using std::endl;
 
-#define CLASS MetadataByLevelCollector
+#define CLASS DefaultMetadataCollector
 
 CLASS::CLASS()
     : mTypeMapByLevel(), mTypeMapByPath()

@@ -18,8 +18,7 @@
 #include <sstream>
 #include <algorithm>
 #include "librets/RetsMetadata.h"
-#include "librets/MetadataByLevelCollector.h"
-#include "librets/MetadataLoader.h"
+#include "librets/MetadataFinder.h"
 #include "librets/MetadataSystem.h"
 #include "librets/MetadataResource.h"
 #include "librets/MetadataClass.h"

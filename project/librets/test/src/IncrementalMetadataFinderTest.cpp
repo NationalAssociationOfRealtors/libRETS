@@ -19,7 +19,6 @@
 #include "testUtil.h"
 #include "TestMetadataTree.h"
 #include "librets/IncrementalMetadataFinder.h"
-#include "librets/MetadataByLevelCollector.h"
 
 using namespace librets;
 using namespace std;

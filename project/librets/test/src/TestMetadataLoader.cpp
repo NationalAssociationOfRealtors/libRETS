@@ -17,7 +17,7 @@
 
 #include "testUtil.h"
 #include "TestMetadataLoader.h"
-#include "librets/MetadataByLevelCollector.h"
+#include "librets/DefaultMetadataCollector.h"
 
 using namespace librets;
 using namespace librets::util;
@@ -26,7 +26,7 @@ using std::string;
 #define CLASS TestMetadataLoader
 
 CLASS::CLASS()
-    : mPrivateCollector(new MetadataByLevelCollector()), mTotalLoadCount(0)
+    : mPrivateCollector(new DefaultMetadataCollector()), mTotalLoadCount(0)
 {
 }
 

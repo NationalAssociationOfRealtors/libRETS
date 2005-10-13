@@ -43,7 +43,7 @@ class TestMetadataLoader : public RetsObject,
   private:
     typedef std::map<MetadataElement::Type, int> LoadCounter;
     
-    MetadataByLevelCollectorPtr mPrivateCollector;
+    DefaultMetadataCollectorPtr mPrivateCollector;
     MetadataElementCollectorPtr mCollector;
     LoadCounter mLoadCounter;
     int mTotalLoadCount;

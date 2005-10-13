@@ -17,14 +17,14 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include "testUtil.h"
-#include "librets/MetadataByLevelCollector.h"
+#include "librets/DefaultMetadataCollector.h"
 #include "TestMetadataTree.h"
 
 using namespace librets;
 using namespace std;
 namespace b = boost;
 
-#define CLASS MetadataByLevelCollectorTest
+#define CLASS DefaultMetadataCollectorTest
 
 class CLASS : public CPPUNIT_NS::TestFixture
 {
@@ -40,7 +40,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testFindByLevel();
     void testFindByPath();
     
-    MetadataByLevelCollectorPtr mCollector;
+    DefaultMetadataCollectorPtr mCollector;
     TestMetadataTreePtr mMetadataTree;
 };
 
@@ -48,7 +48,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
 
 void CLASS::setUp()
 {
-    mCollector.reset(new MetadataByLevelCollector());
+    mCollector.reset(new DefaultMetadataCollector());
     mMetadataTree.reset(new TestMetadataTree(mCollector.get()));
 }
 

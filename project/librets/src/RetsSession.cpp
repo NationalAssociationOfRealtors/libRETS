@@ -19,7 +19,7 @@
 #include "librets.h"
 #include "librets/CurlHttpClient.h"
 #include "librets/XmlMetadataParser.h"
-#include "librets/MetadataByLevelCollector.h"
+#include "librets/DefaultMetadataCollector.h"
 #include "librets/IncrementalMetadataFinder.h"
 #include "librets/SearchRequest.h"
 #include "librets/GetObjectRequest.h"
@@ -203,7 +203,7 @@ void CLASS::RetrieveFullMetadata()
     RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
     
-    MetadataByLevelCollectorPtr collector(new MetadataByLevelCollector());
+    DefaultMetadataCollectorPtr collector(new DefaultMetadataCollector());
     XmlMetadataParserPtr parser(
         new XmlMetadataParser(collector, mErrorHandler));
     parser->Parse(httpResponse->GetInputStream());

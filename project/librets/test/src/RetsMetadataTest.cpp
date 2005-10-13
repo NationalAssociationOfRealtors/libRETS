@@ -19,7 +19,7 @@
 #include "testUtil.h"
 #include "TestMetadataLoader.h"
 #include "librets/RetsMetadata.h"
-#include "librets/MetadataByLevelCollector.h"
+#include "librets/DefaultMetadataCollector.h"
 #include "TestMetadataTree.h"
 
 using namespace librets;
@@ -55,7 +55,7 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     void setUp();
     
   private:
-    MetadataByLevelCollectorPtr collector;
+    DefaultMetadataCollectorPtr mCollector;
     TestMetadataTreePtr mMetadataTree;
     RetsMetadataPtr metadata;
 };
@@ -64,9 +64,9 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CLASS_);
 
 void CLASS_::setUp()
 {
-    collector.reset(new MetadataByLevelCollector());
-    mMetadataTree.reset(new TestMetadataTree(collector.get()));
-    metadata.reset(new RetsMetadata(collector));
+    mCollector.reset(new DefaultMetadataCollector());
+    mMetadataTree.reset(new TestMetadataTree(mCollector.get()));
+    metadata.reset(new RetsMetadata(mCollector));
 }
 
 void CLASS_::testGetSystem()

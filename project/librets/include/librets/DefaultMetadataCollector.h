@@ -15,8 +15,8 @@
  * appear in supporting documentation.
  */
 
-#ifndef LIBRETS_METADATA_BY_LEVEL_COLLECTOR_H
-#define LIBRETS_METADATA_BY_LEVEL_COLLECTOR_H
+#ifndef LIBRETS_DEFAULT_METADATA_COLLECTOR_H
+#define LIBRETS_DEFAULT_METADATA_COLLECTOR_H
 
 #include <map>
 #include "librets/RetsObject.h"
@@ -26,14 +26,14 @@
 
 namespace librets {
 
-class MetadataByLevelCollector :
+class DefaultMetadataCollector :
     public virtual RetsObject, public MetadataElementCollector,
     public MetadataFinder
 {
   public:
-    MetadataByLevelCollector();
+    DefaultMetadataCollector();
 
-    virtual ~MetadataByLevelCollector();
+    virtual ~DefaultMetadataCollector();
 
     void AddElement(MetadataElementPtr element);
     
