@@ -30,11 +30,15 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testGetIntAttribute);
     CPPUNIT_TEST(testGetBoolAttribute);
+    CPPUNIT_TEST(testGetPath);
+    CPPUNIT_TEST(testIdEqualPred);
     CPPUNIT_TEST_SUITE_END();
     
   protected:
     void testGetIntAttribute();
     void testGetBoolAttribute();
+    void testGetPath();
+    void testIdEqualPred();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -65,4 +69,44 @@ void CLASS::testGetBoolAttribute()
     ASSERT_EQUAL(true,  element.GetBoolAttribute("field5"));
     ASSERT_EQUAL(false, element.GetBoolAttribute("field6"));
     ASSERT_EQUAL(false, element.GetBoolAttribute("field7"));
+}
+
+void CLASS::testGetPath()
+{
+    TestMetadataElement element;
+    element.SetLevel("Property");
+    ASSERT_STRING_EQUAL("", element.GetPath());
+
+    element.SetAttribute("ID", "RES");
+    ASSERT_STRING_EQUAL("Property:RES", element.GetPath());
+    
+    element.SetLevel("");
+    ASSERT_STRING_EQUAL("RES", element.GetPath());
+}
+
+void CLASS::testIdEqualPred()
+{
+    TestMetadataElement element1;
+    element1.SetAttribute("ID", "1");
+
+    TestMetadataElement element2;
+    element2.SetAttribute("ID", "2");
+
+    TestMetadataElement element3;
+    element3.SetAttribute("ID", "1");
+    
+    MetadataElementIdEqual idOne("1");
+    CPPUNIT_ASSERT(idOne(&element1));
+    CPPUNIT_ASSERT(!idOne(&element2));
+    CPPUNIT_ASSERT(idOne(&element3));
+    
+    MetadataElementIdEqual idTwo("2");
+    CPPUNIT_ASSERT(!idTwo(&element1));
+    CPPUNIT_ASSERT(idTwo(&element2));
+    CPPUNIT_ASSERT(!idTwo(&element3));
+    
+    MetadataElementIdEqual idThree("3");
+    CPPUNIT_ASSERT(!idThree(&element1));
+    CPPUNIT_ASSERT(!idThree(&element2));
+    CPPUNIT_ASSERT(!idThree(&element3));
 }

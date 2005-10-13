@@ -79,10 +79,9 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
-			name = MetadataElementTest.cpp;
-			path = /Users/dave/work/nar/rets/odbc/librets/librets/project/librets/test/src/MetadataElementTest.cpp;
-			refType = 0;
-			sourceTree = "<absolute>";
+			path = MetadataElementTest.cpp;
+			refType = 4;
+			sourceTree = "<group>";
 		};
 		55083EAE08A92BA2004B3699 = {
 			fileRef = 55083EAD08A92BA2004B3699;

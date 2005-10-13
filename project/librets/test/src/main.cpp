@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
@@ -36,7 +37,7 @@ int main(int argc, char* argv[])
     CPPUNIT_NS::TestResultCollector result;
     controller.addListener(&result );
 
-#if 1 // This is too verbose, I think
+#if 0 // This is too verbose, I think
     // Add a listener that print dots as test run.
     CPPUNIT_NS::BriefTestProgressListener progress;
     controller.addListener(&progress);
