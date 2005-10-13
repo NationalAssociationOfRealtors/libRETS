@@ -80,7 +80,7 @@ class RetsMetadata
      * @param resourceName A resource name
      * @return All metadata class elements for that resource
      */
-    MetadataClassList GetClassesForResource(std::string resourceName) const;
+    MetadataClassList GetAllClasses(std::string resourceName) const;
     
     /**
      * Returns the metadata class from its resource and class names.
@@ -93,6 +93,18 @@ class RetsMetadata
         const;
 
     /**
+     * Returns all metadata table elements for a specified
+     * metadata class.
+     *
+     * @param metadataClass A metadata class element
+     * @return All metadata table elements
+     */
+    MetadataTableList GetAllTables(MetadataClass * metadataClass) const;
+    
+    MetadataTableList GetAllTables(std::string resourceName,
+                                   std::string className) const;
+
+    /**
      * Returns the metadata class from its resource and class names.
      *
      * @param resourceName A resource name
@@ -103,21 +115,7 @@ class RetsMetadata
     MetadataTable * GetTable(std::string resourceName, std::string className,
                              std::string tableName) const;
 
-    /**
-     * Returns all metadata table elements for a specified
-     * metadata class.
-     *
-     * @param metadataClass A metadata class element
-     * @return All metadata table elements
-     */
-    MetadataTableList
-        GetTablesForClass(MetadataClass * metadataClass) const;
-    
-    MetadataTableList
-        GetTablesForClass(std::string resourceName,
-                          std::string className) const;
-
-  private:
+private:
     void InitSystem();
 
     MetadataFinderPtr mFinder;

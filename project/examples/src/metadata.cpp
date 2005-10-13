@@ -92,7 +92,7 @@ void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource)
     string resourceName = resource->GetResourceID();
     
     MetadataClassList classes =
-        metadata->GetClassesForResource(resourceName);
+        metadata->GetAllClasses(resourceName);
     MetadataClassList::iterator i;
     for (i = classes.begin(); i != classes.end(); i++)
     {
@@ -108,7 +108,7 @@ void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource)
 
 void dumpAllTables(RetsMetadata * metadata, MetadataClass * aClass)
 {
-    MetadataTableList tables = metadata->GetTablesForClass(aClass);
+    MetadataTableList tables = metadata->GetAllTables(aClass);
     MetadataTableList::iterator i;
     for (i = tables.begin(); i != tables.end(); i++)
     {

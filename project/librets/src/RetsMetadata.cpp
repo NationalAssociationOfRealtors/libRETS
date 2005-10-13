@@ -118,21 +118,21 @@ MetadataClass * RetsMetadata::GetClass(string resourceName, string className)
     return helper.FindByPath(MetadataElement::CLASS, resourceName, className);
 }
 
-MetadataClassList RetsMetadata::GetClassesForResource(
+MetadataClassList RetsMetadata::GetAllClasses(
     string resourceName) const
 {
     FinderHelper<MetadataClass> helper(mFinder);
     return *helper.FindByLevel(MetadataElement::CLASS, resourceName);
 }
 
-MetadataTableList RetsMetadata::GetTablesForClass(
+MetadataTableList RetsMetadata::GetAllTables(
     MetadataClass * metadataClass) const
 {
-    return GetTablesForClass(metadataClass->GetLevel(),
-                             metadataClass->GetClassName());
+    return GetAllTables(metadataClass->GetLevel(),
+                        metadataClass->GetClassName());
 }
 
-MetadataTableList RetsMetadata::GetTablesForClass(
+MetadataTableList RetsMetadata::GetAllTables(
     string resourceName, string className) const
 {
     string level = resourceName + ":" + className;

@@ -34,10 +34,10 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGetSystem);
     CPPUNIT_TEST(testGetAllResources);
     CPPUNIT_TEST(testGetResource);
+    CPPUNIT_TEST(testGetAllClasses);
     CPPUNIT_TEST(testGetClass);
-    CPPUNIT_TEST(testGetTablesByClassObject);
-    CPPUNIT_TEST(testGetTablesByClassName);
-    CPPUNIT_TEST(testGetClassesForResource);
+    CPPUNIT_TEST(testGetAllTablesByClassObject);
+    CPPUNIT_TEST(testGetAllTablesByClassName);
     CPPUNIT_TEST(testGetTable);
     CPPUNIT_TEST_SUITE_END();
     
@@ -45,10 +45,10 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     void testGetSystem();
     void testGetAllResources();
     void testGetResource();
+    void testGetAllClasses();
     void testGetClass();
-    void testGetTablesByClassObject();
-    void testGetTablesByClassName();
-    void testGetClassesForResource();
+    void testGetAllTablesByClassObject();
+    void testGetAllTablesByClassName();
     void testGetTable();
     
   public:
@@ -89,6 +89,17 @@ void CLASS_::testGetResource()
     ASSERT_EQUAL(*mMetadataTree->agentResource, *actualResource);
 }
 
+void CLASS_::testGetAllClasses()
+{
+    MetadataClassList actualPropClasses =
+    metadata->GetAllClasses("Property");
+    ASSERT_VECTOR_EQUAL(mMetadataTree->propertyClasses, actualPropClasses);
+    
+    MetadataClassList actualAgentClasses =
+        metadata->GetAllClasses("Agent");
+    ASSERT_VECTOR_EQUAL(mMetadataTree->agentClasses, actualAgentClasses);
+}
+
 void CLASS_::testGetClass()
 {
     MetadataClass * actualClass = metadata->GetClass("Property", "RES");
@@ -96,30 +107,19 @@ void CLASS_::testGetClass()
     ASSERT_EQUAL(*mMetadataTree->resClass, *actualClass);
 }
 
-void CLASS_::testGetClassesForResource()
-{
-    MetadataClassList actualPropClasses =
-        metadata->GetClassesForResource("Property");
-    ASSERT_VECTOR_EQUAL(mMetadataTree->propertyClasses, actualPropClasses);
-    
-    MetadataClassList actualAgentClasses =
-        metadata->GetClassesForResource("Agent");
-    ASSERT_VECTOR_EQUAL(mMetadataTree->agentClasses, actualAgentClasses);
-}
-
-void CLASS_::testGetTablesByClassObject()
+void CLASS_::testGetAllTablesByClassObject()
 {
     MetadataClass * actualClass = metadata->GetClass("Property", "RES");
     CPPUNIT_ASSERT(actualClass);
     MetadataTableList actualTables =
-        metadata->GetTablesForClass(actualClass);
+        metadata->GetAllTables(actualClass);
     ASSERT_VECTOR_EQUAL(mMetadataTree->propertyResTables, actualTables);
 }
 
-void CLASS_::testGetTablesByClassName()
+void CLASS_::testGetAllTablesByClassName()
 {
     MetadataTableList actualTables =
-        metadata->GetTablesForClass("Property", "RES");
+        metadata->GetAllTables("Property", "RES");
     ASSERT_VECTOR_EQUAL(mMetadataTree->propertyResTables, actualTables);
 }
 
