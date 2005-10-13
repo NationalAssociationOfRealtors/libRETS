@@ -23,6 +23,9 @@
 
 namespace librets {
     
+/**
+ * An interface used to load a portion of the metadata tree.
+ */
 class MetadataLoader
 {
   public:

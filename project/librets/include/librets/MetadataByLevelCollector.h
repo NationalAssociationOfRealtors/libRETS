@@ -14,18 +14,21 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_METADATA_BY_LEVEL_COLLECTOR_H
 #define LIBRETS_METADATA_BY_LEVEL_COLLECTOR_H
 
 #include <map>
 #include "librets/RetsObject.h"
 #include "librets/MetadataElementCollector.h"
+#include "librets/MetadataFinder.h"
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 class MetadataByLevelCollector :
-    public virtual RetsObject, public MetadataElementCollector
+    public virtual RetsObject, public MetadataElementCollector,
+    public MetadataFinder
 {
   public:
     MetadataByLevelCollector();

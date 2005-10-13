@@ -20,6 +20,7 @@
 #include "librets/CurlHttpClient.h"
 #include "librets/XmlMetadataParser.h"
 #include "librets/MetadataByLevelCollector.h"
+#include "librets/IncrementalMetadataFinder.h"
 #include "librets/SearchRequest.h"
 #include "librets/GetObjectRequest.h"
 #include "librets/GetObjectResponse.h"
@@ -180,8 +181,8 @@ void CLASS::InitializeMetadata()
 {
     if (mIncrementalMetadata)
     {
-        MetadataByLevelCollectorPtr collector(new MetadataByLevelCollector());
-        mMetadata.reset(new RetsMetadata(collector, this));
+        mIncrementalFinder.reset(new IncrementalMetadataFinder(this));
+        mMetadata.reset(new RetsMetadata(mIncrementalFinder));
     }
     else
     {

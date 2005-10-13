@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_RETS_METADATA_H
 #define LIBRETS_RETS_METADATA_H
 
@@ -47,12 +48,9 @@ class RetsMetadata
 {
   public:
     /**
-     * Creates a metadata from a metadata by-level collector.
+     * Creates metadata from a metadata by-level collector.
      */
-    RetsMetadata(MetadataByLevelCollectorPtr collector);
-
-    RetsMetadata(MetadataByLevelCollectorPtr collector,
-                 MetadataLoader * loader);
+    RetsMetadata(MetadataFinderPtr finder);
 
     /**
      * Returns the system metdata element.
@@ -120,18 +118,10 @@ class RetsMetadata
                           std::string className) const;
 
   private:
-    typedef std::set<std::string> TypeLevelCache;
-        
     void InitSystem();
-    std::string KeyForCache(MetadataElement::Type type,
-                            std::string level) const;
-    void EnsureLevelIsLoaded(MetadataElement::Type type,
-                             std::string level) const;
 
-    MetadataByLevelCollectorPtr mCollector;
-    MetadataLoader * mLoader;
+    MetadataFinderPtr mFinder;
     MetadataSystem * mSystem;
-    mutable TypeLevelCache mTypeLevelCache;
 };
 
 };

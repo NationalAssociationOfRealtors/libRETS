@@ -17,52 +17,56 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include "testUtil.h"
-#include "librets/MetadataByLevelCollector.h"
 #include "TestMetadataTree.h"
+#include "librets/IncrementalMetadataFinder.h"
+#include "librets/MetadataByLevelCollector.h"
 
 using namespace librets;
 using namespace std;
-namespace b = boost;
 
-#define CLASS MetadataByLevelCollectorTest
+#define CLASS IncrementalMetadataFinderTest
 
 class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testFindByLevel);
-    CPPUNIT_TEST(testFindByPath);
     CPPUNIT_TEST_SUITE_END();
     
   public:
     void setUp();
-
+    
   protected:
     void testFindByLevel();
     void testFindByPath();
     
-    MetadataByLevelCollectorPtr mCollector;
+    TestMetadataLoaderPtr mLoader;
     TestMetadataTreePtr mMetadataTree;
+    IncrementalMetadataFinderPtr mFinder;
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
 
 void CLASS::setUp()
 {
-    mCollector.reset(new MetadataByLevelCollector());
-    mMetadataTree.reset(new TestMetadataTree(mCollector.get()));
+    mLoader.reset(new TestMetadataLoader());
+    mMetadataTree.reset(new TestMetadataTree(mLoader.get()));
+    mFinder.reset(new IncrementalMetadataFinder(mLoader.get()));
 }
 
 void CLASS::testFindByLevel()
 {
+    ASSERT_EQUAL(0, mLoader->GetTotalLoadCount());
+    
     MetadataElementListPtr elements;
     MetadataElementPtr element;
     
-    elements = mCollector->FindByLevel(MetadataElement::SYSTEM, "");
+    elements = mFinder->FindByLevel(MetadataElement::SYSTEM, "");
     ASSERT_EQUAL(size_t(1), elements->size());
     element = elements->at(0);
     ASSERT_EQUAL(MetadataElement::SYSTEM, element->GetType());
-
-    elements = mCollector->FindByLevel(MetadataElement::TABLE, "Property:RES");
+    ASSERT_EQUAL(1, mLoader->GetTotalLoadCount());
+    
+    elements = mFinder->FindByLevel(MetadataElement::TABLE, "Property:RES");
     ASSERT_EQUAL(size_t(2), elements->size());
     element = elements->at(0);
     ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
@@ -70,31 +74,50 @@ void CLASS::testFindByLevel()
     element = elements->at(1);
     ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
     ASSERT_STRING_EQUAL("ListDate", element->GetId());
-
-    elements = mCollector->FindByLevel(MetadataElement::TABLE, "Property:CON");
+    ASSERT_EQUAL(2, mLoader->GetTotalLoadCount());
+    
+    elements = mFinder->FindByLevel(MetadataElement::TABLE, "Property:CON");
     ASSERT_EQUAL(size_t(0), elements->size());
-
-    elements = mCollector->FindByLevel(MetadataElement::UPDATE, "Property:RES");
+    ASSERT_EQUAL(3, mLoader->GetTotalLoadCount());
+    
+    elements = mFinder->FindByLevel(MetadataElement::UPDATE, "Property:RES");
     ASSERT_EQUAL(size_t(0), elements->size());
+    ASSERT_EQUAL(4, mLoader->GetTotalLoadCount());
+    
+    ASSERT_EQUAL(1, mLoader->GetLoadCount(MetadataElement::SYSTEM));
+    ASSERT_EQUAL(0, mLoader->GetLoadCount(MetadataElement::RESOURCE));
+    ASSERT_EQUAL(2, mLoader->GetLoadCount(MetadataElement::TABLE));
+    ASSERT_EQUAL(1, mLoader->GetLoadCount(MetadataElement::UPDATE));
+    
+    // Get a few of them again, to make sure that this time no loads are done
+    elements = mFinder->FindByLevel(MetadataElement::SYSTEM, "");
+    elements = mFinder->FindByLevel(MetadataElement::TABLE, "Property:RES");
+    elements = mFinder->FindByLevel(MetadataElement::UPDATE, "Property:RES");
+    ASSERT_EQUAL(4, mLoader->GetTotalLoadCount());
+    ASSERT_EQUAL(1, mLoader->GetLoadCount(MetadataElement::SYSTEM));
+    ASSERT_EQUAL(0, mLoader->GetLoadCount(MetadataElement::RESOURCE));
+    ASSERT_EQUAL(2, mLoader->GetLoadCount(MetadataElement::TABLE));
+    ASSERT_EQUAL(1, mLoader->GetLoadCount(MetadataElement::UPDATE));
+    
 }
 
 
 void CLASS::testFindByPath()
 {
     MetadataElementPtr element;
-    element = mCollector->FindByPath(MetadataElement::TABLE,
+    element = mFinder->FindByPath(MetadataElement::TABLE,
                                      "Property:RES:ListPrice");
     CPPUNIT_ASSERT(element);
     ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
     ASSERT_STRING_EQUAL("ListPrice", element->GetId());
     
-    element = mCollector->FindByPath(MetadataElement::TABLE,
+    element = mFinder->FindByPath(MetadataElement::TABLE,
                                      "Property:RES:ListDate");
     CPPUNIT_ASSERT(element);
     ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
-    ASSERT_STRING_EQUAL("ListDate", element->GetId());
-
-    element = mCollector->FindByPath(MetadataElement::TABLE,
+    ASSERT_STRING_EQUAL("Beds", element->GetId());
+    
+    element = mFinder->FindByPath(MetadataElement::TABLE,
                                      "Property:CON:Beds");
     CPPUNIT_ASSERT(!element);
 }

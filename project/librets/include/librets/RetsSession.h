@@ -207,6 +207,8 @@ private:
 
     RetsMetadataPtr mMetadata;
     
+    IncrementalMetadataFinderPtr mIncrementalFinder;
+    
     MetadataElementCollectorPtr mLoaderCollector;
     
     bool mIncrementalMetadata;

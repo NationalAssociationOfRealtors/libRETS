@@ -20,10 +20,12 @@
 
 #include "librets/RetsObject.h"
 #include "librets/MetadataLoader.h"
+#include "librets/MetadataElementCollector.h"
 
 namespace librets {
     
-class TestMetadataLoader : public RetsObject, public MetadataLoader
+class TestMetadataLoader : public RetsObject,
+    public MetadataLoader, public MetadataElementCollector
 {
   public:
     TestMetadataLoader();

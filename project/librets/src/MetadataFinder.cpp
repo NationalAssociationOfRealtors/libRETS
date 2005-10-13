@@ -15,34 +15,10 @@
  * appear in supporting documentation.
  */
 
-#ifndef LIBRETS_TEST_METADATA_ELEMENT_H
-#define LIBRETS_TEST_METADATA_ELEMENT_H
+#include "librets/MetadataFinder.h"
 
-#include "librets/MetadataElement.h"
+using namespace librets;
 
-namespace librets {
-    
-class TestMetadataElement : public MetadataElement
+MetadataFinder::~MetadataFinder()
 {
-  public:
-    virtual MetadataType GetType() const { return SYSTEM; }
-    std::string GetTypeName() const;
-    void SetTypeName(std::string typeName);
-
-    std::string GetId() const;
-    
-  private:
-    std::string mTypeName;
-};
-
-typedef boost::shared_ptr<TestMetadataElement> TestMetadataElementPtr;
-
-typedef std::vector<TestMetadataElementPtr> TestMetadataElementList;
-
 }
-
-#endif
-
-/* Local Variables: */
-/* mode: c++ */
-/* End: */
