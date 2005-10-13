@@ -181,8 +181,9 @@ void CLASS::InitializeMetadata()
 {
     if (mIncrementalMetadata)
     {
-        mIncrementalFinder.reset(new IncrementalMetadataFinder(this));
-        mMetadata.reset(new RetsMetadata(mIncrementalFinder));
+        IncrementalMetadataFinderPtr
+            incrementalFinder(new IncrementalMetadataFinder(this));
+        mMetadata.reset(new RetsMetadata(incrementalFinder));
     }
     else
     {
