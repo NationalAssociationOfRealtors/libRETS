@@ -1533,7 +1533,7 @@
 				5570971408FDBB310067D309,
 				55F902A408FEC33200D76E8C,
 				55F903CB08FED6A000D76E8C,
-				55F9051108FEEAB200D76E8C,
+				55F9061708FEFDD900D76E8C,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1626,7 +1626,7 @@
 				5570971E08FDBC400067D309,
 				55F902A608FEC3C300D76E8C,
 				55F9040808FEDB8800D76E8C,
-				55F9052208FEEB6A00D76E8C,
+				55F9061508FEFDCE00D76E8C,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3806,7 +3806,7 @@
 				5570971D08FDBC400067D309,
 				554A9F5907F9F2E700402C35,
 				554A9F8507F9F2E700402C35,
-				55F9052108FEEB6A00D76E8C,
+				55F9061408FEFDCE00D76E8C,
 				554A9F6D07F9F2E700402C35,
 				554A9F6C07F9F2E700402C35,
 				55F23658087B2AB00090B325,
@@ -3900,7 +3900,7 @@
 				5570971308FDBB310067D309,
 				551131F808D5DE7800CC048D,
 				554A9EBC07F9F2D200402C35,
-				55F9051008FEEAB200D76E8C,
+				55F9061608FEFDD900D76E8C,
 				554A9ED207F9F2D200402C35,
 				554A9ED107F9F2D200402C35,
 				554A9ECF07F9F2D200402C35,
@@ -5408,34 +5408,6 @@
 			settings = {
 			};
 		};
-		55F9051008FEEAB200D76E8C = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			path = DefaultMetadataCollector.h;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		55F9051108FEEAB200D76E8C = {
-			fileRef = 55F9051008FEEAB200D76E8C;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		55F9052108FEEB6A00D76E8C = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			path = DefaultMetadatCollector.cpp;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		55F9052208FEEB6A00D76E8C = {
-			fileRef = 55F9052108FEEB6A00D76E8C;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		55F9055408FEED5C00D76E8C = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -5446,6 +5418,34 @@
 		};
 		55F9055508FEED5C00D76E8C = {
 			fileRef = 55F9055408FEED5C00D76E8C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F9061408FEFDCE00D76E8C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = DefaultMetadataCollector.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F9061508FEFDCE00D76E8C = {
+			fileRef = 55F9061408FEFDCE00D76E8C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		55F9061608FEFDD900D76E8C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = DefaultMetadataCollector.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		55F9061708FEFDD900D76E8C = {
+			fileRef = 55F9061608FEFDD900D76E8C;
 			isa = PBXBuildFile;
 			settings = {
 			};
