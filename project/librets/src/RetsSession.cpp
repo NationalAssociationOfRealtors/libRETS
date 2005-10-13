@@ -140,6 +140,23 @@ void CLASS::SetCollector(MetadataElementCollectorPtr collector)
     mLoaderCollector = collector;
 }
 
+std::string CLASS::MetadataTypeToString(MetadataElement::Type type)
+{
+    if (type == MetadataElement::SYSTEM)
+        return "METADATA-SYSTEM";
+    else if (type == MetadataElement::CLASS)
+        return "METADATA-CLASS";
+    else if (type == MetadataElement::RESOURCE)
+        return "METADATA-RESOURCE";
+    else if (type == MetadataElement::TABLE)
+        return "METADATA-TABLE";
+    else
+    {
+        throw RetsException(str_stream() << "Invalid metadata type: "
+                            << type);
+    }
+}
+
 void CLASS::LoadMetadata(MetadataElement::Type type,
                          std::string level)
 {
@@ -147,38 +164,8 @@ void CLASS::LoadMetadata(MetadataElement::Type type,
     RetsHttpRequestPtr request(new RetsHttpRequest());
     request->SetUrl(getMetadataUrl);
     request->SetMethod(mHttpMethod);
-    string retsType;
-    switch (type)
-    {
-        case MetadataElement::SYSTEM:
-            retsType = "METADATA-SYSTEM";
-            break;
-            
-        case MetadataElement::CLASS:
-            retsType = "METADATA-CLASS";
-            break;
-
-        case MetadataElement::RESOURCE:
-            retsType = "METADATA-RESOURCE";
-            break;
-            
-        case MetadataElement::TABLE:
-            retsType = "METADATA-TABLE";
-            break;
-            
-        default:
-            throw RetsException(str_stream() << "Invalid type: "
-                                << type);
-    }
-    
-    string id;
-    if (level.empty())
-        id  = "0";
-    else
-        id = level + ":0";
-
-    request->SetQueryParameter("Type", retsType);
-    request->SetQueryParameter("ID", id);
+    request->SetQueryParameter("Type", MetadataTypeToString(type));
+    request->SetQueryParameter("ID", join(level, "0", ":"));
     request->SetQueryParameter("Format", "COMPACT");
     RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);

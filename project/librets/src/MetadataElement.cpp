@@ -103,11 +103,7 @@ string CLASS::GetPath() const
     string id = GetId();
     if (!id.empty())
     {
-        string level = GetLevel();
-        if (level.empty())
-            return id;
-        else
-            return level + ":" + id;
+        return join(mLevel, id, ":");
     }
     else
     {

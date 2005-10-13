@@ -194,6 +194,8 @@ private:
     std::string RetsVersionToString(RetsVersion retsVersion);
     
     RetsVersion RetsVersionFromString(std::string versionString);
+    
+    std::string MetadataTypeToString(MetadataElement::Type type);
 
     RetsHttpClientPtr mHttpClient;
 

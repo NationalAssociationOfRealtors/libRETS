@@ -36,6 +36,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testVectorEqualsWithSharedPointers);
     CPPUNIT_TEST(testSplitField);
     CPPUNIT_TEST(testUrlEncode);
+    CPPUNIT_TEST(testJoinStrings);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -43,6 +44,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testVectorEqualsWithSharedPointers();
     void testSplitField();
     void testUrlEncode();
+    void testJoinStrings();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -163,4 +165,11 @@ void CLASS::testSplitField()
 void CLASS::testUrlEncode()
 {
     ASSERT_STRING_EQUAL("foo%2bbar", urlEncode("foo+bar"));
+}
+
+void CLASS::testJoinStrings()
+{
+    ASSERT_STRING_EQUAL("foo", join("foo", "", ":"));
+    ASSERT_STRING_EQUAL("bar", join("", "bar", ":"));
+    ASSERT_STRING_EQUAL("foo:bar", join("foo", "bar", ":"));
 }
