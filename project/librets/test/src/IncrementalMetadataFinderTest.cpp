@@ -29,6 +29,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testFindByLevel);
+    CPPUNIT_TEST(testFindByPath);
     CPPUNIT_TEST_SUITE_END();
     
   public:
@@ -100,23 +101,33 @@ void CLASS::testFindByLevel()
     
 }
 
-
 void CLASS::testFindByPath()
 {
+    ASSERT_EQUAL(0, mLoader->GetTotalLoadCount());
+
     MetadataElementPtr element;
     element = mFinder->FindByPath(MetadataElement::TABLE,
-                                     "Property:RES:ListPrice");
+                                     "Property:RES", "ListPrice");
     CPPUNIT_ASSERT(element);
     ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
     ASSERT_STRING_EQUAL("ListPrice", element->GetId());
+    ASSERT_EQUAL(1, mLoader->GetTotalLoadCount());
     
     element = mFinder->FindByPath(MetadataElement::TABLE,
-                                     "Property:RES:ListDate");
+                                     "Property:RES", "ListDate");
     CPPUNIT_ASSERT(element);
     ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
-    ASSERT_STRING_EQUAL("Beds", element->GetId());
+    ASSERT_STRING_EQUAL("ListDate", element->GetId());
+    // This one should have been loaded by the previous find
+    ASSERT_EQUAL(1, mLoader->GetTotalLoadCount());
     
     element = mFinder->FindByPath(MetadataElement::TABLE,
-                                     "Property:CON:Beds");
+                                     "Property:CON", "Beds");
     CPPUNIT_ASSERT(!element);
+    ASSERT_EQUAL(2, mLoader->GetTotalLoadCount());
+    
+    ASSERT_EQUAL(0, mLoader->GetLoadCount(MetadataElement::SYSTEM));
+    ASSERT_EQUAL(0, mLoader->GetLoadCount(MetadataElement::RESOURCE));
+    ASSERT_EQUAL(2, mLoader->GetLoadCount(MetadataElement::TABLE));
+    ASSERT_EQUAL(0, mLoader->GetLoadCount(MetadataElement::UPDATE));
 }

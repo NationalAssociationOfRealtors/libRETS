@@ -35,7 +35,8 @@ class IncrementalMetadataFinder : public RetsObject,
                                                std::string level);
     
     virtual MetadataElementPtr FindByPath(MetadataElement::Type type,
-                                          std::string path);
+                                          std::string level,
+                                          std::string id);
     
   private:
     typedef std::set<std::string> TypeLevelCache;

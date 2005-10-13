@@ -57,7 +57,8 @@ MetadataElementListPtr CLASS::FindByLevel(MetadataElement::Type type,
 }
 
 MetadataElementPtr CLASS::FindByPath(MetadataElement::Type type,
-                                     string path)
+                                     string level, string id)
 {
-    return mLoadedMetadata->FindByPath(type, path);
+    EnsureLevelIsLoaded(type, level);
+    return mLoadedMetadata->FindByPath(type, level, id);
 }

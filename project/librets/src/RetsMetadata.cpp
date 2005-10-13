@@ -35,12 +35,15 @@ namespace b = boost;
 #define CLASS_ RetsMetadata
 
 template<typename DERIVED>
-struct ElementVectorCast
+class FinderHelper
 {
+  public:
     typedef std::vector< DERIVED * > derived_vec_type;
     typedef boost::shared_ptr< derived_vec_type > derived_vec_type_ptr;
     
-    derived_vec_type_ptr operator()(const MetadataElementList & base_vec)
+    FinderHelper(MetadataFinderPtr finder) : mFinder(finder) { }
+    
+    derived_vec_type_ptr cast(const MetadataElementList & base_vec)
     {
         derived_vec_type_ptr derived_vec(new derived_vec_type());
         MetadataElementList::const_iterator i;
@@ -52,6 +55,22 @@ struct ElementVectorCast
         }
         return derived_vec;
     }
+    
+    derived_vec_type_ptr FindByLevel(MetadataElement::Type type, string level)
+    {
+        MetadataElementListPtr elements = mFinder->FindByLevel(type, level);
+        derived_vec_type_ptr derivedElements = cast(*elements);
+        return derivedElements;
+    }
+    
+    DERIVED * FindByPath(MetadataElement::Type type, string level, string id)
+    {
+        MetadataElementPtr element = mFinder->FindByPath(type, level, id);
+        return dynamic_cast< DERIVED *>(element.get());
+    }
+    
+  private:
+    MetadataFinderPtr mFinder;
 };
 
 RetsMetadata::RetsMetadata(MetadataFinderPtr finder)
@@ -82,52 +101,28 @@ MetadataSystem * RetsMetadata::GetSystem() const
 
 MetadataResourceList RetsMetadata::GetAllResources() const
 {
-    MetadataElementListPtr elements =
-        mFinder->FindByLevel(MetadataElement::RESOURCE, "");
-    
-    ElementVectorCast<MetadataResource> cast;
-    MetadataResourceListPtr resources =  cast(*elements);
-    return *resources;
+    FinderHelper<MetadataResource> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::RESOURCE, "");
 }
 
 MetadataResource * RetsMetadata::GetResource(string resourceName) const
 {
-    MetadataResource * metadataResource = 0;
-    MetadataElementListPtr elements =
-        mFinder->FindByLevel(MetadataElement::RESOURCE, "");
-    MetadataElementList::iterator i;
-    i = find_if(elements->begin(), elements->end(),
-                MetadataElementIdEqual(resourceName));
-    if (i != elements->end())
-        metadataResource = dynamic_cast<MetadataResource *>((*i).get());
-    return metadataResource;
+    FinderHelper<MetadataResource> helper(mFinder);
+    return helper.FindByPath(MetadataElement::RESOURCE, "", resourceName);
 }
 
 MetadataClass * RetsMetadata::GetClass(string resourceName, string className)
     const
 {
-    MetadataClass * metadataClass = 0;
-    MetadataElementListPtr elements =
-        mFinder->FindByLevel(MetadataElement::CLASS, resourceName);
-
-    MetadataElementList::iterator i;
-    i = find_if(elements->begin(), elements->end(),
-                MetadataElementIdEqual(className));
-    if (i != elements->end())
-        metadataClass = dynamic_cast<MetadataClass *>((*i).get());
-    
-    return metadataClass;
+    FinderHelper<MetadataClass> helper(mFinder);
+    return helper.FindByPath(MetadataElement::CLASS, resourceName, className);
 }
 
 MetadataClassList RetsMetadata::GetClassesForResource(
     string resourceName) const
 {
-    MetadataElementListPtr elements =
-        mFinder->FindByLevel(MetadataElement::CLASS, resourceName);
-
-    ElementVectorCast<MetadataClass> cast;
-    MetadataClassListPtr classes = cast(*elements);
-    return *classes;
+    FinderHelper<MetadataClass> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::CLASS, resourceName);
 }
 
 MetadataTableList RetsMetadata::GetTablesForClass(
@@ -141,27 +136,14 @@ MetadataTableList RetsMetadata::GetTablesForClass(
     string resourceName, string className) const
 {
     string level = resourceName + ":" + className;
-    MetadataElementListPtr elements =
-        mFinder->FindByLevel(MetadataElement::TABLE, level);
-
-    ElementVectorCast<MetadataTable> cast;
-    MetadataTableListPtr tables = cast(*elements);
-    return *tables;
+    FinderHelper<MetadataTable> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::TABLE, level);
 }
 
 MetadataTable * RetsMetadata::GetTable(string resourceName, string className,
                                         string tableName) const
 {
     string level = resourceName + ":" + className;
-    MetadataTable * metadataTable = 0;
-    MetadataElementListPtr elements =
-        mFinder->FindByLevel(MetadataElement::TABLE, level);
-    
-    MetadataElementList::iterator i;
-    i = find_if(elements->begin(), elements->end(),
-                MetadataElementIdEqual(tableName));
-    if (i != elements->end())
-        metadataTable = dynamic_cast<MetadataTable *>((*i).get());
-    
-    return metadataTable;
+    FinderHelper<MetadataTable> helper(mFinder);
+    return helper.FindByPath(MetadataElement::TABLE, level, tableName);
 }

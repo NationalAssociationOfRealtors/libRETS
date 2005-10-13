@@ -32,7 +32,8 @@ class MetadataFinder
                                                std::string level) = 0;
     
     virtual MetadataElementPtr FindByPath(MetadataElement::Type type,
-                                          std::string path) = 0;
+                                          std::string level,
+                                          std::string id) = 0;
 };
 
 };

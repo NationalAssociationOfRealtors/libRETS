@@ -40,8 +40,9 @@ class DefaultMetadataCollector :
     MetadataElementListPtr FindByLevel(MetadataElement::MetadataType type,
                                        std::string level);
     
-    MetadataElementPtr FindByPath(MetadataElement::MetadataType type,
-                                  std::string path);
+    virtual MetadataElementPtr FindByPath(MetadataElement::Type type,
+                                          std::string level,
+                                          std::string id);
     
     virtual std::ostream & Print(std::ostream & outputStream) const;
     

@@ -146,8 +146,9 @@ MetadataElementListPtr CLASS::FindByLevel(MetadataElement::MetadataType type,
 }
 
 MetadataElementPtr CLASS::FindByPath(MetadataElement::MetadataType type,
-                              std::string path)
+                                     string level, string id)
 {
+    string path = join(level, id, ":");
     MetadataElementPtr element;
     PathElementsPtr pathElements = GetPathElementsByType(type);
     PathElements::iterator i = pathElements->find(path);

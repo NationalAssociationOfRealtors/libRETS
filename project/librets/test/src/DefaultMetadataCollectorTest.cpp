@@ -83,18 +83,18 @@ void CLASS::testFindByPath()
 {
     MetadataElementPtr element;
     element = mCollector->FindByPath(MetadataElement::TABLE,
-                                     "Property:RES:ListPrice");
+                                     "Property:RES", "ListPrice");
     CPPUNIT_ASSERT(element);
     ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
     ASSERT_STRING_EQUAL("ListPrice", element->GetId());
     
     element = mCollector->FindByPath(MetadataElement::TABLE,
-                                     "Property:RES:ListDate");
+                                     "Property:RES", "ListDate");
     CPPUNIT_ASSERT(element);
     ASSERT_EQUAL(MetadataElement::TABLE, element->GetType());
     ASSERT_STRING_EQUAL("ListDate", element->GetId());
 
     element = mCollector->FindByPath(MetadataElement::TABLE,
-                                     "Property:CON:Beds");
+                                     "Property:CON", "Beds");
     CPPUNIT_ASSERT(!element);
 }
