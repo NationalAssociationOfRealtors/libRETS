@@ -15,35 +15,10 @@
  * appear in supporting documentation.
  */
 
-#ifndef LIBRETS_METADATA_EDIT_MASK_H
-#define LIBRETS_METADATA_EDIT_MASK_H
+#include "librets/MetadataFinder.h"
 
-#include "librets/MetadataElement.h"
+using namespace librets;
 
-namespace librets {
-
-/**
- * Edit mask metadata.
- */
-class MetadataEditMask : public MetadataElement
+MetadataFinder::~MetadataFinder()
 {
-  public:
-    /**
-     * Always returns EDIT_MASK.
-     *
-     * @return EDIT_MASK
-     */
-    virtual MetadataType GetType() const;
-    
-    virtual std::string GetId() const;
-    
-    std::string GetEditMaskID() const;
-};
-
-};
-
-#endif
-
-/* Local Variables: */
-/* mode: c++ */
-/* End: */
+}

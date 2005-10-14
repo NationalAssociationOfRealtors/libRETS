@@ -102,6 +102,8 @@ class MetadataTable : public MetadataElement
      * @return TABLE
      */
     virtual MetadataType GetType() const;
+    
+    virtual std::string GetId() const;
 
     /**
      * Returns the system name for this field.

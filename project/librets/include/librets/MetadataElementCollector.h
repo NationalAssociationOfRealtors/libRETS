@@ -14,15 +14,15 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_METADATA_ELEMENT_COLLECTOR_H
 #define LIBRETS_METADATA_ELEMENT_COLLECTOR_H
 
 #include "librets/metadata_forward.h"
-#include "librets/RetsObject.h"
 
 namespace librets {
 
-class MetadataElementCollector : public virtual RetsObject
+class MetadataElementCollector
 {
   public:
     virtual ~MetadataElementCollector();

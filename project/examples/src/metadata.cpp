@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include "librets.h"
 #include "Options.h"
 #include <iostream>
@@ -25,10 +26,10 @@ using std::cout;
 using std::endl;
 using std::exception;
 
-void dumpSystem(RetsMetadataPtr metadata);
-void dumpAllResources(RetsMetadataPtr metadata);
-void dumpAllClasses(RetsMetadataPtr metadata);
-void dumpAllTables(RetsMetadataPtr metadata, MetadataClassPtr aClass);
+void dumpSystem(RetsMetadata * metadata);
+void dumpAllResources(RetsMetadata * metadata);
+void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource);
+void dumpAllTables(RetsMetadata * metadata, MetadataClass * aClass);
 
 int main(int argc, char * argv[])
 {
@@ -47,10 +48,9 @@ int main(int argc, char * argv[])
             return -1;
         }
 
-        RetsMetadataPtr metadata = session->GetMetadata();
+        RetsMetadata * metadata = session->GetMetadata();
         dumpSystem(metadata);
         dumpAllResources(metadata);
-        dumpAllClasses(metadata);
 
         session->Logout();
     }
@@ -67,47 +67,52 @@ int main(int argc, char * argv[])
     return 0;
 }
 
-void dumpSystem(RetsMetadataPtr metadata)
+void dumpSystem(RetsMetadata * metadata)
 {
-    MetadataSystemPtr system = metadata->GetSystem();
+    MetadataSystem * system = metadata->GetSystem();
     cout << "System ID: " << system->GetSystemID() << endl;
     cout << "System Description: " << system->GetSystemDescription() << endl;
     cout << "Comments: " << system->GetComments() << endl;
 }
 
-void dumpAllResources(RetsMetadataPtr metadata)
+void dumpAllResources(RetsMetadata * metadata)
 {
-    MetadataResourceListPtr resources = metadata->GetAllResources();
+    MetadataResourceList resources = metadata->GetAllResources();
     MetadataResourceList::iterator i;
     cout << endl;
-    for (i = resources->begin(); i != resources->end(); i++)
+    for (i = resources.begin(); i != resources.end(); i++)
     {
-        MetadataResourcePtr resource(*i);
-        cout << "Resource name: " << resource->GetResourceID() << " ["
-             << resource->GetStandardName() << "]" << endl;
+        MetadataResource * resource = *i;
+        dumpAllClasses(metadata, resource);
     }
 }
 
-void dumpAllClasses(RetsMetadataPtr metadata)
+void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource)
 {
-    MetadataClassListPtr classes = metadata->GetAllClasses();
+    string resourceName = resource->GetResourceID();
+    
+    MetadataClassList classes =
+        metadata->GetAllClasses(resourceName);
     MetadataClassList::iterator i;
-    for (i = classes->begin(); i != classes->end(); i++)
+    for (i = classes.begin(); i != classes.end(); i++)
     {
-        MetadataClassPtr aClass(*i);
-        cout << endl << "Class name: " << aClass->GetClassName() << " ["
+        MetadataClass * aClass = *i;
+        cout << "Resource name: " << resourceName << " ["
+             << resource->GetStandardName() << "]" << endl;
+        cout << "Class name: " << aClass->GetClassName() << " ["
              << aClass->GetStandardName() << "]" << endl;
         dumpAllTables(metadata, aClass);
+        cout << endl;
     }
 }
 
-void dumpAllTables(RetsMetadataPtr metadata, MetadataClassPtr aClass)
+void dumpAllTables(RetsMetadata * metadata, MetadataClass * aClass)
 {
-    MetadataTableListPtr tables = metadata->GetTablesForClass(aClass);
+    MetadataTableList tables = metadata->GetAllTables(aClass);
     MetadataTableList::iterator i;
-    for (i = tables->begin(); i != tables->end(); i++)
+    for (i = tables.begin(); i != tables.end(); i++)
     {
-        MetadataTablePtr table(*i);
+        MetadataTable * table = *i;
         cout << "Table name: " << table->GetSystemName() << " ["
              << table->GetStandardName() << "]" << endl;
     }

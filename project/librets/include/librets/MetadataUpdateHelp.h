@@ -33,6 +33,10 @@ class MetadataUpdateHelp : public MetadataElement
      * @return UPDATE_HELP
      */
     virtual MetadataType GetType() const;
+    
+    virtual std::string GetId() const;
+    
+    std::string GetUpdateHelpID() const;
 };
 
 };

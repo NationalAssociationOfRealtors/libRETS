@@ -14,9 +14,11 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <sstream>
+#include <algorithm>
 #include "librets/RetsMetadata.h"
-#include "librets/MetadataByLevelCollector.h"
+#include "librets/MetadataFinder.h"
 #include "librets/MetadataSystem.h"
 #include "librets/MetadataResource.h"
 #include "librets/MetadataClass.h"
@@ -27,20 +29,60 @@ using namespace librets;
 using std::string;
 using std::vector;
 using std::ostringstream;
+using std::find_if;
 namespace b = boost;
 
-RetsMetadata::RetsMetadata(MetadataByLevelCollectorPtr collector)
+#define CLASS_ RetsMetadata
+
+template<typename DERIVED>
+class FinderHelper
 {
-    mCollector = collector;
+  public:
+    typedef std::vector< DERIVED * > derived_vec_type;
+    typedef boost::shared_ptr< derived_vec_type > derived_vec_type_ptr;
+    
+    FinderHelper(MetadataFinderPtr finder) : mFinder(finder) { }
+    
+    derived_vec_type_ptr cast(const MetadataElementList & base_vec)
+    {
+        derived_vec_type_ptr derived_vec(new derived_vec_type());
+        MetadataElementList::const_iterator i;
+        for (i = base_vec.begin(); i != base_vec.end(); i++)
+        {
+            MetadataElement * element = (*i).get();
+            DERIVED * derived = dynamic_cast< DERIVED * >(element);
+            derived_vec->push_back(derived);
+        }
+        return derived_vec;
+    }
+    
+    derived_vec_type_ptr FindByLevel(MetadataElement::Type type, string level)
+    {
+        MetadataElementListPtr elements = mFinder->FindByLevel(type, level);
+        derived_vec_type_ptr derivedElements = cast(*elements);
+        return derivedElements;
+    }
+    
+    DERIVED * FindByPath(MetadataElement::Type type, string level, string id)
+    {
+        MetadataElementPtr element = mFinder->FindByPath(type, level, id);
+        return dynamic_cast< DERIVED *>(element.get());
+    }
+    
+  private:
+    MetadataFinderPtr mFinder;
+};
+
+RetsMetadata::RetsMetadata(MetadataFinderPtr finder)
+    :  mFinder(finder)
+{
     InitSystem();
-    InitAllResources();
-    InitAllClasses();
 }
 
 void RetsMetadata::InitSystem()
 {
     MetadataElementListPtr elements =
-        mCollector->Find(MetadataElement::SYSTEM, "");
+        mFinder->FindByLevel(MetadataElement::SYSTEM, "");
     if (elements->size() != 1)
     {
         ostringstream message;
@@ -49,172 +91,59 @@ void RetsMetadata::InitSystem()
         throw RetsException(message.str());
     }
     MetadataElementPtr element = elements->at(0);
-    mSystem = b::dynamic_pointer_cast<MetadataSystem>(element);
+    mSystem = dynamic_cast<MetadataSystem *>(element.get());
 }
 
-void RetsMetadata::InitAllClasses()
-{
-    mAllClasses.reset(new MetadataClassList());
-    MetadataElementListPtr resources =
-        mCollector->Find(MetadataElement::RESOURCE, "");
-    MetadataElementList::iterator i;
-    for (i = resources->begin(); i != resources->end(); i++)
-    {
-        MetadataResourcePtr resource =
-            b::dynamic_pointer_cast<MetadataResource>(*i);
-        string level = resource->GetResourceID();
-
-        MetadataElementListPtr classes =
-            mCollector->Find(MetadataElement::CLASS, level);
-        MetadataElementList::iterator j;
-        for (j = classes->begin(); j != classes->end(); j++)
-        {
-            MetadataClassPtr aClass =
-                b::dynamic_pointer_cast<MetadataClass>(*j);
-            mAllClasses->push_back(aClass);
-        }
-    }
-}
-
-void RetsMetadata::InitAllResources()
-{
-    mAllResources.reset(new MetadataResourceList());
-    MetadataElementListPtr resources =
-        mCollector->Find(MetadataElement::RESOURCE, "");
-    MetadataElementList::iterator i;
-    for (i = resources->begin(); i != resources->end(); i++)
-    {
-        MetadataResourcePtr resource =
-            b::dynamic_pointer_cast<MetadataResource>(*i);
-        mAllResources->push_back(resource);
-    }
-}
-
-MetadataSystemPtr RetsMetadata::GetSystem() const
+MetadataSystem * RetsMetadata::GetSystem() const
 {
     return mSystem;
 }
 
-MetadataClassListPtr RetsMetadata::GetAllClasses() const
+MetadataResourceList RetsMetadata::GetAllResources() const
 {
-    return mAllClasses;
+    FinderHelper<MetadataResource> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::RESOURCE, "");
 }
 
-MetadataClassPtr RetsMetadata::GetClass(string resourceName, string className)
+MetadataResource * RetsMetadata::GetResource(string resourceName) const
+{
+    FinderHelper<MetadataResource> helper(mFinder);
+    return helper.FindByPath(MetadataElement::RESOURCE, "", resourceName);
+}
+
+MetadataClass * RetsMetadata::GetClass(string resourceName, string className)
     const
 {
-    MetadataClassPtr metadataClass;
-
-    MetadataClassListPtr classList = GetClassesForResource(resourceName);
-    
-    bool found = false;
-    MetadataClassList::iterator i = classList->begin();
-    
-    while (i != classList->end() && !found)
-    {
-        MetadataClassPtr clazz = *i;
-        string testName = clazz->GetClassName();
-        if (testName == className)
-        {
-            metadataClass = clazz;
-            found = true;
-        }
-        i++;
-    }
-    
-    return metadataClass;
+    FinderHelper<MetadataClass> helper(mFinder);
+    return helper.FindByPath(MetadataElement::CLASS, resourceName, className);
 }
 
-MetadataTableListPtr RetsMetadata::GetTablesForClass(
-    MetadataClassPtr metadataClass) const
+MetadataClassList RetsMetadata::GetAllClasses(
+    string resourceName) const
 {
-    return GetTablesForClass(metadataClass->GetLevel(),
-                             metadataClass->GetClassName());
+    FinderHelper<MetadataClass> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::CLASS, resourceName);
 }
 
-MetadataTableListPtr RetsMetadata::GetTablesForClass(
+MetadataTableList RetsMetadata::GetAllTables(
+    MetadataClass * metadataClass) const
+{
+    return GetAllTables(metadataClass->GetLevel(),
+                        metadataClass->GetClassName());
+}
+
+MetadataTableList RetsMetadata::GetAllTables(
     string resourceName, string className) const
 {
     string level = resourceName + ":" + className;
-    MetadataElementListPtr elements =
-        mCollector->Find(MetadataElement::TABLE, level);
-    
-    MetadataTableListPtr tables(new MetadataTableList());
-    MetadataElementList::iterator i;
-    for (i = elements->begin(); i != elements->end(); i++)
-    {
-        MetadataTablePtr table = b::dynamic_pointer_cast<MetadataTable>(*i);
-        tables->push_back(table);
-    }
-    return tables;
+    FinderHelper<MetadataTable> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::TABLE, level);
 }
 
-MetadataResourceListPtr RetsMetadata::GetAllResources() const
-{
-    return mAllResources;
-}
-
-MetadataClassListPtr RetsMetadata::GetClassesForResource(
-    string resourceName) const
-{
-    MetadataElementListPtr elements =
-        mCollector->Find(MetadataElement::CLASS, resourceName);
-    
-    MetadataClassListPtr classes(new MetadataClassList());
-    MetadataElementList::iterator i;
-    for (i = elements->begin(); i != elements->end(); i++)
-    {
-        MetadataClassPtr aClass = b::dynamic_pointer_cast<MetadataClass>(*i);
-        classes->push_back(aClass);
-    }
-    
-    return classes;
-}
-
-MetadataResourcePtr RetsMetadata::GetResource(string resourceName) const
-{
-    MetadataResourcePtr metadataResource;
-
-    bool found = false;
-    MetadataResourceList::iterator i = mAllResources->begin();
-    
-    while (i != mAllResources->end() && !found)
-    {
-        MetadataResourcePtr res = *i;
-        string testName = res->GetResourceID();
-        if (testName == resourceName)
-        {
-            metadataResource = res;
-            found = true;
-        }
-        i++;
-    }
-    
-    return metadataResource;
-}
-
-MetadataTablePtr RetsMetadata::GetTable(string resourceName, string className,
+MetadataTable * RetsMetadata::GetTable(string resourceName, string className,
                                         string tableName) const
 {
-    MetadataTablePtr metadataTable;
-
-    MetadataTableListPtr tableList =
-        GetTablesForClass(resourceName, className);
-    
-    bool found = false;
-    MetadataTableList::iterator i = tableList->begin();
-    
-    while (i != tableList->end() && !found)
-    {
-        MetadataTablePtr table = *i;
-        string testName = table->GetSystemName();
-        if (testName == tableName)
-        {
-            metadataTable = table;
-            found = true;
-        }
-        i++;
-    }
-    
-    return metadataTable;
+    string level = resourceName + ":" + className;
+    FinderHelper<MetadataTable> helper(mFinder);
+    return helper.FindByPath(MetadataElement::TABLE, level, tableName);
 }

@@ -25,3 +25,13 @@ MetadataElement::MetadataType CLASS::GetType() const
 {
     return UPDATE;
 }
+
+string CLASS::GetId() const
+{
+    return GetUpdateName();
+}
+
+string CLASS::GetUpdateName() const
+{
+    return GetStringAttribute("UpdateName");
+}

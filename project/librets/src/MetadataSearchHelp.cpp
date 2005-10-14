@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include "librets/MetadataSearchHelp.h"
 
 using namespace librets;
@@ -24,4 +25,14 @@ using std::string;
 MetadataElement::MetadataType CLASS::GetType() const
 {
     return SEARCH_HELP;
+}
+
+string CLASS::GetId() const
+{
+    return GetSearchHelpID();
+}
+
+string CLASS::GetSearchHelpID() const
+{
+    return GetStringAttribute("SearchHelpID");
 }

@@ -14,38 +14,26 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#ifndef LIBRETS_METADATA_BY_LEVEL_COLLECTOR_H
-#define LIBRETS_METADATA_BY_LEVEL_COLLECTOR_H
 
-#include <map>
-#include "librets/RetsObject.h"
-#include "librets/MetadataElementCollector.h"
+#ifndef LIBRETS_METADATA_FINDER_H
+#define LIBRETS_METADATA_FINDER_H
+
+#include "librets/metadata_forward.h"
 #include "librets/MetadataElement.h"
 
 namespace librets {
-
-class MetadataByLevelCollector :
-    public virtual RetsObject, public MetadataElementCollector
+    
+class MetadataFinder
 {
   public:
-    MetadataByLevelCollector();
-
-    virtual ~MetadataByLevelCollector();
-
-    void AddElement(MetadataElementPtr element);
+    virtual ~MetadataFinder();
     
-    MetadataElementListPtr Find(MetadataElement::MetadataType type,
-                                std::string level);
-
-  private:
-    typedef std::map<std::string, MetadataElementListPtr> LevelMap;
-
-    typedef boost::shared_ptr<LevelMap> LevelMapPtr;
-
-    typedef std::map<MetadataElement::MetadataType, LevelMapPtr>
-        TypeMap;
-
-    TypeMap mTypeMap;
+    virtual MetadataElementListPtr FindByLevel(MetadataElement::Type type,
+                                               std::string level) = 0;
+    
+    virtual MetadataElementPtr FindByPath(MetadataElement::Type type,
+                                          std::string level,
+                                          std::string id) = 0;
 };
 
 };

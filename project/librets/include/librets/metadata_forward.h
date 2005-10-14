@@ -110,6 +110,16 @@ class MetadataElementCollector;
 typedef boost::shared_ptr<MetadataElementCollector>
     MetadataElementCollectorPtr;
 
+class MetadataLoader;
+typedef boost::shared_ptr<MetadataLoader> MetadataLoaderPtr;
+
+class MetadataFinder;
+typedef boost::shared_ptr<MetadataFinder> MetadataFinderPtr;
+
+class IncrementalMetadataFinder;
+typedef boost::shared_ptr<IncrementalMetadataFinder>
+    IncrementalMetadataFinderPtr;
+
 class XmlMetadataParser;
 typedef boost::shared_ptr<XmlMetadataParser> XmlMetadataParserPtr;
 
@@ -121,9 +131,9 @@ class DefaultMetadataElementFactory;
 typedef boost::shared_ptr<DefaultMetadataElementFactory>
     DefaultMetadataElementFactoryPtr;
 
-class MetadataByLevelCollector;
-typedef boost::shared_ptr<MetadataByLevelCollector>
-    MetadataByLevelCollectorPtr;
+class DefaultMetadataCollector;
+typedef boost::shared_ptr<DefaultMetadataCollector>
+    DefaultMetadataCollectorPtr;
 
 class RetsUnknownMetadataException;
 

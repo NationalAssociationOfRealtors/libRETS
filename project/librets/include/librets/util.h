@@ -34,6 +34,8 @@ int find(const std::string & aString, const std::string & separators,
 
 std::string join(const StringVector & strings, std::string separator);
 
+std::string join(std::string left, std::string right, std::string separator);
+
 bool splitField(const std::string & field, const std::string & delimiter,
                 std::string & key, std::string & value);
 
@@ -46,6 +48,11 @@ std::string urlEncode(const std::string & aString);
 struct RetsObjectEqualTo
 {
     bool operator()(const RetsObjectPtr & o1, const RetsObjectPtr & o2) const
+    {
+        return (*o1 == *o2);
+    }
+
+    bool operator()(const RetsObject * o1, const RetsObject * o2) const
     {
         return (*o1 == *o2);
     }

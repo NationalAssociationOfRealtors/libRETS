@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_METADATA_LOOKUP_TYPE_H
 #define LIBRETS_METADATA_LOOKUP_TYPE_H
 
@@ -33,6 +34,10 @@ class MetadataLookupType : public MetadataElement
      * @return LOOKUP_TYPE
      */
     virtual MetadataType GetType() const;
+    
+    virtual std::string GetId() const;
+    
+    std::string GetValue() const;
 };
 
 };

@@ -15,29 +15,26 @@
  * appear in supporting documentation.
  */
 
-#ifndef LIBRETS_METADATA_EDIT_MASK_H
-#define LIBRETS_METADATA_EDIT_MASK_H
+#ifndef LIBRETS_METADATA_LOADER_H
+#define LIBRETS_METADATA_LOADER_H
 
+#include "librets/metadata_forward.h"
 #include "librets/MetadataElement.h"
 
 namespace librets {
-
+    
 /**
- * Edit mask metadata.
+ * An interface used to load a portion of the metadata tree.
  */
-class MetadataEditMask : public MetadataElement
+class MetadataLoader
 {
   public:
-    /**
-     * Always returns EDIT_MASK.
-     *
-     * @return EDIT_MASK
-     */
-    virtual MetadataType GetType() const;
+    virtual ~MetadataLoader();
     
-    virtual std::string GetId() const;
+    virtual void SetCollector(MetadataElementCollectorPtr collector) = 0;
     
-    std::string GetEditMaskID() const;
+    virtual void LoadMetadata(MetadataElement::Type type,
+                              std::string level) = 0;
 };
 
 };

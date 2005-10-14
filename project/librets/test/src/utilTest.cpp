@@ -32,20 +32,78 @@ typedef vector<RetsXmlEventPtr> EventVector;
 class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
-    CPPUNIT_TEST(testVectorEquals);
+    CPPUNIT_TEST(testVectorEqualsWithPointers);
+    CPPUNIT_TEST(testVectorEqualsWithSharedPointers);
     CPPUNIT_TEST(testSplitField);
     CPPUNIT_TEST(testUrlEncode);
+    CPPUNIT_TEST(testJoinStrings);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
-    void testVectorEquals();
+    void testVectorEqualsWithPointers();
+    void testVectorEqualsWithSharedPointers();
     void testSplitField();
     void testUrlEncode();
+    void testJoinStrings();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
 
-void CLASS::testVectorEquals()
+void CLASS::testVectorEqualsWithPointers()
+{
+    TestObject object1_1(1);
+    TestObject object1_2(2);
+    TestObject object1_3(3);
+    TestObject object1_4(4);
+
+    vector<TestObject *> v1;
+    v1.push_back(&object1_1);
+    v1.push_back(&object1_2);
+    v1.push_back(&object1_3);
+    
+    TestObject object2_1(1);
+    TestObject object2_2(2);
+    TestObject object2_3(3);
+
+    vector<TestObject *> v2;
+    v2.push_back(&object2_1);
+    v2.push_back(&object2_2);
+    v2.push_back(&object2_3);
+    
+    TestObject object3_1(1);
+    TestObject object3_2(2);
+    TestObject object3_3(3);
+    
+    vector<TestObject *> v3;
+    v3.push_back(&object3_3);
+    v3.push_back(&object3_2);
+    v3.push_back(&object3_1);
+    
+    TestObject object4_1(1);
+    TestObject object4_2(2);
+    TestObject object4_3(3);
+    TestObject object4_4(4);
+
+    vector<TestObject *> v4;
+    v4.push_back(&object4_1);
+    v4.push_back(&object4_2);
+    v4.push_back(&object4_3);
+    v4.push_back(&object4_4);
+    
+    TestObject object5_1(1);
+    TestObject object5_2(2);
+
+    vector<TestObject *> v5;
+    v5.push_back(&object5_1);
+    v5.push_back(&object5_2);
+    
+    CPPUNIT_ASSERT(VectorEquals(v1, v2));
+    CPPUNIT_ASSERT(!VectorEquals(v1, v3));
+    CPPUNIT_ASSERT(!VectorEquals(v1, v4));
+    CPPUNIT_ASSERT(!VectorEquals(v1, v4));
+}
+
+void CLASS::testVectorEqualsWithSharedPointers()
 {
     TestObjectPtr derived;
     vector<TestObjectPtr> v1;
@@ -107,4 +165,11 @@ void CLASS::testSplitField()
 void CLASS::testUrlEncode()
 {
     ASSERT_STRING_EQUAL("foo%2bbar", urlEncode("foo+bar"));
+}
+
+void CLASS::testJoinStrings()
+{
+    ASSERT_STRING_EQUAL("foo", join("foo", "", ":"));
+    ASSERT_STRING_EQUAL("bar", join("", "bar", ":"));
+    ASSERT_STRING_EQUAL("foo:bar", join("foo", "bar", ":"));
 }

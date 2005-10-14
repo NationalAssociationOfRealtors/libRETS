@@ -23,16 +23,6 @@
 
 namespace librets {
 
-/** Vector of MetadataTable objects. */
-typedef std::vector<MetadataTablePtr> MetadataTableList;
-/** A smart pointer to MetadataTableList. */
-typedef boost::shared_ptr<MetadataTableList> MetadataTableListPtr;
-
-/** A vector of MetadataUpdate objects. */
-typedef std::vector<MetadataUpdatePtr> MetadataUpdateList;
-/** A smart pointer to MetadataUpdateList. */
-typedef boost::shared_ptr<MetadataUpdateList> MetadataUpdateListPtr;
-
 /**
  * Class metadata.
  */
@@ -45,6 +35,8 @@ class MetadataClass : public MetadataElement
      * @return CLASS
      */
     virtual MetadataType GetType() const;
+    
+    virtual std::string GetId() const;
 
     /**
      * Returns the name of the class metadata.
@@ -68,20 +60,6 @@ class MetadataClass : public MetadataElement
      * @return Description of this class.
      */
     std::string GetDescription() const;
-
-    /**
-     * Returns all tables.
-     *
-     * @return All tables
-     */
-    MetadataTableListPtr GetTables() const;
-
-    /**
-     * Returns all updates.
-     *
-     * @return All updtes
-     */
-    MetadataUpdateListPtr GetUpdates() const;
 };
 
 };

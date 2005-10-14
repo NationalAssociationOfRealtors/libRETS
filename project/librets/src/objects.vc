@@ -6,6 +6,7 @@ X_OBJS = \
 	$(DIROBJ)\CurlHttpClient.obj \
 	$(DIROBJ)\CurlHttpResponse.obj \
 	$(DIROBJ)\CurlSlist.obj \
+	$(DIROBJ)\DefaultMetadataCollector.obj \
 	$(DIROBJ)\DefaultMetadataElementFactory.obj \
 	$(DIROBJ)\DmqlCriterion.obj \
 	$(DIROBJ)\DmqlExpression.obj \
@@ -18,6 +19,7 @@ X_OBJS = \
 	$(DIROBJ)\GetObjectRequest.obj \
 	$(DIROBJ)\GetObjectResponse.obj \
 	$(DIROBJ)\GtCriterion.obj \
+	$(DIROBJ)\IncrementalMetadataFinder.obj \
 	$(DIROBJ)\JunctionCriterion.obj \
 	$(DIROBJ)\KeyValueResponse.obj \
 	$(DIROBJ)\LiteralCriterion.obj \
@@ -26,12 +28,13 @@ X_OBJS = \
 	$(DIROBJ)\LookupCriterion.obj \
 	$(DIROBJ)\LookupOrCriterion.obj \
 	$(DIROBJ)\LtCriterion.obj \
-	$(DIROBJ)\MetadataByLevelCollector.obj \
 	$(DIROBJ)\MetadataClass.obj \
 	$(DIROBJ)\MetadataEditMask.obj \
 	$(DIROBJ)\MetadataElement.obj \
 	$(DIROBJ)\MetadataElementCollector.obj \
+	$(DIROBJ)\MetadataFinder.obj \
 	$(DIROBJ)\MetadataForeignKey.obj \
+	$(DIROBJ)\MetadataLoader.obj \
 	$(DIROBJ)\MetadataLookup.obj \
 	$(DIROBJ)\MetadataLookupType.obj \
 	$(DIROBJ)\MetadataObject.obj \

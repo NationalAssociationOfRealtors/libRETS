@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <iostream>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>                                           
@@ -83,10 +84,9 @@ void CLASS::SetAttribute(string attributeName, string attributeValue)
     mAttributes[attributeName] = attributeValue;
 }
 
-vector<MetadataElementPtr> MetadataElement::GetChildren(MetadataType type)
+string CLASS::GetId() const
 {
-    vector<MetadataElementPtr> children;
-    return children;
+    return "";
 }
 
 string CLASS::GetLevel() const
@@ -99,9 +99,23 @@ void CLASS::SetLevel(string level)
     mLevel = level;
 }
 
+string CLASS::GetPath() const
+{
+    string id = GetId();
+    if (!id.empty())
+    {
+        return join(mLevel, id, ":");
+    }
+    else
+    {
+        return "";
+    }
+}
+
 std::ostream & CLASS::Print(std::ostream & outputStream) const
 {
-    return outputStream << "Type [" << GetType() << "], level [" << mLevel
+    return outputStream << "Type [" << GetType() << "], id [" << GetId()
+                        << "], level [" << mLevel << "], path [" << GetPath()
                         << "]";
 }
 

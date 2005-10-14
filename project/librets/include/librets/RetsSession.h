@@ -24,6 +24,7 @@
 #include "librets/http_forward.h"
 #include "librets/RetsVersion.h"
 #include "librets/error_forward.h"
+#include "MetadataLoader.h"
 
 /**
  * The main librets namespace.  See RetsSession.
@@ -33,7 +34,7 @@ namespace librets {
 /**
  * Interface to RETS session.
  */
-class RetsSession
+class RetsSession : public MetadataLoader
 {
   public:
     /**
@@ -86,12 +87,27 @@ class RetsSession
 
     /**
      * Returns the metadata for this server.  Only valid after logging
-     * in.
+     * in.  This object is owned by the RetsSession and should not need
+     * to be deleted by the user.
      *
      * @return The metadata for this server
      * @throws RetsException if an error occurs.
      */
-    RetsMetadataPtr GetMetadata();
+    RetsMetadata * GetMetadata();
+    
+    /**
+     * Returns true if metadata is retrieved incrementally.
+     *
+     * @eturn true if metadata is retreived incrementally.
+     */
+    bool IsIncrementalMetadata() const;
+    
+    /**
+     * Changes how metadata is fetched.  If true, metadata is retrieved
+     * incrementally, as needed.  If false, metadata is retreived all at once
+     * right after logging in.  The default is true (incremental).
+     */
+    void SetIncrementalMetadata(bool incrementalMetadata);
     
     GetObjectResponsePtr GetObject(GetObjectRequestPtr request);
 
@@ -156,14 +172,21 @@ class RetsSession
      */
     void SetErrorHandler(RetsErrorHandler * errorHandler);
 
-  private:
+    virtual void SetCollector(MetadataElementCollectorPtr collector);
+    
+    virtual void LoadMetadata(MetadataElement::Type type,
+                              std::string level);
+
+private:
     static const char * RETS_VERSION_HEADER;
     static const char * RETS_1_0_STRING;
     static const char * RETS_1_5_STRING;
     
     void RetrieveAction();
 
-    void RetrieveMetadata();
+    void InitializeMetadata();
+    
+    void RetrieveFullMetadata();
 
     void AssertSuccessfulResponse(RetsHttpResponsePtr response,
                                   std::string url);
@@ -171,6 +194,8 @@ class RetsSession
     std::string RetsVersionToString(RetsVersion retsVersion);
     
     RetsVersion RetsVersionFromString(std::string versionString);
+    
+    std::string MetadataTypeToString(MetadataElement::Type type);
 
     RetsHttpClientPtr mHttpClient;
 
@@ -181,6 +206,10 @@ class RetsSession
     std::string mAction;
 
     RetsMetadataPtr mMetadata;
+    
+    MetadataElementCollectorPtr mLoaderCollector;
+    
+    bool mIncrementalMetadata;
     
     RetsHttpRequest::Method mHttpMethod;
     

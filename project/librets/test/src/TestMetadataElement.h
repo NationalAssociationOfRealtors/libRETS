@@ -15,8 +15,8 @@
  * appear in supporting documentation.
  */
 
-#ifndef LIBRETS_TEST_SQL_METADATA_H
-#define LIBRETS_TEST_SQL_METADATA_H
+#ifndef LIBRETS_TEST_METADATA_ELEMENT_H
+#define LIBRETS_TEST_METADATA_ELEMENT_H
 
 #include "librets/MetadataElement.h"
 
@@ -28,6 +28,8 @@ class TestMetadataElement : public MetadataElement
     virtual MetadataType GetType() const { return SYSTEM; }
     std::string GetTypeName() const;
     void SetTypeName(std::string typeName);
+
+    std::string GetId() const;
     
   private:
     std::string mTypeName;

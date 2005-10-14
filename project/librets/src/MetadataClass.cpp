@@ -14,27 +14,35 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include "librets/MetadataClass.h"
 
 using namespace librets;
 using std::string;
 
-MetadataElement::MetadataType MetadataClass::GetType() const
+#define CLASS_ MetadataClass
+
+MetadataElement::MetadataType CLASS_::GetType() const
 {
     return CLASS;
 }
 
-string MetadataClass::GetClassName() const
+string CLASS_::GetId() const
+{
+    return GetClassName();
+}
+
+string CLASS_::GetClassName() const
 {
     return GetStringAttribute("ClassName");
 }
 
-string MetadataClass::GetStandardName() const
+string CLASS_::GetStandardName() const
 {
     return GetStringAttribute("StandardName");
 }
 
-string MetadataClass::GetDescription() const
+string CLASS_::GetDescription() const
 {
     return GetStringAttribute("Description");
 }

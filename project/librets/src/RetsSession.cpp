@@ -14,11 +14,13 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <sstream>
 #include "librets.h"
 #include "librets/CurlHttpClient.h"
 #include "librets/XmlMetadataParser.h"
-#include "librets/MetadataByLevelCollector.h"
+#include "librets/DefaultMetadataCollector.h"
+#include "librets/IncrementalMetadataFinder.h"
 #include "librets/SearchRequest.h"
 #include "librets/GetObjectRequest.h"
 #include "librets/GetObjectResponse.h"
@@ -30,7 +32,7 @@ using namespace librets::util;
 using std::ostringstream;
 using std::string;
 
-#define CLASS RetsSession
+typedef RetsSession CLASS;
 
 const char * CLASS::DEFAULT_USER_AGENT = "librets/" LIBRETS_VERSION;
 const RetsVersion CLASS::DEFAULT_RETS_VERSION = RETS_1_5;
@@ -38,7 +40,7 @@ const char * CLASS::RETS_VERSION_HEADER = "RETS-Version";
 const char * CLASS::RETS_1_0_STRING = "RETS/1.0";
 const char * CLASS::RETS_1_5_STRING = "RETS/1.5";
 
-CLASS::CLASS(string login_url)
+CLASS::RetsSession(string login_url)
 {
     mLoginUrl = login_url;
     mHttpMethod = RetsHttpRequest::POST;
@@ -46,6 +48,7 @@ CLASS::CLASS(string login_url)
     mHttpClient->SetUserAgent(DEFAULT_USER_AGENT);
     mRetsVersion = DEFAULT_RETS_VERSION;
     mErrorHandler = ExceptionErrorHandler::GetInstance();
+    mIncrementalMetadata = true;
 }
 
 void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
@@ -114,16 +117,81 @@ string CLASS::GetAction()
     return mAction;
 }
 
-RetsMetadataPtr CLASS::GetMetadata()
+RetsMetadata * CLASS::GetMetadata()
 {
     if (!mMetadata)
     {
-        RetrieveMetadata();
+        InitializeMetadata();
     }
-    return mMetadata;
+    return mMetadata.get();
 }
 
-void CLASS::RetrieveMetadata()
+bool CLASS::IsIncrementalMetadata() const
+{
+    return mIncrementalMetadata;
+}
+
+void CLASS::SetIncrementalMetadata(bool incrementalMetadata)
+{
+    mIncrementalMetadata = incrementalMetadata;
+}
+
+void CLASS::SetCollector(MetadataElementCollectorPtr collector)
+{
+    mLoaderCollector = collector;
+}
+
+std::string CLASS::MetadataTypeToString(MetadataElement::Type type)
+{
+    if (type == MetadataElement::SYSTEM)
+        return "METADATA-SYSTEM";
+    else if (type == MetadataElement::CLASS)
+        return "METADATA-CLASS";
+    else if (type == MetadataElement::RESOURCE)
+        return "METADATA-RESOURCE";
+    else if (type == MetadataElement::TABLE)
+        return "METADATA-TABLE";
+    else
+    {
+        throw RetsException(str_stream() << "Invalid metadata type: "
+                            << type);
+    }
+}
+
+void CLASS::LoadMetadata(MetadataElement::Type type,
+                         std::string level)
+{
+    string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
+    RetsHttpRequestPtr request(new RetsHttpRequest());
+    request->SetUrl(getMetadataUrl);
+    request->SetMethod(mHttpMethod);
+    request->SetQueryParameter("Type", MetadataTypeToString(type));
+    request->SetQueryParameter("ID", join(level, "0", ":"));
+    request->SetQueryParameter("Format", "COMPACT");
+    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
+    AssertSuccessfulResponse(httpResponse, getMetadataUrl);
+    
+    XmlMetadataParserPtr parser(new XmlMetadataParser(mLoaderCollector,
+                                                      mErrorHandler));
+    parser->Parse(httpResponse->GetInputStream());
+}
+
+
+void CLASS::InitializeMetadata()
+{
+    if (mIncrementalMetadata)
+    {
+        IncrementalMetadataFinderPtr
+            incrementalFinder(new IncrementalMetadataFinder(this));
+        mMetadata.reset(new RetsMetadata(incrementalFinder));
+    }
+    else
+    {
+        RetrieveFullMetadata();
+    }
+}
+
+void CLASS::RetrieveFullMetadata()
 {
     string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
     RetsHttpRequestPtr request(new RetsHttpRequest());
@@ -135,7 +203,7 @@ void CLASS::RetrieveMetadata()
     RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
     
-    MetadataByLevelCollectorPtr collector(new MetadataByLevelCollector());
+    DefaultMetadataCollectorPtr collector(new DefaultMetadataCollector());
     XmlMetadataParserPtr parser(
         new XmlMetadataParser(collector, mErrorHandler));
     parser->Parse(httpResponse->GetInputStream());

@@ -22,11 +22,6 @@
 
 namespace librets {
 
-/** A vector of MetadataResource objecst. */
-typedef std::vector<MetadataResourcePtr> MetadataResourceList;
-/** A smart pointer to MetadataResourceList. */
-typedef boost::shared_ptr<MetadataResourceList> MetadataResourceListPtr;
-
 /** A vector of MetadataForeignKey objects. */
 typedef std::vector<MetadataForeignKeyPtr> MetadataForeignKeyList;
 /** A smart pointer to MetadataForeignKeyList. */
@@ -68,13 +63,6 @@ class MetadataSystem : public MetadataElement
      * @return The comments
      */
     std::string GetComments() const;
-
-    /**
-     * Returns all the child resources.
-     *
-     * @return All the child resources
-     */
-    MetadataResourceListPtr GetResources() const;
 
     /**
      * Returns all the child foreign keys.

@@ -76,6 +76,15 @@ string NS::join(const StringVector & strings, string separator)
     return joined;
 }
 
+string NS::join(string left, string right, string separator)
+{
+    if (left.empty())
+        return right;
+    if (right.empty())
+        return left;
+    return left + separator + right;
+}
+
 bool NS::splitField(const string & field, const string & delimiter,
                     string & key, string & value)
 {

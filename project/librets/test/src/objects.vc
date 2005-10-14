@@ -2,6 +2,7 @@
 X_OBJS = \
 	$(DIROBJ)\AndCriterionTest.obj \
 	$(DIROBJ)\CapabilityUrlsTest.obj \
+	$(DIROBJ)\DefaultMetadataCollectorTest.obj \
 	$(DIROBJ)\DefaultMetadataElementFactoryTest.obj \
 	$(DIROBJ)\DmqlExpressionTest.obj \
 	$(DIROBJ)\EqCriterionTest.obj \
@@ -9,12 +10,12 @@ X_OBJS = \
 	$(DIROBJ)\GetObjectRequestTest.obj \
 	$(DIROBJ)\GetObjectResponseTest.obj \
 	$(DIROBJ)\GtCriterionTest.obj \
+	$(DIROBJ)\IncrementalMetadataFinderTest.obj \
 	$(DIROBJ)\LiteralCriterionTest.obj \
 	$(DIROBJ)\LoginResponseTest.obj \
 	$(DIROBJ)\LogoutResponseTest.obj \
 	$(DIROBJ)\LookupOrCriterionTest.obj \
 	$(DIROBJ)\LtCriterionTest.obj \
-	$(DIROBJ)\MetadataByLevelCollectorTest.obj \
 	$(DIROBJ)\MetadataElementTest.obj \
 	$(DIROBJ)\NotCriterionTest.obj \
 	$(DIROBJ)\OrCriterionTest.obj \
@@ -28,6 +29,8 @@ X_OBJS = \
 	$(DIROBJ)\TestHttpResponse.obj \
 	$(DIROBJ)\TestHttpResponseTest.obj \
 	$(DIROBJ)\TestMetadataElement.obj \
+	$(DIROBJ)\TestMetadataLoader.obj \
+	$(DIROBJ)\TestMetadataTree.obj \
 	$(DIROBJ)\TestObject.obj \
 	$(DIROBJ)\TestSqlMetadata.obj \
 	$(DIROBJ)\UriTest.obj \
