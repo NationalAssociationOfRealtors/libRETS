@@ -166,7 +166,7 @@ void CLASS::LoadMetadata(MetadataElement::Type type,
     request->SetUrl(getMetadataUrl);
     request->SetMethod(mHttpMethod);
     request->SetQueryParameter("Type", MetadataTypeToString(type));
-    request->SetQueryParameter("ID", join(level, "0", ":"));
+    request->SetQueryParameter("ID", level.empty() ? "0" : level);
     request->SetQueryParameter("Format", "COMPACT");
     RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
