@@ -2,6 +2,19 @@
 Installing the Prequisites
 ==========================
 
+Due to modifications needed to make 3rd party libraries compile
+against librets, binaries of all dependant libraries are stored in
+Subversion.  are stored in Subversion.  Check out this repository in
+the parent directory of the main librets directory:
+
+  https://code.crt.realtors.org/svn/librets/vendor/windows/
+
+The best Subversion client for Windows is TortoiseSVN:
+
+  http://tortoisesvn.tigris.org/
+
+You then need to install Microsoft Visual C++ and a Java JDK.
+
 Microsoft Visual C++
 --------------------
 
@@ -13,74 +26,32 @@ Only building from the command line is supported.  Install Visual C++
 the command line to setup VC++ environment variables and add the tools
 to the path.
 
-librets also only builds in multithreaded, static mode, the /MT
-command line flag.  This requires that all dependant libraries be
-compiled with /MT.
-
-Boost
------
-
-  Version: 1.32.0 or higher.
-  URL: http://www.boost.org/
-
-Download and unzip the source archive in the directory as the toplevel
-librets directory.  Boost has it's own build tool, called bjam.  You
-can download it from the Boost website.  Compile boost with the
-following command:
-
-  % bjam "-sTOOLS=vc-7_1" --with-filesystem --with-program_options stage
-
-libcurl
--------
-
-  Version: 7.13.2 or higher.
-  URL: http://curl.haxx.se/libcurl/
-
-Download and unzip the source archive in the directory as the toplevel
-librets directory.  You need to edit lib/Makefile.vc6.  You need to
-change /MD and /MDd to /MT and /MTd to ensure the correct runtime
-libraries.  Then run this command from the top level Curl directory:
-
-  % nmake vc
-
-Expat
------
-
-  Version: 1.95.8 or higher.
-  URL: http://expat.sourceforge.net/    
-
-You can download and install the Windows binary, expat_win32bin.
-
 Java SDK
 --------
 
   Version: 1.4.2 or higher.
   URL: http://java.sun.com/
 
-Java is required to build and use ANTLR (see below).
 
-Cygwin
-------
+Customizing config.vc
+=====================
 
-  Version: 1.5.18-1 or higher.
-  URL: http://www.cygwin.com/
+Copy the <librets>/project/build/config.vc.dist file to
+<librets>/project/build/config.vc.  Edit BASE_PATH to point to the
+full path of the dependant libries that were checked out from
+Subversion, above.  The following table shows the four possible
+library names:
 
-Cygwin is required to build ANTLR (see below).
+  BUILD    | RUNTIME_LIBS | Library Name
+  ---------+--------------+----------------
+  debug    | static       | libretsmtd.lib
+  ---------+--------------+----------------
+  release  | static       | libretsmt.lib
+  ---------+--------------+----------------
+  debug    | dynamic      | libretsd.lib
+  ---------+--------------+---------------
+  release  | dynamic      | librets.lib
 
-ANTLR
------
-
-  Version: 2.7.5 or higher.
-  URL: http://www.antlr.org/
-
-Download and unzip the source archive in the directory as the toplevel
-librets directory.  Open up a Cygwin shell prompt, and run the
-following commands:
-
-  % ./configure --disable-csharp --disable-python --prefix=c:/antlr/antlr-2.7.5
-  % export CXXFLAGS="+ /MTd"
-  % make
-  % make install
 
 Building librets
 ================
@@ -89,9 +60,13 @@ From the command line, run the following command:
 
   % nmake -f Makefile.vc
 
-This will create the library:
+This will create the specified library in:
 
-  project/librets/src/release/librets.lib
+  project/librets/src/build
+
+To build all four library variants, run the following command:
+
+  % make -f Makefile.vc lib-all-variants
 
 The header files needed to use librets are in:
 
