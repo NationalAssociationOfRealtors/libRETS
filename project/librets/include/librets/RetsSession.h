@@ -98,7 +98,7 @@ class RetsSession : public MetadataLoader
     /**
      * Returns true if metadata is retrieved incrementally.
      *
-     * @eturn true if metadata is retreived incrementally.
+     * @return true if metadata is retreived incrementally.
      */
     bool IsIncrementalMetadata() const;
     
