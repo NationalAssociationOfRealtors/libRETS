@@ -38,7 +38,9 @@ prepare:
 
 docs: prepare
 	rm -rf build/doc/api
-	$(DOXYGEN) project\build\Doxyfile.in
+	cp project\build\Doxyfile.in project\build\Doxyfile
+	echo PROJECT_NUMBER=$(VERSION) >> project\build\Doxyfile
+	$(DOXYGEN) project\build\Doxyfile
 
 lib-all-variants:
 	cd project\librets\src
