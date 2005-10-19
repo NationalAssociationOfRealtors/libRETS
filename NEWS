@@ -1,3 +1,10 @@
+Version 1.0.0 - 20 October 2005
+
+  * Add cleaner fix for 512-byte XML document parsing error.
+  * All metadata objects are returned as normal pointers, not as
+    shared pointers, since the RetsSession object owns them.
+  * Add incremental metadata fetching.  This is now the default.
+
 Version 1.0.0b2 - 13 September 2005
 
   * Add support for SQL quoted literals.
