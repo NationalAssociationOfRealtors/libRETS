@@ -5,13 +5,9 @@ BASE_PATH = c:/vendor
 BUILD = debug
 
 # [dynamic, static]
-TYPE = static
-
-# [dynamic, static]
-THIRD_PARTY_LIBS = static
-
-# [dynamic, static]
 #
-# WARNING: Curl has no option to build againts static runtime
-# libraries.  You must edit the makefiles and change /MD to /MT
+# Static means compile with /MT and dynamic means compile with /MD.
+#
+# NOTE: ALL objects of a library or application must be compiled
+# with the same flag.  Not doing so will cause errors at link time.
 RUNTIME_LIBS = static

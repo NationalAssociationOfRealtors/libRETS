@@ -1,6 +1,9 @@
 !include config.vc
 !include version.mk
 
+TYPE = static
+THIRD_PARTY_LIBS = static
+
 !if "$(TYPE)" == "static"
 LINK_LIB_FLAG = /lib
 LIB_PREFIX = lib
