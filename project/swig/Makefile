@@ -11,6 +11,9 @@ PERL_MAKEFILE = perl/Makefile
 PERL_MAKEFILE_PL = perl/Makefile.PL
 PERL_WRAP = perl/librets_wrap.cpp
 
+PYTHON = python
+PYTHON_WRAP = python/librets_wrap.cpp
+
 SWIG_FILES = librets.i auto_ptr_release.i
 
 all: csharp ruby perl
@@ -39,6 +42,12 @@ $(PERL_WRAP): $(SWIG_FILES)
 $(PERL_MAKEFILE):
 	cd perl; $(PERL) Makefile.PL
 
+python: $(PYTHON_WRAP)
+	$(MAKE) -C python
+
+$(PYTHON_WRAP): $(SWIG_FILES)
+	$(SWIG) -c++ -python -o $(PYTHON_WRAP) librets.i
+
 clean-csharp:
 	$(MAKE) -C csharp distclean
 
@@ -50,6 +59,11 @@ clean-perl:
 	$(MAKE) -C perl distclean
 	$(RM) $(PERL_WRAP)
 
+clean-python:
+	$(MAKE) -C python distclean
+	$(RM) $(PYTHON_WRAP)
+
 clean: clean-csharp clean-ruby clean-perl
 
-.PHONY: csharp ruby perl clean clean-csharp clean-ruby clean-perl
+.PHONY: csharp ruby perl python \
+	clean clean-csharp clean-ruby clean-perl clean-python

@@ -32,11 +32,13 @@ namespace std {
     "ST(argvi) = sv_newmortal();
      SWIG_MakePtr(ST(argvi++), (void *) $1.release(), $descriptor(TYPE *), $shadow|$owner);";
 
-#else
+#elif defined(SWIGPYTHON) || defined(SWIGRUBY)
 
 %typemap(out) std::auto_ptr<TYPE>
     "$result = SWIG_NewPointerObj((void *) $1.release(), $descriptor(TYPE *), $owner);"
 
+#else
+#error "Unsupported SWIG language for auto_ptr_release"
 #endif
 
 %template() std::auto_ptr<TYPE>;
