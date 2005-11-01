@@ -83,7 +83,7 @@ class RetsSession : public MetadataLoader
      * @return Search result set
      * @throws RetsException if an error occurs.
      */
-    SearchResultSetPtr Search(SearchRequest * request);
+    SearchResultSetAPtr Search(SearchRequest * request);
 
     /**
      * Returns the metadata for this server.  Only valid after logging

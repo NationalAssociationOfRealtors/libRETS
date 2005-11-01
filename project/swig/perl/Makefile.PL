@@ -1,0 +1,27 @@
+use ExtUtils::MakeMaker;
+use Config;
+
+$cflags = `../../../librets-config-inplace --cflags`;
+$libs = `../../../librets-config-inplace --libs`;
+$cc = $Config{'cc'};
+$ld = $Config{'ld'};
+if ($Config{'osname'} =~ /darwin/)
+{
+    $cc =~ s/cc/c\+\+/;
+    $ld =~ s/cc/c\+\+/;
+}
+elsif ($Config{'osname'} =~ /linux/)
+{
+    $cc =~ s/gcc/g\+\+/;
+    $ld =~ s/gcc/g\+\+/;
+}
+
+WriteMakefile(
+    NAME            => 'librets',
+    INC             => $cflags,
+    CC              => $cc,
+    LD              => $ld,
+    PM              => {'librets.pm' => '$(INST_LIBDIR)/librets.pm'},
+    dynamic_lib     => { OTHERLDFLAGS => $libs},
+    OBJECT          => 'librets_wrap.o'
+);
