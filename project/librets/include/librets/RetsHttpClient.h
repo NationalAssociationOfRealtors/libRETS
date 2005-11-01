@@ -38,8 +38,14 @@ class RetsHttpClient
     
     virtual void SetUserAgent(std::string userAgent) = 0;
 
-    virtual RetsHttpResponsePtr DoRequest(RetsHttpRequestPtr request) = 0;
+    // Todo: Remove this!
+    virtual RetsHttpResponsePtr DoRequest(RetsHttpRequestPtr request)
+    {
+        return DoRequest(request.get());
+    }
     
+    virtual RetsHttpResponsePtr DoRequest(RetsHttpRequest * request) = 0;
+
     virtual void SetLogger(RetsHttpLogger * logger) = 0;
 };
 

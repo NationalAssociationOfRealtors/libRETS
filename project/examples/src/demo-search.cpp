@@ -14,11 +14,11 @@ int main(int argc, char * argv[])
             new RetsSession("http://demo.crt.realtors.org:6103/rets/login"));
         session->Login("Joe", "Schmoe");
         
-        SearchRequestPtr searchRequest(
+        SearchRequestAPtr searchRequest(
             new SearchRequest("Property", "ResidentialProperty", 
                               "(ListPrice=300000-)"));
         
-        SearchResultSetPtr results = session->Search(searchRequest);
+        SearchResultSetPtr results = session->Search(searchRequest.get());
         while (results->HasNext())
         {
             cout << "ListingID: " << results->GetString("ListingID") << endl;

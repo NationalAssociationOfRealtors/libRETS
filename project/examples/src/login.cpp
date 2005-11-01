@@ -48,9 +48,9 @@ int main(int argc, char * argv[])
 
         cout << "Action:\n" << session->GetAction() << endl;
 
-        LogoutResponsePtr logout = session->Logout();
+        LogoutResponseAPtr logout = session->Logout();
         cout << "Logged out\n";
-        if (logout)
+        if (logout.get())
         {
             cout << "Billing information: " << logout->GetBillingInfo()
                  << endl;

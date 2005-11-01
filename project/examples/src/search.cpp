@@ -71,13 +71,13 @@ int main(int argc, char * argv[])
             return -1;
         }
         
-        SearchRequestPtr searchRequest = session->CreateSearchRequest(
+        SearchRequestAPtr searchRequest = session->CreateSearchRequest(
             resource, searchClass, query);
         searchRequest->SetSelect(select);
         searchRequest->SetStandardNames(standardNames);
         searchRequest->SetLimit(limit);
         
-        SearchResultSetPtr results = session->Search(searchRequest);
+        SearchResultSetPtr results = session->Search(searchRequest.get());
         StringVectorPtr columns = results->GetColumns();
         while (results->HasNext())
         {

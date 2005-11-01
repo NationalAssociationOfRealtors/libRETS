@@ -36,6 +36,7 @@ typedef boost::shared_ptr<CapabilityUrls> CapabilityUrlsPtr;
 class SearchRequest;
 /** Smart pointer to SearchRequest. */
 typedef boost::shared_ptr<SearchRequest> SearchRequestPtr;
+typedef std::auto_ptr<SearchRequest> SearchRequestAPtr;
 
 class SearchResultSet;
 /** Smart pointer to SearchResultSet. */
@@ -56,6 +57,7 @@ typedef boost::shared_ptr<GetObjectResponse> GetObjectResponsePtr;
 class LogoutResponse;
 /** Smart pointer to LogoutResponse. */
 typedef boost::shared_ptr<LogoutResponse> LogoutResponsePtr;
+typedef std::auto_ptr<LogoutResponse> LogoutResponseAPtr;
 
 };
 

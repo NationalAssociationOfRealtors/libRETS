@@ -79,7 +79,7 @@ void CurlHttpClient::SetUserCredentials(string userName, string password)
     mCurl.SetUserCredentials(userName, password);
 }
 
-RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequestPtr request)
+RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequest * request)
 {
     string url = request->GetUrl();
     string queryString = request->GetQueryString();

@@ -68,13 +68,13 @@ bool CLASS::Login(string user_name, string passwd)
 {
     mHttpClient->SetDefaultHeader(RETS_VERSION_HEADER,
                                   RetsVersionToString(mRetsVersion));
-    RetsHttpRequestPtr request(new RetsHttpRequest());
-    request->SetUrl(mLoginUrl);
+    RetsHttpRequest request;
+    request.SetUrl(mLoginUrl);
     mHttpClient->SetUserCredentials(user_name, passwd);
-    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
+    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(&request));
     if (httpResponse->GetResponseCode() == 401)
     {
-        httpResponse = mHttpClient->DoRequest(request);
+        httpResponse = mHttpClient->DoRequest(&request);
         if (httpResponse->GetResponseCode() == 401)
         {
             return false;
@@ -87,9 +87,9 @@ bool CLASS::Login(string user_name, string passwd)
     mHttpClient->SetDefaultHeader(RETS_VERSION_HEADER,
                                   RetsVersionToString(mDetectedRetsVersion));
     
-    LoginResponsePtr response(new LoginResponse);
-    response->Parse(httpResponse->GetInputStream(), mDetectedRetsVersion);
-    mCapabilityUrls = response->GetCapabilityUrls(mLoginUrl);
+    LoginResponse response;
+    response.Parse(httpResponse->GetInputStream(), mDetectedRetsVersion);
+    mCapabilityUrls = response.GetCapabilityUrls(mLoginUrl);
 
     RetrieveAction();
 
@@ -105,9 +105,9 @@ void CLASS::RetrieveAction()
         return;
     }
 
-    RetsHttpRequestPtr request(new RetsHttpRequest());
-    request->SetUrl(actionUrl);
-    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
+    RetsHttpRequest request;
+    request.SetUrl(actionUrl);
+    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(&request));
     AssertSuccessfulResponse(httpResponse, actionUrl);
     mAction = readIntoString(*httpResponse->GetInputStream());
 }
@@ -162,13 +162,13 @@ void CLASS::LoadMetadata(MetadataElement::Type type,
                          std::string level)
 {
     string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
-    RetsHttpRequestPtr request(new RetsHttpRequest());
-    request->SetUrl(getMetadataUrl);
-    request->SetMethod(mHttpMethod);
-    request->SetQueryParameter("Type", MetadataTypeToString(type));
-    request->SetQueryParameter("ID", level.empty() ? "0" : level);
-    request->SetQueryParameter("Format", "COMPACT");
-    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
+    RetsHttpRequest request;
+    request.SetUrl(getMetadataUrl);
+    request.SetMethod(mHttpMethod);
+    request.SetQueryParameter("Type", MetadataTypeToString(type));
+    request.SetQueryParameter("ID", level.empty() ? "0" : level);
+    request.SetQueryParameter("Format", "COMPACT");
+    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(&request));
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
     
     XmlMetadataParserPtr parser(new XmlMetadataParser(mLoaderCollector,
@@ -194,13 +194,13 @@ void CLASS::InitializeMetadata()
 void CLASS::RetrieveFullMetadata()
 {
     string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
-    RetsHttpRequestPtr request(new RetsHttpRequest());
-    request->SetUrl(getMetadataUrl);
-    request->SetMethod(mHttpMethod);
-    request->SetQueryParameter("Type", "METADATA-SYSTEM");
-    request->SetQueryParameter("ID", "*");
-    request->SetQueryParameter("Format", "COMPACT");
-    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
+    RetsHttpRequest request;
+    request.SetUrl(getMetadataUrl);
+    request.SetMethod(mHttpMethod);
+    request.SetQueryParameter("Type", "METADATA-SYSTEM");
+    request.SetQueryParameter("ID", "*");
+    request.SetQueryParameter("Format", "COMPACT");
+    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(&request));
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
     
     DefaultMetadataCollectorPtr collector(new DefaultMetadataCollector());
@@ -211,11 +211,11 @@ void CLASS::RetrieveFullMetadata()
     mMetadata.reset(new RetsMetadata(collector));
 }
 
-SearchRequestPtr CLASS::CreateSearchRequest(string searchType, 
-                                            string searchClass,
-                                            string query)
+SearchRequestAPtr CLASS::CreateSearchRequest(string searchType, 
+                                             string searchClass,
+                                             string query)
 {
-    SearchRequestPtr searchRequest(new SearchRequest(searchType, searchClass,
+    std::auto_ptr<SearchRequest> searchRequest(new SearchRequest(searchType, searchClass,
                                                      query));
     if (mDetectedRetsVersion == RETS_1_0)
     {
@@ -228,7 +228,7 @@ SearchRequestPtr CLASS::CreateSearchRequest(string searchType,
     return searchRequest;
 }
 
-SearchResultSetPtr CLASS::Search(SearchRequestPtr request)
+SearchResultSetPtr CLASS::Search(SearchRequest * request)
 {
     string searchUrl = mCapabilityUrls->GetSearchUrl();
     request->SetUrl(searchUrl);
@@ -255,18 +255,18 @@ GetObjectResponsePtr CLASS::GetObject(GetObjectRequestPtr request)
     return response;
 }
 
-LogoutResponsePtr CLASS::Logout()
+LogoutResponseAPtr CLASS::Logout()
 {
-    LogoutResponsePtr logoutResponse;
+    LogoutResponseAPtr logoutResponse;
     string logoutUrl = mCapabilityUrls->GetLogoutUrl();
     if (logoutUrl == "")
     {
         return logoutResponse;
     }
     
-    RetsHttpRequestPtr request(new RetsHttpRequest());
-    request->SetUrl(logoutUrl);
-    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(request));
+    RetsHttpRequest request;
+    request.SetUrl(logoutUrl);
+    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(&request));
     AssertSuccessfulResponse(httpResponse, logoutUrl);
 
     logoutResponse.reset(new LogoutResponse());

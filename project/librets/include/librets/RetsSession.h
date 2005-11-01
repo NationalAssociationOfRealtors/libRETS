@@ -72,9 +72,9 @@ class RetsSession : public MetadataLoader
      * @param searchClass RETS class name
      * @param query DMQL(2) query
      */
-    SearchRequestPtr CreateSearchRequest(std::string searchType, 
-                                         std::string searchClass,
-                                         std::string query);
+    SearchRequestAPtr CreateSearchRequest(std::string searchType, 
+                                          std::string searchClass,
+                                          std::string query);
     
     /**
      * Performs a search on the server.
@@ -83,7 +83,7 @@ class RetsSession : public MetadataLoader
      * @return Search result set
      * @throws RetsException if an error occurs.
      */
-    SearchResultSetPtr Search(SearchRequestPtr request);
+    SearchResultSetPtr Search(SearchRequest * request);
 
     /**
      * Returns the metadata for this server.  Only valid after logging
@@ -117,7 +117,7 @@ class RetsSession : public MetadataLoader
      * @return Logout information
      * @throws RetsException if an error occurs.
      */
-    LogoutResponsePtr Logout();
+    LogoutResponseAPtr Logout();
     
     /**
      * Sets the HTTP user agent.
