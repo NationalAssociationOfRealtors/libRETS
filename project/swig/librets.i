@@ -7,8 +7,10 @@ using std::vector;
 using std::string;
 %}
 
+#ifndef SWIGXML
 %include "std_string.i"
 %include "std_vector.i"
+#endif
 %include "exception.i"
 %include "auto_ptr_release.i"
 
