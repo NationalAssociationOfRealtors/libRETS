@@ -42,21 +42,21 @@ Options::Options()
          ->default_value("Schmoe", ""), "Password")
         ("user-agent,a", po::value<string>(&userAgent)
          ->default_value(RetsSession::DEFAULT_USER_AGENT, ""), "User agent")
-        ("http-get,g", po::value<bool>(&useHttpGet)
-         ->default_value(false, "")->implicit(), "Use HTTP GET")
+        ("http-get,g", "Use HTTP GET")
         ("http-log,l", po::value<string>(&mLogFile), "HTTP log file")
         ("config-file,c", po::value<string>(&mConfigFile),
          "Use configuration file")
         ("rets-version,V", po::value<string>(&mRetsVersionString)
          ->default_value("1.5", ""), "RETS Version")
-        ("full-metadata,F", po::value<bool>(&useFullMetadata)
-         ->default_value(false, "")->implicit(),
+        ("full-metadata,F", 
          "Use full metadata (instead of incremental)")
         ;
 }
 
 bool Options::ParseCommandLine(int argc, char * argv[])
 {
+    useHttpGet = false;
+    useFullMetadata = false;
     po::store(po::parse_command_line(argc, argv, descriptions), options);
     po::notify(options);
     if (options.count("config-file"))
@@ -64,6 +64,14 @@ bool Options::ParseCommandLine(int argc, char * argv[])
         ifstream ifs(mConfigFile.c_str());
         po::store(parse_config_file(ifs, descriptions), options);
         po::notify(options);
+    }
+    if (options.count("http-get"))
+    {
+        useHttpGet = true;
+    }
+    if  (options.count("full-metadata"))
+    {
+        useFullMetadata = true;
     }
     if (options.count("help"))
     {

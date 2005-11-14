@@ -83,6 +83,7 @@ class SearchResultSet : public virtual RetsObject
   private:
     typedef std::vector<StringVectorPtr> RowData;
     typedef std::map<std::string, StringVector::size_type> ColumnToIndexMap;
+    void FixCompactArray(StringVector & compactVector, std::string context);
 
     int mCount;
     StringVectorPtr mColumns;

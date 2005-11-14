@@ -18,7 +18,7 @@ int main(int argc, char * argv[])
             new SearchRequest("Property", "ResidentialProperty", 
                               "(ListPrice=300000-)"));
         
-        SearchResultSetPtr results = session->Search(searchRequest.get());
+        SearchResultSetAPtr results = session->Search(searchRequest.get());
         while (results->HasNext())
         {
             cout << "ListingID: " << results->GetString("ListingID") << endl;

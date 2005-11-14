@@ -46,6 +46,35 @@ SearchResultSet::~SearchResultSet()
 {
 }
 
+void SearchResultSet::FixCompactArray(StringVector & compactArray,
+                                      std::string context)
+{
+    if (compactArray.size() < 2)
+    {
+        ostringstream message;
+        message << "Unknown compact format: " << context << ": "<< Output(compactArray);
+        throw RetsException(message.str());
+    }
+
+    if (!compactArray.front().empty())
+    {
+        ostringstream message;
+        message << "First element should be empty: " << context << ": "
+                << Output(compactArray);
+        throw RetsException(message.str());
+    }
+    compactArray.erase(compactArray.begin());
+    
+    if (!compactArray.back().empty())
+    {
+        ostringstream message;
+        message << "Last element should be empty: " << context << ": "
+                << Output(compactArray);
+        throw RetsException(message.str());
+    }
+    compactArray.pop_back();
+}
+
 void SearchResultSet::Parse(istreamPtr inputStream)
 {
     ExpatXmlParserPtr mXmlParser(new ExpatXmlParser(inputStream));
@@ -90,18 +119,13 @@ void SearchResultSet::Parse(istreamPtr inputStream)
             string text = textEvent->GetText();
             StringVector columns;
             ba::split(columns, text, ba::is_any_of(delimiter));
-            if (columns.size() < 1)
-            {
-                ostringstream message;
-                message << "Unknown column format: " << Output(columns);
-                throw RetsException(message.str());
-            }
+            FixCompactArray(columns, "columns");
 
-            for (StringVector::size_type i = 1; i < columns.size(); i++)
+            for (StringVector::size_type i = 0; i < columns.size(); i++)
             {
                 mColumns->push_back(columns.at(i));
                 // Need to subtract 1, so it's zero-based
-                mColumnToIndex[columns.at(i)] = i - 1;
+                mColumnToIndex[columns.at(i)] = i;
             }
             mXmlParser->AssertNextIsEndEvent();
         }
@@ -112,15 +136,8 @@ void SearchResultSet::Parse(istreamPtr inputStream)
             string text = textEvent->GetText();
             StringVectorPtr data(new StringVector());
             ba::split(*data, text, ba::is_any_of(delimiter));
-            if (data->size() < 1)
-            {
-                ostringstream message;
-                message << "Unknown data format: " << Output(*data);
-                throw RetsException(message.str());
-            }
-
-            // Erase the first item, which *should* be empty
-            data->erase(data->begin());
+            FixCompactArray(*data, "data");
+            
             mRows.push_back(data);
             mXmlParser->AssertNextIsEndEvent();
         }

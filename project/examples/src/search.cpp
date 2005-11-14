@@ -36,7 +36,7 @@ int main(int argc, char * argv[])
         string searchClass;
         string select;
         string query;
-        bool standardNames;
+        bool standardNames = true;
         int limit;
 
         // GCC on FC3 for season does not like using
@@ -54,14 +54,17 @@ int main(int argc, char * argv[])
              ->default_value("ListingID,ListPrice,Beds,City"), "Search select")
             ("query,q", po::value<string>(&query)
              ->default_value("(ListPrice=300000-)"), "Search query")
-            ("standard-names,n", po::value<bool>(&standardNames)
-             ->default_value(true)->implicit(), "Use standard names")
+            ("system-names,S", "Use system names, instead of standard names")
             ("limit,L", po::value<int>(&limit)
              ->default_value(defaultLimit), "Set the limit")
             ;
         if (!options.ParseCommandLine(argc, argv))
         {
             return 0;
+        }
+        if (options.count("system-names"))
+        {
+            standardNames = false;
         }
 
         RetsSessionPtr session = options.RetsLogin();
@@ -77,7 +80,7 @@ int main(int argc, char * argv[])
         searchRequest->SetStandardNames(standardNames);
         searchRequest->SetLimit(limit);
         
-        SearchResultSetPtr results = session->Search(searchRequest.get());
+        SearchResultSetAPtr results = session->Search(searchRequest.get());
         StringVectorPtr columns = results->GetColumns();
         while (results->HasNext())
         {
