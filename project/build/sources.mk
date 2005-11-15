@@ -247,4 +247,5 @@ $(GET_OBJECT_EXE): $(GET_OBJECT_EXAMPLE_OBJECTS) $(LIBRETS_LIB)
 DISTCLEAN_FILES = \
 	config.status config.log config.cache \
 	project/librets/src/config.h \
-	project/build/Doxyfile
+	Makefile project/build/Doxyfile \
+	librets-config librets-config-inplace
