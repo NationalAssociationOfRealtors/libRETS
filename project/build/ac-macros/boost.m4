@@ -31,8 +31,8 @@ AC_DEFUN([MY_TEST_BOOST], [
     BOOST_CFLAGS="-I${BOOST_PREFIX}/include"
     BOOST_LIBS=
 
-		check="1_33_0"
-		check_int=103300
+    check="1_32_0"
+    check_int=103200
     AC_MSG_CHECKING([for boost >= $check])
 		
     ver=`perl -ane "print /\#define\s+BOOST_LIB_VERSION\s+\"(\S+)\"/" ${BOOST_PREFIX}/include/boost/version.hpp`

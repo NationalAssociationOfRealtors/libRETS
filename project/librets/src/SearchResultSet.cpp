@@ -52,7 +52,8 @@ void SearchResultSet::FixCompactArray(StringVector & compactArray,
     if (compactArray.size() < 2)
     {
         ostringstream message;
-        message << "Unknown compact format: " << context << ": "<< Output(compactArray);
+        message << "Unknown compact format: " << context << ": "
+		<< Output(compactArray);
         throw RetsException(message.str());
     }
 
@@ -65,6 +66,7 @@ void SearchResultSet::FixCompactArray(StringVector & compactArray,
     }
     compactArray.erase(compactArray.begin());
     
+#if BOOST_VERSION > 10330
     if (!compactArray.back().empty())
     {
         ostringstream message;
@@ -73,6 +75,7 @@ void SearchResultSet::FixCompactArray(StringVector & compactArray,
         throw RetsException(message.str());
     }
     compactArray.pop_back();
+#endif
 }
 
 void SearchResultSet::Parse(istreamPtr inputStream)
