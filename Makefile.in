@@ -23,7 +23,7 @@ CFLAGS=@CFLAGS@ @DEFS@
 LIBS=@LIBS@
 LDFLAGS=@LDFLAGS@
 
-USE_DEPENDS=@USE_DEPENDS@
+USE_DEPENDS_IN=@USE_DEPENDS@
 USE_EXAMPLES=@USE_EXAMPLES@
 
 TARGET=unix
@@ -52,15 +52,22 @@ DOXYGEN=doxygen
 
 # Put targets here so that zsh can complete on them, as zsh won't
 # follow the include directives.
-all: _all
-debug: _debug
-build: _build
-install: _install
+#
+# These use a separate make to only enable dependency checking for
+# targets that actually compile something.
+all:
+	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _all
+debug:
+	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _debug
+build:
+	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _build
+install:
+	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _install
+test:
+	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _test
 
 doc: _doc
 doc-api: _doc-api
-
-test: _test
 
 dist: _dist
 clean: _clean
