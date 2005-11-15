@@ -17,6 +17,7 @@
 
 #include <sstream>
 #include <boost/algorithm/string.hpp>
+#include <boost/version.hpp>
 #include <stdexcept>
 #include "librets/SearchResultSet.h"
 #include "librets/ExpatXmlParser.h"
@@ -53,7 +54,7 @@ void SearchResultSet::FixCompactArray(StringVector & compactArray,
     {
         ostringstream message;
         message << "Unknown compact format: " << context << ": "
-		<< Output(compactArray);
+		        << Output(compactArray);
         throw RetsException(message.str());
     }
 
@@ -66,7 +67,7 @@ void SearchResultSet::FixCompactArray(StringVector & compactArray,
     }
     compactArray.erase(compactArray.begin());
     
-#if BOOST_VERSION > 10330
+#if BOOST_VERSION >= 103300
     if (!compactArray.back().empty())
     {
         ostringstream message;
