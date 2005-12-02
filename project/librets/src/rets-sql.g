@@ -130,7 +130,7 @@ field_value_list
     ;
 
 numeric_operator
-    : (EQ | LESS | LTE | GREATER | GTE)
+    : (EQ | NEQ| LESS | LTE | GREATER | GTE)
     ;
 
 field_value
@@ -162,7 +162,8 @@ RPAREN  : ')' ;
 STAR    : '*' ;
 PLUS    : '+' ;
 EQ      : '='  ;
-GREATER: ">" ;
+NEQ     : "!=" ;
+GREATER : ">" ;
 GTE     : ">=" ;
 LESS    : "<"  ;
 LTE  options { paraphrase = "<="; }             : "<=" ;

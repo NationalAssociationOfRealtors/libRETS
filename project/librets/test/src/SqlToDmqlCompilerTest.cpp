@@ -42,6 +42,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testOrderByIgnored);
     CPPUNIT_TEST(testLessThan);
     CPPUNIT_TEST(testEquals);
+    CPPUNIT_TEST(testNotEquals);
     CPPUNIT_TEST(testStringEquals);
     CPPUNIT_TEST(testLessThanOrEquals);
     CPPUNIT_TEST(testGreaterThanOrEquals);
@@ -75,6 +76,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testOrderByIgnored();
     void testLessThan();
     void testEquals();
+    void testNotEquals();
     void testStringEquals();
     void testLessThanOrEquals();
     void testGreaterThanOrEquals();
@@ -311,6 +313,22 @@ void CLASS::testEquals()
     ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
 
     DmqlCriterionPtr criterion = eq("ListPrice", literal("300000"));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+}
+
+void CLASS::testNotEquals()
+{
+    DmqlQueryPtr query =
+        sqlToDmql("select * "
+                  "  from data:Property:RES "
+                  " where ListPrice != 300000;");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+
+    StringVector columns;
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+
+    DmqlCriterionPtr criterion = logicNot(eq("ListPrice", literal("300000")));
     ASSERT_EQUAL(*criterion, *query->GetCriterion());
 }
 

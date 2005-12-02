@@ -163,6 +163,7 @@ standard_element [std::string n] returns [DmqlCriterionPtr criterion]
     | #(LESS c=field_value)
         { criterion = logicAnd(lt(n, c), logicNot(eq(n, c))); }
     | #(EQ c=field_value)      { criterion = eq(n, c); }
+    | #(NEQ c=field_value)     { criterion = logicNot(eq(n, c)); }
     | #(LTE c=field_value)     { criterion = lt(n, c); }
     | #(GTE c=field_value)     { criterion = gt(n, c); }
     ;
