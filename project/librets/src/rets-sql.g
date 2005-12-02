@@ -21,7 +21,7 @@ header "post_include_hpp"
 
 options
 {
-	language="Cpp";
+    language="Cpp";
     namespace = "librets";
     namespaceStd = "std";
     namespaceAntlr = "antlr";
@@ -123,6 +123,8 @@ column_condition [RefRetsAST c]
         { #column_condition = #([QUERY_ELEMENT, "QE"], #c, (#o, #v)); }
     |! IN fvl:field_value_list
         { #column_condition = #([IN], #c, (#fvl)); }
+    |! NOT IN nfvl:field_value_list
+        { #column_condition = #([NOT], #([IN], #c, (#nfvl))); }
     ;
 
 field_value_list
@@ -130,7 +132,7 @@ field_value_list
     ;
 
 numeric_operator
-    : (EQ | NEQ| LESS | LTE | GREATER | GTE)
+    : (EQ | NEQ | LESS | LTE | GREATER | GTE)
     ;
 
 field_value

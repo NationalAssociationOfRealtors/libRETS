@@ -51,6 +51,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testComments);
     CPPUNIT_TEST(testOr);
     CPPUNIT_TEST(testIn);
+    CPPUNIT_TEST(testNotIn);
     CPPUNIT_TEST(testInWithSingleValue);
     CPPUNIT_TEST(testLookupIn);
     CPPUNIT_TEST(testAnd);
@@ -85,6 +86,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testComments();
     void testOr();
     void testIn();
+    void testNotIn();
     void testInWithSingleValue();
     void testLookupIn();
     void testAnd();
@@ -406,6 +408,26 @@ void CLASS::testIn()
         logicOr(eq("ListingID", literal("LN1")),
                 logicOr(eq("ListingID", literal("LN2")),
                         eq("ListingID", literal("LN3"))));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+}
+
+void CLASS::testNotIn()
+{
+    DmqlQueryPtr query =
+    sqlToDmql("select * "
+              "  from data:Property:RES "
+              " where ListingID NOT IN ('LN1', 'LN2', 'LN3');");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+    
+    StringVector columns;
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+
+    DmqlCriterionPtr criterion =
+        logicNot(logicOr(eq("ListingID", literal("LN1")),
+                logicOr(eq("ListingID", literal("LN2")),
+                        eq("ListingID", literal("LN3")))));
+    
     ASSERT_EQUAL(*criterion, *query->GetCriterion());
 }
 
