@@ -43,7 +43,7 @@ tokens
     SELECT = "select"; FROM = "from"; WHERE = "where";
     OR = "or"; AND = "and"; NOT = "not"; ORDER = "order"; BY = "by"; AS = "as";
     IN = "in";
-    COLUMNS; COLUMN; QUERY_ELEMENT; TABLE;
+    COLUMNS; COLUMN; QUERY_ELEMENT; TABLE; NEQ;
 }
 
 {
@@ -132,7 +132,9 @@ field_value_list
     ;
 
 numeric_operator
-    : (EQ | NEQ | LESS | LTE | GREATER | GTE)
+    : (EQ | LESS | LTE | GREATER | GTE
+        | NEQ1 { #numeric_operator = #([NEQ]); }
+        | NEQ2 { #numeric_operator = #([NEQ]); })
     ;
 
 field_value
@@ -164,7 +166,8 @@ RPAREN  : ')' ;
 STAR    : '*' ;
 PLUS    : '+' ;
 EQ      : '='  ;
-NEQ     : "!=" ;
+NEQ1    : "!=" ;
+NEQ2    : "<>";
 GREATER : ">" ;
 GTE     : ">=" ;
 LESS    : "<"  ;
