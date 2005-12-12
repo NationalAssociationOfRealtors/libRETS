@@ -58,6 +58,17 @@ class SearchRequest : public RetsHttpRequest
      * @param limit The maximum number of records to return
      */
     void SetLimit(int limit);
+	
+	/**
+	 * This indicatates that no offset should be sent to the server.
+	 */
+	static const int OFFSET_NONE = 0;
+	
+	/**
+	 * Sets the offset to be used for record retrieval.  Offsets are 1-based,
+	 * thus an offset of 1 means to start with the first record.
+	 */
+	void SetOffset(int offset);
 
     /**
      * Sets the select string to choose which fields are returned.
@@ -98,6 +109,7 @@ class SearchRequest : public RetsHttpRequest
     static const char * COUNT_PARAMETER;
     static const char * SELECT_PARAMETER;
     static const char * LIMIT_PARAMETER;
+	static const char * OFFSET_PARAMETER;
 };
 
 };

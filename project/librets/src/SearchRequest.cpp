@@ -28,6 +28,7 @@ const char * SearchRequest::QUERY_PARAMETER = "Query";
 const char * SearchRequest::SELECT_PARAMETER = "Select";
 const char * SearchRequest::COUNT_PARAMETER = "Count";
 const char * SearchRequest::LIMIT_PARAMETER = "Limit";
+const char * SearchRequest::OFFSET_PARAMETER = "Offset";
 
 SearchRequest::SearchRequest(string searchType, string searchClass,
                              string query)
@@ -40,6 +41,7 @@ SearchRequest::SearchRequest(string searchType, string searchClass,
     SetQueryParameter(QUERY_PARAMETER, query);
     SetCountType(RECORD_COUNT_AND_RESULTS);
     SetLimit(LIMIT_DEFAULT);
+	SetOffset(OFFSET_NONE);
 }
 
 void SearchRequest::SetLimit(int limit)
@@ -56,6 +58,18 @@ void SearchRequest::SetLimit(int limit)
     {
         SetQueryParameter(LIMIT_PARAMETER, limit);
     }
+}
+
+void SearchRequest::SetOffset(int offset)
+{
+	if (offset == OFFSET_NONE)
+	{
+		SetQueryParameter(OFFSET_PARAMETER, "");
+	}
+	else
+	{
+		SetQueryParameter(OFFSET_PARAMETER, offset);
+	}
 }
 
 void SearchRequest::SetSelect(string select)
