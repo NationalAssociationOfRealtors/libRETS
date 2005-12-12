@@ -43,6 +43,22 @@ class SearchRequest
     void SetStandardNames(bool standardNames);
 
     void SetSelect(std::string select);
+    
+    static const int LIMIT_DEFAULT = -1;
+    static const int LIMIT_NONE = 0;
+    void SetLimit(int limit);
+    
+    static const int OFFSET_NONE = 0;
+    void SetOffset(int offset);
+    
+    enum CountType
+    {
+        NO_RECORD_COUNT,
+        RECORD_COUNT_AND_RESULTS,
+        RECORD_COUNT_ONLY
+    };
+
+    void SetCountType(CountType countType);
 };
 typedef std::auto_ptr<SearchRequest> SearchRequestAPtr;
 

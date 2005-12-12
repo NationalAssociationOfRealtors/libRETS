@@ -122,6 +122,18 @@ sub new {
 
 *SetStandardNames = *libretsc::SearchRequest_SetStandardNames;
 *SetSelect = *libretsc::SearchRequest_SetSelect;
+*LIMIT_DEFAULT = *libretsc::SearchRequest_LIMIT_DEFAULT;
+*LIMIT_DEFAULT = *libretsc::SearchRequest_LIMIT_DEFAULT;
+*LIMIT_NONE = *libretsc::SearchRequest_LIMIT_NONE;
+*LIMIT_NONE = *libretsc::SearchRequest_LIMIT_NONE;
+*SetLimit = *libretsc::SearchRequest_SetLimit;
+*OFFSET_NONE = *libretsc::SearchRequest_OFFSET_NONE;
+*OFFSET_NONE = *libretsc::SearchRequest_OFFSET_NONE;
+*SetOffset = *libretsc::SearchRequest_SetOffset;
+*NO_RECORD_COUNT = *libretsc::SearchRequest_NO_RECORD_COUNT;
+*RECORD_COUNT_AND_RESULTS = *libretsc::SearchRequest_RECORD_COUNT_AND_RESULTS;
+*RECORD_COUNT_ONLY = *libretsc::SearchRequest_RECORD_COUNT_ONLY;
+*SetCountType = *libretsc::SearchRequest_SetCountType;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});

@@ -13,7 +13,13 @@ public class Search
             "Property", "ResidentialProperty", "(ListPrice=300000-)");
 
         searchRequest.SetSelect("ListingID,ListPrice,Beds,City");
+        searchRequest.SetLimit(SearchRequest.LIMIT_DEFAULT);
+        searchRequest.SetOffset(SearchRequest.OFFSET_NONE);
+        searchRequest.SetCountType(SearchRequest.CountType.RECORD_COUNT_AND_RESULTS);
         SearchResultSet results = session.Search(searchRequest);
+        
+        Console.WriteLine("Record count: " + results.GetCount());
+        Console.WriteLine();
         StringVector columns = results.GetColumns();
         while (results.HasNext())
         {

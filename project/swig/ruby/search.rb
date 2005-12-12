@@ -17,9 +17,13 @@ puts "Action: " + rets.GetAction()
 request = rets.CreateSearchRequest("Property", "ResidentialProperty",
                                    "(ListPrice=300000-)")
 request.SetSelect("ListingID,ListPrice,Beds,City")                                     
+request.SetLimit(SearchRequest::LIMIT_DEFAULT)
+request.SetOffset(SearchRequest::OFFSET_NONE)
+request.SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
 results = rets.Search(request)
 
-#columns = results.GetColumns
+puts "Record count: " + results.GetCount.to_s
+puts
 columns = results.GetColumns
 while results.HasNext()
   columns.each do |column|

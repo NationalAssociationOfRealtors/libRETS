@@ -17,9 +17,13 @@ print "Action: " . $rets->GetAction() . "\n";
 
 my $request = $rets->CreateSearchRequest("Property", "ResidentialProperty",
 					 "(ListPrice=300000-)");
-
 $request->SetSelect("ListingID,ListPrice,Beds,City");
+$request->SetLimit($librets::SearchRequest::LIMIT_DEFAULT);
+$request->SetOffset($librets::SearchRequest::OFFSET_NONE);
+$request->SetCountType($librets::SearchRequest::RECORD_COUNT_AND_RESULTS);
 my $results = $rets->Search($request);
+
+print "Record count: " . $results->GetCount() . "\n\n";
 my $columns = $results->GetColumns();
 while ($results->HasNext())
 {
