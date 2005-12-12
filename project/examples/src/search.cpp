@@ -38,11 +38,17 @@ int main(int argc, char * argv[])
         string query;
         bool standardNames = true;
         int limit;
+        int offset;
+        SearchRequest::CountType count;
+        string countString;
+        bool printCount;
 
         // GCC on FC3 for season does not like using
         // SearchRequest::LIMIT_DEFAULT in the default_value calls below.
         // This is a really crappy work around until gcc unhorks itself.
         int defaultLimit = SearchRequest::LIMIT_DEFAULT;
+        
+        int defaultOffset = SearchRequest::OFFSET_NONE;
         
         Options options;
         options.descriptions.add_options()
@@ -57,6 +63,11 @@ int main(int argc, char * argv[])
             ("system-names,S", "Use system names, instead of standard names")
             ("limit,L", po::value<int>(&limit)
              ->default_value(defaultLimit), "Set the limit")
+            ("offset,O", po::value<int>(&offset)
+             ->default_value(defaultOffset), "Set the offset")
+            ("count,n", po::value<string>(&countString)
+             ->default_value("yes"),
+             "Set the count type: no, yes or count-only)")
             ;
         if (!options.ParseCommandLine(argc, argv))
         {
@@ -65,6 +76,27 @@ int main(int argc, char * argv[])
         if (options.count("system-names"))
         {
             standardNames = false;
+        }
+        
+        if (countString == "yes")
+        {
+            count = SearchRequest::RECORD_COUNT_AND_RESULTS;
+            printCount = true;
+        }
+        else if (countString == "no")
+        {
+            count = SearchRequest::NO_RECORD_COUNT;
+            printCount = false;
+        }
+        else if (countString == "count-only")
+        {
+            count = SearchRequest::RECORD_COUNT_ONLY;
+            printCount = true;
+        }
+        else
+        {
+            count = SearchRequest::RECORD_COUNT_AND_RESULTS;
+            printCount = true;
         }
 
         RetsSessionPtr session = options.RetsLogin();
@@ -79,8 +111,14 @@ int main(int argc, char * argv[])
         searchRequest->SetSelect(select);
         searchRequest->SetStandardNames(standardNames);
         searchRequest->SetLimit(limit);
+        searchRequest->SetOffset(offset);
+        searchRequest->SetCountType(count);
         
         SearchResultSetAPtr results = session->Search(searchRequest.get());
+        if (printCount)
+        {
+            cout << "Matching record count: " << results->GetCount() << endl;
+        }
         StringVectorPtr columns = results->GetColumns();
         while (results->HasNext())
         {
