@@ -16,11 +16,11 @@ puts "Action: " + rets.GetAction()
 
 request = rets.CreateSearchRequest("Property", "ResidentialProperty",
                                    "(ListPrice=300000-)")
-                                     
+request.SetSelect("ListingID,ListPrice,Beds,City")                                     
 results = rets.Search(request)
 
 #columns = results.GetColumns
-columns = %w{ListingID ListPrice Beds City}
+columns = results.GetColumns
 while results.HasNext()
   columns.each do |column|
     puts column + ": " + results.GetString(column)

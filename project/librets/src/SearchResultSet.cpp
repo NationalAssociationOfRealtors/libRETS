@@ -180,9 +180,9 @@ int SearchResultSet::GetCount()
     return mCount;
 }
 
-StringVectorPtr SearchResultSet::GetColumns()
+const StringVector SearchResultSet::GetColumns()
 {
-    return mColumns;
+    return *mColumns;
 }
 
 string SearchResultSet::GetString(int columnIndex)

@@ -16,7 +16,7 @@ PYTHON_WRAP = python/librets_wrap.cpp
 
 SWIG_FILES = librets.i auto_ptr_release.i
 
-all: csharp ruby perl
+all: csharp ruby perl python
 
 csharp: $(CSHARP_WRAP)
 	$(MAKE) -C csharp
@@ -63,7 +63,7 @@ clean-python:
 	$(MAKE) -C python distclean
 	$(RM) $(PYTHON_WRAP)
 
-clean: clean-csharp clean-ruby clean-perl
+clean: clean-csharp clean-ruby clean-perl clean-python
 
 .PHONY: csharp ruby perl python \
 	clean clean-csharp clean-ruby clean-perl clean-python

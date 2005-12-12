@@ -5,6 +5,7 @@ GENERATED_SRC = \
 	RetsSession.cs \
 	SearchRequest.cs \
 	SearchResultSet.cs \
+	StringVector.cs \
 	librets.cs \
 	libretsPINVOKE.cs \
 

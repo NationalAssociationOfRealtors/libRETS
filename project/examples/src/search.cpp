@@ -119,11 +119,11 @@ int main(int argc, char * argv[])
         {
             cout << "Matching record count: " << results->GetCount() << endl;
         }
-        StringVectorPtr columns = results->GetColumns();
+        StringVector columns = results->GetColumns();
         while (results->HasNext())
         {
             StringVector::iterator i;
-            for (i = columns->begin(); i != columns->end(); i++)
+            for (i = columns.begin(); i != columns.end(); i++)
             {
                 string column = *i;
                 cout << setw(15) << column << ": "

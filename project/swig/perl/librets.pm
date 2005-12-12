@@ -46,6 +46,49 @@ sub this {
 package librets;
 
 
+############# Class : librets::StringVector ##############
+
+package librets::StringVector;
+@ISA = qw( librets );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = libretsc::new_StringVector(@_);
+    bless $self, $pkg if defined($self);
+}
+
+*size = *libretsc::StringVector_size;
+*empty = *libretsc::StringVector_empty;
+*clear = *libretsc::StringVector_clear;
+*push = *libretsc::StringVector_push;
+*pop = *libretsc::StringVector_pop;
+*get = *libretsc::StringVector_get;
+*set = *libretsc::StringVector_set;
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        libretsc::delete_StringVector($self);
+        delete $OWNER{$self};
+    }
+}
+
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
 ############# Class : librets::RetsException ##############
 
 package librets::RetsException;
@@ -78,6 +121,7 @@ sub new {
 }
 
 *SetStandardNames = *libretsc::SearchRequest_SetStandardNames;
+*SetSelect = *libretsc::SearchRequest_SetSelect;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -110,6 +154,7 @@ package librets::SearchResultSet;
 %ITERATORS = ();
 *HasNext = *libretsc::SearchResultSet_HasNext;
 *GetCount = *libretsc::SearchResultSet_GetCount;
+*GetColumns = *libretsc::SearchResultSet_GetColumns;
 *GetString = *libretsc::SearchResultSet_GetString;
 sub new {
     my $pkg = shift;

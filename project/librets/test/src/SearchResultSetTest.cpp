@@ -55,12 +55,12 @@ void CLASS::testValidResponse()
     istreamPtr inputStream = getResource("search-response.xml");
     resultSet.Parse(inputStream);
     ASSERT_EQUAL(2, resultSet.GetCount());
-    StringVectorPtr columns = resultSet.GetColumns();
-    ASSERT_EQUAL(StringVector::size_type(4), columns->size());
-    ASSERT_STRING_EQUAL("ListingID", columns->at(0));
-    ASSERT_STRING_EQUAL("ListPrice", columns->at(1));
-    ASSERT_STRING_EQUAL("City", columns->at(2));
-    ASSERT_STRING_EQUAL("ListDate", columns->at(3));
+    StringVector columns = resultSet.GetColumns();
+    ASSERT_EQUAL(StringVector::size_type(4), columns.size());
+    ASSERT_STRING_EQUAL("ListingID", columns.at(0));
+    ASSERT_STRING_EQUAL("ListPrice", columns.at(1));
+    ASSERT_STRING_EQUAL("City", columns.at(2));
+    ASSERT_STRING_EQUAL("ListDate", columns.at(3));
 
     CPPUNIT_ASSERT(resultSet.HasNext());
     ASSERT_STRING_EQUAL("LN000005", resultSet.GetString("ListingID"));
@@ -90,8 +90,8 @@ void CLASS::testNoRecordsFound()
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response-no-records.xml");
     resultSet.Parse(inputStream);
-    StringVectorPtr columns = resultSet.GetColumns();
-    ASSERT_EQUAL(StringVector::size_type(0), columns->size());
+    StringVector columns = resultSet.GetColumns();
+    ASSERT_EQUAL(StringVector::size_type(0), columns.size());
     CPPUNIT_ASSERT(!resultSet.HasNext());
 }
 
@@ -119,9 +119,9 @@ void CLASS::testSingleColumn()
     istreamPtr inputStream = getResource("search-response-single-column.xml");
     resultSet.Parse(inputStream);
     ASSERT_EQUAL(2, resultSet.GetCount());
-    StringVectorPtr columns = resultSet.GetColumns();
-    ASSERT_EQUAL(StringVector::size_type(1), columns->size());
-    ASSERT_STRING_EQUAL("ListingID", columns->at(0));
+    StringVector columns = resultSet.GetColumns();
+    ASSERT_EQUAL(StringVector::size_type(1), columns.size());
+    ASSERT_STRING_EQUAL("ListingID", columns.at(0));
 
     CPPUNIT_ASSERT(resultSet.HasNext());
     ASSERT_STRING_EQUAL("LN000005", resultSet.GetString("ListingID"));
@@ -173,9 +173,9 @@ void CLASS::testPipeDelimiter()
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response-pipe.xml");
     resultSet.Parse(inputStream);
-    StringVectorPtr columns = resultSet.GetColumns();
-    ASSERT_EQUAL(StringVector::size_type(1), columns->size());
-    ASSERT_STRING_EQUAL("CITY", columns->at(0));
+    StringVector columns = resultSet.GetColumns();
+    ASSERT_EQUAL(StringVector::size_type(1), columns.size());
+    ASSERT_STRING_EQUAL("CITY", columns.at(0));
     
     CPPUNIT_ASSERT(resultSet.HasNext());
     ASSERT_STRING_EQUAL("AURORA", resultSet.GetString("CITY"));

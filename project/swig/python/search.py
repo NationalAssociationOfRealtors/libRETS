@@ -10,12 +10,13 @@ try:
   request = rets.CreateSearchRequest("Property", "ResidentialProperty",
     "(ListPrice=300000-)")
     
+  request.SetSelect("ListingID,ListPrice,Beds,City")
   results = rets.Search(request)
+  
+  columns = results.GetColumns()
   while results.HasNext():
-    print "ListingID: " + results.GetString("ListingID")
-    print "ListPrice: " + results.GetString("ListPrice")
-    print "Beds: " + results.GetString("Beds")
-    print "City: " + results.GetString("City")
+    for column in columns:
+      print column + ": " + results.GetString(column)
     print
   
   logout = rets.Logout();

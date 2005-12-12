@@ -18,13 +18,14 @@ print "Action: " . $rets->GetAction() . "\n";
 my $request = $rets->CreateSearchRequest("Property", "ResidentialProperty",
 					 "(ListPrice=300000-)");
 
+$request->SetSelect("ListingID,ListPrice,Beds,City");
 my $results = $rets->Search($request);
-my @columns = qw{ListingID ListPrice Beds City};
+my $columns = $results->GetColumns();
 while ($results->HasNext())
 {
-    foreach my $column (@columns)
+    foreach my $column (@$columns)
     {
-	print $column . ": " . $results->GetString($column) . "\n";
+	    print $column . ": " . $results->GetString($column) . "\n";
     }
     print "\n";
 }

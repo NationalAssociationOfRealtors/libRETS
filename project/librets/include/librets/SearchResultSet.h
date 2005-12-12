@@ -62,7 +62,7 @@ class SearchResultSet : public virtual RetsObject
      *
      * @return The column names
      */
-    StringVectorPtr GetColumns();
+    const StringVector GetColumns();
 
     /**
      * Returns the value of a column as a string.

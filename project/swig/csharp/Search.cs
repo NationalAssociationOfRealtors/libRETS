@@ -12,16 +12,15 @@ public class Search
         SearchRequest searchRequest = session.CreateSearchRequest(
             "Property", "ResidentialProperty", "(ListPrice=300000-)");
 
+        searchRequest.SetSelect("ListingID,ListPrice,Beds,City");
         SearchResultSet results = session.Search(searchRequest);
+        StringVector columns = results.GetColumns();
         while (results.HasNext())
         {
-            Console.WriteLine("ListingID: " +
-                              results.GetString("ListingID"));
-            Console.WriteLine("ListPrice: " +
-                              results.GetString("ListPrice"));
-            Console.WriteLine("Beds: " +
-                              results.GetString("Beds"));
-            Console.WriteLine("City: " + results.GetString("City"));
+            foreach (string column in columns)
+            {
+                Console.WriteLine(column + ": " + results.GetString(column));
+            }
             Console.WriteLine();
         }
 

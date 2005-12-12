@@ -14,13 +14,7 @@ using std::string;
 %include "exception.i"
 %include "auto_ptr_release.i"
 
-%typemap(ruby, out) vector<string> {
-  VALUE arr = rb_ary_new2($1.size()); 
-  vector<string>::iterator i = $1.begin(), iend = $1.end();
-  for ( ; i!=iend; i++ )
-    rb_ary_push(arr, rb_str_new2(i->c_str()));
-  $result = arr;
-}
+%template(StringVector) std::vector<std::string>;
 
 %exception {
     try {
@@ -47,6 +41,8 @@ class SearchRequest
                   std::string query);
     
     void SetStandardNames(bool standardNames);
+
+    void SetSelect(std::string select);
 };
 typedef std::auto_ptr<SearchRequest> SearchRequestAPtr;
 
@@ -57,7 +53,7 @@ class SearchResultSet
     
     int GetCount();
     
-    // const vector<string> GetColumns();
+    const std::vector<std::string> GetColumns();
     
     std::string GetString(int columnIndex);
     
