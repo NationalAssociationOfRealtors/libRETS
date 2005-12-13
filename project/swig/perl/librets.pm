@@ -254,6 +254,11 @@ sub new {
 *CreateSearchRequest = *libretsc::RetsSession_CreateSearchRequest;
 *Search = *libretsc::RetsSession_Search;
 *Logout = *libretsc::RetsSession_Logout;
+*SetUserAgent = *libretsc::RetsSession_SetUserAgent;
+*UseHttpGet = *libretsc::RetsSession_UseHttpGet;
+*SetRetsVersion = *libretsc::RetsSession_SetRetsVersion;
+*GetRetsVersion = *libretsc::RetsSession_GetRetsVersion;
+*GetDetectedRetsVersion = *libretsc::RetsSession_GetDetectedRetsVersion;
 sub DESTROY {
     return unless $_[0]->isa('HASH');
     my $self = tied(%{$_[0]});
@@ -282,4 +287,6 @@ sub ACQUIRE {
 
 package librets;
 
+*RETS_1_0 = *libretsc::RETS_1_0;
+*RETS_1_5 = *libretsc::RETS_1_5;
 1;

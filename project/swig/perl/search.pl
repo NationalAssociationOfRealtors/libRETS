@@ -14,6 +14,9 @@ if (!$rets->Login("Joe", "Schmoe"))
 }
 
 print "Action: " . $rets->GetAction() . "\n";
+my $version = "1.0";
+$version = "1.5" if ($rets->GetDetectedRetsVersion() == $librets::RETS_1_5);
+print "RETS Version: $version\n";
 
 my $request = $rets->CreateSearchRequest("Property", "ResidentialProperty",
 					 "(ListPrice=300000-)");

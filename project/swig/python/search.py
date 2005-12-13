@@ -5,8 +5,13 @@ import librets
 try:
   rets = librets.RetsSession("http://demo.crt.realtors.org:6103/rets/login")
   rets.Login("Joe", "Schmoe")
+
   print "Action: ", rets.GetAction()
-  
+  version = "1.0"
+  if rets.GetDetectedRetsVersion() == librets.RETS_1_5:
+    version = "1.5"
+  print "RETS Version: " + version
+
   request = rets.CreateSearchRequest("Property", "ResidentialProperty",
     "(ListPrice=300000-)")
     

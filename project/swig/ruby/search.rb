@@ -6,13 +6,16 @@ require 'pp'
 include Librets
 
 rets = RetsSession.new("http://demo.crt.realtors.org:6103/rets/login")
-  
+
 if !rets.Login("Joe", "Schmoe")
   puts "Invalid login"
   exit 1
 end
 
 puts "Action: " + rets.GetAction()
+version = "1.0"
+version = "1.5" if (rets.GetDetectedRetsVersion() == RETS_1_5)
+puts "RETS Version: " + version
 
 request = rets.CreateSearchRequest("Property", "ResidentialProperty",
                                    "(ListPrice=300000-)")

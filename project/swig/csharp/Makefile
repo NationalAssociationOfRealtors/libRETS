@@ -3,6 +3,7 @@ GENERATED_SRC = \
 	LogoutResponse.cs \
 	RetsException.cs \
 	RetsSession.cs \
+	RetsVersion.cs \
 	SearchRequest.cs \
 	SearchResultSet.cs \
 	StringVector.cs \

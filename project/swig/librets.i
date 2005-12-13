@@ -91,6 +91,12 @@ SWIG_AUTO_PTR_RELEASE(SearchRequest);
 SWIG_AUTO_PTR_RELEASE(SearchResultSet);
 SWIG_AUTO_PTR_RELEASE(LogoutResponse);
 
+enum RetsVersion
+{
+    RETS_1_0,
+    RETS_1_5
+};
+
 class RetsSession
 {
   public:
@@ -106,6 +112,16 @@ class RetsSession
 
     SearchResultSetAPtr Search(SearchRequest * request);
     LogoutResponseAPtr Logout();
+    
+    void SetUserAgent(std::string userAgent);
+
+    void UseHttpGet(bool useHttpGet);
+    
+    void SetRetsVersion(RetsVersion retsVersion);
+    
+    RetsVersion GetRetsVersion() const;
+    
+    RetsVersion GetDetectedRetsVersion() const;
 };
 
 

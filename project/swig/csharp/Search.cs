@@ -9,6 +9,11 @@ public class Search
             "http://demo.crt.realtors.org:6103/rets/login");
         session.Login("Joe", "Schmoe");
 
+        Console.WriteLine("Action: " + session.GetAction());
+        RetsVersion version = session.GetDetectedRetsVersion();
+        Console.WriteLine("RETS Version: " +
+            ((version == RetsVersion.RETS_1_5) ? "1.5" : "1.0"));
+
         SearchRequest searchRequest = session.CreateSearchRequest(
             "Property", "ResidentialProperty", "(ListPrice=300000-)");
 
