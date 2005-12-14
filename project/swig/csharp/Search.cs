@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using librets;
 
 public class Search
@@ -25,7 +26,7 @@ public class Search
         
         Console.WriteLine("Record count: " + results.GetCount());
         Console.WriteLine();
-        StringVector columns = results.GetColumns();
+        IEnumerable columns = results.GetColumns();
         while (results.HasNext())
         {
             foreach (string column in columns)

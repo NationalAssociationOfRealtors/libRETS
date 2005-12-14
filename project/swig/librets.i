@@ -91,6 +91,48 @@ SWIG_AUTO_PTR_RELEASE(SearchRequest);
 SWIG_AUTO_PTR_RELEASE(SearchResultSet);
 SWIG_AUTO_PTR_RELEASE(LogoutResponse);
 
+/****************************************************************************
+ * Metadata
+ ***************************************************************************/
+ 
+class MetadataSystem
+{
+  public:
+    std::string GetSystemID() const;  
+    
+    std::string GetSystemDescription() const;
+    
+    std::string GetComments() const;
+};
+
+class MetadataResource
+{
+  public:
+    std::string GetId() const;
+    
+    std::string GetResourceID() const;
+    
+    std::string GetStandardName() const;
+};
+
+// typedef std::vector<MetadataResource *> MetadataResourceList;
+// %template(MetadataResourceList) std::vector<MetadataResource *>;
+
+%nodefault;
+
+class RetsMetadata
+{
+  public:
+    MetadataSystem * GetSystem() const;
+//    std::vector<MetadataResource *> GetAllResources() const;
+};
+
+%default;
+ 
+/****************************************************************************
+ * RetsSession
+ ***************************************************************************/
+
 enum RetsVersion
 {
     RETS_1_0,
@@ -111,7 +153,15 @@ class RetsSession
                                           std::string query);
 
     SearchResultSetAPtr Search(SearchRequest * request);
+    
     LogoutResponseAPtr Logout();
+    
+    RetsMetadata * GetMetadata();
+    
+    bool IsIncrementalMetadata() const;
+    
+    void SetIncrementalMetadata(bool incrementalMetadata);
+
     
     void SetUserAgent(std::string userAgent);
 

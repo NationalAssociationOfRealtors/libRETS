@@ -2,7 +2,7 @@ LIBRETS_EXT = _librets.so
 
 all: _librets.so
 
-_librets.so:
+_librets.so: librets_wrap.cpp
 	python setup.py build --build-lib=.
 
 clean:

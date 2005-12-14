@@ -7,6 +7,9 @@ GENERATED_SRC = \
 	SearchRequest.cs \
 	SearchResultSet.cs \
 	StringVector.cs \
+	RetsMetadata.cs \
+	MetadataSystem.cs \
+	MetadataResource.cs \
 	librets.cs \
 	libretsPINVOKE.cs \
 
