@@ -1,17 +1,5 @@
 
-GENERATED_SRC = \
-	LogoutResponse.cs \
-	RetsException.cs \
-	RetsSession.cs \
-	RetsVersion.cs \
-	SearchRequest.cs \
-	SearchResultSet.cs \
-	StringVector.cs \
-	RetsMetadata.cs \
-	MetadataSystem.cs \
-	MetadataResource.cs \
-	librets.cs \
-	libretsPINVOKE.cs \
+GENERATED_SRC = $(wildcard lib/*.cs)
 
 WRAP = 	librets_wrap.cpp
 

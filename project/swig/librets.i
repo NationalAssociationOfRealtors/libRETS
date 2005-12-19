@@ -14,7 +14,6 @@ using std::string;
 #ifndef SWIGXML
 %include "std_string.i"
 %include "std_vector.i"
-%include "cstring.i"
 #endif
 %include "exception.i"
 %include "auto_ptr_release.i"
@@ -200,7 +199,7 @@ class RetsMetadata
 {
   public:
     MetadataSystem * GetSystem() const;
-//    std::vector<MetadataResource *> GetAllResources() const;
+    // std::vector<MetadataResource *> GetAllResources() const;
 };
 
 %default;

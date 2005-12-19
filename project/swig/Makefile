@@ -1,6 +1,8 @@
 
 SWIG = swig
+
 CSHARP_WRAP = csharp/librets_wrap.cpp
+CSHARP_LIB_DIR = csharp/lib
 
 RUBY = ruby
 RUBY_MAKEFILE = ruby/Makefile
@@ -18,11 +20,15 @@ SWIG_FILES = librets.i auto_ptr_release.i
 
 all: csharp ruby perl python
 
+SWIG_CSHARP = $(SWIG) -c++ -csharp -namespace librets -o $(CSHARP_WRAP) \
+	-outdir $(CSHARP_LIB_DIR) librets.i
+
 csharp: $(CSHARP_WRAP)
 	$(MAKE) -C csharp
 
 $(CSHARP_WRAP): $(SWIG_FILES)
-	$(SWIG) -c++ -csharp -namespace librets -o $(CSHARP_WRAP) librets.i
+	$(RM) $(CSHARP_LIB_DIR)/*.cs
+	$(SWIG_CSHARP)
 
 ruby: $(RUBY_WRAP) $(RUBY_MAKEFILE)
 	$(MAKE) -C ruby
