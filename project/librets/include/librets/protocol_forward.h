@@ -46,14 +46,17 @@ typedef std::auto_ptr<SearchResultSet> SearchResultSetAPtr;
 class GetObjectRequest;
 /** Smart pointer to GetObjectRequest. */
 typedef boost::shared_ptr<GetObjectRequest> GetObjectRequestPtr;
+typedef std::auto_ptr<GetObjectRequest> GetObjectRequestAPtr;
 
 class ObjectDescriptor;
 /** Smart pointer to ObjectDescriptor. */
 typedef boost::shared_ptr<ObjectDescriptor> ObjectDescriptorPtr;
+typedef std::auto_ptr<ObjectDescriptor> ObjectDescriptorAPtr;
 
 class GetObjectResponse;
 /** Smart pointer to GetObjectResponse. */
 typedef boost::shared_ptr<GetObjectResponse> GetObjectResponsePtr;
+typedef std::auto_ptr<GetObjectResponse> GetObjectResponseAPtr;
 
 class LogoutResponse;
 /** Smart pointer to LogoutResponse. */

@@ -109,7 +109,7 @@ class RetsSession : public MetadataLoader
      */
     void SetIncrementalMetadata(bool incrementalMetadata);
     
-    GetObjectResponsePtr GetObject(GetObjectRequestPtr request);
+    GetObjectResponseAPtr GetObject(GetObjectRequest * request);
 
     /**
      * Logs out of the server.

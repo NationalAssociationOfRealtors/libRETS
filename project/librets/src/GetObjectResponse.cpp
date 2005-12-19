@@ -240,7 +240,7 @@ string GetObjectResponse::FindBoundary(string contentType)
         RetsException, ("Could not determine boundary: " + contentType));
 }
 
-ObjectDescriptorPtr GetObjectResponse::NextObject()
+ObjectDescriptor * GetObjectResponse::NextObject()
 {
     ObjectDescriptorPtr nextObject;
     if (mNextObject != mObjects.end())
@@ -248,6 +248,6 @@ ObjectDescriptorPtr GetObjectResponse::NextObject()
         nextObject = *mNextObject;
         mNextObject++;
     }
-    return nextObject;
+    return nextObject.get();
 }
 

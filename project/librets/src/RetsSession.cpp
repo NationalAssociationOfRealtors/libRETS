@@ -241,7 +241,7 @@ SearchResultSetAPtr CLASS::Search(SearchRequest * request)
     return resultSet;
 }
 
-GetObjectResponsePtr CLASS::GetObject(GetObjectRequestPtr request)
+GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)
 {
     RetsHttpRequestPtr httpRequest = request->CreateHttpRequest();
     string getObjectUrl = mCapabilityUrls->GetGetObjectUrl();
@@ -250,7 +250,7 @@ GetObjectResponsePtr CLASS::GetObject(GetObjectRequestPtr request)
     RetsHttpResponsePtr httpResponse = mHttpClient->DoRequest(httpRequest);
     AssertSuccessfulResponse(httpResponse, getObjectUrl);
     
-    GetObjectResponsePtr response(new GetObjectResponse());
+    GetObjectResponseAPtr response(new GetObjectResponse());
     response->Parse(httpResponse);
     return response;
 }

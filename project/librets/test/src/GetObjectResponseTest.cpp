@@ -56,7 +56,7 @@ void CLASS::testSinglePart()
     RetsHttpResponsePtr httpResponse(new TestHttpResponse(
          "get-object-response-single.txt"));
     response.Parse(httpResponse);
-    ObjectDescriptorPtr objectDescriptor = response.NextObject();
+    ObjectDescriptor * objectDescriptor = response.NextObject();
     CPPUNIT_ASSERT(objectDescriptor);
     ASSERT_STRING_EQUAL("image/gif", objectDescriptor->GetContentType());
     ASSERT_STRING_EQUAL("abc123", objectDescriptor->GetObjectKey());
@@ -82,7 +82,7 @@ void CLASS::testSinglePartLocation()
     RetsHttpResponsePtr httpResponse(new TestHttpResponse(
         "get-object-response-single-location.txt"));
     response.Parse(httpResponse);
-    ObjectDescriptorPtr objectDescriptor = response.NextObject();
+    ObjectDescriptor * objectDescriptor = response.NextObject();
     CPPUNIT_ASSERT(objectDescriptor);
     ASSERT_STRING_EQUAL("image/gif", objectDescriptor->GetContentType());
     ASSERT_STRING_EQUAL("abc123", objectDescriptor->GetObjectKey());
@@ -122,7 +122,7 @@ void CLASS::testNoObjectFound()
     RetsHttpResponsePtr httpResponse(new TestHttpResponse(
         "get-object-response-no-object.txt"));
     response.Parse(httpResponse);
-    ObjectDescriptorPtr objectDescriptor = response.NextObject();
+    ObjectDescriptor * objectDescriptor = response.NextObject();
     CPPUNIT_ASSERT(!objectDescriptor);
 }
 
@@ -132,7 +132,7 @@ void CLASS::testNoObjectFoundFromVariman()
     RetsHttpResponsePtr httpResponse(new TestHttpResponse(
         "get-object-response-no-object-variman.txt"));
     response.Parse(httpResponse);
-    ObjectDescriptorPtr objectDescriptor = response.NextObject();
+    ObjectDescriptor * objectDescriptor = response.NextObject();
     CPPUNIT_ASSERT(!objectDescriptor);
 }
 
@@ -143,7 +143,7 @@ void CLASS::testMultiPartLocation()
         "get-object-response-multi-location.txt"));
     response.Parse(httpResponse);
     
-    ObjectDescriptorPtr objectDescriptor;
+    ObjectDescriptor * objectDescriptor;
     istreamPtr dataStream;
     string data;
     

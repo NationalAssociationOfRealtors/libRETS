@@ -34,7 +34,7 @@ class GetObjectResponse : public RetsObject
     
     void Parse(RetsHttpResponsePtr httpResponse);
     
-    ObjectDescriptorPtr NextObject();
+    ObjectDescriptor * NextObject();
     
   private:
     typedef std::vector<ObjectDescriptorPtr> ObjectList;

@@ -2,7 +2,11 @@
 
 %{
 #include "librets.h"
+#include <iostream>
+#include <sstream>
+
 using namespace librets;
+using namespace librets::util;
 using std::vector;
 using std::string;
 %}
@@ -10,6 +14,7 @@ using std::string;
 #ifndef SWIGXML
 %include "std_string.i"
 %include "std_vector.i"
+%include "cstring.i"
 #endif
 %include "exception.i"
 %include "auto_ptr_release.i"
@@ -92,6 +97,77 @@ SWIG_AUTO_PTR_RELEASE(SearchResultSet);
 SWIG_AUTO_PTR_RELEASE(LogoutResponse);
 
 /****************************************************************************
+ * GetObject
+ ***************************************************************************/
+ 
+class GetObjectRequest
+{
+  public:
+    GetObjectRequest(std::string resource, std::string type);
+    
+    bool GetLocation() const;
+    
+    void SetLocation(bool location);
+    
+    void AddObject(std::string resourceEntity, int objectId);
+    
+    void AddAllObjects(std::string resourceEntity);
+};
+
+class ObjectDescriptor
+{
+  public:
+    std::string GetObjectKey() const;
+    
+    int GetObjectId() const;
+    
+    std::string GetDescription() const;
+    
+    std::string GetLocationUrl() const;
+    
+    std::string GetContentType() const;
+    
+#if 0
+    // This doesn't work yet.  I'm having trouble getting an array of
+    // bytes across the SWIG boundary.
+    %newobject GetData;
+    %extend {
+        void GetData2(char **data, int *size)
+        {
+            std::stringstream outputStream;
+            istreamPtr inputStream = self->GetData();
+            readUntilEof(*inputStream, outputStream);
+            std::string stringData = outputStream.str();
+            *size = stringData.length();
+            *data = (char *) malloc(*size);
+            memcpy(*data, stringData.data(), *size);
+        }
+        
+        char * GetData()
+        {
+            std::stringstream outputStream;
+            istreamPtr inputStream = self->GetData();
+            readUntilEof(*inputStream, outputStream);
+            std::string stringData = outputStream.str();
+            int length = stringData.length();
+            char * data = (char *) malloc(length);
+            memcpy(data, stringData.data(), length);
+            return data;
+        }
+    }
+#endif
+};
+
+class GetObjectResponse
+{
+  public:
+    ObjectDescriptor * NextObject();
+};
+typedef std::auto_ptr<GetObjectResponse> GetObjectResponseAPtr;
+
+SWIG_AUTO_PTR_RELEASE(GetObjectResponse);
+
+/****************************************************************************
  * Metadata
  ***************************************************************************/
  
@@ -161,8 +237,9 @@ class RetsSession
     bool IsIncrementalMetadata() const;
     
     void SetIncrementalMetadata(bool incrementalMetadata);
-
     
+    GetObjectResponseAPtr GetObject(GetObjectRequest * request);
+
     void SetUserAgent(std::string userAgent);
 
     void UseHttpGet(bool useHttpGet);

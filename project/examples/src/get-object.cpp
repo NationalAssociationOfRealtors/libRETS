@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+ 
 #include "librets.h"
 #include "Options.h"
 #include <iostream>
@@ -60,25 +61,24 @@ int main(int argc, char * argv[])
             return -1;
         }
     
-        GetObjectRequestPtr getObjectRequest(
-            new GetObjectRequest(resource, type));
+        GetObjectRequest getObjectRequest(resource, type);
     
         if (objectId == "*")
         {
-            getObjectRequest->AddAllObjects(resourceEntity);
+            getObjectRequest.AddAllObjects(resourceEntity);
         }
         else
         {
-            getObjectRequest->AddObject(resourceEntity,
-                                        lexical_cast<int>(objectId));
+            getObjectRequest.AddObject(resourceEntity,
+                                       lexical_cast<int>(objectId));
         }
     
-        GetObjectResponsePtr getObjectResponse =
-            session->GetObject(getObjectRequest);
+        GetObjectResponseAPtr getObjectResponse =
+            session->GetObject(&getObjectRequest);
     
         StringMap contentTypeSuffixes;
         contentTypeSuffixes["image/jpeg"] = "jpg";
-        ObjectDescriptorPtr objectDescriptor;
+        ObjectDescriptor * objectDescriptor;
         while (objectDescriptor = getObjectResponse->NextObject())
         {
             string objectKey = objectDescriptor->GetObjectKey();
