@@ -16,10 +16,13 @@ else
 LINK = g++ -shared
 endif
 
-all: librets.so Search.exe
+all: librets.so Search.exe Metadata.exe
 
 Search.exe: Search.cs $(LIBRETS_SHARP_DLL) librets.so
 	mcs -r:$(LIBRETS_SHARP_DLL) Search.cs
+
+Metadata.exe: Metadata.cs $(LIBRETS_SHARP_DLL) librets.so
+	mcs -r:$(LIBRETS_SHARP_DLL) Metadata.cs
 
 $(LIBRETS_SHARP_DLL): librets.so $(GENERATED_SRC)
 	mcs -target:library -out:$(LIBRETS_SHARP_DLL) $(GENERATED_SRC)

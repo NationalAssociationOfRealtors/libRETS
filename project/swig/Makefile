@@ -21,7 +21,7 @@ SWIG_FILES = librets.i auto_ptr_release.i
 all: csharp ruby perl python
 
 SWIG_CSHARP = $(SWIG) -c++ -csharp -namespace librets -o $(CSHARP_WRAP) \
-	-outdir $(CSHARP_LIB_DIR) librets.i
+	-outdir $(CSHARP_LIB_DIR) -Ilib/csharp librets.i
 
 csharp: $(CSHARP_WRAP)
 	$(MAKE) -C csharp

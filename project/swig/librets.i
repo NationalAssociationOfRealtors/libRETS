@@ -190,8 +190,8 @@ class MetadataResource
     std::string GetStandardName() const;
 };
 
-// typedef std::vector<MetadataResource *> MetadataResourceList;
-// %template(MetadataResourceList) std::vector<MetadataResource *>;
+typedef std::vector<MetadataResource *> MetadataResourceList;
+%template(MetadataResourceList) std::vector<MetadataResource *>;
 
 %nodefault;
 
@@ -199,7 +199,7 @@ class RetsMetadata
 {
   public:
     MetadataSystem * GetSystem() const;
-    // std::vector<MetadataResource *> GetAllResources() const;
+    MetadataResourceList GetAllResources() const;
 };
 
 %default;
