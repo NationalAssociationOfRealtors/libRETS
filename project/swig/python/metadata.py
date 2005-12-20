@@ -12,9 +12,9 @@ try:
   print "Description: " + system.GetSystemDescription()
   print "Comments: " + system.GetComments()
   
-#  resources = metadata.GetAllResources()
-#  for resource in resources:
-#    print resource.GetStandardName()
+  resources = metadata.GetAllResources()
+  for resource in resources:
+    print resource.GetStandardName()
  
   logout = rets.Logout();
 except librets.RetsException,e:

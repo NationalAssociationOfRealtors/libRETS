@@ -26,6 +26,6 @@ end
 
 metadata = rets.GetMetadata
 dump_system(metadata)
-# dump_all_resources(metadata)
+dump_all_resources(metadata)
 
 rets.Logout()

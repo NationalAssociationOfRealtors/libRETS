@@ -18,10 +18,10 @@ PYTHON_WRAP = python/librets_wrap.cpp
 
 SWIG_FILES = librets.i auto_ptr_release.i
 
-# Only C# is supported right now
-default: csharp
+# Perl isn't handling vectors of object ponters correctly
+default: csharp ruby python
 
-all: csharp ruby perl python
+all: default perl
 
 SWIG_CSHARP = $(SWIG) -c++ -csharp -namespace librets -o $(CSHARP_WRAP) \
 	-outdir $(CSHARP_LIB_DIR) -Ilib/csharp librets.i
@@ -39,8 +39,9 @@ ruby: $(RUBY_WRAP) $(RUBY_MAKEFILE)
 $(RUBY_MAKEFILE): $(RUBY_WRAP)
 	cd ruby ; $(RUBY) extconf.rb --with-librets-config=../../../librets-config-inplace
 
-$(RUBY_WRAP): $(SWIG_FILES)
-	$(SWIG) -c++ -ruby -o $(RUBY_WRAP) librets.i
+SWIG_RUBY = $(SWIG) -c++ -ruby -o $(RUBY_WRAP) -Ilib/ruby librets.i
+$(RUBY_WRAP): $(SWIG_FILES) lib/ruby/std_vector.i
+	$(SWIG_RUBY)
 
 perl: $(PERL_WRAP) $(PERL_MAKEFILE)
 	$(MAKE) -C perl
@@ -72,9 +73,9 @@ clean-python:
 	$(MAKE) -C python distclean
 	$(RM) $(PYTHON_WRAP)
 
-clean: clean-csharp
+clean: clean-csharp clean-ruby clean-python
 
-clean-all: clean-csharp clean-ruby clean-perl clean-python
+clean-all: clean clean-perl
 
 .PHONY: default all \
 	csharp ruby perl python \
