@@ -18,6 +18,9 @@ PYTHON_WRAP = python/librets_wrap.cpp
 
 SWIG_FILES = librets.i auto_ptr_release.i
 
+# Only C# is supported right now
+default: csharp
+
 all: csharp ruby perl python
 
 SWIG_CSHARP = $(SWIG) -c++ -csharp -namespace librets -o $(CSHARP_WRAP) \
@@ -26,7 +29,7 @@ SWIG_CSHARP = $(SWIG) -c++ -csharp -namespace librets -o $(CSHARP_WRAP) \
 csharp: $(CSHARP_WRAP)
 	$(MAKE) -C csharp
 
-$(CSHARP_WRAP): $(SWIG_FILES)
+$(CSHARP_WRAP): $(SWIG_FILES) lib/csharp/std_vector.i
 	$(RM) $(CSHARP_LIB_DIR)/*.cs
 	$(SWIG_CSHARP)
 
@@ -69,7 +72,10 @@ clean-python:
 	$(MAKE) -C python distclean
 	$(RM) $(PYTHON_WRAP)
 
-clean: clean-csharp clean-ruby clean-perl clean-python
+clean: clean-csharp
 
-.PHONY: csharp ruby perl python \
-	clean clean-csharp clean-ruby clean-perl clean-python
+clean-all: clean-csharp clean-ruby clean-perl clean-python
+
+.PHONY: default all \
+	csharp ruby perl python \
+	clean clean-all clean-csharp clean-ruby clean-perl clean-python

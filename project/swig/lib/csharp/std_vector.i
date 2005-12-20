@@ -166,12 +166,12 @@
     %rename(Clear) clear;
     void clear();
     %rename(Add) push_back;
-    void push_back(const CTYPE& value);
+    void push_back(CTYPE value);
     size_type size() const;
     size_type capacity() const;
     void reserve(size_type n);
     %newobject GetRange(int index, int count);
-    %newobject Repeat(const CTYPE& value, int count);
+    %newobject Repeat(CTYPE value, int count);
     vector();
     %extend {
       vector(int capacity) throw (std::out_of_range) {
@@ -190,13 +190,13 @@
         else
           throw std::out_of_range("index");
       }
-      const CTYPE& getitem(int index) throw (std::out_of_range) {
+      CTYPE getitem(int index) throw (std::out_of_range) {
         if (index>=0 && index<(int)self->size())
           return (*self)[index];
         else
           throw std::out_of_range("index");
       }
-      void setitem(int index, const CTYPE& value) throw (std::out_of_range) {
+      void setitem(int index, CTYPE value) throw (std::out_of_range) {
         if (index>=0 && index<(int)self->size())
           (*self)[index] = value;
         else
@@ -216,7 +216,7 @@
           throw std::invalid_argument("invalid range");
         return new std::vector<CTYPE >(self->begin()+index, self->begin()+index+count);
       }
-      void Insert(int index, const CTYPE& value) throw (std::out_of_range) {
+      void Insert(int index, CTYPE value) throw (std::out_of_range) {
         if (index>=0 && index<(int)self->size()+1)
           self->insert(self->begin()+index, value);
         else
@@ -244,7 +244,7 @@
           throw std::invalid_argument("invalid range");
         self->erase(self->begin()+index, self->begin()+index+count);
       }
-      static std::vector<CTYPE > *Repeat(const CTYPE& value, int count) throw (std::out_of_range) {
+      static std::vector<CTYPE > *Repeat(CTYPE value, int count) throw (std::out_of_range) {
         if (count < 0)
           throw std::out_of_range("count");
         return new std::vector<CTYPE >(count, value);
@@ -276,24 +276,24 @@
 // CSTYPE and CTYPE respectively correspond to the types in the cstype and ctype typemaps
 %define SWIG_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(CSTYPE, CTYPE...)
     %extend {
-      bool Contains(const CTYPE& value) {
+      bool Contains(CTYPE value) {
         return std::find(self->begin(), self->end(), value) != self->end();
       }
-      int IndexOf(const CTYPE& value) {
+      int IndexOf(CTYPE value) {
         int index = -1;
         std::vector<CTYPE >::iterator it = std::find(self->begin(), self->end(), value);
         if (it != self->end())
           index = it - self->begin();
         return index;
       }
-      int LastIndexOf(const CTYPE& value) {
+      int LastIndexOf(CTYPE value) {
         int index = -1;
         std::vector<CTYPE >::reverse_iterator rit = std::find(self->rbegin(), self->rend(), value);
         if (rit != self->rend())
           index = self->rend() - 1 - rit;
         return index;
       }
-      void Remove(const CTYPE& value) {
+      void Remove(CTYPE value) {
         std::vector<CTYPE >::iterator it = std::find(self->begin(), self->end(), value);
         if (it != self->end())
           self->erase(it);
@@ -340,6 +340,11 @@ namespace std {
   template<class T> class vector {
     SWIG_STD_VECTOR_MINIMUM(T, T)
   };
+
+  // Partial specialization for pointers to objects
+  template<class T> class vector<T *> {
+    SWIG_STD_VECTOR_MINIMUM(T, T *)
+  };
 }
 
 // template specializations for std::vector
@@ -359,295 +364,5 @@ SWIG_STD_VECTOR_SPECIALIZE(ulong, unsigned long long)
 SWIG_STD_VECTOR_SPECIALIZE(float, float)
 SWIG_STD_VECTOR_SPECIALIZE(double, double)
 SWIG_STD_VECTOR_SPECIALIZE(string, std::string) // also requires a %include "std_string.i"
-
-namespace std {
-  template<class T> class vector<T * > {
-    /*@lib/csharp/std_vector.i,-243,SWIG_STD_VECTOR_MINIMUM@*/
-%typemap(csinterfaces) std::vector<T * > "IDisposable, System.Collections.IEnumerable";
-%typemap(cscode) std::vector<T * > %{
-  public $csclassname(System.Collections.ICollection c) : this() {
-    if (c == null)
-      throw new ArgumentNullException("c");
-    foreach (T element in c) {
-      this.Add(element);
-    }
-  }
-
-  public bool IsFixedSize {
-    get {
-      return false;
-    }
-  }
-
-  public bool IsReadOnly {
-    get {
-      return false;
-    }
-  }
-
-  public T this[int index]  {
-    get {
-      return getitem(index);
-    }
-    set {
-      setitem(index, value);
-    }
-  }
-
-  public int Capacity {
-    get {
-      return (int)capacity();
-    }
-    set {
-      if (value < size())
-        throw new ArgumentOutOfRangeException("Capacity");
-      reserve((uint)value);
-    }
-  }
-
-  public int Count {
-    get {
-      return (int)size();
-    }
-  }
-
-  public bool IsSynchronized {
-    get {
-      return false;
-    }
-  }
-
-  public void CopyTo(System.Array array) {
-    CopyTo(0, array, 0, this.Count);
-  }
-
-  public void CopyTo(System.Array array, int arrayIndex) {
-    CopyTo(0, array, arrayIndex, this.Count);
-  }
-
-  public void CopyTo(int index, System.Array array, int arrayIndex, int count) {
-    if (array == null)
-      throw new ArgumentNullException("array");
-    if (index < 0)
-      throw new ArgumentOutOfRangeException("index", "Value is less than zero");
-    if (arrayIndex < 0)
-      throw new ArgumentOutOfRangeException("arrayIndex", "Value is less than zero");
-    if (count < 0)
-      throw new ArgumentOutOfRangeException("count", "Value is less than zero");
-    if (array.Rank > 1)
-      throw new ArgumentException("Multi dimensional array.");
-    if (index+count > this.Count || arrayIndex+count > array.Length)
-      throw new ArgumentException("Number of elements to copy is too large.");
-    for (int i=0; i<count; i++)
-      array.SetValue(getitemcopy(index+i), arrayIndex+i);
-  }
-
-  // Type-safe version of IEnumerable.GetEnumerator
-  System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() {
-    return new $csclassnameEnumerator(this);
-  }
-
-  public $csclassnameEnumerator GetEnumerator() {
-    return new $csclassnameEnumerator(this);
-  }
-
-  // Type-safe enumerator
-  /// Note that the IEnumerator documentation requires an InvalidOperationException to be thrown
-  /// whenever the collection is modified. This has been done for changes in the size of the
-  /// collection but not when one of the elements of the collection is modified as it is a bit
-  /// tricky to detect unmanaged code that modifies the collection under our feet.
-  public sealed class $csclassnameEnumerator : System.Collections.IEnumerator {
-    private $csclassname collectionRef;
-    private int currentIndex;
-    private object currentObject;
-    private int currentSize;
-
-    public $csclassnameEnumerator($csclassname collection) {
-      collectionRef = collection;
-      currentIndex = -1;
-      currentObject = null;
-      currentSize = collectionRef.Count;
-    }
-
-    // Type-safe iterator Current
-    public T Current {
-      get {
-        if (currentIndex == -1)
-          throw new InvalidOperationException("Enumeration not started.");
-        if (currentIndex > currentSize - 1)
-          throw new InvalidOperationException("Enumeration finished.");
-        if (currentObject == null)
-          throw new InvalidOperationException("Collection modified.");
-        return (T)currentObject;
-      }
-    }
-
-    // Type-unsafe IEnumerator.Current
-    object System.Collections.IEnumerator.Current {
-      get {
-        return Current;
-      }
-    }
-
-    public bool MoveNext() {
-      int size = collectionRef.Count;
-      bool moveOkay = (currentIndex+1 < size) && (size == currentSize);
-      if (moveOkay) {
-        currentIndex++;
-        currentObject = collectionRef[currentIndex];
-      } else {
-        currentObject = null;
-      }
-      return moveOkay;
-    }
-
-    public void Reset() {
-      currentIndex = -1;
-      currentObject = null;
-      if (collectionRef.Count != currentSize) {
-        throw new InvalidOperationException("Collection modified.");
-      }
-    }
-  }
-%}
-
-  public:
-    typedef size_t size_type;
-    %rename(Clear) clear;
-    void clear();
-    %rename(Add) push_back;
-    void push_back(T * value);
-    size_type size() const;
-    size_type capacity() const;
-    void reserve(size_type n);
-    %feature("new") GetRange(int index, int count);
-    %feature("new") Repeat(T * value, int count);
-    vector();
-    %extend {
-      vector(int capacity) throw (std::out_of_range) {
-        std::vector<T * >* pv = 0;
-        if (capacity >= 0) {
-          pv = new std::vector<T * >();
-          pv->reserve(capacity);
-       } else {
-          throw std::out_of_range("capacity");
-       }
-       return pv;
-      }
-      T * getitemcopy(int index) throw (std::out_of_range) {
-        if (index>=0 && index<(int)self->size())
-          return (*self)[index];
-        else
-          throw std::out_of_range("index");
-      }
-      const T * getitem(int index) throw (std::out_of_range) {
-        if (index>=0 && index<(int)self->size())
-          return (*self)[index];
-        else
-          throw std::out_of_range("index");
-      }
-      void setitem(int index,  T * value) throw (std::out_of_range) {
-        if (index>=0 && index<(int)self->size())
-          (*self)[index] = value;
-        else
-          throw std::out_of_range("index");
-      }
-      // Takes a deep copy of the elements unlike ArrayList.AddRange
-      void AddRange(const std::vector<T * >& values) {
-        self->insert(self->end(), values.begin(), values.end());
-      }
-      // Takes a deep copy of the elements unlike ArrayList.GetRange
-      std::vector<T * > *GetRange(int index, int count) throw (std::out_of_range, std::invalid_argument) {
-        if (index < 0)
-          throw std::out_of_range("index");
-        if (count < 0)
-          throw std::out_of_range("count");
-        if (index >= (int)self->size()+1 || index+count > (int)self->size())
-          throw std::invalid_argument("invalid range");
-        return new std::vector<T * >(self->begin()+index, self->begin()+index+count);
-      }
-      void Insert(int index,  T * value) throw (std::out_of_range) {
-        if (index>=0 && index<(int)self->size()+1)
-          self->insert(self->begin()+index, value);
-        else
-          throw std::out_of_range("index");
-      }
-      // Takes a deep copy of the elements unlike ArrayList.InsertRange
-      void InsertRange(int index, const std::vector<T * >& values) throw (std::out_of_range) {
-        if (index>=0 && index<(int)self->size()+1)
-          self->insert(self->begin()+index, values.begin(), values.end());
-        else
-          throw std::out_of_range("index");
-      }
-      void RemoveAt(int index) throw (std::out_of_range) {
-        if (index>=0 && index<(int)self->size())
-          self->erase(self->begin() + index);
-        else
-          throw std::out_of_range("index");
-      }
-      void RemoveRange(int index, int count) throw (std::out_of_range, std::invalid_argument) {
-        if (index < 0)
-          throw std::out_of_range("index");
-        if (count < 0)
-          throw std::out_of_range("count");
-        if (index >= (int)self->size()+1 || index+count > (int)self->size())
-          throw std::invalid_argument("invalid range");
-        self->erase(self->begin()+index, self->begin()+index+count);
-      }
-      static std::vector<T * > *Repeat(T * value, int count) throw (std::out_of_range) {
-        if (count < 0)
-          throw std::out_of_range("count");
-        return new std::vector<T * >(count, value);
-      }
-      void Reverse() {
-        std::reverse(self->begin(), self->end());
-      }
-      void Reverse(int index, int count) throw (std::out_of_range, std::invalid_argument) {
-        if (index < 0)
-          throw std::out_of_range("index");
-        if (count < 0)
-          throw std::out_of_range("count");
-        if (index >= (int)self->size()+1 || index+count > (int)self->size())
-          throw std::invalid_argument("invalid range");
-        std::reverse(self->begin()+index, self->begin()+index+count);
-      }
-      // Takes a deep copy of the elements unlike ArrayList.SetRange
-      void SetRange(int index, const std::vector<T * >& values) throw (std::out_of_range) {
-        if (index < 0)
-          throw std::out_of_range("index");
-        if (index+values.size() > self->size())
-          throw std::out_of_range("index");
-        std::copy(values.begin(), values.end(), self->begin()+index);
-      }
-    }
-/*@@*/
-    /*@lib/csharp/std_vector.i,252,SWIG_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS@*/
-    %extend {
-      bool Contains(const T * value) {
-        return std::find(self->begin(), self->end(), value) != self->end();
-      }
-      int IndexOf(const T * value) {
-        int index = -1;
-        std::vector<T * >::iterator it = std::find(self->begin(), self->end(), value);
-        if (it != self->end())
-          index = it - self->begin();
-        return index;
-      }
-      int LastIndexOf(const T * value) {
-        int index = -1;
-        std::vector<T * >::reverse_iterator rit = std::find(self->rbegin(), self->rend(), value);
-        if (rit != self->rend())
-          index = self->rend() - 1 - rit;
-        return index;
-      }
-      void Remove(const T * value) {
-        std::vector<T * >::iterator it = std::find(self->begin(), self->end(), value);
-        if (it != self->end())
-          self->erase(it);
-      }
-    }
-/*@@*/
-  };
-}
 
 
