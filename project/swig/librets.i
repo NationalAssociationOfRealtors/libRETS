@@ -174,9 +174,7 @@ class MetadataSystem
 {
   public:
     std::string GetSystemID() const;  
-    
     std::string GetSystemDescription() const;
-    
     std::string GetComments() const;
 };
 
@@ -184,14 +182,36 @@ class MetadataResource
 {
   public:
     std::string GetId() const;
-    
     std::string GetResourceID() const;
-    
     std::string GetStandardName() const;
+    std::string GetKeyField() const;
 };
 
 typedef std::vector<MetadataResource *> MetadataResourceList;
 %template(MetadataResourceList) std::vector<MetadataResource *>;
+
+class MetadataClass
+{
+  public:
+    virtual std::string GetId() const;
+    std::string GetClassName() const;
+    std::string GetStandardName() const;
+    std::string GetDescription() const;
+};
+
+typedef std::vector<MetadataClass *> MetadataClassList;
+%template(MetadataClassList) std::vector<MetadataClass *>;
+
+class MetadataTable
+{
+  public:
+    std::string GetSystemName() const;
+    std::string GetStandardName() const;
+    std::string GetLongName() const;
+};
+
+typedef std::vector<MetadataTable *> MetadataTableList;
+%template(MetadataTableList) std::vector<MetadataTable *>;
 
 %nodefault;
 
@@ -199,7 +219,21 @@ class RetsMetadata
 {
   public:
     MetadataSystem * GetSystem() const;
+
     MetadataResourceList GetAllResources() const;
+    MetadataResource * GetResource(std::string resourceName) const;
+    
+    MetadataClassList GetAllClasses(std::string resourceName) const;
+    MetadataClass * GetClass(std::string resourceName,
+        std::string className) const;
+        
+    MetadataTableList GetAllTables(MetadataClass * metadataClass) const;
+    
+    MetadataTableList GetAllTables(std::string resourceName,
+                                   std::string className) const;
+
+    MetadataTable * GetTable(std::string resourceName, std::string className,
+                             std::string tableName) const;
 };
 
 %default;

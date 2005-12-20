@@ -1,25 +1,28 @@
 #!/usr/bin/env python
 
+import sys
 import librets
 
 try:
-  rets = librets.RetsSession("http://demo.crt.realtors.org:6103/rets/login")
-  rets.Login("Joe", "Schmoe")
+  session = librets.RetsSession("http://demo.crt.realtors.org:6103/rets/login")
+  if (not session.Login("Joe", "Schmoe")):
+      print "Invalid login"
+      sys.exit(1)
 
-  print "Action: ", rets.GetAction()
+  print "Action: ", session.GetAction()
   version = "1.0"
-  if rets.GetDetectedRetsVersion() == librets.RETS_1_5:
+  if session.GetDetectedRetsVersion() == librets.RETS_1_5:
     version = "1.5"
   print "RETS Version: " + version
 
-  request = rets.CreateSearchRequest("Property", "ResidentialProperty",
+  request = session.CreateSearchRequest("Property", "ResidentialProperty",
     "(ListPrice=300000-)")
     
   request.SetSelect("ListingID,ListPrice,Beds,City")
   request.SetLimit(librets.SearchRequest.LIMIT_DEFAULT)
   request.SetOffset(librets.SearchRequest.OFFSET_NONE)
   request.SetCountType(librets.SearchRequest.RECORD_COUNT_AND_RESULTS)
-  results = rets.Search(request)
+  results = session.Search(request)
   
   print "Record count: " + `results.GetCount()`
   print
@@ -29,7 +32,7 @@ try:
       print column + ": " + results.GetString(column)
     print
   
-  logout = rets.Logout();
+  logout = session.Logout();
   print "Billing info: " + logout.GetBillingInfo()
   print "Logout message: " + logout.GetLogoutMessage()
   print "Connect time: " + str(logout.GetConnectTime())

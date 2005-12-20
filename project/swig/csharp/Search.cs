@@ -8,7 +8,11 @@ public class Search
     {
         RetsSession session = new RetsSession(
             "http://demo.crt.realtors.org:6103/rets/login");
-        session.Login("Joe", "Schmoe");
+        if (!session.Login("Joe", "Schmoe"))
+        {
+            Console.WriteLine("Invalid login");
+            Environment.Exit(1);
+        }
 
         Console.WriteLine("Action: " + session.GetAction());
         RetsVersion version = session.GetDetectedRetsVersion();

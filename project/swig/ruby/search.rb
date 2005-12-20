@@ -5,25 +5,25 @@ require 'pp'
 
 include Librets
 
-rets = RetsSession.new("http://demo.crt.realtors.org:6103/rets/login")
+session = RetsSession.new("http://demo.crt.realtors.org:6103/rets/login")
 
-if !rets.Login("Joe", "Schmoe")
+if !session.Login("Joe", "Schmoe")
   puts "Invalid login"
   exit 1
 end
 
-puts "Action: " + rets.GetAction()
+puts "Action: " + session.GetAction()
 version = "1.0"
-version = "1.5" if (rets.GetDetectedRetsVersion() == RETS_1_5)
+version = "1.5" if (session.GetDetectedRetsVersion() == RETS_1_5)
 puts "RETS Version: " + version
 
-request = rets.CreateSearchRequest("Property", "ResidentialProperty",
-                                   "(ListPrice=300000-)")
+request = session.CreateSearchRequest("Property", "ResidentialProperty",
+                                      "(ListPrice=300000-)")
 request.SetSelect("ListingID,ListPrice,Beds,City")                                     
 request.SetLimit(SearchRequest::LIMIT_DEFAULT)
 request.SetOffset(SearchRequest::OFFSET_NONE)
 request.SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
-results = rets.Search(request)
+results = session.Search(request)
 
 puts "Record count: " + results.GetCount.to_s
 puts
@@ -35,7 +35,7 @@ while results.HasNext()
   puts
 end
 
-logout = rets.Logout()
+logout = session.Logout()
 
 puts "Billing info: " + logout.GetBillingInfo
 puts "Logout message: " + logout.GetLogoutMessage
