@@ -1,6 +1,8 @@
 
 GENERATED_SRC = $(wildcard lib/*.cs)
 
+SAMPLE_EXE = Search.exe Metadata.exe GetObject.exe
+
 WRAP = 	librets_wrap.cpp
 
 LIBRETS_CONFIG = ../../../librets-config-inplace
@@ -16,13 +18,16 @@ else
 LINK = g++ -shared
 endif
 
-all: librets.so Search.exe Metadata.exe
+all: librets.so $(SAMPLE_EXE)
 
 Search.exe: Search.cs $(LIBRETS_SHARP_DLL) librets.so
 	mcs -r:$(LIBRETS_SHARP_DLL) Search.cs
 
 Metadata.exe: Metadata.cs $(LIBRETS_SHARP_DLL) librets.so
 	mcs -r:$(LIBRETS_SHARP_DLL) Metadata.cs
+
+GetObject.exe: GetObject.cs $(LIBRETS_SHARP_DLL) librets.so
+	mcs -r:$(LIBRETS_SHARP_DLL) GetObject.cs
 
 $(LIBRETS_SHARP_DLL): librets.so $(GENERATED_SRC)
 	mcs -target:library -out:$(LIBRETS_SHARP_DLL) $(GENERATED_SRC)
@@ -31,7 +36,7 @@ librets.so: librets_wrap.o
 	$(LINK) -o librets.so librets_wrap.o $(LIBRETS_LIBS)
 
 clean:
-	$(RM) *.o $(LIBRETS_SHARP_DLL) librets.so Search.exe
+	$(RM) *.o $(LIBRETS_SHARP_DLL) librets.so $(SAMPLE_EXE)
 
 distclean: clean
 	$(RM) $(GENERATED_SRC) librets_wrap*

@@ -155,6 +155,16 @@ class ObjectDescriptor
         }
     }
 #endif
+    %extend {
+        std::string GetStringData()
+        {
+            std::stringstream outputStream;
+            istreamPtr inputStream = self->GetData();
+            readUntilEof(*inputStream, outputStream);
+            std::string stringData = outputStream.str();
+            return stringData;
+        }
+    }
 };
 
 class GetObjectResponse
