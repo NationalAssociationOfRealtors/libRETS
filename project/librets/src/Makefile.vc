@@ -35,11 +35,15 @@ ANTLR_OBJS = \
 	$(DIROBJ)\DmqlTreeParser.obj \
 	$(DIROBJ)\GetObjectTreeParser.obj
 
+all: $(TARGET)
+
+# Use this to regenerate objects.vc
+win_files:
+	perl ../../build/win_files.pl X_OBJS '*.cpp' '(.*)\.cpp$$' '\$$(DIROBJ)\\\$$1.obj' > objects.vc
+
 !include <objects.vc>
 
 X_OBJS = $(ANTLR_OBJS) $(X_OBJS)
-
-all: $(TARGET)
 
 $(TARGET): $(X_OBJS)
 	$(LINK_LIB) /out:$(TARGET) $(LINK_STD) $(LDFLAGS) $(X_OBJS)

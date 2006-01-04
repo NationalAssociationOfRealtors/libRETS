@@ -1,0 +1,22 @@
+# Automatically generated file list.  Edits will be overwritten.
+GENERATED_SRC = \
+	lib\GetObjectRequest.cs \
+	lib\GetObjectResponse.cs \
+	lib\LogoutResponse.cs \
+	lib\MetadataClass.cs \
+	lib\MetadataClassList.cs \
+	lib\MetadataResource.cs \
+	lib\MetadataResourceList.cs \
+	lib\MetadataSystem.cs \
+	lib\MetadataTable.cs \
+	lib\MetadataTableList.cs \
+	lib\ObjectDescriptor.cs \
+	lib\RetsException.cs \
+	lib\RetsMetadata.cs \
+	lib\RetsSession.cs \
+	lib\RetsVersion.cs \
+	lib\SearchRequest.cs \
+	lib\SearchResultSet.cs \
+	lib\StringVector.cs \
+	lib\librets.cs \
+	lib\libretsPINVOKE.cs
