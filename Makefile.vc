@@ -1,24 +1,26 @@
 !include <project/build/Makefile.vc>
 
+NMAKE = nmake /nologo
+
 all:
 	cd project\librets\src
-	nmake /nologo /f Makefile.vc
+	$(NMAKE) /f Makefile.vc
 	cd ..\..\examples\src
-	nmake /nologo /f Makefile.vc
+	$(NMAKE) /f Makefile.vc
 	cd ..\..\..
 
 clean:
 	cd project\librets\src
-	nmake /nologo /f Makefile.vc clean
+	$(NMAKE) /f Makefile.vc clean
 	cd ..\..\examples\src
-	nmake /nologo /f Makefile.vc clean
+	$(NMAKE) /f Makefile.vc clean
 	cd ..\..\..
 	@-rmdir /q  /s build 2>NUL
 	@-rmdir /q  /s dist 2>NUL
 
 test:
 	cd project\librets\test\src
-	nmake /nologo /f Makefile.vc
+	$(NMAKE) /f Makefile.vc
 	cd ..\..\..\..
 	project\librets\test\src\$(DIROBJ)\test.exe
 
@@ -35,6 +37,7 @@ prepare:
 	@$(MKDIR_P) $(DISTDIR)
 	@$(MKDIR_P) $(DISTDIR)/doc/api
 	@$(MKDIR_P) $(DISTDIR)/lib
+	@$(MKDIR_P) $(DISTDIR)/bin
 
 docs: prepare
 	rm -rf build/doc/api
@@ -44,10 +47,13 @@ docs: prepare
 
 lib-all-variants:
 	cd project\librets\src
-	nmake /nologo /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
-	nmake /nologo /f Makefile.vc BUILD=release RUNTIME_LIBS=static
-	nmake /nologo /f Makefile.vc BUILD=debug RUNTIME_LIBS=dynamic
-	nmake /nologo /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
+	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
+	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=static
+	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=dynamic
+	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
+	cd ..\..\..
+	cd project\swig\csharp
+	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
 	cd ..\..\..
 
 dist: docs lib-all-variants _dist
@@ -56,6 +62,7 @@ _dist:
 	$(RSYNC) --delete build/doc/api/html $(DISTDIR)/doc/api
 	$(RSYNC) --delete project/librets/include $(DISTDIR)
 	cp -u project/librets/src/build/*.lib $(DISTDIR)/lib
+	cp -u project/swig/csharp/bin/*.dll $(DISTDIR)/bin
 	rm -f $(DIST_ZIP)
 	cd build
 	zip -rq ../$(DIST_ZIP) $(DIST_BASE)

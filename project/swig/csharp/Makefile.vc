@@ -10,29 +10,39 @@ LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS)
 LINK = $(LINK_EXE) $(LDFLAGS)
 SYSLIBS = wsock32.lib winmm.lib
 
-LIBRETS_SHARP_DLL = librets-sharp.dll
+BIN_DIR = bin
+LIBRETS_UNMANAGED_DLL_FILE = librets-pinvoke.dll
+LIBRETS_UNMANAGED_DLL = $(BIN_DIR)\$(LIBRETS_UNMANAGED_DLL_FILE)
+LIBRETS_MANAGED_DLL = $(BIN_DIR)\librets-dotnet.dll
 RM = rm -f
 
-all: librets.dll Search.exe Metadata.exe
+SEARCH_EXE = $(BIN_DIR)\Search.exe
+METADATA_EXE = $(BIN_DIR)\Metadata.exe
 
-Search.exe: Search.cs $(LIBRETS_SHARP_DLL) librets.dll
-	$(CSC) -r:$(LIBRETS_SHARP_DLL) Search.cs
+all: $(LIBRETS_UNMANAGED_DLL) $(SEARCH_EXE) $(METADATA_EXE)
 
-Metadata.exe: Metadata.cs $(LIBRETS_SHARP_DLL) librets.dll
-	$(CSC) -r:$(LIBRETS_SHARP_DLL) Metadata.cs
+$(SEARCH_EXE): Search.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
+	$(CSC) -out:$(SEARCH_EXE) -r:$(LIBRETS_MANAGED_DLL) Search.cs
 
-$(LIBRETS_SHARP_DLL): librets.dll $(GENERATED_SRC)
-	$(CSC) -target:library -out:$(LIBRETS_SHARP_DLL) $(GENERATED_SRC)
+$(METADATA_EXE): Metadata.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
+	$(CSC) -out:$(METADATA_EXE) -r:$(LIBRETS_MANAGED_DLL) Metadata.cs
 
-librets.dll: librets_wrap.obj
-	$(LINK) /dll /out:librets.dll librets_wrap.obj $(LIBRETS_LIB) $(SYSLIBS)
+$(LIBRETS_MANAGED_DLL): $(LIBRETS_UNMANAGED_DLL) $(GENERATED_SRC) $(BIN_DIR)
+	$(CSC) -target:library -out:$(LIBRETS_MANAGED_DLL) $(GENERATED_SRC)
+
+$(LIBRETS_UNMANAGED_DLL): librets_wrap.obj $(BIN_DIR)
+	$(LINK) /dll /out:$(LIBRETS_UNMANAGED_DLL) librets_wrap.obj $(LIBRETS_LIB) $(SYSLIBS)
+
+$(BIN_DIR):
+	@if not exist "$(BIN_DIR)" mkdir $(BIN_DIR)
 
 # Use to generate generated.vc
 win_files:
 	perl ../../build/win_files.pl GENERATED_SRC 'lib\*.cs' > generated.vc
 
 SWIG_CSHARP = $(SWIG) -c++ -csharp -namespace librets -o librets_wrap.cpp \
-	-outdir lib -I../lib/csharp ../librets.i
+	-outdir lib -I../lib/csharp -dllimport $(LIBRETS_UNMANAGED_DLL_FILE) \
+	../librets.i
 
 librets_wrap.obj: librets_wrap.cpp
 
@@ -41,13 +51,14 @@ librets_wrap.cpp: ../librets.i
 	$(SWIG_CSHARP)
 
 clean:
+	@-rmdir /q /s $(BIN_DIR) 2> NUL
 	@-erase /q lib\*.cs 2> NUL
 	@-erase /q vc*.pch 2> NUL
 	@-erase /q vc*.idb 2> NUL
 	@-erase /q vc*.pdb 2> NUL
 	@-erase /q librets.* 2> NUL
 	@-erase /q *.obj 2> NUL
-	@-erase Search.exe Metadata.exe GetObject.exe librets_wrap.cpp librets-sharp.dll 2> NUL
+	@-erase librets_wrap.cpp 2> NUL
 
 distclean: clean
 	$(RM) $(GENERATED_SRC) librets_wrap*
