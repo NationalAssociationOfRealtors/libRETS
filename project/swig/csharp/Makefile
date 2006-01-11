@@ -8,7 +8,7 @@ WRAP = 	librets_wrap.cpp
 LIBRETS_CONFIG = ../../../librets-config-inplace
 LIBRETS_LIBS = `$(LIBRETS_CONFIG) --libs`
 CXXFLAGS = `$(LIBRETS_CONFIG) --cflags`
-LIBRETS_SHARP_DLL = librets-sharp.dll
+LIBRETS_SHARP_DLL = librets-dotnet.dll
 
 osname := $(shell perl -e 'use Config; print $$Config{osname};')
 
