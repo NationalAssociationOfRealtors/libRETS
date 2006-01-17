@@ -33,7 +33,7 @@ const char * SearchRequest::OFFSET_PARAMETER = "Offset";
 SearchRequest::SearchRequest(string searchType, string searchClass,
                              string query)
 {
-    SetQueryParameter(FORMAT_PARAMETER, "COMPACT-DECODED");
+    SetFormatType(COMPACT_DECODED);
     SetStandardNames(true);
     SetQueryType(DMQL2);
     SetQueryParameter(SEARCH_TYPE_PARAMETER, searchType);
@@ -41,7 +41,7 @@ SearchRequest::SearchRequest(string searchType, string searchClass,
     SetQueryParameter(QUERY_PARAMETER, query);
     SetCountType(RECORD_COUNT_AND_RESULTS);
     SetLimit(LIMIT_DEFAULT);
-	SetOffset(OFFSET_NONE);
+    SetOffset(OFFSET_NONE);
 }
 
 void SearchRequest::SetLimit(int limit)
@@ -110,6 +110,20 @@ void SearchRequest::SetQueryType(QueryType queryType)
             
         case DMQL2:
             SetQueryParameter(QUERY_TYPE_PARAMETER, "DMQL2");
+            break;
+    }
+}
+
+void SearchRequest::SetFormatType(FormatType formateType)
+{
+    switch (formateType)
+    {
+        case COMPACT:
+            SetQueryParameter(FORMAT_PARAMETER, "COMPACT");
+            break;
+
+        case COMPACT_DECODED:
+            SetQueryParameter(FORMAT_PARAMETER, "COMPACT-DECODED");
             break;
     }
 }

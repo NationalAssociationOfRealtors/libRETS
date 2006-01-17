@@ -97,9 +97,19 @@ class SearchRequest : public RetsHttpRequest
     };
     
     void SetQueryType(QueryType queryType);
+
+    enum FormatType
+    {
+        COMPACT,
+        COMPACT_DECODED
+    };
+
+    /**
+     * Sets the Format to request data as, COMPACT or COMPACT-DECODED.
+     */
+    void SetFormatType(FormatType formatType);
     
   private:
-    
     static const char * FORMAT_PARAMETER;
     static const char * STANDARD_NAMES_PARAMETER;
     static const char * QUERY_TYPE_PARAMETER;
@@ -109,7 +119,7 @@ class SearchRequest : public RetsHttpRequest
     static const char * COUNT_PARAMETER;
     static const char * SELECT_PARAMETER;
     static const char * LIMIT_PARAMETER;
-	static const char * OFFSET_PARAMETER;
+    static const char * OFFSET_PARAMETER;
 };
 
 };
