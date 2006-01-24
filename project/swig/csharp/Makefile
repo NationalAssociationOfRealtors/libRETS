@@ -37,6 +37,7 @@ librets.so: librets_wrap.o
 
 clean:
 	$(RM) *.o $(LIBRETS_SHARP_DLL) librets.so $(SAMPLE_EXE)
+	$(RM) -rf bin
 
 distclean: clean
 	$(RM) $(GENERATED_SRC) librets_wrap*
