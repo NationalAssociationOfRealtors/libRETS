@@ -9,9 +9,16 @@ elsif PLATFORM =~ /linux/
   CONFIG['LDSHARED'].sub!(/\$\(CC\)/, "$(CXX)")
 end
 
-librets_config = with_config("librets-config", "librets-config")
-$libs += ' ' + `#{librets_config} --libs`.chomp
-$CFLAGS += ' ' + `#{librets_config} --cflags`.chomp
+if PLATFORM =~ /darwin/ || PLATFORM =~ /linux/
+  librets_config = with_config("librets-config", "librets-config")
+  $libs += ' ' + `#{librets_config} --libs`.chomp
+  $CFLAGS += ' ' + `#{librets_config} --cflags`.chomp
+elsif PLATFORM =~ /win32/
+  $CFLAGS += ' /MD /DBOOST_USE_WINDOWS_H /GR /GX /nologo -I../../librets/include -Ic:/odbcrets/vendor/boost'
+  $libs += ' ../../librets/src/build/librets.lib winmm.lib'
+#  $LDFLAGS += ' 
+end
+
 
 create_makefile('librets')
 
