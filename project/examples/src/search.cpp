@@ -37,6 +37,7 @@ int main(int argc, char * argv[])
         string select;
         string query;
         bool standardNames = true;
+        SearchRequest::FormatType format = SearchRequest::COMPACT_DECODED;
         int limit;
         int offset;
         SearchRequest::CountType count;
@@ -61,6 +62,7 @@ int main(int argc, char * argv[])
             ("query,q", po::value<string>(&query)
              ->default_value("(ListPrice=300000-)"), "Search query")
             ("system-names,S", "Use system names, instead of standard names")
+            ("compact", "Use COMPACT instead of COMPACT-DECODED")
             ("limit,L", po::value<int>(&limit)
              ->default_value(defaultLimit), "Set the limit")
             ("offset,O", po::value<int>(&offset)
@@ -76,6 +78,10 @@ int main(int argc, char * argv[])
         if (options.count("system-names"))
         {
             standardNames = false;
+        }
+        if (options.count("compact"))
+        {
+            format = SearchRequest::COMPACT;
         }
         
         if (countString == "yes")
@@ -113,6 +119,7 @@ int main(int argc, char * argv[])
         searchRequest->SetLimit(limit);
         searchRequest->SetOffset(offset);
         searchRequest->SetCountType(count);
+        searchRequest->SetFormatType(format);
         
         SearchResultSetAPtr results = session->Search(searchRequest.get());
         if (printCount)

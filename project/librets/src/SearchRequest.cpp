@@ -114,9 +114,9 @@ void SearchRequest::SetQueryType(QueryType queryType)
     }
 }
 
-void SearchRequest::SetFormatType(FormatType formateType)
+void SearchRequest::SetFormatType(FormatType formatType)
 {
-    switch (formateType)
+    switch (formatType)
     {
         case COMPACT:
             SetQueryParameter(FORMAT_PARAMETER, "COMPACT");
