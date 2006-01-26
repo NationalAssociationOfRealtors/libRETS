@@ -63,7 +63,6 @@
 		5559722908CF66F6003A6B24 /* DmqlExpressionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5559722808CF66F6003A6B24 /* DmqlExpressionTest.cpp */; };
 		5570976B08FDC4530067D309 /* TestMetadataLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5570976A08FDC4530067D309 /* TestMetadataLoader.cpp */; };
 		55B7EAE5080EC4AA00245DFA /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
-		55B7EAE6080EC4AA00245DFA /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
 		55B7EAE7080EC4AA00245DFA /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
 		55BD538E07FBB7BA00526D69 /* DisclosableView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD538D07FBB7BA00526D69 /* DisclosableView.framework */; };
 		55BD55B507FBDF0500526D69 /* DisclosableView.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55BD538D07FBB7BA00526D69 /* DisclosableView.framework */; };
@@ -603,7 +602,6 @@
 				55BD580A07FDB03100526D69 /* libexpat.a in Frameworks */,
 				55BD580B07FDB03100526D69 /* libantlr.a in Frameworks */,
 				55BD580C07FDB03100526D69 /* libcppunit.dylib in Frameworks */,
-				55B7EAE6080EC4AA00245DFA /* libboost_filesystem.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1746,6 +1744,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../librets/test/src/librets_test_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = ../librets/include;
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
@@ -1755,8 +1754,9 @@
 					"$(SRCROOT)/../../build/xcode/Development",
 				);
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = /usr/local/lib/libboost_filesystem.a;
 				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
 				PRODUCT_NAME = test;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
@@ -1774,6 +1774,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../librets/test/src/librets_test_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = ../librets/include;
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
@@ -1783,8 +1784,9 @@
 					"$(SRCROOT)/../../build/xcode/Development",
 				);
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = /usr/local/lib/libboost_filesystem.a;
 				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
 				PRODUCT_NAME = test;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
@@ -1800,6 +1802,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../librets/test/src/librets_test_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = ../librets/include;
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
@@ -1809,8 +1812,9 @@
 					"$(SRCROOT)/../../build/xcode/Development",
 				);
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = /usr/local/lib/libboost_filesystem.a;
 				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
 				PRODUCT_NAME = test;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
