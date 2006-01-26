@@ -109,7 +109,7 @@ void GetObjectResponse::ParseSinglePart(RetsHttpResponsePtr httpResponse)
     string objectId = httpResponse->GetHeader("Object-ID");
     descriptor->SetObjectId(lexical_cast<int>(objectId));
     descriptor->SetDescription(httpResponse->GetHeader("Content-Description"));
-    descriptor->SetData(httpResponse->GetInputStream());
+    descriptor->SetDataStream(httpResponse->GetInputStream());
     descriptor->SetLocationUrl(httpResponse->GetHeader("Location"));
     mObjects.push_back(descriptor);
 }
@@ -202,7 +202,7 @@ void GetObjectResponse::ParsePartStream(istreamPtr in)
             objectDescriptor->SetDescription(value);
         }
     }
-    objectDescriptor->SetData(in);
+    objectDescriptor->SetDataStream(in);
     mObjects.push_back(objectDescriptor);
 }
 

@@ -23,10 +23,14 @@
  *
  */
 
+#include <iostream>
 #include "librets/ObjectDescriptor.h"
+#include "librets/util.h"
 
 using namespace librets;
+using namespace librets::util;
 using std::string;
+using std::istream;
 
 string ObjectDescriptor::GetObjectKey() const
 {
@@ -78,12 +82,45 @@ void ObjectDescriptor::SetContentType(string contentType)
     mContentType = contentType;
 }
 
-istreamPtr ObjectDescriptor::GetData()
+istreamPtr ObjectDescriptor::GetDataStream()
 {
-    return mData;
+    return mDataStream;
 }
 
-void ObjectDescriptor::SetData(istreamPtr data)
+void ObjectDescriptor::SetDataStream(istreamPtr dataStream)
 {
-    mData = data;
+    mDataStream = dataStream;
+}
+
+BinaryDataAPtr ObjectDescriptor::GetData()
+{
+	BinaryDataAPtr data(new BinaryData());
+	data->ReadToEof(*mDataStream);
+	return data;
+}
+
+int BinaryData::Size() const
+{
+	return mData.size();
+}
+
+string BinaryData::AsString() const
+{
+	return mData;
+}
+
+const char * BinaryData::AsChar() const
+{
+	return mData.data();
+}
+
+void BinaryData::ReadToEof(istream & inputStream)
+{
+	mData.clear();
+	readIntoString(inputStream, mData);
+}
+
+void BinaryData::Copy(unsigned char buffer[], int length) const
+{
+	mData.copy((char *) buffer, length);
 }

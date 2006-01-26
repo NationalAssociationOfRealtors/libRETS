@@ -129,9 +129,21 @@ void NS::readUntilEof(istream & inputStream, ostream & outputStream)
     }
 }
 
+void NS::readIntoString(istream & inputStream, string & aString)
+{
+	while (!inputStream.eof())
+	{
+		char buffer[4096];
+		int length;
+        inputStream.read(buffer, sizeof(buffer));
+        length = inputStream.gcount();
+        aString.append(buffer, length);
+	}
+}
+
 string NS::readIntoString(istream & inputStream)
 {
-    ostringstream buffer;
-    readUntilEof(inputStream, buffer);
-    return buffer.str();
+	string aString;
+	readIntoString(inputStream, aString);
+	return aString;
 }

@@ -22,6 +22,21 @@
 #include "librets/std_forward.h"
 
 namespace librets {
+	
+class BinaryData
+{
+  public:
+	int Size() const;
+	std::string AsString() const;
+	const char * AsChar() const;
+	void Copy(unsigned char buffer[], int length) const; 
+	void ReadToEof(std::istream & inputStream);
+	
+  private:
+	std::string mData;
+};
+
+typedef std::auto_ptr<BinaryData> BinaryDataAPtr;
 
 class ObjectDescriptor : public RetsObject
 {
@@ -47,9 +62,11 @@ class ObjectDescriptor : public RetsObject
     
     void SetContentType(std::string contentType);
     
-    istreamPtr GetData();
+    istreamPtr GetDataStream();
     
-    void SetData(istreamPtr data);
+    void SetDataStream(istreamPtr dataStream);
+	
+	BinaryDataAPtr GetData();
     
   private:
     std::string mObjectKey;
@@ -57,7 +74,7 @@ class ObjectDescriptor : public RetsObject
     std::string mDescription;
     std::string mLocationUrl;
     std::string mContentType;
-    istreamPtr mData;
+    istreamPtr mDataStream;
 };
     
 }

@@ -41,6 +41,8 @@ bool splitField(const std::string & field, const std::string & delimiter,
 
 void readUntilEof(std::istream & inputStream, std::ostream & outputStream);
 
+void readIntoString(std::istream & inputStream, std::string & aString);
+
 std::string readIntoString(std::istream & inputStream);
 
 std::string urlEncode(const std::string & aString);

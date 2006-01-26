@@ -32,17 +32,19 @@ public class Search
                 Console.Write(", desription: " + description);
             Console.WriteLine();
             
-            /* This doesn't work yet...
-            string data = objectDescriptor.GetStringData();
-            Console.WriteLine("Data length: " + data.Length);
-            string suffix = "jpg";
-            string outputFileName = objectKey + "-" + objectId + "." + suffix;
+            Hashtable extensions = new Hashtable();
+            extensions["image/jpeg"] = "jpg";
+            extensions["image/gif"] = "gif";
+            
+            byte[] data = objectDescriptor.GetDataBytes();
+            string extension = (string) extensions[contentType];
+            string outputFileName = objectKey + "-" + objectId + "." +
+                extension;
             Stream outputStream = File.OpenWrite(outputFileName);
             BinaryWriter w = new BinaryWriter(outputStream);
             w.Write(data);
             w.Close();
             outputStream.Close();
-            */
         }
 
         session.Logout();

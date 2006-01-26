@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <cppunit/extensions/HelperMacros.h>
 #include "testUtil.h"
 #include "librets/GetObjectResponse.h"
@@ -66,7 +67,7 @@ void CLASS::testSinglePart()
     
     istreamPtr data = getResource("abc123-1.gif");
     string expected = readIntoString(*data);
-    data = objectDescriptor->GetData();
+    data = objectDescriptor->GetDataStream();
     CPPUNIT_ASSERT(data);
     string actual = readIntoString(*data);
     ASSERT_EQUAL(size_t(94), actual.size());
@@ -91,7 +92,7 @@ void CLASS::testSinglePartLocation()
     ASSERT_STRING_EQUAL("http://www.example.com/images/abc123.gif",
                         objectDescriptor->GetLocationUrl());
     
-    istreamPtr data = objectDescriptor->GetData();
+    istreamPtr data = objectDescriptor->GetDataStream();
     CPPUNIT_ASSERT(data);
     string actual = readIntoString(*data);
     ASSERT_STRING_EQUAL("", actual);
@@ -157,7 +158,7 @@ void CLASS::testMultiPartLocation()
     ASSERT_STRING_EQUAL("http://www.example.com/images/abc123/1",
                         objectDescriptor->GetLocationUrl());
     
-    dataStream = objectDescriptor->GetData();
+    dataStream = objectDescriptor->GetDataStream();
     CPPUNIT_ASSERT(dataStream);
     data = readIntoString(*dataStream);
     ASSERT_STRING_EQUAL("", data);
@@ -172,7 +173,7 @@ void CLASS::testMultiPartLocation()
     ASSERT_STRING_EQUAL("http://www.example.com/images/abc123/2",
                         objectDescriptor->GetLocationUrl());
     
-    dataStream = objectDescriptor->GetData();
+    dataStream = objectDescriptor->GetDataStream();
     CPPUNIT_ASSERT(dataStream);
     data = readIntoString(*dataStream);
     ASSERT_STRING_EQUAL("", data);
@@ -187,7 +188,7 @@ void CLASS::testMultiPartLocation()
     ASSERT_STRING_EQUAL("http://www.example.com/images/abc123/3",
                         objectDescriptor->GetLocationUrl());
     
-    dataStream = objectDescriptor->GetData();
+    dataStream = objectDescriptor->GetDataStream();
     CPPUNIT_ASSERT(dataStream);
     data = readIntoString(*dataStream);
     ASSERT_STRING_EQUAL("", data);

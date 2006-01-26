@@ -94,7 +94,7 @@ int main(int argc, char * argv[])
             string outputFileName = outputPrefix + objectKey + "-" +
                 lexical_cast<string>(objectId) + "." + suffix;
             ofstream outputStream(outputFileName.c_str());
-            istreamPtr inputStream = objectDescriptor->GetData();
+            istreamPtr inputStream = objectDescriptor->GetDataStream();
             readUntilEof(*inputStream, outputStream);
         }
     

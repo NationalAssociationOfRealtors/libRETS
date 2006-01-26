@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_STD_FORWARD_H
 #define LIBRETS_STD_FORWARD_H
 
@@ -28,6 +29,10 @@ namespace librets {
 typedef boost::shared_ptr<std::istream> istreamPtr;
 typedef boost::shared_ptr<std::ostream> ostreamPtr;
 typedef boost::shared_ptr<std::iostream> iostreamPtr;
+
+typedef std::auto_ptr<std::istream> istreamAPtr;
+typedef std::auto_ptr<std::ostream> ostreamAPtr;
+typedef std::auto_ptr<std::iostream> iostreamAPtr;
 
 typedef std::map<std::string, std::string> StringMap;
 

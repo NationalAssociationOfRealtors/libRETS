@@ -19,6 +19,24 @@ using std::string;
 %include "auto_ptr_release.i"
 
 %template(StringVector) std::vector<std::string>;
+%template(ByteVector) std::vector<unsigned char>;
+
+%typemap(ctype)  unsigned char[] "unsigned char*"
+%typemap(cstype) unsigned char[] "byte[]"
+%typemap(csin)   unsigned char[] "$csinput"
+%typemap(imtype) unsigned char[] "byte[]"
+%typemap(in)     unsigned char[] {$1 = $input;}
+
+#if 0
+%typemap(ctype) unsigned char * "unsigned char *"
+%typemap(imtype, out="byte[]") unsigned char * "byte[]"
+%typemap(cstype) unsigned char * "byte[]"
+#endif
+
+%typemap(out) std::vector<unsigned char>
+{
+    
+}
 
 %exception {
     try {
@@ -113,6 +131,30 @@ class GetObjectRequest
     void AddAllObjects(std::string resourceEntity);
 };
 
+class BinaryData
+{
+  public:
+  	int Size() const;
+  	std::string AsString() const;
+  	const char * AsChar() const;
+  	void Copy(unsigned char buffer[], int length) const; 
+  	void ReadToEof(std::istream & inputStream);
+};
+typedef std::auto_ptr<BinaryData> BinaryDataAPtr;
+SWIG_AUTO_PTR_RELEASE(BinaryData);
+
+%typemap(cscode) ObjectDescriptor %{
+    public byte[] GetDataBytes()
+    {
+        BinaryData binaryData = GetData();
+        int length = binaryData.Size();
+        byte[] bytes = new byte[length];
+        binaryData.Copy(bytes, bytes.Length);
+        return bytes;
+    }
+%}
+
+
 class ObjectDescriptor
 {
   public:
@@ -126,43 +168,13 @@ class ObjectDescriptor
     
     std::string GetContentType() const;
     
-#if 0
-    // This doesn't work yet.  I'm having trouble getting an array of
-    // bytes across the SWIG boundary.
-    %newobject GetData;
-    %extend {
-        void GetData2(char **data, int *size)
-        {
-            std::stringstream outputStream;
-            istreamPtr inputStream = self->GetData();
-            readUntilEof(*inputStream, outputStream);
-            std::string stringData = outputStream.str();
-            *size = stringData.length();
-            *data = (char *) malloc(*size);
-            memcpy(*data, stringData.data(), *size);
-        }
-        
-        char * GetData()
-        {
-            std::stringstream outputStream;
-            istreamPtr inputStream = self->GetData();
-            readUntilEof(*inputStream, outputStream);
-            std::string stringData = outputStream.str();
-            int length = stringData.length();
-            char * data = (char *) malloc(length);
-            memcpy(data, stringData.data(), length);
-            return data;
-        }
-    }
-#endif
+    BinaryDataAPtr GetData();
+    
     %extend {
         std::string GetStringData()
         {
-            std::stringstream outputStream;
-            istreamPtr inputStream = self->GetData();
-            readUntilEof(*inputStream, outputStream);
-            std::string stringData = outputStream.str();
-            return stringData;
+            istreamPtr inputStream = self->GetDataStream();
+            return readIntoString(*inputStream);
         }
     }
 };
