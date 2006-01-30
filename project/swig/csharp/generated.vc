@@ -1,7 +1,10 @@
 # Automatically generated file list.  Edits will be overwritten.
 GENERATED_SRC = \
+	lib\BinaryData.cs \
+	lib\ByteVector.cs \
 	lib\GetObjectRequest.cs \
 	lib\GetObjectResponse.cs \
+	lib\InputStreamBridge.cs \
 	lib\LogoutResponse.cs \
 	lib\MetadataClass.cs \
 	lib\MetadataClassList.cs \
