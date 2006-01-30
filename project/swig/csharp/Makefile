@@ -29,11 +29,11 @@ Metadata.exe: Metadata.cs $(LIBRETS_SHARP_DLL) librets.so
 GetObject.exe: GetObject.cs $(LIBRETS_SHARP_DLL) librets.so
 	mcs -r:$(LIBRETS_SHARP_DLL) GetObject.cs
 
-$(LIBRETS_SHARP_DLL): librets.so $(GENERATED_SRC)
-	mcs -target:library -out:$(LIBRETS_SHARP_DLL) $(GENERATED_SRC)
+$(LIBRETS_SHARP_DLL): librets.so $(GENERATED_SRC) CppInputStream.cs
+	mcs -target:library -out:$(LIBRETS_SHARP_DLL) $(GENERATED_SRC) CppInputStream.cs
 
-librets.so: librets_wrap.o
-	$(LINK) -o librets.so librets_wrap.o $(LIBRETS_LIBS)
+librets.so: librets_wrap.o librets_sharp.o
+	$(LINK) -o librets.so librets_wrap.o librets_sharp.o $(LIBRETS_LIBS)
 
 clean:
 	$(RM) *.o $(LIBRETS_SHARP_DLL) librets.so $(SAMPLE_EXE)

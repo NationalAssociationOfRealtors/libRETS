@@ -27,10 +27,11 @@ while object_descriptor = get_object_response.NextObject
   print ", description: #{description}" if !description.empty?
   puts
   
-#  puts object_descriptor.GetData
   suffix = content_type_suffixes[content_type]
   output_file_name = object_key + "-" + object_id.to_s + "." + suffix
-  File.open(output_file_name, "w") { |f| f << object_descriptor.GetStringData }
+  File.open(output_file_name, "w") do |f|
+    f << object_descriptor.GetDataAsString
+  end
 end
 
 session.Logout()

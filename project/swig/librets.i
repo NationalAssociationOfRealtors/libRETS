@@ -1,5 +1,12 @@
 %module librets
 
+
+#ifdef SWIGCSHARP
+%{
+#include "librets_sharp.h"
+%}
+#endif
+
 %{
 #include "librets.h"
 #include <iostream>
@@ -21,16 +28,12 @@ using std::string;
 %template(StringVector) std::vector<std::string>;
 %template(ByteVector) std::vector<unsigned char>;
 
+#ifdef SWIGCSHARP
 %typemap(ctype)  unsigned char[] "unsigned char*"
 %typemap(cstype) unsigned char[] "byte[]"
 %typemap(csin)   unsigned char[] "$csinput"
 %typemap(imtype) unsigned char[] "byte[]"
 %typemap(in)     unsigned char[] {$1 = $input;}
-
-#if 0
-%typemap(ctype) unsigned char * "unsigned char *"
-%typemap(imtype, out="byte[]") unsigned char * "byte[]"
-%typemap(cstype) unsigned char * "byte[]"
 #endif
 
 %typemap(out) std::vector<unsigned char>
@@ -116,7 +119,11 @@ SWIG_AUTO_PTR_RELEASE(LogoutResponse);
 /****************************************************************************
  * GetObject
  ***************************************************************************/
- 
+
+typedef std::auto_ptr<InputStreamBridge> InputStreamBridgeAPtr;
+SWIG_AUTO_PTR_RELEASE(InputStreamBridge);
+
+
 class GetObjectRequest
 {
   public:
@@ -131,6 +138,39 @@ class GetObjectRequest
     void AddAllObjects(std::string resourceEntity);
 };
 
+
+/*
+ * Handling of the binary object data is a bit tricky.  Each language has
+ * its own issues.
+ *
+ * Ruby
+ * ====
+ *
+ * In Ruby, characters are 8-bits and strings may contain null characters.
+ * This is very similar to C++ strings, so the binary data can be retrieved
+ * with std::string.
+ *
+ * C#
+ * ==
+ *
+ * In C#, characters are 16-bits, so strings cannot be used to represent
+ * binary data.  C# does have a byte type, and a byte array (byte[]) can
+ * be used to represent binary data.  The object data stream is also
+ * represented as a native C# stream, using an intermediate bridge class
+ * (InputStreamBridge).
+ */
+ 
+ 
+#ifdef SWIGCSHARP
+
+%nodefault InputStreamBridge;
+class InputStreamBridge
+{
+  public:
+    int readByte() const;
+    int read(unsigned char buffer[], int offset, int length) const; 
+};
+
 class BinaryData
 {
   public:
@@ -138,13 +178,12 @@ class BinaryData
   	std::string AsString() const;
   	const char * AsChar() const;
   	void Copy(unsigned char buffer[], int length) const; 
-  	void ReadToEof(std::istream & inputStream);
 };
 typedef std::auto_ptr<BinaryData> BinaryDataAPtr;
 SWIG_AUTO_PTR_RELEASE(BinaryData);
 
 %typemap(cscode) ObjectDescriptor %{
-    public byte[] GetDataBytes()
+    public byte[] GetDataAsBytes()
     {
         BinaryData binaryData = GetData();
         int length = binaryData.Size();
@@ -152,8 +191,14 @@ SWIG_AUTO_PTR_RELEASE(BinaryData);
         binaryData.Copy(bytes, bytes.Length);
         return bytes;
     }
+    
+    public System.IO.Stream GetDataStream()
+    {
+        return new CppInputStream(GetDataStreamBridge());
+    }
 %}
 
+#endif
 
 class ObjectDescriptor
 {
@@ -168,16 +213,30 @@ class ObjectDescriptor
     
     std::string GetContentType() const;
     
-    BinaryDataAPtr GetData();
-    
+#ifdef SWIGRUBY
     %extend {
-        std::string GetStringData()
+        std::string GetDataAsString()
         {
             istreamPtr inputStream = self->GetDataStream();
             return readIntoString(*inputStream);
         }
     }
+#endif
+    
+#ifdef SWIGCSHARP
+    BinaryDataAPtr GetData();
+
+    %extend {
+        InputStreamBridgeAPtr GetDataStreamBridge()
+        {
+            InputStreamBridgeAPtr streamBridge(
+                new InputStreamBridge(self->GetDataStream()));
+            return streamBridge;
+        }
+    }
+#endif
 };
+
 
 class GetObjectResponse
 {
