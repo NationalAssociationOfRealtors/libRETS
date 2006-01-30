@@ -1,6 +1,12 @@
 
 GENERATED_SRC = $(wildcard lib/*.cs)
 
+LIBRETS_UNMANAGED_OBJ = librets_wrap.o librets_sharp.o
+LIBRETS_UNMANAGED_DLL = librets.so
+
+LIBRETS_MANAGED_SRC = $(GENERATED_SRC) CppInputStream.cs
+LIBRETS_MANAGED_DLL = librets-dotnet.dll
+
 SAMPLE_EXE = Search.exe Metadata.exe GetObject.exe
 
 WRAP = 	librets_wrap.cpp
@@ -8,7 +14,6 @@ WRAP = 	librets_wrap.cpp
 LIBRETS_CONFIG = ../../../librets-config-inplace
 LIBRETS_LIBS = `$(LIBRETS_CONFIG) --libs`
 CXXFLAGS = `$(LIBRETS_CONFIG) --cflags`
-LIBRETS_SHARP_DLL = librets-dotnet.dll
 
 osname := $(shell perl -e 'use Config; print $$Config{osname};')
 
@@ -18,25 +23,25 @@ else
 LINK = g++ -shared
 endif
 
-all: librets.so $(SAMPLE_EXE)
+all: $(LIBRETS_MANAGED_DLL) $(SAMPLE_EXE)
 
-Search.exe: Search.cs $(LIBRETS_SHARP_DLL) librets.so
-	mcs -r:$(LIBRETS_SHARP_DLL) Search.cs
+Search.exe: Search.cs $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
+	mcs -r:$(LIBRETS_MANAGED_DLL) Search.cs
 
-Metadata.exe: Metadata.cs $(LIBRETS_SHARP_DLL) librets.so
-	mcs -r:$(LIBRETS_SHARP_DLL) Metadata.cs
+Metadata.exe: Metadata.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
+	mcs -r:$(LIBRETS_MANAGED_DLL) Metadata.cs
 
-GetObject.exe: GetObject.cs $(LIBRETS_SHARP_DLL) librets.so
-	mcs -r:$(LIBRETS_SHARP_DLL) GetObject.cs
+GetObject.exe: GetObject.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
+	mcs -r:$(LIBRETS_MANAGED_DLL) GetObject.cs
 
-$(LIBRETS_SHARP_DLL): librets.so $(GENERATED_SRC) CppInputStream.cs
-	mcs -target:library -out:$(LIBRETS_SHARP_DLL) $(GENERATED_SRC) CppInputStream.cs
+$(LIBRETS_MANAGED_DLL): $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_MANAGED_SRC)
+	mcs -target:library -out:$(LIBRETS_MANAGED_DLL) $(LIBRETS_MANAGED_SRC)
 
-librets.so: librets_wrap.o librets_sharp.o
-	$(LINK) -o librets.so librets_wrap.o librets_sharp.o $(LIBRETS_LIBS)
+$(LIBRETS_UNMANAGED_DLL): $(LIBRETS_UNMANAGED_OBJ)
+	$(LINK) -o $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_OBJ) $(LIBRETS_LIBS)
 
 clean:
-	$(RM) *.o $(LIBRETS_SHARP_DLL) librets.so $(SAMPLE_EXE)
+	$(RM) *.o $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL) $(SAMPLE_EXE)
 	$(RM) -rf bin
 
 distclean: clean
