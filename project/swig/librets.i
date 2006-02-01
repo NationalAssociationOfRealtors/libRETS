@@ -25,6 +25,7 @@ using std::string;
 %include "exception.i"
 %include "auto_ptr_release.i"
 
+typedef std::vector<std::string> StringVector;
 %template(StringVector) std::vector<std::string>;
 %template(ByteVector) std::vector<unsigned char>;
 
@@ -267,7 +268,71 @@ SWIG_AUTO_PTR_RELEASE(GetObjectResponse);
  * Metadata
  ***************************************************************************/
  
-class MetadataSystem
+class MetadataElement
+{
+  public:
+    enum MetadataType
+    {
+        /** System metadata. */
+        SYSTEM,
+        /** Resource metadata. */
+        RESOURCE,
+        /** Class metadata. */
+        CLASS,
+        /** Table metadata. */
+        TABLE,
+        /** Update metadata. */
+        UPDATE,
+        /** Update type metadata. */
+        UPDATE_TYPE,
+        /** Object metadata. */
+        OBJECT,
+        /** Search help metadata. */
+        SEARCH_HELP,
+        /** Edit mask metadata. */
+        EDIT_MASK,
+        /** Lookup metadata. */
+        LOOKUP,
+        /** Lookup type metadata. */
+        LOOKUP_TYPE,
+        /** Update help metadata. */
+        UPDATE_HELP,
+        /** Validation lookup metadata. */
+        VALIDATION_LOOKUP,
+        /** Validation lookup type metadata. */
+        VALIDATION_LOOKUP_TYPE,
+        /** Validation external metadata. */
+        VALIDATION_EXTERNAL,
+        /** Validation external type metadata. */
+        VALIDATION_EXTERNAL_TYPE,
+        /** Validation expression metadata. */
+        VALIDATION_EXPRESSION,
+        /** Foreign key metadata. */
+        FOREIGN_KEY
+    };
+    typedef MetadataType Type;
+
+    %rename(GetMetadataType) GetType() const;
+    virtual MetadataType GetType() const = 0;
+    
+    StringVector GetAttributeNames() const;
+
+    std::string GetStringAttribute(std::string attributeName,
+                                   std::string defaultValue = "") const;
+   
+    int GetIntAttribute(std::string attributeName, int defaultValue = 0) const;
+    
+    bool GetBoolAttribute(std::string attributeName, bool defaultValue = false)
+        const;
+
+    virtual std::string GetId() const;
+
+    std::string GetLevel() const;
+
+    std::string GetPath() const;
+};
+
+class MetadataSystem : public MetadataElement
 {
   public:
     std::string GetSystemID() const;  
@@ -275,7 +340,7 @@ class MetadataSystem
     std::string GetComments() const;
 };
 
-class MetadataResource
+class MetadataResource : public MetadataElement
 {
   public:
     std::string GetId() const;
@@ -287,7 +352,7 @@ class MetadataResource
 typedef std::vector<MetadataResource *> MetadataResourceList;
 %template(MetadataResourceList) std::vector<MetadataResource *>;
 
-class MetadataClass
+class MetadataClass : public MetadataElement
 {
   public:
     virtual std::string GetId() const;
@@ -299,7 +364,7 @@ class MetadataClass
 typedef std::vector<MetadataClass *> MetadataClassList;
 %template(MetadataClassList) std::vector<MetadataClass *>;
 
-class MetadataTable
+class MetadataTable : public MetadataElement
 {
   public:
     std::string GetSystemName() const;

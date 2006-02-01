@@ -95,6 +95,13 @@ class MetadataElement : public RetsObject
     virtual MetadataType GetType() const = 0;
 
     /**
+     * Returns all attirbute names.
+     *
+     * @return all attribute names
+     */
+    StringVector GetAttributeNames() const;
+
+    /**
      * Returns the value of an attribute.
      *
      * @param attributeName the name of an attribute

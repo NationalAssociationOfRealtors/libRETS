@@ -38,6 +38,17 @@ CLASS::~CLASS()
 {
 }
 
+StringVector CLASS::GetAttributeNames() const
+{
+    StringVector attributeNames;
+    StringMap::const_iterator i;
+    for (i = mAttributes.begin(); i != mAttributes.end(); i++)
+    {
+        attributeNames.push_back(i->first);
+    }
+    return attributeNames;
+}
+
 string CLASS::GetStringAttribute(string attributeName,
                                  string defaultValue) const
 {

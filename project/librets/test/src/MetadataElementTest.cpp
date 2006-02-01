@@ -32,6 +32,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGetBoolAttribute);
     CPPUNIT_TEST(testGetPath);
     CPPUNIT_TEST(testIdEqualPred);
+    CPPUNIT_TEST(testGetAttributeNames);
     CPPUNIT_TEST_SUITE_END();
     
   protected:
@@ -39,6 +40,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testGetBoolAttribute();
     void testGetPath();
     void testIdEqualPred();
+    void testGetAttributeNames();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -109,4 +111,17 @@ void CLASS::testIdEqualPred()
     CPPUNIT_ASSERT(!idThree(&element1));
     CPPUNIT_ASSERT(!idThree(&element2));
     CPPUNIT_ASSERT(!idThree(&element3));
+}
+
+void CLASS::testGetAttributeNames()
+{
+    TestMetadataElement element;
+    element.SetAttribute("field1", "foo");
+    element.SetAttribute("field2", "bar");
+    
+    StringVector names = element.GetAttributeNames();
+    set<string> setOfNames(names.begin(), names.end());
+    ASSERT_EQUAL(size_t(2), setOfNames.size());
+    ASSERT_EQUAL(size_t(1), setOfNames.count("field1"));
+    ASSERT_EQUAL(size_t(1), setOfNames.count("field2"));
 }
