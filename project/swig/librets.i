@@ -238,6 +238,22 @@ class ObjectDescriptor
 };
 
 
+
+%typemap(csimports) GetObjectResponse %{
+using System;
+using System.Runtime.InteropServices;
+using System.Collections;
+%};
+%typemap(csbase) GetObjectResponse "IEnumerable";
+
+%typemap(cscode) GetObjectResponse %{
+    public IEnumerator GetEnumerator()
+    {
+        return new ObjectDescriptorEnumerator(this);
+    }
+%}
+
+
 class GetObjectResponse
 {
   public:

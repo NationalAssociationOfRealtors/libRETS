@@ -26,9 +26,7 @@ public class Search
         request.AddAllObjects("LN000001");
         
         GetObjectResponse response = session.GetObject(request);
-        ObjectDescriptor objectDescriptor;
-
-        while ((objectDescriptor = response.NextObject()) != null)
+        foreach(ObjectDescriptor objectDescriptor in response)
         {
             string objectKey = objectDescriptor.GetObjectKey();
             int objectId = objectDescriptor.GetObjectId();
