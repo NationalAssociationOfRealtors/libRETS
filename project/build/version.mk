@@ -1,1 +1,1 @@
-VERSION = 1.1.0b2
+VERSION = 1.1.0b3
