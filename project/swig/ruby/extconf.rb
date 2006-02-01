@@ -9,6 +9,7 @@ elsif PLATFORM =~ /linux/
   CONFIG['LDSHARED'].sub!(/\$\(CC\)/, "$(CXX)")
 end
 
+makefile_prefix = ""
 if PLATFORM =~ /darwin/ || PLATFORM =~ /linux/
   librets_config = with_config("librets-config", "librets-config")
   $libs += ' ' + `#{librets_config} --libs`.chomp
@@ -16,6 +17,10 @@ if PLATFORM =~ /darwin/ || PLATFORM =~ /linux/
 elsif PLATFORM =~ /win32/
   $CFLAGS += ' $(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include'
   $libs += ' $(LIBRETS_LIB) winmm.lib'
+  makefile_prefix = %{
+!include <../../build/Makefile.vc>
+LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
+}
 end
 
 
@@ -23,11 +28,7 @@ create_makefile('librets')
 
 orig_makefile = IO::read("Makefile")
 File.open("Makefile", "w") do |mfile|
-  mfile.print %{
-!include <../../build/Makefile.vc>
-LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
-}
-
+  mfile << makefile_prefix
   mfile << orig_makefile
 
   mfile.print %{
