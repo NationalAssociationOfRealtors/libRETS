@@ -1,6 +1,8 @@
 !include config.vc
 !include version.mk
 
+NMAKE = nmake /nologo
+
 TYPE = static
 THIRD_PARTY_LIBS = static
 

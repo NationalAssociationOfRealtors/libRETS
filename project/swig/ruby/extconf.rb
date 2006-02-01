@@ -14,18 +14,28 @@ if PLATFORM =~ /darwin/ || PLATFORM =~ /linux/
   $libs += ' ' + `#{librets_config} --libs`.chomp
   $CFLAGS += ' ' + `#{librets_config} --cflags`.chomp
 elsif PLATFORM =~ /win32/
-  $CFLAGS += ' /MD /DBOOST_USE_WINDOWS_H /GR /GX /nologo -I../../librets/include -Ic:/odbcrets/vendor/boost'
-  $libs += ' ../../librets/src/build/librets.lib winmm.lib'
-#  $LDFLAGS += ' 
+  $CFLAGS += ' $(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include'
+  $libs += ' $(LIBRETS_LIB) winmm.lib'
 end
 
 
 create_makefile('librets')
 
-mfile = File.open("Makefile", "a")
+orig_makefile = IO::read("Makefile")
+File.open("Makefile", "w") do |mfile|
+  mfile.print %{
+!include <../../build/Makefile.vc>
+LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
+}
 
-mfile.print %{
+  mfile << orig_makefile
+
+  mfile.print %{
 librets_wrap.cxx: ../librets.i
 \tswig -c++ -ruby ../librets.i
+
+librets_wrap.cpp: ../librets.i
+\tswig -c++ -ruby ../librets.i
 }
-mfile.close
+end
+

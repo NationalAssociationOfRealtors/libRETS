@@ -1,0 +1,40 @@
+!include <../build/Makefile.vc>
+
+RUBY = ruby
+RUBY_MAKEFILE = ruby\Makefile
+RUBY_WRAP = ruby\librets_wrap.cpp
+
+SWIG_FILES = librets.i auto_ptr_release.i
+
+all: csharp_ ruby_
+
+csharp_:
+	cd csharp
+	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
+	cd ..
+
+ruby_: $(RUBY_WRAP) $(RUBY_MAKEFILE)
+	cd ruby
+	$(NMAKE) BUILD=release RUNTIME_LIBS=dynamic
+	cd ..
+
+$(RUBY_MAKEFILE): $(RUBY_WRAP) ruby\extconf.rb
+	 cd ruby
+	$(RUBY) extconf.rb
+	cd ..
+
+$(RUBY_WRAP): $(SWIG_FILES) lib/ruby/std_vector.i
+	$(SWIG) -c++ -ruby -o $(RUBY_WRAP) -Ilib/ruby librets.i
+
+clean: clean-csharp clean-ruby
+
+clean-csharp:
+	cd csharp
+	$(NMAKE) /f Makefile.vc clean
+	cd ..
+
+clean-ruby:
+	cd ruby
+	$(NMAKE) clean
+	cd ..
+	@-erase /q $(RUBY_WRAP) 2> NUL

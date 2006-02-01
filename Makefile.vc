@@ -1,7 +1,5 @@
 !include <project/build/Makefile.vc>
 
-NMAKE = nmake /nologo
-
 all:
 	cd project\librets\src
 	$(NMAKE) /f Makefile.vc
@@ -37,13 +35,19 @@ prepare:
 	@$(MKDIR_P) $(DISTDIR)
 	@$(MKDIR_P) $(DISTDIR)/doc/api
 	@$(MKDIR_P) $(DISTDIR)/lib
-	@$(MKDIR_P) $(DISTDIR)/bin
+	@$(MKDIR_P) $(DISTDIR)/dotnet
+	@$(MKDIR_P) $(DISTDIR)/ruby
 
 docs: prepare
 	rm -rf build/doc/api
 	cp project\build\Doxyfile.in project\build\Doxyfile
 	echo PROJECT_NUMBER=$(VERSION) >> project\build\Doxyfile
 	$(DOXYGEN) project\build\Doxyfile
+
+swig:
+	cd project\swig
+	$(NMAKE) -f Makefile.vc
+	cd ..\..
 
 lib-all-variants:
 	cd project\librets\src
@@ -52,9 +56,9 @@ lib-all-variants:
 	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=dynamic
 	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
 	cd ..\..\..
-	cd project\swig\csharp
+	cd project\swig
 	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
-	cd ..\..\..
+	cd ..\..
 
 dist: docs lib-all-variants _dist
 
@@ -62,7 +66,8 @@ _dist:
 	$(RSYNC) --delete build/doc/api/html $(DISTDIR)/doc/api
 	$(RSYNC) --delete project/librets/include $(DISTDIR)
 	cp -u project/librets/src/build/*.lib $(DISTDIR)/lib
-	cp -u project/swig/csharp/bin/*.dll $(DISTDIR)/bin
+	cp -u project/swig/csharp/bin/*.dll $(DISTDIR)/dotnet
+	cp -u project/swig/ruby/*.so $(DISTDIR)/ruby
 	rm -f $(DIST_ZIP)
 	cd build
 	zip -rq ../$(DIST_ZIP) $(DIST_BASE)

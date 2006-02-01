@@ -7,6 +7,12 @@
 %}
 #endif
 
+#ifdef SWIGRUBY
+%{
+#include "librets_ruby.h"
+%}
+#endif
+
 %{
 #include "librets.h"
 #include <iostream>
