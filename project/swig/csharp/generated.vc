@@ -8,6 +8,7 @@ GENERATED_SRC = \
 	lib\LogoutResponse.cs \
 	lib\MetadataClass.cs \
 	lib\MetadataClassList.cs \
+	lib\MetadataElement.cs \
 	lib\MetadataResource.cs \
 	lib\MetadataResourceList.cs \
 	lib\MetadataSystem.cs \
