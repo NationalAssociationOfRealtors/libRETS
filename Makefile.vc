@@ -13,6 +13,10 @@ clean:
 	cd ..\..\examples\src
 	$(NMAKE) /f Makefile.vc clean
 	cd ..\..\..
+	cd project\swig
+	$(NMAKE) /f Makefile.vc clean
+	cd ..\..
+	
 	@-rmdir /q  /s build 2>NUL
 	@-rmdir /q  /s dist 2>NUL
 
@@ -46,7 +50,7 @@ docs: prepare
 
 swig:
 	cd project\swig
-	$(NMAKE) -f Makefile.vc
+	$(NMAKE) /f Makefile.vc
 	cd ..\..
 
 lib-all-variants:
