@@ -19,6 +19,7 @@ header "post_include_hpp"
 #include <iostream>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
+#include <boost/lexical_cast.hpp>
 #include "librets/RetsAST.h"
 #include "librets/sql_forward.h"
 #include "librets/DmqlQuery.h"
@@ -63,6 +64,40 @@ void DmqlTreeParser::setTable(DmqlQueryPtr query, RefRetsAST tableAst,
     query->SetClass(components.at(2));
 }
 
+void DmqlTreeParser::setLimit(DmqlQueryPtr query, RefRetsAST limitAst)
+{
+    std::string limittext;
+
+    try
+    {
+        std::string limittext = limitAst->getText();
+        int limit = boost::lexical_cast<int>(limittext);
+        query->SetLimit(limit);
+    }
+    catch (boost::bad_lexical_cast&)
+    {
+        throwSemanticException("Could not convert limit to int: " + limittext,
+                               limitAst);
+    }
+}
+
+void DmqlTreeParser::setOffset(DmqlQueryPtr query, RefRetsAST offsetAst)
+{
+    std::string offsettext;
+    
+    try
+    {
+        std::string offsettext = offsetAst->getText();
+        int offset = boost::lexical_cast<int>(offsettext);
+        query->SetOffset(offset);
+    }
+    catch (boost::bad_lexical_cast&)
+    {
+        throwSemanticException(
+            "Could not convert offset to int: " + offsettext, offsetAst);
+    }
+}
+
 void DmqlTreeParser::assertValidTable(RefRetsAST ast)
 {
     std::string table = ast->getText();
@@ -101,6 +136,8 @@ options
   private:
     void setTable(DmqlQueryPtr query, RefRetsAST tableAst,
                   RefRetsAST aliasAst);
+    void setLimit(DmqlQueryPtr query, RefRetsAST limitAst);
+    void setOffset(DmqlQueryPtr query, RefRetsAST offsetAst);
     void assertValidTable(RefRetsAST ast);
     void throwSemanticException(std::string message, RefRetsAST ast);
     bool fieldIsLookup(std::string field);
@@ -127,6 +164,14 @@ column [DmqlQueryPtr q]
 
 table_name [DmqlQueryPtr q]
     : #(TABLE table:ID alias:ID)  { setTable(q, table, alias); }
+    ;
+
+limit [DmqlQueryPtr q]
+    : #(LIMIT l:INT) { setLimit(q, l); }
+    ;
+
+offset [DmqlQueryPtr q]
+    : #(OFFSET o:INT) { setOffset(q, o); }
     ;
 
 criteria returns [DmqlCriterionPtr criterion]

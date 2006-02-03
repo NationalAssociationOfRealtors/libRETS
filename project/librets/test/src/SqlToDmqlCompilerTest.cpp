@@ -65,6 +65,8 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGetAllObjects);
     CPPUNIT_TEST(testGetOneObject);
     CPPUNIT_TEST(testGetTwoObjects);
+    CPPUNIT_TEST(testLimit);
+    CPPUNIT_TEST(testOffset);
     CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -101,6 +103,8 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testGetAllObjects();
     void testGetOneObject();
     void testGetTwoObjects();
+    void testLimit();
+    void testOffset();
 
     DmqlQueryPtr sqlToDmql(string sql);
     GetObjectQueryPtr sqlToGetObject(string sql);
@@ -644,4 +648,50 @@ void CLASS::testGetTwoObjects()
     objectIds.push_back(1);
     objectIds.push_back(2);
     ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
+}
+
+void CLASS::testLimit()
+{
+    DmqlQueryPtr query =
+    sqlToDmql("select * "
+              " from data:Property:RES"
+              " where ListPrice = 300000"
+              " limit 5;");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+    
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+
+    StringVector columns;
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+
+    DmqlCriterionPtr criterion = eq("ListPrice", literal("300000"));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+
+    int limit = query->GetLimit();
+    ASSERT_EQUAL(5, limit);
+}
+
+void CLASS::testOffset()
+{
+    DmqlQueryPtr query =
+    sqlToDmql("select * "
+              " from data:Property:RES"
+              " where ListPrice = 300000"
+              " offset 5;");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+    
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+
+    StringVector columns;
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+
+    DmqlCriterionPtr criterion = eq("ListPrice", literal("300000"));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+
+    int offset = query->GetOffset();
+    ASSERT_EQUAL(5, offset);
 }

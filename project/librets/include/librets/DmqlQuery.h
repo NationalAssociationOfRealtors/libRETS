@@ -44,6 +44,14 @@ class DmqlQuery : public RetsObject
 
     void SetCriterion(DmqlCriterionPtr criterion);
 
+    int GetLimit() const;
+
+    void SetLimit(int limit);
+
+    int GetOffset() const;
+
+    void SetOffset(int offset);
+
     virtual std::ostream & Print(std::ostream & outputStream) const;
 
   private:
@@ -51,6 +59,8 @@ class DmqlQuery : public RetsObject
     std::string mClass;
     StringVectorPtr mFields;
     DmqlCriterionPtr mCriterion;
+    int mLimit;
+    int mOffset;
 };
 
 };

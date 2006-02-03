@@ -24,6 +24,7 @@ using std::string;
 using std::ostream;
 
 DmqlQuery::DmqlQuery()
+    : mLimit(0), mOffset(0)
 {
     mFields.reset(new StringVector());
 }
@@ -66,6 +67,26 @@ DmqlCriterionPtr DmqlQuery::GetCriterion() const
 void DmqlQuery::SetCriterion(DmqlCriterionPtr criterion)
 {
     mCriterion = criterion;
+}
+
+int DmqlQuery::GetLimit() const
+{
+    return mLimit;
+}
+
+void DmqlQuery::SetLimit(int limit)
+{
+    mLimit = limit;
+}
+
+int DmqlQuery::GetOffset() const
+{
+    return mOffset;
+}
+
+void DmqlQuery::SetOffset(int offset)
+{
+    mOffset = offset;
 }
 
 ostream & DmqlQuery::Print(std::ostream & outputStream) const
