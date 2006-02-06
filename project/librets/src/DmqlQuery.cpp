@@ -14,9 +14,11 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <iostream>
 #include "librets/DmqlQuery.h"
 #include "librets/util.h"
+#include "librets/SearchRequest.h"
 
 using namespace librets;
 using namespace librets::util;
@@ -24,7 +26,8 @@ using std::string;
 using std::ostream;
 
 DmqlQuery::DmqlQuery()
-    : mLimit(0), mOffset(0)
+    : mLimit(SearchRequest::LIMIT_DEFAULT),
+      mOffset(SearchRequest::OFFSET_NONE)
 {
     mFields.reset(new StringVector());
 }

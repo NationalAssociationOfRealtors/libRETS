@@ -66,35 +66,33 @@ void DmqlTreeParser::setTable(DmqlQueryPtr query, RefRetsAST tableAst,
 
 void DmqlTreeParser::setLimit(DmqlQueryPtr query, RefRetsAST limitAst)
 {
-    std::string limittext;
-
+    std::string limitText;
     try
     {
-        std::string limittext = limitAst->getText();
-        int limit = boost::lexical_cast<int>(limittext);
+        limitText = limitAst->getText();
+        int limit = boost::lexical_cast<int>(limitText);
         query->SetLimit(limit);
     }
     catch (boost::bad_lexical_cast&)
     {
-        throwSemanticException("Could not convert limit to int: " + limittext,
+        throwSemanticException("Could not convert limit to int: " + limitText,
                                limitAst);
     }
 }
 
 void DmqlTreeParser::setOffset(DmqlQueryPtr query, RefRetsAST offsetAst)
 {
-    std::string offsettext;
-    
+    std::string offsetText;
     try
     {
-        std::string offsettext = offsetAst->getText();
-        int offset = boost::lexical_cast<int>(offsettext);
+        offsetText = offsetAst->getText();
+        int offset = boost::lexical_cast<int>(offsetText);
         query->SetOffset(offset);
     }
     catch (boost::bad_lexical_cast&)
     {
         throwSemanticException(
-            "Could not convert offset to int: " + offsettext, offsetAst);
+            "Could not convert offset to int: " + offsetText, offsetAst);
     }
 }
 

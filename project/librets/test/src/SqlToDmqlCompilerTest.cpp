@@ -25,6 +25,7 @@
 #include "librets/DmqlCriterion.h"
 #include "librets/DmqlExpression.h"
 #include "librets/RetsSqlException.h"
+#include "librets/SearchRequest.h"
 
 using namespace librets;
 using namespace librets::DmqlExpression;
@@ -66,7 +67,9 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGetOneObject);
     CPPUNIT_TEST(testGetTwoObjects);
     CPPUNIT_TEST(testLimit);
+    CPPUNIT_TEST(testInvalidLimit);
     CPPUNIT_TEST(testOffset);
+    CPPUNIT_TEST(testInvalidOffset);
     CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -104,7 +107,9 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testGetOneObject();
     void testGetTwoObjects();
     void testLimit();
+    void testInvalidLimit();
     void testOffset();
+    void testInvalidOffset();
 
     DmqlQueryPtr sqlToDmql(string sql);
     GetObjectQueryPtr sqlToGetObject(string sql);
@@ -174,6 +179,10 @@ void CLASS::testGreaterThanOrEquals()
     
     DmqlCriterionPtr criterion = gt("ListPrice", literal("300000"));
     ASSERT_EQUAL(*criterion, *query->GetCriterion());
+    int expectedLimit = SearchRequest::LIMIT_DEFAULT;
+    int expectedOffset = SearchRequest::OFFSET_NONE;
+    ASSERT_EQUAL(expectedLimit, query->GetLimit());
+    ASSERT_EQUAL(expectedOffset, query->GetOffset());
 }
 
 void CLASS::testGreaterThan()
@@ -673,6 +682,14 @@ void CLASS::testLimit()
     ASSERT_EQUAL(5, limit);
 }
 
+void CLASS::testInvalidLimit()
+{
+    ASSERT_INVALID_SQL("select * "
+                       " from data:Property:RES"
+                       " where ListPrice = 300000"
+                       " limit foo;");
+}
+
 void CLASS::testOffset()
 {
     DmqlQueryPtr query =
@@ -694,4 +711,12 @@ void CLASS::testOffset()
 
     int offset = query->GetOffset();
     ASSERT_EQUAL(5, offset);
+}
+
+void CLASS::testInvalidOffset()
+{
+    ASSERT_INVALID_SQL("select * "
+                       " from data:Property:RES"
+                       " where ListPrice = 300000"
+                       " offset foo;");
 }
