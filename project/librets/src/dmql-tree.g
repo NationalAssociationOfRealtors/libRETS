@@ -148,7 +148,7 @@ options
 
 statement returns [DmqlQueryPtr q]
     { q.reset(new DmqlQuery()); DmqlCriterionPtr c; }
-    : #(SELECT table_name[q] columns[q] (c=criteria)?)
+    : #(SELECT table_name[q] columns[q] (c=criteria)? (limit[q])? (offset[q])?)
         { q->SetCriterion(c);}
     ;
 

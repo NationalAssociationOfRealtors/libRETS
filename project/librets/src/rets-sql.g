@@ -42,8 +42,8 @@ tokens
 {
     SELECT = "select"; FROM = "from"; WHERE = "where";
     OR = "or"; AND = "and"; NOT = "not"; ORDER = "order"; BY = "by"; AS = "as";
-    IN = "in"; LIMIT = "limit"; OFFSET = "offset";
-    COLUMNS; COLUMN; QUERY_ELEMENT; TABLE; NEQ;
+    IN = "in"; LIM = "limit"; OFSET = "offset";
+    COLUMNS; COLUMN; QUERY_ELEMENT; TABLE; NEQ; LIMIT; OFFSET;
 }
 
 {
@@ -67,10 +67,10 @@ select_statement
     :! SELECT^ c:column_names
         FROM! t:table_name
         (WHERE! w:where_condition)?
-        { #select_statement = #([SELECT], #t, #c, #w); }
         (order_by)?
-        (limit)?
-        (offset)?
+        (LIM l:limit)?
+        (OFSET o:offset)?
+        { #select_statement = #([SELECT], #t, #c, #w, #l, #o); }
     ;
 
 column_names
@@ -103,12 +103,12 @@ order_by!
     ;
 
 limit
-    : LIMIT l:INT
-      { #limit = #([LIMIT], #l); }
+    : l:INT
+      { #limit = #([LIMIT, "LIMIT"], #l); }
     ;
 
-offset
-    : OFFSET o:INT
+offset!
+    : o:INT
       { #offset = #([OFFSET], #o); }
     ;
 
