@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_SEARCH_REQUEST_H
 #define LIBRETS_SEARCH_REQUEST_H
 
@@ -30,7 +31,9 @@ class SearchRequest : public RetsHttpRequest
 {
   public:
     /**
-     * Create a new search request.
+     * Create a new search request.  Since the query type is depedent
+     * on the RETS version, the RetsSession::CreateRetsRequest() is
+     * the preferred way to create a RetsRequest. 
      *
      * @param searchType RETS resource name
      * @param searchClass RETS class name
@@ -81,31 +84,82 @@ class SearchRequest : public RetsHttpRequest
 
     enum CountType
     {
+        /**
+         * The search result set will only contain records.  The record
+         * count will always be 0.
+         */
         NO_RECORD_COUNT,
+        /**
+         * The search result set will contain a valid cound and records.
+         */
         RECORD_COUNT_AND_RESULTS,
+        /**
+         * The search result set will contain only a record count.  No records
+         * will be in the result set.
+         */
         RECORD_COUNT_ONLY
     };
 
+    /**
+     * Sets the count type.  By default, it is set to
+     * RECORD_COUNT_AND_RESULTS.
+     *
+     * @param countType The count type
+     */
     void SetCountType(CountType countType);
     
+    /**
+     * Sets the vocabular to system names or standard names.  If set to
+     * <code>true</code> all fields will be standard names.  If set to
+     * <code>false</code> all fields will be system names.  By default,
+     * this is set to <code>true</code>.
+     *
+     * @param standardNames <code>true</code> for standard names.
+     */
     void SetStandardNames(bool standardNames);
     
     enum QueryType
     {
+        /** DMQL is required for RETS version 1.0. */
         DMQL,
+        /** DMQL2 is required for all RETS 1.x versions, except 1.0. */
         DMQL2
     };
     
+    /**
+     * Sets the query type for this search.  This is highly dependent on
+     * the RETS version of the server.  DMQL must be used for a 1.0 server.
+     * DMQL2 must be used for all other 1.x versions.  You may use
+     * RetsSession::CreateSearchRequest() to create a request with the
+     * correct query type already set, based on the version of the currently
+     * connected server.
+     *
+     * @param queryType The query type
+     */
     void SetQueryType(QueryType queryType);
 
     enum FormatType
     {
+        /**
+         * COMPACT format returns values directly as they are contained
+         * in the server.
+         */
         COMPACT,
+
+        /**
+         * COMPACT_DECODED decodes some values into more human readable
+         * values.  This is done on the server side, and the results are
+         * server dependent.  However, this often implies that lookup fields
+         * are decoded to their lookup values.
+         */
         COMPACT_DECODED
     };
 
     /**
-     * Sets the Format to request data as, COMPACT or COMPACT-DECODED.
+     * Sets the format of the data returned from the server.  The default
+     * is COMPACT_DECODED.
+     *
+     * @param formatType The formate type
      */
     void SetFormatType(FormatType formatType);
     

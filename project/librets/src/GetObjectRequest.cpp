@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #include <iostream>
 #include <boost/lexical_cast.hpp>
 #include "librets/GetObjectRequest.h"
@@ -24,6 +25,16 @@ using namespace librets;
 using namespace librets::util;
 using std::string;
 using boost::lexical_cast;
+
+typedef GetObjectRequest CLASS;
+
+const char * CLASS::PHOTO_TYPE = "Photo";
+const char * CLASS::PLAT_TYPE = "Plat";
+const char * CLASS::VIDEO_TYPE = "Video";
+const char * CLASS::AUDIO_TYPE = "Audio";
+const char * CLASS::THUMBNAIL_TYPE = "Thumbnail";
+const char * CLASS::MAP_TYPE = "Map";
+const char * CLASS::VRIMAGE_TYPE = "VRImage";
 
 GetObjectRequest::GetObjectRequest(string resource, string type)
 {

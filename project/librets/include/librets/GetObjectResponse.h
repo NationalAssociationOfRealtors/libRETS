@@ -14,6 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
+
 #ifndef LIBRETS_GET_OBJECT_RESPONSE_H
 #define LIBRETS_GET_OBJECT_RESPONSE_H
 
@@ -25,6 +26,13 @@
 
 namespace librets {
 
+/**
+ * The GetObjectResponse represents a response from a RETS GetObject
+ * transaction.  A response may result in zero or more objects.  RETS
+ * does not provide a mechanism for getting all objects returned in a
+ * response, so a user must retrieve each object in turn, until there
+ * are none left.
+ */
 class GetObjectResponse : public RetsObject
 {
   public:
@@ -34,6 +42,11 @@ class GetObjectResponse : public RetsObject
     
     void Parse(RetsHttpResponsePtr httpResponse);
     
+    /**
+     * Returns the next object found in the response.
+     *
+     * @return The object descriptor representing an object.
+     */
     ObjectDescriptor * NextObject();
     
   private:

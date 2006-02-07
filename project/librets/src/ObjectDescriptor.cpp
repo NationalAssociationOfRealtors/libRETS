@@ -82,9 +82,9 @@ void ObjectDescriptor::SetContentType(string contentType)
     mContentType = contentType;
 }
 
-istreamPtr ObjectDescriptor::GetDataStream()
+std::istream * ObjectDescriptor::GetDataStream()
 {
-    return mDataStream;
+    return mDataStream.get();
 }
 
 void ObjectDescriptor::SetDataStream(istreamPtr dataStream)

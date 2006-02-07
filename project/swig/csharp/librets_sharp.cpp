@@ -19,10 +19,11 @@
 #include "librets_sharp.h"
 
 using namespace librets;
+using std::istream;
 
 #define CLASS InputStreamBridge
 
-CLASS::CLASS(istreamPtr inputStream)
+CLASS::CLASS(istream * inputStream)
     : mInputStream(inputStream)
 {
     

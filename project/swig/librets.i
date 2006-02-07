@@ -224,7 +224,7 @@ class ObjectDescriptor
     %extend {
         std::string GetDataAsString()
         {
-            istreamPtr inputStream = self->GetDataStream();
+            std::istream * inputStream = self->GetDataStream();
             return readIntoString(*inputStream);
         }
     }

@@ -65,9 +65,9 @@ void CLASS::testSinglePart()
     ASSERT_STRING_EQUAL("Front view", objectDescriptor->GetDescription());
     ASSERT_STRING_EQUAL("", objectDescriptor->GetLocationUrl());
     
-    istreamPtr data = getResource("abc123-1.gif");
-    string expected = readIntoString(*data);
-    data = objectDescriptor->GetDataStream();
+    istreamPtr resource = getResource("abc123-1.gif");
+    string expected = readIntoString(*resource);
+    istream * data = objectDescriptor->GetDataStream();
     CPPUNIT_ASSERT(data);
     string actual = readIntoString(*data);
     ASSERT_EQUAL(size_t(94), actual.size());
@@ -92,7 +92,7 @@ void CLASS::testSinglePartLocation()
     ASSERT_STRING_EQUAL("http://www.example.com/images/abc123.gif",
                         objectDescriptor->GetLocationUrl());
     
-    istreamPtr data = objectDescriptor->GetDataStream();
+    istream * data = objectDescriptor->GetDataStream();
     CPPUNIT_ASSERT(data);
     string actual = readIntoString(*data);
     ASSERT_STRING_EQUAL("", actual);
@@ -145,7 +145,7 @@ void CLASS::testMultiPartLocation()
     response.Parse(httpResponse);
     
     ObjectDescriptor * objectDescriptor;
-    istreamPtr dataStream;
+    istream * dataStream;
     string data;
     
     objectDescriptor = response.NextObject();
