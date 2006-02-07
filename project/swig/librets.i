@@ -220,7 +220,7 @@ class ObjectDescriptor
     
     std::string GetContentType() const;
     
-#ifdef SWIGRUBY
+#if defined(SWIGRUBY) || defined(SWIGPYTHON)
     %extend {
         std::string GetDataAsString()
         {
