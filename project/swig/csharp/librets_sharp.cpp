@@ -49,3 +49,18 @@ int CLASS::read(unsigned char buffer[], int offset, int length) const
     mInputStream->read(startOfBuffer, length);
     return mInputStream->gcount();
 }
+
+#undef CLASS
+#define CLASS RetsHttpLoggerBridge
+
+CLASS::CLASS(RetsHttpLoggerCallback loggerCallback)
+    : mLoggerCallback(loggerCallback)
+{
+    fprintf(stderr, "BirdgeLolgger constructor: %x\n", loggerCallback);
+    fflush(stderr);
+}
+
+void CLASS::logHttpData(Type type, std::string data)
+{
+    mLoggerCallback(type, (void *) data.data(), data.length());
+}

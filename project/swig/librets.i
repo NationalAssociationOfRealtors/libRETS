@@ -416,6 +416,65 @@ enum RetsVersion
     RETS_1_5
 };
 
+class RetsHttpLogger
+{
+  public:
+    enum Type
+    {
+        RECEIVED,
+        SENT,
+        INFORMATIONAL
+    };
+    
+    virtual void logHttpData(Type type, std::string data) = 0;
+};
+
+
+#ifdef SWIGCSHARP
+
+%pragma(csharp) imclasscode=%{
+%}
+
+%typemap(ctype)  RetsHttpLoggerCallback "RetsHttpLoggerCallback"
+%typemap(cstype) RetsHttpLoggerCallback "RetsHttpLoggerBridge.RetsHttpLoggerDelegate"
+%typemap(csin)   RetsHttpLoggerCallback "$csinput"
+%typemap(imtype) RetsHttpLoggerCallback "RetsHttpLoggerBridge.RetsHttpLoggerDelegate"
+%typemap(in)     RetsHttpLoggerCallback {$1 = $input;}
+
+typedef void (*RetsHttpLoggerCallback)(RetsHttpLogger::Type type,
+    void * data, int length);
+
+%typemap(cscode) RetsHttpLoggerBridge %{
+    public delegate void RetsHttpLoggerDelegate(Type type, IntPtr data, int length);
+%}
+
+class RetsHttpLoggerBridge : public RetsHttpLogger
+{
+  public:
+    RetsHttpLoggerBridge(RetsHttpLoggerCallback loggerCallback);
+    void logHttpData(Type type, std::string data);
+};
+
+#if 0
+%typemap(cscode) RetsSession %{
+    public delegate void RetsHttpLoggerDelegate(RetsHttpLogger::Type, string message);
+    
+    [DllImport("$dllimoprt", EntryPoint="")]
+    private static extern void NativeSetLoggerDelegate(HandleRef session,
+        RetsHttpLoggerDelegate delegate);
+        
+    public void SetLoggerDelegate(RetsHttpLoggerDelegate loggerDelegate)
+    {
+        NativeSetLoggerDelegate(swigCPtr, loggerDelegate);
+    }
+    
+    private RetsHttpLoggerDelegate mLoggerDelegate;
+%}
+#endif
+
+#endif
+
+
 class RetsSession
 {
   public:
@@ -450,6 +509,8 @@ class RetsSession
     RetsVersion GetRetsVersion() const;
     
     RetsVersion GetDetectedRetsVersion() const;
+    
+    void SetHttpLogger(RetsHttpLogger * logger);
 };
 
 

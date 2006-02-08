@@ -12,9 +12,9 @@ try:
   request = librets.GetObjectRequest("Property", "Photo")
   request.AddAllObjects("LN000001")
 
+  content_type_suffixes = {'image/jpeg': 'jpg', 'image/gif': 'gif'}
   response = session.GetObject(request)
   object_descriptor = response.NextObject()
-  content_type_suffixes = {'image/jpeg': 'jpg', 'image/gif': 'gif'}
   while (object_descriptor != None):
     object_key = object_descriptor.GetObjectKey()
     object_id = object_descriptor.GetObjectId()

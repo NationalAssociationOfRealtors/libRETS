@@ -19,6 +19,7 @@
 #define LIBRETS_SHARP_H
 
 #include "librets/std_forward.h"
+#include "librets/RetsHttpLogger.h"
 
 namespace librets {
 
@@ -37,6 +38,19 @@ class InputStreamBridge
 
 typedef std::auto_ptr<InputStreamBridge> InputStreamBridgeAPtr;
 
+
+typedef void (*RetsHttpLoggerCallback)(RetsHttpLogger::Type type,
+    void * data, int length);
+
+class RetsHttpLoggerBridge : public RetsHttpLogger
+{
+  public:
+    RetsHttpLoggerBridge(RetsHttpLoggerCallback loggerCallback);
+    virtual void logHttpData(Type type, std::string data);
+
+  private:
+    RetsHttpLoggerCallback mLoggerCallback;
+};
 
 };
 

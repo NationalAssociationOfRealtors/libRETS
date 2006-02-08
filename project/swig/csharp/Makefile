@@ -8,7 +8,7 @@ LIBRETS_MANAGED_SRC = $(GENERATED_SRC) CppInputStream.cs \
 	ObjectDescriptorEnumerator.cs
 LIBRETS_MANAGED_DLL = librets-dotnet.dll
 
-SAMPLE_EXE = Search.exe Metadata.exe GetObject.exe
+SAMPLE_EXE = Login.exe Search.exe Metadata.exe GetObject.exe
 
 WRAP = 	librets_wrap.cpp
 
@@ -24,19 +24,24 @@ else
 LINK = g++ -shared
 endif
 
+CSC = mcs -debug
+
 all: $(LIBRETS_MANAGED_DLL) $(SAMPLE_EXE)
 
+Login.exe: Login.cs $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
+	$(CSC) -r:$(LIBRETS_MANAGED_DLL) Login.cs
+
 Search.exe: Search.cs $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	mcs -r:$(LIBRETS_MANAGED_DLL) Search.cs
+	$(CSC) -r:$(LIBRETS_MANAGED_DLL) Search.cs
 
 Metadata.exe: Metadata.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	mcs -r:$(LIBRETS_MANAGED_DLL) Metadata.cs
+	$(CSC) -r:$(LIBRETS_MANAGED_DLL) Metadata.cs
 
 GetObject.exe: GetObject.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	mcs -r:$(LIBRETS_MANAGED_DLL) GetObject.cs
+	$(CSC) -r:$(LIBRETS_MANAGED_DLL) GetObject.cs
 
 $(LIBRETS_MANAGED_DLL): $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_MANAGED_SRC)
-	mcs -target:library -out:$(LIBRETS_MANAGED_DLL) $(LIBRETS_MANAGED_SRC)
+	$(CSC) -target:library -out:$(LIBRETS_MANAGED_DLL) $(LIBRETS_MANAGED_SRC)
 
 $(LIBRETS_UNMANAGED_DLL): $(LIBRETS_UNMANAGED_OBJ)
 	$(LINK) -o $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_OBJ) $(LIBRETS_LIBS)
