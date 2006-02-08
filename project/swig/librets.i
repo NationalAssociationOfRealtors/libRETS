@@ -432,9 +432,6 @@ class RetsHttpLogger
 
 #ifdef SWIGCSHARP
 
-%pragma(csharp) imclasscode=%{
-%}
-
 %typemap(ctype)  RetsHttpLoggerCallback "RetsHttpLoggerCallback"
 %typemap(cstype) RetsHttpLoggerCallback "RetsHttpLoggerBridge.RetsHttpLoggerDelegate"
 %typemap(csin)   RetsHttpLoggerCallback "$csinput"

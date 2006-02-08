@@ -16,6 +16,8 @@ GENERATED_SRC = \
 	lib\MetadataTableList.cs \
 	lib\ObjectDescriptor.cs \
 	lib\RetsException.cs \
+	lib\RetsHttpLogger.cs \
+	lib\RetsHttpLoggerBridge.cs \
 	lib\RetsMetadata.cs \
 	lib\RetsSession.cs \
 	lib\RetsVersion.cs \

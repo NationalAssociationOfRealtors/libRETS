@@ -38,8 +38,7 @@ class InputStreamBridge
 
 typedef std::auto_ptr<InputStreamBridge> InputStreamBridgeAPtr;
 
-
-typedef void (*RetsHttpLoggerCallback)(RetsHttpLogger::Type type,
+typedef void (__stdcall* RetsHttpLoggerCallback)(RetsHttpLogger::Type type,
     void * data, int length);
 
 class RetsHttpLoggerBridge : public RetsHttpLogger

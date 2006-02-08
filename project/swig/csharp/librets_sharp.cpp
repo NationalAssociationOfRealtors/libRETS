@@ -19,6 +19,7 @@
 #include "librets_sharp.h"
 
 using namespace librets;
+using std::string;
 using std::istream;
 
 #define CLASS InputStreamBridge
@@ -56,11 +57,10 @@ int CLASS::read(unsigned char buffer[], int offset, int length) const
 CLASS::CLASS(RetsHttpLoggerCallback loggerCallback)
     : mLoggerCallback(loggerCallback)
 {
-    fprintf(stderr, "BirdgeLolgger constructor: %x\n", loggerCallback);
     fflush(stderr);
 }
 
-void CLASS::logHttpData(Type type, std::string data)
+void CLASS::logHttpData(Type type, string data)
 {
     mLoggerCallback(type, (void *) data.data(), data.length());
 }

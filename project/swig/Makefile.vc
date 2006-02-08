@@ -10,7 +10,7 @@ all: csharp_ ruby_
 
 csharp_:
 	cd csharp
-	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
+	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
 	cd ..
 
 ruby_: $(RUBY_WRAP) $(RUBY_MAKEFILE)
