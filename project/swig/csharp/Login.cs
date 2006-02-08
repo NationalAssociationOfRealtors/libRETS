@@ -15,14 +15,12 @@ public class Search
     {
 	RetsHttpLoggerBridge loggerBridge;
 #if true
-    {
 	RetsHttpLoggerBridge.RetsHttpLoggerDelegate myDelegate =
             new RetsHttpLoggerBridge.RetsHttpLoggerDelegate(Search.MyLogger);
         loggerBridge = new RetsHttpLoggerBridge(myDelegate);
 	// The following line causes a crash, if executed, by allowing
 	// the delegate to be garbage collected.
 	// myDelegate = null;
-    }
 #else
         loggerBridge = new RetsHttpLoggerBridge(new RetsHttpLoggerBridge.RetsHttpLoggerDelegate(Search.MyLogger));
 #endif
@@ -42,6 +40,7 @@ public class Search
         Console.WriteLine("Connect time: " + logout.GetConnectTime());
         // session.SetHttpLogger(null);
 	// GC.KeepAlive(loggerBridge);
+	// GC.KeepAlive(myDelegate);
 	// session.SetHttpLogger(null);
     }
 }

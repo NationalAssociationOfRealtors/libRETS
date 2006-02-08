@@ -18,6 +18,15 @@
 #ifndef LIBRETS_SHARP_H
 #define LIBRETS_SHARP_H
 
+/* calling conventions for Windows */
+#ifndef SWIGSTDCALL
+# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+#   define SWIGSTDCALL __stdcall
+# else
+#   define SWIGSTDCALL
+# endif 
+#endif
+
 #include "librets/std_forward.h"
 #include "librets/RetsHttpLogger.h"
 
@@ -38,7 +47,7 @@ class InputStreamBridge
 
 typedef std::auto_ptr<InputStreamBridge> InputStreamBridgeAPtr;
 
-typedef void (__stdcall* RetsHttpLoggerCallback)(RetsHttpLogger::Type type,
+typedef void (SWIGSTDCALL* RetsHttpLoggerCallback)(RetsHttpLogger::Type type,
     void * data, int length);
 
 class RetsHttpLoggerBridge : public RetsHttpLogger
