@@ -37,6 +37,7 @@ using namespace librets;
 - (void) dealloc
 {
     delete mLogger;
+    [super dealloc];
 }
 
 - (IBAction) showLogWindow: (id) sender

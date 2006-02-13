@@ -29,7 +29,7 @@
     MyController * mController;
 }
 
-- (id) initWithObjectDescriptor: (librets::ObjectDescriptorPtr) objectDescriptor
+- (id) initWithObjectDescriptor: (librets::ObjectDescriptor *) objectDescriptor
                      controller: (MyController *) controller;
 
 - (NSString *) description;

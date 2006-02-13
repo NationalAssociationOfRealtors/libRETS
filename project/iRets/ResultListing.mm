@@ -47,6 +47,7 @@ using namespace librets;
     if (mImages != nil)
         [mImages release];
     [mFields release];
+    [super dealloc];
 }
 
 - (NSDictionary *) fields
@@ -89,8 +90,8 @@ using namespace librets;
         request->SetLocation(true);
         request->AddAllObjects(listingId);
         RetsSessionPtr session = [mController createRetsSession];
-        GetObjectResponsePtr response = session->GetObject(request);
-        ObjectDescriptorPtr objectDescriptor;
+        GetObjectResponseAPtr response = session->GetObject(request.get());
+        ObjectDescriptor * objectDescriptor;
         while (objectDescriptor = response->NextObject())
         {
             RetsImage * image =

@@ -33,7 +33,7 @@ using std::string;
 
 @implementation RetsImage
 
-- (id) initWithObjectDescriptor: (ObjectDescriptorPtr) objectDescriptor
+- (id) initWithObjectDescriptor: (ObjectDescriptor *) objectDescriptor
                      controller: (MyController *) controller;
 {
     mController = [controller retain];
@@ -61,7 +61,7 @@ using std::string;
     else
     {
         mLocation = nil;
-        istreamPtr inputStream = objectDescriptor->GetData();
+        std::istream * inputStream = objectDescriptor->GetDataStream();
         NSData * data = [RetsImage dataWithInputStream: *inputStream];
         mImage = [[NSImage alloc] initWithData: data];
         mImageNeedsLoading = NO;
@@ -98,6 +98,7 @@ using std::string;
     if (mDescription != nil)
         [mDescription release];
     [mObjectKey release];
+    [super dealloc];
 }
 
 + (NSData *) dataWithInputStream: (std::istream &) inputStream

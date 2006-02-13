@@ -40,13 +40,13 @@ class SimpleSqlMetadata : public SqlMetadata
 - (void) saveQueries;
 - (void) loadQueries;
 - (void) addQuery: (NSString *) query;
-- (void) setupTableColumns: (StringVectorPtr) resultColumns;
+- (void) setupTableColumns: (const StringVector &) resultColumns;
 - (void) updateSqlView;
 - (void) convertSqlToDmql;
 
 - (void) executeQueryThreadEntry: (id) object;
 - (NSMutableArray *) executeRetsSearch;
-- (void) executeQueryThreadExit: (id) object;
+- (void) executeQueryThreadExit: (NSMutableArray *) object;
 - (void) setResultListings: (NSMutableArray *) resultListings;
 
 - (void) fetchImagesThreadEntry: (ResultListing *) listing;
@@ -123,6 +123,7 @@ class SimpleSqlMetadata : public SqlMetadata
     [mResultListings release];
     [mAccounts release];
     [mPrefs release];
+    [super dealloc];
 }
 
 - (NSMutableArray *) accounts
@@ -279,20 +280,20 @@ class SimpleSqlMetadata : public SqlMetadata
 }
 
 
-NSString * GetString(SearchResultSetPtr results, std::string column)
+NSString * GetString(SearchResultSet * results, std::string column)
 {
     std::string value = results->GetString(column);
     return [NSString stringWithCString: value.c_str()];
 }
 
-NSNumber * GetNumber(SearchResultSetPtr results, std::string column)
+NSNumber * GetNumber(SearchResultSet * results, std::string column)
 {
     NSString * string = GetString(results, column);
     NSNumber * number = [NSNumber numberWithInt: [string intValue]];
     return number;
 }
 
-NSDate * GetDate(SearchResultSetPtr results, std::string column)
+NSDate * GetDate(SearchResultSet * results, std::string column)
 {
     NSString * string = GetString(results, column);
     NSDate * date = [NSDate dateWithNaturalLanguageString: string];
@@ -378,36 +379,36 @@ NSString * toNSString(const std::string aString)
     try
     {
         RetsSessionPtr session = [self createRetsSession];
-        SearchRequestPtr searchRequest(
-            new SearchRequest(cppString(retsResource), cppString(retsClass),
-                              cppString(query)));
-        searchRequest->SetSelect(cppString(retsSelect));
-        searchRequest->SetStandardNames(true);
-        searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
-        SearchResultSetPtr resultSet = session->Search(searchRequest);
-        StringVectorPtr columns = resultSet->GetColumns();
+        SearchRequest searchRequest(cppString(retsResource),
+                                    cppString(retsClass),
+                                    cppString(query));
+        searchRequest.SetSelect(cppString(retsSelect));
+        searchRequest.SetStandardNames(true);
+        searchRequest.SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
+        SearchResultSetAPtr resultSet = session->Search(&searchRequest);
+        StringVector columns = resultSet->GetColumns();
         [self setupTableColumns: columns];
         while (resultSet->HasNext())
         {
             StringVector::iterator i;
             ResultListing * listing =
                 [[ResultListing alloc] initWithController: self];
-            for (i = columns->begin(); i != columns->end(); i++)
+            for (i = columns.begin(); i != columns.end(); i++)
             {
                 NSString * columnName = toNSString(*i);
                 if ([mNumberFields containsObject: columnName])
                 {
-                    [listing setField: GetNumber(resultSet, *i)
+                    [listing setField: GetNumber(resultSet.get(), *i)
                                forKey: columnName];
                 }
                 else if ([mDateFields containsObject: columnName])
                 {
-                    [listing setField: GetDate(resultSet, *i)
+                    [listing setField: GetDate(resultSet.get(), *i)
                                forKey: columnName];
                 }
                 else
                 {
-                    [listing setField: GetString(resultSet, *i)
+                    [listing setField: GetString(resultSet.get(), *i)
                                forKey: columnName];
                 }
             }
@@ -441,7 +442,7 @@ NSString * toNSString(const std::string aString)
     mResultListings = [resultListings retain];
 }
 
-- (void) setupTableColumns: (StringVectorPtr) resultColumns
+- (void) setupTableColumns: (const StringVector &) resultColumns;
 {
     NSArray * tableColumns = [mTableView tableColumns];
     NSEnumerator * columnEnumerator = [tableColumns objectEnumerator];
@@ -451,8 +452,8 @@ NSString * toNSString(const std::string aString)
         [mTableView removeTableColumn: column];
     }
     
-    StringVector::iterator i;
-    for (i = resultColumns->begin(); i != resultColumns->end(); i++)
+    StringVector::const_iterator i;
+    for (i = resultColumns.begin(); i != resultColumns.end(); i++)
     {
         NSString * identifier = [NSString stringWithCString: i->c_str()];
         column = [[NSTableColumn alloc] initWithIdentifier: identifier];
