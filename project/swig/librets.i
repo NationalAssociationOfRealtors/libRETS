@@ -417,7 +417,8 @@ enum RetsVersion
 };
 
 %typemap(cscode) RetsHttpLogger %{
-    public delegate void Delegate(Type type, IntPtr data, int length);
+    public delegate void Delegate(Type type, byte[] data);
+    public delegate void NativeDelegate(Type type, IntPtr data, int length);
 %}
 
 class RetsHttpLogger
@@ -437,9 +438,9 @@ class RetsHttpLogger
 #ifdef SWIGCSHARP
 
 %typemap(ctype)  RetsHttpLoggerCallback "RetsHttpLoggerCallback"
-%typemap(cstype) RetsHttpLoggerCallback "RetsHttpLogger.Delegate"
+%typemap(cstype) RetsHttpLoggerCallback "RetsHttpLogger.NativeDelegate"
 %typemap(csin)   RetsHttpLoggerCallback "$csinput"
-%typemap(imtype) RetsHttpLoggerCallback "RetsHttpLogger.Delegate"
+%typemap(imtype) RetsHttpLoggerCallback "RetsHttpLogger.NativeDelegate"
 %typemap(in)     RetsHttpLoggerCallback {$1 = $input;}
 
 typedef void (*RetsHttpLoggerCallback)(RetsHttpLogger::Type type,
@@ -452,6 +453,8 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
     void logHttpData(Type type, std::string data);
 };
 
+%csmethodmodifiers RetsSession::SetHttpLogger "private";
+
 %typemap(cscode) RetsSession %{
     private RetsHttpLogger.Delegate mLoggerDelegate;
 
@@ -460,28 +463,21 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
         get { return mLoggerDelegate; }
         set
         {
-	    mLoggerDelegate = value;
-	    SetHttpLogger(new RetsHttpLoggerBridge(mLoggerDelegate));
-	}
+            mLoggerDelegate = value;
+            RetsHttpLogger.NativeDelegate nativeDelegate =
+                new RetsHttpLogger.NativeDelegate(this.LoggerDelegateBridge);
+            SetHttpLogger(new RetsHttpLoggerBridge(nativeDelegate));
+        }
     }
-%}
-
-#if 0
-%typemap(cscode) RetsSession %{
-    public delegate void RetsHttpLoggerDelegate(RetsHttpLogger::Type, string message);
     
-    [DllImport("$dllimoprt", EntryPoint="")]
-    private static extern void NativeSetLoggerDelegate(HandleRef session,
-        RetsHttpLoggerDelegate delegate);
-        
-    public void SetLoggerDelegate(RetsHttpLoggerDelegate loggerDelegate)
+    private void LoggerDelegateBridge(RetsHttpLogger.Type type, IntPtr data,
+        int length)
     {
-        NativeSetLoggerDelegate(swigCPtr, loggerDelegate);
+        byte[] byteData = new byte[length];
+        System.Runtime.InteropServices.Marshal.Copy(data, byteData, 0, length);
+        mLoggerDelegate(type, byteData);
     }
-    
-    private RetsHttpLoggerDelegate mLoggerDelegate;
 %}
-#endif
 
 #endif
 

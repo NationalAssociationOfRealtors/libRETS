@@ -1,48 +1,43 @@
 using System;
-using System.Collections;
+using System.IO;
 using librets;
 
 public class Search
 {
-    public static void MyLogger(RetsHttpLogger.Type type, IntPtr data, int length)
+    private static TextWriter mLogWriter;
+    
+    public static void ConsoleLogger(RetsHttpLogger.Type type, byte[] data)
     {
-        byte[] bytes = new byte[length];
-        System.Runtime.InteropServices.Marshal.Copy(data, bytes, 0, length);
-        Console.WriteLine("C# Logger: " + System.Text.Encoding.UTF8.GetString(bytes));
+        mLogWriter.Write(System.Text.Encoding.UTF8.GetString(data));
+        mLogWriter.Flush();
     }
     
     static void Main(string[] args)
     {
-#if false
-	RetsHttpLoggerBridge loggerBridge;
-#if true
-	RetsHttpLogger.Delegate myDelegate =
-            new RetsHttpLogger.Delegate(Search.MyLogger);
-        loggerBridge = new RetsHttpLoggerBridge(myDelegate);
-	// The following line causes a crash, if executed, by allowing
-	// the delegate to be garbage collected.
-	myDelegate = null;
-#else
-        loggerBridge = new RetsHttpLoggerBridge(new RetsHttpLoggerBridge.RetsHttpLoggerDelegate(Search.MyLogger));
-#endif
-#endif
-	GC.Collect();
-        
-        RetsSession session = new RetsSession(
-            "http://demo.crt.realtors.org:6103/rets/login");
-	session.LoggerDelegate = new RetsHttpLogger.Delegate(Search.MyLogger);
-        if (!session.Login("Joe", "Schmoe"))
+        if (args.Length == 1)
+            mLogWriter = new StreamWriter(args[0]);
+        else
+            mLogWriter = TextWriter.Null;
+            
+        try
         {
-            Console.WriteLine("Invalid login");
-            Environment.Exit(1);
+            RetsSession session = new RetsSession(
+                "http://demo.crt.realtors.org:6103/rets/login");
+            session.LoggerDelegate =
+                new RetsHttpLogger.Delegate(Search.ConsoleLogger);
+            if (!session.Login("Joe", "Schmoe"))
+            {
+                Console.WriteLine("Invalid login");
+                Environment.Exit(1);
+            }
+            LogoutResponse logout = session.Logout();
+            Console.WriteLine("Billing info: " + logout.GetBillingInfo());
+            Console.WriteLine("Logout message: " + logout.GetLogoutMessage());
+            Console.WriteLine("Connect time: " + logout.GetConnectTime());
         }
-        LogoutResponse logout = session.Logout();
-        Console.WriteLine("Billing info: " + logout.GetBillingInfo());
-        Console.WriteLine("Logout message: " + logout.GetLogoutMessage());
-        Console.WriteLine("Connect time: " + logout.GetConnectTime());
-        // session.SetHttpLogger(null);
-	// GC.KeepAlive(loggerBridge);
-	// GC.KeepAlive(myDelegate);
-	// session.SetHttpLogger(null);
+        finally
+        {
+            mLogWriter.Close();
+        }
     }
 }
