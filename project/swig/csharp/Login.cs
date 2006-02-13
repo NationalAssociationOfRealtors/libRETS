@@ -4,27 +4,20 @@ using librets;
 
 public class Search
 {
-    private static TextWriter mLogWriter;
-    
-    public static void ConsoleLogger(RetsHttpLogger.Type type, byte[] data)
-    {
-        mLogWriter.Write(System.Text.Encoding.UTF8.GetString(data));
-        mLogWriter.Flush();
-    }
-    
     static void Main(string[] args)
     {
+        TextWriter logWriter;
         if (args.Length == 1)
-            mLogWriter = new StreamWriter(args[0]);
+            logWriter = new StreamWriter(args[0]);
         else
-            mLogWriter = TextWriter.Null;
+            logWriter = TextWriter.Null;
             
         try
         {
             RetsSession session = new RetsSession(
                 "http://demo.crt.realtors.org:6103/rets/login");
             session.LoggerDelegate =
-                new RetsHttpLogger.Delegate(Search.ConsoleLogger);
+                TextWriterLogger.CreateDelegate(logWriter);
             if (!session.Login("Joe", "Schmoe"))
             {
                 Console.WriteLine("Invalid login");
@@ -37,7 +30,7 @@ public class Search
         }
         finally
         {
-            mLogWriter.Close();
+            logWriter.Close();
         }
     }
 }

@@ -5,7 +5,7 @@ LIBRETS_UNMANAGED_OBJ = librets_wrap.o librets_sharp.o
 LIBRETS_UNMANAGED_DLL = librets.so
 
 LIBRETS_MANAGED_SRC = $(GENERATED_SRC) CppInputStream.cs \
-	ObjectDescriptorEnumerator.cs
+	ObjectDescriptorEnumerator.cs TextWriterLogger.cs
 LIBRETS_MANAGED_DLL = librets-dotnet.dll
 
 SAMPLE_EXE = Login.exe Search.exe Metadata.exe GetObject.exe
