@@ -15,7 +15,7 @@ LIBRETS_UNMANAGED_OBJ = librets_wrap.obj librets_sharp.obj
 LIBRETS_UNMANAGED_DLL_FILE = librets-pinvoke.dll
 LIBRETS_UNMANAGED_DLL = $(BIN_DIR)\$(LIBRETS_UNMANAGED_DLL_FILE)
 LIBRETS_MANAGED_SRC = $(GENERATED_SRC) CppInputStream.cs \
-	ObjectDescriptorEnumerator.cs
+	ObjectDescriptorEnumerator.cs TextWriterLogger.cs
 LIBRETS_MANAGED_DLL = $(BIN_DIR)\librets-dotnet.dll
 RM = rm -f
 
