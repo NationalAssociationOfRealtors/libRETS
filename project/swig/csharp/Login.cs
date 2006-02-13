@@ -13,22 +13,24 @@ public class Search
     
     static void Main(string[] args)
     {
+#if false
 	RetsHttpLoggerBridge loggerBridge;
 #if true
-	RetsHttpLoggerBridge.RetsHttpLoggerDelegate myDelegate =
-            new RetsHttpLoggerBridge.RetsHttpLoggerDelegate(Search.MyLogger);
+	RetsHttpLogger.Delegate myDelegate =
+            new RetsHttpLogger.Delegate(Search.MyLogger);
         loggerBridge = new RetsHttpLoggerBridge(myDelegate);
 	// The following line causes a crash, if executed, by allowing
 	// the delegate to be garbage collected.
-	// myDelegate = null;
+	myDelegate = null;
 #else
         loggerBridge = new RetsHttpLoggerBridge(new RetsHttpLoggerBridge.RetsHttpLoggerDelegate(Search.MyLogger));
+#endif
 #endif
 	GC.Collect();
         
         RetsSession session = new RetsSession(
             "http://demo.crt.realtors.org:6103/rets/login");
-	session.SetHttpLogger(loggerBridge);
+	session.LoggerDelegate = new RetsHttpLogger.Delegate(Search.MyLogger);
         if (!session.Login("Joe", "Schmoe"))
         {
             Console.WriteLine("Invalid login");

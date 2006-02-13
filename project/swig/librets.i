@@ -416,6 +416,10 @@ enum RetsVersion
     RETS_1_5
 };
 
+%typemap(cscode) RetsHttpLogger %{
+    public delegate void Delegate(Type type, IntPtr data, int length);
+%}
+
 class RetsHttpLogger
 {
   public:
@@ -433,17 +437,13 @@ class RetsHttpLogger
 #ifdef SWIGCSHARP
 
 %typemap(ctype)  RetsHttpLoggerCallback "RetsHttpLoggerCallback"
-%typemap(cstype) RetsHttpLoggerCallback "RetsHttpLoggerBridge.RetsHttpLoggerDelegate"
+%typemap(cstype) RetsHttpLoggerCallback "RetsHttpLogger.Delegate"
 %typemap(csin)   RetsHttpLoggerCallback "$csinput"
-%typemap(imtype) RetsHttpLoggerCallback "RetsHttpLoggerBridge.RetsHttpLoggerDelegate"
+%typemap(imtype) RetsHttpLoggerCallback "RetsHttpLogger.Delegate"
 %typemap(in)     RetsHttpLoggerCallback {$1 = $input;}
 
 typedef void (*RetsHttpLoggerCallback)(RetsHttpLogger::Type type,
     void * data, int length);
-
-%typemap(cscode) RetsHttpLoggerBridge %{
-    public delegate void RetsHttpLoggerDelegate(Type type, IntPtr data, int length);
-%}
 
 class RetsHttpLoggerBridge : public RetsHttpLogger
 {
@@ -451,6 +451,20 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
     RetsHttpLoggerBridge(RetsHttpLoggerCallback loggerCallback);
     void logHttpData(Type type, std::string data);
 };
+
+%typemap(cscode) RetsSession %{
+    private RetsHttpLogger.Delegate mLoggerDelegate;
+
+    public RetsHttpLogger.Delegate LoggerDelegate
+    {
+        get { return mLoggerDelegate; }
+        set
+        {
+	    mLoggerDelegate = value;
+	    SetHttpLogger(new RetsHttpLoggerBridge(mLoggerDelegate));
+	}
+    }
+%}
 
 #if 0
 %typemap(cscode) RetsSession %{
