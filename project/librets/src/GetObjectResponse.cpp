@@ -90,7 +90,7 @@ void GetObjectResponse::Parse(RetsHttpResponsePtr httpResponse)
         ostringstream message;
         message << "Invalid response code: ";
         message << httpResponse->GetResponseCode();
-        throw RetsException(message.str());
+        LIBRETS_THROW(RetsException, (message.str()));
     }
     string contentType = httpResponse->GetContentType();
     if (ba::starts_with(contentType, "text/xml"))
@@ -117,7 +117,9 @@ void GetObjectResponse::ParseSinglePart(RetsHttpResponsePtr httpResponse)
 
     string objectKey = httpResponse->GetHeader("Content-ID");
     if (objectKey.empty() && !mDefaultsAreValid)
-        throw RetsException("Found empty Content-ID");
+    {
+        LIBRETS_THROW(RetsException, ("Found empty Content-ID"));
+    }
     else if (objectKey.empty() && mDefaultsAreValid)
         descriptor->SetObjectKey(mDefaultObjectKey);
     else
@@ -125,7 +127,9 @@ void GetObjectResponse::ParseSinglePart(RetsHttpResponsePtr httpResponse)
 
     string objectId = httpResponse->GetHeader("Object-ID");
     if (objectId.empty() && !mDefaultsAreValid)
-        throw RetsException("Found empty Object-ID");
+    {
+        LIBRETS_THROW(RetsException, ("Found empty Object-ID"));
+    }
     else if (objectId.empty() && mDefaultsAreValid)
         descriptor->SetObjectId(mDefaultObjectId);
     else
@@ -156,7 +160,8 @@ void GetObjectResponse::ParseMultiPart(RetsHttpResponsePtr httpResponse)
     partStart = content.find(delimiter);
     if (partStart == string::npos)
     {
-        throw RetsException("First delimeter not found");
+        LIBRETS_THROW(RetsException,
+                      ("First delimiter not found: " + boundary));
     }
     partStart += delimiter.size();
     
@@ -169,7 +174,9 @@ void GetObjectResponse::ParseMultiPart(RetsHttpResponsePtr httpResponse)
             partEnd = content.find(closeDelimiter, partStart);
             if (partEnd == string::npos)
             {
-                throw RetsException("Cound not find another delilmiter");
+                LIBRETS_THROW(
+                    RetsException,
+                    ("Cound not find another delimiter: " + boundary));
             }
             done = true;
         }
@@ -201,7 +208,7 @@ void GetObjectResponse::ParsePartStream(istreamPtr in)
         string value;
         if (!splitField(line, ":", name, value))
         {
-            throw RetsException("Malformed header: " + line);
+            LIBRETS_THROW(RetsException, ("Malformed header: " + line));
         }
         ba::trim(value);
         if (name == "Content-Type")
