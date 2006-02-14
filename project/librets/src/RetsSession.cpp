@@ -251,6 +251,11 @@ GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)
     AssertSuccessfulResponse(httpResponse, getObjectUrl);
     
     GetObjectResponseAPtr response(new GetObjectResponse());
+    if (request->HasDefaultObjectKeyAndId())
+    {
+        response->SetDefaultObjectKeyAndId(request->GetDefaultObjectKey(),
+                                           request->GetDefaultObjectId());
+    }
     response->Parse(httpResponse);
     return response;
 }

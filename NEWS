@@ -1,3 +1,26 @@
+Version 1.1.0 beta 4 - 14 February 2006
+
+  * GetObject support for Python.
+  * Allow emtpy or missing Content-ID and Object-ID headers in the GetObject
+    response under conditions where these can be derived from the GetObject
+    request (ticket #22).
+  * Add support for HTTP logging in .Net via the RetsHttpLogger.Delegate
+    property in RetsSession.
+
+Version 1.1.0 beta 3 - 1 February 2006
+
+  * GetObject support for .Net and Ruby.
+
+Version 1.1.0 beta 2 - 26 January 2006
+
+  * Support for COMPACT format.
+
+Version 1.1.0 beta 1 - 12 January 2006
+
+  * Initial bindings to .Net (C# and VB.Net), Ruby, and Python.
+  * Generic API changes such that shared pointers are never passed back to the
+    user: only regular pointes or auto pointers.
+
 Version 1.0.0 - 20 October 2005
 
   * Add cleaner fix for 512-byte XML document parsing error.

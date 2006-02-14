@@ -68,10 +68,19 @@ static void getlineCRLF(istream & in, string & line)
 GetObjectResponse::GetObjectResponse()
 {
     mNextObject = mObjects.begin();
+    mDefaultsAreValid = false;
 }
 
 GetObjectResponse::~GetObjectResponse()
 {
+}
+
+void GetObjectResponse::SetDefaultObjectKeyAndId(string defaultObjectKey,
+                                                 int defaultObjectId)
+{
+    mDefaultObjectKey = defaultObjectKey;
+    mDefaultObjectId = defaultObjectId;
+    mDefaultsAreValid = true;
 }
 
 void GetObjectResponse::Parse(RetsHttpResponsePtr httpResponse)
@@ -105,9 +114,23 @@ void GetObjectResponse::ParseSinglePart(RetsHttpResponsePtr httpResponse)
 {
     ObjectDescriptorPtr descriptor(new ObjectDescriptor());
     descriptor->SetContentType(httpResponse->GetContentType());
-    descriptor->SetObjectKey(httpResponse->GetHeader("Content-ID"));
+
+    string objectKey = httpResponse->GetHeader("Content-ID");
+    if (objectKey.empty() && !mDefaultsAreValid)
+        throw RetsException("Found empty Content-ID");
+    else if (objectKey.empty() && mDefaultsAreValid)
+        descriptor->SetObjectKey(mDefaultObjectKey);
+    else
+        descriptor->SetObjectKey(objectKey);
+
     string objectId = httpResponse->GetHeader("Object-ID");
-    descriptor->SetObjectId(lexical_cast<int>(objectId));
+    if (objectId.empty() && !mDefaultsAreValid)
+        throw RetsException("Found empty Object-ID");
+    else if (objectId.empty() && mDefaultsAreValid)
+        descriptor->SetObjectId(mDefaultObjectId);
+    else
+        descriptor->SetObjectId(lexical_cast<int>(objectId));
+
     descriptor->SetDescription(httpResponse->GetHeader("Content-Description"));
     descriptor->SetDataStream(httpResponse->GetInputStream());
     descriptor->SetLocationUrl(httpResponse->GetHeader("Location"));

@@ -100,15 +100,34 @@ class GetObjectRequest : public RetsObject
     
     void PrepareHttpRequest(RetsHttpRequestPtr httpRequest) const;
     
+    /**
+     * Returns <code>true</code> if a default object key and ID are
+     * available.  A default object key and ID are availalbe if
+     * and only if a single ojbect has been added.  With more than
+     * one object added, there is no way to determine which is the default.
+     *
+     * @return <code>true if a default object key and ID are available.
+     */
+    bool HasDefaultObjectKeyAndId() const;
+    
+    std::string GetDefaultObjectKey() const;
+    
+    int GetDefaultObjectId() const;
+    
   private:
     typedef std::map<std::string, StringVectorPtr> ObjectList;
     
     StringVectorPtr GetObjectIds(std::string resourceEntity);
     
+    void UpdateDefaultObjectKeyAndId();
+    
     std::string mResource;
     std::string mType;
     bool mLocation;
     ObjectList mObjectList;
+    bool mHasDefaultObjectKeyAndId;
+    std::string mDefaultObjectKey;
+    int mDefaultObjectId;
 };
     
 }

@@ -40,6 +40,9 @@ class GetObjectResponse : public RetsObject
     
     virtual ~GetObjectResponse();
     
+    void SetDefaultObjectKeyAndId(std::string defaultObjectKey,
+                                  int defaultObjectId);
+    
     void Parse(RetsHttpResponsePtr httpResponse);
     
     /**
@@ -58,6 +61,9 @@ class GetObjectResponse : public RetsObject
     std::string FindBoundary(std::string contentType);
     void ParsePartStream(istreamPtr in);
     
+    bool mDefaultsAreValid;
+    std::string mDefaultObjectKey;
+    int mDefaultObjectId;
     ObjectList mObjects;
     ObjectList::iterator mNextObject;
 };

@@ -41,6 +41,9 @@ GetObjectRequest::GetObjectRequest(string resource, string type)
     mResource = resource;
     mType = type;
     mLocation = false;
+    mHasDefaultObjectKeyAndId = false;
+    mDefaultObjectKey = "";
+    mDefaultObjectId = -1;
 }
 
 GetObjectRequest::~GetObjectRequest()
@@ -61,12 +64,14 @@ void GetObjectRequest::AddObject(string resourceEntity, int objectId)
 {
     StringVectorPtr objectIds = GetObjectIds(resourceEntity);
     objectIds->push_back(lexical_cast<string>(objectId));
+    UpdateDefaultObjectKeyAndId();
 }
 
 void GetObjectRequest::AddAllObjects(string resourceEntity)
 {
     StringVectorPtr objectIds = GetObjectIds(resourceEntity);
     objectIds->push_back("*");
+    UpdateDefaultObjectKeyAndId();
 }
 
 StringVectorPtr GetObjectRequest::GetObjectIds(string resourceEntity)
@@ -109,5 +114,43 @@ void GetObjectRequest::PrepareHttpRequest(RetsHttpRequestPtr httpRequest) const
         ids.push_back(id);
     }
     httpRequest->SetQueryParameter("ID", join(ids, ","));
+}
+
+void GetObjectRequest::UpdateDefaultObjectKeyAndId()
+{
+    if (mObjectList.size() == 1)
+    {
+        ObjectList::const_iterator i = mObjectList.begin();
+        StringVectorPtr objectIds = i->second;
+        if (objectIds->size() == 1)
+        {
+            string objectId = objectIds->at(0);
+            if (objectId !=  "*")
+            {
+                mHasDefaultObjectKeyAndId = true;
+                mDefaultObjectKey = i->first;
+                mDefaultObjectId = lexical_cast<int>(objectId);
+                return;
+            }
+        }
+    }
+    mHasDefaultObjectKeyAndId = false;
+    mDefaultObjectKey = "";
+    mDefaultObjectId = -1;
+}
+
+bool GetObjectRequest::HasDefaultObjectKeyAndId() const
+{
+    return mHasDefaultObjectKeyAndId;
+}
+
+string GetObjectRequest::GetDefaultObjectKey() const
+{
+    return mDefaultObjectKey;
+}
+
+int GetObjectRequest::GetDefaultObjectId() const
+{
+    return mDefaultObjectId;
 }
 
