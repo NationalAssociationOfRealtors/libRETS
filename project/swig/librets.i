@@ -456,7 +456,9 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
 %csmethodmodifiers RetsSession::SetHttpLogger "private";
 
 %typemap(cscode) RetsSession %{
-    private RetsHttpLogger.Delegate mLoggerDelegate;
+    private RetsHttpLogger.Delegate mLoggerDelegate = null;
+    private RetsHttpLogger.NativeDelegate mNativeDelegate = null;
+    private RetsHttpLogger mLogger = null;
 
     public RetsHttpLogger.Delegate LoggerDelegate
     {
@@ -464,9 +466,13 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
         set
         {
             mLoggerDelegate = value;
-            RetsHttpLogger.NativeDelegate nativeDelegate =
+            // Need to save references to both the delegate and the logger
+            // otherwise they will be garbage collected while still
+            // in use.
+            mNativeDelegate =
                 new RetsHttpLogger.NativeDelegate(this.LoggerDelegateBridge);
-            SetHttpLogger(new RetsHttpLoggerBridge(nativeDelegate));
+	    mLogger = new RetsHttpLoggerBridge(mNativeDelegate);
+            SetHttpLogger(mLogger);
         }
     }
     

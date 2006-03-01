@@ -57,7 +57,6 @@ int CLASS::read(unsigned char buffer[], int offset, int length) const
 CLASS::CLASS(RetsHttpLoggerCallback loggerCallback)
     : mLoggerCallback(loggerCallback)
 {
-    fflush(stderr);
 }
 
 void CLASS::logHttpData(Type type, string data)
