@@ -181,10 +181,10 @@ class InputStreamBridge
 class BinaryData
 {
   public:
-  	int Size() const;
-  	std::string AsString() const;
-  	const char * AsChar() const;
-  	void Copy(unsigned char buffer[], int length) const; 
+        int Size() const;
+        std::string AsString() const;
+        const char * AsChar() const;
+        void Copy(unsigned char buffer[], int length) const; 
 };
 typedef std::auto_ptr<BinaryData> BinaryDataAPtr;
 SWIG_AUTO_PTR_RELEASE(BinaryData);
@@ -466,13 +466,25 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
         set
         {
             mLoggerDelegate = value;
-            // Need to save references to both the delegate and the logger
-            // otherwise they will be garbage collected while still
-            // in use.
-            mNativeDelegate =
-                new RetsHttpLogger.NativeDelegate(this.LoggerDelegateBridge);
-	    mLogger = new RetsHttpLoggerBridge(mNativeDelegate);
-            SetHttpLogger(mLogger);
+
+            if (mLoggerDelegate != null)
+            {
+                // Need to save references to both the delegate and
+                // the logger otherwise they will be garbage collected
+                // while still in use.
+                mNativeDelegate = new RetsHttpLogger.NativeDelegate(
+                    this.LoggerDelegateBridge);
+                mLogger = new RetsHttpLoggerBridge(mNativeDelegate);
+                SetHttpLogger(mLogger);
+            }
+            else
+            {
+                // Disconnect callback prior to making them available
+                // for GC
+                SetHttpLogger(null);
+                mLogger = null;
+                mNativeDelegate = null;
+            }
         }
     }
     
