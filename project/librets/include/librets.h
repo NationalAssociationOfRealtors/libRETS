@@ -86,6 +86,7 @@
 #include "librets/SqlMetadata.h"
 #include "librets/DmqlQuery.h"
 #include "librets/DmqlCriterion.h"
+#include "librets/GetObjectQuery.h"
 
 #include "librets/util.h"
 
