@@ -1,3 +1,8 @@
+Versio 1.1.0 beta 5 - 1 March 2006
+
+  * Fixed memory management issues causing crashes if using HTTP logging
+    delegates in .Net.
+
 Version 1.1.0 beta 4 - 14 February 2006
 
   * GetObject support for Python.
