@@ -10,9 +10,13 @@ all:
 clean:
 	cd project\librets\src
 	$(NMAKE) /f Makefile.vc clean
-	cd ..\..\examples\src
+	cd ..\..\..
+	cd project\examples\src
 	$(NMAKE) /f Makefile.vc clean
 	cd ..\..\..
+	cd project\librets\test\src
+	$(NMAKE) /f Makefile.vc clean
+	cd ..\..\..\..
 	cd project\swig
 	$(NMAKE) /f Makefile.vc clean
 	cd ..\..
