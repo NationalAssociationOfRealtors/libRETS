@@ -12,9 +12,10 @@ public class Search
         else
             logWriter = TextWriter.Null;
             
+        RetsSession session = null;
         try
         {
-            RetsSession session = new RetsSession(
+            session = new RetsSession(
                 "http://demo.crt.realtors.org:6103/rets/login");
             session.LoggerDelegate =
                 TextWriterLogger.CreateDelegate(logWriter);
@@ -30,6 +31,10 @@ public class Search
         }
         finally
         {
+            // Be sure to dispose RetsSession when finished, otherwise the
+            // TextWriter Dispose() method may be called prior to RetsSession.
+            if (session != null)
+                session.Dispose();
             logWriter.Close();
         }
     }
