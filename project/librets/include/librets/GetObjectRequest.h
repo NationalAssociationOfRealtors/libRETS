@@ -106,7 +106,7 @@ class GetObjectRequest : public RetsObject
      * and only if a single ojbect has been added.  With more than
      * one object added, there is no way to determine which is the default.
      *
-     * @return <code>true if a default object key and ID are available.
+     * @return <code>true</code> if a default object key and ID are available.
      */
     bool HasDefaultObjectKeyAndId() const;
     

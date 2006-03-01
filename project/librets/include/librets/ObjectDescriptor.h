@@ -86,7 +86,7 @@ class ObjectDescriptor : public RetsObject
     /**
      * Sets the description of this object.
      *
-     * @parm description A description
+     * @param description A description
      */
     void SetDescription(std::string description);
 
