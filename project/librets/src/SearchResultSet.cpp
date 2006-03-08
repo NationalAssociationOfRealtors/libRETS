@@ -41,6 +41,7 @@ namespace ba = boost::algorithm;
 SearchResultSet::SearchResultSet()
 {
     mColumns.reset(new StringVector());
+    mCount = -1;
 }
 
 SearchResultSet::~SearchResultSet()
@@ -103,6 +104,8 @@ void SearchResultSet::Parse(istreamPtr inputStream)
             replyCodeString >> replyCode;
             if (replyCode == 20201)
             {
+                // No records found
+                mCount = 0;
                 continue;
             }
             else if (replyCode != 0)

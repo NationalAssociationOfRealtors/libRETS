@@ -29,6 +29,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testValidResponse);
+    CPPUNIT_TEST(testValidResponseNoCount);
     CPPUNIT_TEST(testNoRecordsFound);
     CPPUNIT_TEST(testErrorResponse);
     CPPUNIT_TEST(testSingleColumn);
@@ -39,6 +40,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
 
   protected:
     void testValidResponse();
+    void testValidResponseNoCount();
     void testNoRecordsFound();
     void testErrorResponse();
     void testSingleColumn();
@@ -85,11 +87,48 @@ void CLASS::testValidResponse()
     CPPUNIT_ASSERT(!resultSet.HasNext());
 }
 
+void CLASS::testValidResponseNoCount()
+{
+    SearchResultSet resultSet;
+    istreamPtr inputStream = getResource("search-response-no-count.xml");
+    resultSet.Parse(inputStream);
+    ASSERT_EQUAL(-1, resultSet.GetCount());
+    StringVector columns = resultSet.GetColumns();
+    ASSERT_EQUAL(StringVector::size_type(4), columns.size());
+    ASSERT_STRING_EQUAL("ListingID", columns.at(0));
+    ASSERT_STRING_EQUAL("ListPrice", columns.at(1));
+    ASSERT_STRING_EQUAL("City", columns.at(2));
+    ASSERT_STRING_EQUAL("ListDate", columns.at(3));
+    
+    CPPUNIT_ASSERT(resultSet.HasNext());
+    ASSERT_STRING_EQUAL("LN000005", resultSet.GetString("ListingID"));
+    ASSERT_STRING_EQUAL("LN000005", resultSet.GetString(0));
+    ASSERT_STRING_EQUAL("250000", resultSet.GetString("ListPrice"));
+    ASSERT_STRING_EQUAL("250000", resultSet.GetString(1));
+    ASSERT_STRING_EQUAL("Chicago", resultSet.GetString("City"));
+    ASSERT_STRING_EQUAL("Chicago", resultSet.GetString(2));
+    ASSERT_STRING_EQUAL("2004-07-04", resultSet.GetString("ListDate"));
+    ASSERT_STRING_EQUAL("2004-07-04", resultSet.GetString(3));
+    
+    CPPUNIT_ASSERT(resultSet.HasNext());
+    ASSERT_STRING_EQUAL("LN000004", resultSet.GetString("ListingID"));
+    ASSERT_STRING_EQUAL("LN000004", resultSet.GetString(0));
+    ASSERT_STRING_EQUAL("380000", resultSet.GetString("ListPrice"));
+    ASSERT_STRING_EQUAL("380000", resultSet.GetString(1));
+    ASSERT_STRING_EQUAL("Buffalo Grove", resultSet.GetString("City"));
+    ASSERT_STRING_EQUAL("Buffalo Grove", resultSet.GetString(2));
+    ASSERT_STRING_EQUAL("2004-05-30", resultSet.GetString("ListDate"));
+    ASSERT_STRING_EQUAL("2004-05-30", resultSet.GetString(3));
+    
+    CPPUNIT_ASSERT(!resultSet.HasNext());
+}
+
 void CLASS::testNoRecordsFound()
 {
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response-no-records.xml");
     resultSet.Parse(inputStream);
+    ASSERT_EQUAL(0, resultSet.GetCount());
     StringVector columns = resultSet.GetColumns();
     ASSERT_EQUAL(StringVector::size_type(0), columns.size());
     CPPUNIT_ASSERT(!resultSet.HasNext());
