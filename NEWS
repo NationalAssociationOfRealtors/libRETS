@@ -1,4 +1,10 @@
-Versio 1.1.0 beta 5 - 1 March 2006
+Version 1.1.0 beta 6 - ???
+
+  * ResultSet count property correctly is zero for a "No Records Found"
+    response.
+  * ResultSet count property is set to -1 if no <count> tag is found.
+
+Version 1.1.0 beta 5 - 1 March 2006
 
   * Fixed memory management issues causing crashes if using HTTP logging
     delegates in .Net.
