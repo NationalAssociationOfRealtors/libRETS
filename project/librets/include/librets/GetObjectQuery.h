@@ -43,15 +43,19 @@ class GetObjectQuery : public RetsObject
     IntVectorPtr GetObjectIds() const;
     
     void AddObjectId(int objectId);
-    
-    virtual std::ostream & Print(std::ostream & outputStream) const;
 
+    bool GetUseLocation() const;
+
+    void SetUseLocation(bool useLocation);
+
+    virtual std::ostream & Print(std::ostream & outputStream) const;
     
   private:
     IntVectorPtr mObjectIds;
     std::string mResource;
     std::string mType;
     std::string mObjectKey;
+    bool mUseLocation;
 };
 
 };

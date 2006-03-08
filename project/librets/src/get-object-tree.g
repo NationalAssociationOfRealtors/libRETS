@@ -42,17 +42,27 @@ options
 
 {
 
-void GetObjectTreeParser::setResource(
+void GetObjectTreeParser::setTable(
         GetObjectQueryPtr query, RefRetsAST ast)
 {
     std::string table = ast->getText();
     StringVector components;
     split(components, table, is_any_of(":"));
-    if ((components.size() != 2) || (components.at(0) != "object")) {
+    if ((components.size() != 3) || (components.at(0) != "object")) {
         throwSemanticException("Invalid table: " + table, ast);
     }
 
-    query->SetResource(components.at(1));
+    if (components.at(1) == "location") {
+        query->SetUseLocation(true);
+    }
+    else if (components.at(1) == "binary") {
+        query->SetUseLocation(false);
+    }
+    else {
+        throwSemanticException("Invalid table: " + table, ast);
+    }
+
+    query->SetResource(components.at(2));
 }
 
 void GetObjectTreeParser::handleEquals(
@@ -95,7 +105,7 @@ options
 
 {
   public:
-    void setResource(GetObjectQueryPtr query, RefRetsAST ast);
+    void setTable(GetObjectQueryPtr query, RefRetsAST ast);
     void handleEquals(GetObjectQueryPtr query,
                       RefRetsAST nameAst, RefRetsAST valueAst);
     void throwSemanticException(std::string message, RefRetsAST ast);
@@ -115,7 +125,7 @@ columns
 
 table_name [GetObjectQueryPtr q]
     : #(TABLE table:ID alias:ID)
-        { setResource(q, alias); tableName = alias->getText();}
+        { setTable(q, alias); tableName = alias->getText();}
     ;
 
 criteria [GetObjectQueryPtr q]

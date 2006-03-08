@@ -23,7 +23,7 @@ using namespace librets::util;
 using std::string;
 using std::ostream;
 
-GetObjectQuery::GetObjectQuery()
+GetObjectQuery::GetObjectQuery() : mUseLocation(true)
 {
     mObjectIds.reset(new IntVector());
 }
@@ -66,6 +66,16 @@ IntVectorPtr GetObjectQuery::GetObjectIds() const
 void GetObjectQuery::AddObjectId(int objectId)
 {
     mObjectIds->push_back(objectId);
+}
+
+bool GetObjectQuery::GetUseLocation() const
+{
+    return mUseLocation;
+}
+
+void GetObjectQuery::SetUseLocation(bool useLocation)
+{
+    mUseLocation = useLocation;
 }
 
 ostream & GetObjectQuery::Print(ostream & outputStream) const
