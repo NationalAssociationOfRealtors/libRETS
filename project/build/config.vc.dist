@@ -1,5 +1,6 @@
-# Point to vendor code, checked out from svn.  Must be an absolute path.
-BASE_PATH = c:/vendor
+# Point to vendor code, checked out from svn.  Must be an absolute
+# path with backslashes.  Do not use forward slashes.
+BASE_PATH = c:\vendor\windows
 
 # [debug, release]
 BUILD = debug

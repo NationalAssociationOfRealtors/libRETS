@@ -194,4 +194,5 @@ CPPUNIT_LDFLAGS = "/LIBPATH:$(CPPUNIT_PATH)/lib" $(CPPUNIT_LIB)
 #
 # Swig Configuration
 
-SWIG = c:\swigwin-1.3.27\swig.exe
+SWIG_PATH = $(BASE_PATH)\swig
+SWIG = $(SWIG_PATH)\swig.exe
