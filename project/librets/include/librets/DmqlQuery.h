@@ -20,6 +20,7 @@
 #include "librets/std_forward.h"
 #include "librets/sql_forward.h"
 #include "librets/RetsObject.h"
+#include "librets/SearchRequest.h"
 
 namespace librets {
 
@@ -52,6 +53,10 @@ class DmqlQuery : public RetsObject
 
     void SetOffset(int offset);
 
+    SearchRequest::CountType GetCountType() const;
+
+    void SetCountType(SearchRequest::CountType countType);
+
     virtual std::ostream & Print(std::ostream & outputStream) const;
 
   private:
@@ -61,6 +66,7 @@ class DmqlQuery : public RetsObject
     DmqlCriterionPtr mCriterion;
     int mLimit;
     int mOffset;
+    SearchRequest::CountType mCountType;
 };
 
 };

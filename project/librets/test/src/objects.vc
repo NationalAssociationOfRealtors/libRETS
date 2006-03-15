@@ -26,6 +26,7 @@ X_OBJS = \
 	$(DIROBJ)\RetsXmlStartElementEventTest.obj \
 	$(DIROBJ)\SearchResultSetTest.obj \
 	$(DIROBJ)\SqlToDmqlCompilerTest.obj \
+	$(DIROBJ)\SqlToDmqlObjectTest.obj \
 	$(DIROBJ)\TestHttpResponse.obj \
 	$(DIROBJ)\TestHttpResponseTest.obj \
 	$(DIROBJ)\TestMetadataElement.obj \

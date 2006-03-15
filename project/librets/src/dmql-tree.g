@@ -152,6 +152,7 @@ statement returns [DmqlQueryPtr q]
 
 columns [DmqlQueryPtr q]
     : #(COLUMNS (column[q])* )
+    | COUNT { q->SetCountType(SearchRequest::RECORD_COUNT_ONLY); }
     ;
 
 column [DmqlQueryPtr q]

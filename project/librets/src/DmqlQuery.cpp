@@ -27,7 +27,8 @@ using std::ostream;
 
 DmqlQuery::DmqlQuery()
     : mLimit(SearchRequest::LIMIT_DEFAULT),
-      mOffset(SearchRequest::OFFSET_NONE)
+      mOffset(SearchRequest::OFFSET_NONE),
+      mCountType(SearchRequest::RECORD_COUNT_AND_RESULTS)
 {
     mFields.reset(new StringVector());
 }
@@ -90,6 +91,16 @@ int DmqlQuery::GetOffset() const
 void DmqlQuery::SetOffset(int offset)
 {
     mOffset = offset;
+}
+
+SearchRequest::CountType DmqlQuery::GetCountType() const
+{
+    return mCountType;
+}
+
+void DmqlQuery::SetCountType(SearchRequest::CountType countType)
+{
+    mCountType = countType;
 }
 
 ostream & DmqlQuery::Print(std::ostream & outputStream) const

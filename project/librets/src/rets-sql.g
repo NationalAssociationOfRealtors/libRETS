@@ -42,7 +42,7 @@ tokens
 {
     SELECT = "select"; FROM = "from"; WHERE = "where";
     OR = "or"; AND = "and"; NOT = "not"; ORDER = "order"; BY = "by"; AS = "as";
-    IN = "in"; LIMIT = "limit"; OFFSET = "offset";
+    IN = "in"; LIMIT = "limit"; OFFSET = "offset"; COUNT = "count";
     COLUMNS; COLUMN; QUERY_ELEMENT; TABLE; NEQ;
 }
 
@@ -77,6 +77,7 @@ column_names
     : STAR { #column_names = #([COLUMNS, "COLS"]); }
     | column_name (COMMA! column_name)*
         { #column_names = #([COLUMNS, "COLS"], #column_names); }
+    | count_clause
     ;
 
 column_name!
@@ -100,6 +101,10 @@ table_name!
 
 order_by!
     : ORDER BY column_name (COMMA column_name)*
+    ;
+
+count_clause
+    : COUNT LPAREN! STAR! RPAREN!
     ;
 
 limit

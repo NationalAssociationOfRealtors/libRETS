@@ -63,16 +63,12 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testTableAlias);
     CPPUNIT_TEST(testTableAliasWithoutAs);
     CPPUNIT_TEST(testInvalidTableAliases);
-    CPPUNIT_TEST(testGetAllObjects);
-    CPPUNIT_TEST(testGetOneObject);
-    CPPUNIT_TEST(testGetTwoObjects);
-    CPPUNIT_TEST(testGetUsingLocation);
-    CPPUNIT_TEST(testGetUsingBinary);
-    CPPUNIT_TEST(testBadObjectTable);
     CPPUNIT_TEST(testLimit);
     CPPUNIT_TEST(testInvalidLimit);
     CPPUNIT_TEST(testOffset);
     CPPUNIT_TEST(testInvalidOffset);
+    CPPUNIT_TEST(testCount);
+    CPPUNIT_TEST(testInvalidCount);
     CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -106,19 +102,14 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testTableAlias();
     void testTableAliasWithoutAs();
     void testInvalidTableAliases();
-    void testGetAllObjects();
-    void testGetOneObject();
-    void testGetTwoObjects();
-    void testGetUsingLocation();
-    void testGetUsingBinary();
-    void testBadObjectTable();
     void testLimit();
     void testInvalidLimit();
     void testOffset();
     void testInvalidOffset();
+    void testCount();
+    void testInvalidCount();
 
     DmqlQueryPtr sqlToDmql(string sql);
-    GetObjectQueryPtr sqlToGetObject(string sql);
     void assertInvalidSql(string sql,
                           const CPPUNIT_NS::SourceLine & sourceLine);
 
@@ -140,15 +131,6 @@ DmqlQueryPtr CLASS::sqlToDmql(string sql)
         CPPUNIT_FAIL("Not a DMQL query");
     }
     return mCompiler->GetDmqlQuery();
-}
-
-GetObjectQueryPtr CLASS::sqlToGetObject(string sql)
-{
-    if (mCompiler->sqlToDmql(sql) != SqlToDmqlCompiler::GET_OBJECT_QUERY)
-    {
-        CPPUNIT_FAIL("Not a GetObject query");
-    }
-    return mCompiler->GetGetObjectQuery();
 }
 
 #define ASSERT_INVALID_SQL(_SQL_) assertInvalidSql(_SQL_, CPPUNIT_SOURCELINE())
@@ -179,6 +161,8 @@ void CLASS::testGreaterThanOrEquals()
               " where ListPrice >= 300000;");
     ASSERT_STRING_EQUAL("Property", query->GetResource());
     ASSERT_STRING_EQUAL("RES", query->GetClass());
+    ASSERT_EQUAL(SearchRequest::RECORD_COUNT_AND_RESULTS,
+                 query->GetCountType());
     
     StringVector columns;
     ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
@@ -620,92 +604,6 @@ void CLASS::testInvalidTableAliases()
                        "where r.ListPrice > 0");
 }
 
-void CLASS::testGetAllObjects()
-{
-    GetObjectQueryPtr query = 
-        sqlToGetObject("select * "
-                       "  from object:location:Property "
-                       " where type = 'Photo' "
-                       "       and object_key = 'LN1'");
-    ASSERT_STRING_EQUAL("Property", query->GetResource());
-    ASSERT_STRING_EQUAL("Photo", query->GetType());
-    ASSERT_STRING_EQUAL("LN1", query->GetObjectKey());
-    ASSERT_EQUAL(true, query->GetUseLocation());
-    IntVector objectIds;
-    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
-}
-
-void CLASS::testGetOneObject()
-{
-    GetObjectQueryPtr query = 
-    sqlToGetObject("select * "
-                   "  from object:location:Property "
-                   " where type = 'Photo' and object_key = 'LN1'"
-                   "       and object_id = 1");
-    ASSERT_STRING_EQUAL("Property", query->GetResource());
-    ASSERT_STRING_EQUAL("Photo", query->GetType());
-    ASSERT_STRING_EQUAL("LN1", query->GetObjectKey());
-    ASSERT_EQUAL(true, query->GetUseLocation());
-    IntVector objectIds;
-    objectIds.push_back(1);
-    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
-}
-
-void CLASS::testGetTwoObjects()
-{
-    GetObjectQueryPtr query = 
-    sqlToGetObject("select * "
-                   "  from object:location:Property "
-                   " where type = 'Photo' and object_key = 'LN1'"
-                   "       and object_id = 1 or object_id = 2");
-    ASSERT_STRING_EQUAL("Property", query->GetResource());
-    ASSERT_STRING_EQUAL("Photo", query->GetType());
-    ASSERT_STRING_EQUAL("LN1", query->GetObjectKey());
-    ASSERT_EQUAL(true, query->GetUseLocation());
-    IntVector objectIds;
-    objectIds.push_back(1);
-    objectIds.push_back(2);
-    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
-}
-
-void CLASS::testGetUsingLocation()
-{
-    GetObjectQueryPtr query = 
-        sqlToGetObject("select * "
-                       "  from object:location:Property "
-                       " where type = 'Photo' "
-                       "       and object_key = 'LN1'");
-    ASSERT_STRING_EQUAL("Property", query->GetResource());
-    ASSERT_STRING_EQUAL("Photo", query->GetType());
-    ASSERT_STRING_EQUAL("LN1", query->GetObjectKey());
-    ASSERT_EQUAL(true, query->GetUseLocation());
-    IntVector objectIds;
-    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
-}    
-
-void CLASS::testGetUsingBinary()
-{
-    GetObjectQueryPtr query = 
-        sqlToGetObject("select * "
-                       "  from object:binary:Property "
-                       " where type = 'Photo' "
-                       "       and object_key = 'LN1'");
-    ASSERT_STRING_EQUAL("Property", query->GetResource());
-    ASSERT_STRING_EQUAL("Photo", query->GetType());
-    ASSERT_STRING_EQUAL("LN1", query->GetObjectKey());
-    ASSERT_EQUAL(false, query->GetUseLocation());
-    IntVector objectIds;
-    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
-}
-
-void CLASS::testBadObjectTable()
-{
-    ASSERT_INVALID_SQL(
-        "select * "
-        "  from object:fail:Property "
-        " where type = 'Photo' "
-        "       and object_key = 'LN1'");
-}
 
 void CLASS::testLimit()
 {
@@ -747,9 +645,6 @@ void CLASS::testOffset()
               " offset 5;");
     ASSERT_STRING_EQUAL("Property", query->GetResource());
     ASSERT_STRING_EQUAL("RES", query->GetClass());
-    
-    ASSERT_STRING_EQUAL("Property", query->GetResource());
-    ASSERT_STRING_EQUAL("RES", query->GetClass());
 
     StringVector columns;
     ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
@@ -767,4 +662,42 @@ void CLASS::testInvalidOffset()
                        " from data:Property:RES"
                        " where ListPrice = 300000"
                        " offset foo;");
+}
+
+void CLASS::testCount()
+{
+    DmqlQueryPtr query =
+        sqlToDmql("select count(*) "
+                  "  from data:Property:RES"
+                  " WHERE ListPrice = 300000");
+
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+
+    StringVector columns;
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+
+    DmqlCriterionPtr criterion = eq("ListPrice", literal("300000"));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+
+    ASSERT_EQUAL(SearchRequest::RECORD_COUNT_ONLY, query->GetCountType());
+}
+
+void CLASS::testInvalidCount()
+{
+    ASSERT_INVALID_SQL("select count(*),foo "
+                       " from data:Property:RES"
+                       " where ListPrice = 300000");
+
+    ASSERT_INVALID_SQL("select foo,count(*) "
+                       " from data:Property:RES"
+                       " where ListPrice = 300000");
+
+    ASSERT_INVALID_SQL("select count"
+                       " from data:Property:RES"
+                       " where ListPrice = 300000");
+
+    ASSERT_INVALID_SQL("select count(foo) "
+                       " from data:Property:RES"
+                       " where ListPrice = 300000");
 }
