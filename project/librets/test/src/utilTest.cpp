@@ -37,7 +37,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSplitField);
     CPPUNIT_TEST(testUrlEncode);
     CPPUNIT_TEST(testJoinStrings);
-	CPPUNIT_TEST(testReadIntoString);
+    CPPUNIT_TEST(testReadIntoString);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -46,7 +46,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testSplitField();
     void testUrlEncode();
     void testJoinStrings();
-	void testReadIntoString();
+    void testReadIntoString();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -179,8 +179,8 @@ void CLASS::testJoinStrings()
 
 void CLASS::testReadIntoString()
 {
-	istringstream stream("string data");
-	string aString;
-	readIntoString(stream, aString);
-	ASSERT_STRING_EQUAL("string data", aString);
+    istringstream stream("string data");
+    string aString;
+    readIntoString(stream, aString);
+    ASSERT_STRING_EQUAL("string data", aString);
 }
