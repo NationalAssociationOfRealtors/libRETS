@@ -50,9 +50,11 @@ void CLASS::testGetIntAttribute()
     TestMetadataElement element;
     element.SetAttribute("field1", "5");
     element.SetAttribute("field2", "");
+    element.SetAttribute("field3", " ");
     ASSERT_EQUAL(5, element.GetIntAttribute("field1"));
     ASSERT_EQUAL(0, element.GetIntAttribute("field2"));
     ASSERT_EQUAL(0, element.GetIntAttribute("field3"));
+    ASSERT_EQUAL(0, element.GetIntAttribute("field4"));
 }
 
 void CLASS::testGetBoolAttribute()

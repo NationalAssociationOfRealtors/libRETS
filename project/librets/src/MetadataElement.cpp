@@ -66,7 +66,7 @@ string CLASS::GetStringAttribute(string attributeName,
 int CLASS::GetIntAttribute(string attributeName, int defaultValue) const
 {
     StringMap::const_iterator i = mAttributes.find(attributeName);
-    if (i != mAttributes.end() && !(i->second.empty()))
+    if (i != mAttributes.end() && !isEmpty(i->second))
     {
         return lexical_cast<int>(i->second);
     }

@@ -37,6 +37,7 @@
 		55083EAE08A92BA2004B3699 /* MetadataElementTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55083EAD08A92BA2004B3699 /* MetadataElementTest.cpp */; };
 		55083EC908A92D80004B3699 /* TestMetadataElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55083EC808A92D80004B3699 /* TestMetadataElement.cpp */; };
 		55097D3A09A149EA00225C99 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
+		550A6DEA09E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 550A6DE909E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp */; };
 		554AA16F07FA0EF600402C35 /* sql2dmql.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA16807FA0ECD00402C35 /* sql2dmql.cpp */; };
 		554AA18907FA10FA00402C35 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 554AA18607FA10FA00402C35 /* libantlr.a */; };
 		554AA1B107FA13A000402C35 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554AA1B007FA13A000402C35 /* Cocoa.framework */; };
@@ -256,6 +257,7 @@
 		55083EAD08A92BA2004B3699 /* MetadataElementTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MetadataElementTest.cpp; sourceTree = "<group>"; };
 		55083EC708A92D80004B3699 /* TestMetadataElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestMetadataElement.h; sourceTree = "<group>"; };
 		55083EC808A92D80004B3699 /* TestMetadataElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestMetadataElement.cpp; sourceTree = "<group>"; };
+		550A6DE909E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = SqlToDmqlObjectTest.cpp; sourceTree = "<group>"; };
 		551131F008D5DA4A00CC048D /* RetsErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetsErrorHandler.h; sourceTree = "<group>"; };
 		551131F208D5DAD500CC048D /* RetsErrorHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RetsErrorHandler.cpp; sourceTree = "<group>"; };
 		551131F608D5DDFC00CC048D /* ExceptionErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionErrorHandler.h; sourceTree = "<group>"; };
@@ -1162,6 +1164,7 @@
 		55F902BC08FEC65600D76E8C /* SQL */ = {
 			isa = PBXGroup;
 			children = (
+				550A6DE909E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp */,
 				55BD578207FDAAFD00526D69 /* EqCriterionTest.cpp */,
 				55BD577F07FDAAFD00526D69 /* AndCriterionTest.cpp */,
 				55BD578407FDAAFD00526D69 /* GtCriterionTest.cpp */,
@@ -1608,6 +1611,7 @@
 				55F902B908FEC59000D76E8C /* IncrementalMetadataFinderTest.cpp in Sources */,
 				55F9032608FEC7DD00D76E8C /* TestMetadataTree.cpp in Sources */,
 				55F9055508FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp in Sources */,
+				550A6DEA09E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
