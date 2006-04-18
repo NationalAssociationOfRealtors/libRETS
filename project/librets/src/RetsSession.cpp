@@ -151,6 +151,8 @@ std::string CLASS::MetadataTypeToString(MetadataElement::Type type)
         return "METADATA-RESOURCE";
     else if (type == MetadataElement::TABLE)
         return "METADATA-TABLE";
+    else if (type == MetadataElement::LOOKUP)
+        return "METADATA-LOOKUP";
     else
     {
         throw RetsException(str_stream() << "Invalid metadata type: "

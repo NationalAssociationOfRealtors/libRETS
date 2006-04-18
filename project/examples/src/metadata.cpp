@@ -30,6 +30,7 @@ void dumpSystem(RetsMetadata * metadata);
 void dumpAllResources(RetsMetadata * metadata);
 void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource);
 void dumpAllTables(RetsMetadata * metadata, MetadataClass * aClass);
+void dumpAllLookups(RetsMetadata * metadata, MetadataResource * resource);
 
 int main(int argc, char * argv[])
 {
@@ -85,6 +86,12 @@ void dumpAllResources(RetsMetadata * metadata)
         MetadataResource * resource = *i;
         dumpAllClasses(metadata, resource);
     }
+
+    for (i = resources.begin(); i != resources.end(); i++)
+    {
+        MetadataResource * resource = *i;
+        dumpAllLookups(metadata, resource);
+    }
 }
 
 void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource)
@@ -115,5 +122,23 @@ void dumpAllTables(RetsMetadata * metadata, MetadataClass * aClass)
         MetadataTable * table = *i;
         cout << "Table name: " << table->GetSystemName() << " ["
              << table->GetStandardName() << "]" << endl;
+    }
+}
+
+void dumpAllLookups(RetsMetadata * metadata, MetadataResource * resource)
+{
+    string resourceName = resource->GetResourceID();
+    
+    MetadataLookupList classes =
+        metadata->GetAllLookups(resourceName);
+    MetadataLookupList::iterator i;
+    for (i = classes.begin(); i != classes.end(); i++)
+    {
+        MetadataLookup * aClass = *i;
+        cout << "Resource name: " << resourceName << " ["
+             << resource->GetStandardName() << "]" << endl;
+        cout << "Lookup name: " << aClass->GetLookupName() << " ("
+             << aClass->GetVisibleName() << ")" << endl;
+        cout << endl;
     }
 }
