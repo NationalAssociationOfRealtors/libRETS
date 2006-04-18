@@ -39,6 +39,8 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGetAllTablesByClassObject);
     CPPUNIT_TEST(testGetAllTablesByClassName);
     CPPUNIT_TEST(testGetTable);
+    CPPUNIT_TEST(testGetAllLookups);
+    CPPUNIT_TEST(testGetLookup);
     CPPUNIT_TEST_SUITE_END();
     
   protected:
@@ -50,6 +52,8 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     void testGetAllTablesByClassObject();
     void testGetAllTablesByClassName();
     void testGetTable();
+    void testGetAllLookups();
+    void testGetLookup();
     
   public:
     void setUp();
@@ -130,3 +134,17 @@ void CLASS_::testGetTable()
     CPPUNIT_ASSERT(actualTable);
     ASSERT_EQUAL(*mMetadataTree->listDateTable, *actualTable);
 }
+
+void CLASS_::testGetAllLookups()
+{
+    MetadataLookupList actualLookups = metadata->GetAllLookups("Property");
+    ASSERT_VECTOR_EQUAL(mMetadataTree->propertyLookups, actualLookups);
+}
+
+void CLASS_::testGetLookup()
+{
+    MetadataLookup * actualLookup = metadata->GetLookup("Property", "AR");
+    CPPUNIT_ASSERT(actualLookup);
+    ASSERT_EQUAL(*mMetadataTree->areaLookup, *actualLookup);
+}
+

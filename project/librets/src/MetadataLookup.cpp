@@ -36,3 +36,18 @@ string CLASS::GetLookupName() const
 {
     return GetStringAttribute("LookupName");
 }
+
+string CLASS::GetVisibleName() const
+{
+    return GetStringAttribute("VisibleName");
+}
+
+string CLASS::GetVersion() const
+{
+    return GetStringAttribute("Version");
+}
+
+string CLASS::GetDate() const
+{
+    return GetStringAttribute("Date");
+}

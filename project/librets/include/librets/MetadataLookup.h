@@ -38,7 +38,12 @@ class MetadataLookup : public MetadataElement
     virtual std::string GetId() const;
     
     std::string GetLookupName() const;
-
+    
+    std::string GetVisibleName() const;
+    
+    std::string GetVersion() const;
+    
+    std::string GetDate() const;
 };
 
 };

@@ -41,6 +41,9 @@ typedef std::vector<MetadataTable *> MetadataTableList;
 /** A smart pointer to MetadataTableList. */
 typedef boost::shared_ptr<MetadataTableList> MetadataTableListPtr;
 
+/** A vector of MetadataLookup objects */
+typedef std::vector<MetadataLookup *> MetadataLookupList;
+
 /**
  * Contains all the metadata.
  */
@@ -67,7 +70,7 @@ class RetsMetadata
     MetadataResourceList GetAllResources() const;
 
     /**
-     * Returns the metadata resource from its resource names.
+     * Returns the metadata resource from its resource name.
      *
      * @param resourceName A resource name
      * @return A metadata class
@@ -75,7 +78,7 @@ class RetsMetadata
     MetadataResource * GetResource(std::string resourceName) const;
 
     /**
-     * Returns all metadata class elements for a specified metadata class.
+     * Returns all metadata class elements for a specified resource.
      *
      * @param resourceName A resource name
      * @return All metadata class elements for that resource
@@ -114,6 +117,24 @@ class RetsMetadata
      */
     MetadataTable * GetTable(std::string resourceName, std::string className,
                              std::string tableName) const;
+    
+    /**
+     * Returns all metadata lookup elements for a specified resource.
+     *
+     * @param resourceName A resource name
+     * @return All lookups for that resource
+     */
+    MetadataLookupList GetAllLookups(std::string resourceName) const;
+
+    /**
+     * Returns a metadata lookup from a resource and lookup name.
+     *
+     * @param resrouceName A resource name
+     * @param lookupName A lookup name
+     * @return A metadata lookup
+     */
+    MetadataLookup * GetLookup(std::string resourceName, std::string lookupName)
+        const;
 
 private:
     void InitSystem();

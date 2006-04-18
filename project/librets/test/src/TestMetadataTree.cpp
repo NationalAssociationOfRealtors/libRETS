@@ -73,4 +73,11 @@ CLASS::CLASS(MetadataElementCollector * collector)
     listDateTable->SetAttribute("SystemName", "ListDate");
     collector->AddElement(listDateTable);
     propertyResTables.push_back(listDateTable.get());
+    
+    areaLookup.reset(new MetadataLookup());
+    areaLookup->SetLevel("Property");
+    areaLookup->SetAttribute("LookupName", "AR");
+    areaLookup->SetAttribute("VisibleName", "Area");
+    collector->AddElement(areaLookup);
+    propertyLookups.push_back(areaLookup.get());
 }
