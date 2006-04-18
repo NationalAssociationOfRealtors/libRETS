@@ -19,12 +19,14 @@
 #include "Options.h"
 #include <iostream>
 #include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
 
 using namespace librets;
 using namespace librets::util;
 using namespace std;
 using boost::lexical_cast;
 namespace po = boost::program_options;
+namespace ba = boost::algorithm;
 
 int main(int argc, char * argv[])
 {
@@ -35,6 +37,7 @@ int main(int argc, char * argv[])
         string resourceEntity;
         string objectId;
         string outputPrefix;
+        vector<string> resourceSets;
         
         Options options;
         options.descriptions.add_options()
@@ -42,16 +45,19 @@ int main(int argc, char * argv[])
              ->default_value("Property"), "Object resource")
             ("type,t", po::value<string>(&type)
              ->default_value("Photo"), "Object type")
-            ("resource-entity,e", po::value<string>(&resourceEntity)
-             ->default_value("LN000001"), "Search select")
-            ("object-id,i", po::value<string>(&objectId)
-             ->default_value("*"), "Object ID")
             ("output-prefix,P", po::value<string>(&outputPrefix)
              ->default_value(""), "Output file prefix")
+            ("resource-set,R", po::value< vector<string> >(&resourceSets),
+             "Resource sets (e.g. 'resource-id' or 'resource-id:#,#'))")
             ;
         if (!options.ParseCommandLine(argc, argv))
         {
-            return 0;
+            return 1;
+        }
+        
+        if (resourceSets.size() == 0)
+        {
+            resourceSets.push_back("LN000001");
         }
 
         RetsSessionPtr session = options.RetsLogin();
@@ -63,14 +69,27 @@ int main(int argc, char * argv[])
     
         GetObjectRequest getObjectRequest(resource, type);
     
-        if (objectId == "*")
+        vector<string>::const_iterator i;
+        for (i = resourceSets.begin(); i != resourceSets.end(); i++)
         {
-            getObjectRequest.AddAllObjects(resourceEntity);
-        }
-        else
-        {
-            getObjectRequest.AddObject(resourceEntity,
-                                       lexical_cast<int>(objectId));
+            vector<string> resourceSet;
+            ba::split(resourceSet, *i, ba::is_any_of(":"));
+            if (resourceSet.size() == 1)
+            {
+                getObjectRequest.AddAllObjects(resourceSet[0]);
+            }
+            else if (resourceSet.size() == 2)
+            {
+                vector<string> ids;
+                ba::split(ids, resourceSet[1], ba::is_any_of(","));
+                vector<string>::const_iterator idString;
+                for (idString = ids.begin(); idString != ids.end();
+                     idString++)
+                {
+                    int id  = lexical_cast<int>(*idString);
+                    getObjectRequest.AddObject(resourceSet[0], id);
+                }
+            }
         }
     
         GetObjectResponseAPtr getObjectResponse =
