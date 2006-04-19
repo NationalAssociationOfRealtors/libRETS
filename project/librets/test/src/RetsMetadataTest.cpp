@@ -41,6 +41,9 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGetTable);
     CPPUNIT_TEST(testGetAllLookups);
     CPPUNIT_TEST(testGetLookup);
+    CPPUNIT_TEST(testGetAllLookupTypesByName);
+    CPPUNIT_TEST(testGetAllLookupTypesByObject);
+    CPPUNIT_TEST(testGetLookupType);
     CPPUNIT_TEST_SUITE_END();
     
   protected:
@@ -54,6 +57,9 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     void testGetTable();
     void testGetAllLookups();
     void testGetLookup();
+    void testGetAllLookupTypesByName();
+    void testGetAllLookupTypesByObject();
+    void testGetLookupType();
     
   public:
     void setUp();
@@ -148,3 +154,28 @@ void CLASS_::testGetLookup()
     ASSERT_EQUAL(*mMetadataTree->areaLookup, *actualLookup);
 }
 
+void CLASS_::testGetAllLookupTypesByName()
+{
+    MetadataLookupTypeList actualLookupTypes =
+        metadata->GetAllLookupTypes("Property", "AR");
+    ASSERT_VECTOR_EQUAL(mMetadataTree->propertyAreaLookupTypes,
+                        actualLookupTypes);
+}
+
+void CLASS_::testGetAllLookupTypesByObject()
+{
+    MetadataLookup * actualLookup = metadata->GetLookup("Property", "AR");
+    CPPUNIT_ASSERT(actualLookup);
+    MetadataLookupTypeList actualLookupTypes =
+        metadata->GetAllLookupTypes(actualLookup);
+    ASSERT_VECTOR_EQUAL(mMetadataTree->propertyAreaLookupTypes,
+                        actualLookupTypes);
+}
+
+void CLASS_::testGetLookupType()
+{
+    MetadataLookupType * actualLookupType =
+        metadata->GetLookupType("Property", "AR", "SoLo");
+    CPPUNIT_ASSERT(actualLookupType);
+    ASSERT_EQUAL(*mMetadataTree->southLoopLookupType, *actualLookupType);
+}

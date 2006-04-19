@@ -44,6 +44,9 @@ typedef boost::shared_ptr<MetadataTableList> MetadataTableListPtr;
 /** A vector of MetadataLookup objects */
 typedef std::vector<MetadataLookup *> MetadataLookupList;
 
+/** A vector of MetadataLookupType objects */
+typedef std::vector<MetadataLookupType *> MetadataLookupTypeList;
+
 /**
  * Contains all the metadata.
  */
@@ -135,8 +138,18 @@ class RetsMetadata
      */
     MetadataLookup * GetLookup(std::string resourceName, std::string lookupName)
         const;
-
-private:
+    
+    MetadataLookupTypeList GetAllLookupTypes(std::string resrouceName,
+                                             std::string lookupName) const;
+    
+    MetadataLookupTypeList GetAllLookupTypes(MetadataLookup * metadataLookup)
+        const;
+    
+    MetadataLookupType * GetLookupType(std::string resourceName,
+                                       std::string lookupName,
+                                       std::string lookupValue) const;
+    
+  private:
     void InitSystem();
 
     MetadataFinderPtr mFinder;

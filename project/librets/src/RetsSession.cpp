@@ -217,8 +217,8 @@ SearchRequestAPtr CLASS::CreateSearchRequest(string searchType,
                                              string searchClass,
                                              string query)
 {
-    std::auto_ptr<SearchRequest> searchRequest(new SearchRequest(searchType, searchClass,
-                                                     query));
+    std::auto_ptr<SearchRequest> searchRequest(
+        new SearchRequest(searchType, searchClass, query));
     if (mDetectedRetsVersion == RETS_1_0)
     {
         searchRequest->SetQueryType(SearchRequest::DMQL);

@@ -27,6 +27,7 @@
 #include "librets/MetadataClass.h"
 #include "librets/MetadataTable.h"
 #include "librets/MetadataLookup.h"
+#include "librets/MetadataLookupType.h"
 
 namespace librets {
     
@@ -41,6 +42,7 @@ class TestMetadataTree
     MetadataClassList agentClasses;
     MetadataTableList propertyResTables;
     MetadataLookupList propertyLookups;
+    MetadataLookupTypeList propertyAreaLookupTypes;
     
     MetadataSystemPtr system;
 
@@ -55,6 +57,9 @@ class TestMetadataTree
     MetadataTablePtr listPriceTable;
     
     MetadataLookupPtr areaLookup;
+
+    MetadataLookupTypePtr southLoopLookupType;
+    MetadataLookupTypePtr lincolnParkLookupType;
 };
 
 typedef boost::shared_ptr<TestMetadataTree> TestMetadataTreePtr;

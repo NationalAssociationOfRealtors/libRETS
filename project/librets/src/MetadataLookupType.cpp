@@ -36,3 +36,13 @@ string CLASS::GetValue() const
 {
     return GetStringAttribute("Value");
 }
+
+string CLASS::GetLongValue() const
+{
+    return GetStringAttribute("LongValue");
+}
+
+string CLASS::GetShortValue() const
+{
+    return GetStringAttribute("ShortValue");
+}

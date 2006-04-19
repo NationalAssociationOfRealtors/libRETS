@@ -80,4 +80,20 @@ CLASS::CLASS(MetadataElementCollector * collector)
     areaLookup->SetAttribute("VisibleName", "Area");
     collector->AddElement(areaLookup);
     propertyLookups.push_back(areaLookup.get());
+    
+    southLoopLookupType.reset(new MetadataLookupType());
+    southLoopLookupType->SetLevel("Property:AR");
+    southLoopLookupType->SetAttribute("Value", "SoLo");
+    southLoopLookupType->SetAttribute("ShortValue", "SL");
+    southLoopLookupType->SetAttribute("LongValue", "South Loop");
+    collector->AddElement(southLoopLookupType);
+    propertyAreaLookupTypes.push_back(southLoopLookupType.get());
+    
+    lincolnParkLookupType.reset(new MetadataLookupType());
+    lincolnParkLookupType->SetLevel("Property:AR");
+    lincolnParkLookupType->SetAttribute("Value", "LP");
+    lincolnParkLookupType->SetAttribute("ShortValue", "LP");
+    lincolnParkLookupType->SetAttribute("LongValue", "Linconln Park");
+    collector->AddElement(lincolnParkLookupType);
+    propertyAreaLookupTypes.push_back(lincolnParkLookupType.get());
 }

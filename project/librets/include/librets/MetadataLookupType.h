@@ -38,6 +38,10 @@ class MetadataLookupType : public MetadataElement
     virtual std::string GetId() const;
     
     std::string GetValue() const;
+    
+    std::string GetLongValue() const;
+    
+    std::string GetShortValue() const;
 };
 
 };
