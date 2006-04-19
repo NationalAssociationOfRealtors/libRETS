@@ -15,6 +15,9 @@ def dump_all_resources(metadata)
   metadata.GetAllResources.each do |resource|
     dump_all_classes(metadata, resource)
   end
+  metadata.GetAllResources.each do |resource|
+    dump_all_lookups(metadata, resource)
+  end
 end
 
 def dump_all_classes(metadata, resource)
@@ -33,6 +36,27 @@ def dump_all_tables(metadata, aClass)
   metadata.GetAllTables(aClass).each do |table|
     puts "Table name: " + table.GetSystemName + " [" + table.GetStandardName +
       "]"
+  end
+end
+
+def dump_all_lookups(metadata, resource)
+  resource_name = resource.GetResourceID();
+  metadata.GetAllLookups(resource_name).each do |lookup|
+    puts "Lookup name: " +  resource_name + " [" + 
+      resource.GetStandardName + "]"
+    puts "Lookup name: " + lookup.GetLookupName + " (" +
+      lookup.GetVisibleName + ")"
+    dump_all_lookup_types(metadata, lookup)
+    puts
+  end
+end
+
+def dump_all_lookup_types(metadata, lookup)
+  lookup_types = metadata.GetAllLookupTypes(lookup);
+  lookup_types.each do |lookup_type|
+    puts "Lookup value: " + lookup_type.GetValue() + " (" +
+      lookup_type.GetShortValue() + ", " +
+      lookup_type.GetLongValue() + ")"
   end
 end
 

@@ -381,6 +381,31 @@ class MetadataTable : public MetadataElement
 typedef std::vector<MetadataTable *> MetadataTableList;
 %template(MetadataTableList) std::vector<MetadataTable *>;
 
+class MetadataLookup : public MetadataElement
+{
+  public:
+    virtual std::string GetId() const;
+    std::string GetLookupName() const;
+    std::string GetVisibleName() const;
+    std::string GetVersion() const;
+    std::string GetDate() const;
+};
+
+typedef std::vector<MetadataLookup *> MetadataLookupList;
+%template(MetadataLookupList) std::vector<MetadataLookup *>;
+
+class MetadataLookupType : public MetadataElement
+{
+  public:
+    virtual std::string GetId() const;
+    std::string GetValue() const;
+    std::string GetLongValue() const;
+    std::string GetShortValue() const;
+};
+
+typedef std::vector<MetadataLookupType *> MetadataLookupTypeList;
+%template(MetadataLookupTypeList) std::vector<MetadataLookupType *>;
+
 %nodefault;
 
 class RetsMetadata
@@ -402,6 +427,21 @@ class RetsMetadata
 
     MetadataTable * GetTable(std::string resourceName, std::string className,
                              std::string tableName) const;
+
+    MetadataLookupList GetAllLookups(std::string resourceName) const;
+    
+    MetadataLookup * GetLookup(std::string resourceName,
+        std::string lookupName) const;
+    
+    MetadataLookupTypeList GetAllLookupTypes(std::string resrouceName,
+                                             std::string lookupName) const;
+    
+    MetadataLookupTypeList GetAllLookupTypes(MetadataLookup * metadataLookup)
+        const;
+    
+    MetadataLookupType * GetLookupType(std::string resourceName,
+                                       std::string lookupName,
+                                       std::string lookupValue) const;
 };
 
 %default;
