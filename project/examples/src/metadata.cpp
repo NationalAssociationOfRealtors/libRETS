@@ -31,6 +31,7 @@ void dumpAllResources(RetsMetadata * metadata);
 void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource);
 void dumpAllTables(RetsMetadata * metadata, MetadataClass * aClass);
 void dumpAllLookups(RetsMetadata * metadata, MetadataResource * resource);
+void dumpAllLookupTypes(RetsMetadata * metadata, MetadataLookup * lookup);
 
 int main(int argc, char * argv[])
 {
@@ -134,11 +135,25 @@ void dumpAllLookups(RetsMetadata * metadata, MetadataResource * resource)
     MetadataLookupList::iterator i;
     for (i = classes.begin(); i != classes.end(); i++)
     {
-        MetadataLookup * aClass = *i;
+        MetadataLookup * lookup = *i;
         cout << "Resource name: " << resourceName << " ["
              << resource->GetStandardName() << "]" << endl;
-        cout << "Lookup name: " << aClass->GetLookupName() << " ("
-             << aClass->GetVisibleName() << ")" << endl;
+        cout << "Lookup name: " << lookup->GetLookupName() << " ("
+             << lookup->GetVisibleName() << ")" << endl;
+        dumpAllLookupTypes(metadata, lookup);
         cout << endl;
+    }
+}
+
+void dumpAllLookupTypes(RetsMetadata * metadata, MetadataLookup * lookup)
+{
+    MetadataLookupTypeList lookupTypes = metadata->GetAllLookupTypes(lookup);
+    MetadataLookupTypeList::const_iterator i ;
+    for (i = lookupTypes.begin(); i != lookupTypes.end(); i++)
+    {
+        MetadataLookupType * lookupType = *i;
+        cout << "Lookup value: " << lookupType->GetValue() << " ("
+             << lookupType->GetShortValue() << ", "
+             << lookupType->GetLongValue() << ")" << endl;
     }
 }
