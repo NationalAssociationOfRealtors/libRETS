@@ -42,6 +42,10 @@ public class Search
         {
             dumpAllClasses(metadata, resource);
         }
+        foreach (MetadataResource resource in resources)
+        {
+            dumpAllLookups(metadata, resource);
+        }
     }
     
     static void dumpAllClasses(RetsMetadata metadata,
@@ -67,6 +71,34 @@ public class Search
         {
             Console.WriteLine("Table name: " + table.GetSystemName() + " [" +
                 table.GetStandardName() + "]");
+        }
+    }
+
+    static void dumpAllLookups(RetsMetadata metadata,
+        MetadataResource resource)
+    {
+        string resourceName = resource.GetResourceID();
+        IEnumerable lookups = metadata.GetAllLookups(resourceName);
+        foreach (MetadataLookup lookup in lookups)
+        {
+            Console.WriteLine("Resource name: " + resourceName + " [" +
+                resource.GetStandardName() + "]");
+            Console.WriteLine("Lokup name: " + lookup.GetLookupName() + " (" +
+                lookup.GetVisibleName() + ")");
+            dumpAllLookupTypes(metadata, lookup);
+            Console.WriteLine();
+        }
+    }
+    
+    static void dumpAllLookupTypes(RetsMetadata metadata,
+        MetadataLookup lookup)
+    {
+        IEnumerable lookupTypes = metadata.GetAllLookupTypes(lookup);
+        foreach (MetadataLookupType lookupType in lookupTypes)
+        {
+            Console.WriteLine("Lookup value: " + lookupType.GetValue() +
+                " (" + lookupType.GetShortValue() + ", " +
+                lookupType.GetLongValue() + ")");
         }
     }
 }
