@@ -1,8 +1,12 @@
-Version 1.1.0 beta 6 - ???
+Version 1.1.0 beta 6 - 28 Apr 2006
 
+  * Lookup and LookupType metadata is now accessible through RetsMetadata.
+  * Add COUNT(*) to SQL compiler.
+  * Location URLs supported in GetObject SQL compiler.
   * ResultSet count property correctly is zero for a "No Records Found"
     response.
   * ResultSet count property is set to -1 if no <count> tag is found.
+  * Fix various build issues.
 
 Version 1.1.0 beta 5 - 1 March 2006
 
