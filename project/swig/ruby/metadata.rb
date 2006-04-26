@@ -52,8 +52,7 @@ def dump_all_lookups(metadata, resource)
 end
 
 def dump_all_lookup_types(metadata, lookup)
-  lookup_types = metadata.GetAllLookupTypes(lookup);
-  lookup_types.each do |lookup_type|
+  metadata.GetAllLookupTypes(lookup).each do |lookup_type|
     puts "Lookup value: " + lookup_type.GetValue() + " (" +
       lookup_type.GetShortValue() + ", " +
       lookup_type.GetLongValue() + ")"
