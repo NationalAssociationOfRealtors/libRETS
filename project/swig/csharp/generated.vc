@@ -9,6 +9,10 @@ GENERATED_SRC = \
 	lib\MetadataClass.cs \
 	lib\MetadataClassList.cs \
 	lib\MetadataElement.cs \
+	lib\MetadataLookup.cs \
+	lib\MetadataLookupList.cs \
+	lib\MetadataLookupType.cs \
+	lib\MetadataLookupTypeList.cs \
 	lib\MetadataResource.cs \
 	lib\MetadataResourceList.cs \
 	lib\MetadataSystem.cs \
