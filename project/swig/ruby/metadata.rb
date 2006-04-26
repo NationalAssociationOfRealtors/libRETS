@@ -42,7 +42,7 @@ end
 def dump_all_lookups(metadata, resource)
   resource_name = resource.GetResourceID();
   metadata.GetAllLookups(resource_name).each do |lookup|
-    puts "Lookup name: " +  resource_name + " [" + 
+    puts "Resource name: " +  resource_name + " [" + 
       resource.GetStandardName + "]"
     puts "Lookup name: " + lookup.GetLookupName + " (" +
       lookup.GetVisibleName + ")"
