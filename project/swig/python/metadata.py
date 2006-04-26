@@ -13,6 +13,8 @@ def dump_all_resources(metadata):
     print
     for resource in metadata.GetAllResources():
         dump_all_classes(metadata, resource)
+    for resource in metadata.GetAllResources():
+        dump_all_lookups(metadata, resource)
         
 def dump_all_classes(metadata, resource):
     resource_name = resource.GetResourceID()
@@ -28,6 +30,23 @@ def dump_all_tables(metadata, aClass):
     for table in metadata.GetAllTables(aClass):
         print "Table name: " + table.GetSystemName()  + " [" + \
             table.GetStandardName() + "]"
+
+def dump_all_lookups(metadata, resource):
+    resource_name = resource.GetResourceID()
+    for lookup in metadata.GetAllLookups(resource_name):
+        print "Resource name: " + resource_name + " [" + \
+            resource.GetStandardName() + "]"
+        print "Lookup name: " + lookup.GetLookupName() + " ("  + \
+            lookup.GetVisibleName() + ")"
+        dump_all_lookup_types(metadata, lookup)
+        print
+
+def dump_all_lookup_types(metadata, lookup):
+    for lookup_type in metadata.GetAllLookupTypes(lookup):
+        print "Lookup value: " + lookup_type.GetValue() + " (" + \
+            lookup_type.GetShortValue() + ", " + \
+            lookup_type.GetLongValue() + ")"
+        
     
 try:
   session = librets.RetsSession("http://demo.crt.realtors.org:6103/rets/login")
