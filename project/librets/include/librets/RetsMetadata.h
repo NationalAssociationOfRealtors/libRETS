@@ -107,6 +107,13 @@ class RetsMetadata
      */
     MetadataTableList GetAllTables(MetadataClass * metadataClass) const;
     
+    /**
+     * Returns all metadata table elements with a resource and class name.
+     *
+     * @param resourceName A resource name
+     * @parm className A class name
+     * @return A list of matching metadata tables
+     */
     MetadataTableList GetAllTables(std::string resourceName,
                                    std::string className) const;
 
@@ -139,12 +146,35 @@ class RetsMetadata
     MetadataLookup * GetLookup(std::string resourceName, std::string lookupName)
         const;
     
+    /**
+     * Returns all metadata lookup type element from its resource and lookup
+     * names.
+     *
+     * @param resourceName A resource name
+     * @param lookupName A lookup name
+     * @return All lookup types
+     */
     MetadataLookupTypeList GetAllLookupTypes(std::string resrouceName,
                                              std::string lookupName) const;
     
+    /**
+     * Returns all metadata lookup type element for a lookup.
+     *
+     * @param lookup A metadata lookup element
+     * @return All lookup types
+     */
     MetadataLookupTypeList GetAllLookupTypes(MetadataLookup * metadataLookup)
         const;
     
+    /**
+     * Returns a metadata lookup from a resource name, lookup name, and 
+     * lookup value.
+     *
+     * @param resourceName A resource name
+     * @param lookupName A lookup  name
+     * @param lookupValue A lookup value
+     * @return A metadata lookup type
+     */
     MetadataLookupType * GetLookupType(std::string resourceName,
                                        std::string lookupName,
                                        std::string lookupValue) const;
