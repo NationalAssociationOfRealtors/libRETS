@@ -138,8 +138,13 @@ void SearchResultSet::Parse(istreamPtr inputStream)
         }
         else if (name == "DATA")
         {
+            // AssertNextIsTextEvent() ignores empty text events. In this
+            // case, an empty text event (one with just tabs) is valid.  So
+            // here we use GetNextEvent() which does not ignore empty text
+            // events.
+            RetsXmlEventPtr xmlEvent = mXmlParser->GetNextEvent();
             RetsXmlTextEventPtr textEvent =
-                mXmlParser->AssertNextIsTextEvent();
+                mXmlParser->AssertTextEvent(xmlEvent, "DATA: ");
             string text = textEvent->GetText();
             StringVectorPtr data(new StringVector());
             ba::split(*data, text, ba::is_any_of(delimiter));

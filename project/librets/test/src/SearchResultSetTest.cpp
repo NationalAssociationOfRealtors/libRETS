@@ -157,7 +157,7 @@ void CLASS::testSingleColumn()
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response-single-column.xml");
     resultSet.Parse(inputStream);
-    ASSERT_EQUAL(2, resultSet.GetCount());
+    ASSERT_EQUAL(3, resultSet.GetCount());
     StringVector columns = resultSet.GetColumns();
     ASSERT_EQUAL(StringVector::size_type(1), columns.size());
     ASSERT_STRING_EQUAL("ListingID", columns.at(0));
@@ -169,7 +169,11 @@ void CLASS::testSingleColumn()
     CPPUNIT_ASSERT(resultSet.HasNext());
     ASSERT_STRING_EQUAL("LN000004", resultSet.GetString("ListingID"));
     ASSERT_STRING_EQUAL("LN000004", resultSet.GetString(0));
-
+    
+    CPPUNIT_ASSERT(resultSet.HasNext());
+    ASSERT_STRING_EQUAL("", resultSet.GetString("ListingID"));
+    ASSERT_STRING_EQUAL("", resultSet.GetString(0));
+    
     CPPUNIT_ASSERT(!resultSet.HasNext());
 }
 

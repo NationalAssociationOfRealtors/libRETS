@@ -46,13 +46,12 @@ RetsXmlParser::~RetsXmlParser()
 
 RetsXmlEventPtr CLASS::GetNextSkippingEmptyText()
 {
-    RetsXmlParser * xmlParser = this;
-    if (!xmlParser->HasNext())
+    if (!HasNext())
     {
         throw RetsException("No more XML events");
     }
 
-    RetsXmlEventPtr event = xmlParser->GetNextEvent();
+    RetsXmlEventPtr event = GetNextEvent();
     RetsXmlTextEventPtr textEvent =
         b::dynamic_pointer_cast<RetsXmlTextEvent>(event);
     if (!textEvent)
@@ -131,7 +130,7 @@ RetsXmlEndElementEventPtr CLASS::AssertEndEvent(RetsXmlEventPtr event,
 
 RetsXmlTextEventPtr CLASS::AssertNextIsTextEvent(string prefix)
 {
-    return AssertTextEvent(GetNextSkippingEmptyText());
+    return AssertTextEvent(GetNextSkippingEmptyText(), prefix);
 }
 
 RetsXmlTextEventPtr CLASS::AssertTextEvent(RetsXmlEventPtr event, string prefix)

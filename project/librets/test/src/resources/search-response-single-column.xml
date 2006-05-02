@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <RETS ReplyCode="0" ReplyText="Operation Successful">
-<COUNT Records="2"/>
+<COUNT Records="3"/>
 <DELIMITER value="09"/>
 <COLUMNS>	ListingID	</COLUMNS>
 <DATA>	LN000005	</DATA>
 <DATA>	LN000004	</DATA>
+<DATA>		</DATA>
 </RETS>
