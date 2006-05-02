@@ -2,6 +2,10 @@ dnl
 dnl Check for ANTLR
 dnl
 AC_DEFUN([MY_TEST_ANTLR], [
+  AC_CHECK_PROG(ANTLR_JAVA, java, java, [])
+  if test x$ANTLR_JAVA == "x"; then
+    AC_MSG_ERROR([antlr requires java to run])
+  fi
   AC_CHECK_PROG(ANTLR, antlr, antlr, [])
   if test x$ANTLR == "x"; then
     AC_MSG_ERROR([antlr is required to build librets])
