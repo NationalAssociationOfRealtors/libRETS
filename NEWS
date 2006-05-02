@@ -1,3 +1,8 @@
+Version 1.1.0 -  2 May 2006
+
+  * Fix parse error for COMPACT data rows with all empty data.
+  * ./configure checks for the "java" program, since ANTLR requires it.
+
 Version 1.1.0 beta 6 - 28 Apr 2006
 
   * Lookup and LookupType metadata is now accessible through RetsMetadata.
