@@ -40,6 +40,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGetUsingBinary);
     CPPUNIT_TEST(testBadObjectTable);
     CPPUNIT_TEST(testCountWithObject);
+    CPPUNIT_TEST(testNoWhere);
     CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -53,6 +54,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testGetUsingBinary();
     void testBadObjectTable();
     void testCountWithObject();
+    void testNoWhere();
     
     GetObjectQueryPtr sqlToGetObject(string sql);
     void assertInvalidSql(string sql,
@@ -191,4 +193,18 @@ void CLASS::testCountWithObject()
         "  from object:location:Property "
         " where type = 'Photo' "
         "       and object_key = 'LN1'");
+}
+
+void CLASS::testNoWhere()
+{
+    GetObjectQueryPtr query =
+        sqlToGetObject("SELECT * "
+                       "FROM object:binary:Property");
+
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("", query->GetType());
+    ASSERT_STRING_EQUAL("", query->GetObjectKey());
+    ASSERT_EQUAL(false, query->GetUseLocation());
+    IntVector objectIds;
+    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
 }
