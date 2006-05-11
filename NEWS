@@ -1,3 +1,8 @@
+Version 1.1.1 - 11 May 2006
+
+  * Deal with HTTP headers as case insensitive.
+  * Handle GetObject SQL queries that have no WHERE clause.
+
 Version 1.1.0 -  2 May 2006
 
   * Fix parse error for COMPACT data rows with all empty data.
