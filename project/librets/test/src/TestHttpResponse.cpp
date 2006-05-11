@@ -45,7 +45,7 @@ TestHttpResponse::TestHttpResponse(string resourceName)
         string value;
         if (splitField(line, ":", name, value))
         {
-            mHeaders[name] = ba::trim_copy(value);
+            mHeaders[ba::to_lower_copy(name)] = ba::trim_copy(value);
         }
     }
 }
@@ -61,7 +61,7 @@ int TestHttpResponse::GetResponseCode() const
 
 string TestHttpResponse::GetHeader(string name) const
 {
-    StringMap::const_iterator i = mHeaders.find(name);
+    StringMap::const_iterator i = mHeaders.find(ba::to_lower_copy(name));
     if (i != mHeaders.end())
     {
         return i->second;

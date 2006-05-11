@@ -1,6 +1,7 @@
 200
 Content-Type: text/plain
 Colon-Header: header:with:colons
+lowercase-header: foo
 
 this is
 sample text.

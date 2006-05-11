@@ -15,10 +15,12 @@
  * appear in supporting documentation.
  */
 #include <iostream>
+#include <boost/algorithm/string.hpp>
 #include "librets/CurlHttpResponse.h"
 
 using namespace librets;
-using namespace std;
+using std::string;
+namespace ba = boost::algorithm;
 
 CurlHttpResponse::CurlHttpResponse()
 {
@@ -54,7 +56,7 @@ void CurlHttpResponse::SetResponseCode(int responseCode)
 
 string CurlHttpResponse::GetHeader(string name) const
 {
-    StringMap::const_iterator i = mHeaders.find(name);
+    StringMap::const_iterator i = mHeaders.find(ba::to_lower_copy(name));
     if (i != mHeaders.end())
     {
         return i->second;
@@ -67,7 +69,7 @@ string CurlHttpResponse::GetHeader(string name) const
 
 void CurlHttpResponse::SetHeader(string name, string value)
 {
-    mHeaders[name] = value;
+    mHeaders[ba::to_lower_copy(name)] = value;
 }
 
 istreamPtr CurlHttpResponse::GetInputStream() const

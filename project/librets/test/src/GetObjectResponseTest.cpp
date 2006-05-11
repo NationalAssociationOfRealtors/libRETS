@@ -42,6 +42,8 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testNoObjectFound);
     CPPUNIT_TEST(testNoObjectFoundFromVariman);
     CPPUNIT_TEST(testMultiPartLocation);
+    CPPUNIT_TEST(testNormls);
+    CPPUNIT_TEST(testCris);
     CPPUNIT_TEST_SUITE_END();
     
   protected:
@@ -55,6 +57,8 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testNoObjectFound();
     void testNoObjectFoundFromVariman();
     void testMultiPartLocation();
+    void testNormls();
+    void testCris();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -294,4 +298,36 @@ void CLASS::testMultiPartLocation()
     
     objectDescriptor = response.NextObject();
     CPPUNIT_ASSERT(!objectDescriptor);
+}
+
+void CLASS::testNormls()
+{
+    GetObjectResponse response;
+    RetsHttpResponsePtr httpResponse(new TestHttpResponse(
+        "get-object-response-normls.txt"));
+    response.Parse(httpResponse);
+    
+    int objectCount = 0;
+    ObjectDescriptor * objectDescriptor;
+    while (objectDescriptor = response.NextObject())
+    {
+        objectCount++;
+    }
+    CPPUNIT_ASSERT_EQUAL(6, objectCount);
+}
+
+void CLASS::testCris()
+{
+    try 
+    {
+        GetObjectResponse response;
+        RetsHttpResponsePtr httpResponse(new TestHttpResponse(
+            "get-object-response-cris.txt"));
+        response.Parse(httpResponse);
+        CPPUNIT_FAIL("Should have thrown exception");
+    }
+    catch (const RetsException &)
+    {
+        // Expetcted
+    }
 }
