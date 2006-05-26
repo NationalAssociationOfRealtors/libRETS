@@ -468,7 +468,7 @@
 		558F6ACF07FE088600CE8AF2 /* GetObjectResponse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetObjectResponse.cpp; sourceTree = "<group>"; };
 		558F6AD107FE089700CE8AF2 /* ObjectDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectDescriptor.cpp; sourceTree = "<group>"; };
 		55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = lib/libboost_filesystem.a; sourceTree = BOOST; };
-		55BD538D07FBB7BA00526D69 /* DisclosableView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DisclosableView.framework; path = /Users/dave/src/DisclosableView/DisclosableView.framework; sourceTree = "<absolute>"; };
+		55BD538D07FBB7BA00526D69 /* DisclosableView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DisclosableView.framework; sourceTree = DISCLOSABLE_VIEW; };
 		55BD563407FC3AB200526D69 /* AccountsArrayController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AccountsArrayController.h; sourceTree = "<group>"; };
 		55BD563607FC3AC600526D69 /* iRets_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = iRets_Prefix.pch; sourceTree = "<group>"; };
 		55BD565707FC3BA100526D69 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = lib/libcurl.a; sourceTree = CURL; };
