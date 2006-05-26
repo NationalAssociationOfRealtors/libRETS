@@ -416,7 +416,7 @@
 		554AA16807FA0ECD00402C35 /* sql2dmql.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = sql2dmql.cpp; path = ../examples/src/sql2dmql.cpp; sourceTree = SOURCE_ROOT; };
 		554AA16907FA0ECD00402C35 /* xml.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = xml.cpp; path = ../examples/src/xml.cpp; sourceTree = SOURCE_ROOT; };
 		554AA16D07FA0EE800402C35 /* sql2dmql */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sql2dmql; sourceTree = BUILT_PRODUCTS_DIR; };
-		554AA18607FA10FA00402C35 /* libantlr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libantlr.a; path = /usr/local/lib/libantlr.a; sourceTree = "<absolute>"; };
+		554AA18607FA10FA00402C35 /* libantlr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libantlr.a; path = lib/libantlr.a; sourceTree = ANTLR; };
 		554AA19C07FA129100402C35 /* iRets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		554AA1B007FA13A000402C35 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		554AA1D007FA14A300402C35 /* AccountsArrayController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AccountsArrayController.m; sourceTree = "<group>"; };
@@ -467,12 +467,12 @@
 		558F6AB207FE03A700CE8AF2 /* GetObjectResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetObjectResponse.h; sourceTree = "<group>"; };
 		558F6ACF07FE088600CE8AF2 /* GetObjectResponse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetObjectResponse.cpp; sourceTree = "<group>"; };
 		558F6AD107FE089700CE8AF2 /* ObjectDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectDescriptor.cpp; sourceTree = "<group>"; };
-		55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = /usr/local/lib/libboost_filesystem.a; sourceTree = "<absolute>"; };
+		55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = lib/libboost_filesystem.a; sourceTree = BOOST; };
 		55BD538D07FBB7BA00526D69 /* DisclosableView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DisclosableView.framework; path = /Users/dave/src/DisclosableView/DisclosableView.framework; sourceTree = "<absolute>"; };
 		55BD563407FC3AB200526D69 /* AccountsArrayController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AccountsArrayController.h; sourceTree = "<group>"; };
 		55BD563607FC3AC600526D69 /* iRets_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = iRets_Prefix.pch; sourceTree = "<group>"; };
-		55BD565707FC3BA100526D69 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = /usr/local/lib/libcurl.a; sourceTree = "<absolute>"; };
-		55BD565907FC3BBE00526D69 /* libexpat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libexpat.a; path = /usr/local/lib/libexpat.a; sourceTree = "<absolute>"; };
+		55BD565707FC3BA100526D69 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = lib/libcurl.a; sourceTree = CURL; };
+		55BD565907FC3BBE00526D69 /* libexpat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libexpat.a; path = lib/libexpat.a; sourceTree = EXPAT; };
 		55BD56AE07FC48A000526D69 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
 		55BD56CC07FC76F600526D69 /* iRets.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = iRets.icns; sourceTree = "<group>"; };
 		55BD56E907FC823E00526D69 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
@@ -505,7 +505,7 @@
 		55BD57A207FDAAFD00526D69 /* UriTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = UriTest.cpp; sourceTree = "<group>"; };
 		55BD57A307FDAAFD00526D69 /* utilTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = utilTest.cpp; sourceTree = "<group>"; };
 		55BD57A407FDAAFD00526D69 /* XmlMetadataParserTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = XmlMetadataParserTest.cpp; sourceTree = "<group>"; };
-		55BD57C107FDAB4500526D69 /* libcppunit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcppunit.dylib; path = /usr/local/lib/libcppunit.dylib; sourceTree = "<absolute>"; };
+		55BD57C107FDAB4500526D69 /* libcppunit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcppunit.dylib; path = lib/libcppunit.dylib; sourceTree = CPPUNIT; };
 		55BD57ED07FDAFE000526D69 /* test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
 		55EE8499093E5AAA00812582 /* librets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librets.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F23658087B2AB00090B325 /* MetadataForeignKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MetadataForeignKey.cpp; sourceTree = "<group>"; };
@@ -1752,15 +1752,14 @@
 				GCC_PREFIX_HEADER = ../librets/test/src/librets_test_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = ../librets/include;
-				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/boost-1.33.0/lib",
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/cppunit-1.10.2/lib",
+					"$(BOOST)/lib",
+					"$(EXPAT)/lib",
+					"$(CPPUNIT)/lib",
 					"$(SRCROOT)/../../build/xcode/Development",
 				);
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = /usr/local/lib/libboost_filesystem.a;
+				OTHER_LDFLAGS = "$(BOOST)/lib/libboost_filesystem.a";
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = test;
@@ -1782,15 +1781,14 @@
 				GCC_PREFIX_HEADER = ../librets/test/src/librets_test_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = ../librets/include;
-				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/boost-1.33.0/lib",
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/cppunit-1.10.2/lib",
+					"$(BOOST)/lib",
+					"$(EXPAT)/lib",
+					"$(CPPUNIT)/lib",
 					"$(SRCROOT)/../../build/xcode/Development",
 				);
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = /usr/local/lib/libboost_filesystem.a;
+				OTHER_LDFLAGS = "$(BOOST)/lib/libboost_filesystem.a";
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = test;
@@ -1810,15 +1808,14 @@
 				GCC_PREFIX_HEADER = ../librets/test/src/librets_test_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = ../librets/include;
-				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/boost-1.33.0/lib",
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/cppunit-1.10.2/lib",
+					"$(BOOST)/lib",
+					"$(EXPAT)/lib",
+					"$(CPPUNIT)/lib",
 					"$(SRCROOT)/../../build/xcode/Development",
 				);
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = /usr/local/lib/libboost_filesystem.a;
+				OTHER_LDFLAGS = "$(BOOST)/lib/libboost_filesystem.a";
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = test;
@@ -1837,11 +1834,10 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = ../librets/include;
-				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/curl-7.13.1/lib",
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/boost-1.32.0/lib",
+					"$(CURL)/lib",
+					"$(EXPAT)/lib",
+					"$(BOOST)/lib",
 				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -1862,11 +1858,10 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				HEADER_SEARCH_PATHS = ../librets/include;
-				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/curl-7.13.1/lib",
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/boost-1.32.0/lib",
+					"$(CURL)/lib",
+					"$(EXPAT)/lib",
+					"$(BOOST)/lib",
 				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -1885,11 +1880,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = ../librets/include;
-				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/curl-7.13.1/lib",
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/boost-1.32.0/lib",
+					"$(CURL)/lib",
+					"$(EXPAT)/lib",
+					"$(BOOST)/lib",
 				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -1917,9 +1911,9 @@
 				INFOPLIST_FILE = ../iRets/Info.plist;
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/curl-7.15.1/lib",
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/boost-1.33.0.1/lib",
+					"$(CURL)/lib",
+					"$(EXPAT)/lib",
+					"$(BOOST)/lib",
 				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -1927,8 +1921,8 @@
 					Foundation,
 					"-framework",
 					AppKit,
-					/usr/local/lib/libcurl.a,
-					/usr/local/lib/libboost_filesystem.a,
+					"$(CURL)/lib/libcurl.a",
+					"$(BOOST)/lib/libboost_filesystem.a",
 				);
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
@@ -1955,9 +1949,9 @@
 				INFOPLIST_FILE = ../iRets/Info.plist;
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/curl-7.13.1/lib",
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/boost-1.32.0/lib",
+					"$(CURL)/lib",
+					"$(EXPAT)/lib",
+					"$(BOOST)/lib",
 				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -1965,8 +1959,8 @@
 					Foundation,
 					"-framework",
 					AppKit,
-					/usr/local/lib/libcurl.a,
-					/usr/local/lib/libboost_filesystem.a,
+					"$(CURL)/lib/libcurl.a",
+					"$(BOOST)/lib/libboost_filesystem.a",
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = iRets;
@@ -1990,9 +1984,9 @@
 				INFOPLIST_FILE = ../iRets/Info.plist;
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/curl-7.13.1/lib",
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/boost-1.32.0/lib",
+					"$(CURL)/lib",
+					"$(EXPAT)/lib",
+					"$(BOOST)/lib",
 				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -2000,8 +1994,8 @@
 					Foundation,
 					"-framework",
 					AppKit,
-					/usr/local/lib/libcurl.a,
-					/usr/local/lib/libboost_filesystem.a,
+					"$(CURL)/lib/libcurl.a",
+					"$(BOOST)/lib/libboost_filesystem.a",
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = iRets;
@@ -2072,12 +2066,11 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = ../librets/include;
-				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/curl-7.13.1/lib",
-					"/usr/local/encap/antlr-2.7.5/lib",
-					"/usr/local/encap/boost-1.32.0/lib",
+					"$(EXPAT)/lib",
+					"$(CURL)/lib",
+					"$(ANTLR)/lib",
+					"$(BOOST)/lib",
 				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2098,12 +2091,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				HEADER_SEARCH_PATHS = ../librets/include;
-				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/curl-7.13.1/lib",
-					"/usr/local/encap/antlr-2.7.5/lib",
-					"/usr/local/encap/boost-1.32.0/lib",
+					"$(EXPAT)/lib",
+					"$(CURL)/lib",
+					"$(ANTLR)/lib",
+					"$(BOOST)/lib",
 				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2122,12 +2114,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = ../librets/include;
-				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/curl-7.13.1/lib",
-					"/usr/local/encap/antlr-2.7.5/lib",
-					"/usr/local/encap/boost-1.32.0/lib",
+					"$(EXPAT)/lib",
+					"$(CURL)/lib",
+					"$(ANTLR)/lib",
+					"$(BOOST)/lib",
 				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -2188,7 +2179,6 @@
 					"$(SRCROOT)/../librets/include",
 					"$(HEADER_SEARCH_PATHS)",
 				);
-				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = rets;
 				ZERO_LINK = YES;
@@ -2206,7 +2196,6 @@
 					"$(SRCROOT)/../librets/include",
 					"$(HEADER_SEARCH_PATHS)",
 				);
-				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = rets;
 				ZERO_LINK = NO;
@@ -2222,7 +2211,6 @@
 					"$(SRCROOT)/../librets/include",
 					"$(HEADER_SEARCH_PATHS)",
 				);
-				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = rets;
 				ZERO_LINK = YES;
