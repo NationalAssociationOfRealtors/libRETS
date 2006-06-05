@@ -265,6 +265,7 @@
 		551131FA08D5DE9100CC048D /* RetsUnknownMetadataException.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsUnknownMetadataException.cpp; sourceTree = "<group>"; };
 		551131FC08D5DEB300CC048D /* ExceptionErrorHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExceptionErrorHandler.cpp; sourceTree = "<group>"; };
 		5511327508D5E32D00CC048D /* error_forward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error_forward.h; sourceTree = "<group>"; };
+		553844F80A349A5F00415742 /* librets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = librets.xcconfig; sourceTree = "<group>"; };
 		554A9EB607F9F2D200402C35 /* AndCriterion.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AndCriterion.h; sourceTree = "<group>"; };
 		554A9EB707F9F2D200402C35 /* CapabilityUrls.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CapabilityUrls.h; sourceTree = "<group>"; };
 		554A9EB807F9F2D200402C35 /* curl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
@@ -627,6 +628,7 @@
 				554AA16207FA0E9C00402C35 /* src */,
 				554AA1AF07FA134F00402C35 /* iRets */,
 				554A9EB307F9F2B300402C35 /* Products */,
+				553844F80A349A5F00415742 /* librets.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2156,34 +2158,34 @@
 		};
 		55C70BC3093D1BDD00D34681 /* Development */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553844F80A349A5F00415742 /* librets.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"LIBRETS_VERSION=\"1.0.0\"",
+					"LIBRETS_VERSION=\"$(VERSION)\"",
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 				);
-				LIBRETS_VERSION = "\"1.0.0\"";
 			};
 			name = Development;
 		};
 		55C70BC4093D1BDD00D34681 /* Deployment */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553844F80A349A5F00415742 /* librets.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"LIBRETS_VERSION=\"1.0.0\"",
+					"LIBRETS_VERSION=\"$(VERSION)\"",
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 				);
-				LIBRETS_VERSION = "\"1.0.0\"";
 			};
 			name = Deployment;
 		};
 		55C70BC5093D1BDD00D34681 /* Default */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553844F80A349A5F00415742 /* librets.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"LIBRETS_VERSION=\"1.0.0\"",
+					"LIBRETS_VERSION=\"$(VERSION)\"",
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 				);
-				LIBRETS_VERSION = "\"1.0.0\"";
 			};
 			name = Default;
 		};
