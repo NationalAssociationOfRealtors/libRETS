@@ -35,6 +35,7 @@ X_OBJS = \
 	$(DIROBJ)\TestObject.obj \
 	$(DIROBJ)\TestSqlMetadata.obj \
 	$(DIROBJ)\UriTest.obj \
+	$(DIROBJ)\UserAgentAuthCalculatorTest.obj \
 	$(DIROBJ)\XmlMetadataParserTest.obj \
 	$(DIROBJ)\main.obj \
 	$(DIROBJ)\testUtil.obj \

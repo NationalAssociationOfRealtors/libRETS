@@ -79,6 +79,8 @@ X_OBJS = \
 	$(DIROBJ)\SqlToDmqlCompiler.obj \
 	$(DIROBJ)\StreamHttpLogger.obj \
 	$(DIROBJ)\Uri.obj \
+	$(DIROBJ)\UserAgentAuthCalculator.obj \
 	$(DIROBJ)\XmlMetadataElementFactory.obj \
 	$(DIROBJ)\XmlMetadataParser.obj \
+	$(DIROBJ)\md5.obj \
 	$(DIROBJ)\util.obj

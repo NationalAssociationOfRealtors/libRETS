@@ -18,9 +18,13 @@ LINK    = $(LINK_EXE) $(LDFLAGS)
 ########################################################################
 #
 
-!include <objects.vc>
-
 all: $(TARGET)
+
+# Use this to regenerate objects.vc
+win_files:
+	perl ../../../build/win_files.pl X_OBJS '*.cpp' '(.*)\.cpp$$' '\$$(DIROBJ)\\\$$1.obj' > objects.vc
+
+!include <objects.vc>
 
 $(TARGET): $(X_OBJS) $(LIBRETS_LIB)
 	$(LINK) /out:$(TARGET) $(X_OBJS) wsock32.lib winmm.lib
