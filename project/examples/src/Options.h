@@ -33,6 +33,8 @@ class Options
     std::string username;
     std::string password;
     std::string userAgent;
+    std::string userAgentPassword;
+    librets::UserAgentAuthType uaAuthType;
     bool useHttpGet;
     librets::RetsVersion retsVersion;
     bool useFullMetadata;
@@ -48,6 +50,7 @@ class Options
   private:
     std::string mLogFile;
     std::string mRetsVersionString;
+    std::string mUserAgentAuthType;
     std::ofstream mLogStream;
     librets::RetsHttpLoggerPtr mLogger;
     std::string mConfigFile;

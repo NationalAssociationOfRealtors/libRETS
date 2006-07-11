@@ -42,6 +42,8 @@ Options::Options()
          ->default_value("Schmoe", ""), "Password")
         ("user-agent,a", po::value<string>(&userAgent)
          ->default_value(RetsSession::DEFAULT_USER_AGENT, ""), "User agent")
+        ("ua-password", po::value<string>(&userAgentPassword)
+         ->default_value(""), "User agent password")
         ("http-get,g", "Use HTTP GET")
         ("http-log,l", po::value<string>(&mLogFile), "HTTP log file")
         ("config-file,c", po::value<string>(&mConfigFile),
@@ -96,6 +98,12 @@ RetsSessionPtr Options::RetsLogin()
     session->UseHttpGet(useHttpGet);
     session->SetRetsVersion(retsVersion);
     session->SetIncrementalMetadata(!useFullMetadata);
+    if (userAgentPassword != "")
+    {
+        session->SetUserAgentAuthType(USER_AGENT_AUTH_INTEREALTY);
+        session->SetUserAgentPassword(userAgentPassword);
+    }
+
     if (options.count("http-log"))
     {
         mLogStream.open(mLogFile.c_str());

@@ -49,6 +49,15 @@ void CurlHttpClient::SetDefaultHeader(string name, string value)
     mDefaultHeaders[name] = value;
 }
 
+string CurlHttpClient::GetDefaultHeader(string name) const
+{
+    StringMap::const_iterator i = mDefaultHeaders.find(name);
+    if (i != mDefaultHeaders.end())
+        return i->second;
+    else
+        return "";
+}
+
 void CurlHttpClient::ClearDefaultHeader(string name)
 {
     mDefaultHeaders.erase(name);

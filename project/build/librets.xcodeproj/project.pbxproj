@@ -38,6 +38,12 @@
 		55083EC908A92D80004B3699 /* TestMetadataElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55083EC808A92D80004B3699 /* TestMetadataElement.cpp */; };
 		55097D3A09A149EA00225C99 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
 		550A6DEA09E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 550A6DE909E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp */; };
+		554662320A62BAD900F3B94E /* md5.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 554662310A62BAD900F3B94E /* md5.hpp */; };
+		554662340A62BAF600F3B94E /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554662330A62BAF600F3B94E /* md5.cpp */; };
+		554662420A62EBB400F3B94E /* UserAgentAuthType.h in Headers */ = {isa = PBXBuildFile; fileRef = 554662410A62EBB400F3B94E /* UserAgentAuthType.h */; };
+		5546624C0A62EE7200F3B94E /* UserAgentAuthCalculator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5546624B0A62EE7200F3B94E /* UserAgentAuthCalculator.h */; };
+		554662500A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5546624F0A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp */; };
+		554662C00A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554662BF0A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp */; };
 		554AA16F07FA0EF600402C35 /* sql2dmql.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA16807FA0ECD00402C35 /* sql2dmql.cpp */; };
 		554AA18907FA10FA00402C35 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 554AA18607FA10FA00402C35 /* libantlr.a */; };
 		554AA1B107FA13A000402C35 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554AA1B007FA13A000402C35 /* Cocoa.framework */; };
@@ -266,6 +272,12 @@
 		551131FC08D5DEB300CC048D /* ExceptionErrorHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExceptionErrorHandler.cpp; sourceTree = "<group>"; };
 		5511327508D5E32D00CC048D /* error_forward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error_forward.h; sourceTree = "<group>"; };
 		553844F80A349A5F00415742 /* librets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = librets.xcconfig; sourceTree = "<group>"; };
+		554662310A62BAD900F3B94E /* md5.hpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.h; path = md5.hpp; sourceTree = "<group>"; };
+		554662330A62BAF600F3B94E /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
+		554662410A62EBB400F3B94E /* UserAgentAuthType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAgentAuthType.h; sourceTree = "<group>"; };
+		5546624B0A62EE7200F3B94E /* UserAgentAuthCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAgentAuthCalculator.h; sourceTree = "<group>"; };
+		5546624F0A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = UserAgentAuthCalculator.cpp; sourceTree = "<group>"; };
+		554662BF0A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserAgentAuthCalculatorTest.cpp; sourceTree = "<group>"; };
 		554A9EB607F9F2D200402C35 /* AndCriterion.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AndCriterion.h; sourceTree = "<group>"; };
 		554A9EB707F9F2D200402C35 /* CapabilityUrls.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CapabilityUrls.h; sourceTree = "<group>"; };
 		554A9EB807F9F2D200402C35 /* curl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
@@ -620,6 +632,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		554662300A62BAD900F3B94E /* boostext */ = {
+			isa = PBXGroup;
+			children = (
+				554662310A62BAD900F3B94E /* md5.hpp */,
+			);
+			path = boostext;
+			sourceTree = "<group>";
+		};
 		554A9EA207F9F27F00402C35 = {
 			isa = PBXGroup;
 			children = (
@@ -648,6 +668,7 @@
 		554A9EB407F9F2D200402C35 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				554662300A62BAD900F3B94E /* boostext */,
 				558F6A6407FDEB6800CE8AF2 /* librets */,
 				554A9F0207F9F2D200402C35 /* librets.h */,
 			);
@@ -834,6 +855,7 @@
 		558F6AC007FE050400CE8AF2 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				5546624F0A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp */,
 				5552AA6B08046692002288F1 /* GetObjectRequest.cpp */,
 				558F6AD107FE089700CE8AF2 /* ObjectDescriptor.cpp */,
 				558F6ACF07FE088600CE8AF2 /* GetObjectResponse.cpp */,
@@ -928,6 +950,7 @@
 		558F6AC407FE06A200CE8AF2 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				554662330A62BAF600F3B94E /* md5.cpp */,
 				551131FC08D5DEB300CC048D /* ExceptionErrorHandler.cpp */,
 				551131F208D5DAD500CC048D /* RetsErrorHandler.cpp */,
 				554AA20B07FA174200402C35 /* librets_Prefix.pch */,
@@ -1041,6 +1064,8 @@
 				554A9EF607F9F2D200402C35 /* SearchRequest.h */,
 				554A9EF707F9F2D200402C35 /* SearchResultSet.h */,
 				554A9EE507F9F2D200402C35 /* protocol_forward.h */,
+				554662410A62EBB400F3B94E /* UserAgentAuthType.h */,
+				5546624B0A62EE7200F3B94E /* UserAgentAuthCalculator.h */,
 			);
 			name = Protocol;
 			sourceTree = "<group>";
@@ -1202,6 +1227,7 @@
 				55BD578707FDAAFD00526D69 /* LoginResponseTest.cpp */,
 				55BD578907FDAAFD00526D69 /* LogoutResponseTest.cpp */,
 				55BD579B07FDAAFD00526D69 /* SearchResultSetTest.cpp */,
+				554662BF0A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp */,
 			);
 			name = Protocol;
 			sourceTree = "<group>";
@@ -1236,6 +1262,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				554662320A62BAD900F3B94E /* md5.hpp in Headers */,
+				554662420A62EBB400F3B94E /* UserAgentAuthType.h in Headers */,
+				5546624C0A62EE7200F3B94E /* UserAgentAuthCalculator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1614,6 +1643,7 @@
 				55F9032608FEC7DD00D76E8C /* TestMetadataTree.cpp in Sources */,
 				55F9055508FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp in Sources */,
 				550A6DEA09E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp in Sources */,
+				554662C00A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1707,6 +1737,8 @@
 				55EE854C093E628900812582 /* util.cpp in Sources */,
 				55EE854D093E628900812582 /* XmlMetadataElementFactory.cpp in Sources */,
 				55EE854E093E628900812582 /* XmlMetadataParser.cpp in Sources */,
+				554662340A62BAF600F3B94E /* md5.cpp in Sources */,
+				554662500A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

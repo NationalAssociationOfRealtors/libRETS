@@ -34,6 +34,8 @@ class RetsHttpClient
 
     virtual void SetDefaultHeader(std::string name, std::string value) = 0;
     
+    virtual std::string GetDefaultHeader(std::string name) const = 0;
+   
     virtual void ClearDefaultHeader(std::string name) =  0;
     
     virtual void SetUserAgent(std::string userAgent) = 0;

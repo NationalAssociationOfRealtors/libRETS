@@ -39,6 +39,8 @@ class CurlHttpClient : public RetsHttpClient
 
     virtual void SetDefaultHeader(std::string name, std::string value);
     
+    virtual std::string GetDefaultHeader(std::string name) const;
+
     virtual void ClearDefaultHeader(std::string name);
     
     virtual void SetUserAgent(std::string userAgent);

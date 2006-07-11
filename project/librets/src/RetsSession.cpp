@@ -49,6 +49,21 @@ CLASS::RetsSession(string login_url)
     mRetsVersion = DEFAULT_RETS_VERSION;
     mErrorHandler = ExceptionErrorHandler::GetInstance();
     mIncrementalMetadata = true;
+    mUserAgentAuthType = USER_AGENT_AUTH_NONE;
+}
+
+RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
+{
+    if (mUserAgentAuthType != USER_AGENT_AUTH_NONE)
+    {
+        mUserAgentAuthCalculator.SetRequestId("");
+        mUserAgentAuthCalculator.SetSessionId("");
+        mUserAgentAuthCalculator.SetVersionInfo(
+            mHttpClient->GetDefaultHeader(RETS_VERSION_HEADER));
+        string headerValue = "Digest " + mUserAgentAuthCalculator.AuthorizationValue();
+        request->SetHeader("RETS-UA-Authorization", headerValue);
+    }
+    return mHttpClient->DoRequest(request);
 }
 
 void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
@@ -71,10 +86,10 @@ bool CLASS::Login(string user_name, string passwd)
     RetsHttpRequest request;
     request.SetUrl(mLoginUrl);
     mHttpClient->SetUserCredentials(user_name, passwd);
-    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(&request));
+    RetsHttpResponsePtr httpResponse(DoRequest(&request));
     if (httpResponse->GetResponseCode() == 401)
     {
-        httpResponse = mHttpClient->DoRequest(&request);
+        httpResponse = DoRequest(&request);
         if (httpResponse->GetResponseCode() == 401)
         {
             return false;
@@ -107,7 +122,7 @@ void CLASS::RetrieveAction()
 
     RetsHttpRequest request;
     request.SetUrl(actionUrl);
-    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(&request));
+    RetsHttpResponsePtr httpResponse(DoRequest(&request));
     AssertSuccessfulResponse(httpResponse, actionUrl);
     mAction = readIntoString(*httpResponse->GetInputStream());
 }
@@ -172,7 +187,7 @@ void CLASS::LoadMetadata(MetadataElement::Type type,
     request.SetQueryParameter("Type", MetadataTypeToString(type));
     request.SetQueryParameter("ID", level.empty() ? "0" : level);
     request.SetQueryParameter("Format", "COMPACT");
-    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(&request));
+    RetsHttpResponsePtr httpResponse(DoRequest(&request));
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
     
     XmlMetadataParserPtr parser(new XmlMetadataParser(mLoaderCollector,
@@ -204,7 +219,7 @@ void CLASS::RetrieveFullMetadata()
     request.SetQueryParameter("Type", "METADATA-SYSTEM");
     request.SetQueryParameter("ID", "*");
     request.SetQueryParameter("Format", "COMPACT");
-    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(&request));
+    RetsHttpResponsePtr httpResponse(DoRequest(&request));
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
     
     DefaultMetadataCollectorPtr collector(new DefaultMetadataCollector());
@@ -237,7 +252,7 @@ SearchResultSetAPtr CLASS::Search(SearchRequest * request)
     string searchUrl = mCapabilityUrls->GetSearchUrl();
     request->SetUrl(searchUrl);
     request->SetMethod(mHttpMethod);
-    RetsHttpResponsePtr httpResponse = mHttpClient->DoRequest(request);
+    RetsHttpResponsePtr httpResponse = DoRequest(request);
     AssertSuccessfulResponse(httpResponse, searchUrl);
     
     SearchResultSetAPtr resultSet(new SearchResultSet());
@@ -251,7 +266,7 @@ GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)
     string getObjectUrl = mCapabilityUrls->GetGetObjectUrl();
     httpRequest->SetUrl(getObjectUrl);
     httpRequest->SetMethod(mHttpMethod);
-    RetsHttpResponsePtr httpResponse = mHttpClient->DoRequest(httpRequest);
+    RetsHttpResponsePtr httpResponse = DoRequest(httpRequest.get());
     AssertSuccessfulResponse(httpResponse, getObjectUrl);
     
     GetObjectResponseAPtr response(new GetObjectResponse());
@@ -275,7 +290,7 @@ LogoutResponseAPtr CLASS::Logout()
     
     RetsHttpRequest request;
     request.SetUrl(logoutUrl);
-    RetsHttpResponsePtr httpResponse(mHttpClient->DoRequest(&request));
+    RetsHttpResponsePtr httpResponse(DoRequest(&request));
     AssertSuccessfulResponse(httpResponse, logoutUrl);
 
     logoutResponse.reset(new LogoutResponse());
@@ -286,6 +301,7 @@ LogoutResponseAPtr CLASS::Logout()
 void CLASS::SetUserAgent(string userAgent)
 {
     mHttpClient->SetUserAgent(userAgent);
+    mUserAgentAuthCalculator.SetUserAgent(userAgent);
 }
 
 void CLASS::UseHttpGet(bool useHttpGet)
@@ -362,3 +378,19 @@ void CLASS::SetErrorHandler(RetsErrorHandler * errorHandler)
 {
     mErrorHandler = errorHandler;
 }
+
+void CLASS::SetUserAgentAuthType(UserAgentAuthType type)
+{
+    mUserAgentAuthType = type;
+}
+
+UserAgentAuthType CLASS::GetUserAgentAuthType() const
+{
+    return mUserAgentAuthType;
+}
+
+void CLASS::SetUserAgentPassword(std::string userAgentPassword)
+{
+    mUserAgentAuthCalculator.SetUserAgentPassword(userAgentPassword);
+}
+

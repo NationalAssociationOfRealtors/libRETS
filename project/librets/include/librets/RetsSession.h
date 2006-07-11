@@ -23,6 +23,8 @@
 #include "librets/RetsHttpRequest.h"
 #include "librets/http_forward.h"
 #include "librets/RetsVersion.h"
+#include "librets/UserAgentAuthType.h"
+#include "librets/UserAgentAuthCalculator.h"
 #include "librets/error_forward.h"
 #include "MetadataLoader.h"
 
@@ -176,6 +178,13 @@ class RetsSession : public MetadataLoader
     
     virtual void LoadMetadata(MetadataElement::Type type,
                               std::string level);
+    
+    void SetUserAgentAuthType(UserAgentAuthType type);
+
+    UserAgentAuthType GetUserAgentAuthType() const;
+    
+    void SetUserAgentPassword(std::string userAgentPassword);
+    
 
 private:
     static const char * RETS_VERSION_HEADER;
@@ -197,6 +206,8 @@ private:
     
     std::string MetadataTypeToString(MetadataElement::Type type);
 
+    RetsHttpResponsePtr DoRequest(RetsHttpRequest * request);
+    
     RetsHttpClientPtr mHttpClient;
 
     std::string mLoginUrl;
@@ -218,6 +229,10 @@ private:
     RetsVersion mDetectedRetsVersion;
 
     RetsErrorHandler * mErrorHandler;
+    
+    UserAgentAuthType mUserAgentAuthType;
+
+    UserAgentAuthCalculator mUserAgentAuthCalculator;
 };
 
 };
