@@ -44,6 +44,8 @@ class CurlHttpClient : public RetsHttpClient
     virtual void ClearDefaultHeader(std::string name);
     
     virtual void SetUserAgent(std::string userAgent);
+    
+    virtual std::string GetUserAgent() const;
 
     virtual RetsHttpResponsePtr DoRequest(RetsHttpRequest * request);
     

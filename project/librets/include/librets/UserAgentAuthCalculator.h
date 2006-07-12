@@ -32,7 +32,8 @@ class UserAgentAuthCalculator : public RetsObject
     void SetSessionId(std::string sessionId);
     void SetVersionInfo(std::string versionInfo);
     
-    std::string AuthorizationValue();
+    bool HasAuthorizationValue() const;
+    std::string AuthorizationValue() const;;
     
   private:
     std::string mUserAgent;

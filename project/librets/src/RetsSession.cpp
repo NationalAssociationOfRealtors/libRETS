@@ -37,6 +37,7 @@ typedef RetsSession CLASS;
 const char * CLASS::DEFAULT_USER_AGENT = "librets/" LIBRETS_VERSION;
 const RetsVersion CLASS::DEFAULT_RETS_VERSION = RETS_1_5;
 const char * CLASS::RETS_VERSION_HEADER = "RETS-Version";
+const char * CLASS::RETS_UA_AUTH_HEADER = "RETS-UA-Authorization";
 const char * CLASS::RETS_1_0_STRING = "RETS/1.0";
 const char * CLASS::RETS_1_5_STRING = "RETS/1.5";
 
@@ -49,19 +50,20 @@ CLASS::RetsSession(string login_url)
     mRetsVersion = DEFAULT_RETS_VERSION;
     mErrorHandler = ExceptionErrorHandler::GetInstance();
     mIncrementalMetadata = true;
-    mUserAgentAuthType = USER_AGENT_AUTH_NONE;
+    mUserAgentAuthType = USER_AGENT_AUTH_INTEREALTY;
+    mUserAgentAuthCalculator.SetUserAgentPassword("");
 }
 
 RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
 {
-    if (mUserAgentAuthType != USER_AGENT_AUTH_NONE)
+    if (mUserAgentAuthCalculator.HasAuthorizationValue())
     {
         mUserAgentAuthCalculator.SetRequestId("");
         mUserAgentAuthCalculator.SetSessionId("");
         mUserAgentAuthCalculator.SetVersionInfo(
             mHttpClient->GetDefaultHeader(RETS_VERSION_HEADER));
         string headerValue = "Digest " + mUserAgentAuthCalculator.AuthorizationValue();
-        request->SetHeader("RETS-UA-Authorization", headerValue);
+        request->SetHeader(RETS_UA_AUTH_HEADER, headerValue);
     }
     return mHttpClient->DoRequest(request);
 }
@@ -381,6 +383,13 @@ void CLASS::SetErrorHandler(RetsErrorHandler * errorHandler)
 
 void CLASS::SetUserAgentAuthType(UserAgentAuthType type)
 {
+    if (type != USER_AGENT_AUTH_INTEREALTY)
+    {
+        throw RetsException(str_stream()
+                            << "Unsupported User-Agent authentication type: "
+                            << type);
+    }
+    
     mUserAgentAuthType = type;
 }
 

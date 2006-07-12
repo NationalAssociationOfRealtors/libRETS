@@ -179,15 +179,27 @@ class RetsSession : public MetadataLoader
     virtual void LoadMetadata(MetadataElement::Type type,
                               std::string level);
     
+    /**
+     * Sets the User-Agent authorzation type.  Currently, only 
+     * Interealty is supported.  Setting to any other value
+     * will raise an exception.
+     */
     void SetUserAgentAuthType(UserAgentAuthType type);
 
+    /**
+     * Returns the current User-Agent authorization type.
+     */
     UserAgentAuthType GetUserAgentAuthType() const;
     
+    /**
+     * Sets the User-Agent password.
+     */
     void SetUserAgentPassword(std::string userAgentPassword);
     
 
 private:
     static const char * RETS_VERSION_HEADER;
+    static const char * RETS_UA_AUTH_HEADER;
     static const char * RETS_1_0_STRING;
     static const char * RETS_1_5_STRING;
     

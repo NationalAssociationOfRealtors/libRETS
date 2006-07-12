@@ -98,11 +98,7 @@ RetsSessionPtr Options::RetsLogin()
     session->UseHttpGet(useHttpGet);
     session->SetRetsVersion(retsVersion);
     session->SetIncrementalMetadata(!useFullMetadata);
-    if (userAgentPassword != "")
-    {
-        session->SetUserAgentAuthType(USER_AGENT_AUTH_INTEREALTY);
-        session->SetUserAgentPassword(userAgentPassword);
-    }
+    session->SetUserAgentPassword(userAgentPassword);
 
     if (options.count("http-log"))
     {

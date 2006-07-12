@@ -23,10 +23,9 @@ namespace librets {
 enum UserAgentAuthType
 {
     /**
-     * No user agent authorization is used.  The user agent password
-     * is ignored.
+     * RETS 1.7 user agent authorization.
      */
-    USER_AGENT_AUTH_NONE,
+    USER_AGENT_AUTH_RETS_1_7,
     
     /**
      * The Interealty variant of 1.7 user agent authorization.

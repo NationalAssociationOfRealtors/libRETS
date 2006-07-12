@@ -49,8 +49,16 @@ void CLASS::SetVersionInfo(string versionInfo)
     mVersionInfo = versionInfo;
 }
 
-string CLASS::AuthorizationValue()
+bool CLASS::HasAuthorizationValue() const
 {
+    return (!mUserAgentPassword.empty());
+}
+
+string CLASS::AuthorizationValue() const
+{
+    if (!HasAuthorizationValue())
+        return "";
+    
     string product = mUserAgent;
     string::size_type slashPosition = product.find_first_of('/');
     if (slashPosition != string::npos)

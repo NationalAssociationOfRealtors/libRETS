@@ -83,6 +83,11 @@ void CurlHttpClient::SetUserAgent(string userAgent)
     SetDefaultHeader("User-Agent", userAgent);
 }
 
+string CurlHttpClient::GetUserAgent() const
+{
+    return "";
+}
+
 void CurlHttpClient::SetUserCredentials(string userName, string password)
 {
     mCurl.SetUserCredentials(userName, password);
