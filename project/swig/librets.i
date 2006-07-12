@@ -456,6 +456,13 @@ enum RetsVersion
     RETS_1_5
 };
 
+enum UserAgentAuthType
+{
+    USER_AGENT_AUTH_RETS_1_7,
+    USER_AGENT_AUTH_INTEREALTY,
+};
+
+
 %typemap(cscode) RetsHttpLogger %{
     public delegate void Delegate(Type type, byte[] data);
     public delegate void NativeDelegate(Type type, IntPtr data, int length);
@@ -576,6 +583,12 @@ class RetsSession
     RetsVersion GetDetectedRetsVersion() const;
     
     void SetHttpLogger(RetsHttpLogger * logger);
+
+    void SetUserAgentAuthType(UserAgentAuthType type);
+
+    UserAgentAuthType GetUserAgentAuthType() const;
+    
+    void SetUserAgentPassword(std::string userAgentPassword);
 };
 
 
