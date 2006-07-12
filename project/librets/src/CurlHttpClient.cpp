@@ -42,6 +42,7 @@ CurlHttpClient::CurlHttpClient()
     mCurl.SetWriteFunction(CurlHttpClient::StaticWriteData);
     mCurl.SetWriteHeaderData(this);
     mCurl.SetWriteHeaderFunction(CurlHttpClient::StaticWriteHeader);
+    SetUserAgent("librets-curl/" LIBRETS_VERSION);
 }
 
 void CurlHttpClient::SetDefaultHeader(string name, string value)
