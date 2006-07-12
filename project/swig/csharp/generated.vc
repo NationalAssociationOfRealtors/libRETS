@@ -28,5 +28,6 @@ GENERATED_SRC = \
 	lib\SearchRequest.cs \
 	lib\SearchResultSet.cs \
 	lib\StringVector.cs \
+	lib\UserAgentAuthType.cs \
 	lib\librets.cs \
 	lib\libretsPINVOKE.cs
