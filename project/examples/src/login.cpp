@@ -48,6 +48,9 @@ int main(int argc, char * argv[])
 
         LoginResponse * login = session->GetLoginResponse();
         cout << "Member name: " << login->GetMemberName() << endl;
+        
+        CapabilityUrls * urls = session->GetCapabilityUrls();
+        cout << "Search URL: " << urls->GetSearchUrl() << endl;
 
         cout << "Action:\n" << session->GetAction() << endl;
 

@@ -110,7 +110,8 @@ bool CLASS::Login(string user_name, string passwd)
     
     mLoginResponse.reset(new LoginResponse);
     mLoginResponse->Parse(httpResponse->GetInputStream(), mDetectedRetsVersion);
-    mCapabilityUrls.reset(mLoginResponse->CreateCapabilityUrls(mLoginUrl).get());
+    mCapabilityUrls.reset(
+        mLoginResponse->CreateCapabilityUrls(mLoginUrl).release());
 
     RetrieveAction();
 

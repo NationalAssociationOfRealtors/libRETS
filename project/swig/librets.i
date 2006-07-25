@@ -66,6 +66,98 @@ class RetsException
     virtual std::string GetMessage();
 };
 
+class LoginResponse 
+{
+  public:
+    std::string GetMemberName() const;
+
+    std::string GetUserInfo() const;
+
+    std::string GetBroker() const;
+
+    std::string GetMetadataVersion() const;
+
+    std::string GetMetadataTimestamp() const;
+
+    std::string GetMinMetadataTimestamp() const;
+
+    std::string GetOfficeList() const;
+
+    std::string GetBalance() const;
+
+    std::string GetTimeout() const;
+
+    std::string GetPasswordExpire() const;
+
+    std::string GetActionUrl() const;
+
+    std::string GetChangePasswordUrl() const;
+
+    std::string GetGetObjectUrl() const;
+
+    std::string GetLoginUrl() const;
+
+    std::string GetLoginCompleteUrl() const;
+
+    std::string GetLogoutUrl() const;
+
+    std::string GetSearchUrl() const;
+
+    std::string GetGetMetadataUrl() const;
+
+    std::string GetServerInformationUrl() const;
+
+    std::string GetUpdateUrl() const;
+};
+
+class CapabilityUrls
+{
+  public:
+    CapabilityUrls(std::string baseUrl);
+
+    virtual ~CapabilityUrls();
+
+    void SetActionUrl(std::string actionUrl);
+
+    std::string GetActionUrl() const;
+
+    void SetChangePasswordUrl(std::string changePasswordUrl);
+
+    std::string GetChangePasswordUrl() const;
+
+    void SetGetObjectUrl(std::string getObjectUrl);
+
+    std::string GetGetObjectUrl() const;
+
+    void SetLoginUrl(std::string loginUrl);
+
+    std::string GetLoginUrl() const;
+
+    void SetLoginCompleteUrl(std::string loginCompleteUrl);
+
+    std::string GetLoginCompleteUrl() const;
+
+    void SetLogoutUrl(std::string logoutUrl);
+
+    std::string GetLogoutUrl() const;
+
+    void SetSearchUrl(std::string searchUrl);
+
+    std::string GetSearchUrl() const;
+
+    void SetGetMetadataUrl(std::string getMetadataUrl);
+
+    std::string GetGetMetadataUrl() const;
+
+    void SetServerInformationUrl(std::string serverInformationUrl);
+
+    std::string GetServerInformationUrl() const;
+
+    void SetUpdateUrl(std::string updateUrl);
+
+    std::string GetUpdateUrl() const;
+};
+
 class SearchRequest
 {
   public:
@@ -553,6 +645,10 @@ class RetsSession
     RetsSession(std::string loginUrl);
 
     bool Login(std::string userName, std::string password);
+
+    LoginResponse * GetLoginResponse() const;
+    
+    CapabilityUrls * GetCapabilityUrls() const;
 
     std::string GetAction();
 

@@ -12,6 +12,9 @@ if !session.Login("Joe", "Schmoe")
   exit 1
 end
 
+puts "Member name: " + session.GetLoginResponse().GetMemberName()
+puts "Search URL: " + session.GetCapabilityUrls().GetSearchUrl()
+
 puts "Action: " + session.GetAction()
 version = "1.0"
 version = "1.5" if (session.GetDetectedRetsVersion() == RETS_1_5)

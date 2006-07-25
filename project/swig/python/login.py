@@ -9,6 +9,8 @@ try:
       print "Invalid login"
       sys.exit(1)
 
+  print "Member name: ", session.GetLoginResponse().GetMemberName()
+  print "Search URL: ", session.GetCapabilityUrls().GetSearchUrl()
   print "Action: ", session.GetAction()
   version = "1.0"
   if session.GetDetectedRetsVersion() == librets.RETS_1_5:

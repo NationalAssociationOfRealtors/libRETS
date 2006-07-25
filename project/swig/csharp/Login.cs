@@ -24,6 +24,15 @@ public class Search
                 Console.WriteLine("Invalid login");
                 Environment.Exit(1);
             }
+            
+            Console.WriteLine(".Net version: " + System.Environment.Version);
+
+            LoginResponse login = session.GetLoginResponse();
+            Console.WriteLine("Member name: " + login.GetMemberName());
+            
+            CapabilityUrls capabilityUrls = session.GetCapabilityUrls();
+            Console.WriteLine("Search URL: " + capabilityUrls.GetSearchUrl());
+
             LogoutResponse logout = session.Logout();
             Console.WriteLine("Billing info: " + logout.GetBillingInfo());
             Console.WriteLine("Logout message: " + logout.GetLogoutMessage());
