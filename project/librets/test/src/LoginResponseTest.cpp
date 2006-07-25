@@ -102,8 +102,8 @@ void CLASS::testValid15Response()
         "http://example.com:6103/rets/serverInfo");
     expected.SetUpdateUrl("http://example.com:6103/rets/update");
 
-    CapabilityUrlsPtr actual =
-        response.GetCapabilityUrls("http://example.com:6103/rets/login");
+    CapabilityUrlsAPtr actual =
+        response.CreateCapabilityUrls("http://example.com:6103/rets/login");
     CPPUNIT_ASSERT_EQUAL(expected, *actual);
 }
 
@@ -157,7 +157,7 @@ void CLASS::testValid10Response()
     expected.SetServerInformationUrl("");
     expected.SetUpdateUrl("");
     
-    CapabilityUrlsPtr actual = response.GetCapabilityUrls(
+    CapabilityUrlsAPtr actual = response.CreateCapabilityUrls(
         "http://cornerstone.mris.com:6103/platinum/login");
     CPPUNIT_ASSERT_EQUAL(expected, *actual);
 }

@@ -58,7 +58,25 @@ class RetsSession : public MetadataLoader
     bool Login(std::string userName, std::string password);
 
     /**
-     * Returns the contents of tne action URL from the last successful
+     * Returns the login response from the last successful login transaction.
+     * If the last login trasaction was not successful, NULL is returned.
+     *
+     * @return Login response
+     * @throws RetsEXception if an error occurs.
+     */
+    LoginResponse * GetLoginResponse() const;
+    
+    /**
+     * Returns the capability URLs from the last successful login transaction.
+     * If the last login transaction was not successful, NULL is returned.
+     *
+     * @return Capability URLs
+     * @throws RetsException if an error occurs.
+     */
+    CapabilityUrls * GetCapabilityUrls() const;
+    
+    /**
+     * Returns the contents of the action URL from the last successful
      * login.
      *
      * @return the contents of the action URL
@@ -224,6 +242,8 @@ private:
 
     std::string mLoginUrl;
 
+    LoginResponsePtr mLoginResponse;
+    
     CapabilityUrlsPtr mCapabilityUrls;
 
     std::string mAction;

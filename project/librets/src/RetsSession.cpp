@@ -44,6 +44,8 @@ const char * CLASS::RETS_1_5_STRING = "RETS/1.5";
 CLASS::RetsSession(string login_url)
 {
     mLoginUrl = login_url;
+    mLoginResponse.reset();
+    mCapabilityUrls.reset();
     mHttpMethod = RetsHttpRequest::POST;
     mHttpClient.reset(new CurlHttpClient());
     mHttpClient->SetUserAgent(DEFAULT_USER_AGENT);
@@ -83,6 +85,8 @@ void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
 
 bool CLASS::Login(string user_name, string passwd)
 {
+    mLoginResponse.reset();
+    mCapabilityUrls.reset();
     mHttpClient->SetDefaultHeader(RETS_VERSION_HEADER,
                                   RetsVersionToString(mRetsVersion));
     RetsHttpRequest request;
@@ -104,13 +108,23 @@ bool CLASS::Login(string user_name, string passwd)
     mHttpClient->SetDefaultHeader(RETS_VERSION_HEADER,
                                   RetsVersionToString(mDetectedRetsVersion));
     
-    LoginResponse response;
-    response.Parse(httpResponse->GetInputStream(), mDetectedRetsVersion);
-    mCapabilityUrls = response.GetCapabilityUrls(mLoginUrl);
+    mLoginResponse.reset(new LoginResponse);
+    mLoginResponse->Parse(httpResponse->GetInputStream(), mDetectedRetsVersion);
+    mCapabilityUrls.reset(mLoginResponse->CreateCapabilityUrls(mLoginUrl).get());
 
     RetrieveAction();
 
     return true;
+}
+
+LoginResponse * CLASS::GetLoginResponse() const
+{
+    return mLoginResponse.get();
+}
+
+CapabilityUrls * CLASS::GetCapabilityUrls() const
+{
+    return mCapabilityUrls.get();
 }
 
 void CLASS::RetrieveAction()

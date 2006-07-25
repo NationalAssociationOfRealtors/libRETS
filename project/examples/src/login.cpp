@@ -46,6 +46,9 @@ int main(int argc, char * argv[])
         }
         cout << "Logged in\n";
 
+        LoginResponse * login = session->GetLoginResponse();
+        cout << "Member name: " << login->GetMemberName() << endl;
+
         cout << "Action:\n" << session->GetAction() << endl;
 
         LogoutResponseAPtr logout = session->Logout();

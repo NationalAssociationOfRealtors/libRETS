@@ -66,13 +66,11 @@ class LoginResponse : public KeyValueResponse
 
     std::string GetUpdateUrl() const;
 
-    CapabilityUrlsPtr GetCapabilityUrls(std::string baseUrl) const;
+    CapabilityUrlsAPtr CreateCapabilityUrls(std::string baseUrl) const;
     
   private:
     virtual RetsXmlTextEventPtr GetBodyEvent(RetsXmlEventListPtr eventList,
                                              RetsVersion retsVersion);
-
-    CapabilityUrlsPtr mCapabilityUrls;
 };
 
 };

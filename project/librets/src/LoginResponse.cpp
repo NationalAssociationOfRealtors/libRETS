@@ -126,9 +126,9 @@ string CLASS::GetUpdateUrl() const
     return GetValue("Update");
 }
 
-CapabilityUrlsPtr CLASS::GetCapabilityUrls(string baseUrl) const
+CapabilityUrlsAPtr CLASS::CreateCapabilityUrls(string baseUrl) const
 {
-    CapabilityUrlsPtr urls(new CapabilityUrls(baseUrl));
+    CapabilityUrlsAPtr urls(new CapabilityUrls(baseUrl));
     urls->SetActionUrl(GetActionUrl());
     urls->SetChangePasswordUrl(GetChangePasswordUrl());
     urls->SetGetObjectUrl(GetGetObjectUrl());

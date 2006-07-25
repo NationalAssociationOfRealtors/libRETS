@@ -28,10 +28,12 @@ typedef boost::shared_ptr<RetsSession> RetsSessionPtr;
 class LoginResponse;
 /** Smart pointer to LoginResponse. */
 typedef boost::shared_ptr<LoginResponse> LoginResponsePtr;
+typedef std::auto_ptr<LoginResponse> LoginResponseAPtr;
 
 class CapabilityUrls;
 /** Smart pointer to CapabilityUrls. */
 typedef boost::shared_ptr<CapabilityUrls> CapabilityUrlsPtr;
+typedef std::auto_ptr<CapabilityUrls> CapabilityUrlsAPtr;
 
 class SearchRequest;
 /** Smart pointer to SearchRequest. */
