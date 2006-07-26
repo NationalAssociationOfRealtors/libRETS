@@ -8,7 +8,8 @@ librets_cflags = commands.getoutput(librets_config + " --cflags").split()
 librets_libs = commands.getoutput(librets_config + " --libs").split()
 
 setup(name = "librets: A RETS client library",
-  version = "1.0",
+  version = "1.1.3",
+  py_modules=['librets'],
   ext_modules = [Extension("_librets", ["librets_wrap.cpp"],
     extra_compile_args = librets_cflags,
     extra_link_args = librets_libs
