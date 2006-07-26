@@ -5,16 +5,7 @@ import re
 
 librets_config = "../../../librets-config-inplace"
 
-# Read in version from the makefile
-librets_version = "1.0"
-f = open('../../build/version.mk')
-for line in f.readlines():
-    match = re.match('^\\s*VERSION\\s*=\\s*(\\S+)', line)
-    if match:
-        librets_version = match.group(1)
-        break
-f.close()
-
+librets_version = commands.getoutput(librets_config + " --version").rstrip()
 librets_cflags = commands.getoutput(librets_config + " --cflags").split()
 librets_libs = commands.getoutput(librets_config + " --libs").split()
 
