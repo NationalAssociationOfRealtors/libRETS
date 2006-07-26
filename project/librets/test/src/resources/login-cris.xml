@@ -1,0 +1,15 @@
+<RETS ReplyCode="0" ReplyText="">
+<RETS-RESPONSE>
+Broker=9999999
+MemberName=WATCH1 MLS
+User=0207099998,,X
+MetadataVersion=1.0.3
+MinMetadataVersion=1.0.3
+TimeoutSeconds=900
+Login=http://rets.crisnetmls.com:6103/cgi-bin/WebObjects/RETS.woa/wa/RETSTransactionHandler/login
+Search=http://rets.crisnetmls.com:6103/cgi-bin/WebObjects/RETS.woa/12/wa/RETSTransactionHandler/search
+GetObject=http://rets.crisnetmls.com:6103/cgi-bin/WebObjects/RETS.woa/12/wa/RETSTransactionHandler/getObject
+GetMetadata=http://rets.crisnetmls.com:6103/cgi-bin/WebObjects/RETS.woa/12/wa/RETSTransactionHandler/getMetadata
+Logout=http://rets.crisnetmls.com:6103/cgi-bin/WebObjects/RETS.woa/12/wa/RETSTransactionHandler/logout
+</RETS-RESPONSE>
+</RETS>

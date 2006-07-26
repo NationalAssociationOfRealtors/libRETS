@@ -84,13 +84,13 @@ RetsXmlTextEventPtr CLASS::GetBodyEvent(RetsXmlEventListPtr eventList,
     {
         bodyEvent = GetBodyEventFromEmptyLogoutResponse(eventList);
     }
-    else if (eventList->size() != 3)
+    else if (eventList->size() == 3)
     {
-        bodyEvent = GetBodyEventFromStandardResponse(eventList);
+        bodyEvent = GetBodyEventFromShortResponse(eventList);
     }
     else
     {
-        bodyEvent = GetBodyEventFromShortResponse(eventList);
+        bodyEvent = GetBodyEventFromStandardResponse(eventList);
     }
     return bodyEvent;
 }

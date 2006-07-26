@@ -93,19 +93,41 @@ RetsXmlTextEventPtr CLASS::GetBodyEventFromStandardResponse(
     RetsXmlEndElementEventPtr endEvent;
     RetsXmlTextEventPtr textEvent;
     
-    AssertEventListSize(6, eventList);
-    startEvent = RetsXmlParser::AssertStartEvent(eventList->at(0));
-    AssertEquals("RETS", startEvent->GetName());
-    AssertEquals("0", startEvent->GetAttributeValue("ReplyCode"));
-    startEvent = RetsXmlParser::AssertStartEvent(eventList->at(1));
-    AssertEquals("RETS-RESPONSE", startEvent->GetName());
-    bodyEvent = RetsXmlParser::AssertTextEvent(eventList->at(2));
-    endEvent = RetsXmlParser::AssertEndEvent(eventList->at(3));
-    AssertEquals("RETS-RESPONSE", endEvent->GetName());
-    endEvent = RetsXmlParser::AssertEndEvent(eventList->at(4));
-    AssertEquals("RETS", endEvent->GetName());
-    RetsXmlParser::AssertEndDocumentEvent(eventList->at(5));
-    
+    if (eventList->size() == 6)
+    {
+        startEvent = RetsXmlParser::AssertStartEvent(eventList->at(0));
+        AssertEquals("RETS", startEvent->GetName());
+        AssertEquals("0", startEvent->GetAttributeValue("ReplyCode"));
+        startEvent = RetsXmlParser::AssertStartEvent(eventList->at(1));
+        AssertEquals("RETS-RESPONSE", startEvent->GetName());
+        bodyEvent = RetsXmlParser::AssertTextEvent(eventList->at(2));
+        endEvent = RetsXmlParser::AssertEndEvent(eventList->at(3));
+        AssertEquals("RETS-RESPONSE", endEvent->GetName());
+        endEvent = RetsXmlParser::AssertEndEvent(eventList->at(4));
+        AssertEquals("RETS", endEvent->GetName());
+        RetsXmlParser::AssertEndDocumentEvent(eventList->at(5));
+    }
+    else if (eventList->size() == 5)
+    {
+        startEvent = RetsXmlParser::AssertStartEvent(eventList->at(0));
+        AssertEquals("RETS", startEvent->GetName());
+        AssertEquals("0", startEvent->GetAttributeValue("ReplyCode"));
+        startEvent = RetsXmlParser::AssertStartEvent(eventList->at(1));
+        AssertEquals("RETS-RESPONSE", startEvent->GetName());
+        endEvent = RetsXmlParser::AssertEndEvent(eventList->at(2));
+        AssertEquals("RETS-RESPONSE", endEvent->GetName());
+        endEvent = RetsXmlParser::AssertEndEvent(eventList->at(3));
+        AssertEquals("RETS", endEvent->GetName());
+        RetsXmlParser::AssertEndDocumentEvent(eventList->at(4));
+    }
+    else
+    {
+        ostringstream message;
+        message << "Unexpected XML event list for standard RETS respose: "
+                << Output(*eventList);
+        throw RetsException(message.str());
+    }
+        
     return bodyEvent;
 }
 

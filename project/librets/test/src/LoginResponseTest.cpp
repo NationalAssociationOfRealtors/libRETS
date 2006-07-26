@@ -32,12 +32,14 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testValid15Response);
     CPPUNIT_TEST(testValid10Response);
     CPPUNIT_TEST(testShortResponse);
+    CPPUNIT_TEST(testCrisResponse);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
     void testValid15Response();
     void testValid10Response();
     void testShortResponse();
+    void testCrisResponse();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -175,4 +177,11 @@ void CLASS::testShortResponse()
     {
         // Expected
     }
+}
+
+void CLASS::testCrisResponse()
+{
+    istreamPtr inputStream= getResource("login-cris.xml");
+    LoginResponse response;
+    response.Parse(inputStream, RETS_1_5);
 }
