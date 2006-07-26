@@ -1,4 +1,4 @@
-Version 1.1.3 - ???
+Version 1.1.3 - 26 July 2006
 
   * Expose LoginResponse and CapabilityUrls in RetsSession.
 
