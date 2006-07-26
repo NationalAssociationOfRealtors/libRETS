@@ -46,7 +46,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
 
 void CLASS::testValid15Response()
 {
-    istreamPtr inputStream = getResource("login_valid15.xml");
+    istreamPtr inputStream = getResource("login-valid15.xml");
     LoginResponse response;
     response.Parse(inputStream, RETS_1_5);
 
@@ -111,7 +111,7 @@ void CLASS::testValid15Response()
 
 void CLASS::testValid10Response()
 {
-    istreamPtr inputStream = getResource("login_valid10.xml");
+    istreamPtr inputStream = getResource("login-valid10.xml");
     LoginResponse response;
     response.Parse(inputStream, RETS_1_0);
     

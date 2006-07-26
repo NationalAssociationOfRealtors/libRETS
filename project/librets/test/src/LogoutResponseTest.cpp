@@ -44,7 +44,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
 
 void CLASS::testValidResponse()
 {
-    istreamPtr inputStream = getResource("logout_valid15.xml");
+    istreamPtr inputStream = getResource("logout-valid15.xml");
     LogoutResponse response;
     response.Parse(inputStream, RETS_1_5);
 
@@ -69,7 +69,7 @@ void CLASS::testShortResponse()
 
 void CLASS::testTarasoftResponse()
 {
-    istreamPtr inputStream = getResource("logout_tarasoft.xml");
+    istreamPtr inputStream = getResource("logout-tarasoft.xml");
     LogoutResponse response;
     response.Parse(inputStream, RETS_1_5);
     ASSERT_STRING_EQUAL("", response.GetBillingInfo());
