@@ -11,7 +11,8 @@ end
 
 makefile_prefix = ""
 if PLATFORM =~ /darwin/ || PLATFORM =~ /linux/
-  librets_config = with_config("librets-config", "librets-config")
+  librets_config = with_config("librets-config",
+    "../../../librets-config-inplace")
   $libs += ' ' + `#{librets_config} --libs`.chomp
   $CFLAGS += ' ' + `#{librets_config} --cflags`.chomp
 elsif PLATFORM =~ /win32/
@@ -24,7 +25,7 @@ LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LI
 end
 
 
-create_makefile('librets')
+create_makefile('librets_native')
 
 orig_makefile = IO::read("Makefile")
 File.open("Makefile", "w") do |mfile|

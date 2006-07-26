@@ -19,7 +19,7 @@ puts "RETS Version: " + version
 
 request = session.CreateSearchRequest("Property", "ResidentialProperty",
                                       "(ListPrice=300000-)")
-request.SetSelect("ListingID,ListPrice,Beds,City")                                     
+request.select = "ListingID,ListPrice,Beds,City"
 request.SetLimit(SearchRequest::LIMIT_DEFAULT)
 request.SetOffset(SearchRequest::OFFSET_NONE)
 request.SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
@@ -28,9 +28,9 @@ results = session.Search(request)
 puts "Record count: " + results.GetCount.to_s
 puts
 columns = results.GetColumns
-while results.HasNext()
+results.each do |result|
   columns.each do |column|
-    puts column + ": " + results.GetString(column)
+    puts column + ": " + result.GetString(column)
   end
   puts
 end
