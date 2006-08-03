@@ -119,6 +119,9 @@ string NS::urlEncode(const string & aString)
             case '&':
                 encoded += "%26";
                 break;
+            case '%':
+                encoded += "%25";
+                break;
             default:
                encoded += *i;
         }
