@@ -105,13 +105,22 @@ string NS::urlEncode(const string & aString)
     string::const_iterator i;
     for (i = aString.begin(); i != aString.end(); i++)
     {
-        if (*i == '+')
+        switch (*i)
         {
-            encoded += "%2b";
-        }
-        else
-        {
-            encoded += *i;
+            case '+':
+                encoded += "%2b";
+                break;
+            case '=':
+                encoded += "%3d";
+                break;
+            case '?':
+                encoded += "%3f";
+                break;
+            case '&':
+                encoded += "%26";
+                break;
+            default:
+               encoded += *i;
         }
     }
     return encoded;

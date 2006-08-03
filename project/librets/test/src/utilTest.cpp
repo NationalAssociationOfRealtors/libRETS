@@ -166,8 +166,7 @@ void CLASS::testSplitField()
 
 void CLASS::testUrlEncode()
 {
-    ASSERT_STRING_EQUAL("foo%2bbar", urlEncode("foo+bar"));
-    ASSERT_STRING_EQUAL("foo:bar", urlEncode("foo:bar"));
+    ASSERT_STRING_EQUAL("%3d-%2b-%3f-%26-(-)-:", urlEncode("=-+-?-&-(-)-:"));
 }
 
 void CLASS::testJoinStrings()
