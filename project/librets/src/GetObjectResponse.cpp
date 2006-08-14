@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2006 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -13,14 +13,6 @@
  * permission notice appear in all copies of the Software and that
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
- */
-/*
- *  GetObjectResponse.cpp
- *  librets
- *
- *  Created by Dave Dribin on 4/1/05.
- *  Copyright 2005 __MyCompanyName__. All rights reserved.
- *
  */
 
 #include <sstream>
@@ -149,7 +141,7 @@ void GetObjectResponse::ParseMultiPart(RetsHttpResponsePtr httpResponse)
     delimiter.append(boundary).append("\r\n");
 
     string closeDelimiter = "\r\n--";
-    closeDelimiter.append(boundary).append("--\r\n");
+    closeDelimiter.append(boundary).append("--");
 
     string content = readIntoString(*httpResponse->GetInputStream());
     

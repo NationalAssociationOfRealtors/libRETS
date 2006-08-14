@@ -44,6 +44,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testMultiPartLocation);
     CPPUNIT_TEST(testNormls);
     CPPUNIT_TEST(testCris);
+    CPPUNIT_TEST(testRapattoni);
     CPPUNIT_TEST_SUITE_END();
     
   protected:
@@ -59,6 +60,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testMultiPartLocation();
     void testNormls();
     void testCris();
+    void testRapattoni();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -330,4 +332,20 @@ void CLASS::testCris()
     {
         // Expetcted
     }
+}
+
+void CLASS::testRapattoni()
+{
+    GetObjectResponse response;
+    RetsHttpResponsePtr httpResponse(new TestHttpResponse(
+        "get-object-response-rapattoni.txt"));
+    response.Parse(httpResponse);
+    
+    int objectCount = 0;
+    ObjectDescriptor * objectDescriptor;
+    while (objectDescriptor = response.NextObject())
+    {
+        objectCount++;
+    }
+    CPPUNIT_ASSERT_EQUAL(3, objectCount);
 }
