@@ -7,21 +7,21 @@ include Librets
 
 session = RetsSession.new("http://demo.crt.realtors.org:6103/rets/login")
 
-if !session.Login("Joe", "Schmoe")
+if !session.login("Joe", "Schmoe")
   puts "Invalid login"
   exit 1
 end
 
-puts "Member name: " + session.GetLoginResponse().GetMemberName()
-puts "Search URL: " + session.GetCapabilityUrls().GetSearchUrl()
+puts "Member name: " + session.login_response.member_name
+puts "Search URL: " + session.capability_urls.search_url
 
-puts "Action: " + session.GetAction()
+puts "Action: " + session.action
 version = "1.0"
-version = "1.5" if (session.GetDetectedRetsVersion() == RETS_1_5)
+version = "1.5" if (session.detected_rets_version == RETS_1_5)
 puts "RETS Version: " + version
 
-logout = session.Logout()
+logout = session.logout()
 
-puts "Billing info: " + logout.GetBillingInfo
-puts "Logout message: " + logout.GetLogoutMessage
-puts "Connect time: " + logout.GetConnectTime.to_s
+puts "Billing info: " + logout.billing_info
+puts "Logout message: " + logout.logout_message
+puts "Connect time: " + logout.connect_time.to_s

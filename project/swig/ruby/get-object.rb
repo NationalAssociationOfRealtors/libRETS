@@ -7,22 +7,22 @@ include Librets
 
 session = RetsSession.new("http://demo.crt.realtors.org:6103/rets/login")
 
-if !session.Login("Joe", "Schmoe")
+if !session.login("Joe", "Schmoe")
   puts "Invalid login"
   exit 1
 end
 
-get_object_request = GetObjectRequest::new("Property", "Photo")
-get_object_request.AddAllObjects("LN000001")
+get_object_request = GetObjectRequest.new("Property", "Photo")
+get_object_request.add_all_objects("LN000001")
 
-get_object_response = session.GetObject(get_object_request)
+get_object_response = session.get_object(get_object_request)
 
 content_type_suffixes = { "image/jpeg" => "jpg"}
-while object_descriptor = get_object_response.NextObject
-  object_key =  object_descriptor.GetObjectKey
-  object_id = object_descriptor.GetObjectId
-  content_type = object_descriptor.GetContentType
-  description = object_descriptor.GetDescription
+get_object_response.each_object do |object_descriptor|
+  object_key =  object_descriptor.object_key
+  object_id = object_descriptor.object_id
+  content_type = object_descriptor.content_type
+  description = object_descriptor.description
   print "#{object_key} object \##{object_id}"
   print ", description: #{description}" if !description.empty?
   puts
@@ -30,8 +30,8 @@ while object_descriptor = get_object_response.NextObject
   suffix = content_type_suffixes[content_type]
   output_file_name = object_key + "-" + object_id.to_s + "." + suffix
   File.open(output_file_name, "wb") do |f|
-    f << object_descriptor.GetDataAsString
+    f << object_descriptor.data_as_string
   end
 end
 
-session.Logout()
+session.logout
