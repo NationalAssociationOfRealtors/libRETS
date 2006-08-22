@@ -63,7 +63,9 @@ clean-csharp:
 	$(MAKE) -C csharp distclean
 
 clean-ruby:
+ifneq "$(wildcard $(RUBY_MAKEFILE))" ""
 	$(MAKE) -C ruby distclean
+endif
 	$(RM) $(RUBY_WRAP)
 
 clean-perl:
