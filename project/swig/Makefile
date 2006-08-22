@@ -39,7 +39,8 @@ ruby: $(RUBY_WRAP) $(RUBY_MAKEFILE)
 $(RUBY_MAKEFILE): $(RUBY_WRAP) ruby/extconf.rb
 	cd ruby ; $(RUBY) extconf.rb --with-librets-config=../../../librets-config-inplace
 
-SWIG_RUBY = $(SWIG) -c++ -ruby -o $(RUBY_WRAP) -Ilib/ruby librets.i
+SWIG_RUBY = $(SWIG) -c++ -ruby -o $(RUBY_WRAP) -module librets_native \
+    -Ilib/ruby librets.i
 $(RUBY_WRAP): $(SWIG_FILES) lib/ruby/std_vector.i
 	$(SWIG_RUBY)
 
