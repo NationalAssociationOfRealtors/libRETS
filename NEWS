@@ -1,7 +1,9 @@
-Version 1.1.4 - ???
+Version 1.1.4 - 23 August 2006
 
   * URL escpae more characters.
   * More robust Logout Respoonse handling.
+  * Make Ruby bindings more Ruby-like
+  * Remove all derived files from source distribution, except ./configure
 
 Version 1.1.3 - 26 July 2006
 
