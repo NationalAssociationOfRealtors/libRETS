@@ -56,12 +56,12 @@ _doc-api: doxygen prepare
 # (Ab)use rsync as a recursive copy with exclude.  Yeah, rsync is
 # "non-standard", but screw it.  It's unfortunately the easiest way to
 # do a recursive copy with exclude.
-_dist: _build _doc-api
+_dist: _doc-api
 	$(RM) -r dist/$(DIST_SRC)
 	mkdir -p dist/$(DIST_SRC)
 	mkdir -p dist/$(DIST_SRC)/doc
 	rsync -a --exclude-from project/build/dist-exclude . \
-	dist/$(DIST_SRC)
+	  dist/$(DIST_SRC)
 	rsync -a --cvs-exclude build/doc/api dist/$(DIST_SRC)/doc
 	cd dist; zip -r -q $(SRC_ZIP) $(DIST_SRC)
 	cd dist; tar --gzip -cf $(SRC_TGZ) $(DIST_SRC)
@@ -82,6 +82,7 @@ _install: _build
 
 _clean:
 	$(RM) -r build dist
+	$(MAKE) -C project/swig clean
 
 _distclean: _clean
 	$(RM) $(DISTCLEAN_FILES)
