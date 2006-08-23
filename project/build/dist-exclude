@@ -11,3 +11,25 @@
 /autom4te.cache
 /config.log
 /config.status
+/librets-config
+/librets-config-inplace
+/project/librets/src/config.h
+
+# Xcode user files
+*.mode1
+*.pbxuser
+
+# SWIG C#
+/project/swig/csharp/lib/*.cs
+/project/swig/csharp/lib/librets_wrap.cpp
+
+# SWIG Perl
+/swig/perl/librets.pm
+
+# SWIG Python
+/swig/python/librets.py
+/swig/python/librets_wrap.cpp
+
+# SWIG Ruby
+/project/swig/ruby/Makefile
+/project/swig/ruby/librets_wrap.cpp
