@@ -18,17 +18,19 @@
 # Xcode user files
 *.mode1
 *.pbxuser
+*.mode2
+*.perspective
 
 # SWIG C#
 /project/swig/csharp/lib/*.cs
-/project/swig/csharp/lib/librets_wrap.cpp
+/project/swig/csharp/librets_wrap.cpp
 
 # SWIG Perl
-/swig/perl/librets.pm
+/project/swig/perl/librets.pm
 
 # SWIG Python
-/swig/python/librets.py
-/swig/python/librets_wrap.cpp
+/project/swig/python/librets.py
+/project/swig/python/librets_wrap.cpp
 
 # SWIG Ruby
 /project/swig/ruby/Makefile
