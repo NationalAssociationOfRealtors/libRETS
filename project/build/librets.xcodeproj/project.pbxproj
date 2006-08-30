@@ -43,7 +43,6 @@
 		554662420A62EBB400F3B94E /* UserAgentAuthType.h in Headers */ = {isa = PBXBuildFile; fileRef = 554662410A62EBB400F3B94E /* UserAgentAuthType.h */; };
 		5546624C0A62EE7200F3B94E /* UserAgentAuthCalculator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5546624B0A62EE7200F3B94E /* UserAgentAuthCalculator.h */; };
 		554662500A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5546624F0A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp */; };
-		554662C00A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554662BF0A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp */; };
 		554AA16F07FA0EF600402C35 /* sql2dmql.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA16807FA0ECD00402C35 /* sql2dmql.cpp */; };
 		554AA18907FA10FA00402C35 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 554AA18607FA10FA00402C35 /* libantlr.a */; };
 		554AA1B107FA13A000402C35 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554AA1B007FA13A000402C35 /* Cocoa.framework */; };
@@ -55,8 +54,6 @@
 		554AA1EB07FA15D200402C35 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 554AA18607FA10FA00402C35 /* libantlr.a */; };
 		5552A8850803319B002288F1 /* TestHttpResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5552A8840803319B002288F1 /* TestHttpResponse.cpp */; };
 		5552A8BE080335E6002288F1 /* TestHttpResponseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5552A8BD080335E6002288F1 /* TestHttpResponseTest.cpp */; };
-		5552A92C08033C19002288F1 /* GetObjectResponseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5552A92B08033C19002288F1 /* GetObjectResponseTest.cpp */; };
-		5552AA6208046478002288F1 /* GetObjectRequestTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5552AA6108046478002288F1 /* GetObjectRequestTest.cpp */; };
 		5552AB1D080475D6002288F1 /* get-object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5552AB1108047438002288F1 /* get-object.cpp */; };
 		5552AB1F08047683002288F1 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD56E907FC823E00526D69 /* libcrypto.dylib */; };
 		5552AB2008047683002288F1 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD56EA07FC823E00526D69 /* libssl.dylib */; };
@@ -69,6 +66,15 @@
 		5552ACF30804F096002288F1 /* RetsImage.h in Resources */ = {isa = PBXBuildFile; fileRef = 5552ACF10804F096002288F1 /* RetsImage.h */; };
 		5552ACF40804F096002288F1 /* RetsImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5552ACF20804F096002288F1 /* RetsImage.mm */; };
 		5559722908CF66F6003A6B24 /* DmqlExpressionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5559722808CF66F6003A6B24 /* DmqlExpressionTest.cpp */; };
+		556A41880AA3A5F200602CC5 /* GetObjectRequestTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5552AA6108046478002288F1 /* GetObjectRequestTest.cpp */; };
+		556A41890AA3A5F200602CC5 /* GetObjectResponseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5552A92B08033C19002288F1 /* GetObjectResponseTest.cpp */; };
+		556A418A0AA3A5F200602CC5 /* CapabilityUrlsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578007FDAAFD00526D69 /* CapabilityUrlsTest.cpp */; };
+		556A418B0AA3A5F200602CC5 /* LoginResponseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578707FDAAFD00526D69 /* LoginResponseTest.cpp */; };
+		556A418C0AA3A5F200602CC5 /* LogoutResponseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578907FDAAFD00526D69 /* LogoutResponseTest.cpp */; };
+		556A418D0AA3A5F200602CC5 /* SearchResultSetTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD579B07FDAAFD00526D69 /* SearchResultSetTest.cpp */; };
+		556A418E0AA3A5F200602CC5 /* UserAgentAuthCalculatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554662BF0A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp */; };
+		556A41C80AA49ADB00602CC5 /* CurlMulti.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A41C70AA49ADB00602CC5 /* CurlMulti.h */; };
+		556A41CA0AA49B4B00602CC5 /* CurlMulti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556A41C90AA49B4B00602CC5 /* CurlMulti.cpp */; };
 		5570976B08FDC4530067D309 /* TestMetadataLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5570976A08FDC4530067D309 /* TestMetadataLoader.cpp */; };
 		55B7EAE5080EC4AA00245DFA /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
 		55B7EAE7080EC4AA00245DFA /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
@@ -80,14 +86,11 @@
 		55BD56EB07FC823E00526D69 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD56E907FC823E00526D69 /* libcrypto.dylib */; };
 		55BD56EC07FC823E00526D69 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD56EA07FC823E00526D69 /* libssl.dylib */; };
 		55BD57EF07FDB01400526D69 /* AndCriterionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD577F07FDAAFD00526D69 /* AndCriterionTest.cpp */; };
-		55BD57F007FDB01400526D69 /* CapabilityUrlsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578007FDAAFD00526D69 /* CapabilityUrlsTest.cpp */; };
 		55BD57F107FDB01400526D69 /* DefaultMetadataElementFactoryTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578107FDAAFD00526D69 /* DefaultMetadataElementFactoryTest.cpp */; };
 		55BD57F207FDB01400526D69 /* EqCriterionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578207FDAAFD00526D69 /* EqCriterionTest.cpp */; };
 		55BD57F307FDB01500526D69 /* ExpatXmlParserTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578307FDAAFD00526D69 /* ExpatXmlParserTest.cpp */; };
 		55BD57F407FDB01500526D69 /* GtCriterionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578407FDAAFD00526D69 /* GtCriterionTest.cpp */; };
 		55BD57F507FDB01500526D69 /* LiteralCriterionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578507FDAAFD00526D69 /* LiteralCriterionTest.cpp */; };
-		55BD57F607FDB01500526D69 /* LoginResponseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578707FDAAFD00526D69 /* LoginResponseTest.cpp */; };
-		55BD57F707FDB01500526D69 /* LogoutResponseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578907FDAAFD00526D69 /* LogoutResponseTest.cpp */; };
 		55BD57F807FDB01500526D69 /* LtCriterionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578A07FDAAFD00526D69 /* LtCriterionTest.cpp */; };
 		55BD57F907FDB01500526D69 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578B07FDAAFD00526D69 /* main.cpp */; };
 		55BD57FB07FDB01500526D69 /* NotCriterionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD579007FDAAFD00526D69 /* NotCriterionTest.cpp */; };
@@ -97,7 +100,6 @@
 		55BD57FF07FDB01500526D69 /* RetsObjectTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD579407FDAAFD00526D69 /* RetsObjectTest.cpp */; };
 		55BD580007FDB01500526D69 /* RetsXmlAttributeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD579507FDAAFD00526D69 /* RetsXmlAttributeTest.cpp */; };
 		55BD580107FDB01500526D69 /* RetsXmlStartElementEventTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD579607FDAAFD00526D69 /* RetsXmlStartElementEventTest.cpp */; };
-		55BD580207FDB01500526D69 /* SearchResultSetTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD579B07FDAAFD00526D69 /* SearchResultSetTest.cpp */; };
 		55BD580307FDB01500526D69 /* SqlToDmqlCompilerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD579C07FDAAFD00526D69 /* SqlToDmqlCompilerTest.cpp */; };
 		55BD580407FDB01500526D69 /* TestObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD579E07FDAAFD00526D69 /* TestObject.cpp */; };
 		55BD580507FDB01500526D69 /* testUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD57A007FDAAFD00526D69 /* testUtil.cpp */; };
@@ -467,6 +469,8 @@
 		555970C208CF5034003A6B24 /* LookupCriterion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupCriterion.h; sourceTree = "<group>"; };
 		555970C408CF520F003A6B24 /* LookupCriterion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LookupCriterion.cpp; sourceTree = "<group>"; };
 		5559722808CF66F6003A6B24 /* DmqlExpressionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DmqlExpressionTest.cpp; sourceTree = "<group>"; };
+		556A41C70AA49ADB00602CC5 /* CurlMulti.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlMulti.h; sourceTree = "<group>"; };
+		556A41C90AA49B4B00602CC5 /* CurlMulti.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurlMulti.cpp; sourceTree = "<group>"; };
 		5570971308FDBB310067D309 /* MetadataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetadataLoader.h; sourceTree = "<group>"; };
 		5570971D08FDBC400067D309 /* MetadataLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MetadataLoader.cpp; sourceTree = "<group>"; };
 		5570976908FDC4530067D309 /* TestMetadataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestMetadataLoader.h; sourceTree = "<group>"; };
@@ -827,6 +831,7 @@
 			isa = PBXGroup;
 			children = (
 				55F23D84088EACDE0090B325 /* CurlEasy.cpp */,
+				556A41C90AA49B4B00602CC5 /* CurlMulti.cpp */,
 				554A9F5607F9F2E700402C35 /* CurlHttpClient.cpp */,
 				554A9F5707F9F2E700402C35 /* CurlHttpResponse.cpp */,
 				554A9F5807F9F2E700402C35 /* CurlSlist.cpp */,
@@ -1094,6 +1099,7 @@
 				554A9EC607F9F2D200402C35 /* http_forward.h */,
 				554A9EB807F9F2D200402C35 /* curl.h */,
 				55F23D62088EAA290090B325 /* CurlEasy.h */,
+				556A41C70AA49ADB00602CC5 /* CurlMulti.h */,
 				554A9EB907F9F2D200402C35 /* CurlHttpClient.h */,
 				554A9EBA07F9F2D200402C35 /* CurlHttpResponse.h */,
 				554A9EBB07F9F2D200402C35 /* CurlSlist.h */,
@@ -1265,6 +1271,7 @@
 				554662320A62BAD900F3B94E /* md5.hpp in Headers */,
 				554662420A62EBB400F3B94E /* UserAgentAuthType.h in Headers */,
 				5546624C0A62EE7200F3B94E /* UserAgentAuthCalculator.h in Headers */,
+				556A41C80AA49ADB00602CC5 /* CurlMulti.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1605,14 +1612,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				55BD57EF07FDB01400526D69 /* AndCriterionTest.cpp in Sources */,
-				55BD57F007FDB01400526D69 /* CapabilityUrlsTest.cpp in Sources */,
 				55BD57F107FDB01400526D69 /* DefaultMetadataElementFactoryTest.cpp in Sources */,
 				55BD57F207FDB01400526D69 /* EqCriterionTest.cpp in Sources */,
 				55BD57F307FDB01500526D69 /* ExpatXmlParserTest.cpp in Sources */,
 				55BD57F407FDB01500526D69 /* GtCriterionTest.cpp in Sources */,
 				55BD57F507FDB01500526D69 /* LiteralCriterionTest.cpp in Sources */,
-				55BD57F607FDB01500526D69 /* LoginResponseTest.cpp in Sources */,
-				55BD57F707FDB01500526D69 /* LogoutResponseTest.cpp in Sources */,
 				55BD57F807FDB01500526D69 /* LtCriterionTest.cpp in Sources */,
 				55BD57F907FDB01500526D69 /* main.cpp in Sources */,
 				55BD57FB07FDB01500526D69 /* NotCriterionTest.cpp in Sources */,
@@ -1622,7 +1626,6 @@
 				55BD57FF07FDB01500526D69 /* RetsObjectTest.cpp in Sources */,
 				55BD580007FDB01500526D69 /* RetsXmlAttributeTest.cpp in Sources */,
 				55BD580107FDB01500526D69 /* RetsXmlStartElementEventTest.cpp in Sources */,
-				55BD580207FDB01500526D69 /* SearchResultSetTest.cpp in Sources */,
 				55BD580307FDB01500526D69 /* SqlToDmqlCompilerTest.cpp in Sources */,
 				55BD580407FDB01500526D69 /* TestObject.cpp in Sources */,
 				55BD580507FDB01500526D69 /* testUtil.cpp in Sources */,
@@ -1631,8 +1634,6 @@
 				55BD580807FDB01500526D69 /* XmlMetadataParserTest.cpp in Sources */,
 				5552A8850803319B002288F1 /* TestHttpResponse.cpp in Sources */,
 				5552A8BE080335E6002288F1 /* TestHttpResponseTest.cpp in Sources */,
-				5552A92C08033C19002288F1 /* GetObjectResponseTest.cpp in Sources */,
-				5552AA6208046478002288F1 /* GetObjectRequestTest.cpp in Sources */,
 				55F23F0A088FFC720090B325 /* LookupOrCriterionTest.cpp in Sources */,
 				55F23F8C089003B60090B325 /* TestSqlMetadata.cpp in Sources */,
 				55083EAE08A92BA2004B3699 /* MetadataElementTest.cpp in Sources */,
@@ -1643,7 +1644,13 @@
 				55F9032608FEC7DD00D76E8C /* TestMetadataTree.cpp in Sources */,
 				55F9055508FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp in Sources */,
 				550A6DEA09E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp in Sources */,
-				554662C00A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp in Sources */,
+				556A41880AA3A5F200602CC5 /* GetObjectRequestTest.cpp in Sources */,
+				556A41890AA3A5F200602CC5 /* GetObjectResponseTest.cpp in Sources */,
+				556A418A0AA3A5F200602CC5 /* CapabilityUrlsTest.cpp in Sources */,
+				556A418B0AA3A5F200602CC5 /* LoginResponseTest.cpp in Sources */,
+				556A418C0AA3A5F200602CC5 /* LogoutResponseTest.cpp in Sources */,
+				556A418D0AA3A5F200602CC5 /* SearchResultSetTest.cpp in Sources */,
+				556A418E0AA3A5F200602CC5 /* UserAgentAuthCalculatorTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1739,6 +1746,7 @@
 				55EE854E093E628900812582 /* XmlMetadataParser.cpp in Sources */,
 				554662340A62BAF600F3B94E /* md5.cpp in Sources */,
 				554662500A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp in Sources */,
+				556A41CA0AA49B4B00602CC5 /* CurlMulti.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
