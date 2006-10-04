@@ -46,6 +46,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testNotEquals);
     CPPUNIT_TEST(testNotEqualsAlt);
     CPPUNIT_TEST(testStringEquals);
+    CPPUNIT_TEST(testStringEqualsWithSpace);
     CPPUNIT_TEST(testLessThanOrEquals);
     CPPUNIT_TEST(testGreaterThanOrEquals);
     CPPUNIT_TEST(testLookupEquals);
@@ -85,6 +86,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testNotEquals();
     void testNotEqualsAlt();
     void testStringEquals();
+    void testStringEqualsWithSpace();
     void testLessThanOrEquals();
     void testGreaterThanOrEquals();
     void testLookupEquals();
@@ -368,6 +370,21 @@ void CLASS::testStringEquals()
     StringVector columns;
     ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
     DmqlCriterionPtr criterion = eq("ListingID", literal("LN000002"));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+}
+
+void CLASS::testStringEqualsWithSpace()
+{
+    DmqlQueryPtr query =
+    sqlToDmql("select * "
+              "  from data:Property:RES "
+              " where ListingID = 'LN 2';");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+    
+    StringVector columns;
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+    DmqlCriterionPtr criterion = eq("ListingID", literal("\"LN 2\""));
     ASSERT_EQUAL(*criterion, *query->GetCriterion());
 }
 

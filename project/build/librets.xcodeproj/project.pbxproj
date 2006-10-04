@@ -13,18 +13,6 @@
 			buildPhases = (
 				55BD572907FC9D7A00526D69 /* ShellScript */,
 			);
-			buildSettings = {
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = "Disk Image";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
 			dependencies = (
 				55BD572C07FC9D9200526D69 /* PBXTargetDependency */,
 			);
@@ -204,25 +192,6 @@
 		55F9032608FEC7DD00D76E8C /* TestMetadataTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9032508FEC7DD00D76E8C /* TestMetadataTree.cpp */; };
 		55F9055508FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9055408FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXBuildStyle section */
-		554A9EA407F9F27F00402C35 /* Development */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				ZERO_LINK = NO;
-			};
-			name = Development;
-		};
-		554A9EA507F9F27F00402C35 /* Deployment */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-			};
-			name = Deployment;
-		};
-/* End PBXBuildStyle section */
 
 /* Begin PBXContainerItemProxy section */
 		55BD572B07FC9D9200526D69 /* PBXContainerItemProxy */ = {
@@ -1280,25 +1249,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				HEADER_SEARCH_PATHS = ../librets/include;
-				INSTALL_PATH = /usr/local/bin;
-				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/curl-7.13.1/lib",
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/boost-1.32.0/lib",
-				);
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = sql2dmql;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
 			dependencies = (
 			);
 			name = sql2dmql;
@@ -1317,67 +1267,11 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = /Users/dave/src/DisclosableView/Source/DisclosableView/build;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				HEADER_SEARCH_PATHS = ../librets/include;
-				INFOPLIST_FILE = ../iRets/Info.plist;
-				INSTALL_PATH = "$(USER_APPS_DIR)";
-				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/curl-7.13.1/lib",
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/boost-1.32.0/lib",
-				);
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-					/usr/local/lib/libcurl.a,
-					/usr/local/lib/libboost_filesystem.a,
-				);
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = iRets;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
 			dependencies = (
 			);
 			name = iRets;
 			productName = iRets;
 			productReference = 554AA19C07FA129100402C35 /* iRets.app */;
-			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
-<plist version=\"1.0\">
-<dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>English</string>
-	<key>CFBundleExecutable</key>
-	<string>iRets</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.iRets</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
-	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
-	<key>NSPrincipalClass</key>
-	<string>NSApplication</string>
-</dict>
-</plist>
-";
 			productType = "com.apple.product-type.application";
 		};
 		5552AB18080475A2002288F1 /* get-object */ = {
@@ -1389,26 +1283,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				HEADER_SEARCH_PATHS = ../librets/include;
-				INSTALL_PATH = /usr/local/bin;
-				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/curl-7.13.1/lib",
-					"/usr/local/encap/antlr-2.7.5/lib",
-					"/usr/local/encap/boost-1.32.0/lib",
-				);
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = "get-object";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
 			dependencies = (
 			);
 			name = "get-object";
@@ -1425,27 +1299,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = ../librets/test/src/librets_test_Prefix.pch;
-				HEADER_SEARCH_PATHS = ../librets/include;
-				INSTALL_PATH = /usr/local/bin;
-				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/encap/expat-1.95.8/lib",
-					"/usr/local/encap/cppunit-1.10.2/lib",
-					"/usr/local/encap/boost-1.32.0/lib",
-				);
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = test;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
 			dependencies = (
 				55EE8558093E633F00812582 /* PBXTargetDependency */,
 			);
@@ -1465,14 +1318,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/lib;
-				PREBINDING = NO;
-				PRODUCT_NAME = rets;
-				ZERO_LINK = YES;
-			};
 			dependencies = (
 			);
 			name = librets;
@@ -1486,12 +1331,6 @@
 		554A9EA607F9F27F00402C35 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 55C70BC2093D1BDD00D34681 /* Build configuration list for PBXProject "librets" */;
-			buildSettings = {
-			};
-			buildStyles = (
-				554A9EA407F9F27F00402C35 /* Development */,
-				554A9EA507F9F27F00402C35 /* Deployment */,
-			);
 			hasScannedForEncodings = 0;
 			mainGroup = 554A9EA207F9F27F00402C35;
 			productRefGroup = 554A9EB307F9F2B300402C35 /* Products */;
@@ -2193,9 +2032,10 @@
 			baseConfigurationReference = 553844F80A349A5F00415742 /* librets.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"LIBRETS_VERSION=\"$(VERSION)\"",
+					"$(GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1)",
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1 = "LIBRETS_VERSION=\\\"$(VERSION)\\\"";
 			};
 			name = Development;
 		};
@@ -2204,9 +2044,10 @@
 			baseConfigurationReference = 553844F80A349A5F00415742 /* librets.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"LIBRETS_VERSION=\"$(VERSION)\"",
+					"$(GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1)",
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1 = "LIBRETS_VERSION=\\\"$(VERSION)\\\"";
 			};
 			name = Deployment;
 		};
@@ -2215,9 +2056,10 @@
 			baseConfigurationReference = 553844F80A349A5F00415742 /* librets.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"LIBRETS_VERSION=\"$(VERSION)\"",
+					"$(GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1)",
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1 = "LIBRETS_VERSION=\\\"$(VERSION)\\\"";
 			};
 			name = Default;
 		};
