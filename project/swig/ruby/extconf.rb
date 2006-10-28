@@ -14,7 +14,11 @@ if PLATFORM =~ /darwin/ || PLATFORM =~ /linux/
   librets_config = with_config("librets-config",
     "../../../librets-config-inplace")
   $libs += ' ' + `#{librets_config} --libs`.chomp
-  $CFLAGS += ' ' + `#{librets_config} --cflags`.chomp
+  if ENV['CFLAGS'].nil?
+    $CFLAGS += ' ' + `#{librets_config} --cflags`.chomp
+  else
+    $CFLAGS += ' ' + ENV['CFLAGS'] + ' ' + `#{librets_config} --cflags`.chomp
+  end
 elsif PLATFORM =~ /win32/
   $CFLAGS += ' $(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include'
   $libs += ' $(LIBRETS_LIB) winmm.lib'
@@ -40,4 +44,3 @@ librets_wrap.cpp: ../librets.i
 \tswig -c++ -ruby ../librets.i
 }
 end
-
