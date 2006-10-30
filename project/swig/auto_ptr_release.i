@@ -32,7 +32,7 @@ namespace std {
     "ST(argvi) = sv_newmortal();
      SWIG_MakePtr(ST(argvi++), (void *) $1.release(), $descriptor(TYPE *), $shadow|$owner);";
 
-#elif defined(SWIGPYTHON) || defined(SWIGRUBY)
+#elif defined(SWIGPYTHON) || defined(SWIGRUBY) || defined(SWIGPHP)
 
 %typemap(out) std::auto_ptr<TYPE>
     "$result = SWIG_NewPointerObj((void *) $1.release(), $descriptor(TYPE *), $owner);"

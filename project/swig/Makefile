@@ -16,6 +16,9 @@ PERL_WRAP = perl/librets_wrap.cpp
 PYTHON = python
 PYTHON_WRAP = python/librets_wrap.cpp
 
+PHP = php
+PHP_WRAP = php/librets_wrap.cpp
+
 SWIG_FILES = librets.i auto_ptr_release.i
 
 # Perl isn't handling vectors of object ponters correctly
@@ -52,6 +55,12 @@ $(PERL_WRAP): $(SWIG_FILES)
 
 $(PERL_MAKEFILE):
 	cd perl; $(PERL) Makefile.PL
+
+$(PHP_WRAP): $(SWIG_FILES)
+	$(SWIG) -c++ -php -o $(PHP_WRAP) librets.i
+
+php: $(PHP_WRAP)
+	$(MAKE) -C php
 
 python: $(PYTHON_WRAP)
 	$(MAKE) -C python
