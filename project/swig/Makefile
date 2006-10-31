@@ -57,10 +57,13 @@ $(PERL_MAKEFILE):
 	cd perl; $(PERL) Makefile.PL
 
 $(PHP_WRAP): $(SWIG_FILES)
-	$(SWIG) -c++ -php -o $(PHP_WRAP) librets.i
+	$(SWIG) -c++ -cpperraswarn -php -o $(PHP_WRAP) librets.i
 
 php: $(PHP_WRAP)
 	$(MAKE) -C php
+
+clean-php:
+	$(MAKE) -C php distclean
 
 python: $(PYTHON_WRAP)
 	$(MAKE) -C python
