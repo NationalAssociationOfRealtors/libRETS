@@ -15,6 +15,7 @@
  * appear in supporting documentation.
  */
 #include <sstream>
+#include <boost/algorithm/string.hpp>
 #include "librets/DmqlExpression.h"
 #include "librets/LiteralCriterion.h"
 #include "librets/EqCriterion.h"
@@ -30,6 +31,7 @@ using namespace librets::DmqlExpression;
 using std::string;
 using std::ostringstream;
 namespace b = boost;
+namespace ba = boost::algorithm;
 
 #define NS librets::DmqlExpression
 
@@ -44,6 +46,16 @@ DmqlCriterionPtr NS::literal(int number)
     ostringstream aString;
     aString << number;
     LiteralCriterionPtr literal(new LiteralCriterion(aString.str()));
+    return literal;
+}
+
+DmqlCriterionPtr NS::dmqlString(std::string aString)
+{
+    if (!ba::all(aString, !ba::is_space()))
+    {
+        aString = "\"" + aString + "\"";
+    }
+    LiteralCriterionPtr literal(new LiteralCriterion(aString));
     return literal;
 }
 

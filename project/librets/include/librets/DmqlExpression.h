@@ -24,6 +24,8 @@ namespace DmqlExpression {
 
 DmqlCriterionPtr literal(std::string aString);
 
+DmqlCriterionPtr dmqlString(std::string aString);
+
 DmqlCriterionPtr literal(int number);
 
 DmqlCriterionPtr eq(std::string field, DmqlCriterionPtr value);

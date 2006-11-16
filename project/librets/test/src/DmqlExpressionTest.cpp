@@ -38,6 +38,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testLiteralString);
     CPPUNIT_TEST(testLiteralInt);
+    CPPUNIT_TEST(testDmqlString);
     CPPUNIT_TEST(testEq);
     CPPUNIT_TEST(testGt);
     CPPUNIT_TEST(testLt);
@@ -53,6 +54,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
   protected:
     void testLiteralString();
     void testLiteralInt();
+    void testDmqlString();
     void testEq();
     void testGt();
     void testLt();
@@ -86,6 +88,17 @@ void CLASS::testLiteralInt()
     DmqlCriterionPtr c1 = literal(1);
     LiteralCriterionPtr c2(new LiteralCriterion("1"));
     ASSERT_EQUAL(*DmqlCriterionPtr(c2), *c1);
+}
+
+void CLASS::testDmqlString()
+{
+    DmqlCriterionPtr c1 = dmqlString("foo");
+    LiteralCriterionPtr c2(new LiteralCriterion("foo"));
+    ASSERT_EQUAL(*DmqlCriterionPtr(c2), *c1);
+
+    DmqlCriterionPtr c3 = dmqlString("foo bar");
+    LiteralCriterionPtr c4(new LiteralCriterion("\"foo bar\""));
+    ASSERT_EQUAL(*DmqlCriterionPtr(c4), *c3);
 }
 
 void CLASS::testEq()
