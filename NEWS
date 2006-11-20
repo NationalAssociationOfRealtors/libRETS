@@ -1,6 +1,10 @@
+Version 1.1.5 - 20 November 2006
+
+  * Properly quote strings with spaces in SQL to DMQL translator.
+
 Version 1.1.4 - 23 August 2006
 
-  * URL escpae more characters.
+  * URL escape more characters.
   * More robust Logout Respoonse handling.
   * Make Ruby bindings more Ruby-like
   * Remove all derived files from source distribution, except ./configure
