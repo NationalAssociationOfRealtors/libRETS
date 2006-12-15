@@ -71,6 +71,7 @@ public class Search
         {
             Console.WriteLine("Table name: " + table.GetSystemName() + " [" +
                 table.GetStandardName() + "]");
+	    Console.WriteLine("Table datatype: " + table.GetDataType());
         }
     }
 

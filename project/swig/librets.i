@@ -465,9 +465,74 @@ typedef std::vector<MetadataClass *> MetadataClassList;
 class MetadataTable : public MetadataElement
 {
   public:
+    enum DataType
+    {
+        BOOLEAN,
+        CHARACTER,
+        DATE,
+        DATE_TIME,
+        TIME,
+        TINY,
+        SMALL,
+        INT,
+        LONG,
+        DECIMAL
+    };
+
+    enum Interpretation
+    {
+        NUMBER,
+        CURRENCY,
+        LOOKUP,
+        LOOKUP_MULTI,
+        LOOKUP_BITSTRING,
+        LOOKUP_BITMASK,
+        NO_INTERPRETATION
+    };
+    
+    enum Alignment
+    {
+        LEFT,
+        RIGHT,
+        CENTER,
+        JUSTIFY,
+        NO_ALIGNMENT
+    };
+    
+    enum Units
+    {
+        FEET,
+        METERS,
+        SQUARE_FEET,
+        SQUARE_METERS,
+        ACRES,
+        HECTARES,
+        NO_UNITS
+    };
+
     std::string GetSystemName() const;
     std::string GetStandardName() const;
     std::string GetLongName() const;
+    std::string GetDBName() const;
+    std::string GetShortName() const;
+    int GetMaximumLength() const;
+    DataType GetDataType() const;
+    int GetPrecision() const;
+    bool IsSearchable() const;
+    Interpretation GetInterpretation() const;
+    Alignment GetAlignment() const;
+    bool UseSeparator() const;
+    std::string GetEditMaskId() const;
+    std::string GetLookupName() const;
+    int GetMaxSelect() const;
+    Units GetUnits() const;
+    int GetIndex() const;
+    int GetMinimum() const;
+    int GetMaximum() const;
+    int GetDefault() const;
+    int GetRequired() const;
+    std::string GetSearchHelpId() const;
+    bool IsUnique() const;
 };
 
 typedef std::vector<MetadataTable *> MetadataTableList;
