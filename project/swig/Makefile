@@ -16,8 +16,8 @@ PERL_WRAP = perl/librets_wrap.cpp
 PYTHON = python
 PYTHON_WRAP = python/librets_wrap.cpp
 
-PHP = php
-PHP_WRAP = php/librets_wrap.cpp
+PHP4 = php
+PHP4_WRAP = php4/librets_wrap.cpp
 
 SWIG_FILES = librets.i auto_ptr_release.i
 
@@ -56,14 +56,16 @@ $(PERL_WRAP): $(SWIG_FILES)
 $(PERL_MAKEFILE):
 	cd perl; $(PERL) Makefile.PL
 
-$(PHP_WRAP): $(SWIG_FILES)
-	$(SWIG) -c++ -cpperraswarn -php -o $(PHP_WRAP) librets.i
+$(PHP4_WRAP): $(SWIG_FILES)
+	$(SWIG) -c++ -cpperraswarn -php -o $(PHP4_WRAP) librets.i
 
-php: $(PHP_WRAP)
-	$(MAKE) -C php
+php: php4
 
-clean-php:
-	$(MAKE) -C php distclean
+php4: $(PHP4_WRAP)
+	$(MAKE) -C php4
+
+clean-php4:
+	$(MAKE) -C php4 distclean
 
 python: $(PYTHON_WRAP)
 	$(MAKE) -C python
