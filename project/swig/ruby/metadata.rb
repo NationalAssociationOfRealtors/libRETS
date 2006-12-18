@@ -36,6 +36,9 @@ def dump_all_tables(metadata, aClass)
   metadata.all_tables(aClass).each do |table|
     puts "Table name: " + table.system_name + " [" + table.standard_name +
       "]"
+    puts "\tType: " + table.get_data_type.to_s
+    puts "\tUnique: " + table.is_unique.to_s
+    puts "\tMax Length: " + table.get_maximum_length.to_s
   end
 end
 

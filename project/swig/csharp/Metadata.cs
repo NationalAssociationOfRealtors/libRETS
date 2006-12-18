@@ -71,7 +71,9 @@ public class Search
         {
             Console.WriteLine("Table name: " + table.GetSystemName() + " [" +
                 table.GetStandardName() + "]");
-	    Console.WriteLine("Table datatype: " + table.GetDataType());
+	    Console.WriteLine("\tTable datatype: " + table.GetDataType());
+	    Console.WriteLine("\tUnique: " + table.IsUnique());
+            Console.WriteLine("\tMax Length: " + table.GetMaximumLength());
         }
     }
 
