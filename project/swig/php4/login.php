@@ -16,11 +16,19 @@ $capurls = $session->GetCapabilityUrls();
 print "Member name: " . $loginResponse->GetMemberName() . "\n";
 print "Search URL: " . $capurls->GetSearchUrl() . "\n";
 
+print "Action: " . $session->Action() . "\n";
+$version = "1.0";
+if ($session->DetectedRetsVersion == RETS_1_5)
+{
+    $version = "1.5";
+}
+
+print "RETS Version: " . $version . "\n";
 
 $logout = $session->Logout();
 
-#print "Billing info: " . $logout->GetBillingInfo() . "\n";
-#print "Logout message: " . $logout->GetLogoutMessage() . "\n";
-#print "Connect time: " . $logout->GetConnectTime() . "\n";
+print "Billing info: " . $logout->GetBillingInfo() . "\n";
+print "Logout message: " . $logout->GetLogoutMessage() . "\n";
+print "Connect time: " . $logout->GetConnectTime() . "\n";
 
 ?>
