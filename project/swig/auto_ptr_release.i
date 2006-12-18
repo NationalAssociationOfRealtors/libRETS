@@ -37,6 +37,11 @@ namespace std {
 %typemap(out) std::auto_ptr<TYPE>
     "$result = SWIG_NewPointerObj((void *) $1.release(), $descriptor(TYPE *), $owner);"
 
+#elif defined(SWIGPHP)
+
+%typemap(out) std::auto_ptr<TYPE>
+    "SWIG_SetPointerZval($result, (void *) $1.release(), $descriptor(TYPE *), $owner);"
+
 #else
 #error "Unsupported SWIG language for auto_ptr_release"
 #endif
