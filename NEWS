@@ -1,3 +1,8 @@
+Version 1.1.6 - 18 December 2006
+
+  * Create the rest of the method mappings for MetadataTable for various
+    swig bindings.
+
 Version 1.1.5 - 20 November 2006
 
   * Properly quote strings with spaces in SQL to DMQL translator.
