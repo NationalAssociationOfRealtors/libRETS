@@ -16,9 +16,9 @@ $capurls = $session->GetCapabilityUrls();
 print "Member name: " . $loginResponse->GetMemberName() . "\n";
 print "Search URL: " . $capurls->GetSearchUrl() . "\n";
 
-print "Action: " . $session->Action() . "\n";
+print "Action: " . $session->GetAction() . "\n";
 $version = "1.0";
-if ($session->DetectedRetsVersion == RETS_1_5)
+if ($session->GetDetectedRetsVersion() == RETS_1_5)
 {
     $version = "1.5";
 }
