@@ -40,7 +40,16 @@ namespace std {
 #elif defined(SWIGPHP)
 
 %typemap(out) std::auto_ptr<TYPE>
-    "SWIG_SetPointerZval($result, (void *) $1.release(), $descriptor(TYPE *), $owner);"
+    "SWIG_SetPointerZval($result, (void *) $1.release(), $descriptor(TYPE *), $owner);
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+#define MAKE_PHP_NAME(translate) ptr_ce_swig_ ## translate
+    object_init_ex(obj,MAKE_PHP_NAME(TYPE));
+    add_property_zval(obj,\"_cPtr\",_cPtr);
+    *return_value=*obj;";
 
 #else
 #error "Unsupported SWIG language for auto_ptr_release"
