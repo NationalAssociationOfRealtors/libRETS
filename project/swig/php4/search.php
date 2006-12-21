@@ -26,8 +26,18 @@ $request->SetOffset(SearchRequest_OFFSET_NONE);
 $request->SetCountType(SearchRequest_RECORD_COUNT_AND_RESULTS);
 $results = $session->Search($request);
 
-print "Record Count: " . $results->GetCount() . "\n";
+print "Record Count: " . $results->GetCount() . "\n\n";
 
+$columns = $results->GetColumns();
+while ($results->HasNext())
+{
+    foreach($columns as $column)
+    {
+#        print $column . ": " . $results->GetString($column) . "\n";
+        print $column . ": " . "\n";
+    }
+    print "\n";
+}
 
 $logout = $session->Logout();
 

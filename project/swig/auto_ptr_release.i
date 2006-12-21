@@ -46,7 +46,6 @@ namespace std {
     MAKE_STD_ZVAL(_cPtr);
     *_cPtr = *return_value;
     INIT_ZVAL(*return_value);
-#define MAKE_PHP_NAME(translate) ptr_ce_swig_ ## translate
     object_init_ex(obj,MAKE_PHP_NAME(TYPE));
     add_property_zval(obj,\"_cPtr\",_cPtr);
     *return_value=*obj;";

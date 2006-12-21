@@ -13,6 +13,12 @@
 %}
 #endif
 
+#ifdef SWIGPHP
+%{
+#include "librets_php4.h"
+%}
+#endif
+
 %{
 #include "librets.h"
 #include <iostream>
