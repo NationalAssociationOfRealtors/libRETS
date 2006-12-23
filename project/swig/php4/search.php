@@ -29,12 +29,12 @@ $results = $session->Search($request);
 print "Record Count: " . $results->GetCount() . "\n\n";
 
 $columns = $results->GetColumns();
+
 while ($results->HasNext())
 {
-    foreach($columns as $column)
+    for ($i = 0; $i < $columns->size(); $i++)
     {
-#        print $column . ": " . $results->GetString($column) . "\n";
-        print $column . ": " . "\n";
+        print $columns->get2($i) . ": " . $results->GetString($i) . "\n";
     }
     print "\n";
 }

@@ -40,7 +40,7 @@ namespace std {
 #elif defined(SWIGPHP)
 
 %typemap(out) std::auto_ptr<TYPE>
-    "SWIG_SetPointerZval($result, (void *) $1.release(), $descriptor(TYPE *), $owner);
+    "SWIG_SetPointerZval($result, (void *) $1.release(), $descriptor(TYPE *), 1);
     zval *obj, *_cPtr;
     MAKE_STD_ZVAL(obj);
     MAKE_STD_ZVAL(_cPtr);

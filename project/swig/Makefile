@@ -57,7 +57,7 @@ $(PERL_MAKEFILE):
 	cd perl; $(PERL) Makefile.PL
 
 $(PHP4_WRAP): $(SWIG_FILES)
-	$(SWIG) -c++ -php -o $(PHP4_WRAP) librets.i
+	$(SWIG) -Ilib/php4 -c++ -php -o $(PHP4_WRAP) librets.i
 
 php: php4
 
