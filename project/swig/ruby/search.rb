@@ -22,7 +22,7 @@ request = session.create_search_request("Property", "ResidentialProperty",
 request.select = "ListingID,ListPrice,Beds,City"
 request.limit = SearchRequest::LIMIT_DEFAULT
 request.offset = SearchRequest::OFFSET_NONE
-request.count_type = SearchRequest::RECORD_COUNT_AND_RESULTS;
+request.count_type = SearchRequest::RECORD_COUNT_AND_RESULTS
 results = session.search(request)
 
 puts "Record count: " + results.count.to_s
