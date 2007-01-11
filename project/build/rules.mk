@@ -13,8 +13,10 @@ ALL_DEPENDS 	= $(LIBRETS_DEPENDS) $(LIBRETS_TEST_DEPENDS) \
 ALL_OBJ_DIRS	= \
 	build/librets/antlr \
 	build/librets/objects \
+	build/librets/sql \
 	build/librets/lib \
 	build/librets/test/objects \
+	build/librets/test/sql \
 	build/librets/test/bin \
 	build/examples/objects \
 	build/examples/bin \

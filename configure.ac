@@ -45,6 +45,8 @@ fi
 
 MY_TEST_ANTLR
 
+MY_CHECK_SQL_COMPILER
+
 MY_TEST_CPPUNIT
 
 MY_CHECK_EXAMPLES
@@ -82,4 +84,5 @@ echo Use ccache .................: $my_use_ccache
 echo Use dependency checking ....: $my_use_depends
 echo Compile type................: $my_compile_type
 echo Compile examples............: $my_use_examples
+echo Compile SQL compiler........: $my_use_sql_compiler
 echo

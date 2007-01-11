@@ -7,9 +7,9 @@ AC_DEFUN([MY_TEST_ANTLR], [
     AC_MSG_ERROR([antlr requires java to run])
   fi
   AC_CHECK_PROG(ANTLR, antlr, antlr, [])
-  if test x$ANTLR == "x"; then
-    AC_MSG_ERROR([antlr is required to build librets])
-  fi
+dnl  if test x$ANTLR == "x"; then
+dnl    AC_MSG_ERROR([antlr is required to build the SQL to DMQL compiler])
+dnl  fi
 
   AC_MSG_CHECKING([whether linking with -lantlr works])
   save_LIBS=$LIBS
@@ -30,7 +30,7 @@ int main(int, char * argv[])
     ANTLR_LIBS=-lantlr
   ], [
     AC_MSG_RESULT(no)
-    AC_MSG_ERROR([Could not link with -lantlr])
+    dnl AC_MSG_ERROR([Could not link with -lantlr])
   ]
   )
   AC_LANG_POP()
