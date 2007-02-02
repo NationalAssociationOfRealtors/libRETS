@@ -35,7 +35,7 @@ AC_DEFUN([MY_TEST_CPPUNIT], [
         AC_MSG_RESULT([$my_cv_cppunit_vers])
 
         HAVE_CPPUNIT=1
-        CPPUNITL_CFLAGS=`$CPPUNIT_CONFIG --cflags`
+        CPPUNIT_CFLAGS=`$CPPUNIT_CONFIG --cflags`
         CPPUNIT_LIBS=`$CPPUNIT_CONFIG --libs`
       else
         AC_MSG_RESULT(FAILED)

@@ -20,6 +20,7 @@ MKINSTALLDIRS=$(top_srcdir)/project/build/mkinstalldirs
 CC=@CC@
 CXX=@CXX@
 CFLAGS=@CFLAGS@ @DEFS@
+CPPFLAGS=@CPPFLAGS@
 LIBS=@LIBS@
 LDFLAGS=@LDFLAGS@
 

@@ -66,7 +66,7 @@ my_compile_type="Normal"
 if test -n "$GCC"; then
   if test "$my_enable_debug" = "yes"; then
     CFLAGS="-g"
-    LDFLAGS="-g"
+    LDFLAGS="$LDFLAGS -g"
     my_compile_type="Debug"
   fi
 fi
