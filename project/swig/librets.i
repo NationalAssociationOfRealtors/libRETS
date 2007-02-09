@@ -187,8 +187,21 @@ class SearchRequest
         RECORD_COUNT_AND_RESULTS,
         RECORD_COUNT_ONLY
     };
-
     void SetCountType(CountType countType);
+    
+    enum QueryType
+    {
+        DMQL,
+        DMQL2
+    };
+    void SetQueryType(QueryType queryType);
+
+    enum FormatType
+    {
+        COMPACT,
+        COMPACT_DECODED
+    };
+    void SetFormatType(FormatType formatType);
 };
 typedef std::auto_ptr<SearchRequest> SearchRequestAPtr;
 
