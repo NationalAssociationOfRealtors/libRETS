@@ -53,7 +53,6 @@ X_OBJS = \
 	$(DIROBJ)\NotCriterion.obj \
 	$(DIROBJ)\ObjectDescriptor.obj \
 	$(DIROBJ)\OrCriterion.obj \
-	$(DIROBJ)\RetsAST.obj \
 	$(DIROBJ)\RetsErrorHandler.obj \
 	$(DIROBJ)\RetsException.obj \
 	$(DIROBJ)\RetsExceptionContext.obj \
@@ -65,7 +64,6 @@ X_OBJS = \
 	$(DIROBJ)\RetsObject.obj \
 	$(DIROBJ)\RetsReplyException.obj \
 	$(DIROBJ)\RetsSession.obj \
-	$(DIROBJ)\RetsSqlException.obj \
 	$(DIROBJ)\RetsUnknownMetadataException.obj \
 	$(DIROBJ)\RetsXmlAttribute.obj \
 	$(DIROBJ)\RetsXmlEndDocumentEvent.obj \
@@ -76,7 +74,6 @@ X_OBJS = \
 	$(DIROBJ)\RetsXmlTextEvent.obj \
 	$(DIROBJ)\SearchRequest.obj \
 	$(DIROBJ)\SearchResultSet.obj \
-	$(DIROBJ)\SqlToDmqlCompiler.obj \
 	$(DIROBJ)\StreamHttpLogger.obj \
 	$(DIROBJ)\Uri.obj \
 	$(DIROBJ)\UserAgentAuthCalculator.obj \

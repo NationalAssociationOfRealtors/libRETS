@@ -35,6 +35,18 @@ ANTLR_OBJS = \
 	$(DIROBJ)\DmqlTreeParser.obj \
 	$(DIROBJ)\GetObjectTreeParser.obj
 
+SQL_DIR = ..\sql
+
+SQL_SRCS = \
+	$(SQL_DIR)\RetsAST.cpp \
+	$(SQL_DIR)\RetsSqlException.cpp \
+	$(SQL_DIR)\SqlToDmqlCompiler.cpp
+
+SQL_OBJS = \
+	$(DIROBJ)\RetsAST.obj \
+	$(DIROBJ)\RetsSqlException.obj \
+	$(DIROBJ)\SqlToDmqlCompiler.obj
+
 all: $(TARGET)
 
 # Use this to regenerate objects.vc
@@ -43,7 +55,7 @@ win_files:
 
 !include <objects.vc>
 
-X_OBJS = $(ANTLR_OBJS) $(X_OBJS)
+X_OBJS = $(ANTLR_OBJS) $(SQL_OBJS) $(X_OBJS)
 
 $(TARGET): $(X_OBJS)
 	$(LINK_LIB) /out:$(TARGET) $(LINK_STD) $(LDFLAGS) $(X_OBJS)
@@ -59,6 +71,8 @@ $(ANTLR_TRIGGER): rets-sql.g dmql-tree.g get-object-tree.g $(ANTLR_DIR)
 	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g dmql-tree.g
 	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g get-object-tree.g
 	@echo "ANTLR Trigger" > $(ANTLR_TRIGGER)
+
+$(SQL_OBJS): $(SQL_SRCS)
 
 $(BUILD_DIR):
 	@if not exist "$(BUILD_DIR)" mkdir $(BUILD_DIR)
@@ -84,4 +98,7 @@ clean:
 	$(CXX) $(CFLAGS) /Fo"$@"  $<
 
 {$(ANTLR_DIR)\}.cpp{$(DIROBJ)\}.obj:
+	$(CXX) $(CFLAGS) /Fo"$@"  $<
+
+{$(SQL_DIR)\}.cpp{$(DIROBJ)\}.obj:
 	$(CXX) $(CFLAGS) /Fo"$@"  $<
