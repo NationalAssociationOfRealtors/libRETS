@@ -12,3 +12,9 @@ BUILD = debug
 # NOTE: ALL objects of a library or application must be compiled
 # with the same flag.  Not doing so will cause errors at link time.
 RUNTIME_LIBS = static
+
+# [true, anything else is false]
+#
+# Allows a library user to not compiler/include the SQL to DMQL compiler
+# if they are not going to use it.
+ENABLE_SQL_COMPILER = true

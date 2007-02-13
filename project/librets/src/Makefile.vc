@@ -35,6 +35,7 @@ ANTLR_OBJS = \
 	$(DIROBJ)\DmqlTreeParser.obj \
 	$(DIROBJ)\GetObjectTreeParser.obj
 
+!if "$(ENABLE_SQL_COMPILER)" == "true"
 SQL_DIR = ..\sql
 
 SQL_SRCS = \
@@ -47,6 +48,8 @@ SQL_OBJS = \
 	$(DIROBJ)\RetsSqlException.obj \
 	$(DIROBJ)\SqlToDmqlCompiler.obj
 
+!endif
+
 all: $(TARGET)
 
 # Use this to regenerate objects.vc
@@ -55,7 +58,11 @@ win_files:
 
 !include <objects.vc>
 
+!if "$(ENABLE_SQL_COMPILER)" == "true"
 X_OBJS = $(ANTLR_OBJS) $(SQL_OBJS) $(X_OBJS)
+!else
+X_OBJS = $(ANTLR_OBJS) $(X_OBJS)
+!endif
 
 $(TARGET): $(X_OBJS)
 	$(LINK_LIB) /out:$(TARGET) $(LINK_STD) $(LDFLAGS) $(X_OBJS)
