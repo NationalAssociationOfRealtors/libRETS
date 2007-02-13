@@ -1,3 +1,13 @@
+Version 1.1.7 - 13 February 2007
+
+  * The SQL to DMQL compiler (and its ANTLR dependency) are now
+    optional.  This should only effect people using C++ and this
+    functionality.
+  * Fix some build problems on OS X/Unix where ANTLR wasn't where we
+    were expecting it.
+  * For the languages supported by swig: map the missing
+    SearchRequest.SetQueryType and SearchRequest.SetFormatType methods.
+
 Version 1.1.6 - 18 December 2006
 
   * Create the rest of the method mappings for MetadataTable for various
