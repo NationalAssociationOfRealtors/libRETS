@@ -25,15 +25,12 @@ X_OBJS = \
 	$(DIROBJ)\RetsXmlAttributeTest.obj \
 	$(DIROBJ)\RetsXmlStartElementEventTest.obj \
 	$(DIROBJ)\SearchResultSetTest.obj \
-	$(DIROBJ)\SqlToDmqlCompilerTest.obj \
-	$(DIROBJ)\SqlToDmqlObjectTest.obj \
 	$(DIROBJ)\TestHttpResponse.obj \
 	$(DIROBJ)\TestHttpResponseTest.obj \
 	$(DIROBJ)\TestMetadataElement.obj \
 	$(DIROBJ)\TestMetadataLoader.obj \
 	$(DIROBJ)\TestMetadataTree.obj \
 	$(DIROBJ)\TestObject.obj \
-	$(DIROBJ)\TestSqlMetadata.obj \
 	$(DIROBJ)\UriTest.obj \
 	$(DIROBJ)\UserAgentAuthCalculatorTest.obj \
 	$(DIROBJ)\XmlMetadataParserTest.obj \
