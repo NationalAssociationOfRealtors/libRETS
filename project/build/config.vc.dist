@@ -15,6 +15,6 @@ RUNTIME_LIBS = static
 
 # [true, anything else is false]
 #
-# Allows a library user to not compiler/include the SQL to DMQL compiler
+# Allows a library user to not compile/include the SQL to DMQL compiler
 # if they are not going to use it.
-ENABLE_SQL_COMPILER = true
+USE_SQL_COMPILER = true

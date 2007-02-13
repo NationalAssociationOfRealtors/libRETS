@@ -13,7 +13,7 @@ METADATA_EXE = $(DIROBJ)\metadata.exe
 SEARCH_EXE = $(DIROBJ)\search.exe
 GET_OBJECT_EXE = $(DIROBJ)\get-object.exe
 
-!if "$(ENABLE_SQL_COMPILER)" == "true"
+!if "$(USE_SQL_COMPILER)" == "true"
 SQL2DMQL_EXE = $(DIROBJ)\sql2dmql.exe
 TARGET  = $(XML_EXE) $(HTTP_EXE) $(RAW_RETS_EXE) $(LOGIN_EXE) $(METADATA_EXE) \
 	$(SEARCH_EXE) $(SQL2DMQL_EXE) $(GET_OBJECT_EXE)
@@ -47,7 +47,7 @@ SEARCH_OBJS = $(DIROBJ)\search.obj $(OPTIONS_OBJS)
 
 GET_OBJECT_OBJS = $(DIROBJ)\get-object.obj $(OPTIONS_OBJS)
 
-!if "$(ENABLE_SQL_COMPILER)" == "true"
+!if "$(USE_SQL_COMPILER)" == "true"
 SQL2DMQL_OBJS = $(DIROBJ)\sql2dmql.obj
 X_OBJS = $(XML_OBJS) $(HTTP_OBJS) $(RAW_RETS_OBJS) $(LOGIN_OBJS) \
 	$(METADATA_OBJ) $(SEARCH_OBJ) $(SQL2DMQL_OBJS) $(GET_OBJECT_OBJS)
@@ -79,7 +79,7 @@ $(SEARCH_EXE): $(SEARCH_OBJS)
 	$(LINK) /out:$(SEARCH_EXE) $(SEARCH_OBJS) \
 	wsock32.lib winmm.lib
 
-!if "$(ENABLE_SQL_COMPILER)" == "true"
+!if "$(USE_SQL_COMPILER)" == "true"
 $(SQL2DMQL_EXE): $(SQL2DMQL_OBJS)
 	$(LINK) /out:$(SQL2DMQL_EXE) $(SQL2DMQL_OBJS) \
 	wsock32.lib winmm.lib

@@ -16,7 +16,7 @@ LDFLAGS = $(LDFLAGS_STD) $(BOOST_LDFLAGS) $(BOOST_FILESYSTEM_LIB) \
 ########################################################################
 #
 
-!if "$(ENABLE_SQL_COMPILER)" == "true"
+!if "$(USE_SQL_COMPILER)" == "true"
 ANTLR_SRCS = \
 	$(ANTLR_DIR)\RetsSqlLexer.hpp \
 	$(ANTLR_DIR)\RetsSqlLexer.cpp \
@@ -57,7 +57,7 @@ win_files:
 
 !include <objects.vc>
 
-!if "$(ENABLE_SQL_COMPILER)" == "true"
+!if "$(USE_SQL_COMPILER)" == "true"
 X_OBJS = $(ANTLR_OBJS) $(SQL_OBJS) $(X_OBJS)
 !else
 X_OBJS = $(X_OBJS)
@@ -68,7 +68,7 @@ $(TARGET): $(X_OBJS)
 
 $(X_OBJS): $(DIROBJ)
 
-!if "$(ENABLE_SQL_COMPILER)" == "true"
+!if "$(USE_SQL_COMPILER)" == "true"
 $(ANTLR_OBJS): $(ANTLR_SRCS)
 
 $(ANTLR_SRCS): $(ANTLR_TRIGGER)
