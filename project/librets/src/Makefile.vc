@@ -16,7 +16,7 @@ LDFLAGS = $(LDFLAGS_STD) $(BOOST_LDFLAGS) $(BOOST_FILESYSTEM_LIB) \
 ########################################################################
 #
 
-
+!if "$(ENABLE_SQL_COMPILER)" == "true"
 ANTLR_SRCS = \
 	$(ANTLR_DIR)\RetsSqlLexer.hpp \
 	$(ANTLR_DIR)\RetsSqlLexer.cpp \
@@ -35,7 +35,6 @@ ANTLR_OBJS = \
 	$(DIROBJ)\DmqlTreeParser.obj \
 	$(DIROBJ)\GetObjectTreeParser.obj
 
-!if "$(ENABLE_SQL_COMPILER)" == "true"
 SQL_DIR = ..\sql
 
 SQL_SRCS = \
@@ -61,7 +60,7 @@ win_files:
 !if "$(ENABLE_SQL_COMPILER)" == "true"
 X_OBJS = $(ANTLR_OBJS) $(SQL_OBJS) $(X_OBJS)
 !else
-X_OBJS = $(ANTLR_OBJS) $(X_OBJS)
+X_OBJS = $(X_OBJS)
 !endif
 
 $(TARGET): $(X_OBJS)
@@ -69,6 +68,7 @@ $(TARGET): $(X_OBJS)
 
 $(X_OBJS): $(DIROBJ)
 
+!if "$(ENABLE_SQL_COMPILER)" == "true"
 $(ANTLR_OBJS): $(ANTLR_SRCS)
 
 $(ANTLR_SRCS): $(ANTLR_TRIGGER)
@@ -79,7 +79,9 @@ $(ANTLR_TRIGGER): rets-sql.g dmql-tree.g get-object-tree.g $(ANTLR_DIR)
 	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g get-object-tree.g
 	@echo "ANTLR Trigger" > $(ANTLR_TRIGGER)
 
+
 $(SQL_OBJS): $(SQL_SRCS)
+!endif
 
 $(BUILD_DIR):
 	@if not exist "$(BUILD_DIR)" mkdir $(BUILD_DIR)
