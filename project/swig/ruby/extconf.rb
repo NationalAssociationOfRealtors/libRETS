@@ -28,6 +28,7 @@ LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LI
 }
 end
 
+$INSTALLFILES = [['librets.rb', "$(RUBYLIBDIR)", "lib"]]
 
 create_makefile('librets_native')
 
