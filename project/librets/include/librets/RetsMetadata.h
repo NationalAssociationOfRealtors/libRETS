@@ -47,6 +47,9 @@ typedef std::vector<MetadataLookup *> MetadataLookupList;
 /** A vector of MetadataLookupType objects */
 typedef std::vector<MetadataLookupType *> MetadataLookupTypeList;
 
+/** A vector of MetadataObject objects. */
+typedef std::vector<MetadataObject *> MetadataObjectList;
+
 /**
  * Contains all the metadata.
  */
@@ -178,6 +181,21 @@ class RetsMetadata
     MetadataLookupType * GetLookupType(std::string resourceName,
                                        std::string lookupName,
                                        std::string lookupValue) const;
+
+    /**
+     * Returns a list of MetadataObjects from a resource name.
+     *
+     * @param resourceName A resource name
+     */
+    MetadataObjectList GetAllObjects(std::string resourceName) const;
+
+    /**
+     * Returns a list of MetadataObjects from a resource.
+     *
+     * @param metadataResrouce a MetadataResource object
+     */
+    MetadataObjectList GetAllObjects(MetadataResource * metadataResource)
+        const;
     
   private:
     void InitSystem();

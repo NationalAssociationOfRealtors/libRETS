@@ -25,6 +25,7 @@
 #include "librets/MetadataTable.h"
 #include "librets/MetadataLookup.h"
 #include "librets/MetadataLookupType.h"
+#include "librets/MetadataObject.h"
 #include "librets/RetsException.h"
 
 using namespace librets;
@@ -187,4 +188,16 @@ MetadataLookupType * RetsMetadata::GetLookupType(std::string resourceName,
     string level = resourceName + ":" + lookupName;
     FinderHelper<MetadataLookupType> helper(mFinder);
     return helper.FindByPath(MetadataElement::LOOKUP_TYPE, level, lookupValue);
+}
+
+MetadataObjectList RetsMetadata::GetAllObjects(std::string resourceName) const
+{
+    FinderHelper<MetadataObject> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::OBJECT, resourceName);
+}
+
+MetadataObjectList RetsMetadata::GetAllObjects(
+    MetadataResource * metadataResource) const
+{
+    return GetAllObjects(metadataResource->GetResourceID());
 }

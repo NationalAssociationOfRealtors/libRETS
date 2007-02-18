@@ -44,6 +44,8 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGetAllLookupTypesByName);
     CPPUNIT_TEST(testGetAllLookupTypesByObject);
     CPPUNIT_TEST(testGetLookupType);
+    CPPUNIT_TEST(testGetAllObjectsByName);
+    CPPUNIT_TEST(testGetAllObjectsByObject);
     CPPUNIT_TEST_SUITE_END();
     
   protected:
@@ -60,6 +62,8 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     void testGetAllLookupTypesByName();
     void testGetAllLookupTypesByObject();
     void testGetLookupType();
+    void testGetAllObjectsByName();
+    void testGetAllObjectsByObject();
     
   public:
     void setUp();
@@ -178,4 +182,21 @@ void CLASS_::testGetLookupType()
         metadata->GetLookupType("Property", "AR", "SoLo");
     CPPUNIT_ASSERT(actualLookupType);
     ASSERT_EQUAL(*mMetadataTree->southLoopLookupType, *actualLookupType);
+}
+
+void CLASS_::testGetAllObjectsByName()
+{
+    MetadataObjectList actualObjectClasses =
+        metadata->GetAllObjects("Property");
+    ASSERT_VECTOR_EQUAL(mMetadataTree->objectClasses, actualObjectClasses);
+}
+
+void CLASS_::testGetAllObjectsByObject()
+{
+    MetadataResource * actualResource = metadata->GetResource("Property");
+    CPPUNIT_ASSERT(actualResource);
+    MetadataObjectList actualObjectClasses =
+        metadata->GetAllObjects(actualResource);
+    ASSERT_VECTOR_EQUAL(mMetadataTree->objectClasses, actualObjectClasses);
+    
 }

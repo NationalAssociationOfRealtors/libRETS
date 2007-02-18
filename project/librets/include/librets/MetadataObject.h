@@ -37,6 +37,12 @@ class MetadataObject : public MetadataElement
     virtual std::string GetId() const;
     
     std::string GetObjectType() const;
+
+    std::string GetMIMEType() const;
+
+    std::string GetVisibleName() const;
+
+    std::string GetDescription() const;
 };
 
 };

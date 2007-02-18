@@ -96,4 +96,13 @@ CLASS::CLASS(MetadataElementCollector * collector)
     lincolnParkLookupType->SetAttribute("LongValue", "Linconln Park");
     collector->AddElement(lincolnParkLookupType);
     propertyAreaLookupTypes.push_back(lincolnParkLookupType.get());
+
+    propObject.reset(new MetadataObject());
+    propObject->SetLevel("Property");
+    propObject->SetAttribute("ObjectType", "Photo");
+    propObject->SetAttribute("MIMEType", "foo");
+    propObject->SetAttribute("VisibleName", "foo");
+    propObject->SetAttribute("Description", "foo");
+    collector->AddElement(propObject);
+    objectClasses.push_back(propObject.get());
 }

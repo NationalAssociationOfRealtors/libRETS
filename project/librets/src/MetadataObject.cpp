@@ -36,3 +36,18 @@ string CLASS::GetObjectType() const
 {
     return GetStringAttribute("ObjectType");
 }
+
+string CLASS::GetMIMEType() const
+{
+    return GetStringAttribute("MIMEType");
+}
+
+string CLASS::GetVisibleName() const
+{
+    return GetStringAttribute("VisibleName");
+}
+
+string CLASS::GetDescription() const
+{
+    return GetStringAttribute("Description");
+}

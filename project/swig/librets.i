@@ -582,6 +582,19 @@ class MetadataLookupType : public MetadataElement
 typedef std::vector<MetadataLookupType *> MetadataLookupTypeList;
 %template(MetadataLookupTypeList) std::vector<MetadataLookupType *>;
 
+class MetadataObject : public MetadataElement
+{
+  public:
+    virtual std::string GetId() const;
+    std::string GetObjectType() const;
+    std::string GetMIMEType() const;
+    std::string GetVisibleName() const;
+    std::string GetDescription() const;
+};
+
+typedef std::vector<MetadataObject *> MetadataObjectList;
+%template(MetadataObjectList) std::vector<MetadataObjectList *>;
+
 %nodefault;
 
 class RetsMetadata
@@ -618,6 +631,11 @@ class RetsMetadata
     MetadataLookupType * GetLookupType(std::string resourceName,
                                        std::string lookupName,
                                        std::string lookupValue) const;
+
+    MetadataObjectList GetAllObjects(std::string resourceName) const;
+
+    MetadataObjectList GetAllObjects(MetadataResource * metadataResource)
+        const;
 };
 
 %default;
