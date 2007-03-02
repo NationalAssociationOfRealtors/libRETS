@@ -245,6 +245,16 @@ SWIG_AUTO_PTR_RELEASE(InputStreamBridge);
 class GetObjectRequest
 {
   public:
+%immutable;
+    static const char * PHOTO_TYPE;
+    static const char * PLAT_TYPE;
+    static const char * VIDEO_TYPE;
+    static const char * AUDIO_TYPE;
+    static const char * THUMBNAIL_TYPE;
+    static const char * MAP_TYPE;
+    static const char * VRIMAGE_TYPE;
+%mutable;
+
     GetObjectRequest(std::string resource, std::string type);
     
     bool GetLocation() const;
@@ -593,7 +603,7 @@ class MetadataObject : public MetadataElement
 };
 
 typedef std::vector<MetadataObject *> MetadataObjectList;
-%template(MetadataObjectList) std::vector<MetadataObjectList *>;
+%template(MetadataObjectList) std::vector<MetadataObject *>;
 
 %nodefault;
 
