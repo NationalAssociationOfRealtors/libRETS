@@ -192,7 +192,7 @@ class RetsMetadata
     /**
      * Returns a list of MetadataObjects from a resource.
      *
-     * @param metadataResrouce a MetadataResource object
+     * @param metadataResource a MetadataResource object
      */
     MetadataObjectList GetAllObjects(MetadataResource * metadataResource)
         const;
