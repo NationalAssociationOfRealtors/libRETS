@@ -98,7 +98,7 @@ int main(int argc, char * argv[])
         StringMap contentTypeSuffixes;
         contentTypeSuffixes["image/jpeg"] = "jpg";
         ObjectDescriptor * objectDescriptor;
-        while (objectDescriptor = getObjectResponse->NextObject())
+        while ((objectDescriptor = getObjectResponse->NextObject()))
         {
             string objectKey = objectDescriptor->GetObjectKey();
             int objectId = objectDescriptor->GetObjectId();

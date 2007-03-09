@@ -311,7 +311,7 @@ void CLASS::testNormls()
     
     int objectCount = 0;
     ObjectDescriptor * objectDescriptor;
-    while (objectDescriptor = response.NextObject())
+    while ((objectDescriptor = response.NextObject()))
     {
         objectCount++;
     }
@@ -343,7 +343,7 @@ void CLASS::testRapattoni()
     
     int objectCount = 0;
     ObjectDescriptor * objectDescriptor;
-    while (objectDescriptor = response.NextObject())
+    while ((objectDescriptor = response.NextObject()))
     {
         objectCount++;
     }
