@@ -10,6 +10,7 @@ includedir=@includedir@
 libdir=@libdir@
 librets_cflags="@LIBRETS_CFLAGS@"
 librets_ldflags="@LIBRETS_LDFLAGS@"
+sql="@USE_SQL_COMPILER@"
 
 usage()
 {
@@ -22,6 +23,7 @@ Available values for OPTION include:
   --help      display this help and exit
   --libs      library linking information
   --version   output version information
+  --sql       returns true if sql compiler included
 EOF
 
     exit $1
@@ -67,6 +69,10 @@ while test $# -gt 0; do
             show_libs="yes"
        	    ;;
 
+	--sql)
+	    show_sql="yes"
+	    ;;
+
         *)
             echo "unknown option: $1"
 	    usage 1
@@ -83,6 +89,14 @@ fi
 if test "$show_libs" = "yes"; then
     append_to_output ${libdir}/librets.a
     append_to_output "$librets_ldflags"
+fi
+
+if test "$show_sql" = "yes"; then
+    if [ $sql == '1' ]; then
+	append_to_output "true"
+    else
+	append_to_output "false"
+    fi
 fi
 
 echo $output
