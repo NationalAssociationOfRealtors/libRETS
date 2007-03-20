@@ -122,7 +122,8 @@ void dumpAllTables(RetsMetadata * metadata, MetadataClass * aClass)
     {
         MetadataTable * table = *i;
         cout << "Table name: " << table->GetSystemName() << " ["
-             << table->GetStandardName() << "]" << endl;
+             << table->GetStandardName() << "]" << " ("
+             << table->GetDataType() << ")" << endl;
     }
 }
 
