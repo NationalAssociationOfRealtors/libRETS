@@ -23,6 +23,7 @@ Available values for OPTION include:
   --help      display this help and exit
   --libs      library linking information
   --version   output version information
+  --vernum    output the version informatin as a number (hexadecimal)
   --sql       returns true if sql compiler included
 EOF
 
@@ -54,6 +55,11 @@ while test $# -gt 0; do
     case "$1" in
         --version)
 	    echo @VERSION@
+	    exit 0
+	    ;;
+
+        --vernum)
+	    echo @HEX_VERSION@
 	    exit 0
 	    ;;
 
