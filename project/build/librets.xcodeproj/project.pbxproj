@@ -193,6 +193,23 @@
 		55F9055508FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9055408FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildStyle section */
+		DEF009860B279CA8005D1D2A /* Development */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Development;
+		};
+		DEF009870B279CA8005D1D2A /* Deployment */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Deployment;
+		};
+/* End PBXBuildStyle section */
+
 /* Begin PBXContainerItemProxy section */
 		55BD572B07FC9D9200526D69 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -365,7 +382,7 @@
 		554A9F7C07F9F2E700402C35 /* MetadataValidationLookupType.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = MetadataValidationLookupType.cpp; sourceTree = "<group>"; };
 		554A9F7D07F9F2E700402C35 /* NotCriterion.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = NotCriterion.cpp; sourceTree = "<group>"; };
 		554A9F7E07F9F2E700402C35 /* OrCriterion.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = OrCriterion.cpp; sourceTree = "<group>"; };
-		554A9F8007F9F2E700402C35 /* RetsAST.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsAST.cpp; sourceTree = "<group>"; };
+		554A9F8007F9F2E700402C35 /* RetsAST.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = RetsAST.cpp; path = ../sql/RetsAST.cpp; sourceTree = "<group>"; };
 		554A9F8107F9F2E700402C35 /* RetsException.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsException.cpp; sourceTree = "<group>"; };
 		554A9F8207F9F2E700402C35 /* RetsHttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsHttpClient.cpp; sourceTree = "<group>"; };
 		554A9F8307F9F2E700402C35 /* RetsHttpRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsHttpRequest.cpp; sourceTree = "<group>"; };
@@ -374,7 +391,7 @@
 		554A9F8607F9F2E700402C35 /* RetsObject.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsObject.cpp; sourceTree = "<group>"; };
 		554A9F8707F9F2E700402C35 /* RetsReplyException.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsReplyException.cpp; sourceTree = "<group>"; };
 		554A9F8807F9F2E700402C35 /* RetsSession.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsSession.cpp; sourceTree = "<group>"; };
-		554A9F8907F9F2E700402C35 /* RetsSqlException.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsSqlException.cpp; sourceTree = "<group>"; };
+		554A9F8907F9F2E700402C35 /* RetsSqlException.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = RetsSqlException.cpp; path = ../sql/RetsSqlException.cpp; sourceTree = "<group>"; };
 		554A9F8A07F9F2E700402C35 /* RetsXmlAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsXmlAttribute.cpp; sourceTree = "<group>"; };
 		554A9F8B07F9F2E700402C35 /* RetsXmlEndElementEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsXmlEndElementEvent.cpp; sourceTree = "<group>"; };
 		554A9F8C07F9F2E700402C35 /* RetsXmlEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsXmlEvent.cpp; sourceTree = "<group>"; };
@@ -383,7 +400,7 @@
 		554A9F8F07F9F2E700402C35 /* RetsXmlTextEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsXmlTextEvent.cpp; sourceTree = "<group>"; };
 		554A9F9007F9F2E700402C35 /* SearchRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = SearchRequest.cpp; sourceTree = "<group>"; };
 		554A9F9107F9F2E700402C35 /* SearchResultSet.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultSet.cpp; sourceTree = "<group>"; };
-		554A9F9207F9F2E700402C35 /* SqlToDmqlCompiler.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = SqlToDmqlCompiler.cpp; sourceTree = "<group>"; };
+		554A9F9207F9F2E700402C35 /* SqlToDmqlCompiler.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = SqlToDmqlCompiler.cpp; path = ../sql/SqlToDmqlCompiler.cpp; sourceTree = "<group>"; };
 		554A9F9307F9F2E700402C35 /* Uri.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Uri.cpp; sourceTree = "<group>"; };
 		554A9F9407F9F2E700402C35 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = util.cpp; sourceTree = "<group>"; };
 		554A9F9507F9F2E700402C35 /* XmlMetadataElementFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = XmlMetadataElementFactory.cpp; sourceTree = "<group>"; };
@@ -399,7 +416,7 @@
 		554AA16907FA0ECD00402C35 /* xml.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = xml.cpp; path = ../examples/src/xml.cpp; sourceTree = SOURCE_ROOT; };
 		554AA16D07FA0EE800402C35 /* sql2dmql */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sql2dmql; sourceTree = BUILT_PRODUCTS_DIR; };
 		554AA18607FA10FA00402C35 /* libantlr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libantlr.a; path = lib/libantlr.a; sourceTree = ANTLR; };
-		554AA19C07FA129100402C35 /* iRets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRets.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		554AA19C07FA129100402C35 /* iRets.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = iRets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		554AA1B007FA13A000402C35 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		554AA1D007FA14A300402C35 /* AccountsArrayController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AccountsArrayController.m; sourceTree = "<group>"; };
 		554AA1D107FA14A300402C35 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MyController.h; path = ../iRets/MyController.h; sourceTree = "<group>"; };
@@ -1331,6 +1348,12 @@
 		554A9EA607F9F27F00402C35 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 55C70BC2093D1BDD00D34681 /* Build configuration list for PBXProject "librets" */;
+			buildSettings = {
+			};
+			buildStyles = (
+				DEF009860B279CA8005D1D2A /* Development */,
+				DEF009870B279CA8005D1D2A /* Deployment */,
+			);
 			hasScannedForEncodings = 0;
 			mainGroup = 554A9EA207F9F27F00402C35;
 			productRefGroup = 554A9EB307F9F2B300402C35 /* Products */;
@@ -2031,6 +2054,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 553844F80A349A5F00415742 /* librets.xcconfig */;
 			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1)",
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
