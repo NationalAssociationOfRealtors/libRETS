@@ -5,7 +5,7 @@ Version 1.1.8 - 26 March 2007
   * Added support for MetadataObject to RetsMetadata
   * Added methods of GetMIMEType, GetVisibleName, and GetDescription
     to MetadataObject
-  * For the languages supported by swig: map the missing MetadataObject
+  * For the languages supported by swig: map MetadataObject
 
 Version 1.1.7 - 13 February 2007
 
