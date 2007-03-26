@@ -1,3 +1,12 @@
+Version 1.1.8 - 26 March 2007
+
+  * librets-config has additional information of version number as hex
+    and if the sql compiler was included.
+  * Added support for MetadataObject to RetsMetadata
+  * Added methods of GetMIMEType, GetVisibleName, and GetDescription
+    to MetadataObject
+  * For the languages supported by swig: map the missing MetadataObject
+
 Version 1.1.7 - 13 February 2007
 
   * The SQL to DMQL compiler (and its ANTLR dependency) are now
