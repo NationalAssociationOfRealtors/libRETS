@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/project/librets/include)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/project/librets/include ${Boost_INCLUDE_DIR} ${CURL_INCLUDE_DIR} ${EXPAT_INCLUDE_DIR})
 
 INCLUDE(${CMAKE_SOURCE_DIR}/project/librets/src/sources.cmake)
 
