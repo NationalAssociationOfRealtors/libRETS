@@ -19,6 +19,12 @@
 %}
 #endif
 
+#ifdef SWIGPERL
+%{
+#undef Copy
+%}
+#endif
+
 %{
 #include "librets.h"
 #include <iostream>
