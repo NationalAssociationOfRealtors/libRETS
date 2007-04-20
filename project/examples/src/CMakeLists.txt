@@ -1,9 +1,15 @@
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/project/librets/include ${Boost_INCLUDE_DIR} ${CURL_INCLUDE_DIR} ${EXPAT_INCLUDE_DIR})
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 
-INCLUDE(${CMAKE_SOURCE_DIR}/project/librets/src/sources.cmake)
+IF(WIN32)
+  SET(BOOST_FILESYSTEM libboost_filesystem-vc71-mt)
+  SET(BOOST_OPTIONS libboost_program_options-vc71-mt)
+else(WIN32)
+  SET(BOOST_FILESYSTEM boost_filesystem)
+  SET(BOOST_OPTIONS boost_program_options)
+ENDIF(WIN32)
 
-SET(LR_LIBS rets ${EXPAT_LIBRARY} ${CURL_LIBRARY} boost_filesystem)
+SET(LR_LIBS rets ${EXPAT_LIBRARY} ${CURL_LIBRARY} ${BOOST_FILESYSTEM})
 
 ADD_EXECUTABLE(xml xml.cpp)
 TARGET_LINK_LIBRARIES(xml ${LR_LIBS})
@@ -15,16 +21,16 @@ ADD_EXECUTABLE(raw-rets raw-rets.cpp )
 TARGET_LINK_LIBRARIES(raw-rets ${LR_LIBS})
 
 ADD_EXECUTABLE(login login.cpp Options.cpp)
-TARGET_LINK_LIBRARIES(login ${LR_LIBS} boost_program_options)
+TARGET_LINK_LIBRARIES(login ${LR_LIBS} ${BOOST_OPTIONS})
 
 ADD_EXECUTABLE(metadata metadata.cpp Options.cpp)
-TARGET_LINK_LIBRARIES(metadata ${LR_LIBS} boost_program_options)
+TARGET_LINK_LIBRARIES(metadata ${LR_LIBS} ${BOOST_OPTIONS})
 
 ADD_EXECUTABLE(search search.cpp Options.cpp)
-TARGET_LINK_LIBRARIES(search ${LR_LIBS} boost_program_options)
+TARGET_LINK_LIBRARIES(search ${LR_LIBS} ${BOOST_OPTIONS})
 
 ADD_EXECUTABLE(get-object get-object.cpp Options.cpp)
-TARGET_LINK_LIBRARIES(get-object ${LR_LIBS} boost_program_options)
+TARGET_LINK_LIBRARIES(get-object ${LR_LIBS} ${BOOST_OPTIONS})
 
 IF (LIBRETS_BUILD_SQL_COMPILER AND ANTLR_FOUND)
   ADD_EXECUTABLE(sql2dmql sql2dmql.cpp)
