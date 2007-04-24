@@ -28,11 +28,14 @@ class StreamHttpLogger : public RetsHttpLogger
   public:
     StreamHttpLogger(std::ostream * out);
 
+    virtual void SetUseTimestamp(bool useTimestamp);
+
     virtual void logHttpData(Type type, std::string data);
     
   private:
     Type mLastType;
     std::ostream * mOut;
+    bool mUseTimestamp;
 };
 }
 

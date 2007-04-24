@@ -17,25 +17,39 @@
 
 #include "librets/StreamHttpLogger.h"
 #include <ostream>
+#include <time.h>
 
 using namespace librets;
 using std::ostream;
 using std::endl;
 
 StreamHttpLogger::StreamHttpLogger(ostream * out)
-    : mLastType(INFORMATIONAL), mOut(out)
+    : mLastType(INFORMATIONAL), mOut(out), mUseTimestamp(false)
 {
+}
+
+void StreamHttpLogger::SetUseTimestamp(bool useTimestamp)
+{
+    mUseTimestamp = useTimestamp;
 }
 
 void StreamHttpLogger::logHttpData(Type type, std::string data)
 {
+    std::string timestr;
+    if (mUseTimestamp)
+    {
+        time_t now;
+        time(&now);
+        timestr.append(" [").append(ctime(&now)).append("]");
+    }
+        
     if ((type == RECEIVED) && (mLastType != RECEIVED))
     {
-        *mOut << endl << "<<< Received" << endl;
+        *mOut << endl << "<<< Received" << timestr << endl;
     }
     else if ((type == SENT) && (mLastType != SENT))
     {
-        *mOut << endl << ">>> Sent" << endl;
+        *mOut << endl << ">>> Sent" << timestr << endl;
     }
     else if (type == INFORMATIONAL)
     {
