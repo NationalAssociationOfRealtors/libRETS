@@ -45,6 +45,12 @@ class SearchResultSet : public virtual RetsObject
     /**
      * Returns true if there are more results.  This may block waiting
      * for data from the RETS server.
+     *
+     * HasNext() has the side effect of incrementing the result set to
+     * the next result.  After a query, this must be called before you
+     * can access the first result row.
+     *
+     * @return If there is a next item or not.
      */
     bool HasNext();
 
