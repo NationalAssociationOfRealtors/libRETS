@@ -63,6 +63,11 @@ IntVectorPtr GetObjectQuery::GetObjectIds() const
     return mObjectIds;
 }
 
+IntVector * GetObjectQuery::GetObjectIdsPtr() const
+{
+    return mObjectIds.get();
+}
+
 void GetObjectQuery::AddObjectId(int objectId)
 {
     mObjectIds->push_back(objectId);

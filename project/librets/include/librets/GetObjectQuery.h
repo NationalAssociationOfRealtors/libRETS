@@ -41,6 +41,12 @@ class GetObjectQuery : public RetsObject
     void SetObjectKey(std::string objectKey);
     
     IntVectorPtr GetObjectIds() const;
+
+    /**
+     * Returns a pointer to the IntVector.  GetObjectQuery is
+     * responsiblity for cleaning up the object.
+     */
+    IntVector * GetObjectIdsPtr() const;
     
     void AddObjectId(int objectId);
 
