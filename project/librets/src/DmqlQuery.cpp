@@ -58,6 +58,11 @@ void DmqlQuery::AddField(string column)
     mFields->push_back(column);
 }
 
+StringVector * DmqlQuery::GetFieldsPtr() const
+{
+    return mFields.get();
+}
+
 StringVectorPtr DmqlQuery::GetFields() const
 {
     return mFields;
@@ -66,6 +71,11 @@ StringVectorPtr DmqlQuery::GetFields() const
 DmqlCriterionPtr DmqlQuery::GetCriterion() const
 {
     return mCriterion;
+}
+
+DmqlCriterion * DmqlQuery::GetCriterionPtr() const
+{
+    return mCriterion.get();
 }
 
 void DmqlQuery::SetCriterion(DmqlCriterionPtr criterion)

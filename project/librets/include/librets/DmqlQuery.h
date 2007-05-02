@@ -28,6 +28,7 @@ class DmqlQuery : public RetsObject
 {
   public:
     DmqlQuery();
+    ~DmqlQuery();
 
     std::string GetResource() const;
 
@@ -37,9 +38,21 @@ class DmqlQuery : public RetsObject
 
     void SetClass(std::string aClass);
 
+    /**
+     * Returns a pointer to a StringVector.  DmqlQuery is responsible for
+     * freeing the object.
+     */
+    StringVector * GetFieldsPtr() const;
+
     StringVectorPtr GetFields() const;
 
     void AddField(std::string column);
+
+    /**
+     * Returns a pointer to a DmqlCriterion.  DmqlQuery is responsible for
+     * freeing the object.
+     */
+    DmqlCriterion * GetCriterionPtr() const;
 
     DmqlCriterionPtr GetCriterion() const;
 

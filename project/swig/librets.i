@@ -1,5 +1,4 @@
-%module librets
-
+%module(directors=1) librets
 
 #ifdef SWIGCSHARP
 %{
@@ -753,6 +752,18 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
         mLoggerDelegate(type, byteData);
     }
 %}
+
+// The following few classes were added to see if we can get C# to
+// call out to the translator
+%feature("director") SqlMetadata;
+class SqlMetadata
+{
+  public:
+    virtual ~SqlMetadata() { };
+
+    virtual bool IsLookupColumn(std::string tableName, std::string columnName)
+        = 0;
+};
 
 #endif
 
