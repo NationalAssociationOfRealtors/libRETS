@@ -28,7 +28,7 @@ class DmqlQuery : public RetsObject
 {
   public:
     DmqlQuery();
-    ~DmqlQuery();
+    virtual ~DmqlQuery();
 
     std::string GetResource() const;
 

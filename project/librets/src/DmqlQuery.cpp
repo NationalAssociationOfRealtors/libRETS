@@ -33,6 +33,10 @@ DmqlQuery::DmqlQuery()
     mFields.reset(new StringVector());
 }
 
+DmqlQuery::~DmqlQuery()
+{
+}
+
 string DmqlQuery::GetResource() const
 {
     return mResource;
