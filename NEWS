@@ -2,6 +2,8 @@ Version 1.1.9 - ?? ????? ????
 
   * Fix bug where exception was thrown when URL was of the form:
     http://example.com:6103
+  * Added missing METADATA-OBJECT to RetsSession::MetadataTypeToString
+  * Added optinal timestamp to StreamHttpLogger
 
 Version 1.1.8 - 26 March 2007
 
