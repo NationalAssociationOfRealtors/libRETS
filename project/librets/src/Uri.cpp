@@ -51,20 +51,46 @@ void CLASS::init(const string & uri)
         {
             mPort = DEFAULT_PORT;
             i2 = uri.find("/", i1);
-            mHost = uri.substr(i1, (i2 - i1));
+            if (i2 != string::npos)
+            {
+                // We have a trailing /
+                mHost = uri.substr(i1, (i2 - i1));
+            }
+            else
+            {
+                // We have NO trailing slash
+                mHost = uri.substr(i1);
+            }
         }
         else
         {
             mHost = uri.substr(i1, (i2 - i1));
             // Skip over ":";
             i1 = i2 + 1;
+            string portString;
             i2 = uri.find("/", i1);
-            string portString = uri.substr(i1, (i2 - i1));
+            if (i2 != string::npos)
+            {
+                // We have a trailing /
+                portString = uri.substr(i1, (i2 - i1));
+            }
+            else
+            {
+                // We have NO trailing slash
+                portString = uri.substr(i1);
+            }
             istringstream s;
             s.str(portString);
             s >> mPort;
         }
-        mPath = uri.substr(i2);
+        if (i2 != string::npos)
+        {
+            mPath = uri.substr(i2);
+        }
+        else
+        {
+            mPath = "";
+        }
     }
     else
     {

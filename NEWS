@@ -1,3 +1,8 @@
+Version 1.1.9 - ?? ????? ????
+
+  * Fix bug where exception was thrown when URL was of the form:
+    http://example.com:6103
+
 Version 1.1.8 - 26 March 2007
 
   * librets-config has additional information of version number as hex

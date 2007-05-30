@@ -29,11 +29,13 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testResolvingUrls);
     CPPUNIT_TEST(testEquals);
+    CPPUNIT_TEST(testNoSlashBase);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
     void testResolvingUrls();
     void testEquals();
+    void testNoSlashBase();
 
     string getBase();
 };
@@ -101,4 +103,50 @@ void CLASS::testEquals()
 
     CPPUNIT_ASSERT_EQUAL(cu1, cu2);
     CPPUNIT_ASSERT_EQUAL(cu1, cu3);
+}
+
+void CLASS::testNoSlashBase()
+{
+    CapabilityUrls urls(getBase());
+    urls.SetActionUrl(getBase() + "/rets/action");
+    urls.SetChangePasswordUrl(getBase() + "/rets/changePassword");
+    urls.SetGetObjectUrl(getBase() + "/rets/getObject");
+    urls.SetLoginUrl(getBase() + "/rets/login");
+    urls.SetLoginCompleteUrl(getBase() + "/rets/loginComplete");
+    urls.SetLogoutUrl(getBase() + "/rets/logout");
+    urls.SetSearchUrl(getBase() + "/rets/search");
+    urls.SetGetMetadataUrl(getBase() + "/rets/getMetadata");
+    urls.SetServerInformationUrl(getBase() + "/rets/serverInfo");
+    urls.SetUpdateUrl(getBase() + "/rets/update");
+
+    ASSERT_STRING_EQUAL("http://example.com:6103/rets/action",
+                        urls.GetActionUrl());
+    ASSERT_STRING_EQUAL("http://example.com:6103/rets/changePassword",
+                        urls.GetChangePasswordUrl());
+    ASSERT_STRING_EQUAL("http://example.com:6103/rets/getObject",
+                        urls.GetGetObjectUrl());
+    ASSERT_STRING_EQUAL("http://example.com:6103/rets/search",
+                        urls.GetSearchUrl());
+
+    string portlessBase = "http://example.com";
+    CapabilityUrls urls2(portlessBase);
+    urls2.SetActionUrl(portlessBase + "/rets/action");
+    urls2.SetChangePasswordUrl(portlessBase + "/rets/changePassword");
+    urls2.SetGetObjectUrl(portlessBase + "/rets/getObject");
+    urls2.SetLoginUrl(portlessBase + "/rets/login");
+    urls2.SetLoginCompleteUrl(portlessBase + "/rets/loginComplete");
+    urls2.SetLogoutUrl(portlessBase + "/rets/logout");
+    urls2.SetSearchUrl(portlessBase + "/rets/search");
+    urls2.SetGetMetadataUrl(portlessBase + "/rets/getMetadata");
+    urls2.SetServerInformationUrl(portlessBase + "/rets/serverInfo");
+    urls2.SetUpdateUrl(portlessBase + "/rets/update");
+
+    ASSERT_STRING_EQUAL("http://example.com/rets/action",
+                        urls2.GetActionUrl());
+    ASSERT_STRING_EQUAL("http://example.com/rets/changePassword",
+                        urls2.GetChangePasswordUrl());
+    ASSERT_STRING_EQUAL("http://example.com/rets/getObject",
+                        urls2.GetGetObjectUrl());
+    ASSERT_STRING_EQUAL("http://example.com/rets/search",
+                        urls2.GetSearchUrl());
 }
