@@ -294,7 +294,7 @@ GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)
         response->SetDefaultObjectKeyAndId(request->GetDefaultObjectKey(),
                                            request->GetDefaultObjectId());
     }
-    response->Parse(httpResponse);
+    response->Parse(httpResponse, request->GetIgnoreMalformedHeaders());
     return response;
 }
 

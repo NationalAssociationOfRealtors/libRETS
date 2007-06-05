@@ -44,6 +44,7 @@ GetObjectRequest::GetObjectRequest(string resource, string type)
     mHasDefaultObjectKeyAndId = false;
     mDefaultObjectKey = "";
     mDefaultObjectId = -1;
+    mIgnoreMalformedHeaders = false;
 }
 
 GetObjectRequest::~GetObjectRequest()
@@ -154,3 +155,12 @@ int GetObjectRequest::GetDefaultObjectId() const
     return mDefaultObjectId;
 }
 
+bool GetObjectRequest::GetIgnoreMalformedHeaders() const
+{
+    return mIgnoreMalformedHeaders;
+}
+
+void GetObjectRequest::SetIgnoreMalformedHeaders(bool ignore)
+{
+    mIgnoreMalformedHeaders = ignore;
+}

@@ -326,12 +326,25 @@ void CLASS::testCris()
         RetsHttpResponsePtr httpResponse(new TestHttpResponse(
             "get-object-response-cris.txt"));
         response.Parse(httpResponse);
-        CPPUNIT_FAIL("Should have thrown exception");
+        CPPUNIT_FAIL("Malformed headers should cause an exception");
     }
     catch (const RetsException &)
     {
-        // Expetcted
+        // Expected
     }
+
+    try
+    {
+        GetObjectResponse response;
+        RetsHttpResponsePtr httpResponse(new TestHttpResponse(
+            "get-object-response-cris.txt"));
+        response.Parse(httpResponse, true);
+    }
+    catch (const RetsException &)
+    {
+        CPPUNIT_FAIL("Malformed headers should not cause an exception");
+    }
+        
 }
 
 void CLASS::testRapattoni()

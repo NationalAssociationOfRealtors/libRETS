@@ -43,7 +43,8 @@ class GetObjectResponse : public RetsObject
     void SetDefaultObjectKeyAndId(std::string defaultObjectKey,
                                   int defaultObjectId);
     
-    void Parse(RetsHttpResponsePtr httpResponse);
+    void Parse(RetsHttpResponsePtr httpResponse,
+               bool ignoreMalformedHeaders = false);
     
     /**
      * Returns the next object found in the response.
@@ -56,10 +57,11 @@ class GetObjectResponse : public RetsObject
     typedef std::vector<ObjectDescriptorPtr> ObjectList;
     
     void ParseSinglePart(RetsHttpResponsePtr httpResponse);
-    void ParseMultiPart(RetsHttpResponsePtr httpResponse);
+    void ParseMultiPart(RetsHttpResponsePtr httpResponse,
+                        bool ignoreMalformedHeaders = false);
     
     std::string FindBoundary(std::string contentType);
-    void ParsePartStream(istreamPtr in);
+    void ParsePartStream(istreamPtr in, bool ignoreMalformedHeaders = false);
     
     bool mDefaultsAreValid;
     std::string mDefaultObjectKey;

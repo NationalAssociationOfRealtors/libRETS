@@ -75,7 +75,8 @@ void GetObjectResponse::SetDefaultObjectKeyAndId(string defaultObjectKey,
     mDefaultsAreValid = true;
 }
 
-void GetObjectResponse::Parse(RetsHttpResponsePtr httpResponse)
+void GetObjectResponse::Parse(RetsHttpResponsePtr httpResponse,
+                              bool ignoreMalformedHeaders)
 {
     if (httpResponse->GetResponseCode() != 200)
     {
@@ -92,7 +93,7 @@ void GetObjectResponse::Parse(RetsHttpResponsePtr httpResponse)
     }
     else if (ba::starts_with(contentType, "multipart/parallel"))
     {
-        ParseMultiPart(httpResponse);
+        ParseMultiPart(httpResponse, ignoreMalformedHeaders);
     }
     else
     {
@@ -133,7 +134,8 @@ void GetObjectResponse::ParseSinglePart(RetsHttpResponsePtr httpResponse)
     mObjects.push_back(descriptor);
 }
 
-void GetObjectResponse::ParseMultiPart(RetsHttpResponsePtr httpResponse)
+void GetObjectResponse::ParseMultiPart(RetsHttpResponsePtr httpResponse,
+                                       bool ignoreMalformedHeaders)
 {
     string contentType = httpResponse->GetContentType();
     string boundary = FindBoundary(contentType);
@@ -181,11 +183,12 @@ void GetObjectResponse::ParseMultiPart(RetsHttpResponsePtr httpResponse)
     for (i = parts.begin(); i != parts.end(); i++)
     {
         istreamPtr partStream( new istringstream(*i));
-        ParsePartStream(partStream);
+        ParsePartStream(partStream, ignoreMalformedHeaders);
     }
 }
 
-void GetObjectResponse::ParsePartStream(istreamPtr in)
+void GetObjectResponse::ParsePartStream(istreamPtr in,
+                                        bool ignoreMalformedHeaders)
 {
     ObjectDescriptorPtr objectDescriptor(new ObjectDescriptor());
     string line;
@@ -198,7 +201,7 @@ void GetObjectResponse::ParsePartStream(istreamPtr in)
         }
         string name;
         string value;
-        if (!splitField(line, ":", name, value))
+        if (!splitField(line, ":", name, value) && !ignoreMalformedHeaders)
         {
             LIBRETS_THROW(RetsException, ("Malformed header: " + line));
         }

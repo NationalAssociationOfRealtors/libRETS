@@ -269,6 +269,8 @@ class GetObjectRequest
     void AddObject(std::string resourceEntity, int objectId);
     
     void AddAllObjects(std::string resourceEntity);
+
+    void SetIgnoreMalformedHeaders(bool ignore);
 };
 
 

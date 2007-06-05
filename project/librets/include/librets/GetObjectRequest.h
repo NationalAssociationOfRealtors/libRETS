@@ -113,6 +113,27 @@ class GetObjectRequest : public RetsObject
     std::string GetDefaultObjectKey() const;
     
     int GetDefaultObjectId() const;
+
+    /**
+     * Certain RETS servers have been known to violate the RETS spec
+     * by allowing Content-Description fields with CRLF in it when
+     * doing a multi-part response.  By the RETS spec, this is
+     * actually creating a new header.  This causes an error when we
+     * parse as having malformed headers.  By turning this on, you are
+     * saying you know that their are malformed headers, but you do
+     * not care.  Do NOT turn this on unless you know what you are
+     * doing.  It is NOT recommended that this be used.  This only
+     * effects multi-part responses.  The default is
+     * <code>false</code>.
+     */
+    void SetIgnoreMalformedHeaders(bool ignore);
+
+    /**
+     * Returns if the GetObject parsing should ignore malformed headers.
+     *
+     * @return <code>true</code> if malformed headers will be ignored.
+     */
+    bool GetIgnoreMalformedHeaders() const;
     
   private:
     typedef std::map<std::string, StringVectorPtr> ObjectList;
@@ -128,6 +149,7 @@ class GetObjectRequest : public RetsObject
     bool mHasDefaultObjectKeyAndId;
     std::string mDefaultObjectKey;
     int mDefaultObjectId;
+    bool mIgnoreMalformedHeaders;
 };
     
 }
