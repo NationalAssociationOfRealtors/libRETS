@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 use lib "blib/lib", "blib/arch";
 use strict;
