@@ -771,6 +771,20 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
 //         = 0;
 // };
 
+// class SqlToDmqlCompiler
+// {
+//   public:
+//     SqlToDmqlCompiler(SqlMetadata* metadata);
+    
+//     enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY};
+    
+//     QueryType sqlToDmql(std::string sql);
+
+//     DmqlQueryPtr GetDmqlQuery() const;
+    
+//     GetObjectQueryPtr GetGetObjectQuery() const;
+// };
+
 #endif
 
 

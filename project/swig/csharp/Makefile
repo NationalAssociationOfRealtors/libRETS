@@ -9,6 +9,7 @@ LIBRETS_MANAGED_SRC = $(GENERATED_SRC) CppInputStream.cs \
 LIBRETS_MANAGED_DLL = librets-dotnet.dll
 
 SAMPLE_EXE = Login.exe Search.exe Metadata.exe GetObject.exe
+TEST_EXE = Sql2DMQL.exe
 
 WRAP = 	librets_wrap.cpp
 
@@ -28,6 +29,8 @@ CSC = mcs -debug
 
 all: $(LIBRETS_MANAGED_DLL) $(SAMPLE_EXE)
 
+test: $(TEST_EXE)
+
 Login.exe: Login.cs $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
 	$(CSC) -r:$(LIBRETS_MANAGED_DLL) Login.cs
 
@@ -40,6 +43,9 @@ Metadata.exe: Metadata.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
 GetObject.exe: GetObject.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
 	$(CSC) -r:$(LIBRETS_MANAGED_DLL) GetObject.cs
 
+Sql2DMQL.exe: Sql2DMQL.cs SimpleSqlMetadata.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
+	$(CSC) -r:$(LIBRETS_MANAGED_DLL) -main:Sql2DMQL Sql2DMQL.cs SimpleSqlMetadata.cs
+
 $(LIBRETS_MANAGED_DLL): $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_MANAGED_SRC)
 	$(CSC) -target:library -out:$(LIBRETS_MANAGED_DLL) $(LIBRETS_MANAGED_SRC)
 
@@ -48,7 +54,7 @@ $(LIBRETS_UNMANAGED_DLL): $(LIBRETS_UNMANAGED_OBJ)
 
 clean:
 	$(RM) *.o *.mdb
-	$(RM) $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL) $(SAMPLE_EXE)
+	$(RM) $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL) $(SAMPLE_EXE) $(TEST_EXE)
 	$(RM) -rf bin
 
 distclean: clean
