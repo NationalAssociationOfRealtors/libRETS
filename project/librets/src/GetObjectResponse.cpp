@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005-2006 National Association of REALTORS(R)
+ * Copyright (C) 2005-2007 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -206,23 +206,24 @@ void GetObjectResponse::ParsePartStream(istreamPtr in,
             LIBRETS_THROW(RetsException, ("Malformed header: " + line));
         }
         ba::trim(value);
-        if (name == "Content-Type")
+        string name_lower(ba::to_lower_copy(name));
+        if (name_lower == "content-type")
         {
             objectDescriptor->SetContentType(value);
         }
-        else if (name == "Content-ID")
+        else if (name_lower == "content-id")
         {
             objectDescriptor->SetObjectKey(value);
         }
-        else if (name == "Object-ID")
+        else if (name_lower == "object-id")
         {
             objectDescriptor->SetObjectId(lexical_cast<int>(value));
         }
-        else if (name == "Location")
+        else if (name_lower == "location")
         {
             objectDescriptor->SetLocationUrl(value);
         }
-        else if (name == "Content-Description")
+        else if (name_lower == "content-description")
         {
             objectDescriptor->SetDescription(value);
         }

@@ -13,7 +13,7 @@ Content-Description: Front view.
 --59a068f72f533f61eead9a5d886690495ab039a0
 Content-ID: abc123
 Object-ID: 2
-Content-Type: application/octet-stream
+Content-type: application/octet-stream
 Location: http://www.example.com/images/abc123/2
 Content-Description: Rear view.
 

@@ -1,11 +1,11 @@
 Version 1.1.9 - ?? ????? ????
 
-  * An option to ignore malformed headers on a multi-part GetObject was
-    added.
+  * Handle headers in Multipart GetObject responses case insensitively
+  * Added option to ignore malformed headers on a multi-part GetObject
   * Fix bug where exception was thrown when URL was of the form:
     http://example.com:6103
   * Added missing METADATA-OBJECT to RetsSession::MetadataTypeToString
-  * Added optinal timestamp to StreamHttpLogger
+  * Added optional timestamp to StreamHttpLogger
 
 Version 1.1.8 - 26 March 2007
 
