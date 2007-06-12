@@ -1,4 +1,4 @@
-Version 1.1.9 - ?? ????? ????
+Version 1.1.9 - 12 June 2007
 
   * Handle headers in Multipart GetObject responses case insensitively
   * Added option to ignore malformed headers on a multi-part GetObject
