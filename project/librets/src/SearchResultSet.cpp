@@ -82,7 +82,20 @@ void SearchResultSet::FixCompactArray(StringVector & compactArray,
 
 void SearchResultSet::Parse(istreamPtr inputStream)
 {
+    // Some "extended character" problems can be worked around by
+    // setting the XML character encoding to iso-8859-1 instead of
+    // US-ASCII.  RETS is officially US-ASCII, so this is a last
+    // result work around.  I think a SetEncoding flag should be added
+    // to a SearchRequest which could then be replied to the result
+    // set.  Until that SetEncoding is added, we'll use the default
+    // encoding instead of specifing it.  On the day we have that
+    // switch, uncomment the following two lines and delete the one
+    // after that.
+//     ExpatXmlParserPtr mXmlParser(
+//         new ExpatXmlParser(inputStream), "iso-8859-1"));
     ExpatXmlParserPtr mXmlParser(new ExpatXmlParser(inputStream));
+
+    
     RetsXmlStartElementEventPtr metadataEvent;
     string delimiter = "\t";
     while (mXmlParser->HasNext())

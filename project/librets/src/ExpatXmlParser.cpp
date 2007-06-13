@@ -33,20 +33,20 @@ using std::ostringstream;
 using std::istream;
 namespace b = boost;
 
-ExpatXmlParser::ExpatXmlParser(string inputString)
+ExpatXmlParser::ExpatXmlParser(string inputString, const char *encoding)
 {
     istreamPtr inputStream(new stringstream(inputString));
-    init(inputStream);
+    init(inputStream, encoding);
 }
 
-ExpatXmlParser::ExpatXmlParser(istreamPtr inputStream)
+ExpatXmlParser::ExpatXmlParser(istreamPtr inputStream, const char *encoding)
 {
-    init(inputStream);
+    init(inputStream, encoding);
 }
 
-void ExpatXmlParser::init(istreamPtr inputStream)
+void ExpatXmlParser::init(istreamPtr inputStream, const char *encoding)
 {
-    mParser = XML_ParserCreate(NULL);
+    mParser = XML_ParserCreate((XML_Char*) encoding);
     if (!mParser)
     {
         throw RetsException("Could not allocate XML parser");

@@ -26,11 +26,15 @@
 
 namespace librets {
 
+#define RETS_XML_DEFAULT_ENCODING "US-ASCII"
+
 class ExpatXmlParser : public RetsXmlParser
 {
   public:
-    ExpatXmlParser(istreamPtr inputStream);
-    ExpatXmlParser(std::string inputString);
+    ExpatXmlParser(istreamPtr inputStream,
+                   const char *encoding=RETS_XML_DEFAULT_ENCODING);
+    ExpatXmlParser(std::string inputString,
+                   const char *encoding=RETS_XML_DEFAULT_ENCODING);
 
     virtual ~ExpatXmlParser();
 
@@ -41,7 +45,8 @@ class ExpatXmlParser : public RetsXmlParser
   private:
     typedef std::list<RetsXmlEventPtr> XmlEventList;
 
-    void init(istreamPtr inputStream);
+    void init(istreamPtr inputStream,
+              const char *encoding=RETS_XML_DEFAULT_ENCODING);
 
     RetsXmlEventPtr GetNextEventWithoutCoalescing();
     void CoalesceTextEvents(RetsXmlTextEventPtr textEvent);
