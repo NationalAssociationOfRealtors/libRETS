@@ -1,0 +1,7 @@
+# On OS X, we support using xcode as well as the GNU autoconf stuff.
+# This is just a simple makefile to call xcodebuild to build librets
+
+all: librets
+
+librets:
+	cd project/build && xcodebuild -target librets -configuration Development
