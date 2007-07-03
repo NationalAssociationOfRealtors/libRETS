@@ -1,3 +1,7 @@
+Version ?.?.? - ?? ???? ????
+
+  * For a SearchRequest, StandardNames now defaults to false.
+
 Version 1.1.9 - 12 June 2007
 
   * Handle headers in Multipart GetObject responses case insensitively

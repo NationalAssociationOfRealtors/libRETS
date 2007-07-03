@@ -112,7 +112,7 @@ class SearchRequest : public RetsHttpRequest
      * Sets the vocabular to system names or standard names.  If set to
      * <code>true</code> all fields will be standard names.  If set to
      * <code>false</code> all fields will be system names.  By default,
-     * this is set to <code>true</code>.
+     * this is set to <code>false</code>.
      *
      * @param standardNames <code>true</code> for standard names.
      */

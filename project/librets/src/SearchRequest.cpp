@@ -34,7 +34,7 @@ SearchRequest::SearchRequest(string searchType, string searchClass,
                              string query)
 {
     SetFormatType(COMPACT_DECODED);
-    SetStandardNames(true);
+    SetStandardNames(false);
     SetQueryType(DMQL2);
     SetQueryParameter(SEARCH_TYPE_PARAMETER, searchType);
     SetQueryParameter(CLASS_PARAMETER, searchClass);
