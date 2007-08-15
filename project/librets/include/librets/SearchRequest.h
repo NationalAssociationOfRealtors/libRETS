@@ -62,16 +62,16 @@ class SearchRequest : public RetsHttpRequest
      */
     void SetLimit(int limit);
 	
-	/**
-	 * This indicatates that no offset should be sent to the server.
-	 */
-	static const int OFFSET_NONE = 0;
+    /**
+     * This indicatates that no offset should be sent to the server.
+     */
+    static const int OFFSET_NONE = 0;
 	
-	/**
-	 * Sets the offset to be used for record retrieval.  Offsets are 1-based,
-	 * thus an offset of 1 means to start with the first record.
-	 */
-	void SetOffset(int offset);
+    /**
+     * Sets the offset to be used for record retrieval.  Offsets are 1-based,
+     * thus an offset of 1 means to start with the first record.
+     */
+    void SetOffset(int offset);
 
     /**
      * Sets the select string to choose which fields are returned.
