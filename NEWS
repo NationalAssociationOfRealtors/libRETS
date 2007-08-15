@@ -1,6 +1,8 @@
 Version ?.?.? - ?? ???? ????
 
   * For a SearchRequest, StandardNames now defaults to false.
+  * SearchResult/RetsHttpRequest.GetQueryString() is now exposed to the
+    swig supported languages.
 
 Version 1.1.9 - 12 June 2007
 
