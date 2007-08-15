@@ -208,6 +208,11 @@ class SearchRequest
         COMPACT_DECODED
     };
     void SetFormatType(FormatType formatType);
+
+    // This is really from RetsHttpRequest, but SearchRequest is a
+    // child of that language, so this should work.  Until we need to,
+    // we won't expose RetsHttpRequest
+    std::string GetQueryString() const;
 };
 typedef std::auto_ptr<SearchRequest> SearchRequestAPtr;
 
