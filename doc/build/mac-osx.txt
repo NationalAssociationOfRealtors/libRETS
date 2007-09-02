@@ -1,9 +1,9 @@
 
 Instructions for building on Mac OS X are nearly identical as the Unix
-instructions in unix.txt.  The OpenDarwin ports has many of the
-preqruisites.  Fink tends to be more out of date.
+instructions in unix.txt.  MacPorts ports has many, if not all, of the
+prerequisites.  Fink tends to be more out of date.
 
-If you choost to build Boost, the following shell script on OS X 10.3
+If you choose to build Boost, the following shell script on OS X 10.3
 will install it into /usr/local:
 
 -----
