@@ -39,7 +39,7 @@ IF(NOT DOXYGEN_FOUND)
 ENDIF(NOT DOXYGEN_FOUND)
 
 IF(NOT SWIG_FOUND)
-  MESSAGE("SWIG wasn't found.  Not building bindings for other languages")
+  MESSAGE(STATUS "SWIG wasn't found.  Not building bindings for other languages")
 ENDIF(NOT SWIG_FOUND)
 
 ADD_SUBDIRECTORY(project/librets/src ${CMAKE_BINARY_DIR}/build/librets)
