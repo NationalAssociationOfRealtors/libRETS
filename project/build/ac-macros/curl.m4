@@ -20,15 +20,17 @@ AC_DEFUN([MY_TEST_CURL], [
         AC_MSG_RESULT([$my_cv_curl_vers])
 
         CURL_PREFIX=`curl-config --prefix`
-        curl_a="${CURL_PREFIX}/lib/libcurl.a"
-        AC_CHECK_FILE($curl_a, have_curl_a=$curl_a)
-        if test -z "$have_curl_a"; then
-          AC_MSG_ERROR([libcurl.a required to build librets])
-        fi
         CURL_CFLAGS=`curl-config --cflags`
         CURL_LIBS=`curl-config --libs`
-        CURL_LIBS=`echo $CURL_LIBS | perl -pe "s/^(-L\S+\s+)?-lcurl\s+//"`
-        CURL_LIBS="${CURL_PREFIX}/lib/libcurl.a $CURL_LIBS"
+        if test "$my_enable_shared_dependencies" != "yes"; then
+          curl_a="${CURL_PREFIX}/lib/libcurl.a"
+          AC_CHECK_FILE($curl_a, have_curl_a=$curl_a)
+          if test -z "$have_curl_a"; then
+            AC_MSG_ERROR([libcurl.a required to build librets])
+          fi
+          CURL_LIBS=`echo $CURL_LIBS | perl -pe "s/^(-L\S+\s+)?-lcurl\s+//"`
+          CURL_LIBS="${CURL_PREFIX}/lib/libcurl.a $CURL_LIBS"
+        fi
       else
         AC_MSG_RESULT(FAILED)
         AC_MSG_ERROR([$ver is too old. Need version $check or higher.])

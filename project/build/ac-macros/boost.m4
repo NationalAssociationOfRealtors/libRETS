@@ -46,10 +46,18 @@ AC_DEFUN([MY_TEST_BOOST], [
       AC_MSG_ERROR([$ver is too old. Need version $check or higher.])
     fi
 
-    my_lib="${BOOST_PREFIX}/lib/libboost_filesystem.a"
-    AC_CHECK_FILE([$my_lib], [BOOST_FILESYSTEM=$my_lib])
-    my_lib="${BOOST_PREFIX}/lib/libboost_program_options.a"
-    AC_CHECK_FILE([$my_lib], [BOOST_PROGRAM_OPTIONS=$my_lib])
+    if test "$my_enable_shared_dependencies" = "yes"; then
+       # Because its easier, for now we will naively assume that
+       # that if the boost headers and version are found, we can just
+       # dynamicly link in the libraries.
+       BOOST_FILESYSTEM="-lboost_filesystem"
+       BOOST_PROGRAM_OPTIONS="-lboost_program_options"
+    else
+	my_lib="${BOOST_PREFIX}/lib/libboost_filesystem.a"
+	AC_CHECK_FILE([$my_lib], [BOOST_FILESYSTEM=$my_lib])
+    	my_lib="${BOOST_PREFIX}/lib/libboost_program_options.a"
+    	AC_CHECK_FILE([$my_lib], [BOOST_PROGRAM_OPTIONS=$my_lib])
+    fi
   fi
 
   AC_SUBST(HAVE_BOOST)

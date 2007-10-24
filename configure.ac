@@ -2,6 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
 AC_INIT
+dnl AC_LANG(C++)
 AC_CONFIG_SRCDIR(project/librets/include/librets.h)
 AC_CONFIG_AUX_DIR(project/build)
 AC_CONFIG_HEADERS([project/librets/src/config.h])
@@ -32,6 +33,12 @@ AC_SUBST(HAVE_DOXYGEN)
 
 MY_PROG_CCACHE
 AC_CACHE_SAVE
+
+AC_ARG_ENABLE(shared_dependencies,
+              AC_HELP_STRING([--enable-shared_dependencies],
+                             [Uses shared libraries for dependencies instead of their static counterparts.  Do not enable unless you know what you're doing.]),
+              test "X$enableval" != "Xno" && my_enable_shared_dependencies=yes,
+              my_enable_shared_dependencies=no)
 
 MY_TEST_DEPENDS
 MY_TEST_CURL
@@ -73,6 +80,17 @@ if test -n "$GCC"; then
   fi
 fi
 
+
+AC_ARG_ENABLE(PIC,
+              AC_HELP_STRING([--enable-PIC],
+                             [use -fPIC when compiling (default: disabled)  Do not enable unless you know what you're doing.]),
+               test "X$enableval" != "Xno" && my_enable_use_pic=yes,
+               my_enable_use_pic=no)
+
+if test "$my_enable_use_pic" = "yes"; then
+   CFLAGS="$CFLAGS -fPIC"
+fi
+
 AC_CONFIG_FILES([Makefile project/build/Doxyfile])
 AC_CONFIG_FILES([librets-config], [chmod +x librets-config])
 AC_CONFIG_FILES([librets-config-inplace], [chmod +x librets-config-inplace])
@@ -84,7 +102,10 @@ echo Option summary:
 echo
 echo Use ccache .................: $my_use_ccache
 echo Use dependency checking ....: $my_use_depends
+echo Use -fPIC...................: $my_enable_use_pic
+echo Use shared dependencies.....: $my_enable_shared_dependencies
 echo Compile type................: $my_compile_type
 echo Compile examples............: $my_use_examples
 echo Compile SQL compiler........: $my_use_sql_compiler
+
 echo

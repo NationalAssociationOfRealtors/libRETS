@@ -19,21 +19,34 @@ AC_DEFUN([MY_TEST_EXPAT], [
   for expat_prefix in $expat_prefixes
   do
     expat_h="${expat_prefix}/include/expat.h"
-    expat_a="${expat_prefix}/lib/libexpat.a"
     AC_CHECK_FILE([$expat_h], [my_expat_h=$expat_h])
-    AC_CHECK_FILE([$expat_a], [my_expat_a=$expat_a])
-    test -n "$my_expat_h" -a -n "$my_expat_a" && break
+    test -n "$my_expat_h" && break
   done
 
   if test -z "$my_expat_h"; then
     AC_MSG_ERROR([Could not find expat.h])
   fi
-  if test -z "$my_expat_a"; then
-    AC_MSG_ERROR([Could nto find libexpat.h])
+
+  if test "$my_enable_shared_dependencies" == "yes"; then
+     if test x"$withval" != "x"; then
+        EXPAT_LDFLAGS="-L$withval/lib"
+     fi
+     AC_CHECK_LIB([expat], [XML_ParserCreate], [expat_lib="-lexpat"],
+ 	          [AC_MSG_ERROR([Can't find expat library. Please install expat.])])
+  else
+     for expat_prefix in $expat_prefixes
+     do
+       expat_lib="${expat_prefix}/lib/libexpat.a"
+       AC_CHECK_FILE([$expat_lib], [my_expat_a=$expat_lib])
+       test -n "$my_expat_a" && break
+     done
+     if test -z "$my_expat_a"; then
+       AC_MSG_ERROR([Could not find libexpat.a])
+     fi
   fi
 
   EXPAT_CFLAGS="-I${expat_prefix}/include"
-  EXPAT_LIBS="${expat_a}"
+  EXPAT_LIBS="$EXPAT_LDFLAGS ${expat_lib}"
 
   AC_SUBST(EXPAT_CFLAGS)
   AC_SUBST(EXPAT_LIBS)
