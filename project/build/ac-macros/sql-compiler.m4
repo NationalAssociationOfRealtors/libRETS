@@ -6,8 +6,8 @@ AC_DEFUN(MY_CHECK_SQL_COMPILER, [
     sql-compiler,
     AC_HELP_STRING([--enable-sql-compiler],
       [build SQL to DMQL compiler (default: enabled)]),
-    [test "$enableval" = "no" && my_enable_sql_compiler=no],
-    [my_enable_sql_compiler=yes])
+    test "X$enableval" == "Xyes" && my_enable_sql_compiler=yes,
+    my_enable_sql_compiler=yes)
 
     my_use_sql_compiler=no
     USE_SQL_COMPILER=0
