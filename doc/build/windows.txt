@@ -4,8 +4,8 @@ Installing the Prequisites
 
 Due to modifications needed to make 3rd party libraries compile
 against librets, binaries of all dependant libraries are stored in
-Subversion.  are stored in Subversion.  Check out this repository in
-the parent directory of the main librets directory:
+Subversion.  Check out this repository in the parent directory of the
+main librets directory:
 
   https://code.crt.realtors.org/svn/librets/vendor/windows/
 
@@ -31,6 +31,45 @@ Java SDK
 
   Version: 1.4.2 or higher.
   URL: http://java.sun.com/
+
+
+In case anyone needs/wants to build from scratch, here is a list of
+the rest of the dependencies, but these can be found in the windows
+binary tree in subversion listed above.
+
+Boost
+-----
+
+  Version: 1.32.0 or higher.
+  URL: http://www.boost.org/
+
+Boost has it's own build system, bjam.  Read it's instructions for
+installation.  You need to compile and install the filesystem and
+program options libraries.
+
+libcurl
+-------
+
+  Version: 7.13.2 or higher.
+  URL: http://curl.haxx.se/libcurl/
+
+Build as per its instructions.  No special steps are needed.
+
+Expat
+-----
+
+  Version: 1.95.8 or higher.
+  URL: http://expat.sourceforge.net/    
+
+Build as per its instructions.  No special steps are needed.
+
+ANTLR
+-----
+
+  Version: 2.7.5 or higher.
+  URL: http://www.antlr.org/
+
+Build as per its instructions.  No special steps are needed.
 
 
 Customizing config.vc
