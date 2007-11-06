@@ -11,8 +11,10 @@ if (sys.platform != 'win32'):
     librets_cflags = commands.getoutput(librets_config + " --cflags").split()
     librets_libs = commands.getoutput(librets_config + " --libs").split()
 else:
-    print "ack!"
-    sys.exit(1)
+    lines = file("setup.ini").readlines()
+    librets_version = lines[0]
+    librets_libs = lines[1].split()
+    librets_cflags = lines[2].split()
 
 setup(name = "librets: A RETS client library",
   version = librets_version,
