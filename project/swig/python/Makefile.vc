@@ -1,7 +1,10 @@
 !include <../../build/Makefile.vc>
 
-LIBRETS_LIB=../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT) winmm.lib
-CFLAGS=$(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include
+PYTHON = python
+
+LIBRETS_LIB= ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT) winmm.lib
+#CFLAGS = $(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include
+CFLAGS = /GR $(BOOST_CFLAGS) -I../../librets/include
 
 LIBRETS_EXT = _librets.so
 
@@ -19,8 +22,9 @@ install:
 	python setup.py install
 
 clean:
-	$(RM) -r build
-	$(RM) _librets.so
+	python setup.py clean -q
+	@-erase build
+	@-erase _librets.so
 
 distclean: clean
-	$(RM) librets.py librets.pyc librets_wrap.cpp
+	@-erase librets.py librets.pyc librets_wrap.cpp 2> NUL
