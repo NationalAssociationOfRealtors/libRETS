@@ -24,7 +24,7 @@ ruby_: $(RUBY_WRAP) $(RUBY_MAKEFILE)
 
 python_: $(PYTHON_WRAP)
 	 cd python
-	 $(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=static
+	 $(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
 	 cd ..
 
 $(RUBY_MAKEFILE): $(RUBY_WRAP) ruby\extconf.rb

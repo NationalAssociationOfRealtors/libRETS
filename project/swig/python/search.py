@@ -18,6 +18,7 @@ try:
   request = session.CreateSearchRequest("Property", "ResidentialProperty",
     "(ListPrice=300000-)")
     
+  request.SetStandardNames(True)
   request.SetSelect("ListingID,ListPrice,Beds,City")
   request.SetLimit(librets.SearchRequest.LIMIT_DEFAULT)
   request.SetOffset(librets.SearchRequest.OFFSET_NONE)

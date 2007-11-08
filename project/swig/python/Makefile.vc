@@ -2,7 +2,7 @@
 
 PYTHON = python
 
-LIBRETS_LIB= ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT) winmm.lib
+LIBRETS_LIB= ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT) winmm.lib wsock32.lib
 #CFLAGS = $(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include
 CFLAGS = /GR $(BOOST_CFLAGS) -I../../librets/include
 
@@ -23,8 +23,7 @@ install:
 
 clean:
 	python setup.py clean -q
-	@-erase build
-	@-erase _librets.so
+	@-erase build dist 2> NUL
 
 distclean: clean
 	@-erase librets.py librets.pyc librets_wrap.cpp 2> NUL
