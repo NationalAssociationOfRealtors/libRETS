@@ -6,13 +6,13 @@ LIBRETS_LIB= ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB
 #CFLAGS = $(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include
 CFLAGS = /GR $(BOOST_CFLAGS) -I../../librets/include
 
-LIBRETS_EXT = _librets.so
+LIBRETS_EXT = build/lib.win32-2.5/_librets.pyd
 
 SETUP_CONFIG = setup.ini
 
-all: _librets.so
+all: $(LIBRETS_EXT)
 
-_librets.so: librets_wrap.cpp
+$(LIBRETS_EXT): librets_wrap.cpp
 	echo $(VERSION) > $(SETUP_CONFIG)
 	echo $(LIBRETS_LIB) >> $(SETUP_CONFIG)
 	echo $(CFLAGS) >> $(SETUP_CONFIG)
@@ -21,9 +21,12 @@ _librets.so: librets_wrap.cpp
 install:
 	python setup.py install
 
+dist: $(LIBRETS_EXT)
+	python setup.py bdist_wininst
+
 clean:
-	python setup.py clean -q
-	@-erase build dist 2> NUL
+	@-rmdir /q /s build 2> NUL
+	@-rmdir /q /s dist 2> NUL
 
 distclean: clean
-	@-erase librets.py librets.pyc librets_wrap.cpp 2> NUL
+	@-erase librets.py* librets_wrap.cpp 2> NUL
