@@ -42,6 +42,7 @@ SearchResultSet::SearchResultSet()
 {
     mColumns.reset(new StringVector());
     mCount = -1;
+    mEncoding = RetsSession::RETS_XML_DEFAULT_ENCODING;
 }
 
 SearchResultSet::~SearchResultSet()
@@ -55,7 +56,7 @@ void SearchResultSet::FixCompactArray(StringVector & compactArray,
     {
         ostringstream message;
         message << "Unknown compact format: " << context << ": "
-		        << Output(compactArray);
+                << Output(compactArray);
         throw RetsException(message.str());
     }
 
@@ -85,16 +86,13 @@ void SearchResultSet::Parse(istreamPtr inputStream)
     // Some "extended character" problems can be worked around by
     // setting the XML character encoding to iso-8859-1 instead of
     // US-ASCII.  RETS is officially US-ASCII, so this is a last
-    // resort work around.  I think a SetEncoding flag should be added
-    // to a SearchRequest which could then be applied to the result
-    // set.  Until that SetEncoding is added, we'll use the default
-    // encoding instead of specifing it.  On the day we have that
-    // switch, uncomment the following two lines and delete the one
-    // after that.
-//     ExpatXmlParserPtr mXmlParser(
-//         new ExpatXmlParser(inputStream), "iso-8859-1"));
-    ExpatXmlParserPtr mXmlParser(new ExpatXmlParser(inputStream));
-
+    // resort work around.  
+    
+    ExpatXmlParserPtr mXmlParser(
+                        new ExpatXmlParser(inputStream,
+                                (mEncoding == RetsSession::RETS_XML_ISO_ENCODING 
+                                ? "iso-8859-1"    
+                                : "US-ASCII")));
     
     RetsXmlStartElementEventPtr metadataEvent;
     string delimiter = "\t";
@@ -219,4 +217,14 @@ string SearchResultSet::GetString(string columnName)
         throw invalid_argument("Invalid columnName: " + columnName);
     }
     return GetString(i->second);
+}
+
+void SearchResultSet::SetEncoding(RetsSession::EncodingType encoding)
+{
+    mEncoding = encoding;
+}
+
+RetsSession::EncodingType SearchResultSet::GetEncoding()
+{
+    return mEncoding;
 }

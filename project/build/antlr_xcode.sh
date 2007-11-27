@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ANTLR=/usr/local/bin/antlr
+ANTLR=${ANTLR_DIR}/bin/antlr
 OUTPUT_DIR=${BUILD_DIR}/${BUILD_STYLE}/antlr
 SRCDIR=${SRCROOT}/../librets/src
 

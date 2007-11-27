@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<RETS ReplyCode="0" ReplyText="Operation Successful">
+<COUNT Records="1"/>
+<DELIMITER value="09"/>
+<COLUMNS>	AgentID	FirstName	LastName	</COLUMNS>
+<DATA>	AG000001	Carlos	Nœ–ez	</DATA>
+</RETS>

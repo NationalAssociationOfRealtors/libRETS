@@ -214,6 +214,26 @@ class RetsSession : public MetadataLoader
      */
     void SetUserAgentPassword(std::string userAgentPassword);
     
+    enum EncodingType
+    {
+        /**
+         *The data is only encoded as US-ASCII.
+         */
+        RETS_XML_DEFAULT_ENCODING,
+        /**
+         * The data may contain extended characters.
+         */
+        RETS_XML_ISO_ENCODING
+    };
+    
+    /**
+     * Sets the data encoding for the data to be returned by a Search. Thiss
+     * is session wide, but can be overridden by SearchRequest.
+     *
+     * @param encoding Either RETS_XML_DEFAULT_ENCODING or RETS_XML_ISO_ENCODING.
+     */
+    void SetDefaultEncoding(EncodingType encoding);
+    
 
 private:
     static const char * RETS_VERSION_HEADER;
@@ -265,6 +285,8 @@ private:
     UserAgentAuthType mUserAgentAuthType;
 
     UserAgentAuthCalculator mUserAgentAuthCalculator;
+    
+    EncodingType mEncoding;
 };
 
 };

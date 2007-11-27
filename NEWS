@@ -6,6 +6,8 @@ Version ?.?.? - ?? ???? ????
   * Added build options of enable-PIC and enable-shared_dependencies to help
     with ezRETS on x86_64 on Linux.
   * Fix build bug where --enable-sql-compiler actually disabled it.
+  * Fix bug where non US-ASCII character in MLS data caused XML parsing to
+    fail. Ticket #40.
 
 Version 1.1.9 - 12 June 2007
 

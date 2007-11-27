@@ -54,6 +54,7 @@ CLASS::RetsSession(string login_url)
     mIncrementalMetadata = true;
     mUserAgentAuthType = USER_AGENT_AUTH_INTEREALTY;
     mUserAgentAuthCalculator.SetUserAgentPassword("");
+    SetDefaultEncoding(RETS_XML_DEFAULT_ENCODING);
 }
 
 RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
@@ -275,6 +276,7 @@ SearchResultSetAPtr CLASS::Search(SearchRequest * request)
     AssertSuccessfulResponse(httpResponse, searchUrl);
     
     SearchResultSetAPtr resultSet(new SearchResultSet());
+    resultSet->SetEncoding(mEncoding);
     resultSet->Parse(httpResponse->GetInputStream());
     return resultSet;
 }
@@ -420,3 +422,7 @@ void CLASS::SetUserAgentPassword(std::string userAgentPassword)
     mUserAgentAuthCalculator.SetUserAgentPassword(userAgentPassword);
 }
 
+void CLASS::SetDefaultEncoding(EncodingType encoding)
+{
+    mEncoding    = encoding;
+}

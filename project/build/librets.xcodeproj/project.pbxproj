@@ -193,23 +193,6 @@
 		55F9055508FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9055408FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXBuildStyle section */
-		DEF009860B279CA8005D1D2A /* Development */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-			};
-			name = Development;
-		};
-		DEF009870B279CA8005D1D2A /* Deployment */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-			};
-			name = Deployment;
-		};
-/* End PBXBuildStyle section */
-
 /* Begin PBXContainerItemProxy section */
 		55BD572B07FC9D9200526D69 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -249,7 +232,7 @@
 		55083EAD08A92BA2004B3699 /* MetadataElementTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MetadataElementTest.cpp; sourceTree = "<group>"; };
 		55083EC708A92D80004B3699 /* TestMetadataElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestMetadataElement.h; sourceTree = "<group>"; };
 		55083EC808A92D80004B3699 /* TestMetadataElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestMetadataElement.cpp; sourceTree = "<group>"; };
-		550A6DE909E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = SqlToDmqlObjectTest.cpp; sourceTree = "<group>"; };
+		550A6DE909E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = SqlToDmqlObjectTest.cpp; path = ../sql/SqlToDmqlObjectTest.cpp; sourceTree = "<group>"; };
 		551131F008D5DA4A00CC048D /* RetsErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetsErrorHandler.h; sourceTree = "<group>"; };
 		551131F208D5DAD500CC048D /* RetsErrorHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RetsErrorHandler.cpp; sourceTree = "<group>"; };
 		551131F608D5DDFC00CC048D /* ExceptionErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionErrorHandler.h; sourceTree = "<group>"; };
@@ -414,9 +397,9 @@
 		554AA16707FA0ECD00402C35 /* search.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = search.cpp; sourceTree = "<group>"; };
 		554AA16807FA0ECD00402C35 /* sql2dmql.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = sql2dmql.cpp; path = ../examples/src/sql2dmql.cpp; sourceTree = SOURCE_ROOT; };
 		554AA16907FA0ECD00402C35 /* xml.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = xml.cpp; path = ../examples/src/xml.cpp; sourceTree = SOURCE_ROOT; };
-		554AA16D07FA0EE800402C35 /* sql2dmql */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sql2dmql; sourceTree = BUILT_PRODUCTS_DIR; };
+		554AA16D07FA0EE800402C35 /* sql2dmql */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = file; path = sql2dmql; sourceTree = BUILT_PRODUCTS_DIR; };
 		554AA18607FA10FA00402C35 /* libantlr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libantlr.a; path = lib/libantlr.a; sourceTree = ANTLR; };
-		554AA19C07FA129100402C35 /* iRets.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = iRets.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		554AA19C07FA129100402C35 /* iRets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		554AA1B007FA13A000402C35 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		554AA1D007FA14A300402C35 /* AccountsArrayController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AccountsArrayController.m; sourceTree = "<group>"; };
 		554AA1D107FA14A300402C35 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MyController.h; path = ../iRets/MyController.h; sourceTree = "<group>"; };
@@ -496,7 +479,7 @@
 		55BD579507FDAAFD00526D69 /* RetsXmlAttributeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsXmlAttributeTest.cpp; sourceTree = "<group>"; };
 		55BD579607FDAAFD00526D69 /* RetsXmlStartElementEventTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsXmlStartElementEventTest.cpp; sourceTree = "<group>"; };
 		55BD579B07FDAAFD00526D69 /* SearchResultSetTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultSetTest.cpp; sourceTree = "<group>"; };
-		55BD579C07FDAAFD00526D69 /* SqlToDmqlCompilerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = SqlToDmqlCompilerTest.cpp; sourceTree = "<group>"; };
+		55BD579C07FDAAFD00526D69 /* SqlToDmqlCompilerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = SqlToDmqlCompilerTest.cpp; path = ../sql/SqlToDmqlCompilerTest.cpp; sourceTree = "<group>"; };
 		55BD579E07FDAAFD00526D69 /* TestObject.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = TestObject.cpp; sourceTree = "<group>"; };
 		55BD579F07FDAAFD00526D69 /* TestObject.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TestObject.h; sourceTree = "<group>"; };
 		55BD57A007FDAAFD00526D69 /* testUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = testUtil.cpp; sourceTree = "<group>"; };
@@ -505,7 +488,7 @@
 		55BD57A307FDAAFD00526D69 /* utilTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = utilTest.cpp; sourceTree = "<group>"; };
 		55BD57A407FDAAFD00526D69 /* XmlMetadataParserTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = XmlMetadataParserTest.cpp; sourceTree = "<group>"; };
 		55BD57C107FDAB4500526D69 /* libcppunit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcppunit.dylib; path = lib/libcppunit.dylib; sourceTree = CPPUNIT; };
-		55BD57ED07FDAFE000526D69 /* test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
+		55BD57ED07FDAFE000526D69 /* test */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = file; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
 		55EE8499093E5AAA00812582 /* librets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librets.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F23658087B2AB00090B325 /* MetadataForeignKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MetadataForeignKey.cpp; sourceTree = "<group>"; };
 		55F23735087C75710090B325 /* RetsHttpLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetsHttpLogger.h; sourceTree = "<group>"; };
@@ -525,7 +508,7 @@
 		55F23EFF088FFC2D0090B325 /* LookupOrCriterion.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = LookupOrCriterion.cpp; sourceTree = "<group>"; };
 		55F23F09088FFC720090B325 /* LookupOrCriterionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = LookupOrCriterionTest.cpp; sourceTree = "<group>"; };
 		55F23F8A089003B60090B325 /* TestSqlMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSqlMetadata.h; sourceTree = "<group>"; };
-		55F23F8B089003B60090B325 /* TestSqlMetadata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSqlMetadata.cpp; sourceTree = "<group>"; };
+		55F23F8B089003B60090B325 /* TestSqlMetadata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestSqlMetadata.cpp; path = ../sql/TestSqlMetadata.cpp; sourceTree = "<group>"; };
 		55F2405B08904F0C0090B325 /* abc123-1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "abc123-1.gif"; sourceTree = "<group>"; };
 		55F2405C08904F0C0090B325 /* get-object-response-multi-location.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-multi-location.txt"; sourceTree = "<group>"; };
 		55F2405D08904F0C0090B325 /* get-object-response-no-object-variman.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-no-object-variman.txt"; sourceTree = "<group>"; };
@@ -533,9 +516,9 @@
 		55F2405F08904F0C0090B325 /* get-object-response-single-location.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-single-location.txt"; sourceTree = "<group>"; };
 		55F2406008904F0C0090B325 /* get-object-response-single.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-single.txt"; sourceTree = "<group>"; };
 		55F2406108904F0C0090B325 /* invalid-http-response.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "invalid-http-response.txt"; sourceTree = "<group>"; };
-		55F2406208904F0C0090B325 /* login_valid10.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = login_valid10.xml; sourceTree = "<group>"; };
-		55F2406308904F0C0090B325 /* login_valid15.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = login_valid15.xml; sourceTree = "<group>"; };
-		55F2406408904F0C0090B325 /* logout_valid15.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = logout_valid15.xml; sourceTree = "<group>"; };
+		55F2406208904F0C0090B325 /* login-valid10.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "login-valid10.xml"; sourceTree = "<group>"; };
+		55F2406308904F0C0090B325 /* login-valid15.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "login-valid15.xml"; sourceTree = "<group>"; };
+		55F2406408904F0C0090B325 /* logout-valid15.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "logout-valid15.xml"; sourceTree = "<group>"; };
 		55F2406508904F0C0090B325 /* metadata-blank-data.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "metadata-blank-data.xml"; sourceTree = "<group>"; };
 		55F2406608904F0C0090B325 /* metadata-class.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "metadata-class.xml"; sourceTree = "<group>"; };
 		55F2406708904F0C0090B325 /* metadata-response.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "metadata-response.xml"; sourceTree = "<group>"; };
@@ -556,6 +539,7 @@
 		55F9055408FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = DefaultMetadataCollectorTest.cpp; sourceTree = "<group>"; };
 		55F9061408FEFDCE00D76E8C /* DefaultMetadataCollector.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = DefaultMetadataCollector.cpp; sourceTree = "<group>"; };
 		55F9061608FEFDD900D76E8C /* DefaultMetadataCollector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefaultMetadataCollector.h; sourceTree = "<group>"; };
+		F90D477E0CF8D29200B9AC65 /* search-response-extended-char.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "search-response-extended-char.xml"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -630,7 +614,7 @@
 			isa = PBXGroup;
 			children = (
 				554AA18C07FA110900402C35 /* External Libraries */,
-				554AA19107FA117A00402C35 /* librets */,
+				554AA19107FA117A00402C35 /* build */,
 				554AA16207FA0E9C00402C35 /* src */,
 				554AA1AF07FA134F00402C35 /* iRets */,
 				554A9EB307F9F2B300402C35 /* Products */,
@@ -738,7 +722,7 @@
 			name = "External Libraries";
 			sourceTree = "<group>";
 		};
-		554AA19107FA117A00402C35 /* librets */ = {
+		554AA19107FA117A00402C35 /* build */ = {
 			isa = PBXGroup;
 			children = (
 				55BD577D07FDAAFD00526D69 /* test */,
@@ -746,7 +730,7 @@
 				554A9EB407F9F2D200402C35 /* Headers */,
 				554AA11807FA0B3D00402C35 /* antlr */,
 			);
-			name = librets;
+			name = build;
 			sourceTree = "<group>";
 		};
 		554AA1AF07FA134F00402C35 /* iRets */ = {
@@ -1126,14 +1110,15 @@
 				55F2405F08904F0C0090B325 /* get-object-response-single-location.txt */,
 				55F2406008904F0C0090B325 /* get-object-response-single.txt */,
 				55F2406108904F0C0090B325 /* invalid-http-response.txt */,
-				55F2406208904F0C0090B325 /* login_valid10.xml */,
-				55F2406308904F0C0090B325 /* login_valid15.xml */,
-				55F2406408904F0C0090B325 /* logout_valid15.xml */,
+				55F2406208904F0C0090B325 /* login-valid10.xml */,
+				55F2406308904F0C0090B325 /* login-valid15.xml */,
+				55F2406408904F0C0090B325 /* logout-valid15.xml */,
 				55F2406508904F0C0090B325 /* metadata-blank-data.xml */,
 				55F2406608904F0C0090B325 /* metadata-class.xml */,
 				55F2406708904F0C0090B325 /* metadata-response.xml */,
 				55F2406808904F0C0090B325 /* metadata-system.xml */,
 				55F2406908904F0C0090B325 /* search-response-error.xml */,
+				F90D477E0CF8D29200B9AC65 /* search-response-extended-char.xml */,
 				55F2406A08904F0C0090B325 /* search-response-no-records.xml */,
 				55F2406B08904F0C0090B325 /* search-response-single-column.xml */,
 				55F2406C08904F0C0090B325 /* search-response.xml */,
@@ -1348,12 +1333,6 @@
 		554A9EA607F9F27F00402C35 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 55C70BC2093D1BDD00D34681 /* Build configuration list for PBXProject "librets" */;
-			buildSettings = {
-			};
-			buildStyles = (
-				DEF009860B279CA8005D1D2A /* Development */,
-				DEF009870B279CA8005D1D2A /* Deployment */,
-			);
 			hasScannedForEncodings = 0;
 			mainGroup = 554A9EA207F9F27F00402C35;
 			productRefGroup = 554A9EB307F9F2B300402C35 /* Products */;
@@ -1741,7 +1720,10 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				HEADER_SEARCH_PATHS = ../librets/include;
+				HEADER_SEARCH_PATHS = (
+					../librets/include,
+					"${BOOST}/include",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(CURL)/lib",
 					"$(EXPAT)/lib",

@@ -228,6 +228,10 @@ class SearchResultSet
     std::string GetString(int columnIndex);
     
     std::string GetString(std::string columnName);
+
+    void SetEncoding(RetsSession::EncodingType encoding);
+
+    RetsSession::EncodingType GetEncoding();
 };
 typedef std::auto_ptr<SearchResultSet> SearchResultSetAPtr;
 
@@ -679,7 +683,6 @@ enum UserAgentAuthType
     USER_AGENT_AUTH_INTEREALTY,
 };
 
-
 %typemap(cscode) RetsHttpLogger %{
     public delegate void Delegate(Type type, byte[] data);
     public delegate void NativeDelegate(Type type, IntPtr data, int length);
@@ -839,6 +842,14 @@ class RetsSession
     UserAgentAuthType GetUserAgentAuthType() const;
     
     void SetUserAgentPassword(std::string userAgentPassword);
+
+    enum EncodingType
+    {
+        RETS_XML_DEFAULT_ENCODING,
+        RETS_XML_ISO_ENCODING
+    };
+
+    void SetDefaultEncoding(EncodingType encoding);
 };
 
 

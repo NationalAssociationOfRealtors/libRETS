@@ -58,6 +58,12 @@ Building librets
 
 Run the following commands:
 
-  % ./configure
+  % ./configure 
   % make
   % sudo make install
+
+If boost or expat can't be found, then you may need to override that with
+switches to the configure step. For example, if boost and expat were beneath 
+/opt/local/, then you'd:
+
+  % ./configure --with-boost-prefix=/opt/local --with-expat-prefix=/opt/local

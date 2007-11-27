@@ -21,6 +21,7 @@
 #include <vector>
 #include "librets/std_forward.h"
 #include "librets/RetsObject.h"
+#include "librets/RetsSession.h"
 
 namespace librets {
 
@@ -86,6 +87,23 @@ class SearchResultSet : public virtual RetsObject
      */
     std::string GetString(std::string columnName);
 
+    /**
+     * Set the data encoding flag to allow for parsing of extended characters by Expat.
+     * RETS is officially US-ASCII, but this will allow a work around for servers that
+     * haven't properly sanitized their data.
+     *
+     * @param encoding Either RetsSession::RETS_XML_DEFAULT_ENCODING or 
+	 * RetsSession::RETS_XML_ISO_ENCODING.
+     */
+    void SetEncoding(RetsSession::EncodingType encoding);
+
+    /**
+     * Get the current value for the data encoding flag.
+     *
+     * @return string value of encoding flag.
+     */
+    RetsSession::EncodingType GetEncoding();
+
   private:
     typedef std::vector<StringVectorPtr> RowData;
     typedef std::map<std::string, StringVector::size_type> ColumnToIndexMap;
@@ -97,6 +115,7 @@ class SearchResultSet : public virtual RetsObject
     RowData mRows;
     RowData::iterator mNextRow;
     StringVectorPtr mCurrentRow;
+    RetsSession::EncodingType mEncoding;
 };
 
 };

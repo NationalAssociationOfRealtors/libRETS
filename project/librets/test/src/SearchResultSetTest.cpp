@@ -19,6 +19,7 @@
 #include "testUtil.h"
 #include "librets/SearchResultSet.h"
 #include "librets/RetsReplyException.h"
+#include "librets/RetsSession.h"
 
 using namespace librets;
 using namespace std;
@@ -36,6 +37,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testOutOfBoundsColumnNumber);
     CPPUNIT_TEST(testInvalidColumnName);
     CPPUNIT_TEST(testPipeDelimiter);
+    CPPUNIT_TEST(testExtendedCharResponse);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -47,6 +49,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testOutOfBoundsColumnNumber();
     void testInvalidColumnName();
     void testPipeDelimiter();
+    void testExtendedCharResponse();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -224,5 +227,47 @@ void CLASS::testPipeDelimiter()
     ASSERT_STRING_EQUAL("AURORA", resultSet.GetString("CITY"));
     ASSERT_STRING_EQUAL("AURORA", resultSet.GetString(0));
     
+    CPPUNIT_ASSERT(!resultSet.HasNext());
+}
+
+
+void CLASS::testExtendedCharResponse()
+{
+    SearchResultSet resultSet;
+
+    /*
+     * This represents "nunez" with extended characters for the accented "u",
+     * and the "enyay".
+     */
+    const char nunez [] = {0x4e, 0xc2, 0x9c, 0xc2, 0x96, 0x65, 0x7a};
+
+    try
+    {
+        resultSet.Parse(getResource("search-response-extended-char.xml"));
+        CPPUNIT_FAIL("Should have thrown exception");
+    }
+    catch (RetsException &)
+    {
+        // Expected
+    }
+
+    resultSet.SetEncoding(RetsSession::RETS_XML_ISO_ENCODING);
+    resultSet.Parse(getResource("search-response-extended-char.xml"));
+
+    ASSERT_EQUAL(1, resultSet.GetCount());
+    StringVector columns = resultSet.GetColumns();
+    ASSERT_EQUAL(StringVector::size_type(3), columns.size());
+    ASSERT_STRING_EQUAL("AgentID", columns.at(0));
+    ASSERT_STRING_EQUAL("FirstName", columns.at(1));
+    ASSERT_STRING_EQUAL("LastName", columns.at(2));
+
+    CPPUNIT_ASSERT(resultSet.HasNext());
+    ASSERT_STRING_EQUAL("AG000001", resultSet.GetString("AgentID"));
+    ASSERT_STRING_EQUAL("AG000001", resultSet.GetString(0));
+    ASSERT_STRING_EQUAL("Carlos", resultSet.GetString("FirstName"));
+    ASSERT_STRING_EQUAL("Carlos", resultSet.GetString(1));
+    ASSERT_STRING_EQUAL(nunez, resultSet.GetString("LastName"));
+    ASSERT_STRING_EQUAL(nunez, resultSet.GetString(2));
+
     CPPUNIT_ASSERT(!resultSet.HasNext());
 }
