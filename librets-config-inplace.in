@@ -12,7 +12,7 @@ sql="@USE_SQL_COMPILER@"
 usage()
 {
     cat <<EOF
-Usage: curl-config [OPTION]
+Usage: librets-config [OPTION]
 
 Available values for OPTION include:
 
