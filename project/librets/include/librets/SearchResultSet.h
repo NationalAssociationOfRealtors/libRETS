@@ -103,6 +103,13 @@ class SearchResultSet : public virtual RetsObject
      * @return string value of encoding flag.
      */
     RetsSession::EncodingType GetEncoding();
+	
+	/**
+	 * Indicate whether the MAXROWS tag has been seen.
+	 *
+	 * @return Boolean value
+	 */
+	bool HasMaxRows();
 
   private:
     typedef std::vector<StringVectorPtr> RowData;
@@ -116,6 +123,7 @@ class SearchResultSet : public virtual RetsObject
     RowData::iterator mNextRow;
     StringVectorPtr mCurrentRow;
     RetsSession::EncodingType mEncoding;
+	bool mMaxRows;
 };
 
 };
