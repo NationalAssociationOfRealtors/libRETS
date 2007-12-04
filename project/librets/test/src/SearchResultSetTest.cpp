@@ -38,6 +38,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInvalidColumnName);
     CPPUNIT_TEST(testPipeDelimiter);
     CPPUNIT_TEST(testExtendedCharResponse);
+	CPPUNIT_TEST(testMaxRows);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -50,6 +51,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testInvalidColumnName();
     void testPipeDelimiter();
     void testExtendedCharResponse();
+	void testMaxRows();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -271,3 +273,30 @@ void CLASS::testExtendedCharResponse()
 
     CPPUNIT_ASSERT(!resultSet.HasNext());
 }
+
+void CLASS::testMaxRows()
+{
+	/*
+	 * MAXROWS is set in search-repsonse.xml and data validation testing
+	 * has already happened. We can run this test against that data and
+	 * check for the presence of MAXROWS. We will also run the test againt
+	 * search-response-no-count.xml, which also lacks the MAXROWS tag make
+	 * sure we properly detect its lack of presense as well.
+	 */
+    SearchResultSet resultSet;
+    istreamPtr inputStream = getResource("search-response.xml");
+    resultSet.Parse(inputStream);
+
+	// We should see the MAXROWS indication
+	CPPUNIT_ASSERT(resultSet.HasMaxRows());
+
+	/*
+	 * Now rerun the test against search-response-no-count.xml.
+	 * MAXROWS has not been set in this test.
+	 */
+	inputStream = getResource("search-response-no-count.xml");
+    resultSet.Parse(inputStream);
+	CPPUNIT_ASSERT(!resultSet.HasMaxRows());
+
+}
+
