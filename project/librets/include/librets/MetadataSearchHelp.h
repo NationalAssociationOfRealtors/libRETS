@@ -38,6 +38,8 @@ class MetadataSearchHelp : public MetadataElement
     virtual std::string GetId() const;
     
     std::string GetSearchHelpID() const;
+
+    std::string GetValue() const;
 };
 
 };

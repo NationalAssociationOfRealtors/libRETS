@@ -196,6 +196,17 @@ class RetsMetadata
      */
     MetadataObjectList GetAllObjects(MetadataResource * metadataResource)
         const;
+
+    /**
+     * Returns the requested SearchHelp given the resource name and
+     * searchHelpID.
+     *
+     * @param resourceName A resource name
+     * @param searchHelpID The search help ID
+     * @return A MetadataSearchHelp
+     */
+    MetadataSearchHelp* GetSearchHelp(std::string resourceName,
+                                      std::string searchHelpID) const;
     
   private:
     void InitSystem();

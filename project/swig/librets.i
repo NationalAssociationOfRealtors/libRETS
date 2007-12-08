@@ -622,6 +622,14 @@ class MetadataObject : public MetadataElement
 typedef std::vector<MetadataObject *> MetadataObjectList;
 %template(MetadataObjectList) std::vector<MetadataObject *>;
 
+class MetadataSearchHelp : public MetadataElement
+{
+  public:
+    virtual std::string GetId() const;
+    std::string GetSearchHelpID() const;
+    std::string GetValue() const;
+};
+
 %nodefault;
 
 class RetsMetadata
@@ -663,6 +671,9 @@ class RetsMetadata
 
     MetadataObjectList GetAllObjects(MetadataResource * metadataResource)
         const;
+
+    MetadataSearchHelp * GetSearchHelp(std::string resourceName,
+                                       std::string searchHelpID) const;
 };
 
 %default;

@@ -26,6 +26,7 @@
 #include "librets/MetadataLookup.h"
 #include "librets/MetadataLookupType.h"
 #include "librets/MetadataObject.h"
+#include "librets/MetadataSearchHelp.h"
 #include "librets/RetsException.h"
 
 using namespace librets;
@@ -200,4 +201,12 @@ MetadataObjectList RetsMetadata::GetAllObjects(
     MetadataResource * metadataResource) const
 {
     return GetAllObjects(metadataResource->GetResourceID());
+}
+
+MetadataSearchHelp * RetsMetadata::GetSearchHelp(
+    std::string resourceName, std::string searchHelpID) const
+{
+    FinderHelper<MetadataSearchHelp> helper(mFinder);
+    return helper.FindByPath(MetadataElement::SEARCH_HELP, resourceName,
+                              searchHelpID);
 }

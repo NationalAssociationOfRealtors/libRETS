@@ -46,6 +46,7 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGetLookupType);
     CPPUNIT_TEST(testGetAllObjectsByName);
     CPPUNIT_TEST(testGetAllObjectsByObject);
+    CPPUNIT_TEST(testGetSearchHelp);
     CPPUNIT_TEST_SUITE_END();
     
   protected:
@@ -64,6 +65,7 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     void testGetLookupType();
     void testGetAllObjectsByName();
     void testGetAllObjectsByObject();
+    void testGetSearchHelp();
     
   public:
     void setUp();
@@ -199,4 +201,12 @@ void CLASS_::testGetAllObjectsByObject()
         metadata->GetAllObjects(actualResource);
     ASSERT_VECTOR_EQUAL(mMetadataTree->objectClasses, actualObjectClasses);
     
+}
+
+void CLASS_::testGetSearchHelp()
+{
+    MetadataSearchHelp* actualHelp = metadata->GetSearchHelp("Property",
+                                                             "ListPrice");
+    CPPUNIT_ASSERT(actualHelp);
+    ASSERT_EQUAL(*mMetadataTree->listPriceSearchHelp, *actualHelp);
 }

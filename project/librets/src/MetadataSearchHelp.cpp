@@ -36,3 +36,8 @@ string CLASS::GetSearchHelpID() const
 {
     return GetStringAttribute("SearchHelpID");
 }
+
+string CLASS::GetValue() const
+{
+    return GetStringAttribute("Value");
+}

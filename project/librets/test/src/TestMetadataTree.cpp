@@ -65,6 +65,7 @@ CLASS::CLASS(MetadataElementCollector * collector)
     listPriceTable.reset(new MetadataTable());
     listPriceTable->SetAttribute("SystemName", "ListPrice");
     listPriceTable->SetLevel("Property:RES");
+    listPriceTable->SetAttribute("SearchHelpID", "ListPrice");
     collector->AddElement(listPriceTable);
     propertyResTables.push_back(listPriceTable.get());
     
@@ -96,6 +97,13 @@ CLASS::CLASS(MetadataElementCollector * collector)
     lincolnParkLookupType->SetAttribute("LongValue", "Linconln Park");
     collector->AddElement(lincolnParkLookupType);
     propertyAreaLookupTypes.push_back(lincolnParkLookupType.get());
+
+    listPriceSearchHelp.reset(new MetadataSearchHelp());
+    listPriceSearchHelp->SetLevel("Property");
+    listPriceSearchHelp->SetAttribute("SearchHelpID", "ListPrice");
+    listPriceSearchHelp->SetAttribute("Value", "This tells you the price of "
+                                      "the property, DUH");
+    collector->AddElement(listPriceSearchHelp);
 
     propObject.reset(new MetadataObject());
     propObject->SetLevel("Property");
