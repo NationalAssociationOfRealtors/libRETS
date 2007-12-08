@@ -8,6 +8,8 @@ Version ?.?.? - ?? ???? ????
   * Fix build bug where --enable-sql-compiler actually disabled it.
   * Fix bug where non US-ASCII character in MLS data caused XML parsing to
     fail. Ticket #40.
+  * Added SearchResultSet::HasMaxRows() in order to determine if MAXROWS
+   was sent by the server. Ticket #43.
 
 Version 1.1.9 - 12 June 2007
 
