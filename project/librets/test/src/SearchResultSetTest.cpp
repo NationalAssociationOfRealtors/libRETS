@@ -241,7 +241,7 @@ void CLASS::testExtendedCharResponse()
      * This represents "nunez" with extended characters for the accented "u",
      * and the "enyay".
      */
-    const char nunez [] = {0x4e, 0xc2, 0x9c, 0xc2, 0x96, 0x65, 0x7a};
+    const char nunez [] = {0x4e, 0xc2, 0x9c, 0xc2, 0x96, 0x65, 0x7a, 0x00};
 
     try
     {
