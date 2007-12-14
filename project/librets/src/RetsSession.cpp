@@ -55,6 +55,7 @@ CLASS::RetsSession(string login_url)
     mUserAgentAuthType = USER_AGENT_AUTH_INTEREALTY;
     mUserAgentAuthCalculator.SetUserAgentPassword("");
     SetDefaultEncoding(RETS_XML_DEFAULT_ENCODING);
+    mLoggedIn = false;
 }
 
 RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
@@ -88,6 +89,7 @@ bool CLASS::Login(string user_name, string passwd)
 {
     mLoginResponse.reset();
     mCapabilityUrls.reset();
+    mLoggedIn = false;
     mHttpClient->SetDefaultHeader(RETS_VERSION_HEADER,
                                   RetsVersionToString(mRetsVersion));
     RetsHttpRequest request;
@@ -115,17 +117,25 @@ bool CLASS::Login(string user_name, string passwd)
         mLoginResponse->CreateCapabilityUrls(mLoginUrl).release());
 
     RetrieveAction();
+    
+    mLoggedIn = true;
 
     return true;
 }
 
 LoginResponse * CLASS::GetLoginResponse() const
 {
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
     return mLoginResponse.get();
 }
 
 CapabilityUrls * CLASS::GetCapabilityUrls() const
 {
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
     return mCapabilityUrls.get();
 }
 
@@ -152,6 +162,9 @@ string CLASS::GetAction()
 
 RetsMetadata * CLASS::GetMetadata()
 {
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
     if (!mMetadata)
     {
         InitializeMetadata();
@@ -202,6 +215,9 @@ std::string CLASS::MetadataTypeToString(MetadataElement::Type type)
 void CLASS::LoadMetadata(MetadataElement::Type type,
                          std::string level)
 {
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
     string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
     RetsHttpRequest request;
     request.SetUrl(getMetadataUrl);
@@ -256,6 +272,9 @@ SearchRequestAPtr CLASS::CreateSearchRequest(string searchType,
                                              string searchClass,
                                              string query)
 {
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
     std::auto_ptr<SearchRequest> searchRequest(
         new SearchRequest(searchType, searchClass, query));
     if (mDetectedRetsVersion == RETS_1_0)
@@ -271,6 +290,9 @@ SearchRequestAPtr CLASS::CreateSearchRequest(string searchType,
 
 SearchResultSetAPtr CLASS::Search(SearchRequest * request)
 {
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
     string searchUrl = mCapabilityUrls->GetSearchUrl();
     request->SetUrl(searchUrl);
     request->SetMethod(mHttpMethod);
@@ -285,6 +307,9 @@ SearchResultSetAPtr CLASS::Search(SearchRequest * request)
 
 GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)
 {
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
     RetsHttpRequestPtr httpRequest = request->CreateHttpRequest();
     string getObjectUrl = mCapabilityUrls->GetGetObjectUrl();
     httpRequest->SetUrl(getObjectUrl);
@@ -304,6 +329,10 @@ GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)
 
 LogoutResponseAPtr CLASS::Logout()
 {
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
+    mLoggedIn = false;
     LogoutResponseAPtr logoutResponse;
     string logoutUrl = mCapabilityUrls->GetLogoutUrl();
     if (logoutUrl == "")
