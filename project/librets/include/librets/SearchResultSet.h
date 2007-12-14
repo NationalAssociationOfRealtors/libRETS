@@ -110,6 +110,20 @@ class SearchResultSet : public virtual RetsObject
 	 * @return Boolean value
 	 */
 	bool HasMaxRows();
+	
+	/**
+	 * Returns the RETS-STATUS ReplyCode.
+	 *
+	 * @return int value of ReplyCode
+	 */
+	int GetReplyCode();
+	
+	/**
+	 * Returns the RETS-STATUS ReplyText.
+	 *
+	 * @return string value of ReplyText.
+	 */
+	std::string GetReplyText();
 
   private:
     typedef std::vector<StringVectorPtr> RowData;
@@ -124,6 +138,8 @@ class SearchResultSet : public virtual RetsObject
     StringVectorPtr mCurrentRow;
     RetsSession::EncodingType mEncoding;
 	bool mMaxRows;
+	int mReplyCode;
+	std::string mReplyText;
 };
 
 };
