@@ -57,8 +57,6 @@
 		5570976B08FDC4530067D309 /* TestMetadataLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5570976A08FDC4530067D309 /* TestMetadataLoader.cpp */; };
 		55B7EAE5080EC4AA00245DFA /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
 		55B7EAE7080EC4AA00245DFA /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
-		55BD538E07FBB7BA00526D69 /* DisclosableView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD538D07FBB7BA00526D69 /* DisclosableView.framework */; };
-		55BD55B507FBDF0500526D69 /* DisclosableView.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55BD538D07FBB7BA00526D69 /* DisclosableView.framework */; };
 		55BD568C07FC448F00526D69 /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565907FC3BBE00526D69 /* libexpat.a */; };
 		55BD56AF07FC48A000526D69 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD56AE07FC48A000526D69 /* libz.dylib */; };
 		55BD56CD07FC76F600526D69 /* iRets.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55BD56CC07FC76F600526D69 /* iRets.icns */; };
@@ -190,6 +188,10 @@
 		F904343B0D03971C004E3017 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
 		F90434580D039AEA004E3017 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
 		F90434590D039AEA004E3017 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
+		F9BE9E510D0C96F500AD1B98 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
+		F9BE9EC80D0C9E6600AD1B98 /* DisclosableView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD538D07FBB7BA00526D69 /* DisclosableView.framework */; };
+		F9F6CC860D12ED2700BDF053 /* DisclosableView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD538D07FBB7BA00526D69 /* DisclosableView.framework */; };
+		F9F6CCAE0D13057D00BDF053 /* DisclosableView.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55BD538D07FBB7BA00526D69 /* DisclosableView.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,6 +216,13 @@
 			remoteGlobalIDString = 55EE8498093E5AAA00812582;
 			remoteInfo = librets;
 		};
+		F9BE9E870D0C97D000AD1B98 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55EE8498093E5AAA00812582;
+			remoteInfo = librets;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -223,7 +232,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				55BD55B507FBDF0500526D69 /* DisclosableView.framework in CopyFiles */,
+				F9F6CCAE0D13057D00BDF053 /* DisclosableView.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,7 +464,7 @@
 		558F6ACF07FE088600CE8AF2 /* GetObjectResponse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetObjectResponse.cpp; sourceTree = "<group>"; };
 		558F6AD107FE089700CE8AF2 /* ObjectDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectDescriptor.cpp; sourceTree = "<group>"; };
 		55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = lib/libboost_filesystem.a; sourceTree = BOOST; };
-		55BD538D07FBB7BA00526D69 /* DisclosableView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DisclosableView.framework; sourceTree = DISCLOSABLE_VIEW; };
+		55BD538D07FBB7BA00526D69 /* DisclosableView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = DisclosableView.framework; path = ../../../../vendorsrc/DisclosableView/current/DisclosableView.framework; sourceTree = SOURCE_ROOT; };
 		55BD563407FC3AB200526D69 /* AccountsArrayController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AccountsArrayController.h; sourceTree = "<group>"; };
 		55BD563607FC3AC600526D69 /* iRets_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = iRets_Prefix.pch; sourceTree = "<group>"; };
 		55BD565707FC3BA100526D69 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = lib/libcurl.a; sourceTree = CURL; };
@@ -565,11 +574,13 @@
 			files = (
 				55097D3A09A149EA00225C99 /* librets.a in Frameworks */,
 				554AA1B107FA13A000402C35 /* Cocoa.framework in Frameworks */,
-				55BD538E07FBB7BA00526D69 /* DisclosableView.framework in Frameworks */,
+				F9BE9EC80D0C9E6600AD1B98 /* DisclosableView.framework in Frameworks */,
 				55BD568C07FC448F00526D69 /* libexpat.a in Frameworks */,
 				55BD56AF07FC48A000526D69 /* libz.dylib in Frameworks */,
 				55BD56EB07FC823E00526D69 /* libcrypto.dylib in Frameworks */,
 				55BD56EC07FC823E00526D69 /* libssl.dylib in Frameworks */,
+				F9BE9E510D0C96F500AD1B98 /* libantlr.a in Frameworks */,
+				F9F6CC860D12ED2700BDF053 /* DisclosableView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1276,6 +1287,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F9BE9E880D0C97D000AD1B98 /* PBXTargetDependency */,
 			);
 			name = iRets;
 			productName = iRets;
@@ -1607,6 +1619,11 @@
 			target = 55EE8498093E5AAA00812582 /* librets */;
 			targetProxy = F90434360D0396D8004E3017 /* PBXContainerItemProxy */;
 		};
+		F9BE9E880D0C97D000AD1B98 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55EE8498093E5AAA00812582 /* librets */;
+			targetProxy = F9BE9E870D0C97D000AD1B98 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1803,7 +1820,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(DISCLOSABLE_VIEW)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DISCLOSABLE_VIEW)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../../../vendorsrc/DisclosableView/current\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../../vendorsrc/DisclosableView/current\"";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -1845,7 +1868,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DISCLOSABLE_VIEW)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DISCLOSABLE_VIEW)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../../../vendorsrc/DisclosableView/current\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../../vendorsrc/DisclosableView/current\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -1883,7 +1912,13 @@
 		55C70BB9093D1BDD00D34681 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(DISCLOSABLE_VIEW)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DISCLOSABLE_VIEW)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../../../vendorsrc/DisclosableView/current\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../../vendorsrc/DisclosableView/current\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
