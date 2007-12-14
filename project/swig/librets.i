@@ -232,6 +232,12 @@ class SearchResultSet
     void SetEncoding(RetsSession::EncodingType encoding);
 
     RetsSession::EncodingType GetEncoding();
+
+    bool HasMaxRows();
+
+    int GetReplyCode();
+
+    std::string GetReplyText();
 };
 typedef std::auto_ptr<SearchResultSet> SearchResultSetAPtr;
 
