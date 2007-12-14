@@ -287,6 +287,8 @@ private:
     UserAgentAuthCalculator mUserAgentAuthCalculator;
     
     EncodingType mEncoding;
+    
+    bool mLoggedIn;
 };
 
 };
