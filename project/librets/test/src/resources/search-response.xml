@@ -6,4 +6,5 @@
 <DATA>	LN000005	250000	Chicago	2004-07-04	</DATA>
 <DATA>	LN000004	380000	Buffalo Grove	2004-05-30	</DATA>
 <MAXROWS/>
+<RETS-STATUS ReplyCode="20208" ReplyText="Maximum Records Exceeded"/>
 </RETS>

@@ -39,6 +39,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPipeDelimiter);
     CPPUNIT_TEST(testExtendedCharResponse);
 	CPPUNIT_TEST(testMaxRows);
+	CPPUNIT_TEST(testRetsStatus);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -52,6 +53,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testPipeDelimiter();
     void testExtendedCharResponse();
 	void testMaxRows();
+    void testRetsStatus();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -298,5 +300,33 @@ void CLASS::testMaxRows()
     resultSet.Parse(inputStream);
 	CPPUNIT_ASSERT(!resultSet.HasMaxRows());
 
+}
+
+void CLASS::testRetsStatus()
+{
+	/*
+	 * RETS-STATUS is used in search-repsonse.xml and data validation testing
+	 * has already happened. We can run this test against that data and
+	 * check for the presence of a reply code and reply text. We will also run 
+     * the test againt search-response-no-count.xml, which also lacks the RETS-STATUS 
+     * tag to make sure we properly reset the values.
+	 */
+    SearchResultSet resultSet;
+    istreamPtr inputStream = getResource("search-response.xml");
+    resultSet.Parse(inputStream);
+
+	// We should see the replyCode == 20208, indicating MAXROWS have been sent
+    ASSERT_EQUAL(20208, resultSet.GetReplyCode());
+    // The ReplyText should be "Maximum Records Exceeded"
+    ASSERT_STRING_EQUAL("Maximum Records Exceeded", resultSet.GetReplyText());
+
+	/*
+	 * Now rerun the test against search-response-no-count.xml.
+	 * RETS-STATUS has not been set in this test.
+	 */
+	inputStream = getResource("search-response-no-count.xml");
+    resultSet.Parse(inputStream);
+	CPPUNIT_ASSERT(resultSet.GetReplyCode() == 0);
+    CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
 }
 
