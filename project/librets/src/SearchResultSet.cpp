@@ -44,6 +44,8 @@ SearchResultSet::SearchResultSet()
     mCount = -1;
     mEncoding = RetsSession::RETS_XML_DEFAULT_ENCODING;
 	mMaxRows = false;
+	mReplyCode = 0;
+	mReplyText.clear();
 }
 
 SearchResultSet::~SearchResultSet()
@@ -126,9 +128,11 @@ void SearchResultSet::Parse(istreamPtr inputStream)
                 throw RetsReplyException(replyCode, meaning);
             }
 			/*
-			 * Beginning a transaction. Clear mMaxRows.
+			 * Beginning a transaction. Clear mMaxRows, mReplyCode and mReplyText.
 			 */
 			mMaxRows = false;
+			mReplyCode = 0;
+			mReplyText.clear();
         }
         else if (name == "COUNT")
         {
@@ -183,6 +187,17 @@ void SearchResultSet::Parse(istreamPtr inputStream)
 		{
 			mMaxRows = true;
 		}
+        else if (name == "RETS-STATUS")
+        {
+            istringstream replyCodeString(
+                startEvent->GetAttributeValue("ReplyCode"));
+            replyCodeString >> mReplyCode;
+            mReplyText.clear();
+            if (mReplyCode != 0)
+            {
+                mReplyText = startEvent->GetAttributeValue("ReplyText");
+            }
+        }
     }
     mNextRow = mRows.begin();
     mCurrentRow.reset();
@@ -241,4 +256,14 @@ RetsSession::EncodingType SearchResultSet::GetEncoding()
 bool SearchResultSet::HasMaxRows()
 {
 	return mMaxRows;
+}
+
+int SearchResultSet::GetReplyCode()
+{
+    return mReplyCode;
+}
+
+string SearchResultSet::GetReplyText()
+{
+    return mReplyText;
 }
