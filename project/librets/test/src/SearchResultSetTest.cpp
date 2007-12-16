@@ -156,7 +156,22 @@ void CLASS::testErrorResponse()
         ASSERT_EQUAL(20205, e.GetReplyCode());
         ASSERT_STRING_EQUAL("Invalid Query Syntax", e.GetMeaning());
     }
-
+    /*
+     * Test the extended error response.
+     */
+    try
+    {
+        SearchResultSet resultSet;
+        resultSet.Parse(getResource("search-response-error-extended.xml"));
+        CPPUNIT_FAIL("Should have thrown exception");
+    }
+    catch (RetsReplyException & e)
+    {
+        // Expected
+        ASSERT_EQUAL(20205, e.GetReplyCode());
+        ASSERT_STRING_EQUAL("Invalid Query Syntax", e.GetMeaning());
+        ASSERT_STRING_EQUAL("You can't do that, so try better next time.", e.GetExtendedMeaning());
+    }
 }
 
 void CLASS::testSingleColumn()
