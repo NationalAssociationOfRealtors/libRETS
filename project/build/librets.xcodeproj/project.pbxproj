@@ -555,6 +555,7 @@
 		55F9061608FEFDD900D76E8C /* DefaultMetadataCollector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefaultMetadataCollector.h; sourceTree = "<group>"; };
 		F90434570D039AE9004E3017 /* libantlr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libantlr.a; path = lib/libantlr.a; sourceTree = ANTLR_DIR; };
 		F90D477E0CF8D29200B9AC65 /* search-response-extended-char.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "search-response-extended-char.xml"; sourceTree = "<group>"; };
+		F9F6CDAC0D14877E00BDF053 /* search-response-error-extended.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "search-response-error-extended.xml"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1134,6 +1135,7 @@
 				55F2406708904F0C0090B325 /* metadata-response.xml */,
 				55F2406808904F0C0090B325 /* metadata-system.xml */,
 				55F2406908904F0C0090B325 /* search-response-error.xml */,
+				F9F6CDAC0D14877E00BDF053 /* search-response-error-extended.xml */,
 				F90D477E0CF8D29200B9AC65 /* search-response-extended-char.xml */,
 				55F2406A08904F0C0090B325 /* search-response-no-records.xml */,
 				55F2406B08904F0C0090B325 /* search-response-single-column.xml */,
