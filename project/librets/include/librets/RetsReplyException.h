@@ -26,15 +26,20 @@ class RetsReplyException : public RetsException
   public:
     RetsReplyException(int replyCode, std::string meaning);
 
+    RetsReplyException(int replyCode, std::string meaning, std::string extendedMeaning);
+
     virtual ~RetsReplyException() throw();
 
     int GetReplyCode() const throw();
 
     std::string GetMeaning() const throw();
 
+    std::string GetExtendedMeaning() const throw();
+    
   private:
     int mReplyCode;
     std::string mMeaning;
+    std::string mExtendedMeaning;
 };
 
 };

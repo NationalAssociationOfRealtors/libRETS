@@ -36,11 +36,19 @@ class RetsException : public std::exception
      * @param message Exception message
      */
     RetsException(std::string message);
+    
+    /**
+     * Create a new exception that includes extended message information.
+     *
+     * @param message Exception message
+     * @param extendedMessage Extended message
+     */
+    RetsException(std::string message, std::string extendedMessage);
 
     virtual ~RetsException() throw();
     
     virtual std::string GetName() const throw();
-
+    
     void SetContext(const RetsExceptionContext & context);
     
     RetsExceptionContext GetContext() const throw();
@@ -51,6 +59,13 @@ class RetsException : public std::exception
      * @return The error message
      */
     virtual std::string GetMessage() const throw();
+    
+    /**
+     * Return the extended error message.
+     *
+     * @return The extended merror message.
+     */
+    virtual std::string GetExtendedMessage() const throw();
     
     virtual void PrintContextMessage(std::ostream & outputStream)
         const throw();
@@ -70,6 +85,7 @@ class RetsException : public std::exception
 
   private:
     std::string mMessage;
+    std::string mExtendedMessage;
     RetsExceptionContext mContext;
 };
 
