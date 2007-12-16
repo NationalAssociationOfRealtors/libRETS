@@ -27,6 +27,13 @@ using std::ostringstream;
 RetsException::RetsException(string message)
 {
     mMessage = message;
+    mExtendedMessage.clear();
+}
+
+RetsException::RetsException(string message, string extendedMessage)
+{
+    mMessage = message;
+    mExtendedMessage = extendedMessage;
 }
 
 RetsException::~RetsException() throw()
@@ -51,6 +58,11 @@ RetsExceptionContext RetsException::GetContext() const throw()
 string RetsException::GetMessage() const throw()
 {
     return mMessage;
+}
+
+string RetsException::GetExtendedMessage() const throw()
+{
+    return mExtendedMessage;
 }
 
 const char * RetsException::what() const throw()
@@ -79,6 +91,8 @@ void RetsException::PrintFullReport(ostream & out) const throw()
 {
     PrintContextMessage(out);
     out << ": " << mMessage << endl;
+    if (!mExtendedMessage.empty())
+        out << mExtendedMessage << endl;
 }
 
 std::string RetsException::GetFullReport() const throw()

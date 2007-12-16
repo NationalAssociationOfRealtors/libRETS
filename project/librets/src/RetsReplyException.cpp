@@ -24,6 +24,15 @@ RetsReplyException::RetsReplyException(int replyCode, string meaning)
 {
     mReplyCode = replyCode;
     mMeaning = meaning;
+    mExtendedMeaning.clear();
+}
+
+RetsReplyException::RetsReplyException(int replyCode, string meaning, string extendedMeaning)
+    : RetsException(meaning, extendedMeaning)
+{
+    mReplyCode = replyCode;
+    mMeaning = meaning;
+    mExtendedMeaning = extendedMeaning;
 }
 
 RetsReplyException::~RetsReplyException() throw()
@@ -38,4 +47,9 @@ int RetsReplyException::GetReplyCode() const throw()
 string RetsReplyException::GetMeaning() const throw()
 {
     return mMeaning;
+}
+
+string RetsReplyException::GetExtendedMeaning() const throw()
+{
+    return mExtendedMeaning;
 }

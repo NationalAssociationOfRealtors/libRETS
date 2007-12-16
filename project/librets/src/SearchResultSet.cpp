@@ -125,7 +125,27 @@ void SearchResultSet::Parse(istreamPtr inputStream)
             else if (replyCode != 0)
             {
                 string meaning = startEvent->GetAttributeValue("ReplyText");
-                throw RetsReplyException(replyCode, meaning);
+                string extendedMeaning;
+                /*
+                 * There can be an optional text event as the next event, so we
+                 * try this in a try/catch block.
+                 */
+                try
+                {
+                    RetsXmlTextEventPtr textEvent =
+                        mXmlParser->AssertNextIsTextEvent();
+                    extendedMeaning = textEvent->GetText();
+                }
+                catch (RetsException e)
+                {
+                    throw RetsReplyException(replyCode, meaning);
+                }
+                /*
+                 * If we're here, we have an extended message. It could contain one
+                 * or more newlines, so remove them.
+                 */
+                ba::erase_all(extendedMeaning, "\n");
+                throw RetsReplyException(replyCode, meaning, extendedMeaning);
             }
 			/*
 			 * Beginning a transaction. Clear mMaxRows, mReplyCode and mReplyText.
