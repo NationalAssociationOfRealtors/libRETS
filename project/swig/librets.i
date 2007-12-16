@@ -76,6 +76,8 @@ class RetsException
 {
   public:
     virtual std::string GetMessage();
+
+    virtual std::string GetExtendedMessage();
 };
 
 class LoginResponse 
