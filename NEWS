@@ -6,10 +6,13 @@ Version ?.?.? - ?? ???? ????
   * Added build options of enable-PIC and enable-shared_dependencies to help
     with ezRETS on x86_64 on Linux.
   * Fix build bug where --enable-sql-compiler actually disabled it.
+  * Add support for extended error messages to RetsException. Ticket #34.
+  * Throw an exception from various RetsSession methods that can be called
+    without being properly logged in. Ticket #37.
   * Fix bug where non US-ASCII character in MLS data caused XML parsing to
     fail. Ticket #40.
   * Added SearchResultSet::HasMaxRows() in order to determine if MAXROWS
-   was sent by the server. Ticket #43.
+    was sent by the server. Ticket #43.
 
 Version 1.1.9 - 12 June 2007
 
