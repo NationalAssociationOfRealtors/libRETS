@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'librets'
-require 'pp'
 
 include Librets
 
@@ -19,6 +18,7 @@ puts "RETS Version: " + version
 
 request = session.create_search_request("Property", "ResidentialProperty",
                                         "(ListPrice=300000-)")
+request.standard_names = true
 request.select = "ListingID,ListPrice,Beds,City"
 request.limit = SearchRequest::LIMIT_DEFAULT
 request.offset = SearchRequest::OFFSET_NONE
