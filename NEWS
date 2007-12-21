@@ -1,4 +1,4 @@
-Version ?.?.? - ?? ???? ????
+Version 1.1.10 - 21 Dec 2007
 
   * For a SearchRequest, StandardNames now defaults to false.
   * SearchResult/RetsHttpRequest.GetQueryString() is now exposed to the
@@ -13,6 +13,7 @@ Version ?.?.? - ?? ???? ????
     fail. Ticket #40.
   * Added SearchResultSet::HasMaxRows() in order to determine if MAXROWS
     was sent by the server. Ticket #43.
+  * RetsMetadata::GetSearchHelp() added.
   * Ruby bindings now support overloading of RetsHttpLogger and the
     use of the RetsSession.SetHttpLogger
 

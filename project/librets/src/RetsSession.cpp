@@ -189,26 +189,47 @@ void CLASS::SetCollector(MetadataElementCollectorPtr collector)
 
 std::string CLASS::MetadataTypeToString(MetadataElement::Type type)
 {
-    if (type == MetadataElement::SYSTEM)
-        return "METADATA-SYSTEM";
-    else if (type == MetadataElement::CLASS)
-        return "METADATA-CLASS";
-    else if (type == MetadataElement::RESOURCE)
-        return "METADATA-RESOURCE";
-    else if (type == MetadataElement::TABLE)
-        return "METADATA-TABLE";
-    else if (type == MetadataElement::LOOKUP)
-        return "METADATA-LOOKUP";
-    else if (type == MetadataElement::LOOKUP_TYPE)
-        return "METADATA-LOOKUP_TYPE";
-    else if (type == MetadataElement::OBJECT)
-        return "METADATA-OBJECT";
-    else if (type == MetadataElement::SEARCH_HELP)
-        return "METADATA-SEARCH_HELP";
-    else
+    switch (type)
     {
-        throw RetsException(str_stream() << "Invalid metadata type: "
-                            << type);
+        case MetadataElement::SYSTEM:
+            return "METADATA-SYSTEM";
+        case MetadataElement::RESOURCE:
+            return "METADATA-RESOURCE";
+        case MetadataElement::CLASS:
+            return "METADATA-CLASS";
+        case MetadataElement::TABLE:
+            return "METADATA-TABLE";
+        case MetadataElement::UPDATE:
+            return "METADATA-UPDATE";
+        case MetadataElement::UPDATE_TYPE:
+            return "METADATA-UPDATE_TYPE";
+        case MetadataElement::OBJECT:
+            return "METADATA-OBJECT";
+        case MetadataElement::SEARCH_HELP:
+            return "METADATA-SEARCH_HELP";
+        case MetadataElement::EDIT_MASK:
+            return "METADATA-EDIT_MASK";
+        case MetadataElement::LOOKUP:
+            return "METADATA-LOOKUP";
+        case MetadataElement::LOOKUP_TYPE:
+            return "METADATA-LOOKUP_TYPE";
+        case MetadataElement::UPDATE_HELP:
+            return "METADATA-UPDATE_HELP";
+        case MetadataElement::VALIDATION_LOOKUP:
+            return "METADATA-VALIDATION_LOOKUP";
+        case MetadataElement::VALIDATION_LOOKUP_TYPE:
+            return "METADATA-VALIDATION_LOOKUP_TYPE";
+        case MetadataElement::VALIDATION_EXTERNAL:
+            return "METADATA-VALIDATION_EXTERNAL";
+        case MetadataElement::VALIDATION_EXTERNAL_TYPE:
+            return "METADATA-VALIDATION_EXTERNAL_TYPE";
+        case MetadataElement::VALIDATION_EXPRESSION:
+            return "METADATA-VALIDATION_EXPRESSION";
+        case MetadataElement::FOREIGN_KEY:
+            return "METADATA-FOREIGN_KEY";
+        default:
+            throw RetsException(str_stream() << "Invalid metadata type: "
+                                << type);
     }
 }
 
