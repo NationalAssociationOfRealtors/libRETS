@@ -701,11 +701,15 @@ enum UserAgentAuthType
     USER_AGENT_AUTH_INTEREALTY,
 };
 
-//%typemap(cscode) RetsHttpLogger %{
-//    public delegate void Delegate(Type type, byte[] data);
-//    public delegate void NativeDelegate(Type type, IntPtr data, int length);
-//%}
 
+#ifdef SWIGCSHARP
+// Right now, we have a hand rolled delegate for logging in CSharp.
+// Eventually we'll move this over to using directors.
+%typemap(cscode) RetsHttpLogger %{
+    public delegate void Delegate(Type type, byte[] data);
+    public delegate void NativeDelegate(Type type, IntPtr data, int length);
+%}
+#endif
 
 // For right now, a director for RetsHttpLogger has only been defined
 // for ruby.  This also adds some ruby GC magic to make sure the director
@@ -746,10 +750,7 @@ class RetsHttpLogger
     virtual void logHttpData(Type type, std::string data) = 0;
 };
 
-
-
 #ifdef SWIGCSHARP
-
 %typemap(ctype)  RetsHttpLoggerCallback "RetsHttpLoggerCallback"
 %typemap(cstype) RetsHttpLoggerCallback "RetsHttpLogger.NativeDelegate"
 %typemap(csin)   RetsHttpLoggerCallback "$csinput"
