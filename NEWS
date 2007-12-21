@@ -13,6 +13,8 @@ Version ?.?.? - ?? ???? ????
     fail. Ticket #40.
   * Added SearchResultSet::HasMaxRows() in order to determine if MAXROWS
     was sent by the server. Ticket #43.
+  * Ruby bindings now support overloading of RetsHttpLogger and the
+    use of the RetsSession.SetHttpLogger
 
 Version 1.1.9 - 12 June 2007
 

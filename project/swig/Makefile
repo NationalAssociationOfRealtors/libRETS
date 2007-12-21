@@ -44,7 +44,7 @@ $(RUBY_MAKEFILE): $(RUBY_WRAP) ruby/extconf.rb
 
 SWIG_RUBY = $(SWIG) -c++ -ruby -o $(RUBY_WRAP) -module librets_native \
     -Ilib/ruby librets.i
-$(RUBY_WRAP): $(SWIG_FILES) lib/ruby/std_vector.i
+$(RUBY_WRAP): $(SWIG_FILES)
 	$(SWIG_RUBY)
 
 perl: $(PERL_WRAP) $(PERL_MAKEFILE)

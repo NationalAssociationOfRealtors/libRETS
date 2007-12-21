@@ -373,6 +373,11 @@ void CLASS::SetHttpLogger(RetsHttpLogger * logger)
     mHttpClient->SetLogger(logger);
 }
 
+RetsHttpLogger* CLASS::GetHttpLogger() const
+{
+    return mHttpClient->GetLogger();
+}
+
 RetsVersion CLASS::GetRetsVersion() const
 {
     return mRetsVersion;
@@ -456,4 +461,9 @@ void CLASS::SetUserAgentPassword(std::string userAgentPassword)
 void CLASS::SetDefaultEncoding(EncodingType encoding)
 {
     mEncoding    = encoding;
+}
+
+void CLASS::Cleanup()
+{
+    mHttpClient.reset();
 }

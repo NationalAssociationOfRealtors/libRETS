@@ -45,6 +45,8 @@ class RetsHttpClient
     virtual RetsHttpResponsePtr DoRequest(RetsHttpRequest * request) = 0;
 
     virtual void SetLogger(RetsHttpLogger * logger) = 0;
+
+    virtual RetsHttpLogger* GetLogger() const = 0;
 };
 
 };

@@ -51,6 +51,8 @@ class CurlHttpClient : public RetsHttpClient
     
     virtual void SetLogger(RetsHttpLogger * logger);
 
+    virtual RetsHttpLogger* GetLogger() const;
+
   private:
     static size_t StaticWriteData(char * buffer, size_t size, size_t nmemb,
                                   void * userData);

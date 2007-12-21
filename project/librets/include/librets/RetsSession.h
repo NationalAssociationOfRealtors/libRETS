@@ -156,8 +156,20 @@ class RetsSession : public MetadataLoader
      * @param useHttpGet <code>true</code> for HTTP GET instead of POST
      */
     void UseHttpGet(bool useHttpGet);
-    
+
+    /**
+     * Accepts a pointer to an instance of RetsHttpLogger to be used
+     * for logging.
+     *
+     * @param logger A pointer to the RetsHttpLogger to use.
+     */
     void SetHttpLogger(RetsHttpLogger * logger);
+
+    /**
+     * Returns a pointer to the instances of the RetsHttpLogger that
+     * will be/is being used.
+     */
+    RetsHttpLogger* GetHttpLogger() const;
     
     /**
      * Return the RETS version to use when first logging in.
@@ -228,12 +240,24 @@ class RetsSession : public MetadataLoader
     
     /**
      * Sets the data encoding for the data to be returned by a Search. Thiss
-     * is session wide, but can be overridden by SearchRequest.
+     * is session wide,
      *
-     * @param encoding Either RETS_XML_DEFAULT_ENCODING or RETS_XML_ISO_ENCODING.
+     * @param encoding Either RETS_XML_DEFAULT_ENCODING or
+     *                 RETS_XML_ISO_ENCODING.
      */
     void SetDefaultEncoding(EncodingType encoding);
-    
+
+    /**
+     * Cleans up/frees some underlying resources including the HTTP
+     * interface.  This method is only really intended to be called by
+     * languages that have swig bindings so their final garbage
+     * collections work properly.  C++ users should not need this
+     * method.
+     *
+     * The RetsSession object should be considered unusuable after this
+     * call.
+     */
+    void Cleanup();
 
 private:
     static const char * RETS_VERSION_HEADER;

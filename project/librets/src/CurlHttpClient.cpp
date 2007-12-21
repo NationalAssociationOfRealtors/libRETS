@@ -136,6 +136,11 @@ void CurlHttpClient::SetLogger(RetsHttpLogger * logger)
     }
 }
 
+RetsHttpLogger* CurlHttpClient::GetLogger() const
+{
+    return mLogger;
+}
+
 size_t CurlHttpClient::StaticWriteData(char * buffer, size_t size, size_t nmemb,
                                        void * userData)
 {

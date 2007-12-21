@@ -1,5 +1,4 @@
-%module librets
-//%module(directors=1) librets
+%module(directors="1") librets
 
 #ifdef SWIGCSHARP
 %{
@@ -702,11 +701,36 @@ enum UserAgentAuthType
     USER_AGENT_AUTH_INTEREALTY,
 };
 
-%typemap(cscode) RetsHttpLogger %{
-    public delegate void Delegate(Type type, byte[] data);
-    public delegate void NativeDelegate(Type type, IntPtr data, int length);
+//%typemap(cscode) RetsHttpLogger %{
+//    public delegate void Delegate(Type type, byte[] data);
+//    public delegate void NativeDelegate(Type type, IntPtr data, int length);
+//%}
+
+
+// For right now, a director for RetsHttpLogger has only been defined
+// for ruby.  This also adds some ruby GC magic to make sure the director
+// class isn't cleaned up before RetsSession.
+#ifdef SWIGRUBY
+%trackobjects;
+%markfunc RetsSession "mark_RetsSession";
+
+%header %{
+static void mark_RetsSession(void* ptr)
+{
+    RetsSession* session = (RetsSession*) ptr;
+
+    RetsHttpLogger* logger = session->GetHttpLogger();
+
+    VALUE object = SWIG_RubyInstanceFor(logger);
+
+    if (object != Qnil) {
+        rb_gc_mark(object);
+    }
+}
 %}
 
+%feature("director") RetsHttpLogger;
+#endif
 class RetsHttpLogger
 {
   public:
@@ -716,9 +740,12 @@ class RetsHttpLogger
         SENT,
         INFORMATIONAL
     };
-    
+
+    virtual ~RetsHttpLogger();
+
     virtual void logHttpData(Type type, std::string data) = 0;
 };
+
 
 
 #ifdef SWIGCSHARP
@@ -853,7 +880,7 @@ class RetsSession
     RetsVersion GetRetsVersion() const;
     
     RetsVersion GetDetectedRetsVersion() const;
-    
+
     void SetHttpLogger(RetsHttpLogger * logger);
 
     void SetUserAgentAuthType(UserAgentAuthType type);
@@ -869,7 +896,10 @@ class RetsSession
     };
 
     void SetDefaultEncoding(EncodingType encoding);
+
+    void Cleanup();
 };
+
 
 
 /* Local Variables: */
