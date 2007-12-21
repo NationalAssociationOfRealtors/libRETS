@@ -19,6 +19,7 @@ GENERATED_SRC = \
 	lib\MetadataObjectList.cs \
 	lib\MetadataResource.cs \
 	lib\MetadataResourceList.cs \
+	lib\MetadataSearchHelp.cs \
 	lib\MetadataSystem.cs \
 	lib\MetadataTable.cs \
 	lib\MetadataTableList.cs \
