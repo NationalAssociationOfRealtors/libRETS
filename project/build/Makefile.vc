@@ -100,6 +100,7 @@ BOOST_FILESYSTEM_LIB = $(BOOST_PREFIX)boost_filesystem-vc71-mt$(BOOST_RUNTIME).l
 BOOST_PROGRAM_OPTIONS_LIB = $(BOOST_PREFIX)boost_program_options-vc71-mt-$(BOOST_RUNTIME).lib
 
 BOOST_CFLAGS = /I "$(BOOST_PATH)" /DBOOST_DISABLE_ASSERTS
+#BOOST_CFLAGS = /I "$(BOOST_PATH)"
 BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib"
 
 ########################################################################
