@@ -1,3 +1,9 @@
+Version ?.?.?? - ?? ??? ????
+
+  * Do not log GetObject requests and provide new method 
+    RetsSession::SetLogEverything() to override the new default.
+    Ticket #36.
+   
 Version 1.1.10 - 21 Dec 2007
 
   * For a SearchRequest, StandardNames now defaults to false.

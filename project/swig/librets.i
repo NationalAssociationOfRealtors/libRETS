@@ -899,6 +899,8 @@ class RetsSession
     void SetDefaultEncoding(EncodingType encoding);
 
     void Cleanup();
+
+    void SetLogEverything(bool logging);
 };
 
 
