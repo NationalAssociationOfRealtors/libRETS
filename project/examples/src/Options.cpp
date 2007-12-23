@@ -45,7 +45,8 @@ Options::Options()
         ("ua-password", po::value<string>(&userAgentPassword)
          ->default_value(""), "User agent password")
         ("http-get,g", "Use HTTP GET")
-        ("http-log,l", po::value<string>(&mLogFile), "HTTP log file")
+        ("http-log,l", po::value<string>(&mLogFile), "HTTP log file - won't log GetObject calls")
+        ("http-log-everything,L", po::value<string>(&mLogFile), "HTTP log file - log GetObject calls")
         ("config-file,c", po::value<string>(&mConfigFile),
          "Use configuration file")
         ("rets-version,V", po::value<string>(&mRetsVersionString)
@@ -100,11 +101,13 @@ RetsSessionPtr Options::RetsLogin()
     session->SetIncrementalMetadata(!useFullMetadata);
     session->SetUserAgentPassword(userAgentPassword);
 
-    if (options.count("http-log"))
+    if (options.count("http-log") || options.count("http-log-everything"))
     {
         mLogStream.open(mLogFile.c_str());
         mLogger.reset(new StreamHttpLogger(&mLogStream));
         session->SetHttpLogger(mLogger.get());
+	if (options.count("http-log-everything"))
+	  session->SetLogEverything(true);
     }
     if (!session->Login(username, password))
     {
