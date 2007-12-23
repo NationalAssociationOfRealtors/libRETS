@@ -59,6 +59,12 @@ class RetsHttpRequest : public virtual RetsObject
 
     virtual std::string GetQueryString() const;
 
+    bool GetLogging();
+    
+    void SetNoLogging();
+    
+    void SetLogging();
+        
   private:
     void GenerateQueryString() const;
     
@@ -68,6 +74,7 @@ class RetsHttpRequest : public virtual RetsObject
     mutable bool mQueryParametersChanged;
     mutable std::string mQueryString;
     StringMap mHeaders;
+    bool mLogging;
 };
 
 };

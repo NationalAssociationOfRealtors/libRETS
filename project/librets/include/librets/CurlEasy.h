@@ -61,6 +61,8 @@ class CurlEasy
     
     long GetResponseCode();
     
+    bool GetVerbose();
+    
   private:
     CurlEasy(const CurlEasy & curlEasy);
 
@@ -78,6 +80,7 @@ class CurlEasy
     std::string mUserpwd;
     std::string mPostFields;
     std::string mUrl;
+    bool mVerbose;
 };
     
 }

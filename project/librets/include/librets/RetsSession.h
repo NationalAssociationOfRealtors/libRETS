@@ -248,6 +248,15 @@ class RetsSession : public MetadataLoader
     void SetDefaultEncoding(EncodingType encoding);
 
     /**
+     * Sets the value of the flag that indicates everything should be logged,
+     * including everything from GetObject().
+     *
+     * @param TRUE indicates to log everything, FALSE indicates to not log
+     * GetObject() requests.
+     */
+    void SetLogEverything(bool logging);
+    
+    /**
      * Cleans up/frees some underlying resources including the HTTP
      * interface.  This method is only really intended to be called by
      * languages that have swig bindings so their final garbage
@@ -313,6 +322,8 @@ private:
     EncodingType mEncoding;
     
     bool mLoggedIn;
+    
+    bool mLogEverything;
 };
 
 };
