@@ -98,6 +98,7 @@ RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequest * request)
 {
     string url = request->GetUrl();
     string queryString = request->GetQueryString();
+    bool wasVerbose = mCurl.GetVerbose();
     if (request->GetMethod() == RetsHttpRequest::GET)
     {
         mCurl.SetHttpGet(true);
@@ -116,7 +117,14 @@ RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequest * request)
     mResponse.reset(new CurlHttpResponse());
     iostreamPtr dataStream(new stringstream());
     mResponse->SetStream(dataStream);
+    /*
+     * Check to see if this request wants no logging to happen.
+     */
+    if (request->GetLogging() == false)
+        mCurl.SetVerbose(false);
     mCurl.Perform();
+    
+    mCurl.SetVerbose(wasVerbose);
     mResponse->SetUrl(request->GetUrl());
     mResponse->SetResponseCode(mCurl.GetResponseCode());
     return mResponse;

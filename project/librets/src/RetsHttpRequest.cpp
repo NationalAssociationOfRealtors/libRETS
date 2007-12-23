@@ -26,7 +26,7 @@ using std::ostringstream;
 using boost::lexical_cast; 
 
 RetsHttpRequest::RetsHttpRequest()
-    : mQueryParameters(), mQueryParametersChanged(false)
+    : mQueryParameters(), mQueryParametersChanged(false), mLogging(true)
 {
     mMethod = GET;
 }
@@ -111,4 +111,19 @@ std::string RetsHttpRequest::GetQueryString() const
 {
     GenerateQueryString();
     return mQueryString;
+}
+
+bool RetsHttpRequest::GetLogging()
+{
+    return mLogging;
+}
+
+void RetsHttpRequest::SetNoLogging()
+{
+    mLogging = false;
+}
+
+void RetsHttpRequest::SetLogging()
+{
+    mLogging = true;
 }

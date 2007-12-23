@@ -115,6 +115,12 @@ void GetObjectRequest::PrepareHttpRequest(RetsHttpRequestPtr httpRequest) const
         ids.push_back(id);
     }
     httpRequest->SetQueryParameter("ID", join(ids, ","));
+    /*
+     * For Objects, if we are debugging and logging, we want to disable that because
+     * most of this data is binary. We may want to make this user controlled at some point
+     * as an option. In that case, RetsHttpRequest::SetLogging() can be used.
+     */
+    httpRequest->SetNoLogging();
 }
 
 void GetObjectRequest::UpdateDefaultObjectKeyAndId()

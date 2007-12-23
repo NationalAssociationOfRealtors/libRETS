@@ -78,8 +78,9 @@ void CurlEasy::SetErrorBuffer(char * errorBuffer)
 
 void CurlEasy::SetVerbose(bool verbose)
 {
-    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_VERBOSE, verbose ? 1 : 0),
-               str_stream() << "set verbose to " << verbose);
+    mVerbose = verbose;
+    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_VERBOSE, mVerbose ? 1 : 0),
+               str_stream() << "set verbose to " << mVerbose);
 }
 
 void CurlEasy::SetDebugData(void * debugData)
@@ -175,4 +176,9 @@ long CurlEasy::GetResponseCode()
     CurlAssert(curl_easy_getinfo(mCurl, CURLINFO_RESPONSE_CODE, &responseCode),
                "get response code");
     return responseCode;
+}
+
+bool CurlEasy::GetVerbose()
+{
+    return mVerbose;
 }

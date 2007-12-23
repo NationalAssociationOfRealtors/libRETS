@@ -56,6 +56,10 @@ CLASS::RetsSession(string login_url)
     mUserAgentAuthCalculator.SetUserAgentPassword("");
     SetDefaultEncoding(RETS_XML_DEFAULT_ENCODING);
     mLoggedIn = false;
+    /*
+     * By default, do not log GetObject() transactions.
+     */
+    mLogEverything = false;
 }
 
 RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
@@ -335,6 +339,10 @@ GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)
     string getObjectUrl = mCapabilityUrls->GetGetObjectUrl();
     httpRequest->SetUrl(getObjectUrl);
     httpRequest->SetMethod(mHttpMethod);
+    
+    if (mLogEverything)
+      httpRequest->SetLogging();
+      
     RetsHttpResponsePtr httpResponse = DoRequest(httpRequest.get());
     AssertSuccessfulResponse(httpResponse, getObjectUrl);
     
@@ -487,4 +495,9 @@ void CLASS::SetDefaultEncoding(EncodingType encoding)
 void CLASS::Cleanup()
 {
     mHttpClient.reset();
+}
+
+void CLASS::SetLogEverything(bool logging)
+{
+    mLogEverything = logging;
 }
