@@ -4,6 +4,9 @@ Version ?.?.?? - ?? ??? ????
     RetsSession::SetLogEverything() to override the new default.
     Ticket #36.
    
+  * Add MetadataTable::GetMinimumAsString() and GetMaximumAsString().
+    Ticket #47.
+
 Version 1.1.10 - 21 Dec 2007
 
   * For a SearchRequest, StandardNames now defaults to false.

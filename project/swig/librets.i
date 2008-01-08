@@ -581,7 +581,9 @@ class MetadataTable : public MetadataElement
     Units GetUnits() const;
     int GetIndex() const;
     int GetMinimum() const;
+    std::string GetMinimumAsString() const;
     int GetMaximum() const;
+    std::string GetMaximumAsString() const;
     int GetDefault() const;
     int GetRequired() const;
     std::string GetSearchHelpId() const;

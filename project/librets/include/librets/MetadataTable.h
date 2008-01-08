@@ -175,7 +175,11 @@ class MetadataTable : public MetadataElement
     
     int GetMinimum() const;
     
+    std::string GetMinimumAsString() const;
+    
     int GetMaximum() const;
+    
+    std::string GetMaximumAsString() const;
     
     int GetDefault() const;
     

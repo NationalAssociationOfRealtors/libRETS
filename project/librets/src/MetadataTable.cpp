@@ -239,9 +239,19 @@ int MetadataTable::GetMinimum() const
     return GetIntAttribute("Minimum");
 }
 
+string MetadataTable::GetMinimumAsString() const
+{
+    return GetStringAttribute("Minimum");
+}
+
 int MetadataTable::GetMaximum() const
 {
     return GetIntAttribute("Maximum");
+}
+
+string MetadataTable::GetMaximumAsString() const
+{
+    return GetStringAttribute("Maximum");
 }
 
 int MetadataTable::GetDefault() const
