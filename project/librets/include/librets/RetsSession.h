@@ -48,6 +48,13 @@ class RetsSession : public MetadataLoader
     RetsSession(std::string loginUrl);
 
     /**
+     * Returns the LoginUrl that was used when this session was constructed.
+     *
+     * @return the login url
+     */
+    std::string GetLoginUrl() const;
+
+    /**
      * Logs into the RETS server.
      *
      * @param userName user name

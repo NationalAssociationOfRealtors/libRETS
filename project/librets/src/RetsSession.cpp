@@ -62,6 +62,11 @@ CLASS::RetsSession(string login_url)
     mLogEverything = false;
 }
 
+string CLASS::GetLoginUrl() const
+{
+    return mLoginUrl;
+}
+
 RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
 {
     if (mUserAgentAuthCalculator.HasAuthorizationValue())

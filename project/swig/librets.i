@@ -850,6 +850,8 @@ class RetsSession
   public:
     RetsSession(std::string loginUrl);
 
+    std::string GetLoginUrl() const;
+
     bool Login(std::string userName, std::string password);
 
     LoginResponse * GetLoginResponse() const;
