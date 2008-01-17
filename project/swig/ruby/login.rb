@@ -7,7 +7,7 @@ include Librets
 
 session = RetsSession.new("http://demo.crt.realtors.org:6103/rets/login")
 
-puts "Logging into #{session.get_login_url}"
+puts "Logging into #{session.login_url}"
 
 if !session.login("Joe", "Schmoe")
   puts "Invalid login"
