@@ -37,11 +37,4 @@ File.open("Makefile", "w") do |mfile|
   mfile << makefile_prefix
   mfile << orig_makefile
 
-  mfile.print %{
-librets_wrap.cxx: ../librets.i
-\tswig -c++ -ruby ../librets.i
-
-librets_wrap.cpp: ../librets.i
-\tswig -c++ -ruby ../librets.i
-}
 end

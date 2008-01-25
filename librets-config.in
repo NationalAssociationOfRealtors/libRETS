@@ -11,6 +11,7 @@ libdir=@libdir@
 librets_cflags="@LIBRETS_CFLAGS@"
 librets_ldflags="@LIBRETS_LDFLAGS@"
 sql="@USE_SQL_COMPILER@"
+swig="@USE_SWIG_BINDINGS@"
 
 usage()
 {
@@ -25,6 +26,7 @@ Available values for OPTION include:
   --version   output version information
   --vernum    output the version informatin as a number (hexadecimal)
   --sql       returns true if sql compiler included
+  --swig      returns true if swig languages included
 EOF
 
     exit $1
@@ -79,6 +81,10 @@ while test $# -gt 0; do
 	    show_sql="yes"
 	    ;;
 
+	--swig)
+	    show_swig="yes"
+	    ;;
+
         *)
             echo "unknown option: $1"
 	    usage 1
@@ -99,6 +105,14 @@ fi
 
 if test "$show_sql" = "yes"; then
     if [ $sql == '1' ]; then
+	append_to_output "true"
+    else
+	append_to_output "false"
+    fi
+fi
+
+if test "$show_swig" = "yes"; then
+    if [ $swig == '1' ]; then
 	append_to_output "true"
     else
 	append_to_output "false"

@@ -1,16 +1,19 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
-AC_INIT
-dnl AC_LANG(C++)
-AC_CONFIG_SRCDIR(project/librets/include/librets.h)
-AC_CONFIG_AUX_DIR(project/build)
+AC_INIT([libRETS], [1.0], [librets@crt.realtors.org])
+
+dnl AC_LANG([C++])
+AC_CONFIG_SRCDIR([project/librets/include/librets.h])
+AC_CONFIG_AUX_DIR([project/build])
 AC_CONFIG_HEADERS([project/librets/src/config.h])
+
 
 dnl Checks for programs
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_INSTALL
+AC_PROG_RANLIB
 AC_CHECK_PROG(my_have_perl, perl, yes, no)
 if test x"$my_have_perl" != x"yes"; then
     AC_MSG_ERROR([perl is required to build librets])
@@ -60,6 +63,8 @@ MY_TEST_CPPUNIT
 
 MY_CHECK_EXAMPLES
 
+MY_TEST_SWIG
+
 LIBRETS_CFLAGS="$BOOST_CFLAGS"
 LIBRETS_LDFLAGS="$BOOST_LIBS $BOOST_FILESYSTEM $CURL_LIBS $EXPAT_LIBS $ANTLR_LIBS"
 AC_SUBST(LIBRETS_CFLAGS)
@@ -107,5 +112,16 @@ echo Use shared dependencies.....: $my_enable_shared_dependencies
 echo Compile type................: $my_compile_type
 echo Compile examples............: $my_use_examples
 echo Compile SQL compiler........: $my_use_sql_compiler
+echo Compile SWIG bindings.......: $my_use_swig_bindings
+if test "$my_have_mcs" = "yes"; then
+  echo "  With CSharp...............: $my_have_mcs"
+fi
+if test "$my_have_python" = "yes"; then
+  echo "  With Python...............: $my_have_python"
+fi
+if test "$my_have_ruby" = "yes"; then
+  echo "  With Ruby.................: $my_have_ruby"
+fi
+
 
 echo

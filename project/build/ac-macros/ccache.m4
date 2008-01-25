@@ -4,7 +4,7 @@ dnl
 dnl Variables:
 dnl  my_use_ccache=(yes|no)
 dnl
-AC_DEFUN(MY_PROG_CCACHE,[
+AC_DEFUN([MY_PROG_CCACHE], [
   AC_ARG_ENABLE(
     ccache,
     AC_HELP_STRING([--enable-ccache],

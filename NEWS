@@ -1,9 +1,12 @@
 Version ?.?.?? - ?? ??? ????
 
-  * Do not log GetObject requests and provide new method 
+  * Add SWIG bindings to Autoconf based build. 
+    Ticket #31.
+
+  * Do not log GetObject requests by default and provide new method 
     RetsSession::SetLogEverything() to override the new default.
     Ticket #36.
-   
+
   * Add MetadataTable::GetMinimumAsString() and GetMaximumAsString().
     Ticket #47.
 

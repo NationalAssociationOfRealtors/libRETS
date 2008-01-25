@@ -1,7 +1,7 @@
 dnl
 dnl Add sql-compiler option.  Requires MY_TEST_ANTLR to be run first.
 dnl
-AC_DEFUN(MY_CHECK_SQL_COMPILER, [
+AC_DEFUN([MY_CHECK_SQL_COMPILER], [
   AC_ARG_ENABLE(
     sql-compiler,
     AC_HELP_STRING([--enable-sql-compiler],
@@ -10,10 +10,10 @@ AC_DEFUN(MY_CHECK_SQL_COMPILER, [
     my_enable_sql_compiler=yes)
 
     my_use_sql_compiler=no
-    USE_SQL_COMPILER=0
+    USE_SQL_COMPILER=
     if test "$my_enable_sql_compiler"  = "yes"; then
       if test "x$ANTLR_LIBS" != "x"; then
-        USE_SQL_COMPILER=1
+        USE_SQL_COMPILER=sql
         my_use_sql_compiler=yes
       else
         AC_MSG_WARN([*** Optional SQL compiler requires ANTLR ***])

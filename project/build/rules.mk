@@ -9,7 +9,7 @@ LIBRETS_LDFLAGS = $(BOOST_LIBS) $(BOOST_FILESYSTEM) $(CURL_LDFLAGS) \
 
 FIXDEP		= perl $(top_srcdir)/project/build/fixdep.pl
 ALL_DEPENDS 	= $(LIBRETS_DEPENDS) $(LIBRETS_TEST_DEPENDS) \
-	$(EXAMPLES_DEPENDS)
+	$(EXAMPLES_DEPENDS) ${SWIG_DEPENDS}
 ALL_OBJ_DIRS	= \
 	build/librets/antlr \
 	build/librets/objects \
@@ -20,11 +20,37 @@ ALL_OBJ_DIRS	= \
 	build/librets/test/bin \
 	build/examples/objects \
 	build/examples/bin \
-	build/doc/api
+	build/doc/api \
+	build/swig/csharp \
+	build/swig/lib \
+	build/swig/perl \
+	build/swig/php4 \
+	build/swig/python \
+	build/swig/ruby
 
 ALL = $(LIBRETS_LIB)
 ifeq ($(USE_EXAMPLES),1)
 ALL += $(EXAMPLES_EXE)
+endif
+
+ifeq (${USE_SWIG_BINDINGS},1)
+ALL += ${SWIG_DEFAULT}
+SWIG_INSTALL = ${SWIG_DEFAULT_INSTALL}
+
+ifeq (${HAVE_MCS},1)
+ALL += ${CSHARP_BUILD}
+SWIG_INSTALL += ${CSHARP_INSTALL}
+endif
+
+ifeq (${HAVE_PYTHON},1)
+ALL += ${PYTHON_BUILD}
+SWIG_INSTALL += ${PYTHON_INSTALL}
+endif
+
+ifeq (${HAVE_RUBY},1)
+ALL += ${RUBY_BUILD}
+SWIG_INSTALL += ${RUBY_INSTALL}
+endif
 endif
 
 cppunit:
@@ -69,7 +95,7 @@ _dist: _doc-api
 	cd dist; tar --gzip -cf $(SRC_TGZ) $(DIST_SRC)
 	$(RM) -r dist/$(DIST_SRC)
 
-_install: _build
+_install: _build ${SWIG_INSTALL}
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(libdir)"
 	$(INSTALL_DATA) $(LIBRETS_LIB) "$(DESTDIR)$(libdir)"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(includedir)/librets"
@@ -84,7 +110,6 @@ _install: _build
 
 _clean:
 	$(RM) -r build dist
-	$(MAKE) -C project/swig clean
 
 _distclean: _clean
 	$(RM) $(DISTCLEAN_FILES)
@@ -109,6 +134,6 @@ ifeq ($(USE_DEPENDS),1)
 endif
 
 .PHONY: all debug build doc doc-api \
-	insatll install-bin install-data install-config no-cppunit \
+	install install-bin install-data install-config no-cppunit \
 	_all _debug _build _doc _doc-api _clean _distclean _veryclean \
 	_maintainer-clean test _test

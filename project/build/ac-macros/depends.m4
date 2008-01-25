@@ -4,7 +4,7 @@ dnl
 dnl Variables:
 dnl  my_use_depends=(yes|no)
 dnl
-AC_DEFUN(MY_TEST_DEPENDS, [
+AC_DEFUN([MY_TEST_DEPENDS], [
   AC_ARG_ENABLE(
     depends,
     AC_HELP_STRING([--enable-depends],

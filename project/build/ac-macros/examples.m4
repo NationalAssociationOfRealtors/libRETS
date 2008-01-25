@@ -1,7 +1,7 @@
 dnl
 dnl Add examples option.  Requires MY_TEST_BOOST to be run first.
 dnl
-AC_DEFUN(MY_CHECK_EXAMPLES, [
+AC_DEFUN([MY_CHECK_EXAMPLES], [
   AC_ARG_ENABLE(
     examples,
     AC_HELP_STRING([--enable-examples],

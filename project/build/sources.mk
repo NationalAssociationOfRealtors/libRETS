@@ -319,6 +319,195 @@ $(GET_OBJECT_EXE): $(GET_OBJECT_EXAMPLE_OBJECTS) $(LIBRETS_LIB)
 
 ########################################################################
 #
+# swig
+#
+ifeq (${USE_SWIG_BINDINGS}, 1)
+
+SWIG_DEFAULT		=
+# SWIG_DEPENDS		= $(shell find ${SWIG_DIR} -name "*.i")
+SWIG_DIR		= ${top_srcdir}/project/swig
+SWIG_FILES		= ${SWIG_DIR}/librets.i ${SWIG_DIR}/auto_ptr_release.i
+SWIG_LIBRETS_CONFIG	= ${top_srcdir}/librets-config-inplace
+SWIG_LIBRETS_LIBS	= `${SWIG_LIBRETS_CONFIG} --libs`
+SWIG_OBJ_DIR		= build/swig
+
+###
+# csharp of swig
+#
+ifeq (${HAVE_MCS},1)
+
+CSHARP_ALL		= ${CSHARP_MANAGED_DLL}					\
+				${CSHARP_UNMANAGED_DLL}				\
+				${CSHARP_DEMO_EXE}
+
+CSHARP_BUILD		= ${CSHARP_WRAP}  ${CSHARP_ALL}
+CSHARP_CXX_FLAGS	= `${SWIG_LIBRETS_CONFIG} --cflags`
+CSHARP_DEMO_EXE		= ${CSHARP_GETOBJECT_EXE}				\
+				${CSHARP_METADATA_EXE}				\
+				${CSHARP_LOGIN_EXE}				\
+				${CSHARP_SEARCH_EXE}				
+CSHARP_DEMO_SRC		= ${CSHARP_GETOBJECT_SRC}				\
+				${CSHARP_METADATA_SRC}				\
+				${CSHARP_LOGIN_SRC}				\
+				${CSHARP_SEARCH_SRC}				
+CSHARP_DIR		= ${SWIG_DIR}/csharp
+CSHARP_GENERATED_SRC	= ${wildcard ${CSHARP_OBJ_DIR}/*.cs}
+CSHARP_GETOBJECT_EXE	= ${CSHARP_OBJ_DIR}/GetObject.exe
+CSHARP_GETOBJECT_SRC	= ${CSHARP_DIR}/GetObject.cs
+CSHARP_INSTALL		= csharp_install
+CSHARP_LOGIN_EXE	= ${CSHARP_OBJ_DIR}/Login.exe
+CSHARP_LOGIN_SRC	= ${CSHARP_DIR}/Login.cs
+CSHARP_MANAGED_DLL	= ${CSHARP_OBJ_DIR}/librets-dotnet.dll
+CSHARP_MANAGED_SRC	= ${CSHARP_GENERATED_SRC}		 		\
+				${CSHARP_DIR}/CppInputStream.cs 		\
+        			${CSHARP_DIR}/ObjectDescriptorEnumerator.cs 	\
+				${CSHARP_DIR}/TextWriterLogger.cs
+
+CSHARP_METADATA_EXE	= ${CSHARP_OBJ_DIR}/Metadata.exe
+CSHARP_METADATA_SRC	= ${CSHARP_DIR}/Metadata.cs
+CSHARP_OBJ_DIR		= ${SWIG_OBJ_DIR}/csharp
+CSHARP_OSNAME		= $(shell perl -e 'use Config; print $$Config{osname};')
+CSHARP_SEARCH_EXE	= ${CSHARP_OBJ_DIR}/Search.exe
+CSHARP_SEARCH_SRC	= ${CSHARP_DIR}/Search.cs
+CSHARP_SQL2DMQL_EXE	= ${CSHARP_OBJ_DIR}/Sql2DMQL.exe
+CSHARP_SQL2DMQL_SRC	= ${CSHARP_DIR}/Sql2DMQL.cs ${CSHARP_DIR}/SimpleSqlMetadata.cs
+CSHARP_UNMANAGED_DLL	= ${CSHARP_OBJ_DIR}/librets.so
+CSHARP_UNMANAGED_OBJ	= ${CSHARP_OBJ_DIR}/librets_wrap.o 			\
+				${CSHARP_OBJ_DIR}/librets_sharp.o
+CSHARP_WRAP		= ${CSHARP_OBJ_DIR}/librets_wrap.cpp
+
+ifeq (${CSHARP_OSNAME}, darwin)
+CSHARP_LINK		= ${CXX} -bundle -undefined suppress -flat_namespace
+else
+CSHARP_LINK		= ${CXX} -shared
+endif
+
+${CSHARP_WRAP}: ${SWIG_FILES} ${SWIG_DIR}/lib/csharp/std_vector.i
+	${SWIG} -c++ -csharp -namespace librets -o ${CSHARP_WRAP} \
+	-outdir ${CSHARP_OBJ_DIR} -I${SWIG_DIR}/lib/csharp ${SWIG_DIR}/librets.i
+	make ${CSHARP_MANAGED_DLL}
+
+${CSHARP_UNMANAGED_DLL}: ${CSHARP_UNMANAGED_OBJ}
+	${CSHARP_LINK} -o ${CSHARP_UNMANAGED_DLL} ${CSHARP_UNMANAGED_OBJ} ${SWIG_LIBRETS_LIBS}
+
+${CSHARP_MANAGED_DLL}:	${CSHARP_UNMANAGED_DLL} ${CSHARP_MANAGED_SRC}
+	${MCS} -target:library -out:${CSHARP_MANAGED_DLL} ${CSHARP_MANAGED_SRC}
+
+${CSHARP_OBJ_DIR}/%.o: ${CSHARP_OBJ_DIR}/%.cpp 
+	${CXX} ${CSHARP_CXX_FLAGS} -I${LIBRETS_INC_DIR} -I${CSHARP_OBJ_DIR} -I${CSHARP_DIR}  -c $< -o $@
+
+${CSHARP_OBJ_DIR}/%.o: ${CSHARP_DIR}/%.cpp
+	${CXX} ${CSHARP_CXX_FLAGS} -I${LIBRETS_INC_DIR} -I${CSHARP_OBJ_DIR} -I${CSHARP_DIR}  -c $< -o $@
+
+${CSHARP_GETOBJECT_EXE}:	${CSHARP_GETOBJECT_SRC}
+	${MCS} -r:${CSHARP_MANAGED_DLL} -out:${CSHARP_GETOBJECT_EXE} ${CSHARP_GETOBJECT_SRC}
+
+${CSHARP_METADATA_EXE}:		${CSHARP_METADATA_SRC}
+	${MCS} -r:${CSHARP_MANAGED_DLL} -out:${CSHARP_METADATA_EXE} ${CSHARP_METADATA_SRC}
+
+${CSHARP_LOGIN_EXE}:		${CSHARP_LOGIN_SRC}
+	${MCS} -r:${CSHARP_MANAGED_DLL} -out:${CSHARP_LOGIN_EXE}  ${CSHARP_LOGIN_SRC}
+
+${CSHARP_SEARCH_EXE}:		${CSHARP_SEARCH_SRC}
+	${MCS} -r:${CSHARP_MANAGED_DLL} -out:${CSHARP_SEARCH_EXE}  ${CSHARP_SEARCH_SRC}
+
+${CSHARP_SQL2DMQL_EXE}:		${CSHARP_SQL2DMQL_SRC}
+	${MCS} -r:${CSHARP_MANAGED_DLL} -main:Sql2DMQL -out:${CSHARP_SQL2DMQL_EXE} ${CSHARP_SQL2DMQL_SRC}
+
+${CSHARP_INSTALL}: ${CSHARP_MANAGED_DLL}
+	@echo The csharp assemblies can be found in: ${CSHARP_OBJ_DIR}. They will need to be manually
+	@echo insalled in your environment.
+endif
+
+###
+# perl of swig - Perl isn't completely implemented and currently won't build, so this section is commented out.
+#
+ifeq (0,1)
+
+PERL_BUILD		= ${PERL_DLL}
+
+PERL_DLL		= ${PERL_OBJ_DIR}/librets_native.bundle
+PERL_EXTCONF_RB		= ${PERL_SRC_DIR}/extconf.rb
+PERL_MAKEFILE		= ${PERL_OBJ_DIR}/Makefile
+PERL_MAKEFILE_PL	= ${PERL_OBJ_DIR}/Makefile.PL
+PERL_OBJ_DIR		= ${SWIG_OBJ_DIR}/perl
+PERL_SRC_DIR		= ${SWIG_DIR}/perl
+PERL_WRAP 		= ${PERL_OBJ_DIR}/librets_wrap.cpp
+
+${PERL_WRAP}: ${SWIG_FILES} 
+	${SWIG} -c++ -perl -o ${PERL_WRAP} \
+	-outdir ${PERL_OBJ_DIR} ${SWIG_DIR}/librets.i
+
+${PERL_MAKEFILE}: ${PERL_WRAP}
+	cd ${PERL_OBJ_DIR}; ${PERL}  ../../../${PERL_MAKEFILE_PL}
+
+${PERL_DLL}: ${PERL_MAKEFILE}
+	${MAKE} -C ${PERL_OBJ_DIR}
+	
+
+endif
+
+###
+# python of swig
+#
+ifeq (${HAVE_PYTHON},1)
+
+PYTHON_BUILD		= ${PYTHON_DLL}
+
+PYTHON_DLL		= ${PYTHON_OBJ_DIR}/_librets.so
+PYTHON_INSTALL		= python_install
+PYTHON_OBJ_DIR		= ${SWIG_OBJ_DIR}/python
+PYTHON_SRC_DIR		= ${SWIG_DIR}/python
+PYTHON_WRAP 		= ${PYTHON_OBJ_DIR}/librets_wrap.cpp
+
+${PYTHON_WRAP}: ${SWIG_FILES} 
+	${SWIG} -c++ -python -o ${PYTHON_WRAP} \
+	-outdir ${PYTHON_OBJ_DIR} ${SWIG_DIR}/librets.i
+	@cp ${PYTHON_SRC_DIR}/* ${PYTHON_OBJ_DIR}
+
+${PYTHON_DLL}: ${PYTHON_WRAP}
+	cd ${PYTHON_OBJ_DIR} ; ${PYTHON} setup.py build --build-lib=.
+	
+${PYTHON_INSTALL}: ${PYTHON_DLL}
+	cd ${PYTHON_OBJ_DIR}; ${PYTHON} setup.py install
+
+endif
+
+###
+# ruby of swig
+#
+ifeq (${HAVE_RUBY},1)
+
+RUBY_BUILD		= ${RUBY_DLL}
+
+RUBY_DLL		= ${RUBY_OBJ_DIR}/librets_native.bundle
+RUBY_EXTCONF_RB		= ${RUBY_SRC_DIR}/extconf.rb
+RUBY_INSTALL		= ruby_install
+RUBY_MAKEFILE		= ${RUBY_OBJ_DIR}/Makefile
+RUBY_OBJ_DIR		= ${SWIG_OBJ_DIR}/ruby
+RUBY_SRC_DIR		= ${SWIG_DIR}/ruby
+RUBY_WRAP 		= ${RUBY_OBJ_DIR}/librets_wrap.cpp
+
+${RUBY_WRAP}: ${SWIG_FILES} 
+	${SWIG} -c++ -ruby -o ${RUBY_WRAP} -module librets_native \
+	-outdir ${RUBY_OBJ_DIR} -I${SWIG_DIR}/lib/ruby ${SWIG_DIR}/librets.i
+
+${RUBY_MAKEFILE}: ${RUBY_WRAP} ${RUBY_SRC_DIR}/extconf.rb
+	${RUBY} -C ${RUBY_OBJ_DIR} ../../../${RUBY_EXTCONF_RB} --with-librets-config=../../../${SWIG_LIBRETS_CONFIG}
+
+${RUBY_DLL}: ${RUBY_MAKEFILE}
+	${MAKE} -C ${RUBY_OBJ_DIR}
+	
+${RUBY_INSTALL}: ${RUBY_DLL}
+	${MAKE} -C ${RUBY_OBJ_DIR} install
+
+endif
+
+
+endif
+
+########################################################################
+#
 # misc
 #
 
