@@ -39,8 +39,7 @@ AC_DEFUN([MY_TEST_SWIG], [
           $ver_major \= $check_major \& \
           $ver_minor \> $check_minor \| \
           $ver_minor \= $check_minor \& \
-          $ver_release \= $check_release \& \
-          $ver_release \>= $check_release `                         
+          $ver_release \>\= $check_release `                         
 
       if test "$ok" == "1"; then
         my_cv_swig_vers="$ver"

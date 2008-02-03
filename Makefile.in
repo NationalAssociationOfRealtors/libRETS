@@ -4,6 +4,7 @@ SHELL = /bin/sh
 
 prefix=@prefix@
 datadir=@datadir@
+datarootdir=@datarootdir@
 exec_prefix=@exec_prefix@
 bindir=@bindir@
 mandir=@mandir@

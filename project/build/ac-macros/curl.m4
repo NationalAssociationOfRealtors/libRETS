@@ -22,7 +22,15 @@ AC_DEFUN([MY_TEST_CURL], [
         CURL_PREFIX=`curl-config --prefix`
         CURL_CFLAGS=`curl-config --cflags`
         CURL_LIBS=`curl-config --libs`
+
         if test "$my_enable_shared_dependencies" != "yes"; then
+	  dnl See if curl version is greater than 7.17.00. If so, change CURL_LIBS
+
+	  ok=`perl -e "print (hex('$hex_ver')>=hex('071100') ? '1' : '0')"`
+	  if test x$ok != x0; then
+	    CURL_LIBS=`curl-config --static-libs`
+	  fi
+
           curl_a="${CURL_PREFIX}/lib/libcurl.a"
           AC_CHECK_FILE($curl_a, have_curl_a=$curl_a)
           if test -z "$have_curl_a"; then
