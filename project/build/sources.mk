@@ -382,7 +382,7 @@ else
 CSHARP_LINK		= ${CXX} -shared
 endif
 
-${CSHARP_WRAP}: ${SWIG_FILES} ${SWIG_DIR}/lib/csharp/std_vector.i
+${CSHARP_WRAP}: ${SWIG_FILES} 
 	${SWIG} -c++ -csharp -namespace librets -o ${CSHARP_WRAP} \
 	-outdir ${CSHARP_OBJ_DIR} -I${SWIG_DIR}/lib/csharp ${SWIG_DIR}/librets.i
 	make ${CSHARP_MANAGED_DLL}

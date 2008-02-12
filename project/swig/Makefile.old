@@ -32,7 +32,7 @@ SWIG_CSHARP = $(SWIG) -c++ -csharp -namespace librets -o $(CSHARP_WRAP) \
 csharp: $(CSHARP_WRAP)
 	$(MAKE) -C csharp
 
-$(CSHARP_WRAP): $(SWIG_FILES) lib/csharp/std_vector.i
+$(CSHARP_WRAP): $(SWIG_FILES) 
 	$(RM) $(CSHARP_LIB_DIR)/*.cs
 	$(SWIG_CSHARP)
 

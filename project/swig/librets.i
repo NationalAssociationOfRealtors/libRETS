@@ -47,6 +47,7 @@ typedef std::vector<std::string> StringVector;
 %template(ByteVector) std::vector<unsigned char>;
 
 #ifdef SWIGCSHARP
+%include "shared_ptr_release.i"
 %typemap(ctype)  unsigned char[] "unsigned char*"
 %typemap(cstype) unsigned char[] "byte[]"
 %typemap(csin)   unsigned char[] "$csinput"
@@ -818,29 +819,185 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
 // for release as of yet.  When ready, also uncomment out the director
 // line on top.
 // 
-// %feature("director") SqlMetadata;
-// class SqlMetadata
-// {
-//   public:
-//     virtual ~SqlMetadata() { };
+%feature("director") SqlMetadata;
+class SqlMetadata
+{
+  public:
+    virtual ~SqlMetadata() { };
 
-//     virtual bool IsLookupColumn(std::string tableName, std::string columnName)
-//         = 0;
-// };
+    virtual bool IsLookupColumn(std::string tableName, std::string columnName)
+        = 0;
+};
 
-// class SqlToDmqlCompiler
-// {
-//   public:
-//     SqlToDmqlCompiler(SqlMetadata* metadata);
-    
-//     enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY};
-    
-//     QueryType sqlToDmql(std::string sql);
+%typemap(cscode) SqlMetadata %{
+      public SqlMetadataPtr metadataptr_reference;
+      public SqlToDmqlCompilerPtr compiler_reference;
 
-//     DmqlQueryPtr GetDmqlQuery() const;
+    public addCompilerReference (SlToDmqlCompilerPtr compiler_ptr)
+    {
+      compiler_reference = compiler_ptr;
+    }
+%}
+
+class DmqlCriterion 
+{
+  public:
+    virtual ~DmqlCriterion();
+
+    virtual std::ostream & ToDmql(std::ostream & outputStream) const = 0;
+
+    std::string ToDmqlString();
+};
+
+class DmqlQuery 
+{
+  public:
+    DmqlQuery();
+    virtual ~DmqlQuery();
+
+    std::string GetResource() const;
+
+    void SetResource(std::string resource);
+
+    std::string GetClass() const;
+
+    void SetClass(std::string aClass);
+
+    /**
+     * Returns a pointer to a StringVector.  DmqlQuery is responsible for
+     * freeing the object.
+     */
+    StringVector * GetFieldsPtr() const;
+
+    StringVectorPtr GetFields() const;
+
+    void AddField(std::string column);
+
+    /**
+     * Returns a pointer to a DmqlCriterion.  DmqlQuery is responsible for
+     * freeing the object.
+     */
+    DmqlCriterion * GetCriterionPtr() const;
+
+    DmqlCriterionPtr GetCriterion() const;
+
+    void SetCriterion(DmqlCriterionPtr criterion);
+
+    int GetLimit() const;
+
+    void SetLimit(int limit);
+
+    int GetOffset() const;
+
+    void SetOffset(int offset);
+
+    SearchRequest::CountType GetCountType() const;
+
+    void SetCountType(SearchRequest::CountType countType);
+
+    virtual std::ostream & Print(std::ostream & outputStream) const;
+};
+
+typedef boost::shared_ptr<DmqlCriterion> DmqlCriterionPtr;
+%template(DmqlCriterionPtr) boost::shared_ptr<DmqlCriterion>;
+
+typedef boost::shared_ptr<DmqlQuery> DmqlQueryPtr;
+%template(DmqlQueryPtr) boost::shared_ptr<DmqlQuery>;
+
+typedef boost::shared_ptr<GetObjectQuery> GetObjectQueryPtr;
+%template(GetObjectQueryPtr) boost::shared_ptr<GetObjectQuery>;
+
+typedef boost::shared_ptr<SqlMetadata> SqlMetadataPtr;
+%template(SqlMetadataPtr) boost::shared_ptr<SqlMetadata>;
+
+/*
+ * I can not figure out how to get SWIG to add this to the shared_ptr wrapper. The shared_ptr 
+ * needs to reference SqlMetatadata, otherwise it is getting garbage collected before the
+ * shared_ptr is released.
+ */
+//%typemap(cscode) SqlMetadataPtr  %{
+//    public SqlMetadata metadata_reference = null;
+//
+//    public AddReference(SqlMetadata metadata)
+//    {
+//      metadata_reference = metadata;
+//    }
+//%}
+
+
+typedef boost::shared_ptr<SqlToDmqlCompiler> SqlToDmqlCompilerPtr;
+%template(SqlToDmqlCompilerPtr) boost::shared_ptr<SqlToDmqlCompiler>;
+
+%typemap(cscode) SqlToDmqlCompiler %{
+      private SqlMetadata metadata_reference = null;
+      private SqlMetadataPtr metadataptr_reference = null;
+
+    /*
+     * Add a layer of indirection to attempt to reference the objects so they do not get
+     * garbage collected. This too appears to fail. When in doubt, use brute force.
+     */
+    public SqlToDmqlCompiler(SqlMetadataPtr metadata_ptr, SqlMetadata metadata) : this(metadata_ptr)
+    {
+      metadataptr_reference = metadata_ptr;
+      //metadataptr_reference.AddReference(metadata);
+      /*
+       * Since simply adding the reference doesn't appear to be stopping the garbage collector,
+       * use brute force.
+       */
+      GC.SuppressFinalize(metadata_ptr);
+    }
+
+    /*
+     * Wrap the metadata into a metadata pointer.
+     */
+    public SqlToDmqlCompiler(SqlMetadata metadata) : this(new SqlMetadataPtr(metadata), metadata) 
+    {
+      metadata_reference = metadata;
+      /*
+       * Since simply adding the reference doesn't appear to be stopping the garbage collector,
+       * use brute force.
+       */
+      GC.SuppressFinalize(metadata);
+    }
+%}
+%typemap(csfinalize) SqlToDmqlCompiler %{
+    ~SqlToDmqlCompiler() 
+    {
+      /*
+       * Clean up for ourselves.
+       */
+      Dispose();
+      /*
+       * We know we created the metadataptr, so go ahead and dispose it as well.
+       */
+      if (metadataptr_reference != null)
+        metadataptr_reference.Dispose();
+      metadataptr_reference = null;
+      /*
+       * Something appears to be destructing the metadata elsewhere, so we do not want
+       * it garbage collected until that can be figured out. I suspect there may be
+       * a memory leak around the director stuff.
+       */
+      //if (metadata_reference != null)
+      //  GC.ReRegisterForFinalize(metadata_reference);
+      metadata_reference = null;
+    }
+%}
+
+class SqlToDmqlCompiler
+{
+  public:
+    SqlToDmqlCompiler(SqlMetadataPtr metadata);
     
-//     GetObjectQueryPtr GetGetObjectQuery() const;
-// };
+    enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY};
+    
+    QueryType sqlToDmql(std::string sql);
+
+    DmqlQueryPtr GetDmqlQuery() const;
+    
+    GetObjectQueryPtr GetGetObjectQuery() const;
+
+};
 
 #endif
 

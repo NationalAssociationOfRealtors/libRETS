@@ -22,7 +22,6 @@ ALL_OBJ_DIRS	= \
 	build/examples/bin \
 	build/doc/api \
 	build/swig/csharp \
-	build/swig/lib \
 	build/swig/perl \
 	build/swig/php4 \
 	build/swig/python \

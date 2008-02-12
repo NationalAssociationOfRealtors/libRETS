@@ -7,8 +7,18 @@ Version ?.?.?? - ?? ??? ????
     RetsSession::SetLogEverything() to override the new default.
     Ticket #36.
 
+  * Expose SqlToDmqlCompiler to C#.
+    Ticket #42.
+
+  * Handle changes to curl-config in curl 7.17.x and later.
+    Ticket #46.
+
   * Add MetadataTable::GetMinimumAsString() and GetMaximumAsString().
     Ticket #47.
+
+  * Remove std_string.i and std_vector.i from swig to allow for
+    default versions to be used.
+    Ticket #49.
 
 Version 1.1.10 - 21 Dec 2007
 
