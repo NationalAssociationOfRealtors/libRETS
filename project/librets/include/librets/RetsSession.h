@@ -258,8 +258,8 @@ class RetsSession : public MetadataLoader
      * Sets the value of the flag that indicates everything should be logged,
      * including everything from GetObject().
      *
-     * @param TRUE indicates to log everything, FALSE indicates to not log
-     * GetObject() requests.
+     * @param logging TRUE indicates to log everything, FALSE
+     * indicates to not log GetObject() requests.
      */
     void SetLogEverything(bool logging);
     
