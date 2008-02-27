@@ -70,6 +70,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInvalidOffset);
     CPPUNIT_TEST(testCount);
     CPPUNIT_TEST(testInvalidCount);
+    CPPUNIT_TEST(testQuestionMark);
     CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -110,6 +111,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testInvalidOffset();
     void testCount();
     void testInvalidCount();
+    void testQuestionMark();
 
     DmqlQueryPtr sqlToDmql(string sql);
     void assertInvalidSql(string sql,
@@ -717,4 +719,61 @@ void CLASS::testInvalidCount()
     ASSERT_INVALID_SQL("select count(foo) "
                        " from data:Property:RES"
                        " where ListPrice = 300000");
+}
+
+void CLASS::testQuestionMark()
+{
+    DmqlQueryPtr query =
+        sqlToDmql("select *"
+                  "  from data:Property:RES"
+                  " WHERE ListPrice = ?");
+
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+
+    StringVector columns;
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+
+    DmqlCriterionPtr criterion = eq("ListPrice", literal("?"));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+
+//     std::cout << criterion << std::endl;
+//     std::cout << criterion->ToDmqlString() << std::endl;
+
+    query =
+        sqlToDmql("select *"
+                  "  from data:Property:RES"
+                  " WHERE ListPrice >= ? AND ListPrice <= ?");
+
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+
+    columns.clear();
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+
+    criterion = logicAnd(gt("ListPrice", literal("?")),
+                         lt("ListPrice", literal("?")));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+
+//     std::cout << criterion << std::endl;
+//     std::cout << criterion->ToDmqlString() << std::endl;
+
+    query =
+        sqlToDmql("select * "
+                  "  from data:Property:RES "
+                  " where ListingID IN (?, ?, ?);");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+    
+    columns.clear();
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+    
+    criterion =
+        logicOr(eq("ListingID", literal("?")),
+                logicOr(eq("ListingID", literal("?")),
+                        eq("ListingID", literal("?"))));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+
+//     std::cout << criterion << std::endl;
+//     std::cout << criterion->ToDmqlString() << std::endl;
 }

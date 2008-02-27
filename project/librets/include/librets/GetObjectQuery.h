@@ -55,6 +55,12 @@ class GetObjectQuery : public RetsObject
     void SetUseLocation(bool useLocation);
 
     virtual std::ostream & Print(std::ostream & outputStream) const;
+
+    /**
+     * When you see this value in the ObjectIds, it means that it is a
+     * place holder value that should be replaced.
+     */
+    static const int SUBSTITUTE_VALUE = -99;
     
   private:
     IntVectorPtr mObjectIds;

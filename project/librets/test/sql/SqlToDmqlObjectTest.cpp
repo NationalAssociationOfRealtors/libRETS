@@ -41,6 +41,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testBadObjectTable);
     CPPUNIT_TEST(testCountWithObject);
     CPPUNIT_TEST(testNoWhere);
+    CPPUNIT_TEST(testQuestionMark);
     CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -55,6 +56,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testBadObjectTable();
     void testCountWithObject();
     void testNoWhere();
+    void testQuestionMark();
     
     GetObjectQueryPtr sqlToGetObject(string sql);
     void assertInvalidSql(string sql,
@@ -206,5 +208,26 @@ void CLASS::testNoWhere()
     ASSERT_STRING_EQUAL("", query->GetObjectKey());
     ASSERT_EQUAL(false, query->GetUseLocation());
     IntVector objectIds;
+    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
+}
+
+void CLASS::testQuestionMark()
+{
+    GetObjectQueryPtr query = 
+    sqlToGetObject("select * "
+                   "  from object:location:Property "
+                   " where type = 'Photo' and object_key = ?"
+                   "       and object_id = ?");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("Photo", query->GetType());
+    ASSERT_STRING_EQUAL("?", query->GetObjectKey());
+    ASSERT_EQUAL(true, query->GetUseLocation());
+
+    // For some reason doing the push_back directly on the value from
+    // GetObjectQuery is causing an issue.  Until I know why, I'll
+    // work around.
+    int value = GetObjectQuery::SUBSTITUTE_VALUE;
+    IntVector objectIds;
+    objectIds.push_back(value);
     ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
 }

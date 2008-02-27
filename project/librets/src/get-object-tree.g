@@ -77,7 +77,12 @@ void GetObjectTreeParser::handleEquals(
         query->SetObjectKey(value);
     }
     else if (name == "object_id") {
-        query->AddObjectId(lexical_cast<int>(value));
+        if (value == "?") {
+            query->AddObjectId(GetObjectQuery::SUBSTITUTE_VALUE);
+        }
+        else {
+            query->AddObjectId(lexical_cast<int>(value));
+        }
     }
     else {
         throwSemanticException("Invalid field: " + name, nameAst);
@@ -153,4 +158,5 @@ field_value returns [RefRetsAST value]
     : id:ID     { value = id; }
     | int1:INT  { value = int1; }
     | s:STRING  { value = s; }
+    | q:QMARK   { value = q; }
     ;

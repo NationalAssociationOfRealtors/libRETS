@@ -241,4 +241,5 @@ field_value returns [DmqlCriterionPtr criterion]
     : id:ID     { criterion = literal(id->getText()); }
     | int1:INT  { criterion = literal(int1->getText()); }
     | s:STRING  { criterion = dmqlString(s->getText()); }
+    | q:QMARK   { criterion = literal(q->getText()); }
     ;

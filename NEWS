@@ -1,5 +1,8 @@
 Version ?.?.?? - ?? ??? ????
 
+  * SqlToDmqlCompiler now accepts a ? as a value in a WHERE clause.
+    Ticket #?
+
   * Add SWIG bindings to Autoconf based build. 
     Ticket #31.
 

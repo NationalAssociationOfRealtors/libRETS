@@ -158,6 +158,7 @@ field_value
     : ID
     | INT
     | STRING
+    | QMARK
     ;
 
 
@@ -188,6 +189,7 @@ NEQ2    : "<>";
 GREATER : ">" ;
 GTE     : ">=" ;
 LESS    : "<"  ;
+QMARK  : '?' ;
 LTE  options { paraphrase = "<="; }             : "<=" ;
 SEMI options { paraphrase = "a semicolon"; }    : ';' ;
 COMMA options { paraphrase = ","; }             : ',' ;
