@@ -176,3 +176,8 @@ long CurlEasy::GetResponseCode()
                "get response code");
     return responseCode;
 }
+
+CURL * CurlEasy::GetEasyHandle()
+{
+    return mCurl;
+}

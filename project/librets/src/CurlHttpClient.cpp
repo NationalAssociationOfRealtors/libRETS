@@ -42,7 +42,15 @@ CurlHttpClient::CurlHttpClient()
     mCurl.SetWriteFunction(CurlHttpClient::StaticWriteData);
     mCurl.SetWriteHeaderData(this);
     mCurl.SetWriteHeaderFunction(CurlHttpClient::StaticWriteHeader);
+    
+    mCurlMulti.AddEasy(mCurl);
+
     SetUserAgent("librets-curl/" LIBRETS_VERSION);
+}
+
+CurlHttpClient::~CurlHttpClient()
+{
+    mCurlMulti.RemoveEasy(mCurl);
 }
 
 void CurlHttpClient::SetDefaultHeader(string name, string value)
@@ -94,7 +102,24 @@ void CurlHttpClient::SetUserCredentials(string userName, string password)
     mCurl.SetUserCredentials(userName, password);
 }
 
-RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequest * request)
+/**
+ * Continue with the request if not completed.
+ * @return boolean that indicates whether or not the transaction has finished.
+ */
+bool CurlHttpClient::ContinueRequest()
+{
+    if (mCurlMulti.StillRunning())
+        mCurlMulti.Perform();
+        
+    if (!mCurlMulti.StillRunning())
+    {
+        mResponse->SetResponseCode(mCurl.GetResponseCode());
+    }
+        
+    return mCurlMulti.StillRunning();
+}
+
+RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
 {
     string url = request->GetUrl();
     string queryString = request->GetQueryString();
@@ -116,7 +141,23 @@ RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequest * request)
     mResponse.reset(new CurlHttpResponse());
     iostreamPtr dataStream(new stringstream());
     mResponse->SetStream(dataStream);
-    mCurl.Perform();
+    //mCurl.Perform();
+    /*
+     * This is ugly ... it appears that to start a new transaction, we must remove and then
+     * add the Easy handle back.
+     */
+    mCurlMulti.RemoveEasy(mCurl);
+    mCurlMulti.AddEasy(mCurl);
+    mCurlMulti.Reset();
+    /*
+     * For now, we will operate as if mCurl.Perform() were invoked. Next step is to move the
+     * completion logic up the chain into the XML parsing. May need to switch from a stringstream
+     * to some sort of device stream to aid in blocking. Beforehand, try doing something like:
+     *         if datastream->eof() then invoke continueRequest().
+     */
+    // while (mCurlMulti.StillRunning()) mCurlMulti.Perform();
+    mCurlMulti.Perform();
+
     mResponse->SetUrl(request->GetUrl());
     mResponse->SetResponseCode(mCurl.GetResponseCode());
     return mResponse;

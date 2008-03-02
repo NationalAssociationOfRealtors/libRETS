@@ -61,6 +61,8 @@ class CurlEasy
     
     long GetResponseCode();
     
+    CURL * GetEasyHandle();
+    
   private:
     CurlEasy(const CurlEasy & curlEasy);
 

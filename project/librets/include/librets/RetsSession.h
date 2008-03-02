@@ -97,13 +97,22 @@ class RetsSession : public MetadataLoader
                                           std::string query);
     
     /**
-     * Performs a search on the server.
+     * Performs a blocking search on the server.
      *
      * @param request search request parameters
      * @return Search result set
      * @throws RetsException if an error occurs.
      */
     SearchResultSetAPtr Search(SearchRequest * request);
+
+    /**
+     * Performs a non-blocking search on the server.
+     *
+     * @param request search request parameters
+     * @return Search result set
+     * @throws RetsException if an error occurs.
+     */
+    SearchResultSetAPtr SearchNonBlocking(SearchRequest * request);
 
     /**
      * Returns the metadata for this server.  Only valid after logging

@@ -20,6 +20,7 @@
 #include <sstream>
 #include <istream>
 #include "librets/CurlEasy.h"
+#include "librets/CurlMulti.h"
 #include "librets/std_forward.h"
 #include "librets/RetsHttpClient.h"
 #include "librets/CurlSlist.h"
@@ -34,6 +35,8 @@ class CurlHttpClient : public RetsHttpClient
   public:
     CurlHttpClient();
     
+    ~CurlHttpClient();
+    
     virtual void SetUserCredentials(std::string userName,
                                     std::string password);
 
@@ -47,7 +50,9 @@ class CurlHttpClient : public RetsHttpClient
     
     virtual std::string GetUserAgent() const;
 
-    virtual RetsHttpResponsePtr DoRequest(RetsHttpRequest * request);
+    virtual RetsHttpResponsePtr StartRequest(RetsHttpRequest * request);
+    
+    virtual bool ContinueRequest();
     
     virtual void SetLogger(RetsHttpLogger * logger);
 
@@ -70,7 +75,9 @@ class CurlHttpClient : public RetsHttpClient
     void GenerateHeadersSlist(const StringMap & requestHeaders);
     
     CurlEasy mCurl;
-    
+
+    CurlMulti mCurlMulti;
+        
     StringMap mDefaultHeaders;                                                 
 
     CurlSlist mHeaders;

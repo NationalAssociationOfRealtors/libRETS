@@ -42,6 +42,8 @@ class SearchResultSet : public virtual RetsObject
     virtual ~SearchResultSet();
 
     void Parse(istreamPtr inputStream);
+	
+	void Parse();
 
     /**
      * Returns true if there are more results.  This may block waiting
@@ -110,6 +112,18 @@ class SearchResultSet : public virtual RetsObject
 	 * @return Boolean value
 	 */
 	bool HasMaxRows();
+	
+	/**
+	 * Set the input stream for Parse.
+	 *
+	 * @param inputStream Input Stream 
+	 */
+	void SetParseStream(istreamPtr inputStream);
+    
+    /**
+     * Set the http client.
+     */
+    void SetHttpClient(RetsHttpClientPtr httpClient);
 
   private:
     typedef std::vector<StringVectorPtr> RowData;
@@ -124,6 +138,8 @@ class SearchResultSet : public virtual RetsObject
     StringVectorPtr mCurrentRow;
     RetsSession::EncodingType mEncoding;
 	bool mMaxRows;
+	istreamPtr mParseInputStream;
+    RetsHttpClientPtr mHttpClient;
 };
 
 };

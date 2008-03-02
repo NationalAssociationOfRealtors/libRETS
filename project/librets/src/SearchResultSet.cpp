@@ -38,7 +38,8 @@ using std::invalid_argument;
 namespace b = boost;
 namespace ba = boost::algorithm;
 
-SearchResultSet::SearchResultSet()
+SearchResultSet::SearchResultSet() 
+			: mParseInputStream()
 {
     mColumns.reset(new StringVector());
     mCount = -1;
@@ -188,6 +189,12 @@ void SearchResultSet::Parse(istreamPtr inputStream)
     mCurrentRow.reset();
 }
 
+void SearchResultSet::Parse()
+{
+    if (mParseInputStream)
+	  Parse(mParseInputStream);
+}
+
 bool SearchResultSet::HasNext()
 {
     if (mNextRow != mRows.end())
@@ -241,4 +248,14 @@ RetsSession::EncodingType SearchResultSet::GetEncoding()
 bool SearchResultSet::HasMaxRows()
 {
 	return mMaxRows;
+}
+
+void SearchResultSet::SetHttpClient(RetsHttpClientPtr httpClient)
+{
+    mHttpClient = httpClient;
+}
+
+void SearchResultSet::SetParseStream(istreamPtr inputStream)
+{
+    mParseInputStream = inputStream;
 }

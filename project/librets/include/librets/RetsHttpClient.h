@@ -42,7 +42,9 @@ class RetsHttpClient
     
     virtual std::string GetUserAgent() const = 0;
 
-    virtual RetsHttpResponsePtr DoRequest(RetsHttpRequest * request) = 0;
+    virtual RetsHttpResponsePtr StartRequest(RetsHttpRequest * request) = 0;
+    
+    virtual bool ContinueRequest() = 0;
 
     virtual void SetLogger(RetsHttpLogger * logger) = 0;
 };
