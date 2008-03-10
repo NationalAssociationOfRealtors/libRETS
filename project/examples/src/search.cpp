@@ -121,7 +121,7 @@ int main(int argc, char * argv[])
         searchRequest->SetCountType(count);
         searchRequest->SetFormatType(format);
         
-        SearchResultSetAPtr results = session->Search(searchRequest.get());
+        SearchResultSetAPtr results = session->SearchNonBlocking(searchRequest.get());
         if (printCount)
         {
             cout << "Matching record count: " << results->GetCount() << endl;
