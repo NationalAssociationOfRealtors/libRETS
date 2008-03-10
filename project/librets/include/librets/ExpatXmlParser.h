@@ -20,6 +20,7 @@
 #include <istream>
 #include <list>
 #include <expat.h>
+#include "librets/http_forward.h"
 #include "librets/std_forward.h"
 #include "librets/xml_forward.h"
 #include "librets/RetsXmlParser.h"
@@ -31,6 +32,7 @@ class ExpatXmlParser : public RetsXmlParser
   public:
     ExpatXmlParser(istreamPtr inputStream, const char *encoding = "US-ASCII");
     ExpatXmlParser(std::string inputString, const char *encoding = "US-ASCII");
+    ExpatXmlParser(RetsHttpClientPtr httpClient, istreamPtr inputStream, const char *encoding = "US-ASCII");
 
     virtual ~ExpatXmlParser();
 
@@ -60,6 +62,7 @@ class ExpatXmlParser : public RetsXmlParser
     istreamPtr mInputStream;
     bool mIsDone;
     XML_Parser mParser;
+    RetsHttpClientPtr mHttpClient;
 };
 
 };

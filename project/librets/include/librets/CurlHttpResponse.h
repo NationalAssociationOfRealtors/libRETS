@@ -19,6 +19,7 @@
 
 #include "librets/RetsHttpResponse.h"
 #include "librets/std_forward.h"
+#include "librets/CurlStream.h"
 
 namespace librets {
 

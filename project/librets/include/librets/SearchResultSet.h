@@ -20,6 +20,7 @@
 #include <string>
 #include <vector>
 #include "librets/std_forward.h"
+#include "librets/ExpatXmlParser.h"
 #include "librets/RetsObject.h"
 #include "librets/RetsSession.h"
 
@@ -44,6 +45,13 @@ class SearchResultSet : public virtual RetsObject
     void Parse(istreamPtr inputStream);
 	
 	void Parse();
+    
+    /*
+     * Parse the XML.
+     *
+     * @return Returns TRUE while more data can be fetched.
+     */
+    bool ParseNonBlocking();
 
     /**
      * Returns true if there are more results.  This may block waiting
@@ -121,10 +129,13 @@ class SearchResultSet : public virtual RetsObject
 	void SetParseStream(istreamPtr inputStream);
     
     /**
-     * Set the http client.
+     * Set the http client and indicate we are in streaming mode.
+     *
+     * @param httpClient The Rets Http Client
+     * @param inputStream Input Stream
      */
-    void SetHttpClient(RetsHttpClientPtr httpClient);
-
+    void SetStreaming(RetsHttpClientPtr httpClient, istreamPtr inputStream);
+    
   private:
     typedef std::vector<StringVectorPtr> RowData;
     typedef std::map<std::string, StringVector::size_type> ColumnToIndexMap;
@@ -139,7 +150,13 @@ class SearchResultSet : public virtual RetsObject
     RetsSession::EncodingType mEncoding;
 	bool mMaxRows;
 	istreamPtr mParseInputStream;
+    /*
+     * For the streaming interface, we must know the http client.
+     */
     RetsHttpClientPtr mHttpClient;
+    bool mStreaming;
+    ExpatXmlParserPtr mXmlParser;
+    std::string mDelimiter;
 };
 
 };

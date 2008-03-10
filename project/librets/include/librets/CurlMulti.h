@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 National Association of REALTORS(R)
+ * Copyright (C) 2008 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
