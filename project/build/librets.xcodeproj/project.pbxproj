@@ -196,6 +196,9 @@
 		F907BC3C0D7A441F00B170F7 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A133EB0D52413400FED80E /* libboost_program_options.a */; };
 		F907BC480D7A448300B170F7 /* search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA16707FA0ECD00402C35 /* search.cpp */; };
 		F907BC4D0D7A453300B170F7 /* metadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA16507FA0ECD00402C35 /* metadata.cpp */; };
+		F93928D90D7B3EF700353C92 /* CurlStream.cpp in Headers */ = {isa = PBXBuildFile; fileRef = F93928D80D7B3EF700353C92 /* CurlStream.cpp */; };
+		F93928DD0D7B3F4500353C92 /* CurlStream.h in Headers */ = {isa = PBXBuildFile; fileRef = F93928DC0D7B3F4500353C92 /* CurlStream.h */; };
+		F93928E20D7B428800353C92 /* CurlStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93928D80D7B3EF700353C92 /* CurlStream.cpp */; };
 		F9A133D00D5228E900FED80E /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565907FC3BBE00526D69 /* libexpat.a */; };
 		F9A133D10D5228E900FED80E /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565707FC3BA100526D69 /* libcurl.a */; };
 		F9A133D20D5228E900FED80E /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
@@ -588,6 +591,8 @@
 		F90434570D039AE9004E3017 /* libantlr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libantlr.a; path = lib/libantlr.a; sourceTree = ANTLR_DIR; };
 		F907BC410D7A441F00B170F7 /* metadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = metadata; sourceTree = BUILT_PRODUCTS_DIR; };
 		F90D477E0CF8D29200B9AC65 /* search-response-extended-char.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "search-response-extended-char.xml"; sourceTree = "<group>"; };
+		F93928D80D7B3EF700353C92 /* CurlStream.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CurlStream.cpp; sourceTree = "<group>"; };
+		F93928DC0D7B3F4500353C92 /* CurlStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CurlStream.h; sourceTree = "<group>"; };
 		F9A133D70D5228E900FED80E /* metadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = metadata; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9A133E70D523FE400FED80E /* Options.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
 		F9A133EB0D52413400FED80E /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = lib/libboost_program_options.a; sourceTree = BOOST; };
@@ -880,6 +885,7 @@
 		5552A8830803311C002288F1 /* HTTP */ = {
 			isa = PBXGroup;
 			children = (
+				F93928D80D7B3EF700353C92 /* CurlStream.cpp */,
 				F9E1CC7F0D6654400089D636 /* CurlMulti.cpp */,
 				55F23D84088EACDE0090B325 /* CurlEasy.cpp */,
 				554A9F5607F9F2E700402C35 /* CurlHttpClient.cpp */,
@@ -1024,19 +1030,19 @@
 		558F6AC507FE06C500CE8AF2 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				5511327508D5E32D00CC048D /* error_forward.h */,
 				551131F608D5DDFC00CC048D /* ExceptionErrorHandler.h */,
-				551131F008D5DA4A00CC048D /* RetsErrorHandler.h */,
 				554A9EC407F9F2D200402C35 /* forward.h */,
-				558F6A6507FDEBC400CE8AF2 /* RetsExceptionContext.h */,
+				551131F008D5DA4A00CC048D /* RetsErrorHandler.h */,
 				554A9EE707F9F2D200402C35 /* RetsException.h */,
+				558F6A6507FDEBC400CE8AF2 /* RetsExceptionContext.h */,
 				554A9EEC07F9F2D200402C35 /* RetsObject.h */,
+				554A9EFA07F9F2D200402C35 /* std_forward.h */,
+				55F23CC30886E7AC0090B325 /* str_stream.h */,
 				554A9EFB07F9F2D200402C35 /* template.h */,
 				554A9EFC07F9F2D200402C35 /* Uri.h */,
 				554A9EFD07F9F2D200402C35 /* util.h */,
 				554A9EFE07F9F2D200402C35 /* winundef.h */,
-				55F23CC30886E7AC0090B325 /* str_stream.h */,
-				554A9EFA07F9F2D200402C35 /* std_forward.h */,
-				5511327508D5E32D00CC048D /* error_forward.h */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -1044,18 +1050,17 @@
 		558F6AC607FE06CC00CE8AF2 /* Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				554A9ECD07F9F2D200402C35 /* metadata_forward.h */,
-				55F903CA08FED6A000D76E8C /* IncrementalMetadataFinder.h */,
-				55F902A308FEC33200D76E8C /* MetadataFinder.h */,
-				5570971308FDBB310067D309 /* MetadataLoader.h */,
-				551131F808D5DE7800CC048D /* RetsUnknownMetadataException.h */,
-				554A9EBC07F9F2D200402C35 /* DefaultMetadataElementFactory.h */,
 				55F9061608FEFDD900D76E8C /* DefaultMetadataCollector.h */,
-				554A9ED207F9F2D200402C35 /* MetadataElementCollector.h */,
-				554A9ED107F9F2D200402C35 /* MetadataElement.h */,
+				554A9EBC07F9F2D200402C35 /* DefaultMetadataElementFactory.h */,
+				55F903CA08FED6A000D76E8C /* IncrementalMetadataFinder.h */,
+				554A9ECD07F9F2D200402C35 /* metadata_forward.h */,
 				554A9ECF07F9F2D200402C35 /* MetadataClass.h */,
 				554A9ED007F9F2D200402C35 /* MetadataEditMask.h */,
+				554A9ED107F9F2D200402C35 /* MetadataElement.h */,
+				554A9ED207F9F2D200402C35 /* MetadataElementCollector.h */,
+				55F902A308FEC33200D76E8C /* MetadataFinder.h */,
 				554A9ED307F9F2D200402C35 /* MetadataForeignKey.h */,
+				5570971308FDBB310067D309 /* MetadataLoader.h */,
 				554A9ED407F9F2D200402C35 /* MetadataLookup.h */,
 				554A9ED507F9F2D200402C35 /* MetadataLookupType.h */,
 				554A9ED607F9F2D200402C35 /* MetadataObject.h */,
@@ -1072,6 +1077,7 @@
 				554A9EE107F9F2D200402C35 /* MetadataValidationLookup.h */,
 				554A9EE207F9F2D200402C35 /* MetadataValidationLookupType.h */,
 				554A9EEB07F9F2D200402C35 /* RetsMetadata.h */,
+				551131F808D5DE7800CC048D /* RetsUnknownMetadataException.h */,
 			);
 			name = Metadata;
 			sourceTree = "<group>";
@@ -1079,26 +1085,26 @@
 		558F6AC707FE06D300CE8AF2 /* SQL */ = {
 			isa = PBXGroup;
 			children = (
-				555970C208CF5034003A6B24 /* LookupCriterion.h */,
-				554A9EF807F9F2D200402C35 /* sql_forward.h */,
 				554A9EB607F9F2D200402C35 /* AndCriterion.h */,
 				554A9EBD07F9F2D200402C35 /* DmqlCriterion.h */,
 				554A9EBE07F9F2D200402C35 /* DmqlExpression.h */,
 				554A9EBF07F9F2D200402C35 /* DmqlQuery.h */,
-				5504F140081D532B0043B5CF /* GetObjectQuery.h */,
 				554A9EC007F9F2D200402C35 /* EqCriterion.h */,
 				554A9EC207F9F2D200402C35 /* FieldCriterion.h */,
+				5504F140081D532B0043B5CF /* GetObjectQuery.h */,
 				554A9EC507F9F2D200402C35 /* GtCriterion.h */,
 				554A9EC707F9F2D200402C35 /* JunctionCriterion.h */,
 				554A9EC907F9F2D200402C35 /* LiteralCriterion.h */,
+				555970C208CF5034003A6B24 /* LookupCriterion.h */,
 				55F23EF0088FFB900090B325 /* LookupOrCriterion.h */,
 				554A9ECC07F9F2D200402C35 /* LtCriterion.h */,
 				554A9EE307F9F2D200402C35 /* NotCriterion.h */,
 				554A9EE407F9F2D200402C35 /* OrCriterion.h */,
 				554A9EE607F9F2D200402C35 /* RetsAST.h */,
 				554A9EEF07F9F2D200402C35 /* RetsSqlException.h */,
-				554A9EF907F9F2D200402C35 /* SqlToDmqlCompiler.h */,
+				554A9EF807F9F2D200402C35 /* sql_forward.h */,
 				55F23E6D088EECB80090B325 /* SqlMetadata.h */,
+				554A9EF907F9F2D200402C35 /* SqlToDmqlCompiler.h */,
 			);
 			name = SQL;
 			sourceTree = "<group>";
@@ -1106,21 +1112,21 @@
 		558F6AC807FE06DA00CE8AF2 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				55F23ACC0885AFA90090B325 /* RetsVersion.h */,
+				554A9EB707F9F2D200402C35 /* CapabilityUrls.h */,
 				5552AA91080467F8002288F1 /* GetObjectRequest.h */,
 				558F6AB207FE03A700CE8AF2 /* GetObjectResponse.h */,
-				558F6A9F07FDF75200CE8AF2 /* ObjectDescriptor.h */,
-				554A9EB707F9F2D200402C35 /* CapabilityUrls.h */,
 				554A9EC807F9F2D200402C35 /* KeyValueResponse.h */,
 				554A9ECA07F9F2D200402C35 /* LoginResponse.h */,
 				554A9ECB07F9F2D200402C35 /* LogoutResponse.h */,
+				558F6A9F07FDF75200CE8AF2 /* ObjectDescriptor.h */,
+				554A9EE507F9F2D200402C35 /* protocol_forward.h */,
 				554A9EED07F9F2D200402C35 /* RetsReplyException.h */,
 				554A9EEE07F9F2D200402C35 /* RetsSession.h */,
+				55F23ACC0885AFA90090B325 /* RetsVersion.h */,
 				554A9EF607F9F2D200402C35 /* SearchRequest.h */,
 				554A9EF707F9F2D200402C35 /* SearchResultSet.h */,
-				554A9EE507F9F2D200402C35 /* protocol_forward.h */,
-				554662410A62EBB400F3B94E /* UserAgentAuthType.h */,
 				5546624B0A62EE7200F3B94E /* UserAgentAuthCalculator.h */,
+				554662410A62EBB400F3B94E /* UserAgentAuthType.h */,
 			);
 			name = Protocol;
 			sourceTree = "<group>";
@@ -1128,17 +1134,17 @@
 		558F6AC907FE06F100CE8AF2 /* XML */ = {
 			isa = PBXGroup;
 			children = (
-				55766CBC08D873F50035838D /* RetsXmlEndDocumentEvent.h */,
 				554A9EC107F9F2D200402C35 /* ExpatXmlParser.h */,
 				554A9EF007F9F2D200402C35 /* RetsXmlAttribute.h */,
+				55766CBC08D873F50035838D /* RetsXmlEndDocumentEvent.h */,
 				554A9EF107F9F2D200402C35 /* RetsXmlEndElementEvent.h */,
 				554A9EF207F9F2D200402C35 /* RetsXmlEvent.h */,
 				554A9EF307F9F2D200402C35 /* RetsXmlParser.h */,
 				554A9EF407F9F2D200402C35 /* RetsXmlStartElementEvent.h */,
 				554A9EF507F9F2D200402C35 /* RetsXmlTextEvent.h */,
+				554A9EFF07F9F2D200402C35 /* xml_forward.h */,
 				554A9F0007F9F2D200402C35 /* XmlMetadataElementFactory.h */,
 				554A9F0107F9F2D200402C35 /* XmlMetadataParser.h */,
-				554A9EFF07F9F2D200402C35 /* xml_forward.h */,
 			);
 			name = XML;
 			sourceTree = "<group>";
@@ -1146,17 +1152,18 @@
 		558F6ACB07FE075500CE8AF2 /* HTTP */ = {
 			isa = PBXGroup;
 			children = (
-				F9E1CC7B0D6653FB0089D636 /* CurlMulti.h */,
-				554A9EC607F9F2D200402C35 /* http_forward.h */,
 				554A9EB807F9F2D200402C35 /* curl.h */,
 				55F23D62088EAA290090B325 /* CurlEasy.h */,
 				554A9EB907F9F2D200402C35 /* CurlHttpClient.h */,
 				554A9EBA07F9F2D200402C35 /* CurlHttpResponse.h */,
+				F9E1CC7B0D6653FB0089D636 /* CurlMulti.h */,
 				554A9EBB07F9F2D200402C35 /* CurlSlist.h */,
+				F93928DC0D7B3F4500353C92 /* CurlStream.h */,
+				554A9EC607F9F2D200402C35 /* http_forward.h */,
 				554A9EE807F9F2D200402C35 /* RetsHttpClient.h */,
+				55F23735087C75710090B325 /* RetsHttpLogger.h */,
 				554A9EE907F9F2D200402C35 /* RetsHttpRequest.h */,
 				554A9EEA07F9F2D200402C35 /* RetsHttpResponse.h */,
-				55F23735087C75710090B325 /* RetsHttpLogger.h */,
 				55F237A3087C7D030090B325 /* StreamHttpLogger.h */,
 			);
 			name = HTTP;
@@ -1324,6 +1331,8 @@
 				554662420A62EBB400F3B94E /* UserAgentAuthType.h in Headers */,
 				5546624C0A62EE7200F3B94E /* UserAgentAuthCalculator.h in Headers */,
 				F9E1CC7C0D6653FB0089D636 /* CurlMulti.h in Headers */,
+				F93928D90D7B3EF700353C92 /* CurlStream.cpp in Headers */,
+				F93928DD0D7B3F4500353C92 /* CurlStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1628,7 +1637,9 @@
 				55EE8507093E628900812582 /* CurlEasy.cpp in Sources */,
 				55EE8508093E628900812582 /* CurlHttpClient.cpp in Sources */,
 				55EE8509093E628900812582 /* CurlHttpResponse.cpp in Sources */,
+				F9E1CC800D6654400089D636 /* CurlMulti.cpp in Sources */,
 				55EE850A093E628900812582 /* CurlSlist.cpp in Sources */,
+				F93928E20D7B428800353C92 /* CurlStream.cpp in Sources */,
 				55EE850B093E628900812582 /* DefaultMetadataCollector.cpp in Sources */,
 				55EE850C093E628900812582 /* DefaultMetadataElementFactory.cpp in Sources */,
 				55EE850D093E628900812582 /* DmqlCriterion.cpp in Sources */,
@@ -1707,7 +1718,6 @@
 				55EE854E093E628900812582 /* XmlMetadataParser.cpp in Sources */,
 				554662340A62BAF600F3B94E /* md5.cpp in Sources */,
 				554662500A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp in Sources */,
-				F9E1CC800D6654400089D636 /* CurlMulti.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
