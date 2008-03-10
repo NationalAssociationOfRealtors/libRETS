@@ -17,6 +17,7 @@
 
 #include <sstream>
 #include <iostream>
+#include "librets/CurlStream.h"
 #include "librets/ExpatXmlParser.h"
 #include "librets/RetsXmlAttribute.h"
 #include "librets/RetsXmlEvent.h"
@@ -25,6 +26,7 @@
 #include "librets/RetsXmlTextEvent.h"
 #include "librets/RetsXmlEndDocumentEvent.h"
 #include "librets/RetsException.h"
+#include "librets/RetsHttpClient.h"
 
 using namespace librets;
 using std::string;
@@ -34,14 +36,24 @@ using std::istream;
 namespace b = boost;
 
 ExpatXmlParser::ExpatXmlParser(string inputString, const char *encoding)
+                            : mHttpClient()
 {
     istreamPtr inputStream(new stringstream(inputString));
     init(inputStream, encoding);
 }
 
 ExpatXmlParser::ExpatXmlParser(istreamPtr inputStream, const char *encoding)
+                            : mHttpClient()
 {
     init(inputStream, encoding);
+}
+
+ExpatXmlParser::ExpatXmlParser(RetsHttpClientPtr httpClient, 
+                                istreamPtr inputStream, 
+                                const char *encoding)
+{
+    init(inputStream, encoding);
+    mHttpClient = httpClient;
 }
 
 void ExpatXmlParser::init(istreamPtr inputStream, const char *encoding)
@@ -111,6 +123,16 @@ void ExpatXmlParser::CoalesceTextEvents(RetsXmlTextEventPtr textEvent)
 
 RetsXmlEventPtr ExpatXmlParser::GetNextEventWithoutCoalescing()
 {
+    bool atEof = false;
+    bool isCurlStream = (typeid(*mInputStream) == typeid(CurlStream));
+    bool isLast = false;
+    istreamPtr inputStream = b::dynamic_pointer_cast<CurlStream>(mInputStream);
+
+    if (!inputStream)
+    {
+        inputStream = mInputStream;
+    }
+    
     if (mIsDone)
     {
         throw RetsException("XML parser is finished");
@@ -118,12 +140,14 @@ RetsXmlEventPtr ExpatXmlParser::GetNextEventWithoutCoalescing()
 
     while (mEvents.empty())
     {
-        if (!mInputStream->eof())
+        if (!inputStream->eof())
         {
             char buf[512];
-            mInputStream->read(buf, sizeof(buf));
-            int len = mInputStream->gcount();
-            bool isLast = mInputStream->eof();
+
+            inputStream->read(buf, sizeof(buf));
+            int len = inputStream->gcount();
+            isLast = inputStream->eof();
+                
             if (XML_Parse(mParser, buf, len, isLast) == XML_STATUS_ERROR)
             {
                 int lineNumber = GetCurrentLineNumber();

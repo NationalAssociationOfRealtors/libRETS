@@ -21,6 +21,7 @@
 #include "librets/RetsHttpRequest.h"
 #include "librets/CurlHttpClient.h"
 #include "librets/CurlHttpResponse.h"
+#include "librets/CurlStream.h"
 #include "librets/RetsException.h"
 #include "librets/RetsHttpLogger.h"
 #include "librets/util.h"
@@ -139,7 +140,10 @@ RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
     mCurl.SetHttpHeaders(mHeaders.slist());
     mCurl.SetUrl(url);
     mResponse.reset(new CurlHttpResponse());
-    iostreamPtr dataStream(new stringstream());
+//    iostreamPtr dataStream(new stringstream());
+//    iostreamPtr dataStream(new CurlStream(*this));
+//    mResponse->SetStream(dataStream);
+    boost::shared_ptr<CurlStream> dataStream(new CurlStream(*this));
     mResponse->SetStream(dataStream);
     //mCurl.Perform();
     /*

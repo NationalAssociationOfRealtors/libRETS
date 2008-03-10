@@ -317,7 +317,8 @@ SearchResultSetAPtr CLASS::SearchNonBlocking(SearchRequest * request)
     
     SearchResultSetAPtr resultSet(new SearchResultSet());
     resultSet->SetEncoding(mEncoding);
-
+    resultSet->SetStreaming(mHttpClient,httpResponse->GetInputStream());
+       
     return resultSet;
 }
 
@@ -476,3 +477,4 @@ void CLASS::SetDefaultEncoding(EncodingType encoding)
 {
     mEncoding    = encoding;
 }
+
