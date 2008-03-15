@@ -149,7 +149,7 @@ void CLASS::RetrieveAction()
     request.SetUrl(actionUrl);
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
     AssertSuccessfulResponse(httpResponse, actionUrl);
-    mAction = readIntoString(*httpResponse->GetInputStream());
+    mAction = readIntoString(httpResponse->GetInputStream());
 }
 
 string CLASS::GetAction()

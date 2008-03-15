@@ -17,6 +17,7 @@
 #include <sstream>
 #include <iostream>
 #include "librets/util.h"
+#include "librets/CurlStream.h"
 
 using namespace librets;
 using namespace librets::util;
@@ -129,31 +130,45 @@ string NS::urlEncode(const string & aString)
     return encoded;
 }
 
-void NS::readUntilEof(istream & inputStream, ostream & outputStream)
+void NS::readUntilEof(istreamPtr InputStream, ostream & outputStream)
 {
-    while (!inputStream.eof())
+    istreamPtr inputStream = boost::dynamic_pointer_cast<CurlStream>(InputStream);
+
+    if (!inputStream)
+    {
+        inputStream = InputStream;
+    }
+    
+    while (!inputStream->eof())
     {
         char buffer[4096];
         int length;
-        inputStream.read(buffer, sizeof(buffer));
-        length = inputStream.gcount();
+        inputStream->read(buffer, sizeof(buffer));
+        length = inputStream->gcount();
         outputStream.write(buffer, length);
     }
 }
 
-void NS::readIntoString(istream & inputStream, string & aString)
+void NS::readIntoString(istreamPtr InputStream, string & aString)
 {
-    while (!inputStream.eof())
+    istreamPtr inputStream = boost::dynamic_pointer_cast<CurlStream>(InputStream);
+
+    if (!inputStream)
+    {
+        inputStream = InputStream;
+    }
+
+    while (!inputStream->eof())
     {
         char buffer[4096];
         int length;
-        inputStream.read(buffer, sizeof(buffer));
-        length = inputStream.gcount();
+        inputStream->read(buffer, sizeof(buffer));
+        length = inputStream->gcount();
         aString.append(buffer, length);
     }
 }
 
-string NS::readIntoString(istream & inputStream)
+string NS::readIntoString(istreamPtr inputStream)
 {
     string aString;
     readIntoString(inputStream, aString);

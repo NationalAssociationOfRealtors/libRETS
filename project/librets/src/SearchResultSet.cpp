@@ -19,6 +19,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/version.hpp>
 #include <stdexcept>
+#include "librets/CurlStream.h"
 #include "librets/SearchResultSet.h"
 #include "librets/ExpatXmlParser.h"
 #include "librets/RetsXmlStartElementEvent.h"
@@ -375,7 +376,7 @@ void SearchResultSet::SetStreaming(RetsHttpClientPtr httpClient, istreamPtr inpu
      */
     mHttpClient = httpClient;
     mStreaming = true;
-    mParseInputStream = inputStream;
+    mParseInputStream =  b::dynamic_pointer_cast<CurlStream>(inputStream);
     
     ExpatXmlParserPtr XmlParser( new ExpatXmlParser(inputStream,
                     (mEncoding == RetsSession::RETS_XML_ISO_ENCODING 

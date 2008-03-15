@@ -126,13 +126,8 @@ RetsXmlEventPtr ExpatXmlParser::GetNextEventWithoutCoalescing()
     bool atEof = false;
     bool isCurlStream = (typeid(*mInputStream) == typeid(CurlStream));
     bool isLast = false;
-    istreamPtr inputStream = b::dynamic_pointer_cast<CurlStream>(mInputStream);
+    int len = 0;
 
-    if (!inputStream)
-    {
-        inputStream = mInputStream;
-    }
-    
     if (mIsDone)
     {
         throw RetsException("XML parser is finished");
@@ -140,13 +135,23 @@ RetsXmlEventPtr ExpatXmlParser::GetNextEventWithoutCoalescing()
 
     while (mEvents.empty())
     {
-        if (!inputStream->eof())
+        atEof = isCurlStream ? b::dynamic_pointer_cast<CurlStream>(mInputStream)->eof() : mInputStream->eof();
+        if (!atEof)
         {
             char buf[512];
 
-            inputStream->read(buf, sizeof(buf));
-            int len = inputStream->gcount();
-            isLast = inputStream->eof();
+            if (isCurlStream)
+            {
+                b::dynamic_pointer_cast<CurlStream>(mInputStream)->read(buf, sizeof(buf));
+                len = b::dynamic_pointer_cast<CurlStream>(mInputStream)->gcount();
+                isLast = b::dynamic_pointer_cast<CurlStream>(mInputStream)->eof();
+            }
+            else
+            {
+                mInputStream->read(buf, sizeof(buf));
+                len = mInputStream->gcount();
+                isLast = mInputStream->eof();
+            }
                 
             if (XML_Parse(mParser, buf, len, isLast) == XML_STATUS_ERROR)
             {

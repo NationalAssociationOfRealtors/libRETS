@@ -45,6 +45,8 @@ CurlHttpClient::CurlHttpClient()
     mCurl.SetWriteHeaderFunction(CurlHttpClient::StaticWriteHeader);
     
     mCurlMulti.AddEasy(mCurl);
+    
+    mResponseCode = 0;
 
     SetUserAgent("librets-curl/" LIBRETS_VERSION);
 }
@@ -88,6 +90,18 @@ void CurlHttpClient::GenerateHeadersSlist(const StringMap & requestHeaders)
     }
 }
 
+int CurlHttpClient::GetResponseCode()
+{
+    /*
+     * With the multi interface, we won't get status until the transaction is done.
+     * Here we assume that if someone wants status, they want the request completed, so
+     * complete it.
+     */
+    while (mResponseCode == 0 && ContinueRequest());
+    
+    return mResponseCode;
+}
+
 void CurlHttpClient::SetUserAgent(string userAgent)
 {
     SetDefaultHeader("User-Agent", userAgent);
@@ -114,7 +128,7 @@ bool CurlHttpClient::ContinueRequest()
         
     if (!mCurlMulti.StillRunning())
     {
-        mResponse->SetResponseCode(mCurl.GetResponseCode());
+        mResponseCode = mCurl.GetResponseCode();
     }
         
     return mCurlMulti.StillRunning();
@@ -141,10 +155,11 @@ RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
     mCurl.SetUrl(url);
     mResponse.reset(new CurlHttpResponse());
 //    iostreamPtr dataStream(new stringstream());
-//    iostreamPtr dataStream(new CurlStream(*this));
+    iostreamPtr dataStream(new CurlStream(*this));
 //    mResponse->SetStream(dataStream);
-    boost::shared_ptr<CurlStream> dataStream(new CurlStream(*this));
+//    boost::shared_ptr<CurlStream> dataStream(new CurlStream(*this));
     mResponse->SetStream(dataStream);
+    mResponse->SetHttpClient(this);
     //mCurl.Perform();
     /*
      * This is ugly ... it appears that to start a new transaction, we must remove and then
@@ -163,7 +178,7 @@ RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
     mCurlMulti.Perform();
 
     mResponse->SetUrl(request->GetUrl());
-    mResponse->SetResponseCode(mCurl.GetResponseCode());
+    mResponseCode = mCurl.GetResponseCode();
     return mResponse;
 }
 
