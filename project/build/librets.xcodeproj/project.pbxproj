@@ -589,13 +589,14 @@
 		55F9061408FEFDCE00D76E8C /* DefaultMetadataCollector.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = DefaultMetadataCollector.cpp; sourceTree = "<group>"; };
 		55F9061608FEFDD900D76E8C /* DefaultMetadataCollector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefaultMetadataCollector.h; sourceTree = "<group>"; };
 		F90434570D039AE9004E3017 /* libantlr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libantlr.a; path = lib/libantlr.a; sourceTree = ANTLR_DIR; };
-		F907BC410D7A441F00B170F7 /* metadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = metadata; sourceTree = BUILT_PRODUCTS_DIR; };
 		F90D477E0CF8D29200B9AC65 /* search-response-extended-char.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "search-response-extended-char.xml"; sourceTree = "<group>"; };
 		F93928D80D7B3EF700353C92 /* CurlStream.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CurlStream.cpp; sourceTree = "<group>"; };
 		F93928DC0D7B3F4500353C92 /* CurlStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CurlStream.h; sourceTree = "<group>"; };
+		F9419C020D85A248001A6A54 /* Options.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
 		F9A133D70D5228E900FED80E /* metadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = metadata; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9A133E70D523FE400FED80E /* Options.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
 		F9A133EB0D52413400FED80E /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = lib/libboost_program_options.a; sourceTree = BOOST; };
+		F9C58E8D0D84D18000F648D4 /* search */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = search; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9E1CC7B0D6653FB0089D636 /* CurlMulti.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CurlMulti.h; sourceTree = "<group>"; };
 		F9E1CC7F0D6654400089D636 /* CurlMulti.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CurlMulti.cpp; sourceTree = "<group>"; };
 		F9F6CDAC0D14877E00BDF053 /* search-response-error-extended.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "search-response-error-extended.xml"; sourceTree = "<group>"; };
@@ -718,7 +719,7 @@
 				5552AB19080475A2002288F1 /* get-object */,
 				55EE8499093E5AAA00812582 /* librets.a */,
 				F9A133D70D5228E900FED80E /* metadata */,
-				F907BC410D7A441F00B170F7 /* metadata */,
+				F9C58E8D0D84D18000F648D4 /* search */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -782,6 +783,7 @@
 		554AA16207FA0E9C00402C35 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				F9419C020D85A248001A6A54 /* Options.h */,
 				5552AB1108047438002288F1 /* get-object.cpp */,
 				554AA16307FA0ECD00402C35 /* http.cpp */,
 				554AA16407FA0ECD00402C35 /* login.cpp */,
@@ -1440,7 +1442,7 @@
 			);
 			name = search;
 			productName = "get-object";
-			productReference = F907BC410D7A441F00B170F7 /* metadata */;
+			productReference = F9C58E8D0D84D18000F648D4 /* search */;
 			productType = "com.apple.product-type.tool";
 		};
 		F9A133C90D5228E900FED80E /* metadata */ = {
@@ -2345,7 +2347,7 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "${BOOST}/lib/libboost_filesystem.a";
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = metadata;
+				PRODUCT_NAME = search;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
 					"-Wmost",
