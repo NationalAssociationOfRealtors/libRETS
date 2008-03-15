@@ -61,6 +61,11 @@ bool Options::ParseCommandLine(int argc, char * argv[])
     useFullMetadata = false;
     po::store(po::parse_command_line(argc, argv, descriptions), options);
     po::notify(options);
+loginUrl="http://rets.socal.mlsrets.com/rets/login"; // $$DEBUG
+username="F210099983"; // $$DEBUG
+password="99983COM"; // $$DEBUG
+mLogFile="/tmp/rets.log"; // $$DEBUG
+
     if (options.count("config-file"))
     {
         ifstream ifs(mConfigFile.c_str());
@@ -100,7 +105,9 @@ RetsSessionPtr Options::RetsLogin()
     session->SetIncrementalMetadata(!useFullMetadata);
     session->SetUserAgentPassword(userAgentPassword);
 
+/* $$DEBUG
     if (options.count("http-log"))
+    $$DEBUG */
     {
         mLogStream.open(mLogFile.c_str());
         mLogger.reset(new StreamHttpLogger(&mLogStream));
