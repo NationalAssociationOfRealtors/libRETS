@@ -179,7 +179,7 @@ void CLASS::testJoinStrings()
 
 void CLASS::testReadIntoString()
 {
-    istringstream stream("string data");
+    iostreamPtr stream(new stringstream("string data"));
     string aString;
     readIntoString(stream, aString);
     ASSERT_STRING_EQUAL("string data", aString);

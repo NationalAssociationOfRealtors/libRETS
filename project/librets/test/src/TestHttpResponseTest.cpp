@@ -47,6 +47,6 @@ void CLASS::testResponse()
     ASSERT_STRING_EQUAL("header:with:colons",
                         response->GetHeader("Colon-Header"));
     ASSERT_STRING_EQUAL("foo", response->GetHeader("Lowercase-Header"));
-    string content = readIntoString(*response->GetInputStream());
+    string content = readIntoString(response->GetInputStream());
     ASSERT_STRING_EQUAL("this is\r\nsample text.\r\n", content);
 }
