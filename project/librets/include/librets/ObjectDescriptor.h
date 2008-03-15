@@ -31,7 +31,7 @@ class BinaryData
 	std::string AsString() const;
 	const char * AsChar() const;
 	void Copy(unsigned char buffer[], int length) const; 
-	void ReadToEof(std::istream & inputStream);
+	void ReadToEof(istreamPtr inputStream);
 	
   private:
 	std::string mData;
@@ -129,7 +129,7 @@ class ObjectDescriptor : public RetsObject
      *
      * @return An input stream to the object data
      */
-    std::istream * GetDataStream();
+    istreamPtr GetDataStream();
     
     /**
      * Sets the input stream to the object data.
