@@ -95,12 +95,6 @@ bool CLASS::Login(string user_name, string passwd)
     mHttpClient->SetUserCredentials(user_name, passwd);
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
     
-    /*
-     * Gotta complete the login, so keep going until the entire transaction
-     * completes.
-     */
-    while (mHttpClient->ContinueRequest());
-    
     if (httpResponse->GetResponseCode() == 401)
     {
         httpResponse = DoRequest(&request);
@@ -216,12 +210,6 @@ void CLASS::LoadMetadata(MetadataElement::Type type,
     request.SetQueryParameter("Format", "COMPACT");
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
 
-    /*
-     * Since we are already incrementally grabbing the metadata, no need to
-     * get fancy here. Just wait for http completion.
-     */
-    while (mHttpClient->ContinueRequest());
-
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
     
     XmlMetadataParserPtr parser(new XmlMetadataParser(mLoaderCollector,
@@ -254,11 +242,6 @@ void CLASS::RetrieveFullMetadata()
     request.SetQueryParameter("ID", "*");
     request.SetQueryParameter("Format", "COMPACT");
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
-    /*
-     * Since we are retrieving all the metadata, wait for the html
-     * transaction to complete.
-     */
-    while (mHttpClient->ContinueRequest());
 
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
     
@@ -292,24 +275,6 @@ SearchResultSetAPtr CLASS::Search(SearchRequest * request)
     string searchUrl = mCapabilityUrls->GetSearchUrl();
     request->SetUrl(searchUrl);
     request->SetMethod(mHttpMethod);
-    RetsHttpResponsePtr httpResponse = DoRequest(request);
-    /*
-     * Wait for the html transaction to complete.
-     */
-    while (mHttpClient->ContinueRequest());
-    AssertSuccessfulResponse(httpResponse, searchUrl);
-    
-    SearchResultSetAPtr resultSet(new SearchResultSet());
-    resultSet->SetEncoding(mEncoding);
-    resultSet->Parse(httpResponse->GetInputStream());
-    return resultSet;
-}
-
-SearchResultSetAPtr CLASS::SearchNonBlocking(SearchRequest * request)
-{
-    string searchUrl = mCapabilityUrls->GetSearchUrl();
-    request->SetUrl(searchUrl);
-    request->SetMethod(mHttpMethod);
     /*
      * Start the transaction.
      */
@@ -317,7 +282,7 @@ SearchResultSetAPtr CLASS::SearchNonBlocking(SearchRequest * request)
     
     SearchResultSetAPtr resultSet(new SearchResultSet());
     resultSet->SetEncoding(mEncoding);
-    resultSet->SetStreaming(mHttpClient,httpResponse->GetInputStream());
+    resultSet->SetInputStream(httpResponse->GetInputStream());
        
     return resultSet;
 }
@@ -329,10 +294,6 @@ GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)
     httpRequest->SetUrl(getObjectUrl);
     httpRequest->SetMethod(mHttpMethod);
     RetsHttpResponsePtr httpResponse = DoRequest(httpRequest.get());
-    /*
-     * Wait for the html transaction to complete.
-     */
-    while (mHttpClient->ContinueRequest());
 
     AssertSuccessfulResponse(httpResponse, getObjectUrl);
     
@@ -358,10 +319,6 @@ LogoutResponseAPtr CLASS::Logout()
     RetsHttpRequest request;
     request.SetUrl(logoutUrl);
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
-    /*
-     * Wait for the html transaction to complete.
-     */
-    while (mHttpClient->ContinueRequest());
     
     AssertSuccessfulResponse(httpResponse, logoutUrl);
 

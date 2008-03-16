@@ -41,13 +41,11 @@ namespace ba = boost::algorithm;
 
 SearchResultSet::SearchResultSet() 
 			: mParseInputStream()
-            , mHttpClient()
 {
     mColumns.reset(new StringVector());
     mCount = -1;
     mEncoding = RetsSession::RETS_XML_DEFAULT_ENCODING;
 	mMaxRows = false;
-    mStreaming = false;
 }
 
 SearchResultSet::~SearchResultSet()
@@ -88,119 +86,11 @@ void SearchResultSet::FixCompactArray(StringVector & compactArray,
 
 void SearchResultSet::Parse(istreamPtr inputStream)
 {
-    // Some "extended character" problems can be worked around by
-    // setting the XML character encoding to iso-8859-1 instead of
-    // US-ASCII.  RETS is officially US-ASCII, so this is a last
-    // resort work around.  
-    
-    ExpatXmlParserPtr mXmlParser(
-                        new ExpatXmlParser(inputStream,
-                                (mEncoding == RetsSession::RETS_XML_ISO_ENCODING 
-                                ? "iso-8859-1"    
-                                : "US-ASCII")));
-    
-    RetsXmlStartElementEventPtr metadataEvent;
-    string delimiter = "\t";
-    while (mXmlParser->HasNext())
-    {
-        RetsXmlEventPtr event = mXmlParser->GetNextSkippingEmptyText();
-        RetsXmlStartElementEventPtr startEvent
-            = b::dynamic_pointer_cast<RetsXmlStartElementEvent>(event);
-        if (!startEvent)
-        {
-            continue;
-        }
-        
-        string name = startEvent->GetName();
-        if (name == "RETS")
-        {
-            istringstream replyCodeString(
-                startEvent->GetAttributeValue("ReplyCode"));
-            int replyCode;
-            replyCodeString >> replyCode;
-            if (replyCode == 20201)
-            {
-                // No records found
-                mCount = 0;
-                continue;
-            }
-            else if (replyCode != 0)
-            {
-                string meaning = startEvent->GetAttributeValue("ReplyText");
-                throw RetsReplyException(replyCode, meaning);
-            }
-			/*
-			 * Beginning a transaction. Clear mMaxRows.
-			 */
-			mMaxRows = false;
-        }
-        else if (name == "COUNT")
-        {
-            istringstream count(startEvent->GetAttributeValue("Records"));
-            count >> mCount;
-        }
-        else if (name == "COLUMNS")
-        {
-            RetsXmlTextEventPtr textEvent =
-                mXmlParser->AssertNextIsTextEvent();
-            string text = textEvent->GetText();
-            StringVector columns;
-            ba::split(columns, text, ba::is_any_of(delimiter));
-            FixCompactArray(columns, "columns");
-
-            for (StringVector::size_type i = 0; i < columns.size(); i++)
-            {
-                mColumns->push_back(columns.at(i));
-                // Need to subtract 1, so it's zero-based
-                mColumnToIndex[columns.at(i)] = i;
-            }
-            mXmlParser->AssertNextIsEndEvent();
-        }
-        else if (name == "DATA")
-        {
-            // AssertNextIsTextEvent() ignores empty text events. In this
-            // case, an empty text event (one with just tabs) is valid.  So
-            // here we use GetNextEvent() which does not ignore empty text
-            // events.
-            RetsXmlEventPtr xmlEvent = mXmlParser->GetNextEvent();
-            RetsXmlTextEventPtr textEvent =
-                mXmlParser->AssertTextEvent(xmlEvent, "DATA: ");
-            string text = textEvent->GetText();
-            StringVectorPtr data(new StringVector());
-            ba::split(*data, text, ba::is_any_of(delimiter));
-            FixCompactArray(*data, "data");
-            
-            mRows.push_back(data);
-            mXmlParser->AssertNextIsEndEvent();
-        }
-        else if (name == "DELIMITER")
-        {
-            istringstream hexString(startEvent->GetAttributeValue("value"));
-            // Must go into an int, not a char, due to the special handling of
-            // chars in istringstream
-            int delimiterChar;
-            hexString >> std::hex >> delimiterChar;
-            delimiter.clear();
-            delimiter += (char) delimiterChar;
-        }
-		else if (name == "MAXROWS")
-		{
-			mMaxRows = true;
-		}
-    }
-    mNextRow = mRows.begin();
-    mCurrentRow.reset();
+    SetInputStream(inputStream);
 }
 
-void SearchResultSet::Parse()
+bool SearchResultSet::Parse()
 {
-    if (mParseInputStream)
-	  Parse(mParseInputStream);
-}
-
-bool SearchResultSet::ParseNonBlocking()
-{
-    RetsXmlStartElementEventPtr metadataEvent;
     bool retval = false;
     
     while (mXmlParser->HasNext())
@@ -275,6 +165,9 @@ bool SearchResultSet::ParseNonBlocking()
             
             mRows.push_back(data);
             mXmlParser->AssertNextIsEndEvent();
+            /*
+             * Once a single data row has been parsed, return to the caller.
+             */
             retval = true;
             break;
         }
@@ -299,34 +192,23 @@ bool SearchResultSet::ParseNonBlocking()
 
 bool SearchResultSet::HasNext()
 {
-    if (mStreaming)
-    {
-        /*
-         * We are in streaming mode. We need to fetch a row until we either successfully
-         * get a row, or run out of data to parse.
-         */
-        while (mNextRow == mRows.end() && ParseNonBlocking());
-        if (mNextRow == mRows.end())
-        {
-            mCurrentRow.reset();
-            return false;
-        }
-        mCurrentRow = *(mRows.end() - 1);
-        mNextRow = mRows.end();
-        return true;
-    }
-    
-    if (mNextRow != mRows.end())
-    {
-        mCurrentRow = *mNextRow;
-        mNextRow++;
-        return true;
-    }
-    else
+    /*
+     * We are in streaming mode. We need to fetch a row until we either successfully
+     * get a row, or run out of data to parse.
+     */
+    while (mNextRow == mRows.end() && Parse());
+    if (mNextRow == mRows.end())
     {
         mCurrentRow.reset();
         return false;
     }
+    /*
+     * Since the parsing returns after parsing a single <DATA/> tag, the current
+     * row will always be the one prior to the end of mRows.
+     */
+    mCurrentRow = *(mRows.end() - 1);
+    mNextRow = mRows.end();
+    return true;
 }
 
 int SearchResultSet::GetCount()
@@ -366,17 +248,21 @@ RetsSession::EncodingType SearchResultSet::GetEncoding()
 
 bool SearchResultSet::HasMaxRows()
 {
+    /*
+     * The <MAX_ROWS/> tag comes at the end of data, so we need to make sure
+     * we've fetched and parsed everything.
+     */
+    while (Parse());
+
 	return mMaxRows;
 }
 
-void SearchResultSet::SetStreaming(RetsHttpClientPtr httpClient, istreamPtr inputStream)
+void SearchResultSet::SetInputStream(istreamPtr inputStream)
 {
     /*
      * Initialize for streaming mode.
      */
-    mHttpClient = httpClient;
-    mStreaming = true;
-    mParseInputStream =  b::dynamic_pointer_cast<CurlStream>(inputStream);
+    mParseInputStream =  inputStream;
     
     ExpatXmlParserPtr XmlParser( new ExpatXmlParser(inputStream,
                     (mEncoding == RetsSession::RETS_XML_ISO_ENCODING 
@@ -388,15 +274,9 @@ void SearchResultSet::SetStreaming(RetsHttpClientPtr httpClient, istreamPtr inpu
     /*
      * Perform the initial parse.
      */
-    if (ParseNonBlocking())
-    {
-        mNextRow = mRows.begin();
-    }
+    Parse();
+    
+    mNextRow = mRows.begin();
     mCurrentRow.reset();
-}
-
-void SearchResultSet::SetParseStream(istreamPtr inputStream)
-{
-    mParseInputStream = inputStream;
 }
 

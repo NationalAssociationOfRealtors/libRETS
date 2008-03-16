@@ -154,27 +154,19 @@ RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
     mCurl.SetHttpHeaders(mHeaders.slist());
     mCurl.SetUrl(url);
     mResponse.reset(new CurlHttpResponse());
-//    iostreamPtr dataStream(new stringstream());
     iostreamPtr dataStream(new CurlStream(*this));
-//    mResponse->SetStream(dataStream);
-//    boost::shared_ptr<CurlStream> dataStream(new CurlStream(*this));
     mResponse->SetStream(dataStream);
     mResponse->SetHttpClient(this);
-    //mCurl.Perform();
     /*
-     * This is ugly ... it appears that to start a new transaction, we must remove and then
+     * It appears that to start a new transaction, we must remove and then
      * add the Easy handle back.
      */
     mCurlMulti.RemoveEasy(mCurl);
     mCurlMulti.AddEasy(mCurl);
     mCurlMulti.Reset();
     /*
-     * For now, we will operate as if mCurl.Perform() were invoked. Next step is to move the
-     * completion logic up the chain into the XML parsing. May need to switch from a stringstream
-     * to some sort of device stream to aid in blocking. Beforehand, try doing something like:
-     *         if datastream->eof() then invoke continueRequest().
+     * Start the html request. This will return immediately.
      */
-    // while (mCurlMulti.StillRunning()) mCurlMulti.Perform();
     mCurlMulti.Perform();
 
     mResponse->SetUrl(request->GetUrl());

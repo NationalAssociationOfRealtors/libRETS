@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2005 National Association of REALTORS(R)
  *
- * All rights reserved.
+  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -130,40 +130,59 @@ string NS::urlEncode(const string & aString)
     return encoded;
 }
 
-void NS::readUntilEof(istreamPtr InputStream, ostream & outputStream)
+void NS::readUntilEof(istreamPtr inputStream, ostream & outputStream)
 {
-    istreamPtr inputStream = boost::dynamic_pointer_cast<CurlStream>(InputStream);
+    bool atEof = false;
+    bool isCurlStream = (typeid(*inputStream) == typeid(CurlStream));
+    int length = 0;
 
-    if (!inputStream)
-    {
-        inputStream = InputStream;
-    }
-    
-    while (!inputStream->eof())
+    atEof = isCurlStream ? boost::dynamic_pointer_cast<CurlStream>(inputStream)->eof() 
+                         : inputStream->eof();
+    while (!atEof)
     {
         char buffer[4096];
-        int length;
-        inputStream->read(buffer, sizeof(buffer));
-        length = inputStream->gcount();
+
+        if (isCurlStream)
+        {
+            boost::dynamic_pointer_cast<CurlStream>(inputStream)->read(buffer, sizeof(buffer));
+            length = boost::dynamic_pointer_cast<CurlStream>(inputStream)->gcount();
+            atEof = boost::dynamic_pointer_cast<CurlStream>(inputStream)->eof();
+        }
+        else
+        {
+            inputStream->read(buffer, sizeof(buffer));
+            length = inputStream->gcount();
+            atEof = inputStream->eof();
+        }
+
         outputStream.write(buffer, length);
     }
 }
 
-void NS::readIntoString(istreamPtr InputStream, string & aString)
+void NS::readIntoString(istreamPtr inputStream, string & aString)
 {
-    istreamPtr inputStream = boost::dynamic_pointer_cast<CurlStream>(InputStream);
+    bool atEof = false;
+    bool isCurlStream = (typeid(*inputStream) == typeid(CurlStream));
+    int length = 0;
 
-    if (!inputStream)
-    {
-        inputStream = InputStream;
-    }
-
-    while (!inputStream->eof())
+    atEof = isCurlStream ? boost::dynamic_pointer_cast<CurlStream>(inputStream)->eof() 
+                         : inputStream->eof();
+    while (!atEof)
     {
         char buffer[4096];
-        int length;
-        inputStream->read(buffer, sizeof(buffer));
-        length = inputStream->gcount();
+
+        if (isCurlStream)
+        {
+            boost::dynamic_pointer_cast<CurlStream>(inputStream)->read(buffer, sizeof(buffer));
+            length = boost::dynamic_pointer_cast<CurlStream>(inputStream)->gcount();
+            atEof = boost::dynamic_pointer_cast<CurlStream>(inputStream)->eof();
+        }
+        else
+        {
+            inputStream->read(buffer, sizeof(buffer));
+            length = inputStream->gcount();
+            atEof = inputStream->eof();
+        }
         aString.append(buffer, length);
     }
 }

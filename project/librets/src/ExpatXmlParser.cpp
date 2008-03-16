@@ -26,7 +26,6 @@
 #include "librets/RetsXmlTextEvent.h"
 #include "librets/RetsXmlEndDocumentEvent.h"
 #include "librets/RetsException.h"
-#include "librets/RetsHttpClient.h"
 
 using namespace librets;
 using std::string;
@@ -36,24 +35,14 @@ using std::istream;
 namespace b = boost;
 
 ExpatXmlParser::ExpatXmlParser(string inputString, const char *encoding)
-                            : mHttpClient()
 {
     istreamPtr inputStream(new stringstream(inputString));
     init(inputStream, encoding);
 }
 
 ExpatXmlParser::ExpatXmlParser(istreamPtr inputStream, const char *encoding)
-                            : mHttpClient()
 {
     init(inputStream, encoding);
-}
-
-ExpatXmlParser::ExpatXmlParser(RetsHttpClientPtr httpClient, 
-                                istreamPtr inputStream, 
-                                const char *encoding)
-{
-    init(inputStream, encoding);
-    mHttpClient = httpClient;
 }
 
 void ExpatXmlParser::init(istreamPtr inputStream, const char *encoding)

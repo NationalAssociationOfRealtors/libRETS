@@ -24,33 +24,19 @@ using std::ostringstream;
 
 CurlStream::CurlStream(CurlHttpClient& httpClient) 
                         : mHttpClient(httpClient)
-                        , mCurlStream()
 {
 }
 
-/*
-CurlStream::CurlStream(std::string & str) 
-                        : mHttpClient()
-                        , mCurlStream(str)
-{
-}
-*/
-
-/*
-CurlStream::CurlStream(const CurlStream & s) : mCurlStream(s.mCurlStream.str())
-{
-}
-*/
 std::istream& CurlStream::read(char* s, std::streamsize n)
 {
     /*
-     * See if the requested data exceeds what is already in the buffer.
+     * See if the requested data exceeds what is already in the buffer. If so,
+     * continue the request in order to fetch the next block.
      */
     while ((n > (std::stringstream::tellp() - std::stringstream::tellg())) && 
         mHttpClient.ContinueRequest());
     
     return std::stringstream::read(s,n);
-//    return *this;
 }
 
 bool CurlStream::eof() 
