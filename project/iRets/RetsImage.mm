@@ -61,7 +61,7 @@ using std::string;
     else
     {
         mLocation = nil;
-        std::istream * inputStream = objectDescriptor->GetDataStream();
+        istreamPtr inputStream = objectDescriptor->GetDataStream();
         NSData * data = [RetsImage dataWithInputStream: *inputStream];
         mImage = [[NSImage alloc] initWithData: data];
         mImageNeedsLoading = NO;
