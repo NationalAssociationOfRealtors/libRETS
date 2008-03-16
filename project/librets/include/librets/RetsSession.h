@@ -106,15 +106,6 @@ class RetsSession : public MetadataLoader
     SearchResultSetAPtr Search(SearchRequest * request);
 
     /**
-     * Performs a non-blocking search on the server.
-     *
-     * @param request search request parameters
-     * @return Search result set
-     * @throws RetsException if an error occurs.
-     */
-    SearchResultSetAPtr SearchNonBlocking(SearchRequest * request);
-
-    /**
      * Returns the metadata for this server.  Only valid after logging
      * in.  This object is owned by the RetsSession and should not need
      * to be deleted by the user.

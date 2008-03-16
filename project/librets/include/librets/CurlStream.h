@@ -24,67 +24,44 @@
 #include "librets/CurlHttpClient.h"
 
 namespace librets {
-
 class CurlStream : public std::stringstream
 {
   public:
+    /**
+     * This class inherits from std::stringstream and overrides the eof() and read()
+     * methods in order to work in concenrt with class CurlHttpClient and the cURL
+     * multi interface to imlement the streaming interface.
+     *
+     * @param A reference to the CurlHttpClient for this call.
+     */
     CurlStream(CurlHttpClient& httpClient);
 
-/*    
-    CurlStream(std::string & str);
- 
-    CurlStream(const CurlStream & s);
-*/
-    
-    std::stringstream & underlying_stream() const
-    {
-        return mCurlStream;
-    }
-    
-    operator std::string() const
-    {
-        return mCurlStream.str();
-    }
-
+    /**
+     * Determine if there is any more data. A side effect of this call is that
+     * the CurlHttpClient may be invoked to fetch further data from the network.
+     *
+     * @return True if there is no more data on the stream.
+     */
     bool eof();
 
+    /**
+     * Read a block of data from the stream. A side effect of this call is that
+     * the CurlHttpClient may be invoked to fetch further data from the network.
+     *
+     * @param s A pointer to a buffer to which the data will be returned.
+     * @param n The maximum size of the buffer.
+     * @return The result of the std::stringstream::read() call.
+     */
+     
     std::istream& read (char* s , std::streamsize n );
 
-//    std::ostream& write ( const char* s , std::streamsize n );
-
-int get() { printf ("get()\n"); return std::stringstream::get(); }
-
-std::istream& get ( char& c ) { printf ("get(char&c}\n"); return std::stringstream::get(c); }
- 
-std::istream& get (char* s, std::streamsize n ) { printf ("get(char*s, streamsize n)\n"); return std::stringstream::get(s,n);}
-
-std::istream& get (char* s, std::streamsize n, char delim ) { printf ("istream& get (char* s, streamsize n, char delim );\n"); return std::stringstream::get(s,n,delim); }
-
-std::istream& get (std::streambuf& sb) { printf ("get (streambuf&sb)\n"); return std::stringstream::get(sb); }
-
-std::istream& get (std::streambuf& sb, char delim ) { printf ("get(streambuf& sb, char delim)\n"); return std::stringstream::get (sb, delim); }
-
-std::istream& getline (char* s, std::streamsize n ) { printf ("getline(char* s, streamsize n)\n"); return std::stringstream::getline(s, n); }
-
-std::istream& getline (char* s, std::streamsize n, char delim ) { printf ("getline(char *s, streamsize n, char delim)\n"); return std::stringstream::getline(s,n,delim); }
-
-std::streamsize readsome ( char* s, std::streamsize n ) { printf ("readsome(char *s, streamsize n);\n"); return std::stringstream::readsome(s,n); }
-
-std::stringbuf* rdbuf ( ) const { printf ("rdbuf()\n"); return std::stringstream::rdbuf(); }
-    
 private:
+    CurlStream();
+    
     mutable std::stringstream mCurlStream;
     CurlHttpClient& mHttpClient;
 };
 
-#if 0
-template <class type>
-    const CurlStream & operator<< (const CurlStream & out, const type & value)
-{
-    out.underlying_stream() << value;
-    return out;
-}
-#endif
 
 }
 

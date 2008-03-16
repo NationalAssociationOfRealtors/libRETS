@@ -44,15 +44,6 @@ class SearchResultSet : public virtual RetsObject
 
     void Parse(istreamPtr inputStream);
 	
-	void Parse();
-    
-    /*
-     * Parse the XML.
-     *
-     * @return Returns TRUE while more data can be fetched.
-     */
-    bool ParseNonBlocking();
-
     /**
      * Returns true if there are more results.  This may block waiting
      * for data from the RETS server.
@@ -126,20 +117,21 @@ class SearchResultSet : public virtual RetsObject
 	 *
 	 * @param inputStream Input Stream 
 	 */
-	void SetParseStream(istreamPtr inputStream);
-    
-    /**
-     * Set the http client and indicate we are in streaming mode.
-     *
-     * @param httpClient The Rets Http Client
-     * @param inputStream Input Stream
-     */
-    void SetStreaming(RetsHttpClientPtr httpClient, istreamPtr inputStream);
+	void SetInputStream(istreamPtr inputStream);
     
   private:
     typedef std::vector<StringVectorPtr> RowData;
     typedef std::map<std::string, StringVector::size_type> ColumnToIndexMap;
     void FixCompactArray(StringVector & compactVector, std::string context);
+    /**
+     * Parse the XML. An input stream must have already been
+     * established. This method should only be called internally.
+     *
+     * @return Returns TRUE while more data can be fetched.
+     */
+    bool Parse();
+
+
 
     int mCount;
     StringVectorPtr mColumns;
@@ -150,11 +142,7 @@ class SearchResultSet : public virtual RetsObject
     RetsSession::EncodingType mEncoding;
 	bool mMaxRows;
 	istreamPtr mParseInputStream;
-    /*
-     * For the streaming interface, we must know the http client.
-     */
-    RetsHttpClientPtr mHttpClient;
-    bool mStreaming;
+
     ExpatXmlParserPtr mXmlParser;
     std::string mDelimiter;
 };

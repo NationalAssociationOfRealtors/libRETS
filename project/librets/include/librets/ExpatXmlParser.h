@@ -32,7 +32,6 @@ class ExpatXmlParser : public RetsXmlParser
   public:
     ExpatXmlParser(istreamPtr inputStream, const char *encoding = "US-ASCII");
     ExpatXmlParser(std::string inputString, const char *encoding = "US-ASCII");
-    ExpatXmlParser(RetsHttpClientPtr httpClient, istreamPtr inputStream, const char *encoding = "US-ASCII");
 
     virtual ~ExpatXmlParser();
 
@@ -62,7 +61,6 @@ class ExpatXmlParser : public RetsXmlParser
     istreamPtr mInputStream;
     bool mIsDone;
     XML_Parser mParser;
-    RetsHttpClientPtr mHttpClient;
 };
 
 };
