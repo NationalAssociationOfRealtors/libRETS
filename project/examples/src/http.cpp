@@ -36,7 +36,7 @@ int main(int argc, char * argv[])
         RetsHttpClientPtr client = RetsHttpClient::CreateDefault();
         RetsHttpRequest request;
         request.SetUrl(url);
-        RetsHttpResponsePtr response = client->DoRequest(&request);
+        RetsHttpResponsePtr response = client->StartRequest(&request);
         dumpResponse(response);
     }
     catch (RetsException & e)
@@ -49,6 +49,6 @@ void dumpResponse(RetsHttpResponsePtr response)
 {
     cout << "Response code: " << response->GetResponseCode() << endl;
     istreamPtr inputStream = response->GetInputStream();
-    readUntilEof(*inputStream, cout);
+    readUntilEof(inputStream, cout);
     cout << endl;
 }

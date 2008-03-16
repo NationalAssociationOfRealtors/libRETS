@@ -113,8 +113,8 @@ int main(int argc, char * argv[])
             string outputFileName = outputPrefix + objectKey + "-" +
                 lexical_cast<string>(objectId) + "." + suffix;
             ofstream outputStream(outputFileName.c_str());
-            istream * inputStream = objectDescriptor->GetDataStream();
-            readUntilEof(*inputStream, outputStream);
+            istreamPtr inputStream = objectDescriptor->GetDataStream();
+            readUntilEof(inputStream, outputStream);
         }
     
         session->Logout();
