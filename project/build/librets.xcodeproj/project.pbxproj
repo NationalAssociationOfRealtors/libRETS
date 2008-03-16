@@ -199,6 +199,21 @@
 		F93928D90D7B3EF700353C92 /* CurlStream.cpp in Headers */ = {isa = PBXBuildFile; fileRef = F93928D80D7B3EF700353C92 /* CurlStream.cpp */; };
 		F93928DD0D7B3F4500353C92 /* CurlStream.h in Headers */ = {isa = PBXBuildFile; fileRef = F93928DC0D7B3F4500353C92 /* CurlStream.h */; };
 		F93928E20D7B428800353C92 /* CurlStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93928D80D7B3EF700353C92 /* CurlStream.cpp */; };
+		F9419D6D0D8C5710001A6A54 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
+		F9419E160D8C9F70001A6A54 /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9A133E70D523FE400FED80E /* Options.cpp */; };
+		F9419E190D8C9F70001A6A54 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
+		F9419E1A0D8C9F70001A6A54 /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565907FC3BBE00526D69 /* libexpat.a */; };
+		F9419E1B0D8C9F70001A6A54 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565707FC3BA100526D69 /* libcurl.a */; };
+		F9419E1C0D8C9F70001A6A54 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
+		F9419E1D0D8C9F70001A6A54 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A133EB0D52413400FED80E /* libboost_program_options.a */; };
+		F9419E830D8C9FF5001A6A54 /* http.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA16307FA0ECD00402C35 /* http.cpp */; };
+		F9419E940D8CA0A8001A6A54 /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9A133E70D523FE400FED80E /* Options.cpp */; };
+		F9419E970D8CA0A8001A6A54 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
+		F9419E980D8CA0A8001A6A54 /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565907FC3BBE00526D69 /* libexpat.a */; };
+		F9419E990D8CA0A8001A6A54 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565707FC3BA100526D69 /* libcurl.a */; };
+		F9419E9A0D8CA0A8001A6A54 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
+		F9419E9B0D8CA0A8001A6A54 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A133EB0D52413400FED80E /* libboost_program_options.a */; };
+		F9419EAD0D8CA1F1001A6A54 /* raw-rets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA16607FA0ECD00402C35 /* raw-rets.cpp */; };
 		F9A133D00D5228E900FED80E /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565907FC3BBE00526D69 /* libexpat.a */; };
 		F9A133D10D5228E900FED80E /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565707FC3BA100526D69 /* libcurl.a */; };
 		F9A133D20D5228E900FED80E /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
@@ -238,6 +253,27 @@
 			remoteInfo = librets;
 		};
 		F907BC330D7A441F00B170F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55EE8498093E5AAA00812582;
+			remoteInfo = librets;
+		};
+		F9419D6E0D8C574F001A6A54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55EE8498093E5AAA00812582;
+			remoteInfo = librets;
+		};
+		F9419E140D8C9F70001A6A54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55EE8498093E5AAA00812582;
+			remoteInfo = librets;
+		};
+		F9419E920D8CA0A8001A6A54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
 			proxyType = 1;
@@ -593,6 +629,8 @@
 		F93928D80D7B3EF700353C92 /* CurlStream.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CurlStream.cpp; sourceTree = "<group>"; };
 		F93928DC0D7B3F4500353C92 /* CurlStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CurlStream.h; sourceTree = "<group>"; };
 		F9419C020D85A248001A6A54 /* Options.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
+		F9419E220D8C9F70001A6A54 /* http */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = http; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9419EA00D8CA0A8001A6A54 /* rawrets */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = rawrets; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9A133D70D5228E900FED80E /* metadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = metadata; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9A133E70D523FE400FED80E /* Options.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
 		F9A133EB0D52413400FED80E /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = lib/libboost_program_options.a; sourceTree = BOOST; };
@@ -640,6 +678,7 @@
 				5552AB2308047683002288F1 /* libcurl.a in Frameworks */,
 				55B7EAE7080EC4AA00245DFA /* libboost_filesystem.a in Frameworks */,
 				F9A133ED0D52413400FED80E /* libboost_program_options.a in Frameworks */,
+				F9419D6D0D8C5710001A6A54 /* librets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,6 +712,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F9419E180D8C9F70001A6A54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9419E190D8C9F70001A6A54 /* librets.a in Frameworks */,
+				F9419E1A0D8C9F70001A6A54 /* libexpat.a in Frameworks */,
+				F9419E1B0D8C9F70001A6A54 /* libcurl.a in Frameworks */,
+				F9419E1C0D8C9F70001A6A54 /* libboost_filesystem.a in Frameworks */,
+				F9419E1D0D8C9F70001A6A54 /* libboost_program_options.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9419E960D8CA0A8001A6A54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9419E970D8CA0A8001A6A54 /* librets.a in Frameworks */,
+				F9419E980D8CA0A8001A6A54 /* libexpat.a in Frameworks */,
+				F9419E990D8CA0A8001A6A54 /* libcurl.a in Frameworks */,
+				F9419E9A0D8CA0A8001A6A54 /* libboost_filesystem.a in Frameworks */,
+				F9419E9B0D8CA0A8001A6A54 /* libboost_program_options.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9A133CC0D5228E900FED80E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -699,7 +762,6 @@
 		554A9EA207F9F27F00402C35 = {
 			isa = PBXGroup;
 			children = (
-				F9A133EB0D52413400FED80E /* libboost_program_options.a */,
 				554AA18C07FA110900402C35 /* External Libraries */,
 				554AA19107FA117A00402C35 /* build */,
 				554AA16207FA0E9C00402C35 /* src */,
@@ -713,13 +775,15 @@
 			isa = PBXGroup;
 			children = (
 				55BD574307FC9F5D00526D69 /* buildDMG.sh */,
-				554AA16D07FA0EE800402C35 /* sql2dmql */,
-				554AA19C07FA129100402C35 /* iRets.app */,
-				55BD57ED07FDAFE000526D69 /* test */,
 				5552AB19080475A2002288F1 /* get-object */,
+				554AA19C07FA129100402C35 /* iRets.app */,
 				55EE8499093E5AAA00812582 /* librets.a */,
 				F9A133D70D5228E900FED80E /* metadata */,
 				F9C58E8D0D84D18000F648D4 /* search */,
+				554AA16D07FA0EE800402C35 /* sql2dmql */,
+				55BD57ED07FDAFE000526D69 /* test */,
+				F9419E220D8C9F70001A6A54 /* http */,
+				F9419EA00D8CA0A8001A6A54 /* rawrets */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -783,13 +847,13 @@
 		554AA16207FA0E9C00402C35 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				F9419C020D85A248001A6A54 /* Options.h */,
 				5552AB1108047438002288F1 /* get-object.cpp */,
 				554AA16307FA0ECD00402C35 /* http.cpp */,
 				554AA16407FA0ECD00402C35 /* login.cpp */,
 				554AA16507FA0ECD00402C35 /* metadata.cpp */,
-				554AA16607FA0ECD00402C35 /* raw-rets.cpp */,
 				F9A133E70D523FE400FED80E /* Options.cpp */,
+				F9419C020D85A248001A6A54 /* Options.h */,
+				554AA16607FA0ECD00402C35 /* raw-rets.cpp */,
 				554AA16707FA0ECD00402C35 /* search.cpp */,
 				554AA16807FA0ECD00402C35 /* sql2dmql.cpp */,
 				554AA16907FA0ECD00402C35 /* xml.cpp */,
@@ -803,6 +867,7 @@
 			children = (
 				F90434570D039AE9004E3017 /* libantlr.a */,
 				55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */,
+				F9A133EB0D52413400FED80E /* libboost_program_options.a */,
 				55BD57C107FDAB4500526D69 /* libcppunit.dylib */,
 				55BD56E907FC823E00526D69 /* libcrypto.dylib */,
 				55BD56EA07FC823E00526D69 /* libssl.dylib */,
@@ -1387,6 +1452,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F9419D6F0D8C574F001A6A54 /* PBXTargetDependency */,
 			);
 			name = "get-object";
 			productName = "get-object";
@@ -1445,6 +1511,40 @@
 			productReference = F9C58E8D0D84D18000F648D4 /* search */;
 			productType = "com.apple.product-type.tool";
 		};
+		F9419E120D8C9F70001A6A54 /* http */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F9419E1E0D8C9F70001A6A54 /* Build configuration list for PBXNativeTarget "http" */;
+			buildPhases = (
+				F9419E150D8C9F70001A6A54 /* Sources */,
+				F9419E180D8C9F70001A6A54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F9419E130D8C9F70001A6A54 /* PBXTargetDependency */,
+			);
+			name = http;
+			productName = "get-object";
+			productReference = F9419E220D8C9F70001A6A54 /* http */;
+			productType = "com.apple.product-type.tool";
+		};
+		F9419E900D8CA0A8001A6A54 /* rawrets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F9419E9C0D8CA0A8001A6A54 /* Build configuration list for PBXNativeTarget "rawrets" */;
+			buildPhases = (
+				F9419E930D8CA0A8001A6A54 /* Sources */,
+				F9419E960D8CA0A8001A6A54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F9419E910D8CA0A8001A6A54 /* PBXTargetDependency */,
+			);
+			name = rawrets;
+			productName = "get-object";
+			productReference = F9419EA00D8CA0A8001A6A54 /* rawrets */;
+			productType = "com.apple.product-type.tool";
+		};
 		F9A133C90D5228E900FED80E /* metadata */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F9A133D30D5228E900FED80E /* Build configuration list for PBXNativeTarget "metadata" */;
@@ -1481,6 +1581,8 @@
 				5552AB18080475A2002288F1 /* get-object */,
 				F9A133C90D5228E900FED80E /* metadata */,
 				F907BC310D7A441F00B170F7 /* search */,
+				F9419E120D8C9F70001A6A54 /* http */,
+				F9419E900D8CA0A8001A6A54 /* rawrets */,
 			);
 		};
 /* End PBXProject section */
@@ -1732,6 +1834,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F9419E150D8C9F70001A6A54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9419E160D8C9F70001A6A54 /* Options.cpp in Sources */,
+				F9419E830D8C9FF5001A6A54 /* http.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9419E930D8CA0A8001A6A54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9419EAD0D8CA1F1001A6A54 /* raw-rets.cpp in Sources */,
+				F9419E940D8CA0A8001A6A54 /* Options.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9A133CA0D5228E900FED80E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1763,6 +1883,21 @@
 			isa = PBXTargetDependency;
 			target = 55EE8498093E5AAA00812582 /* librets */;
 			targetProxy = F907BC330D7A441F00B170F7 /* PBXContainerItemProxy */;
+		};
+		F9419D6F0D8C574F001A6A54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55EE8498093E5AAA00812582 /* librets */;
+			targetProxy = F9419D6E0D8C574F001A6A54 /* PBXContainerItemProxy */;
+		};
+		F9419E130D8C9F70001A6A54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55EE8498093E5AAA00812582 /* librets */;
+			targetProxy = F9419E140D8C9F70001A6A54 /* PBXContainerItemProxy */;
+		};
+		F9419E910D8CA0A8001A6A54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55EE8498093E5AAA00812582 /* librets */;
+			targetProxy = F9419E920D8CA0A8001A6A54 /* PBXContainerItemProxy */;
 		};
 		F9A133DD0D523EEC00FED80E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2160,7 +2295,10 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				HEADER_SEARCH_PATHS = ../librets/include;
+				HEADER_SEARCH_PATHS = (
+					"$(BOOST)/include",
+					../librets/include,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(EXPAT)/lib",
 					"$(CURL)/lib",
@@ -2405,6 +2543,160 @@
 			};
 			name = Default;
 		};
+		F9419E1F0D8C9F70001A6A54 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"${BOOST}/include",
+					../librets/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"${SRCROO}/../../build/xcode/Development",
+					"$(EXPAT)/lib",
+					"$(CURL)/lib",
+					"$(ANTLR)/lib",
+					"$(BOOST)/lib",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "${BOOST}/lib/libboost_filesystem.a";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = http;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		F9419E200D8C9F70001A6A54 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				HEADER_SEARCH_PATHS = ../librets/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(EXPAT)/lib",
+					"$(CURL)/lib",
+					"$(ANTLR)/lib",
+					"$(BOOST)/lib",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "get-object";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Deployment;
+		};
+		F9419E210D8C9F70001A6A54 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = ../librets/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(EXPAT)/lib",
+					"$(CURL)/lib",
+					"$(ANTLR)/lib",
+					"$(BOOST)/lib",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "get-object";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		F9419E9D0D8CA0A8001A6A54 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"${BOOST}/include",
+					../librets/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"${SRCROO}/../../build/xcode/Development",
+					"$(EXPAT)/lib",
+					"$(CURL)/lib",
+					"$(ANTLR)/lib",
+					"$(BOOST)/lib",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "${BOOST}/lib/libboost_filesystem.a";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = rawrets;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		F9419E9E0D8CA0A8001A6A54 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				HEADER_SEARCH_PATHS = ../librets/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(EXPAT)/lib",
+					"$(CURL)/lib",
+					"$(ANTLR)/lib",
+					"$(BOOST)/lib",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "get-object";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Deployment;
+		};
+		F9419E9F0D8CA0A8001A6A54 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = ../librets/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(EXPAT)/lib",
+					"$(CURL)/lib",
+					"$(ANTLR)/lib",
+					"$(BOOST)/lib",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "get-object";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
 		F9A133D40D5228E900FED80E /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2561,6 +2853,26 @@
 				F907BC3E0D7A441F00B170F7 /* Development */,
 				F907BC3F0D7A441F00B170F7 /* Deployment */,
 				F907BC400D7A441F00B170F7 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		F9419E1E0D8C9F70001A6A54 /* Build configuration list for PBXNativeTarget "http" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F9419E1F0D8C9F70001A6A54 /* Development */,
+				F9419E200D8C9F70001A6A54 /* Deployment */,
+				F9419E210D8C9F70001A6A54 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		F9419E9C0D8CA0A8001A6A54 /* Build configuration list for PBXNativeTarget "rawrets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F9419E9D0D8CA0A8001A6A54 /* Development */,
+				F9419E9E0D8CA0A8001A6A54 /* Deployment */,
+				F9419E9F0D8CA0A8001A6A54 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
