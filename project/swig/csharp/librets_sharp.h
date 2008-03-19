@@ -35,14 +35,14 @@ namespace librets {
 class InputStreamBridge
 {
   public:
-    InputStreamBridge(std::istream * inputStream);
+    InputStreamBridge(istreamPtr inputStream);
     
     int readByte() const;
     
     int read(unsigned char buffer[], int offset, int length) const; 
     
   private:
-    std::istream * mInputStream;
+    istreamPtr  mInputStream;
 };
 
 typedef std::auto_ptr<InputStreamBridge> InputStreamBridgeAPtr;

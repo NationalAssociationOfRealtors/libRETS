@@ -23,6 +23,7 @@ request.select = "ListingID,ListPrice,Beds,City"
 request.limit = SearchRequest::LIMIT_DEFAULT
 request.offset = SearchRequest::OFFSET_NONE
 request.count_type = SearchRequest::RECORD_COUNT_AND_RESULTS
+request.standard_names = true;
 results = session.search(request)
 
 puts "Record count: " + results.count.to_s

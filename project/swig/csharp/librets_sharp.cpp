@@ -17,6 +17,7 @@
 
 #include <iostream>
 #include "librets_sharp.h"
+#include "librets/CurlStream.h"
 
 using namespace librets;
 using std::string;
@@ -24,7 +25,7 @@ using std::istream;
 
 #define CLASS InputStreamBridge
 
-CLASS::CLASS(istream * inputStream)
+CLASS::CLASS(istreamPtr inputStream)
     : mInputStream(inputStream)
 {
     
@@ -33,6 +34,21 @@ CLASS::CLASS(istream * inputStream)
 int CLASS::readByte() const
 {
     char byte;
+    bool isCurlStream = (typeid(*mInputStream) == typeid(CurlStream));
+
+    if (isCurlStream)
+    {
+	boost::dynamic_pointer_cast<CurlStream>(mInputStream)->read(&byte, sizeof(byte));
+	if (boost::dynamic_pointer_cast<CurlStream>(mInputStream)->gcount() == sizeof(byte))
+        {
+	    return byte;
+        }
+	else
+	{
+	    return -1;
+	}
+    }
+
     mInputStream->read(&byte, sizeof(byte));
     if (mInputStream->gcount() == sizeof(byte))
     {
@@ -47,6 +63,14 @@ int CLASS::readByte() const
 int CLASS::read(unsigned char buffer[], int offset, int length) const
 {
     char * startOfBuffer = (char *)(buffer + offset);
+    bool isCurlStream = (typeid(*mInputStream) == typeid(CurlStream));
+
+    if (isCurlStream)
+    {
+	boost::dynamic_pointer_cast<CurlStream>(mInputStream)->read(startOfBuffer, length);
+	return boost::dynamic_pointer_cast<CurlStream>(mInputStream)->gcount();
+    }
+
     mInputStream->read(startOfBuffer, length);
     return mInputStream->gcount();
 }

@@ -26,6 +26,7 @@ public class Search
         searchRequest.SetLimit(SearchRequest.LIMIT_DEFAULT);
         searchRequest.SetOffset(SearchRequest.OFFSET_NONE);
         searchRequest.SetCountType(SearchRequest.CountType.RECORD_COUNT_AND_RESULTS);
+	searchRequest.SetStandardNames(true);
         SearchResultSet results = session.Search(searchRequest);
         
         Console.WriteLine("Record count: " + results.GetCount());
