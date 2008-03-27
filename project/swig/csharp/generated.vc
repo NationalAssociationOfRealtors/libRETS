@@ -3,6 +3,11 @@ GENERATED_SRC = \
 	lib\BinaryData.cs \
 	lib\ByteVector.cs \
 	lib\CapabilityUrls.cs \
+	lib\DmqlCriterion.cs \
+	lib\DmqlCriterionPtr.cs \
+	lib\DmqlQuery.cs \
+	lib\DmqlQueryPtr.cs \
+	lib\GetObjectQueryPtr.cs \
 	lib\GetObjectRequest.cs \
 	lib\GetObjectResponse.cs \
 	lib\InputStreamBridge.cs \
@@ -30,8 +35,15 @@ GENERATED_SRC = \
 	lib\RetsMetadata.cs \
 	lib\RetsSession.cs \
 	lib\RetsVersion.cs \
+	lib\SWIGTYPE_p_GetObjectQuery.cs \
+	lib\SWIGTYPE_p_StringVectorPtr.cs \
+	lib\SWIGTYPE_p_std__ostream.cs \
 	lib\SearchRequest.cs \
 	lib\SearchResultSet.cs \
+	lib\SqlMetadata.cs \
+	lib\SqlMetadataPtr.cs \
+	lib\SqlToDmqlCompiler.cs \
+	lib\SqlToDmqlCompilerPtr.cs \
 	lib\StringVector.cs \
 	lib\UserAgentAuthType.cs \
 	lib\librets.cs \

@@ -32,7 +32,7 @@ $(RUBY_MAKEFILE): $(RUBY_WRAP) ruby\extconf.rb
 	$(RUBY) extconf.rb
 	cd ..
 
-$(RUBY_WRAP): $(SWIG_FILES) lib/ruby/std_vector.i
+$(RUBY_WRAP): $(SWIG_FILES)
 	$(SWIG) -c++ -ruby -o $(RUBY_WRAP) -Ilib/ruby -module librets_native librets.i
 
 $(PYTHON_WRAP): $(SWIG_FILES)
