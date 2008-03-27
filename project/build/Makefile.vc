@@ -195,5 +195,9 @@ CPPUNIT_LDFLAGS = "/LIBPATH:$(CPPUNIT_PATH)/lib" $(CPPUNIT_LIB)
 #
 # Swig Configuration
 
+!if "$(SWIG_PATH)" == ""
 SWIG_PATH = $(BASE_PATH)\swig
+!endif
+!if "$(SWIG)" == ""
 SWIG = $(SWIG_PATH)\swig.exe
+!endif

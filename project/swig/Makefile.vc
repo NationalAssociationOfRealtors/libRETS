@@ -6,9 +6,7 @@ RUBY_WRAP = ruby\librets_wrap.cpp
 
 PYTHON_WRAP = python\librets_wrap.cpp
 
-SWIG_FILES = librets.i auto_ptr_release.i
-
-SWIG = c:\swigwin-1.3.31\swig.exe
+SWIG_FILES = librets.i auto_ptr_release.i shared_ptr_release.i
 
 all: csharp_ ruby_ python_
 
