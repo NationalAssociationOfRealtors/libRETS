@@ -5,12 +5,12 @@ require 'mkmf'
 
 if PLATFORM =~ /darwin/
   CONFIG['LDSHARED'].sub!(/^cc/, "c++")
-elsif PLATFORM =~ /linux/
+elsif PLATFORM =~ /linux/ || PLATFORM =~ /freebsd/
   CONFIG['LDSHARED'].sub!(/\$\(CC\)/, "$(CXX)")
 end
 
 makefile_prefix = ""
-if PLATFORM =~ /darwin/ || PLATFORM =~ /linux/
+if PLATFORM =~ /darwin/ || PLATFORM =~ /linux/ || PLATFORM =~ /freebsd/
   librets_config = with_config("librets-config",
     "../../../librets-config-inplace")
   $libs += ' ' + `#{librets_config} --libs`.chomp
@@ -29,6 +29,7 @@ LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LI
 end
 
 $INSTALLFILES = [['librets.rb', "$(RUBYLIBDIR)", "lib"]]
+swig_dir=with_config("swig-dir", "../../../swig")
 
 create_makefile('librets_native')
 
@@ -36,5 +37,13 @@ orig_makefile = IO::read("Makefile")
 File.open("Makefile", "w") do |mfile|
   mfile << makefile_prefix
   mfile << orig_makefile
+
+  mfile.print %{
+librets_wrap.cxx: #{swig_dir}/librets.i
+\tswig -c++ -ruby #{swig_dir}/librets.i
+
+librets_wrap.cpp: #{swig_dir}/librets.i
+\tswig -c++ -ruby #{swig_dir}/librets.i
+  }
 
 end
