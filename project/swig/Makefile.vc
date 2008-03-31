@@ -27,7 +27,7 @@ python_: $(PYTHON_WRAP)
 
 $(RUBY_MAKEFILE): $(RUBY_WRAP) ruby\extconf.rb
 	cd ruby
-	$(RUBY) extconf.rb
+	$(RUBY) extconf.rb --with-swig-dir=../
 	cd ..
 
 $(RUBY_WRAP): $(SWIG_FILES)
