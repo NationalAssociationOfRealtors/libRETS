@@ -39,11 +39,11 @@ std::string join(std::string left, std::string right, std::string separator);
 bool splitField(const std::string & field, const std::string & delimiter,
                 std::string & key, std::string & value);
 
-void readUntilEof(std::istream & inputStream, std::ostream & outputStream);
+void readUntilEof(istreamPtr inputStream, std::ostream & outputStream);
 
-void readIntoString(std::istream & inputStream, std::string & aString);
+void readIntoString(istreamPtr inputStream, std::string & aString);
 
-std::string readIntoString(std::istream & inputStream);
+std::string readIntoString(istreamPtr inputStream);
 
 std::string urlEncode(const std::string & aString);
 

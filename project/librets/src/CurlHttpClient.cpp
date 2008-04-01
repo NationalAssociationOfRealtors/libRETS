@@ -21,6 +21,7 @@
 #include "librets/RetsHttpRequest.h"
 #include "librets/CurlHttpClient.h"
 #include "librets/CurlHttpResponse.h"
+#include "librets/CurlStream.h"
 #include "librets/RetsException.h"
 #include "librets/RetsHttpLogger.h"
 #include "librets/util.h"
@@ -42,7 +43,17 @@ CurlHttpClient::CurlHttpClient()
     mCurl.SetWriteFunction(CurlHttpClient::StaticWriteData);
     mCurl.SetWriteHeaderData(this);
     mCurl.SetWriteHeaderFunction(CurlHttpClient::StaticWriteHeader);
+    
+    mCurlMulti.AddEasy(mCurl);
+    
+    mResponseCode = 0;
+
     SetUserAgent("librets-curl/" LIBRETS_VERSION);
+}
+
+CurlHttpClient::~CurlHttpClient()
+{
+    mCurlMulti.RemoveEasy(mCurl);
 }
 
 void CurlHttpClient::SetDefaultHeader(string name, string value)
@@ -79,6 +90,18 @@ void CurlHttpClient::GenerateHeadersSlist(const StringMap & requestHeaders)
     }
 }
 
+int CurlHttpClient::GetResponseCode()
+{
+    /*
+     * With the multi interface, we won't get status until the transaction is done.
+     * Here we assume that if someone wants status, they want the request completed, so
+     * complete it.
+     */
+    while (mResponseCode == 0 && ContinueRequest());
+    
+    return mResponseCode;
+}
+
 void CurlHttpClient::SetUserAgent(string userAgent)
 {
     SetDefaultHeader("User-Agent", userAgent);
@@ -94,7 +117,24 @@ void CurlHttpClient::SetUserCredentials(string userName, string password)
     mCurl.SetUserCredentials(userName, password);
 }
 
-RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequest * request)
+/**
+ * Continue with the request if not completed.
+ * @return boolean that indicates whether or not the transaction has finished.
+ */
+bool CurlHttpClient::ContinueRequest()
+{
+    if (mCurlMulti.StillRunning())
+        mCurlMulti.Perform();
+        
+    if (!mCurlMulti.StillRunning())
+    {
+        mResponseCode = mCurl.GetResponseCode();
+    }
+        
+    return mCurlMulti.StillRunning();
+}
+
+RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
 {
     string url = request->GetUrl();
     string queryString = request->GetQueryString();
@@ -115,18 +155,24 @@ RetsHttpResponsePtr CurlHttpClient::DoRequest(RetsHttpRequest * request)
     mCurl.SetHttpHeaders(mHeaders.slist());
     mCurl.SetUrl(url);
     mResponse.reset(new CurlHttpResponse());
-    iostreamPtr dataStream(new stringstream());
+    iostreamPtr dataStream(new CurlStream(*this));
     mResponse->SetStream(dataStream);
+    mResponse->SetHttpClient(this);
     /*
-     * Check to see if this request wants no logging to happen.
+     * It appears that to start a new transaction, we must remove and then
+     * add the Easy handle back.
      */
-    if (request->GetLogging() == false)
-        mCurl.SetVerbose(false);
-    mCurl.Perform();
+    mCurlMulti.RemoveEasy(mCurl);
+    mCurlMulti.AddEasy(mCurl);
+    mCurlMulti.Reset();
+    /*
+     * Start the html request. This will return immediately.
+     */
+    mCurlMulti.Perform();
     
     mCurl.SetVerbose(wasVerbose);
     mResponse->SetUrl(request->GetUrl());
-    mResponse->SetResponseCode(mCurl.GetResponseCode());
+    mResponseCode = mCurl.GetResponseCode();
     return mResponse;
 }
 

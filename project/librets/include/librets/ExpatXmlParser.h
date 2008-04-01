@@ -20,6 +20,7 @@
 #include <istream>
 #include <list>
 #include <expat.h>
+#include "librets/http_forward.h"
 #include "librets/std_forward.h"
 #include "librets/xml_forward.h"
 #include "librets/RetsXmlParser.h"

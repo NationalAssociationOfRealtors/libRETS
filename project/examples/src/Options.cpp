@@ -62,6 +62,7 @@ bool Options::ParseCommandLine(int argc, char * argv[])
     useFullMetadata = false;
     po::store(po::parse_command_line(argc, argv, descriptions), options);
     po::notify(options);
+
     if (options.count("config-file"))
     {
         ifstream ifs(mConfigFile.c_str());

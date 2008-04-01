@@ -20,6 +20,7 @@
 #include <string>
 #include <vector>
 #include "librets/std_forward.h"
+#include "librets/ExpatXmlParser.h"
 #include "librets/RetsObject.h"
 #include "librets/RetsSession.h"
 
@@ -42,7 +43,7 @@ class SearchResultSet : public virtual RetsObject
     virtual ~SearchResultSet();
 
     void Parse(istreamPtr inputStream);
-
+    
     /**
      * Returns true if there are more results.  This may block waiting
      * for data from the RETS server.
@@ -93,7 +94,7 @@ class SearchResultSet : public virtual RetsObject
      * haven't properly sanitized their data.
      *
      * @param encoding Either RetsSession::RETS_XML_DEFAULT_ENCODING or 
-	 * RetsSession::RETS_XML_ISO_ENCODING.
+     * RetsSession::RETS_XML_ISO_ENCODING.
      */
     void SetEncoding(RetsSession::EncodingType encoding);
 
@@ -103,32 +104,47 @@ class SearchResultSet : public virtual RetsObject
      * @return string value of encoding flag.
      */
     RetsSession::EncodingType GetEncoding();
-	
-	/**
-	 * Indicate whether the MAXROWS tag has been seen.
-	 *
-	 * @return Boolean value
-	 */
-	bool HasMaxRows();
-	
-	/**
-	 * Returns the RETS-STATUS ReplyCode.
-	 *
-	 * @return int value of ReplyCode
-	 */
-	int GetReplyCode();
-	
-	/**
-	 * Returns the RETS-STATUS ReplyText.
-	 *
-	 * @return string value of ReplyText.
-	 */
-	std::string GetReplyText();
+    
+    /**
+     * Indicate whether the MAXROWS tag has been seen.
+     *
+     * @return Boolean value
+     */
+    bool HasMaxRows();
+    
+    /**
+     * Returns the RETS-STATUS ReplyCode.
+     *
+     * @return int value of ReplyCode
+     */
+    int GetReplyCode();
+    
+    /**
+     * Returns the RETS-STATUS ReplyText.
+     *
+     * @return string value of ReplyText.
+     */
+    std::string GetReplyText();
 
+    /**
+     * Set the input stream for Parse.
+     *
+     * @param inputStream Input Stream 
+     */
+    void SetInputStream(istreamPtr inputStream);
+    
   private:
     typedef std::vector<StringVectorPtr> RowData;
     typedef std::map<std::string, StringVector::size_type> ColumnToIndexMap;
     void FixCompactArray(StringVector & compactVector, std::string context);
+    /**
+     * Parse the XML. An input stream must have already been
+     * established. This method should only be called internally.
+     *
+     * @return Returns TRUE while more data can be fetched.
+     */
+    bool Parse();
+
 
     int mCount;
     StringVectorPtr mColumns;
@@ -137,9 +153,13 @@ class SearchResultSet : public virtual RetsObject
     RowData::iterator mNextRow;
     StringVectorPtr mCurrentRow;
     RetsSession::EncodingType mEncoding;
-	bool mMaxRows;
-	int mReplyCode;
-	std::string mReplyText;
+    bool mMaxRows;
+    int mReplyCode;
+    std::string mReplyText;
+
+    istreamPtr mParseInputStream;
+    ExpatXmlParserPtr mXmlParser;
+    std::string mDelimiter;
 };
 
 };

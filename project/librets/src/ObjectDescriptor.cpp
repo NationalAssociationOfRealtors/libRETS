@@ -82,20 +82,20 @@ void ObjectDescriptor::SetContentType(string contentType)
     mContentType = contentType;
 }
 
-std::istream * ObjectDescriptor::GetDataStream()
+istreamPtr ObjectDescriptor::GetDataStream()
 {
-    return mDataStream.get();
+    return mDataStream;
 }
 
 void ObjectDescriptor::SetDataStream(istreamPtr dataStream)
 {
-    mDataStream = dataStream;
+    mDataStream  = dataStream;
 }
 
 BinaryDataAPtr ObjectDescriptor::GetData()
 {
 	BinaryDataAPtr data(new BinaryData());
-	data->ReadToEof(*mDataStream);
+	data->ReadToEof(mDataStream);
 	return data;
 }
 
@@ -114,7 +114,7 @@ const char * BinaryData::AsChar() const
 	return mData.data();
 }
 
-void BinaryData::ReadToEof(istream & inputStream)
+void BinaryData::ReadToEof(istreamPtr inputStream)
 {
 	mData.clear();
 	readIntoString(inputStream, mData);

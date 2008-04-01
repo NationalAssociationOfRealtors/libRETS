@@ -19,6 +19,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/version.hpp>
 #include <stdexcept>
+#include "librets/CurlStream.h"
 #include "librets/SearchResultSet.h"
 #include "librets/ExpatXmlParser.h"
 #include "librets/RetsXmlStartElementEvent.h"
@@ -38,14 +39,15 @@ using std::invalid_argument;
 namespace b = boost;
 namespace ba = boost::algorithm;
 
-SearchResultSet::SearchResultSet()
+SearchResultSet::SearchResultSet() 
+            : mParseInputStream()
 {
     mColumns.reset(new StringVector());
     mCount = -1;
     mEncoding = RetsSession::RETS_XML_DEFAULT_ENCODING;
-	mMaxRows = false;
-	mReplyCode = 0;
-	mReplyText.clear();
+    mMaxRows = false;
+    mReplyCode = 0;
+    mReplyText.clear();
 }
 
 SearchResultSet::~SearchResultSet()
@@ -86,25 +88,20 @@ void SearchResultSet::FixCompactArray(StringVector & compactArray,
 
 void SearchResultSet::Parse(istreamPtr inputStream)
 {
-    // Some "extended character" problems can be worked around by
-    // setting the XML character encoding to iso-8859-1 instead of
-    // US-ASCII.  RETS is officially US-ASCII, so this is a last
-    // resort work around.  
+    SetInputStream(inputStream);
+}
+
+bool SearchResultSet::Parse()
+{
+    bool retval = false;
     
-    ExpatXmlParserPtr mXmlParser(
-                        new ExpatXmlParser(inputStream,
-                                (mEncoding == RetsSession::RETS_XML_ISO_ENCODING 
-                                ? "iso-8859-1"    
-                                : "US-ASCII")));
-    
-    RetsXmlStartElementEventPtr metadataEvent;
-    string delimiter = "\t";
     while (mXmlParser->HasNext())
     {
         RetsXmlEventPtr event = mXmlParser->GetNextSkippingEmptyText();
         RetsXmlStartElementEventPtr startEvent
             = b::dynamic_pointer_cast<RetsXmlStartElementEvent>(event);
         if (!startEvent)
+        
         {
             continue;
         }
@@ -147,12 +144,12 @@ void SearchResultSet::Parse(istreamPtr inputStream)
                 ba::erase_all(extendedMeaning, "\n");
                 throw RetsReplyException(replyCode, meaning, extendedMeaning);
             }
-			/*
-			 * Beginning a transaction. Clear mMaxRows, mReplyCode and mReplyText.
-			 */
-			mMaxRows = false;
-			mReplyCode = 0;
-			mReplyText.clear();
+            /*
+             * Beginning a transaction. Clear mMaxRows, mReplyCode and mReplyText.
+             */
+            mMaxRows = false;
+            mReplyCode = 0;
+            mReplyText.clear();
         }
         else if (name == "COUNT")
         {
@@ -165,7 +162,7 @@ void SearchResultSet::Parse(istreamPtr inputStream)
                 mXmlParser->AssertNextIsTextEvent();
             string text = textEvent->GetText();
             StringVector columns;
-            ba::split(columns, text, ba::is_any_of(delimiter));
+            ba::split(columns, text, ba::is_any_of(mDelimiter));
             FixCompactArray(columns, "columns");
 
             for (StringVector::size_type i = 0; i < columns.size(); i++)
@@ -187,11 +184,16 @@ void SearchResultSet::Parse(istreamPtr inputStream)
                 mXmlParser->AssertTextEvent(xmlEvent, "DATA: ");
             string text = textEvent->GetText();
             StringVectorPtr data(new StringVector());
-            ba::split(*data, text, ba::is_any_of(delimiter));
+            ba::split(*data, text, ba::is_any_of(mDelimiter));
             FixCompactArray(*data, "data");
             
             mRows.push_back(data);
             mXmlParser->AssertNextIsEndEvent();
+            /*
+             * Once a single data row has been parsed, return to the caller.
+             */
+            retval = true;
+            break;
         }
         else if (name == "DELIMITER")
         {
@@ -200,13 +202,13 @@ void SearchResultSet::Parse(istreamPtr inputStream)
             // chars in istringstream
             int delimiterChar;
             hexString >> std::hex >> delimiterChar;
-            delimiter.clear();
-            delimiter += (char) delimiterChar;
+            mDelimiter.clear();
+            mDelimiter += (char) delimiterChar;
         }
-		else if (name == "MAXROWS")
-		{
-			mMaxRows = true;
-		}
+        else if (name == "MAXROWS")
+        {
+            mMaxRows = true;
+        }
         else if (name == "RETS-STATUS")
         {
             istringstream replyCodeString(
@@ -219,23 +221,29 @@ void SearchResultSet::Parse(istreamPtr inputStream)
             }
         }
     }
-    mNextRow = mRows.begin();
-    mCurrentRow.reset();
+    
+    return retval;
 }
 
 bool SearchResultSet::HasNext()
 {
-    if (mNextRow != mRows.end())
-    {
-        mCurrentRow = *mNextRow;
-        mNextRow++;
-        return true;
-    }
-    else
+    /*
+     * We are in streaming mode. We need to fetch a row until we either successfully
+     * get a row, or run out of data to parse.
+     */
+    while (mNextRow == mRows.end() && Parse());
+    if (mNextRow == mRows.end())
     {
         mCurrentRow.reset();
         return false;
     }
+    /*
+     * Since the parsing returns after parsing a single <DATA/> tag, the current
+     * row will always be the one prior to the end of mRows.
+     */
+    mCurrentRow = *(mRows.end() - 1);
+    mNextRow = mRows.end();
+    return true;
 }
 
 int SearchResultSet::GetCount()
@@ -275,7 +283,13 @@ RetsSession::EncodingType SearchResultSet::GetEncoding()
 
 bool SearchResultSet::HasMaxRows()
 {
-	return mMaxRows;
+    /*
+     * The <MAX_ROWS/> tag comes at the end of data, so we need to make sure
+     * we've fetched and parsed everything.
+     */
+    while (Parse());
+
+    return mMaxRows;
 }
 
 int SearchResultSet::GetReplyCode()
@@ -287,3 +301,27 @@ string SearchResultSet::GetReplyText()
 {
     return mReplyText;
 }
+
+void SearchResultSet::SetInputStream(istreamPtr inputStream)
+{
+    /*
+     * Initialize for streaming mode.
+     */
+    mParseInputStream =  inputStream;
+    
+    ExpatXmlParserPtr XmlParser( new ExpatXmlParser(inputStream,
+                    (mEncoding == RetsSession::RETS_XML_ISO_ENCODING 
+                        ? "iso-8859-1"    
+                        : "US-ASCII")));
+    mXmlParser = XmlParser;
+
+    mDelimiter = "\t";
+    /*
+     * Perform the initial parse.
+     */
+    Parse();
+    
+    mNextRow = mRows.begin();
+    mCurrentRow.reset();
+}
+

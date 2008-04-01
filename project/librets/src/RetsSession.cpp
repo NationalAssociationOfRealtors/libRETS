@@ -78,7 +78,7 @@ RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
         string headerValue = "Digest " + mUserAgentAuthCalculator.AuthorizationValue();
         request->SetHeader(RETS_UA_AUTH_HEADER, headerValue);
     }
-    return mHttpClient->DoRequest(request);
+    return mHttpClient->StartRequest(request);
 }
 
 void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
@@ -105,6 +105,7 @@ bool CLASS::Login(string user_name, string passwd)
     request.SetUrl(mLoginUrl);
     mHttpClient->SetUserCredentials(user_name, passwd);
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
+    
     if (httpResponse->GetResponseCode() == 401)
     {
         httpResponse = DoRequest(&request);
@@ -161,7 +162,7 @@ void CLASS::RetrieveAction()
     request.SetUrl(actionUrl);
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
     AssertSuccessfulResponse(httpResponse, actionUrl);
-    mAction = readIntoString(*httpResponse->GetInputStream());
+    mAction = readIntoString(httpResponse->GetInputStream());
 }
 
 string CLASS::GetAction()
@@ -256,6 +257,7 @@ void CLASS::LoadMetadata(MetadataElement::Type type,
     request.SetQueryParameter("ID", level.empty() ? "0" : level);
     request.SetQueryParameter("Format", "COMPACT");
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
+
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
     
     XmlMetadataParserPtr parser(new XmlMetadataParser(mLoaderCollector,
@@ -288,6 +290,7 @@ void CLASS::RetrieveFullMetadata()
     request.SetQueryParameter("ID", "*");
     request.SetQueryParameter("Format", "COMPACT");
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
+
     AssertSuccessfulResponse(httpResponse, getMetadataUrl);
     
     DefaultMetadataCollectorPtr collector(new DefaultMetadataCollector());
@@ -326,12 +329,15 @@ SearchResultSetAPtr CLASS::Search(SearchRequest * request)
     string searchUrl = mCapabilityUrls->GetSearchUrl();
     request->SetUrl(searchUrl);
     request->SetMethod(mHttpMethod);
+    /*
+     * Start the transaction.
+     */
     RetsHttpResponsePtr httpResponse = DoRequest(request);
-    AssertSuccessfulResponse(httpResponse, searchUrl);
     
     SearchResultSetAPtr resultSet(new SearchResultSet());
     resultSet->SetEncoding(mEncoding);
-    resultSet->Parse(httpResponse->GetInputStream());
+    resultSet->SetInputStream(httpResponse->GetInputStream());
+       
     return resultSet;
 }
 
@@ -349,6 +355,7 @@ GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)
       httpRequest->SetLogging();
       
     RetsHttpResponsePtr httpResponse = DoRequest(httpRequest.get());
+
     AssertSuccessfulResponse(httpResponse, getObjectUrl);
     
     GetObjectResponseAPtr response(new GetObjectResponse());
@@ -377,6 +384,7 @@ LogoutResponseAPtr CLASS::Logout()
     RetsHttpRequest request;
     request.SetUrl(logoutUrl);
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
+    
     AssertSuccessfulResponse(httpResponse, logoutUrl);
 
     logoutResponse.reset(new LogoutResponse());

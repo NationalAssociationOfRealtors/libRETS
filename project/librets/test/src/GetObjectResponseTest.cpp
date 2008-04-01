@@ -81,10 +81,10 @@ void CLASS::testSinglePart()
     ASSERT_STRING_EQUAL("", objectDescriptor->GetLocationUrl());
     
     istreamPtr resource = getResource("abc123-1.gif");
-    string expected = readIntoString(*resource);
-    istream * data = objectDescriptor->GetDataStream();
+    string expected = readIntoString(resource);
+    istreamPtr data(objectDescriptor->GetDataStream());
     CPPUNIT_ASSERT(data);
-    string actual = readIntoString(*data);
+    string actual = readIntoString(data);
     ASSERT_EQUAL(size_t(94), actual.size());
     ASSERT_STRING_EQUAL(expected, actual);
     
@@ -108,9 +108,9 @@ void CLASS::testSinglePartLocation()
     ASSERT_STRING_EQUAL("http://www.example.com/images/abc123.gif",
                         objectDescriptor->GetLocationUrl());
     
-    istream * data = objectDescriptor->GetDataStream();
+    istreamPtr data(objectDescriptor->GetDataStream());
     CPPUNIT_ASSERT(data);
-    string actual = readIntoString(*data);
+    string actual = readIntoString(data);
     ASSERT_STRING_EQUAL("", actual);
     
     objectDescriptor = response.NextObject();
@@ -133,10 +133,10 @@ void CLASS::testSinglePartEmptyHeaders()
     ASSERT_STRING_EQUAL("", objectDescriptor->GetLocationUrl());
     
     istreamPtr resource = getResource("abc123-1.gif");
-    string expected = readIntoString(*resource);
-    istream * data = objectDescriptor->GetDataStream();
+    string expected = readIntoString(resource);
+    istreamPtr data(objectDescriptor->GetDataStream());
     CPPUNIT_ASSERT(data);
-    string actual = readIntoString(*data);
+    string actual = readIntoString(data);
     ASSERT_EQUAL(size_t(94), actual.size());
     ASSERT_STRING_EQUAL(expected, actual);
     
@@ -176,10 +176,10 @@ void CLASS::testSinglePartNoHeaders()
     ASSERT_STRING_EQUAL("", objectDescriptor->GetLocationUrl());
     
     istreamPtr resource = getResource("abc123-1.gif");
-    string expected = readIntoString(*resource);
-    istream * data = objectDescriptor->GetDataStream();
+    string expected = readIntoString(resource);
+    istreamPtr data(objectDescriptor->GetDataStream());
     CPPUNIT_ASSERT(data);
-    string actual = readIntoString(*data);
+    string actual = readIntoString(data);
     ASSERT_EQUAL(size_t(94), actual.size());
     ASSERT_STRING_EQUAL(expected, actual);
     
@@ -250,8 +250,9 @@ void CLASS::testMultiPartLocation()
     response.Parse(httpResponse);
     
     ObjectDescriptor * objectDescriptor;
-    istream * dataStream;
     string data;
+    istreamPtr dataStream;
+
     
     objectDescriptor = response.NextObject();
     CPPUNIT_ASSERT(objectDescriptor);
@@ -265,7 +266,7 @@ void CLASS::testMultiPartLocation()
     
     dataStream = objectDescriptor->GetDataStream();
     CPPUNIT_ASSERT(dataStream);
-    data = readIntoString(*dataStream);
+    data = readIntoString(dataStream);
     ASSERT_STRING_EQUAL("", data);
     
     objectDescriptor = response.NextObject();
@@ -280,7 +281,7 @@ void CLASS::testMultiPartLocation()
     
     dataStream = objectDescriptor->GetDataStream();
     CPPUNIT_ASSERT(dataStream);
-    data = readIntoString(*dataStream);
+    data = readIntoString(dataStream);
     ASSERT_STRING_EQUAL("", data);
     
     objectDescriptor = response.NextObject();
@@ -295,7 +296,7 @@ void CLASS::testMultiPartLocation()
     
     dataStream = objectDescriptor->GetDataStream();
     CPPUNIT_ASSERT(dataStream);
-    data = readIntoString(*dataStream);
+    data = readIntoString(dataStream);
     ASSERT_STRING_EQUAL("", data);
     
     objectDescriptor = response.NextObject();

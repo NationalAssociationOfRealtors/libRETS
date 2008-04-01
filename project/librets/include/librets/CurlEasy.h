@@ -63,6 +63,8 @@ class CurlEasy
     
     bool GetVerbose();
     
+    CURL * GetEasyHandle();
+    
   private:
     CurlEasy(const CurlEasy & curlEasy);
 

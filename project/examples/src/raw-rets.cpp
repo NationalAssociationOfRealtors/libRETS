@@ -34,7 +34,7 @@ int main(int argc, char * argv[])
 
         RetsHttpRequestPtr request(new RetsHttpRequest());
         request->SetUrl("http://demo.crt.realtors.org:6103/rets/login");
-        RetsHttpResponsePtr response = client->DoRequest(request.get());
+        RetsHttpResponsePtr response = client->StartRequest(request.get());
         dumpResponse(response);
 
         request.reset(new RetsHttpRequest());
@@ -49,13 +49,13 @@ int main(int argc, char * argv[])
         request->SetQueryParameter(
             "Select", "ListingID,ListPrice,City,ListDate");
         request->SetQueryParameter("Query", "(ListPrice=300000-)");
-        response = client->DoRequest(request.get());
+        response = client->StartRequest(request.get());
         dumpResponse(response);
 
         request.reset(new RetsHttpRequest());
         request->SetMethod(RetsHttpRequest::GET);
         request->SetUrl("http://demo.crt.realtors.org:6103/rets/logout");
-        response = client->DoRequest(request.get());
+        response = client->StartRequest(request.get());
         dumpResponse(response);
     }
     catch (RetsException & e)

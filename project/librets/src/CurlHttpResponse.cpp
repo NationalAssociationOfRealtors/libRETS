@@ -23,7 +23,9 @@ using std::string;
 namespace ba = boost::algorithm;
 
 CurlHttpResponse::CurlHttpResponse()
+                : mHttpClient()
 {
+    mResponseCode = -1;
 }   
 
 CurlHttpResponse::~CurlHttpResponse()
@@ -46,12 +48,7 @@ void CurlHttpResponse::SetUrl(string url)
 
 int CurlHttpResponse::GetResponseCode() const
 {
-    return mResponseCode;
-}
-
-void CurlHttpResponse::SetResponseCode(int responseCode)
-{
-    mResponseCode = responseCode;
+    return mHttpClient->GetResponseCode();
 }
 
 string CurlHttpResponse::GetHeader(string name) const
@@ -75,4 +72,9 @@ void CurlHttpResponse::SetHeader(string name, string value)
 istreamPtr CurlHttpResponse::GetInputStream() const
 {
     return mStream;
+}
+
+void CurlHttpResponse::SetHttpClient(CurlHttpClient* httpClient)
+{
+    mHttpClient = httpClient;
 }

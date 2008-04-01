@@ -370,8 +370,8 @@ class ObjectDescriptor
     %extend {
         std::string GetDataAsString()
         {
-            std::istream * inputStream = self->GetDataStream();
-            return readIntoString(*inputStream);
+            istreamPtr inputStream = self->GetDataStream();
+            return readIntoString(inputStream);
         }
     }
 #endif

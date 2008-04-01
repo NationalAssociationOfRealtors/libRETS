@@ -20,11 +20,9 @@
 
 #include <string>
 #include <istream>
-#include "boost/shared_ptr.hpp"
+#include "librets/std_forward.h"
 
 namespace librets {
-
-typedef boost::shared_ptr<std::istream> istreamPtr;
 
 /**
  * HTTP response expected for RETS.

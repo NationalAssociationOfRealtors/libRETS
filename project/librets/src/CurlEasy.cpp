@@ -182,3 +182,8 @@ bool CurlEasy::GetVerbose()
 {
     return mVerbose;
 }
+
+CURL * CurlEasy::GetEasyHandle()
+{
+    return mCurl;
+}

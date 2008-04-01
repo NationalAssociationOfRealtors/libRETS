@@ -145,7 +145,7 @@ void GetObjectResponse::ParseMultiPart(RetsHttpResponsePtr httpResponse,
     string closeDelimiter = "\r\n--";
     closeDelimiter.append(boundary).append("--");
 
-    string content = readIntoString(*httpResponse->GetInputStream());
+    string content = readIntoString(httpResponse->GetInputStream());
     
     StringVector parts;
     string::size_type partStart;
