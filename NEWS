@@ -1,27 +1,22 @@
-Version ?.?.?? - ?? ??? ????
 
-  * SqlToDmqlCompiler now accepts a ? as a value in a WHERE clause.
-    Ticket #48  Not complete, as you cannot yet take action.
+Version 1.1.11 - 1 Apr 2007
 
-  * Add SWIG bindings to Autoconf based build. 
+  * Add SWIG bindings to Autoconf based (unix) build.
     Ticket #31.
-
   * Do not log GetObject requests by default and provide new method 
     RetsSession::SetLogEverything() to override the new default.
     Ticket #36.
-
   * Expose SqlToDmqlCompiler to C#.
     Ticket #42.
-
   * Handle changes to curl-config in curl 7.17.x and later.
     Ticket #46.
-
   * Add MetadataTable::GetMinimumAsString() and GetMaximumAsString().
     Ticket #47.
-
   * Remove std_string.i and std_vector.i from swig to allow for
     default versions to be used.
     Ticket #49.
+  * SqlToDmqlCompiler now accepts a ? as a value in a WHERE clause.
+    Ticket #48  Not complete, as you cannot yet take action on that.
 
 Version 1.1.10 - 21 Dec 2007
 
