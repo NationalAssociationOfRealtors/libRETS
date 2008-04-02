@@ -111,11 +111,7 @@ int main(int argc, char * argv[])
             cout << "Login failed\n";
             return -1;
         }
-//resource="PROPERTY"; // $$DEBUG
-//searchClass="RES"; // $$DEBUG
-//query="(MODIFIED=2008-03-14T00:00:00+),(P_BOARDID=B,F)";      // $$DEBUG
-//select="MLSNUM,BEDS,BATHSTOTAL,CITY,LISTPRICE,PHOTOCOUNT"; // $$DEBUG
-//standardNames=false; // $$DEBUG
+
         SearchRequestAPtr searchRequest = session->CreateSearchRequest(
             resource, searchClass, query);
         searchRequest->SetSelect(select);
