@@ -89,21 +89,22 @@ class SearchResultSet : public virtual RetsObject
     std::string GetString(std::string columnName);
 
     /**
-     * Set the data encoding flag to allow for parsing of extended characters by Expat.
-     * RETS is officially US-ASCII, but this will allow a work around for servers that
-     * haven't properly sanitized their data.
+     * Set the data encoding flag to allow for parsing of extended
+     * characters by Expat.  RETS is officially US-ASCII, but this
+     * will allow a work around for servers that haven't properly
+     * sanitized their data.
      *
-     * @param encoding Either RetsSession::RETS_XML_DEFAULT_ENCODING or 
-     * RetsSession::RETS_XML_ISO_ENCODING.
+     * @param encoding Either RETS_XML_DEFAULT_ENCODING or
+     * RETS_XML_ISO_ENCODING.
      */
-    void SetEncoding(RetsSession::EncodingType encoding);
+    void SetEncoding(EncodingType encoding);
 
     /**
      * Get the current value for the data encoding flag.
      *
      * @return string value of encoding flag.
      */
-    RetsSession::EncodingType GetEncoding();
+    EncodingType GetEncoding();
     
     /**
      * Indicate whether the MAXROWS tag has been seen.
@@ -152,7 +153,7 @@ class SearchResultSet : public virtual RetsObject
     RowData mRows;
     RowData::iterator mNextRow;
     StringVectorPtr mCurrentRow;
-    RetsSession::EncodingType mEncoding;
+    EncodingType mEncoding;
     bool mMaxRows;
     int mReplyCode;
     std::string mReplyText;

@@ -44,7 +44,7 @@ SearchResultSet::SearchResultSet()
 {
     mColumns.reset(new StringVector());
     mCount = -1;
-    mEncoding = RetsSession::RETS_XML_DEFAULT_ENCODING;
+    mEncoding = RETS_XML_DEFAULT_ENCODING;
     mMaxRows = false;
     mReplyCode = 0;
     mReplyText.clear();
@@ -271,12 +271,12 @@ string SearchResultSet::GetString(string columnName)
     return GetString(i->second);
 }
 
-void SearchResultSet::SetEncoding(RetsSession::EncodingType encoding)
+void SearchResultSet::SetEncoding(EncodingType encoding)
 {
     mEncoding = encoding;
 }
 
-RetsSession::EncodingType SearchResultSet::GetEncoding()
+EncodingType SearchResultSet::GetEncoding()
 {
     return mEncoding;
 }
@@ -310,7 +310,7 @@ void SearchResultSet::SetInputStream(istreamPtr inputStream)
     mParseInputStream =  inputStream;
     
     ExpatXmlParserPtr XmlParser( new ExpatXmlParser(inputStream,
-                    (mEncoding == RetsSession::RETS_XML_ISO_ENCODING 
+                    (mEncoding == RETS_XML_ISO_ENCODING 
                         ? "iso-8859-1"    
                         : "US-ASCII")));
     mXmlParser = XmlParser;

@@ -23,6 +23,7 @@
 #include "librets/RetsHttpRequest.h"
 #include "librets/http_forward.h"
 #include "librets/RetsVersion.h"
+#include "librets/EncodingType.h"
 #include "librets/UserAgentAuthType.h"
 #include "librets/UserAgentAuthCalculator.h"
 #include "librets/error_forward.h"
@@ -233,18 +234,6 @@ class RetsSession : public MetadataLoader
      */
     void SetUserAgentPassword(std::string userAgentPassword);
     
-    enum EncodingType
-    {
-        /**
-         *The data is only encoded as US-ASCII.
-         */
-        RETS_XML_DEFAULT_ENCODING,
-        /**
-         * The data may contain extended characters.
-         */
-        RETS_XML_ISO_ENCODING
-    };
-    
     /**
      * Sets the data encoding for the data to be returned by a Search. Thiss
      * is session wide,
@@ -326,7 +315,7 @@ private:
 
     UserAgentAuthCalculator mUserAgentAuthCalculator;
     
-    EncodingType mEncoding;
+    librets::EncodingType mEncoding;
     
     bool mLoggedIn;
     

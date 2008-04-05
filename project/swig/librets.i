@@ -231,9 +231,9 @@ class SearchResultSet
     
     std::string GetString(std::string columnName);
 
-    void SetEncoding(RetsSession::EncodingType encoding);
+    void SetEncoding(EncodingType encoding);
 
-    RetsSession::EncodingType GetEncoding();
+    EncodingType GetEncoding();
 
     bool HasMaxRows();
 
@@ -698,6 +698,12 @@ enum RetsVersion
     RETS_1_5
 };
 
+enum EncodingType
+{
+    RETS_XML_DEFAULT_ENCODING,
+    RETS_XML_ISO_ENCODING
+};
+
 enum UserAgentAuthType
 {
     USER_AGENT_AUTH_RETS_1_7,
@@ -1050,12 +1056,6 @@ class RetsSession
     UserAgentAuthType GetUserAgentAuthType() const;
     
     void SetUserAgentPassword(std::string userAgentPassword);
-
-    enum EncodingType
-    {
-        RETS_XML_DEFAULT_ENCODING,
-        RETS_XML_ISO_ENCODING
-    };
 
     void SetDefaultEncoding(EncodingType encoding);
 
