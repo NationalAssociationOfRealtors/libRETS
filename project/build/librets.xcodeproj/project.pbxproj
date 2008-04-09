@@ -187,6 +187,8 @@
 		55F902B908FEC59000D76E8C /* IncrementalMetadataFinderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F902B808FEC59000D76E8C /* IncrementalMetadataFinderTest.cpp */; };
 		55F9032608FEC7DD00D76E8C /* TestMetadataTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9032508FEC7DD00D76E8C /* TestMetadataTree.cpp */; };
 		55F9055508FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9055408FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp */; };
+		DEAFBDE70DAD23D500EA99C7 /* CurlMulti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEAFBDE50DAD23D500EA99C7 /* CurlMulti.cpp */; };
+		DEAFBDE80DAD23D500EA99C7 /* CurlStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEAFBDE60DAD23D500EA99C7 /* CurlStream.cpp */; };
 		F904343B0D03971C004E3017 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
 		F90434580D039AEA004E3017 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
 		F90434590D039AEA004E3017 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
@@ -544,6 +546,8 @@
 		55F9055408FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = DefaultMetadataCollectorTest.cpp; sourceTree = "<group>"; };
 		55F9061408FEFDCE00D76E8C /* DefaultMetadataCollector.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = DefaultMetadataCollector.cpp; sourceTree = "<group>"; };
 		55F9061608FEFDD900D76E8C /* DefaultMetadataCollector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefaultMetadataCollector.h; sourceTree = "<group>"; };
+		DEAFBDE50DAD23D500EA99C7 /* CurlMulti.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurlMulti.cpp; sourceTree = "<group>"; };
+		DEAFBDE60DAD23D500EA99C7 /* CurlStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurlStream.cpp; sourceTree = "<group>"; };
 		F90434570D039AE9004E3017 /* libantlr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libantlr.a; path = lib/libantlr.a; sourceTree = ANTLR_DIR; };
 		F90D477E0CF8D29200B9AC65 /* search-response-extended-char.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "search-response-extended-char.xml"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -801,6 +805,8 @@
 		5552A8830803311C002288F1 /* HTTP */ = {
 			isa = PBXGroup;
 			children = (
+				DEAFBDE50DAD23D500EA99C7 /* CurlMulti.cpp */,
+				DEAFBDE60DAD23D500EA99C7 /* CurlStream.cpp */,
 				55F23D84088EACDE0090B325 /* CurlEasy.cpp */,
 				554A9F5607F9F2E700402C35 /* CurlHttpClient.cpp */,
 				554A9F5707F9F2E700402C35 /* CurlHttpResponse.cpp */,
@@ -1339,10 +1345,12 @@
 		554A9EA607F9F27F00402C35 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 55C70BC2093D1BDD00D34681 /* Build configuration list for PBXProject "librets" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 0;
 			mainGroup = 554A9EA207F9F27F00402C35;
 			productRefGroup = 554A9EB307F9F2B300402C35 /* Products */;
 			projectDirPath = "";
+			projectRoot = ../..;
 			targets = (
 				55EE8498093E5AAA00812582 /* librets */,
 				55BD57EC07FDAFE000526D69 /* test */,
@@ -1586,6 +1594,8 @@
 				55EE854E093E628900812582 /* XmlMetadataParser.cpp in Sources */,
 				554662340A62BAF600F3B94E /* md5.cpp in Sources */,
 				554662500A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp in Sources */,
+				DEAFBDE70DAD23D500EA99C7 /* CurlMulti.cpp in Sources */,
+				DEAFBDE80DAD23D500EA99C7 /* CurlStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2047,12 +2057,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 553844F80A349A5F00415742 /* librets.xcconfig */;
 			buildSettings = {
-				ARCHS = ppc;
+				ARCHS = (
+					ppc,
+					i386,
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1)",
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1 = "LIBRETS_VERSION=\\\"$(VERSION)\\\"";
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Development;
 		};
@@ -2065,6 +2079,7 @@
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1 = "LIBRETS_VERSION=\\\"$(VERSION)\\\"";
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Deployment;
 		};
@@ -2077,6 +2092,7 @@
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1 = "LIBRETS_VERSION=\\\"$(VERSION)\\\"";
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Default;
 		};
