@@ -5,3 +5,6 @@ all: librets
 
 librets:
 	cd project/build && xcodebuild -target librets -configuration Development
+
+clean:
+	cd project/build && xcodebuild -target librets -configuration Development clean
