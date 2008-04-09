@@ -28,11 +28,12 @@ class CurlStream : public std::stringstream
 {
   public:
     /**
-     * This class inherits from std::stringstream and overrides the eof() and read()
-     * methods in order to work in concenrt with class CurlHttpClient and the cURL
-     * multi interface to imlement the streaming interface.
+     * This class inherits from std::stringstream and overrides the
+     * eof() and read() methods in order to work in concenrt with
+     * class CurlHttpClient and the cURL multi interface to imlement
+     * the streaming interface.
      *
-     * @param A reference to the CurlHttpClient for this call.
+     * @param httpClient A reference to the CurlHttpClient for this call.
      */
     CurlStream(CurlHttpClient& httpClient);
 
