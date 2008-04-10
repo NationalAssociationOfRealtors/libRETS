@@ -1,3 +1,8 @@
+Version 1.1.12 - x xxx 2007
+
+  * Extend XML parsing for metadata to include ISO characters if 
+    RETS_XML_ISO_ENCODING is set.
+    Ticket #54.
 
 Version 1.1.11 - 1 Apr 2007
 
