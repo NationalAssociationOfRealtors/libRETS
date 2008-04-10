@@ -260,6 +260,7 @@ void CLASS::LoadMetadata(MetadataElement::Type type,
     
     XmlMetadataParserPtr parser(new XmlMetadataParser(mLoaderCollector,
                                                       mErrorHandler));
+    parser->SetEncoding(mEncoding);
     parser->Parse(httpResponse->GetInputStream());
 }
 
@@ -293,6 +294,7 @@ void CLASS::RetrieveFullMetadata()
     DefaultMetadataCollectorPtr collector(new DefaultMetadataCollector());
     XmlMetadataParserPtr parser(
         new XmlMetadataParser(collector, mErrorHandler));
+    parser->SetEncoding(mEncoding);
     parser->Parse(httpResponse->GetInputStream());
 
     mMetadata.reset(new RetsMetadata(collector));

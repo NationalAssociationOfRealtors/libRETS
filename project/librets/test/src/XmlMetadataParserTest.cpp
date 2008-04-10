@@ -49,6 +49,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testBlankDataTag);
     CPPUNIT_TEST(testUnknownMetadataException);
     CPPUNIT_TEST(testUnknownMetadataIgnored);
+    CPPUNIT_TEST(testExtendedCharacter);
     CPPUNIT_TEST_SUITE_END();
 
  public:
@@ -62,6 +63,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testBlankDataTag();
     void testUnknownMetadataException();
     void testUnknownMetadataIgnored();
+    void testExtendedCharacter();
     
     XmlMetadataParserPtr mParser;
     TestElementFactoryPtr mElementFactory;
@@ -259,3 +261,52 @@ void CLASS::testUnknownMetadataIgnored()
     // No rows should be appear, as the error should be ignored
     ASSERT_EQUAL(size_t(0), elements.size());
 }
+
+void CLASS::testExtendedCharacter()
+{
+    /*
+     * This represents "nunez" with extended characters for the accented "u",
+     * and the "enyay".
+     */
+    const char nunez [] = {0x4e, 0xc2, 0x9c, 0xc2, 0x96, 0x65, 0x7a, 0x00};
+
+    mParser->SetEncoding(RetsSession::RETS_XML_DEFAULT_ENCODING);
+    
+    try
+    {
+        istreamPtr inputStream = getResource("metadata-extended-char.xml");
+
+        mParser->Parse(inputStream);
+        CPPUNIT_FAIL("Should have thrown exception");
+    }
+    catch (RetsException &)
+    {
+        // Expected
+    }
+    
+    mParser->SetEncoding(RetsSession::RETS_XML_ISO_ENCODING);
+    istreamPtr inputStream = getResource("metadata-extended-char.xml");
+    mParser->Parse(inputStream);
+
+    TestMetadataElementList elements = mElementFactory->GetCreatedElements();
+    ASSERT_EQUAL(size_t(1), elements.size());
+    TestMetadataElementPtr element = elements[0];
+
+    ASSERT_STRING_EQUAL("METADATA-CLASS", element->GetTypeName());
+    ASSERT_STRING_EQUAL("RES", element->GetStringAttribute("ClassName"));
+    ASSERT_STRING_EQUAL("ResidentialProperty",
+                        element->GetStringAttribute("StandardName"));
+    ASSERT_STRING_EQUAL("Single Family",
+                        element->GetStringAttribute("VisibleName"));
+    ASSERT_STRING_EQUAL(nunez,
+                        element->GetStringAttribute("Description"));
+    ASSERT_STRING_EQUAL("100.00.001",
+                        element->GetStringAttribute("TableVersion"));
+    ASSERT_STRING_EQUAL("Mon, 18 Aug 2003 17:00:00 GMT",
+                        element->GetStringAttribute("TableDate"));
+    ASSERT_STRING_EQUAL("100.00.001",
+                        element->GetStringAttribute("UpdateVersion"));
+    ASSERT_STRING_EQUAL("Mon, 18 Aug 2003 17:00:00 GMT",
+                        element->GetStringAttribute("UpdateDate"));
+}
+

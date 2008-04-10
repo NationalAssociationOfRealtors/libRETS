@@ -27,6 +27,7 @@
 #include "librets/RetsXmlTextEvent.h"
 #include "librets/MetadataElement.h"
 #include "librets/RetsException.h"
+#include "librets/RetsSession.h"
 #include "librets/RetsUnknownMetadataException.h"
 #include "librets/util.h"
 
@@ -42,6 +43,7 @@ namespace ba = boost::algorithm;
 CLASS::CLASS(MetadataElementCollectorPtr elementCollector,
              RetsErrorHandler * errorHandler)
     : mErrorHandler(errorHandler)
+    , mEncoding(RetsSession::RETS_XML_DEFAULT_ENCODING)
 {
     mElementCollector = elementCollector;
     mElementFactory.reset(new DefaultMetadataElementFactory());
@@ -62,7 +64,10 @@ void CLASS::SetErrorHandler(RetsErrorHandler * errorHandler)
 
 void CLASS::Parse(istreamPtr inputStream)
 {
-    mXmlParser.reset(new ExpatXmlParser(inputStream));
+    mXmlParser.reset(new ExpatXmlParser(inputStream, 
+                                        (mEncoding == RetsSession::RETS_XML_ISO_ENCODING 
+                                         ? "iso-8859-1" 
+                                         : "US-ASCII")));
     RetsXmlStartElementEventPtr metadataEvent;
     while (mXmlParser->HasNext())
     {
@@ -214,3 +219,9 @@ void CLASS::HandleData(RetsXmlStartElementEventPtr metadataEvent)
     }
     mElementCollector->AddElement(element);
 }
+
+void CLASS::SetEncoding(RetsSession::EncodingType encoding)
+{
+    mEncoding = encoding;
+}
+
