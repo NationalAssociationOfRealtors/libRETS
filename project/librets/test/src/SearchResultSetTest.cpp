@@ -19,7 +19,7 @@
 #include "testUtil.h"
 #include "librets/SearchResultSet.h"
 #include "librets/RetsReplyException.h"
-#include "librets/RetsSession.h"
+#include "librets/EncodingType.h"
 
 using namespace librets;
 using namespace std;
@@ -38,8 +38,8 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInvalidColumnName);
     CPPUNIT_TEST(testPipeDelimiter);
     CPPUNIT_TEST(testExtendedCharResponse);
-	CPPUNIT_TEST(testMaxRows);
-	CPPUNIT_TEST(testRetsStatus);
+    CPPUNIT_TEST(testMaxRows);
+    CPPUNIT_TEST(testRetsStatus);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -52,7 +52,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testInvalidColumnName();
     void testPipeDelimiter();
     void testExtendedCharResponse();
-	void testMaxRows();
+    void testMaxRows();
     void testRetsStatus();
 };
 
@@ -260,9 +260,11 @@ void CLASS::testExtendedCharResponse()
      */
     const char nunez [] = {0x4e, 0xc2, 0x9c, 0xc2, 0x96, 0x65, 0x7a, 0x00};
 
+    resultSet.SetEncoding(RETS_XML_DEFAULT_ENCODING);
     try
     {
-        resultSet.Parse(getResource("search-response-extended-char.xml"));
+        istreamPtr inputStream = getResource("search-response-extended-char.xml");
+        resultSet.Parse(inputStream);
         CPPUNIT_FAIL("Should have thrown exception");
     }
     catch (RetsException &)
@@ -271,7 +273,8 @@ void CLASS::testExtendedCharResponse()
     }
 
     resultSet.SetEncoding(RETS_XML_ISO_ENCODING);
-    resultSet.Parse(getResource("search-response-extended-char.xml"));
+    istreamPtr inputStream = getResource("search-response-extended-char.xml");
+    resultSet.Parse(inputStream);
 
     ASSERT_EQUAL(1, resultSet.GetCount());
     StringVector columns = resultSet.GetColumns();
@@ -293,55 +296,67 @@ void CLASS::testExtendedCharResponse()
 
 void CLASS::testMaxRows()
 {
-	/*
-	 * MAXROWS is set in search-repsonse.xml and data validation testing
-	 * has already happened. We can run this test against that data and
-	 * check for the presence of MAXROWS. We will also run the test againt
-	 * search-response-no-count.xml, which also lacks the MAXROWS tag make
-	 * sure we properly detect its lack of presense as well.
-	 */
+    /*
+     * MAXROWS is set in search-repsonse.xml and data validation testing
+     * has already happened. We can run this test against that data and
+     * check for the presence of MAXROWS. We will also run the test againt
+     * search-response-no-count.xml, which also lacks the MAXROWS tag make
+     * sure we properly detect its lack of presense as well.
+     */
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response.xml");
     resultSet.Parse(inputStream);
 
-	// We should see the MAXROWS indication
-	CPPUNIT_ASSERT(resultSet.HasMaxRows());
+    // We should see the MAXROWS indication
+    CPPUNIT_ASSERT(resultSet.HasMaxRows());
 
-	/*
-	 * Now rerun the test against search-response-no-count.xml.
-	 * MAXROWS has not been set in this test.
-	 */
-	inputStream = getResource("search-response-no-count.xml");
+    /*
+     * Now rerun the test against search-response-no-count.xml.
+     * MAXROWS has not been set in this test.
+     */
+    inputStream = getResource("search-response-no-count.xml");
     resultSet.Parse(inputStream);
-	CPPUNIT_ASSERT(!resultSet.HasMaxRows());
+    CPPUNIT_ASSERT(!resultSet.HasMaxRows());
 
 }
 
 void CLASS::testRetsStatus()
 {
-	/*
-	 * RETS-STATUS is used in search-repsonse.xml and data validation testing
-	 * has already happened. We can run this test against that data and
-	 * check for the presence of a reply code and reply text. We will also run 
+    /*
+     * RETS-STATUS is used in search-repsonse.xml and data validation testing
+     * has already happened. We can run this test against that data and
+     * check for the presence of a reply code and reply text. We will also run 
      * the test againt search-response-no-count.xml, which also lacks the RETS-STATUS 
      * tag to make sure we properly reset the values.
-	 */
+     */
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response.xml");
     resultSet.Parse(inputStream);
+    /*
+     * With the streaming enhancement, we can only be assured that the first status has
+     * been seen. In this case, it should be normal (ok). Check to be sure.
+     */
+    ASSERT_EQUAL(0, resultSet.GetReplyCode());
+    
+    /*
+     * Now explicitly check for max rows. This will cause all of the data to be
+     * processed.
+     */
 
-	// We should see the replyCode == 20208, indicating MAXROWS have been sent
+    CPPUNIT_ASSERT(resultSet.HasMaxRows());
+    
+    // We should see the replyCode == 20208, indicating MAXROWS have been sent
     ASSERT_EQUAL(20208, resultSet.GetReplyCode());
     // The ReplyText should be "Maximum Records Exceeded"
     ASSERT_STRING_EQUAL("Maximum Records Exceeded", resultSet.GetReplyText());
 
-	/*
-	 * Now rerun the test against search-response-no-count.xml.
-	 * RETS-STATUS has not been set in this test.
-	 */
-	inputStream = getResource("search-response-no-count.xml");
+    /*
+     * Now rerun the test against search-response-no-count.xml.
+     * RETS-STATUS has not been set in this test.
+     */
+    inputStream = getResource("search-response-no-count.xml");
     resultSet.Parse(inputStream);
-	CPPUNIT_ASSERT(resultSet.GetReplyCode() == 0);
+    CPPUNIT_ASSERT(resultSet.GetReplyCode() == 0);
     CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
 }
 
