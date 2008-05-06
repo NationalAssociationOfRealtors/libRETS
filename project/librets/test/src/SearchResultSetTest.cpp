@@ -270,7 +270,7 @@ void CLASS::testExtendedCharResponse()
         // Expected
     }
 
-    resultSet.SetEncoding(RetsSession::RETS_XML_ISO_ENCODING);
+    resultSet.SetEncoding(RETS_XML_ISO_ENCODING);
     resultSet.Parse(getResource("search-response-extended-char.xml"));
 
     ASSERT_EQUAL(1, resultSet.GetCount());
