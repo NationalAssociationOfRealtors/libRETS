@@ -1,10 +1,10 @@
-Version 1.1.12 - x xxx 2007
+Version 1.1.12 - 6 May 2008
 
   * Extend XML parsing for metadata to include ISO characters if 
     RETS_XML_ISO_ENCODING is set.
     Ticket #54.
 
-Version 1.1.11 - 1 Apr 2007
+Version 1.1.11 - 1 Apr 2008
 
   * Add SWIG bindings to Autoconf based (unix) build.
     Ticket #31.
