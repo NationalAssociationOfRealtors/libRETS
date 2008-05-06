@@ -43,6 +43,36 @@ AC_ARG_ENABLE(shared_dependencies,
               test "X$enableval" != "Xno" && my_enable_shared_dependencies=yes,
               my_enable_shared_dependencies=no)
 
+AC_ARG_ENABLE(dotnet,
+              AC_HELP_STRING([--disable-dotnet],
+                             [If swig is installed, do not build the .NET bindings.]),
+              test "X$enableval" != "Xyes" && my_use_mcs=no,
+              my_use_mcs=yes)
+		
+AC_ARG_ENABLE(java,
+              AC_HELP_STRING([--disable-java],
+                             [If swig is installed, do not build the java  bindings.]),
+              test "X$enableval" != "Xyes" && my_use_java=no,
+              my_use_java=yes)
+		
+AC_ARG_ENABLE(php,
+              AC_HELP_STRING([--disable-php],
+                             [If swig is installed, do not build the PHP bindings.]),
+              test "X$enableval" != "Xyes" && my_use_php=no,
+              my_use_php=yes)
+		
+AC_ARG_ENABLE(python,
+              AC_HELP_STRING([--disable-python],
+                             [If swig is installed, do not build the python bindings.]),
+              test "X$enableval" != "Xyes" && my_use_python=no,
+              my_use_python=yes)
+		
+AC_ARG_ENABLE(ruby,
+              AC_HELP_STRING([--disable-ruby],
+                             [If swig is installed, do not build the ruby  bindings.]),
+              test "X$enableval" != "Xyes" && my_use_ruby=no,
+              my_use_ruby=yes)
+		
 MY_TEST_DEPENDS
 MY_TEST_CURL
 MY_TEST_EXPAT
@@ -115,6 +145,12 @@ echo Compile SQL compiler........: $my_use_sql_compiler
 echo Compile SWIG bindings.......: $my_use_swig_bindings
 if test "$my_have_mcs" = "yes"; then
   echo "  With CSharp...............: $my_have_mcs"
+fi
+if test "$my_have_java" = "yes"; then
+  echo "  With Java.................: $my_have_java"
+fi
+if test "$my_have_php" = "yes"; then
+  echo "  With PHP..................: $my_have_php"
 fi
 if test "$my_have_python" = "yes"; then
   echo "  With Python...............: $my_have_python"

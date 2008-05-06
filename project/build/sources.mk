@@ -330,6 +330,14 @@ SWIG_FILES		= ${SWIG_DIR}/librets.i ${SWIG_DIR}/auto_ptr_release.i
 SWIG_LIBRETS_CONFIG	= ${top_srcdir}/librets-config-inplace
 SWIG_LIBRETS_LIBS	= `${SWIG_LIBRETS_CONFIG} --libs`
 SWIG_OBJ_DIR		= build/swig
+SWIG_OSNAME		= $(shell perl -e 'use Config; print $$Config{osname};')
+
+ifeq (${SWIG_OSNAME}, darwin)
+SWIG_LINK		= ${CXX} -bundle -undefined suppress -flat_namespace 
+else
+SWIG_LINK		= ${CXX} -shared
+endif
+
 
 ###
 # csharp of swig
@@ -366,7 +374,6 @@ CSHARP_MANAGED_SRC	= ${CSHARP_GENERATED_SRC}		 		\
 CSHARP_METADATA_EXE	= ${CSHARP_OBJ_DIR}/Metadata.exe
 CSHARP_METADATA_SRC	= ${CSHARP_DIR}/Metadata.cs
 CSHARP_OBJ_DIR		= ${SWIG_OBJ_DIR}/csharp
-CSHARP_OSNAME		= $(shell perl -e 'use Config; print $$Config{osname};')
 CSHARP_SEARCH_EXE	= ${CSHARP_OBJ_DIR}/Search.exe
 CSHARP_SEARCH_SRC	= ${CSHARP_DIR}/Search.cs
 CSHARP_SQL2DMQL_EXE	= ${CSHARP_OBJ_DIR}/Sql2DMQL.exe
@@ -376,19 +383,13 @@ CSHARP_UNMANAGED_OBJ	= ${CSHARP_OBJ_DIR}/librets_wrap.o 			\
 				${CSHARP_OBJ_DIR}/librets_sharp.o
 CSHARP_WRAP		= ${CSHARP_OBJ_DIR}/librets_wrap.cpp
 
-ifeq (${CSHARP_OSNAME}, darwin)
-CSHARP_LINK		= ${CXX} -bundle -undefined suppress -flat_namespace
-else
-CSHARP_LINK		= ${CXX} -shared
-endif
-
 ${CSHARP_WRAP}: ${SWIG_FILES} 
 	${SWIG} -c++ -csharp -namespace librets -o ${CSHARP_WRAP} \
 	-outdir ${CSHARP_OBJ_DIR} -I${SWIG_DIR}/lib/csharp ${SWIG_DIR}/librets.i
 	make ${CSHARP_MANAGED_DLL}
 
 ${CSHARP_UNMANAGED_DLL}: ${CSHARP_UNMANAGED_OBJ}
-	${CSHARP_LINK} -o ${CSHARP_UNMANAGED_DLL} ${CSHARP_UNMANAGED_OBJ} ${SWIG_LIBRETS_LIBS}
+	${SWIG_LINK} -o ${CSHARP_UNMANAGED_DLL} ${CSHARP_UNMANAGED_OBJ} ${SWIG_LIBRETS_LIBS}
 
 ${CSHARP_MANAGED_DLL}:	${CSHARP_UNMANAGED_DLL} ${CSHARP_MANAGED_SRC}
 	${MCS} -target:library -out:${CSHARP_MANAGED_DLL} ${CSHARP_MANAGED_SRC}
@@ -419,6 +420,83 @@ ${CSHARP_INSTALL}: ${CSHARP_MANAGED_DLL}
 	@echo insalled in your environment.
 endif
 
+###
+# java of swig
+#
+ifeq (${HAVE_JAVA},1)
+
+JAVA_BUILD		= ${JAVA_DLL} ${JAVA_OBJ_DIR}/${JAVA_JAR}
+
+JAVA_CLASSES_QUAL	= ${patsubst ${JAVA_OBJ_DIR}/%.java,${JAVA_CLASS_PATH}/%.class,${JAVA_SOURCES}}
+JAVA_CLASSES		= ${patsubst ${JAVA_OBJ_DIR}/%.java,librets/%.class,${JAVA_SOURCES}}
+JAVA_CLASS_PATH		= ${JAVA_OBJ_DIR}/librets
+JAVA_JAR		= librets.jar
+JAVA_JAR_PATH		= ${JAVA_OBJ_DIR}/librets
+JAVA_OBJ_DIR		= ${SWIG_OBJ_DIR}/java
+JAVA_SOURCES		= ${wildcard ${JAVA_OBJ_DIR}/*.java}
+JAVA_SRC_DIR		= ${SWIG_DIR}/java
+JAVA_WRAP 		= ${JAVA_OBJ_DIR}/librets_wrap.cpp
+
+JAVA_INCLUDES		= ${BOOST_CFLAGS}
+
+ifeq (${SWIG_OSNAME}, darwin)
+JAVA_INCLUDES		= -I`javaconfig Headers`
+JAVA_DLL		= ${JAVA_OBJ_DIR}/librets.jnilib
+#JAVA_DYNAMICLINK	= ${CXX} -dynamiclib -framework JavaVM
+JAVA_DYNAMICLINK	= ${SWIG_LINK}
+else
+JAVA_INCLUDES		= `echo You must provide a path`
+JAVA_DLL		= ${JAVA_OBJ_DIR}/librets.so
+JAVA_DYNAMICLINK	= ${SWIG_LINK}
+endif
+
+${JAVA_WRAP}: ${SWIG_FILES} 
+	${SWIG} -c++ -java -o ${JAVA_WRAP} \
+	-outdir ${JAVA_OBJ_DIR} ${SWIG_DIR}/librets.i
+	${MAKE} ${JAVA_OBJ_DIR}/${JAVA_JAR}
+
+${JAVA_DLL}: ${JAVA_WRAP} ${JAVA_OBJ_DIR}/librets_wrap.o
+	${JAVA_DYNAMICLINK} -o ${JAVA_DLL} ${JAVA_OBJ_DIR}/librets_wrap.o ${SWIG_LIBRETS_LIBS}
+
+${JAVA_OBJ_DIR}/librets_wrap.o: ${JAVA_OBJ_DIR}/librets_wrap.cpp
+	${CXX}  -I${LIBRETS_INC_DIR}  ${BOOST_CFLAGS} ${JAVA_INCLUDES} -c $< -o $@
+	
+${JAVA_CLASSES_QUAL}: ${JAVA_WRAP} ${JAVA_SOURCES}
+	${JAVAC} -d ${JAVA_JAR_PATH} ${JAVA_SOURCES}
+
+${JAVA_OBJ_DIR}/${JAVA_JAR}: ${JAVA_CLASSES_QUAL}
+	echo Classes for jar: ${JAVA_CLASSES}
+	cd ${JAVA_OBJ_DIR}; ${JAR} -cvf ${JAVA_JAR} ${JAVA_CLASSES} || ${RM} ${JAVA_JAR}
+
+endif
+###
+
+###
+# php of swig
+#
+ifeq (${HAVE_PHP},1)
+
+PHP_BUILD		= ${PHP_DLL} 
+
+PHP_DLL			= ${PHP_OBJ_DIR}/librets.so
+PHP_INCLUDES		= `php-config --includes`
+PHP_LDFLAGS		= `php-config --ldflags`
+PHP_LIBS		= `php-config --libs`
+PHP_OBJ_DIR		= ${SWIG_OBJ_DIR}/php5
+PHP_SRC_DIR		= ${SWIG_DIR}/php5
+PHP_WRAP 		= ${PHP_OBJ_DIR}/librets_wrap.cpp
+
+${PHP_WRAP}: ${SWIG_FILES} 
+	${SWIG} -c++ -php5 -o ${PHP_WRAP} \
+	-outdir ${PHP_OBJ_DIR} ${SWIG_DIR}/librets.i
+
+${PHP_DLL}: ${PHP_WRAP} ${PHP_OBJ_DIR}/librets_wrap.o
+	${SWIG_LINK} -o ${PHP_DLL} ${PHP_LDFLAGS} ${PHP_LIBS} ${PHP_OBJ_DIR}/librets_wrap.o ${SWIG_LIBRETS_LIBS}
+
+${PHP_OBJ_DIR}/librets_wrap.o: ${PHP_OBJ_DIR}/librets_wrap.cpp
+	${CXX} -g  -I${LIBRETS_INC_DIR} -I${PHP_SRC_DIR}  ${BOOST_CFLAGS} ${PHP_INCLUDES} -c $< -o $@
+	
+endif
 ###
 # perl of swig - Perl isn't completely implemented and currently won't build, so this section is commented out.
 #

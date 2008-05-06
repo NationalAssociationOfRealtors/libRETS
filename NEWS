@@ -1,5 +1,20 @@
+Version 1.x.xx - x xxx 2008
 
-Version 1.1.11 - 1 Apr 2007
+  * Add "streaming" enhancement. This enhancement improves performance
+    for larger fetches at expense of risking timeouts with the RETS server.
+    This enhancement moves a significant portion of the search and retrieval
+    logic into the SearchResultSet logic. As a result, when the SearchResultSet
+    is first returned, it may not have retrieved any data from the RETS server.
+    You can only be assured that at least one row has been retrieved by
+    calling SearchResultSet::HasNext().
+    Ticket #41.
+
+Version 1.1.12 - x xx 2008
+
+  * Extend XML parsing for metadata to include ISO characters if specified.
+    Ticket #54.
+
+Version 1.1.11 - 1 Apr 2008
 
   * Add SWIG bindings to Autoconf based (unix) build.
     Ticket #31.

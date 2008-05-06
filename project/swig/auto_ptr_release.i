@@ -4,6 +4,7 @@ namespace std {
     public:
       auto_ptr();
       auto_ptr(T * t);
+      auto_ptr(auto_ptr<T>&);
       T * operator-> () const;
       void reset(T * t);
   };
@@ -26,6 +27,18 @@ namespace std {
     return ret;
   }
 
+#elif defined(SWIGJAVA)
+%typemap (ctype) std::auto_ptr<TYPE> "void *"
+%typemap (jtype, out="jlong") std::auto_ptr<TYPE> "long"
+%typemap (jstype) std::auto_ptr<TYPE> "PROXYCLASS"
+%typemap (javaout) std::auto_ptr<TYPE> {
+    long cPtr = $jnicall;
+    PROXYCLASS ret = (cPtr == 0) ? null : new PROXYCLASS(cPtr, true);
+    return ret;
+}
+%typemap(out) std::auto_ptr<TYPE> {
+      *(TYPE **)&$result = $1.release();
+}
 #elif defined(SWIGPERL)
 
 %typemap(out) std::auto_ptr<TYPE>
@@ -40,16 +53,30 @@ namespace std {
 #elif defined(SWIGPHP)
 
 %typemap(out) std::auto_ptr<TYPE>
-    "SWIG_SetPointerZval($result, (void *) $1.release(), $descriptor(TYPE *), 1);
-    zval *obj, *_cPtr;
-    MAKE_STD_ZVAL(obj);
-    MAKE_STD_ZVAL(_cPtr);
-    *_cPtr = *return_value;
-    INIT_ZVAL(*return_value);
-    object_init_ex(obj,MAKE_PHP_NAME(TYPE));
-    add_property_zval(obj,\"_cPtr\",_cPtr);
-    *return_value=*obj;";
+{
+   // Release the auto_ptr and create a Zend resource.
+   SWIG_SetPointerZval($result, (void *) $1.release(), $descriptor(TYPE *), $owner);
+   // Now create the PHP object to contain the class to which the auto_ptr
+   // was referencing.
+   zval *obj, *_cPtr;
+   MAKE_STD_ZVAL(obj);
+   MAKE_STD_ZVAL(_cPtr);
+   *_cPtr = *$result;
+   INIT_ZVAL(*$result);
+   // Lookup the Class Entry for this class.
+   zend_class_entry *ce;
+   zend_class_entry **pce;
+   if (FAILURE == zend_lookup_class("TYPE",strlen("TYPE"), &pce TSRMLS_CC))
+   {
+       SWIG_PHP_Error(E_ERROR, "Unable to locate class entry for TYPE.");
+   }
 
+   ce = *pce;
+   // Initialize it, attach the _cPtr  and return it.
+   object_init_ex(obj, ce);
+   add_property_zval(obj, "_cPtr",_cPtr);
+   *$result = *obj;
+}
 #else
 #error "Unsupported SWIG language for auto_ptr_release"
 #endif

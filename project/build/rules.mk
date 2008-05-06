@@ -22,8 +22,10 @@ ALL_OBJ_DIRS	= \
 	build/examples/bin \
 	build/doc/api \
 	build/swig/csharp \
+	build/swig/java \
+	build/swig/java/librets \
 	build/swig/perl \
-	build/swig/php4 \
+	build/swig/php5 \
 	build/swig/python \
 	build/swig/ruby
 
@@ -39,6 +41,16 @@ SWIG_INSTALL = ${SWIG_DEFAULT_INSTALL}
 ifeq (${HAVE_MCS},1)
 ALL += ${CSHARP_BUILD}
 SWIG_INSTALL += ${CSHARP_INSTALL}
+endif
+
+ifeq (${HAVE_JAVA},1)
+ALL += ${JAVA_BUILD}
+SWIG_INSTALL += ${JAVA_INSTALL}
+endif
+
+ifeq (${HAVE_PHP},1)
+ALL += ${PHP_BUILD}
+SWIG_INSTALL += ${PHP_INSTALL}
 endif
 
 ifeq (${HAVE_PYTHON},1)

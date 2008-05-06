@@ -6,6 +6,10 @@
 %}
 #endif
 
+#ifdef SWIGJAVA
+%include "java/boost_shared_ptr.i"
+#endif
+
 #ifdef SWIGRUBY
 %{
 #include "librets_ruby.h"
@@ -13,9 +17,8 @@
 #endif
 
 #ifdef SWIGPHP
-%{
-#include "librets_php4.h"
-%}
+%include "boost_shared_ptr.i"
+%copyctor;
 #endif
 
 #ifdef SWIGPERL
@@ -37,7 +40,53 @@ using std::string;
 
 #ifndef SWIGXML
 %include "std_string.i"
+#ifndef SWIGPHP
 %include "std_vector.i"
+#else
+%include <std_common.i>
+%{
+#include <vector>
+#include <algorithm>
+#include <stdexcept>
+%}
+namespace std {
+
+    template<class T> class vector {
+        // add generic typemaps here
+      public:
+        vector(unsigned int size = 0);
+        unsigned int size() const;
+        %rename(is_empty) empty;
+        bool empty() const;
+        void clear();
+        %rename(push) push_back;
+        void push_back(const T& x);
+        %extend {
+            T pop() throw (std::out_of_range) {
+                if (self->size() == 0)
+                    throw std::out_of_range("pop from empty vector");
+                T x = self->back();
+                self->pop_back();
+                return x;
+            }
+            T get(int i) throw (std::out_of_range) {
+                int size = int(self->size());
+                if (i>=0 && i<size)
+                    return (*self)[i];
+                else
+                    throw std::out_of_range("vector index out of range");
+            }
+            void set(int i, const T& x) throw (std::out_of_range) {
+                int size = int(self->size());
+                if (i>=0 && i<size)
+                    (*self)[i] = x;
+                else
+                    throw std::out_of_range("vector index out of range");
+            }
+        }
+    };
+}
+#endif
 #endif
 %include "exception.i"
 %include "auto_ptr_release.i"
@@ -217,6 +266,9 @@ class SearchRequest
     std::string GetQueryString() const;
 };
 typedef std::auto_ptr<SearchRequest> SearchRequestAPtr;
+#ifndef SWIGPHP
+%template(SearchRequestAPtr) std::auto_ptr<SearchRequest>;
+#endif
 
 class SearchResultSet
 {
@@ -242,6 +294,9 @@ class SearchResultSet
     std::string GetReplyText();
 };
 typedef std::auto_ptr<SearchResultSet> SearchResultSetAPtr;
+#ifndef SWIGPHP
+%template(SearchResultSetAPtr) std::auto_ptr<SearchResultSet>;
+#endif
 
 class LogoutResponse
 {
@@ -251,7 +306,9 @@ class LogoutResponse
     int GetConnectTime();
 };
 typedef std::auto_ptr<LogoutResponse> LogoutResponseAPtr;
-
+#ifndef SWIGPHP
+%template(LogoutResponseAPtr) std::auto_ptr<LogoutResponse>;
+#endif
 
 SWIG_AUTO_PTR_RELEASE(SearchRequest);
 SWIG_AUTO_PTR_RELEASE(SearchResultSet);
@@ -420,6 +477,13 @@ SWIG_AUTO_PTR_RELEASE(GetObjectResponse);
  * Metadata
  ***************************************************************************/
  
+#ifdef SWIGPHP
+#define CLASS KLASS
+%{
+#define KLASS CLASS
+%}
+#endif
+
 class MetadataElement
 {
   public:
@@ -490,6 +554,7 @@ class MetadataSystem : public MetadataElement
     std::string GetSystemID() const;  
     std::string GetSystemDescription() const;
     std::string GetComments() const;
+    MetadataType GetType() const;
 };
 
 class MetadataResource : public MetadataElement
@@ -499,6 +564,7 @@ class MetadataResource : public MetadataElement
     std::string GetResourceID() const;
     std::string GetStandardName() const;
     std::string GetKeyField() const;
+    MetadataType GetType() const;
 };
 
 typedef std::vector<MetadataResource *> MetadataResourceList;
@@ -507,10 +573,11 @@ typedef std::vector<MetadataResource *> MetadataResourceList;
 class MetadataClass : public MetadataElement
 {
   public:
-    virtual std::string GetId() const;
+    std::string GetId() const;
     std::string GetClassName() const;
     std::string GetStandardName() const;
     std::string GetDescription() const;
+    MetadataType GetType() const;
 };
 
 typedef std::vector<MetadataClass *> MetadataClassList;
@@ -588,6 +655,7 @@ class MetadataTable : public MetadataElement
     int GetDefault() const;
     int GetRequired() const;
     std::string GetSearchHelpId() const;
+    MetadataType GetType() const;
     bool IsUnique() const;
 };
 
@@ -597,11 +665,12 @@ typedef std::vector<MetadataTable *> MetadataTableList;
 class MetadataLookup : public MetadataElement
 {
   public:
-    virtual std::string GetId() const;
+    std::string GetId() const;
     std::string GetLookupName() const;
     std::string GetVisibleName() const;
     std::string GetVersion() const;
     std::string GetDate() const;
+    MetadataType GetType() const;
 };
 
 typedef std::vector<MetadataLookup *> MetadataLookupList;
@@ -610,10 +679,11 @@ typedef std::vector<MetadataLookup *> MetadataLookupList;
 class MetadataLookupType : public MetadataElement
 {
   public:
-    virtual std::string GetId() const;
+    std::string GetId() const;
     std::string GetValue() const;
     std::string GetLongValue() const;
     std::string GetShortValue() const;
+    MetadataType GetType() const;
 };
 
 typedef std::vector<MetadataLookupType *> MetadataLookupTypeList;
@@ -622,11 +692,12 @@ typedef std::vector<MetadataLookupType *> MetadataLookupTypeList;
 class MetadataObject : public MetadataElement
 {
   public:
-    virtual std::string GetId() const;
+    std::string GetId() const;
     std::string GetObjectType() const;
     std::string GetMIMEType() const;
     std::string GetVisibleName() const;
     std::string GetDescription() const;
+    MetadataType GetType() const;
 };
 
 typedef std::vector<MetadataObject *> MetadataObjectList;
@@ -635,9 +706,10 @@ typedef std::vector<MetadataObject *> MetadataObjectList;
 class MetadataSearchHelp : public MetadataElement
 {
   public:
-    virtual std::string GetId() const;
+    std::string GetId() const;
     std::string GetSearchHelpID() const;
     std::string GetValue() const;
+    MetadataType GetType() const;
 };
 
 %nodefault;
