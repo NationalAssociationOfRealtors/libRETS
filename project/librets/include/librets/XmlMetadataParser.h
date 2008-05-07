@@ -22,6 +22,7 @@
 #include "librets/metadata_forward.h"
 #include "librets/error_forward.h"
 #include "librets/RetsObject.h"
+#include "librets/EncodingType.h"
 
 namespace librets {
 
@@ -33,6 +34,8 @@ class XmlMetadataParser : public RetsObject
 
     void SetElementFactory(XmlMetadataElementFactoryPtr elementFactory);
     
+    void SetEncoding(EncodingType encoding);
+
     void SetErrorHandler(RetsErrorHandler * errorHandler);
 
     void Parse(istreamPtr inputStream);
@@ -48,6 +51,8 @@ class XmlMetadataParser : public RetsObject
     RetsErrorHandler * mErrorHandler;
     RetsXmlParserPtr mXmlParser;
     StringVector mColumns;
+
+    EncodingType mEncoding;
 };
 
 };
