@@ -20,7 +20,7 @@
 #include <string>
 #include <vector>
 #include "librets/std_forward.h"
-#include "librets/ExpatXmlParser.h"
+#include "librets/xml_forward.h"
 #include "librets/RetsObject.h"
 #include "librets/RetsSession.h"
 

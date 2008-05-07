@@ -5,7 +5,7 @@ LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LI
 !include <generated.vc>
 WRAP = 	librets_wrap.cpp
 
-CFLAGS  = $(CFLAGS_STD) /I ../../librets/include $(BOOST_CFLAGS)
+CFLAGS  = $(CFLAGS_STD) /I ../../librets/include $(BOOST_CFLAGS) $(CURL_CFLAGS)
 LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS)
 LINK = $(LINK_EXE) $(LDFLAGS)
 SYSLIBS = wsock32.lib winmm.lib

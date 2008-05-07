@@ -7,6 +7,7 @@ GENERATED_SRC = \
 	lib\DmqlCriterionPtr.cs \
 	lib\DmqlQuery.cs \
 	lib\DmqlQueryPtr.cs \
+	lib\EncodingType.cs \
 	lib\GetObjectQueryPtr.cs \
 	lib\GetObjectRequest.cs \
 	lib\GetObjectResponse.cs \
