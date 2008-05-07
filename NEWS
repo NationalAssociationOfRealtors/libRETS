@@ -1,4 +1,4 @@
-Version 1.x.xx - x xxx 2008
+Version 1.2.0 - x xxx 2008
 
   * Add "streaming" enhancement. This enhancement improves performance
     for larger fetches at expense of risking timeouts with the RETS server.
@@ -9,7 +9,7 @@ Version 1.x.xx - x xxx 2008
     calling SearchResultSet::HasNext().
     Ticket #41.
 
-Version 1.1.12 - x xx 2008
+Version 1.1.12 - 6 May 2008
 
   * Extend XML parsing for metadata to include ISO characters if specified.
     Ticket #54.
