@@ -1,4 +1,4 @@
-Version 1.2.0 - x xxx 2008
+Version 1.2.0 - 8 May 2008
 
   * Add "streaming" enhancement. This enhancement improves performance
     for larger fetches at expense of risking timeouts with the RETS server.
