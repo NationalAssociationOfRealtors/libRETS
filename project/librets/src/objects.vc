@@ -5,7 +5,9 @@ X_OBJS = \
 	$(DIROBJ)\CurlEasy.obj \
 	$(DIROBJ)\CurlHttpClient.obj \
 	$(DIROBJ)\CurlHttpResponse.obj \
+	$(DIROBJ)\CurlMulti.obj \
 	$(DIROBJ)\CurlSlist.obj \
+	$(DIROBJ)\CurlStream.obj \
 	$(DIROBJ)\DefaultMetadataCollector.obj \
 	$(DIROBJ)\DefaultMetadataElementFactory.obj \
 	$(DIROBJ)\DmqlCriterion.obj \
