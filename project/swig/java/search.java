@@ -41,7 +41,7 @@ public class search
         searchRequest.SetOffset(SearchRequest.OFFSET_NONE);
         searchRequest.SetCountType(SearchRequest.CountType.RECORD_COUNT_AND_RESULTS);
         searchRequest.SetStandardNames(true);
-        SearchResultSet results = session.Search(searchRequest.__deref__());
+        SearchResultSet results = session.Search(searchRequest);
 
         System.out.println("Record count: " + results.GetCount());
 

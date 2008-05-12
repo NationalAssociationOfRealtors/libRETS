@@ -816,6 +816,9 @@ static void mark_RetsSession(void* ptr)
 
 %feature("director") RetsHttpLogger;
 #endif
+#ifdef SWIGJAVA
+%feature("director") RetsHttpLogger;
+#endif
 class RetsHttpLogger
 {
   public:

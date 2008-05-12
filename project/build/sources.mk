@@ -425,13 +425,13 @@ endif
 #
 ifeq (${HAVE_JAVA},1)
 
-JAVA_BUILD		= ${JAVA_DLL} ${JAVA_OBJ_DIR}/${JAVA_JAR}
+JAVA_BUILD		= ${JAVA_DLL} ${JAVA_OBJ_DIR}/${JAVA_JAR} ${JAVA_EXAMPLES_CLASSES}
 
-JAVA_CLASSES_QUAL	= ${patsubst ${JAVA_OBJ_DIR}/%.java,${JAVA_CLASS_PATH}/%.class,${JAVA_SOURCES}}
-JAVA_CLASSES		= ${patsubst ${JAVA_OBJ_DIR}/%.java,librets/%.class,${JAVA_SOURCES}}
-JAVA_CLASS_PATH		= ${JAVA_OBJ_DIR}/librets
+JAVA_CLASSES		= ${patsubst ${JAVA_OBJ_DIR}/%.java,${JAVA_OBJ_DIR}/librets/%.class,${JAVA_SOURCES}}
+JAVA_CLASSES_UNQUAL	= ${patsubst ${JAVA_OBJ_DIR}/%.java,%.class,${JAVA_SOURCES}}
+JAVA_EXAMPLES		= ${wildcard ${JAVA_SRC_DIR}/*.java}
+JAVA_EXAMPLES_CLASSES	= ${patsubst ${JAVA_SRC_DIR}/%.java,${JAVA_OBJ_DIR}/%.class,${JAVA_EXAMPLES}}
 JAVA_JAR		= librets.jar
-JAVA_JAR_PATH		= ${JAVA_OBJ_DIR}/librets
 JAVA_OBJ_DIR		= ${SWIG_OBJ_DIR}/java
 JAVA_SOURCES		= ${wildcard ${JAVA_OBJ_DIR}/*.java}
 JAVA_SRC_DIR		= ${SWIG_DIR}/java
@@ -440,18 +440,20 @@ JAVA_WRAP 		= ${JAVA_OBJ_DIR}/librets_wrap.cpp
 JAVA_INCLUDES		= ${BOOST_CFLAGS}
 
 ifeq (${SWIG_OSNAME}, darwin)
+JAVA_CLASSPATH		= `javaconfig DefaultClasspath`:${JAVA_OBJ_DIR}/${JAVA_JAR}
 JAVA_INCLUDES		= -I`javaconfig Headers`
-JAVA_DLL		= ${JAVA_OBJ_DIR}/librets.jnilib
+JAVA_DLL		= ${JAVA_OBJ_DIR}/liblibrets.jnilib
 #JAVA_DYNAMICLINK	= ${CXX} -dynamiclib -framework JavaVM
 JAVA_DYNAMICLINK	= ${SWIG_LINK}
 else
-JAVA_INCLUDES		= `echo You must provide a path`
-JAVA_DLL		= ${JAVA_OBJ_DIR}/librets.so
+JAVA_CLASSPATH		= `echo You must provide JAVA_CLASSPATH`
+JAVA_INCLUDES		= `echo You must provide JAVA_INCLUDES`
+JAVA_DLL		= ${JAVA_OBJ_DIR}/liblibrets.so
 JAVA_DYNAMICLINK	= ${SWIG_LINK}
 endif
 
 ${JAVA_WRAP}: ${SWIG_FILES} 
-	${SWIG} -c++ -java -o ${JAVA_WRAP} \
+	${SWIG} -c++ -java -package librets -o ${JAVA_WRAP} \
 	-outdir ${JAVA_OBJ_DIR} ${SWIG_DIR}/librets.i
 	${MAKE} ${JAVA_OBJ_DIR}/${JAVA_JAR}
 
@@ -461,13 +463,15 @@ ${JAVA_DLL}: ${JAVA_WRAP} ${JAVA_OBJ_DIR}/librets_wrap.o
 ${JAVA_OBJ_DIR}/librets_wrap.o: ${JAVA_OBJ_DIR}/librets_wrap.cpp
 	${CXX}  -I${LIBRETS_INC_DIR}  ${BOOST_CFLAGS} ${JAVA_INCLUDES} -c $< -o $@
 	
-${JAVA_CLASSES_QUAL}: ${JAVA_WRAP} ${JAVA_SOURCES}
-	${JAVAC} -d ${JAVA_JAR_PATH} ${JAVA_SOURCES}
+${JAVA_CLASSES}: ${JAVA_WRAP} ${JAVA_SOURCES}
+	${JAVAC} -d ${JAVA_OBJ_DIR} ${JAVA_SOURCES}
 
-${JAVA_OBJ_DIR}/${JAVA_JAR}: ${JAVA_CLASSES_QUAL}
-	echo Classes for jar: ${JAVA_CLASSES}
-	cd ${JAVA_OBJ_DIR}; ${JAR} -cvf ${JAVA_JAR} ${JAVA_CLASSES} || ${RM} ${JAVA_JAR}
+${JAVA_OBJ_DIR}/${JAVA_JAR}: ${JAVA_CLASSES}
+	cd ${JAVA_OBJ_DIR}; ${JAR} -cvf ${JAVA_JAR} librets || \
+					${RM} ${JAVA_OBJ_DIR}/${JAVA_JAR}
 
+${JAVA_EXAMPLES_CLASSES}: ${JAVA_EXAMPLES} ${JAVA_OBJ_DIR}/${JAVA_JAR}
+	${JAVAC} -classpath ${JAVA_CLASSPATH} -d ${JAVA_OBJ_DIR} ${JAVA_EXAMPLES}
 endif
 ###
 
