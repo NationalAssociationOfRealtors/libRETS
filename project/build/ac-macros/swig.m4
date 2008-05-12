@@ -5,7 +5,7 @@ AC_DEFUN([MY_TEST_SWIG], [
   AC_CACHE_VAL(my_cv_swig_vers, [
     my_cv_swig_vers=NONE
     dnl check is the plain-text version of the required version
-    check="1.3.35"
+    check="1.3.33"
 
     set `perl -e "@v = split('\\.', '$check'); print \"@v\";"`
     check_major=$[1]

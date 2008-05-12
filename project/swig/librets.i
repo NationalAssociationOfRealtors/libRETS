@@ -17,7 +17,10 @@
 #endif
 
 #ifdef SWIGPHP
-%include "boost_shared_ptr.i"
+#define CLASS KLASS
+%{
+#define KLASS CLASS
+%}
 %copyctor;
 #endif
 
@@ -48,7 +51,44 @@ using std::string;
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
+#include <fstream>
 %}
+%ignore phpLogging;
+%inline
+%{
+    class phpLogging
+    {
+	public:
+	    phpLogging(std::string filename)
+	    {
+		if (mLogStream.is_open())
+		{
+		    mLogStream.close();
+		}
+		if (filename.length() > 0)
+		{
+		    mLogStream.open(filename.c_str());
+		    mLogger.reset(new StreamHttpLogger(&mLogStream));
+		}
+	    };
+	    ~phpLogging()
+	    {
+		if (mLogStream.is_open())
+		{
+		    mLogStream.close();
+		}
+	    };
+
+	    RetsHttpLogger * get()
+	    {
+	        return mLogger.get();
+	    };
+
+	    std::ofstream mLogStream;
+	    RetsHttpLoggerPtr mLogger;
+    };
+%}
+
 namespace std {
 
     template<class T> class vector {
@@ -477,12 +517,6 @@ SWIG_AUTO_PTR_RELEASE(GetObjectResponse);
  * Metadata
  ***************************************************************************/
  
-#ifdef SWIGPHP
-#define CLASS KLASS
-%{
-#define KLASS CLASS
-%}
-#endif
 
 class MetadataElement
 {
@@ -1137,8 +1171,25 @@ class RetsSession
     void Cleanup();
 
     void SetLogEverything(bool logging);
-};
+#ifdef SWIGPHP
+    %extend
+    {
+        void SetHttpLogger(std::string filename)
+	{
+	    static phpLogging  *logger = 0;
+	    if (logger)
+	        delete logger;
 
+	    logger = new phpLogging(filename);
+	    if (logger)
+	    {
+	        self->SetHttpLogger(logger->get());
+	    }
+	}
+        
+    }
+#endif
+};
 
 
 /* Local Variables: */
