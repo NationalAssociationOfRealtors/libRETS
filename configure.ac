@@ -143,21 +143,11 @@ echo Compile type................: $my_compile_type
 echo Compile examples............: $my_use_examples
 echo Compile SQL compiler........: $my_use_sql_compiler
 echo Compile SWIG bindings.......: $my_use_swig_bindings
-if test "$my_have_mcs" = "yes"; then
   echo "  With CSharp...............: $my_have_mcs"
-fi
-if test "$my_have_java" = "yes"; then
   echo "  With Java.................: $my_have_java"
-fi
-if test "$my_have_php" = "yes"; then
   echo "  With PHP..................: $my_have_php"
-fi
-if test "$my_have_python" = "yes"; then
   echo "  With Python...............: $my_have_python"
-fi
-if test "$my_have_ruby" = "yes"; then
   echo "  With Ruby.................: $my_have_ruby"
-fi
 
 
 echo

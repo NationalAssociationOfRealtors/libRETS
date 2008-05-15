@@ -10,10 +10,10 @@ AC_DEFUN([MY_TEST_EXPAT], [
        By default, checks in /usr and /usr/local.
       ]),
     expat_prefixes="$withval",
-	  expat_prefixes="/usr/local /usr")
+    expat_prefixes="/usr/local /usr")
 
   if test x"$with_expat" == "xno"; then
-	 AC_MSG_ERROR([Expat is required to build librets])
+     AC_MSG_ERROR([Expat is required to build librets])
   fi
 
   for expat_prefix in $expat_prefixes
@@ -32,7 +32,7 @@ AC_DEFUN([MY_TEST_EXPAT], [
         EXPAT_LDFLAGS="-L$withval/lib"
      fi
      AC_CHECK_LIB([expat], [XML_ParserCreate], [expat_lib="-lexpat"],
- 	          [AC_MSG_ERROR([Can't find expat library. Please install expat.])])
+               [AC_MSG_ERROR([Can't find expat library. Please install expat.])])
   else
      for expat_prefix in $expat_prefixes
      do

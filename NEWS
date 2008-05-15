@@ -3,7 +3,8 @@ Version 1.2.x - x xxx 2008
   * Add PHP interface.
     Ticket #51.
 
-  * Add JAVA interface.
+  * Add JAVA interface. On Unixen, you need to include --with-java-prefix and
+    point it to the JDK as in --with-java-prefix=/usr/local/jdk1.6.0.
     Ticket #52.
 
 

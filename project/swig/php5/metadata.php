@@ -1,5 +1,4 @@
-#!/usr/bin/php -q
-<?
+<?php
 include_once('librets.php');
 
 function dump_system($metadata)

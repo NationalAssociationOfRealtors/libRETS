@@ -10,10 +10,10 @@ AC_DEFUN([MY_TEST_BOOST], [
        By default, checks in /usr and /usr/local.
       ]),
     boost_prefixes="$withval",
-	  boost_prefixes="/usr/local /usr")
+      boost_prefixes="/usr/local /usr")
 
   if test x"$with_boost" == "xno"; then
-	 AC_MSG_ERROR([Boost is required to build librets])
+     AC_MSG_ERROR([Boost is required to build librets])
   fi
 
   for boost_prefix in $boost_prefixes
@@ -34,12 +34,12 @@ AC_DEFUN([MY_TEST_BOOST], [
     check="1_32_0"
     check_int=103200
     AC_MSG_CHECKING([for boost >= $check])
-		
+        
     ver=`perl -ane "print /\#define\s+BOOST_LIB_VERSION\s+\"(\S+)\"/" ${BOOST_PREFIX}/include/boost/version.hpp`
-		int_ver=`perl -ane "print /\#define\s+BOOST_VERSION\s+(\S+)/" ${BOOST_PREFIX}/include/boost/version.hpp`
+        int_ver=`perl -ane "print /\#define\s+BOOST_VERSION\s+(\S+)/" ${BOOST_PREFIX}/include/boost/version.hpp`
     ok=`perl -e "print (($int_ver>=$check_int) ? '1' : '0')"`
     if test x$ok != x0; then
-    	my_cv_boost_vers="$ver"
+        my_cv_boost_vers="$ver"
       AC_MSG_RESULT([$my_cv_boost_vers])
     else
       AC_MSG_RESULT(FAILED)
@@ -53,10 +53,10 @@ AC_DEFUN([MY_TEST_BOOST], [
        BOOST_FILESYSTEM="-lboost_filesystem"
        BOOST_PROGRAM_OPTIONS="-lboost_program_options"
     else
-	my_lib="${BOOST_PREFIX}/lib/libboost_filesystem.a"
-	AC_CHECK_FILE([$my_lib], [BOOST_FILESYSTEM=$my_lib])
-    	my_lib="${BOOST_PREFIX}/lib/libboost_program_options.a"
-    	AC_CHECK_FILE([$my_lib], [BOOST_PROGRAM_OPTIONS=$my_lib])
+    my_lib="${BOOST_PREFIX}/lib/libboost_filesystem.a"
+    AC_CHECK_FILE([$my_lib], [BOOST_FILESYSTEM=$my_lib])
+        my_lib="${BOOST_PREFIX}/lib/libboost_program_options.a"
+        AC_CHECK_FILE([$my_lib], [BOOST_PROGRAM_OPTIONS=$my_lib])
     fi
   fi
 

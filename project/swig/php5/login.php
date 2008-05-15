@@ -1,5 +1,4 @@
-#!/usr/bin/php -q
-<?
+<?php
 include_once('librets.php');
 
 $session = new RetsSession("http://demo.crt.realtors.org:6103/rets/login");

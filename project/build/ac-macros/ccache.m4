@@ -10,7 +10,7 @@ AC_DEFUN([MY_PROG_CCACHE], [
     AC_HELP_STRING([--enable-ccache],
                    [enable ccache (default: disabled)]),
                    test "X$enableval" != "Xno" && my_enable_ccache=yes,
-	                 my_enable_ccache=no)
+                   my_enable_ccache=no)
 
 my_use_ccache=no
 if test "$my_enable_ccache" = "yes"; then
