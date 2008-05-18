@@ -450,6 +450,31 @@ SWIG_AUTO_PTR_RELEASE(BinaryData);
 
 #endif
 
+#ifdef SWIGJAVA
+class BinaryData
+{
+  public:
+        int Size() const;
+        std::string AsString() const;
+        const char * AsChar() const;
+        void Copy(unsigned char buffer[], int length) const; 
+};
+typedef std::auto_ptr<BinaryData> BinaryDataAPtr;
+SWIG_AUTO_PTR_RELEASE(BinaryData);
+
+%typemap(javacode) ObjectDescriptor %{
+    public byte[] GetDataAsBytes()
+    {
+        BinaryData binaryData = GetData();
+        int length = binaryData.Size();
+        byte[] bytes = new byte[length];
+        binaryData.Copy(bytes, length);
+        return bytes;
+    }
+%}
+
+#endif
+
 class ObjectDescriptor
 {
   public:
@@ -463,12 +488,26 @@ class ObjectDescriptor
     
     std::string GetContentType() const;
     
-#if defined(SWIGRUBY) || defined(SWIGPYTHON)
+#if defined(SWIGRUBY) || defined(SWIGPYTHON) || defined(SWIGPHP)
     %extend {
         std::string GetDataAsString()
         {
             istreamPtr inputStream = self->GetDataStream();
             return readIntoString(inputStream);
+        }
+    }
+#endif
+#if defined(SWIGJAVA)
+    BinaryDataAPtr GetData();
+    %extend {
+        const char * GetDataAsBytesTest()
+        {
+	    jbyteArray jb;
+
+            istreamPtr inputStream = self->GetDataStream();
+            std::string data = readIntoString(inputStream);
+
+	    return data.c_str();
         }
     }
 #endif

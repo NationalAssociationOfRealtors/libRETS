@@ -23,6 +23,7 @@ my $request = $rets->CreateSearchRequest("Property", "ResidentialProperty",
 $request->SetSelect("ListingID,ListPrice,Beds,City");
 $request->SetLimit($librets::SearchRequest::LIMIT_DEFAULT);
 $request->SetOffset($librets::SearchRequest::OFFSET_NONE);
+$request->SetStandardNames(1);
 $request->SetCountType($librets::SearchRequest::RECORD_COUNT_AND_RESULTS);
 my $results = $rets->Search($request);
 

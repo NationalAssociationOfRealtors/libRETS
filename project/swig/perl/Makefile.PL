@@ -15,6 +15,11 @@ elsif ($Config{'osname'} =~ /linux/)
     $cc =~ s/gcc/g\+\+/;
     $ld =~ s/gcc/g\+\+/;
 }
+elsif ($Config{'osname'} =~ /freebsd/)
+{
+    $cc =~ s/cc/g\+\+/;
+    $ld =~ s/cc/g\+\+/;
+}
 
 WriteMakefile(
     NAME            => 'librets',

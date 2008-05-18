@@ -15,6 +15,7 @@ AC_DEFUN([MY_TEST_SWIG], [
 
     HAVE_JAVA=0
     HAVE_MCS=0
+    HAVE_PERL=0
     HAVE_PHP=0
     HAVE_PYTHON=0
     HAVE_RUBY=0
@@ -22,6 +23,7 @@ AC_DEFUN([MY_TEST_SWIG], [
     USE_SWIG_BINDINGS=
     my_have_java=no
     my_have_mcs=no
+    my_have_perl=no
     my_have_php=no
     my_have_python=no
     my_have_ruby=no
@@ -109,6 +111,14 @@ AC_DEFUN([MY_TEST_SWIG], [
         fi
 
         dnl
+        dnl Check to see if we should build for perl
+        dnl
+        if test "$my_use_perl" == "yes"; then
+            HAVE_PERL=1
+            my_have_perl=yes
+        fi
+
+        dnl
         dnl Check to see if we can build for php
         dnl
         if test "$my_use_php" == "yes"; then
@@ -156,6 +166,8 @@ AC_DEFUN([MY_TEST_SWIG], [
     AC_SUBST(JAVA_INCLUDES)
     AC_SUBST(HAVE_MCS)
     AC_SUBST(MCS)
+    AC_SUBST(HAVE_PERL)
+    AC_SUBST(PERL)
     AC_SUBST(HAVE_PHP)
     AC_SUBST(PHP)
     AC_SUBST(HAVE_PYTHON)

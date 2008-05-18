@@ -55,6 +55,12 @@ AC_ARG_ENABLE(java,
               test "X$enableval" != "Xyes" && my_use_java=no,
               my_use_java=yes)
 		
+AC_ARG_ENABLE(perl,
+              AC_HELP_STRING([--disable-perl],
+                             [If swig is installed, do not build the Perl bindings.]),
+              test "X$enableval" != "Xyes" && my_use_perl=no,
+              my_use_perl=yes)
+		
 AC_ARG_ENABLE(php,
               AC_HELP_STRING([--disable-php],
                              [If swig is installed, do not build the PHP bindings.]),
@@ -145,6 +151,7 @@ echo Compile SQL compiler........: $my_use_sql_compiler
 echo Compile SWIG bindings.......: $my_use_swig_bindings
   echo "  With CSharp...............: $my_have_mcs"
   echo "  With Java.................: $my_have_java"
+  echo "  With PERL.................: $my_have_perl"
   echo "  With PHP..................: $my_have_php"
   echo "  With Python...............: $my_have_python"
   echo "  With Ruby.................: $my_have_ruby"

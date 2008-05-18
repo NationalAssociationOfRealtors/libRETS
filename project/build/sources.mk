@@ -500,14 +500,13 @@ endif
 ###
 # perl of swig - Perl isn't completely implemented and currently won't build, so this section is commented out.
 #
-ifeq (0,1)
+ifeq (${HAVE_PERL},1)
 
 PERL_BUILD		= ${PERL_DLL}
 
-PERL_DLL		= ${PERL_OBJ_DIR}/librets_native.bundle
-PERL_EXTCONF_RB		= ${PERL_SRC_DIR}/extconf.rb
+PERL_DLL		= ${PERL_OBJ_DIR}/blib/arch/auto/librets/librets.so
 PERL_MAKEFILE		= ${PERL_OBJ_DIR}/Makefile
-PERL_MAKEFILE_PL	= ${PERL_OBJ_DIR}/Makefile.PL
+PERL_MAKEFILE_PL	= Makefile.PL
 PERL_OBJ_DIR		= ${SWIG_OBJ_DIR}/perl
 PERL_SRC_DIR		= ${SWIG_DIR}/perl
 PERL_WRAP 		= ${PERL_OBJ_DIR}/librets_wrap.cpp
@@ -516,11 +515,12 @@ ${PERL_WRAP}: ${SWIG_FILES}
 	${SWIG} -c++ -perl -o ${PERL_WRAP} \
 	-outdir ${PERL_OBJ_DIR} ${SWIG_DIR}/librets.i
 
-${PERL_MAKEFILE}: ${PERL_WRAP}
-	cd ${PERL_OBJ_DIR}; ${PERL}  ../../../${PERL_MAKEFILE_PL}
+${PERL_MAKEFILE}: ${PERL_WRAP} ${PERL_SRC_DIR}/${PERL_MAKEFILE_PL}
+	cp ${PERL_SRC_DIR}/${PERL_MAKEFILE_PL} ${PERL_OBJ_DIR}
+	cd ${PERL_OBJ_DIR}; ${PERL}  ${PERL_MAKEFILE_PL}
 
 ${PERL_DLL}: ${PERL_MAKEFILE}
-	${MAKE} -C ${PERL_OBJ_DIR}
+	${MAKE} -C ${PERL_OBJ_DIR} || ${MAKE} -C ${PERL_OBJ_DIR}
 	
 
 endif
