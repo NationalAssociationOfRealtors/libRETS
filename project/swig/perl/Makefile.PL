@@ -7,6 +7,8 @@ $cc = $Config{'cc'};
 $ld = $Config{'ld'};
 if ($Config{'osname'} =~ /darwin/)
 {
+    $cc =~ s/gcc/cc/;
+    $ld =~ s/gcc/cc/;
     $cc =~ s/cc/c\+\+/;
     $ld =~ s/cc/c\+\+/;
 }

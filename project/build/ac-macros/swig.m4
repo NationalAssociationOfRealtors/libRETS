@@ -81,7 +81,7 @@ AC_DEFUN([MY_TEST_SWIG], [
                             [find the Java headers and libraries in `PATH/include` and  `PATH/lib`.
                             By default, checks in /usr/include and /usr/local/include.
                     ]),
-                    java_prefixes="$withval/include",
+                    java_prefixes="$withval",
                     java_prefixes="/usr/local/include /usr/include")
                 for java_prefix in $java_prefixes
                 do
@@ -167,7 +167,6 @@ AC_DEFUN([MY_TEST_SWIG], [
     AC_SUBST(HAVE_MCS)
     AC_SUBST(MCS)
     AC_SUBST(HAVE_PERL)
-    AC_SUBST(PERL)
     AC_SUBST(HAVE_PHP)
     AC_SUBST(PHP)
     AC_SUBST(HAVE_PYTHON)

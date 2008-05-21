@@ -8,6 +8,7 @@
 
 #ifdef SWIGJAVA
 %include "java/boost_shared_ptr.i"
+%include "java/typemaps.i"
 #endif
 
 #ifdef SWIGRUBY
@@ -58,34 +59,34 @@ using std::string;
 %{
     class phpLogging
     {
-	public:
-	    phpLogging(std::string filename)
-	    {
-		if (mLogStream.is_open())
-		{
-		    mLogStream.close();
-		}
-		if (filename.length() > 0)
-		{
-		    mLogStream.open(filename.c_str());
-		    mLogger.reset(new StreamHttpLogger(&mLogStream));
-		}
-	    };
-	    ~phpLogging()
-	    {
-		if (mLogStream.is_open())
-		{
-		    mLogStream.close();
-		}
-	    };
+        public:
+            phpLogging(std::string filename)
+            {
+                if (mLogStream.is_open())
+                {
+                    mLogStream.close();
+                }
+                if (filename.length() > 0)
+                {
+                    mLogStream.open(filename.c_str());
+                    mLogger.reset(new StreamHttpLogger(&mLogStream));
+                }
+            };
+            ~phpLogging()
+            {
+                if (mLogStream.is_open())
+                {
+                    mLogStream.close();
+                }
+            };
 
-	    RetsHttpLogger * get()
-	    {
-	        return mLogger.get();
-	    };
+            RetsHttpLogger * get()
+            {
+                return mLogger.get();
+            };
 
-	    std::ofstream mLogStream;
-	    RetsHttpLoggerPtr mLogger;
+            std::ofstream mLogStream;
+            RetsHttpLoggerPtr mLogger;
     };
 %}
 
@@ -451,28 +452,93 @@ SWIG_AUTO_PTR_RELEASE(BinaryData);
 #endif
 
 #ifdef SWIGJAVA
-class BinaryData
-{
-  public:
-        int Size() const;
-        std::string AsString() const;
-        const char * AsChar() const;
-        void Copy(unsigned char buffer[], int length) const; 
-};
-typedef std::auto_ptr<BinaryData> BinaryDataAPtr;
-SWIG_AUTO_PTR_RELEASE(BinaryData);
 
-%typemap(javacode) ObjectDescriptor %{
-    public byte[] GetDataAsBytes()
+    // map java parameter to native declaration in libretsJNI.java
+    %typemap(jtype)  unsigned char[] "byte[]"
+
+    // map java parameter (generated java wrapper)
+
+    %typemap(jstype) unsigned char[] "byte[]"
+
+    // identified parameter in the generated java wrapper
+    %typemap(javain)   unsigned char[] "$javainput"
+    %typemap(jni) unsigned char[] "jbyteArray"
+
+    // Do the input conversion. This will be executed before BinaryData.Copy()
+    // and will allocate a temporary buffer for the copy.
+    %typemap(in)     unsigned char[] (int _length)
     {
-        BinaryData binaryData = GetData();
-        int length = binaryData.Size();
-        byte[] bytes = new byte[length];
-        binaryData.Copy(bytes, length);
-        return bytes;
+        // Determine the length of the data in BinaryData
+        _length = JCALL1(GetArrayLength, jenv, $input);
+        // Allocate a buffer to which the data will be copied by BinaryData.Copy()
+        try
+        {
+            $1 = new unsigned char [_length];
+        }
+        catch(std::exception &e)
+        {
+            std::string message = std::string(e.what()) + "\n";
+            SWIG_JavaException(jenv, SWIG_ValueError, message.c_str()); 
+            return;
+        }
+        catch(...)
+        {
+            SWIG_JavaException(jenv, SWIG_RuntimeError, "Unknown exception\n"); 
+            return;
+        }
     }
-%}
 
+    %typemap(arginit) unsigned char []
+    {
+        $1 = NULL;
+    }
+
+    // The data has been copied to the temporary buffer. Now write it back to
+    // the Java domain and then release the buffer.
+    %typemap(argout) unsigned char [] 
+    {
+        JCALL4(SetByteArrayRegion, jenv, $input, 0, _length$argnum, (const jbyte *)$1);
+        if ($1)
+        {
+            try
+            {
+                delete $1;
+            }
+            catch(std::exception &e)
+            {
+                std::string message = std::string(e.what()) + "\n";
+                SWIG_JavaException(jenv, SWIG_ValueError, message.c_str()); 
+                return;
+            }
+            catch(...)
+            {
+                SWIG_JavaException(jenv, SWIG_RuntimeError, "Unknown exception\n"); 
+                return;
+            }
+        }
+    }
+
+    class BinaryData
+    {
+      public:
+            int Size() const;
+            const char * AsChar() const;
+            void Copy(unsigned char buffer[], int length) const; 
+    };
+
+    typedef std::auto_ptr<BinaryData> BinaryDataAPtr;
+    SWIG_AUTO_PTR_RELEASE(BinaryData);
+
+    %typemap(javacode) ObjectDescriptor %{
+        public byte [] GetDataAsBytes()
+        {
+            BinaryData binaryData = GetData();
+            int length = binaryData.Size();
+            byte[] bytes = new byte[length];
+            binaryData.Copy(bytes, length);
+            return bytes;
+        }
+    %}
 #endif
 
 class ObjectDescriptor
@@ -497,19 +563,9 @@ class ObjectDescriptor
         }
     }
 #endif
+
 #if defined(SWIGJAVA)
     BinaryDataAPtr GetData();
-    %extend {
-        const char * GetDataAsBytesTest()
-        {
-	    jbyteArray jb;
-
-            istreamPtr inputStream = self->GetDataStream();
-            std::string data = readIntoString(inputStream);
-
-	    return data.c_str();
-        }
-    }
 #endif
     
 #ifdef SWIGCSHARP
@@ -1214,17 +1270,17 @@ class RetsSession
     %extend
     {
         void SetHttpLogger(std::string filename)
-	{
-	    static phpLogging  *logger = 0;
-	    if (logger)
-	        delete logger;
+        {
+            static phpLogging  *logger = 0;
+            if (logger)
+                delete logger;
 
-	    logger = new phpLogging(filename);
-	    if (logger)
-	    {
-	        self->SetHttpLogger(logger->get());
-	    }
-	}
+            logger = new phpLogging(filename);
+            if (logger)
+            {
+                self->SetHttpLogger(logger->get());
+            }
+        }
         
     }
 #endif

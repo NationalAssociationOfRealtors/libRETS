@@ -57,12 +57,11 @@ public class getobject
 
 	    try
 	    {
-	        DataOutputStream outfile = new DataOutputStream(new FileOutputStream(file_name));
-		byte [] object_data;
-		int length;
-		object_data = objectDescriptor.GetDataAsBytes();
-		System.out.println("size of data: " + object_data.length());
-	        outfile.write(object_data, length);
+	        FileOutputStream outfile = new FileOutputStream(file_name);
+
+		byte [] object_data = objectDescriptor.GetDataAsBytes();
+
+	        outfile.write(object_data);
 	        outfile.close();
 	    }
 	    catch (IOException e) {}
