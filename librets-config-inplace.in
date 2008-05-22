@@ -101,7 +101,7 @@ if test "$show_libs" = "yes"; then
 fi
 
 if test "$show_sql" = "yes"; then
-    if [ $sql == '1' ]; then
+    if [ "$sql" = "1" ]; then
 	append_to_output "true"
     else
 	append_to_output "false"
@@ -109,7 +109,7 @@ if test "$show_sql" = "yes"; then
 fi
 
 if test "$show_swig" = "yes"; then
-    if [ $swig == '1' ]; then
+    if [ "$swig" = "1" ]; then
 	append_to_output "true"
     else
 	append_to_output "false"
