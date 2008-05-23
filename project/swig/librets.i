@@ -1108,6 +1108,75 @@ class DmqlQuery
     virtual std::ostream & Print(std::ostream & outputStream) const;
 };
 
+class GetObjectQuery
+{
+    GetObjectQuery();
+    
+    std::string GetResource() const;
+    
+    void SetResource(std::string resource);
+    
+    std::string GetType() const;
+    
+    void SetType(std::string type);
+    
+    std::string GetObjectKey() const;
+    
+    void SetObjectKey(std::string objectKey);
+    
+    IntVectorPtr GetObjectIds() const;
+
+    /**
+     * Returns a pointer to the IntVector.  GetObjectQuery is
+     * responsiblity for cleaning up the object.
+     */
+    IntVector * GetObjectIdsPtr() const;
+    
+    void AddObjectId(int objectId);
+
+    bool GetUseLocation() const;
+
+    void SetUseLocation(bool useLocation);
+
+    virtual std::ostream & Print(std::ostream & outputStream) const;
+
+    /**
+     * When you see this value in the ObjectIds, it means that it is a
+     * place holder value that should be replaced.
+     */
+    static const int SUBSTITUTE_VALUE = -99;
+};
+
+class LookupQuery
+{
+  public:
+    LookupQuery();
+    virtual ~LookupQuery();
+
+    std::string GetResource() const;
+
+    void SetResource(std::string resource);
+
+    std::string GetLookup() const;
+
+    void SetLookup(std::string lookup);
+};
+
+class LookupColumnsQuery
+{
+  public:
+    LookupColumnsQuery();
+    virtual ~LookupColumnsQuery();
+
+    std::string GetResource() const;
+
+    void SetResource(std::string resource);
+
+    std::string GetClass() const;
+
+    void SetClass(std::string aClass);
+};
+
 typedef boost::shared_ptr<DmqlCriterion> DmqlCriterionPtr;
 %template(DmqlCriterionPtr) boost::shared_ptr<DmqlCriterion>;
 
@@ -1116,6 +1185,12 @@ typedef boost::shared_ptr<DmqlQuery> DmqlQueryPtr;
 
 typedef boost::shared_ptr<GetObjectQuery> GetObjectQueryPtr;
 %template(GetObjectQueryPtr) boost::shared_ptr<GetObjectQuery>;
+
+typedef boost::shared_ptr<LookupQuery> LookupQueryPtr;
+%template(LookupQueryPtr) boost::shared_ptr<LookupQuery>;
+
+typedef boost::shared_ptr<LookupColumnsQuery> LookupColumnsQueryPtr;
+%template(LookupColumnsQueryPtr) boost::shared_ptr<LookupColumnsQuery>;
 
 typedef boost::shared_ptr<SqlMetadata> SqlMetadataPtr;
 %template(SqlMetadataPtr) boost::shared_ptr<SqlMetadata>;
@@ -1199,7 +1274,8 @@ class SqlToDmqlCompiler
   public:
     SqlToDmqlCompiler(SqlMetadataPtr metadata);
     
-    enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY};
+    enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY, LOOKUP_QUERY,
+                    LOOKUP_COLUMNS_QUERY};
     
     QueryType sqlToDmql(std::string sql);
 
@@ -1207,6 +1283,9 @@ class SqlToDmqlCompiler
     
     GetObjectQueryPtr GetGetObjectQuery() const;
 
+    LookupQueryPtr GetLookupQuery() const;
+
+    LookupColumnsQueryPtr GetLookupColumnsQuery() const;
 };
 
 #endif
