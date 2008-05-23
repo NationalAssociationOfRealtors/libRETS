@@ -29,7 +29,8 @@ class SqlToDmqlCompiler : public RetsObject
   public:
     SqlToDmqlCompiler(SqlMetadataPtr metadata);
     
-    enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY, LOOKUP_QUERY};
+    enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY, LOOKUP_QUERY,
+                    LOOKUP_COLUMNS_QUERY};
     
     QueryType sqlToDmql(std::string sql);
     
@@ -41,11 +42,14 @@ class SqlToDmqlCompiler : public RetsObject
 
     LookupQueryPtr GetLookupQuery() const;
     
+    LookupColumnsQueryPtr GetLookupColumnsQuery() const;
+    
  private:
     SqlMetadataPtr mMetadata;
     DmqlQueryPtr mDmqlQuery;
     GetObjectQueryPtr mGetObjectQuery;
     LookupQueryPtr mLookupQuery;
+    LookupColumnsQueryPtr mLookupColumnsQuery;
 };
 
 };

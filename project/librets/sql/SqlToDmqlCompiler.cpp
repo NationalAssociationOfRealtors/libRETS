@@ -25,6 +25,7 @@
 #include "DmqlTreeParser.hpp"
 #include "GetObjectTreeParser.hpp"
 #include "LookupTreeParser.hpp"
+#include "LookupColumnsTreeParser.hpp"
 
 using namespace librets;
 using std::string;
@@ -98,6 +99,16 @@ SqlToDmqlCompiler::QueryType SqlToDmqlCompiler::sqlToDmql(istream & inputStream)
             mLookupQuery = treeParser.statement(ast);
             return LOOKUP_QUERY;
         }
+        else if (ba::starts_with(tableName, "lookupcolumns:"))
+        {
+            LookupColumnsTreeParser treeParser;
+            treeParser.initializeASTFactory(astFactory);
+            treeParser.setASTFactory(&astFactory);
+
+            RefRetsAST ast = RefRetsAST(parser.getAST());
+            mLookupColumnsQuery = treeParser.statement(ast);
+            return LOOKUP_COLUMNS_QUERY;
+        }
         else
         {
             RefToken token = parser.getTableName();
@@ -146,4 +157,9 @@ GetObjectQueryPtr SqlToDmqlCompiler::GetGetObjectQuery() const
 LookupQueryPtr SqlToDmqlCompiler::GetLookupQuery() const
 {
     return mLookupQuery;
+}
+
+LookupColumnsQueryPtr SqlToDmqlCompiler::GetLookupColumnsQuery() const
+{
+    return mLookupColumnsQuery;
 }

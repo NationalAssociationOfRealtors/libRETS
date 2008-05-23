@@ -20,6 +20,7 @@
 #include "TestSqlMetadata.h"
 #include "librets/SqlToDmqlCompiler.h"
 #include "librets/LookupQuery.h"
+#include "librets/LookupColumnsQuery.h"
 #include "librets/RetsSqlException.h"
 
 
@@ -31,18 +32,23 @@ using namespace std;
 class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
-    CPPUNIT_TEST(testSimpleQuery);
-    CPPUNIT_TEST(testInvalidSql);
+    CPPUNIT_TEST(testSimpleLookupQuery);
+    CPPUNIT_TEST(testInvalidLookupSql);
+    CPPUNIT_TEST(testSimpleLookupColumnsQuery);
+    CPPUNIT_TEST(testInvalidLookupColumnsSql);
     CPPUNIT_TEST_SUITE_END();
 
   public:
     CLASS();
 
   protected:
-    void testSimpleQuery();
-    void testInvalidSql();
+    void testSimpleLookupQuery();
+    void testInvalidLookupSql();
+    void testSimpleLookupColumnsQuery();
+    void testInvalidLookupColumnsSql();
     
     LookupQueryPtr sqlToLookup(string sql);
+    LookupColumnsQueryPtr sqlToLookupColumns(string sql);
     void assertInvalidSql(string sql,
                           const CPPUNIT_NS::SourceLine & sourceLine);
     SqlToDmqlCompilerPtr mCompiler;
@@ -66,6 +72,16 @@ LookupQueryPtr CLASS::sqlToLookup(string sql)
     return mCompiler->GetLookupQuery();
 }
 
+LookupColumnsQueryPtr CLASS::sqlToLookupColumns(string sql)
+{
+    if (mCompiler->sqlToDmql(sql) != SqlToDmqlCompiler::LOOKUP_COLUMNS_QUERY)
+    {
+        CPPUNIT_FAIL("Not a Lookup Columns query");
+    }
+    
+    return mCompiler->GetLookupColumnsQuery();
+}
+
 #define ASSERT_INVALID_SQL(_SQL_) assertInvalidSql(_SQL_, CPPUNIT_SOURCELINE())
 
 void CLASS::assertInvalidSql(string sql,
@@ -86,15 +102,29 @@ void CLASS::assertInvalidSql(string sql,
     }
 }
 
-void CLASS::testSimpleQuery()
+void CLASS::testSimpleLookupQuery()
 {
     LookupQueryPtr query = sqlToLookup("select * from lookup:Property:AR");
     ASSERT_STRING_EQUAL("Property", query->GetResource());
     ASSERT_STRING_EQUAL("AR", query->GetLookup());
 }
 
-void CLASS::testInvalidSql()
+void CLASS::testInvalidLookupSql()
 {
     ASSERT_INVALID_SQL("select * from lookup:Property");
+}
+
+void CLASS::testSimpleLookupColumnsQuery()
+{
+    LookupColumnsQueryPtr query =
+        sqlToLookupColumns("select * "
+                           "from lookupcolumns:Property:RES");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+}
+
+void CLASS::testInvalidLookupColumnsSql()
+{
+    ASSERT_INVALID_SQL("select * from lookupcolumns:Property");
 }
     
