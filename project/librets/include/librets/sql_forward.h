@@ -60,6 +60,9 @@ typedef boost::shared_ptr<DmqlQuery> DmqlQueryPtr;
 class GetObjectQuery;
 typedef boost::shared_ptr<GetObjectQuery> GetObjectQueryPtr;
 
+class LookupQuery;
+typedef boost::shared_ptr<LookupQuery> LookupQueryPtr;
+
 class SqlToDmqlCompiler;
 typedef boost::shared_ptr<SqlToDmqlCompiler> SqlToDmqlCompilerPtr;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2008 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -24,6 +24,7 @@
 #include "RetsSqlParser.hpp"
 #include "DmqlTreeParser.hpp"
 #include "GetObjectTreeParser.hpp"
+#include "LookupTreeParser.hpp"
 
 using namespace librets;
 using std::string;
@@ -87,6 +88,16 @@ SqlToDmqlCompiler::QueryType SqlToDmqlCompiler::sqlToDmql(istream & inputStream)
             mGetObjectQuery = treeParser.statement(ast);
             return GET_OBJECT_QUERY;
         }
+        else if (ba::starts_with(tableName, "lookup:"))
+        {
+            LookupTreeParser treeParser;
+            treeParser.initializeASTFactory(astFactory);
+            treeParser.setASTFactory(&astFactory);
+
+            RefRetsAST ast = RefRetsAST(parser.getAST());
+            mLookupQuery = treeParser.statement(ast);
+            return LOOKUP_QUERY;
+        }
         else
         {
             RefToken token = parser.getTableName();
@@ -130,4 +141,9 @@ DmqlQueryPtr SqlToDmqlCompiler::GetDmqlQuery() const
 GetObjectQueryPtr SqlToDmqlCompiler::GetGetObjectQuery() const
 {
     return mGetObjectQuery;
+}
+
+LookupQueryPtr SqlToDmqlCompiler::GetLookupQuery() const
+{
+    return mLookupQuery;
 }

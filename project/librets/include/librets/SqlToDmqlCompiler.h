@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2008 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -29,7 +29,7 @@ class SqlToDmqlCompiler : public RetsObject
   public:
     SqlToDmqlCompiler(SqlMetadataPtr metadata);
     
-    enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY};
+    enum QueryType {DMQL_QUERY, GET_OBJECT_QUERY, LOOKUP_QUERY};
     
     QueryType sqlToDmql(std::string sql);
     
@@ -38,11 +38,14 @@ class SqlToDmqlCompiler : public RetsObject
     DmqlQueryPtr GetDmqlQuery() const;
     
     GetObjectQueryPtr GetGetObjectQuery() const;
+
+    LookupQueryPtr GetLookupQuery() const;
     
  private:
     SqlMetadataPtr mMetadata;
     DmqlQueryPtr mDmqlQuery;
     GetObjectQueryPtr mGetObjectQuery;
+    LookupQueryPtr mLookupQuery;
 };
 
 };
