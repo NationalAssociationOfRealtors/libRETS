@@ -25,7 +25,12 @@ ANTLR_SRCS = \
 	$(ANTLR_DIR)\DmqlTreeParser.hpp \
 	$(ANTLR_DIR)\DmqlTreeParser.cpp \
 	$(ANTLR_DIR)\GetObjectTreeParser.hpp \
-	$(ANTLR_DIR)\GetObjectTreeParser.cpp
+	$(ANTLR_DIR)\GetObjectTreeParser.cpp \
+	$(ANTLR_DIR)\LookupColumnsTreeParser.hpp \
+	$(ANTLR_DIR)\LookupColumnsTreeParser.cpp \
+	$(ANTLR_DIR)\LookupTreeParser.hpp \
+	$(ANTLR_DIR)\LookupTreeParser.cpp
+
 
 ANTLR_TRIGGER = $(ANTLR_DIR)\antlr.txt
 
@@ -33,7 +38,9 @@ ANTLR_OBJS = \
 	$(DIROBJ)\RetsSqlLexer.obj \
 	$(DIROBJ)\RetsSqlParser.obj \
 	$(DIROBJ)\DmqlTreeParser.obj \
-	$(DIROBJ)\GetObjectTreeParser.obj
+	$(DIROBJ)\GetObjectTreeParser.obj \
+	$(DIROBJ)\LookupColumnsTreeParser.obj \
+	$(DIROBJ)\LookupTreeParser.obj
 
 SQL_DIR = ..\sql
 
@@ -77,6 +84,8 @@ $(ANTLR_TRIGGER): rets-sql.g dmql-tree.g get-object-tree.g $(ANTLR_DIR)
 	$(ANTLR) -o $(ANTLR_DIR) rets-sql.g
 	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g dmql-tree.g
 	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g get-object-tree.g
+	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g lookup-tree.g
+	$(ANTLR) -o $(ANTLR_DIR) -glib rets-sql.g lookup-columns-tree.g
 	@echo "ANTLR Trigger" > $(ANTLR_TRIGGER)
 
 

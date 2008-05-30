@@ -8,12 +8,18 @@ GENERATED_SRC = \
 	lib\DmqlQuery.cs \
 	lib\DmqlQueryPtr.cs \
 	lib\EncodingType.cs \
+	lib\GetObjectQuery.cs \
 	lib\GetObjectQueryPtr.cs \
 	lib\GetObjectRequest.cs \
 	lib\GetObjectResponse.cs \
 	lib\InputStreamBridge.cs \
 	lib\LoginResponse.cs \
 	lib\LogoutResponse.cs \
+	lib\LogoutResponseAPtr.cs \
+	lib\LookupColumnsQuery.cs \
+	lib\LookupColumnsQueryPtr.cs \
+	lib\LookupQuery.cs \
+	lib\LookupQueryPtr.cs \
 	lib\MetadataClass.cs \
 	lib\MetadataClassList.cs \
 	lib\MetadataElement.cs \
@@ -36,11 +42,12 @@ GENERATED_SRC = \
 	lib\RetsMetadata.cs \
 	lib\RetsSession.cs \
 	lib\RetsVersion.cs \
-	lib\SWIGTYPE_p_GetObjectQuery.cs \
 	lib\SWIGTYPE_p_StringVectorPtr.cs \
 	lib\SWIGTYPE_p_std__ostream.cs \
 	lib\SearchRequest.cs \
+	lib\SearchRequestAPtr.cs \
 	lib\SearchResultSet.cs \
+	lib\SearchResultSetAPtr.cs \
 	lib\SqlMetadata.cs \
 	lib\SqlMetadataPtr.cs \
 	lib\SqlToDmqlCompiler.cs \
