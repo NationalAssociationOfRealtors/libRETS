@@ -52,11 +52,32 @@ AC_DEFUN([MY_TEST_BOOST], [
        # dynamicly link in the libraries.
        BOOST_FILESYSTEM="-lboost_filesystem"
        BOOST_PROGRAM_OPTIONS="-lboost_program_options"
+
+       # Boost added the system error stuff in 1.35, and boost_filesystem
+       # is dependant on it.  We'll make the naive assumption that if the
+       # header is present, the library will also be present.
+       boost_system_error_h="${boost_prefix}/include/boost/system/system_error.hpp"
+       AC_CHECK_FILE([$boost_system_error_h], [my_boost_system_error_h=$boost_system_error_h])
+       if test "x$my_boost_system_error_h" != "x"; then
+       	  BOOST_SYSTEM="-lboost_system"
+       fi
+
+dnl Look at AC_LINK_IFELSE test in expat to turn the following into
+dnl something that provides code
+dnl       AC_CHECK_LIB([boost_system], [boost::system::get_system_category],
+dnl                    [boost_system_lib="-lboost_system"])
+dnl
+dnl       save_LIBS=$LIBS
+dnl       LIBS="$LIBS -lboost_system"
+dnl       AC_LANG_PUSH(C++)
+
     else
-    my_lib="${BOOST_PREFIX}/lib/libboost_filesystem.a"
-    AC_CHECK_FILE([$my_lib], [BOOST_FILESYSTEM=$my_lib])
-        my_lib="${BOOST_PREFIX}/lib/libboost_program_options.a"
-        AC_CHECK_FILE([$my_lib], [BOOST_PROGRAM_OPTIONS=$my_lib])
+       my_lib="${BOOST_PREFIX}/lib/libboost_filesystem.a"
+       AC_CHECK_FILE([$my_lib], [BOOST_FILESYSTEM=$my_lib])
+       my_lib="${BOOST_PREFIX}/lib/libboost_program_options.a"
+       AC_CHECK_FILE([$my_lib], [BOOST_PROGRAM_OPTIONS=$my_lib])
+       my_lib="${BOOST_PREFIX}/lib/libboost_system.a"
+       AC_CHECK_FILE([$my_lib], [BOOST_SYSTEM=$my_lib])
     fi
   fi
 
@@ -65,5 +86,6 @@ AC_DEFUN([MY_TEST_BOOST], [
   AC_SUBST(BOOST_CFLAGS)
   AC_SUBST(BOOST_LIBS)
   AC_SUBST(BOOST_FILESYSTEM)
+  AC_SUBST(BOOST_SYSTEM)
   AC_SUBST(BOOST_PROGRAM_OPTIONS)
 ])
