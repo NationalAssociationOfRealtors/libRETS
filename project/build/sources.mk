@@ -502,7 +502,7 @@ ${PHP_DLL}: ${PHP_WRAP} ${PHP_OBJ_DIR}/librets_wrap.o
 	${SWIG_LINK} -o ${PHP_DLL} ${PHP_OBJ_DIR}/librets_wrap.o ${SWIG_LIBRETS_LIBS}
 
 ${PHP_OBJ_DIR}/librets_wrap.o: ${PHP_OBJ_DIR}/librets_wrap.cpp
-	${CXX} -g  -I${LIBRETS_INC_DIR} -I${PHP_SRC_DIR}  ${BOOST_CFLAGS} ${PHP_INCLUDES} -c $< -o $@
+	${CXX} -g -DLIBRETS_VERSION='"$(VERSION)"' -I${LIBRETS_INC_DIR} -I${PHP_SRC_DIR}  ${BOOST_CFLAGS} ${PHP_INCLUDES} -c $< -o $@
 	
 endif
 ###

@@ -23,6 +23,11 @@
 #define KLASS CLASS
 %}
 %copyctor;
+%pragma(php4) phpinfo="
+  php_info_print_table_start();
+  php_info_print_table_row(2, \"version\", LIBRETS_VERSION);
+  php_info_print_table_end();
+"
 #endif
 
 #ifdef SWIGPERL
