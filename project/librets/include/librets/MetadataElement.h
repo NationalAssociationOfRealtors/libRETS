@@ -144,6 +144,13 @@ class MetadataElement : public RetsObject
      */
     std::string GetPath() const;
     
+    /**
+     * Returns the MetadataEntryId for the element.
+     *
+     * @return MetadataEntryId
+     */
+    std::string GetMetadataEntryID() const;
+    
     virtual std::ostream & Print(std::ostream & outputStream) const;
 
   protected:

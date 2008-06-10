@@ -65,6 +65,16 @@ class LogoutResponse;
 typedef boost::shared_ptr<LogoutResponse> LogoutResponsePtr;
 typedef std::auto_ptr<LogoutResponse> LogoutResponseAPtr;
 
+class ServerInformationRequest;
+/** Smart pointer to ServerInformationRequest. */
+typedef boost::shared_ptr<ServerInformationRequest> ServerInformationRequestPtr;
+typedef std::auto_ptr<ServerInformationRequest> ServerInformationRequestAPtr;
+
+class ServerInformationResponse;
+/** Smart pointer to ServerInformationResponse. */
+typedef boost::shared_ptr<ServerInformationResponse> ServerInformationResponsePtr;
+typedef std::auto_ptr<ServerInformationResponse> ServerInformationResponseAPtr;
+
 };
 
 #endif

@@ -123,6 +123,11 @@ string CLASS::GetPath() const
     }
 }
 
+string CLASS::GetMetadataEntryID() const
+{
+    return GetStringAttribute("MetadataEntryID", "None");
+}
+
 std::ostream & CLASS::Print(std::ostream & outputStream) const
 {
     return outputStream << "Type [" << GetType() << "], id [" << GetId()

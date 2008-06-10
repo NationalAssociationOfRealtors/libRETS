@@ -188,6 +188,46 @@ class MetadataTable : public MetadataElement
     std::string GetSearchHelpId() const;
     
     bool IsUnique() const;
+    
+    /**
+     * Returns <code>true</code> if changes to this field update the class's 
+     * ModTimeStamp field.
+     *
+     * @return <code>true</code> if changes update ModTimeStamp.
+     */
+    bool UpdatesModTimeStamp() const;
+    
+    /**
+     * When nonblank, indicate that this field is normally populated via this
+     * foreign key.
+     *
+     * @return Blank or a foriegn key.
+     */
+    std::string GetForeignKey() const;
+    
+    /**
+     * Returns the <code>SystemName</code> from the child record accessed via the
+     * specified foreign key.
+     *
+     * @return <code>SystemName</code> of the foreign key for the child.
+     */
+    std::string GetForeignField() const;
+    
+    /**
+     * Returns <code>true</code> when this field may be included in a query that
+     * uses the <code>Key</code> optional argument.
+     *
+     * @return <code>true</code> when may be used with <code>Key</code> optional argument.
+     */
+    bool GetKeyRetrievalQuery() const;
+    
+    /**
+     * Returns <code>true</code> when this field may be included in the <code>Select</code>
+     * list of a query that uses the option <code>Key</code> argument.
+     *
+     * @return <code>true</code> when may be used in <code>Select</code> list.
+     */
+    bool GetKeyRetrievalSelect() const;
 };
 
 };

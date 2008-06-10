@@ -269,6 +269,7 @@ private:
     static const char * RETS_UA_AUTH_HEADER;
     static const char * RETS_1_0_STRING;
     static const char * RETS_1_5_STRING;
+    static const char * RETS_1_7_STRING;
     
     void RetrieveAction();
 

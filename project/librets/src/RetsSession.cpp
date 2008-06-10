@@ -40,6 +40,7 @@ const char * CLASS::RETS_VERSION_HEADER = "RETS-Version";
 const char * CLASS::RETS_UA_AUTH_HEADER = "RETS-UA-Authorization";
 const char * CLASS::RETS_1_0_STRING = "RETS/1.0";
 const char * CLASS::RETS_1_5_STRING = "RETS/1.5";
+const char * CLASS::RETS_1_7_STRING = "RETS/1.7";
 
 CLASS::RetsSession(string login_url)
 {
@@ -447,6 +448,10 @@ string CLASS::RetsVersionToString(RetsVersion retsVersion)
     {
         return RETS_1_5_STRING;
     }
+    else if (retsVersion == RETS_1_7)
+    {
+        return RETS_1_7_STRING;
+    }
     else
     {
         throw RetsException(str_stream() << "Invalid RetsVersion: "
@@ -463,6 +468,10 @@ RetsVersion CLASS::RetsVersionFromString(string versionString)
     else if (versionString == RETS_1_5_STRING)
     {
         return RETS_1_5;
+    }
+    else if (versionString == RETS_1_7_STRING)
+    {
+        return RETS_1_7;
     }
     else if (versionString.empty())
     {
