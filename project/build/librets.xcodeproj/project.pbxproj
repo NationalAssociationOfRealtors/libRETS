@@ -189,6 +189,8 @@
 		55F9055508FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9055408FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp */; };
 		DEAFBDE70DAD23D500EA99C7 /* CurlMulti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEAFBDE50DAD23D500EA99C7 /* CurlMulti.cpp */; };
 		DEAFBDE80DAD23D500EA99C7 /* CurlStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEAFBDE60DAD23D500EA99C7 /* CurlStream.cpp */; };
+		DEE2CF330DFED0E5002424AC /* LookupColumnsTreeParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEE2CF2B0DFED0E5002424AC /* LookupColumnsTreeParser.cpp */; };
+		DEE2CF360DFED0E5002424AC /* LookupTreeParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEE2CF2F0DFED0E5002424AC /* LookupTreeParser.cpp */; };
 		F904343B0D03971C004E3017 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
 		F90434580D039AEA004E3017 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
 		F90434590D039AEA004E3017 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
@@ -548,6 +550,18 @@
 		55F9061608FEFDD900D76E8C /* DefaultMetadataCollector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefaultMetadataCollector.h; sourceTree = "<group>"; };
 		DEAFBDE50DAD23D500EA99C7 /* CurlMulti.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurlMulti.cpp; sourceTree = "<group>"; };
 		DEAFBDE60DAD23D500EA99C7 /* CurlStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurlStream.cpp; sourceTree = "<group>"; };
+		DEE2CF270DFED0C8002424AC /* get-object-tree.g */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "get-object-tree.g"; path = "../librets/src/get-object-tree.g"; sourceTree = SOURCE_ROOT; };
+		DEE2CF280DFED0C8002424AC /* lookup-columns-tree.g */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "lookup-columns-tree.g"; path = "../librets/src/lookup-columns-tree.g"; sourceTree = SOURCE_ROOT; };
+		DEE2CF290DFED0C8002424AC /* lookup-tree.g */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "lookup-tree.g"; path = "../librets/src/lookup-tree.g"; sourceTree = SOURCE_ROOT; };
+		DEE2CF2A0DFED0E5002424AC /* GetObjectTreeParserTokenTypes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetObjectTreeParserTokenTypes.txt; sourceTree = "<group>"; };
+		DEE2CF2B0DFED0E5002424AC /* LookupColumnsTreeParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LookupColumnsTreeParser.cpp; sourceTree = "<group>"; };
+		DEE2CF2C0DFED0E5002424AC /* LookupColumnsTreeParser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LookupColumnsTreeParser.hpp; sourceTree = "<group>"; };
+		DEE2CF2D0DFED0E5002424AC /* LookupColumnsTreeParserTokenTypes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LookupColumnsTreeParserTokenTypes.hpp; sourceTree = "<group>"; };
+		DEE2CF2E0DFED0E5002424AC /* LookupColumnsTreeParserTokenTypes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LookupColumnsTreeParserTokenTypes.txt; sourceTree = "<group>"; };
+		DEE2CF2F0DFED0E5002424AC /* LookupTreeParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LookupTreeParser.cpp; sourceTree = "<group>"; };
+		DEE2CF300DFED0E5002424AC /* LookupTreeParser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LookupTreeParser.hpp; sourceTree = "<group>"; };
+		DEE2CF310DFED0E5002424AC /* LookupTreeParserTokenTypes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LookupTreeParserTokenTypes.hpp; sourceTree = "<group>"; };
+		DEE2CF320DFED0E5002424AC /* LookupTreeParserTokenTypes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LookupTreeParserTokenTypes.txt; sourceTree = "<group>"; };
 		F90434570D039AE9004E3017 /* libantlr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libantlr.a; path = lib/libantlr.a; sourceTree = ANTLR_DIR; };
 		F90D477E0CF8D29200B9AC65 /* search-response-extended-char.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "search-response-extended-char.xml"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -673,8 +687,11 @@
 			isa = PBXGroup;
 			children = (
 				554AA26D07FB124C00402C35 /* antlr_xcode.sh */,
-				554AA11907FA0B7200402C35 /* dmql-tree.g */,
 				554AA11A07FA0B7200402C35 /* rets-sql.g */,
+				554AA11907FA0B7200402C35 /* dmql-tree.g */,
+				DEE2CF270DFED0C8002424AC /* get-object-tree.g */,
+				DEE2CF280DFED0C8002424AC /* lookup-columns-tree.g */,
+				DEE2CF290DFED0C8002424AC /* lookup-tree.g */,
 				554AA11B07FA0B7500402C35 /* antlr */,
 			);
 			name = antlr;
@@ -683,6 +700,15 @@
 		554AA11B07FA0B7500402C35 /* antlr */ = {
 			isa = PBXGroup;
 			children = (
+				DEE2CF2A0DFED0E5002424AC /* GetObjectTreeParserTokenTypes.txt */,
+				DEE2CF2B0DFED0E5002424AC /* LookupColumnsTreeParser.cpp */,
+				DEE2CF2C0DFED0E5002424AC /* LookupColumnsTreeParser.hpp */,
+				DEE2CF2D0DFED0E5002424AC /* LookupColumnsTreeParserTokenTypes.hpp */,
+				DEE2CF2E0DFED0E5002424AC /* LookupColumnsTreeParserTokenTypes.txt */,
+				DEE2CF2F0DFED0E5002424AC /* LookupTreeParser.cpp */,
+				DEE2CF300DFED0E5002424AC /* LookupTreeParser.hpp */,
+				DEE2CF310DFED0E5002424AC /* LookupTreeParserTokenTypes.hpp */,
+				DEE2CF320DFED0E5002424AC /* LookupTreeParserTokenTypes.txt */,
 				5504F1B4081D79BF0043B5CF /* GetObjectTreeParser.cpp */,
 				5504F1B5081D79BF0043B5CF /* GetObjectTreeParser.hpp */,
 				5504F1B6081D79BF0043B5CF /* GetObjectTreeParserTokenTypes.hpp */,
@@ -1406,6 +1432,8 @@
 				"$(SRCROOT)/../librets/src/rets-sql.g",
 				"$(SRCROOT)/../librets/src/dmql-tree.g",
 				"$(SRCROOT)/../librets/src/get-object-tree.g",
+				"$(SRCROOT)/../librets/src/lookup-tree.g",
+				"$(SRCROOT)/../librets/src/lookup-columns-tree.g",
 			);
 			outputPaths = (
 				"$(TARGET_BUILD_DIR)/antlr/up-to-date",
@@ -1417,6 +1445,10 @@
 				"$(TARGET_BUILD_DIR)/antlr/RetsSqlParser.cpp",
 				"$(TARGET_BUILD_DIR)/antlr/GetObjectTreeParser.hpp",
 				"$(TARGET_BUILD_DIR)/antlr/GetObjectTreeParser.cpp",
+				"$(TARGET_BUILD_DIR)/antlr/LookupTreeParser.hpp",
+				"$(TARGET_BUILD_DIR)/antlr/LookupTreeParser.cpp",
+				"$(TARGET_BUILD_DIR)/antlr/LookupColumnsTreeParser.hpp",
+				"$(TARGET_BUILD_DIR)/antlr/LookupColumnsTreeParser.cpp",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1596,6 +1628,8 @@
 				554662500A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp in Sources */,
 				DEAFBDE70DAD23D500EA99C7 /* CurlMulti.cpp in Sources */,
 				DEAFBDE80DAD23D500EA99C7 /* CurlStream.cpp in Sources */,
+				DEE2CF330DFED0E5002424AC /* LookupColumnsTreeParser.cpp in Sources */,
+				DEE2CF360DFED0E5002424AC /* LookupTreeParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
