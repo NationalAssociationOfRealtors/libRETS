@@ -26,11 +26,6 @@
 		55083EC908A92D80004B3699 /* TestMetadataElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55083EC808A92D80004B3699 /* TestMetadataElement.cpp */; };
 		55097D3A09A149EA00225C99 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
 		550A6DEA09E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 550A6DE909E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp */; };
-		554662320A62BAD900F3B94E /* md5.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 554662310A62BAD900F3B94E /* md5.hpp */; };
-		554662340A62BAF600F3B94E /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554662330A62BAF600F3B94E /* md5.cpp */; };
-		554662420A62EBB400F3B94E /* UserAgentAuthType.h in Headers */ = {isa = PBXBuildFile; fileRef = 554662410A62EBB400F3B94E /* UserAgentAuthType.h */; };
-		5546624C0A62EE7200F3B94E /* UserAgentAuthCalculator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5546624B0A62EE7200F3B94E /* UserAgentAuthCalculator.h */; };
-		554662500A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5546624F0A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp */; };
 		554662C00A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554662BF0A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp */; };
 		554AA16F07FA0EF600402C35 /* sql2dmql.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA16807FA0ECD00402C35 /* sql2dmql.cpp */; };
 		554AA1B107FA13A000402C35 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554AA1B007FA13A000402C35 /* Cocoa.framework */; };
@@ -85,93 +80,7 @@
 		55BD580807FDB01500526D69 /* XmlMetadataParserTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD57A407FDAAFD00526D69 /* XmlMetadataParserTest.cpp */; };
 		55BD580A07FDB03100526D69 /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565907FC3BBE00526D69 /* libexpat.a */; };
 		55BD580C07FDB03100526D69 /* libcppunit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD57C107FDAB4500526D69 /* libcppunit.dylib */; };
-		55EE84D6093E600300812582 /* GetObjectRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5552AA6B08046692002288F1 /* GetObjectRequest.cpp */; };
-		55EE84D7093E600300812582 /* ObjectDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 558F6AD107FE089700CE8AF2 /* ObjectDescriptor.cpp */; };
-		55EE84D8093E600300812582 /* GetObjectResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 558F6ACF07FE088600CE8AF2 /* GetObjectResponse.cpp */; };
-		55EE84D9093E600300812582 /* KeyValueResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6307F9F2E700402C35 /* KeyValueResponse.cpp */; };
-		55EE84DA093E600300812582 /* LoginResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6507F9F2E700402C35 /* LoginResponse.cpp */; };
-		55EE84DB093E600300812582 /* LogoutResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6607F9F2E700402C35 /* LogoutResponse.cpp */; };
-		55EE84DC093E600300812582 /* RetsReplyException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8707F9F2E700402C35 /* RetsReplyException.cpp */; };
-		55EE84DD093E600300812582 /* RetsSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8807F9F2E700402C35 /* RetsSession.cpp */; };
-		55EE84DE093E600300812582 /* CapabilityUrls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5307F9F2E700402C35 /* CapabilityUrls.cpp */; };
-		55EE84DF093E600300812582 /* SearchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9007F9F2E700402C35 /* SearchRequest.cpp */; };
-		55EE84E0093E600300812582 /* SearchResultSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9107F9F2E700402C35 /* SearchResultSet.cpp */; };
-		55EE8504093E628900812582 /* AndCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5207F9F2E700402C35 /* AndCriterion.cpp */; };
-		55EE8507093E628900812582 /* CurlEasy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F23D84088EACDE0090B325 /* CurlEasy.cpp */; };
-		55EE8508093E628900812582 /* CurlHttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5607F9F2E700402C35 /* CurlHttpClient.cpp */; };
-		55EE8509093E628900812582 /* CurlHttpResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5707F9F2E700402C35 /* CurlHttpResponse.cpp */; };
-		55EE850A093E628900812582 /* CurlSlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5807F9F2E700402C35 /* CurlSlist.cpp */; };
-		55EE850B093E628900812582 /* DefaultMetadataCollector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9061408FEFDCE00D76E8C /* DefaultMetadataCollector.cpp */; };
-		55EE850C093E628900812582 /* DefaultMetadataElementFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5907F9F2E700402C35 /* DefaultMetadataElementFactory.cpp */; };
-		55EE850D093E628900812582 /* DmqlCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5B07F9F2E700402C35 /* DmqlCriterion.cpp */; };
-		55EE850E093E628900812582 /* DmqlExpression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5C07F9F2E700402C35 /* DmqlExpression.cpp */; };
-		55EE850F093E628900812582 /* DmqlQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5D07F9F2E700402C35 /* DmqlQuery.cpp */; };
-		55EE8510093E628900812582 /* EqCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5E07F9F2E700402C35 /* EqCriterion.cpp */; };
-		55EE8511093E628900812582 /* ExceptionErrorHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 551131FC08D5DEB300CC048D /* ExceptionErrorHandler.cpp */; };
-		55EE8512093E628900812582 /* ExpatXmlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5F07F9F2E700402C35 /* ExpatXmlParser.cpp */; };
-		55EE8513093E628900812582 /* FieldCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6007F9F2E700402C35 /* FieldCriterion.cpp */; };
-		55EE8514093E628900812582 /* GetObjectQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5504F156081D563E0043B5CF /* GetObjectQuery.cpp */; };
-		55EE8515093E628900812582 /* GtCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6107F9F2E700402C35 /* GtCriterion.cpp */; };
-		55EE8516093E628900812582 /* IncrementalMetadataFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9040708FEDB8800D76E8C /* IncrementalMetadataFinder.cpp */; };
-		55EE8517093E628900812582 /* JunctionCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6207F9F2E700402C35 /* JunctionCriterion.cpp */; };
-		55EE8519093E628900812582 /* LiteralCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6407F9F2E700402C35 /* LiteralCriterion.cpp */; };
-		55EE851A093E628900812582 /* LookupCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 555970C408CF520F003A6B24 /* LookupCriterion.cpp */; };
-		55EE851B093E628900812582 /* LookupOrCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F23EFF088FFC2D0090B325 /* LookupOrCriterion.cpp */; };
-		55EE851C093E628900812582 /* LtCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6707F9F2E700402C35 /* LtCriterion.cpp */; };
-		55EE851E093E628900812582 /* MetadataClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6A07F9F2E700402C35 /* MetadataClass.cpp */; };
-		55EE851F093E628900812582 /* MetadataEditMask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6B07F9F2E700402C35 /* MetadataEditMask.cpp */; };
-		55EE8520093E628900812582 /* MetadataElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6C07F9F2E700402C35 /* MetadataElement.cpp */; };
-		55EE8521093E628900812582 /* MetadataElementCollector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6D07F9F2E700402C35 /* MetadataElementCollector.cpp */; };
-		55EE8522093E628900812582 /* MetadataFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F902A508FEC3C300D76E8C /* MetadataFinder.cpp */; };
-		55EE8523093E628900812582 /* MetadataForeignKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F23658087B2AB00090B325 /* MetadataForeignKey.cpp */; };
-		55EE8524093E628900812582 /* MetadataLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5570971D08FDBC400067D309 /* MetadataLoader.cpp */; };
-		55EE8525093E628900812582 /* MetadataLookup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6E07F9F2E700402C35 /* MetadataLookup.cpp */; };
-		55EE8526093E628900812582 /* MetadataLookupType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6F07F9F2E700402C35 /* MetadataLookupType.cpp */; };
-		55EE8527093E628900812582 /* MetadataObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7007F9F2E700402C35 /* MetadataObject.cpp */; };
-		55EE8528093E628900812582 /* MetadataResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7107F9F2E700402C35 /* MetadataResource.cpp */; };
-		55EE8529093E628900812582 /* MetadataSearchHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7207F9F2E700402C35 /* MetadataSearchHelp.cpp */; };
-		55EE852A093E628900812582 /* MetadataSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7307F9F2E700402C35 /* MetadataSystem.cpp */; };
-		55EE852B093E628900812582 /* MetadataTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7407F9F2E700402C35 /* MetadataTable.cpp */; };
-		55EE852C093E628900812582 /* MetadataUpdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7507F9F2E700402C35 /* MetadataUpdate.cpp */; };
-		55EE852D093E628900812582 /* MetadataUpdateHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7607F9F2E700402C35 /* MetadataUpdateHelp.cpp */; };
-		55EE852E093E628900812582 /* MetadataUpdateType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7707F9F2E700402C35 /* MetadataUpdateType.cpp */; };
-		55EE852F093E628900812582 /* MetadataValidationExpression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7807F9F2E700402C35 /* MetadataValidationExpression.cpp */; };
-		55EE8530093E628900812582 /* MetadataValidationExternal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7907F9F2E700402C35 /* MetadataValidationExternal.cpp */; };
-		55EE8531093E628900812582 /* MetadataValidationExternalType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7A07F9F2E700402C35 /* MetadataValidationExternalType.cpp */; };
-		55EE8532093E628900812582 /* MetadataValidationLookup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7B07F9F2E700402C35 /* MetadataValidationLookup.cpp */; };
-		55EE8533093E628900812582 /* MetadataValidationLookupType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7C07F9F2E700402C35 /* MetadataValidationLookupType.cpp */; };
-		55EE8534093E628900812582 /* NotCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7D07F9F2E700402C35 /* NotCriterion.cpp */; };
-		55EE8535093E628900812582 /* OrCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7E07F9F2E700402C35 /* OrCriterion.cpp */; };
-		55EE8536093E628900812582 /* RetsAST.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8007F9F2E700402C35 /* RetsAST.cpp */; };
-		55EE8537093E628900812582 /* RetsErrorHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 551131F208D5DAD500CC048D /* RetsErrorHandler.cpp */; };
-		55EE8538093E628900812582 /* RetsException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8107F9F2E700402C35 /* RetsException.cpp */; };
-		55EE8539093E628900812582 /* RetsExceptionContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 558F6A5007FDEA9E00CE8AF2 /* RetsExceptionContext.cpp */; };
-		55EE853A093E628900812582 /* RetsHttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8207F9F2E700402C35 /* RetsHttpClient.cpp */; };
-		55EE853B093E628900812582 /* RetsHttpLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F23737087C76A50090B325 /* RetsHttpLogger.cpp */; };
-		55EE853C093E628900812582 /* RetsHttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8307F9F2E700402C35 /* RetsHttpRequest.cpp */; };
-		55EE853D093E628900812582 /* RetsHttpResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8407F9F2E700402C35 /* RetsHttpResponse.cpp */; };
-		55EE853E093E628900812582 /* RetsMetadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8507F9F2E700402C35 /* RetsMetadata.cpp */; };
-		55EE853F093E628900812582 /* RetsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8607F9F2E700402C35 /* RetsObject.cpp */; };
-		55EE8540093E628900812582 /* RetsSqlException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8907F9F2E700402C35 /* RetsSqlException.cpp */; };
-		55EE8541093E628900812582 /* RetsUnknownMetadataException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 551131FA08D5DE9100CC048D /* RetsUnknownMetadataException.cpp */; };
-		55EE8542093E628900812582 /* RetsXmlAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8A07F9F2E700402C35 /* RetsXmlAttribute.cpp */; };
-		55EE8543093E628900812582 /* RetsXmlEndDocumentEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55766CBE08D874450035838D /* RetsXmlEndDocumentEvent.cpp */; };
-		55EE8544093E628900812582 /* RetsXmlEndElementEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8B07F9F2E700402C35 /* RetsXmlEndElementEvent.cpp */; };
-		55EE8545093E628900812582 /* RetsXmlEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8C07F9F2E700402C35 /* RetsXmlEvent.cpp */; };
-		55EE8546093E628900812582 /* RetsXmlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8D07F9F2E700402C35 /* RetsXmlParser.cpp */; };
-		55EE8547093E628900812582 /* RetsXmlStartElementEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8E07F9F2E700402C35 /* RetsXmlStartElementEvent.cpp */; };
-		55EE8548093E628900812582 /* RetsXmlTextEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8F07F9F2E700402C35 /* RetsXmlTextEvent.cpp */; };
-		55EE8549093E628900812582 /* SqlToDmqlCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9207F9F2E700402C35 /* SqlToDmqlCompiler.cpp */; };
-		55EE854A093E628900812582 /* StreamHttpLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F237A5087C7DA30090B325 /* StreamHttpLogger.cpp */; };
-		55EE854B093E628900812582 /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9307F9F2E700402C35 /* Uri.cpp */; };
-		55EE854C093E628900812582 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9407F9F2E700402C35 /* util.cpp */; };
-		55EE854D093E628900812582 /* XmlMetadataElementFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9507F9F2E700402C35 /* XmlMetadataElementFactory.cpp */; };
-		55EE854E093E628900812582 /* XmlMetadataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9607F9F2E700402C35 /* XmlMetadataParser.cpp */; };
 		55EE855D093E638C00812582 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
-		55EE8575093E64E700812582 /* GetObjectTreeParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5504F1B4081D79BF0043B5CF /* GetObjectTreeParser.cpp */; };
-		55EE8576093E64E700812582 /* DmqlTreeParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA2AB07FB16D500402C35 /* DmqlTreeParser.cpp */; };
-		55EE8577093E64E700812582 /* RetsSqlLexer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA2AF07FB16D500402C35 /* RetsSqlLexer.cpp */; };
-		55EE8578093E64E700812582 /* RetsSqlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA2B107FB16D500402C35 /* RetsSqlParser.cpp */; };
 		55F238AB087DB2530090B325 /* LogController.h in Resources */ = {isa = PBXBuildFile; fileRef = 55F238A9087DB2530090B325 /* LogController.h */; };
 		55F238AC087DB2530090B325 /* LogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55F238AA087DB2530090B325 /* LogController.mm */; };
 		55F23A99087EEB460090B325 /* TextViewHttpLogger.h in Resources */ = {isa = PBXBuildFile; fileRef = 55F23A97087EEB460090B325 /* TextViewHttpLogger.h */; };
@@ -181,8 +90,6 @@
 		55F902B908FEC59000D76E8C /* IncrementalMetadataFinderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F902B808FEC59000D76E8C /* IncrementalMetadataFinderTest.cpp */; };
 		55F9032608FEC7DD00D76E8C /* TestMetadataTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9032508FEC7DD00D76E8C /* TestMetadataTree.cpp */; };
 		55F9055508FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9055408FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp */; };
-		DEAFBDE70DAD23D500EA99C7 /* CurlMulti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEAFBDE50DAD23D500EA99C7 /* CurlMulti.cpp */; };
-		DEAFBDE80DAD23D500EA99C7 /* CurlStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEAFBDE60DAD23D500EA99C7 /* CurlStream.cpp */; };
 		F904343B0D03971C004E3017 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
 		F90434580D039AEA004E3017 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
 		F90434590D039AEA004E3017 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
@@ -257,41 +164,103 @@
 		F9310A950DF4E1EE004DE8BB /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
 		F9310A990DF4E267004DE8BB /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */; };
 		F9310AA10DF4E3FE004DE8BB /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
-		F9310AD10DFDEB0C004DE8BB /* ServerInfoRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F9310AD00DFDEB0C004DE8BB /* ServerInfoRequest.h */; };
-		F9310AD30DFDEB4D004DE8BB /* ServerInfoRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9310AD20DFDEB4D004DE8BB /* ServerInfoRequest.cpp */; };
-		F9310B450DFE08A0004DE8BB /* ServerInfoResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9310B440DFE08A0004DE8BB /* ServerInfoResponse.cpp */; };
-		F9310B470DFE08D2004DE8BB /* ServerInfoResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = F9310B460DFE08D2004DE8BB /* ServerInfoResponse.h */; };
-		F9310B5F0DFEC32C004DE8BB /* EncodingType.h in Headers */ = {isa = PBXBuildFile; fileRef = F9310B5E0DFEC32C004DE8BB /* EncodingType.h */; };
-		F9310B620DFEC347004DE8BB /* CurlMulti.h in Headers */ = {isa = PBXBuildFile; fileRef = F9310B600DFEC347004DE8BB /* CurlMulti.h */; };
-		F9310B630DFEC347004DE8BB /* CurlStream.h in Headers */ = {isa = PBXBuildFile; fileRef = F9310B610DFEC347004DE8BB /* CurlStream.h */; };
-		F9310B670DFEC376004DE8BB /* LookupQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9310B650DFEC376004DE8BB /* LookupQuery.cpp */; };
-		F9AD5E1B0DFEE07F00775FCC /* LookupColumnsTreeParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AD5E150DFEE07F00775FCC /* LookupColumnsTreeParser.cpp */; };
-		F9AD5E1C0DFEE07F00775FCC /* LookupColumnsTreeParser.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F9AD5E160DFEE07F00775FCC /* LookupColumnsTreeParser.hpp */; };
-		F9AD5E1D0DFEE07F00775FCC /* LookupColumnsTreeParserTokenTypes.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F9AD5E170DFEE07F00775FCC /* LookupColumnsTreeParserTokenTypes.hpp */; };
-		F9AD5E1E0DFEE07F00775FCC /* LookupTreeParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AD5E180DFEE07F00775FCC /* LookupTreeParser.cpp */; };
-		F9AD5E1F0DFEE07F00775FCC /* LookupTreeParser.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F9AD5E190DFEE07F00775FCC /* LookupTreeParser.hpp */; };
-		F9AD5E200DFEE07F00775FCC /* LookupTreeParserTokenTypes.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F9AD5E1A0DFEE07F00775FCC /* LookupTreeParserTokenTypes.hpp */; };
-		F9AD5E420DFEE4DC00775FCC /* LookupColumnsQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9310B640DFEC376004DE8BB /* LookupColumnsQuery.cpp */; };
-		F9AD5E590DFEE51200775FCC /* LookupColumnsQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9310B640DFEC376004DE8BB /* LookupColumnsQuery.cpp */; };
-		F9AD5E5A0DFEE51200775FCC /* LookupQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9310B650DFEC376004DE8BB /* LookupQuery.cpp */; };
-		F9AD5E5B0DFEE51200775FCC /* LookupCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 555970C408CF520F003A6B24 /* LookupCriterion.cpp */; };
-		F9AD5E5C0DFEE51200775FCC /* LookupOrCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F23EFF088FFC2D0090B325 /* LookupOrCriterion.cpp */; };
-		F9AD5E5D0DFEE51200775FCC /* LtCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6707F9F2E700402C35 /* LtCriterion.cpp */; };
-		F9AD5E5E0DFEE51200775FCC /* AndCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5207F9F2E700402C35 /* AndCriterion.cpp */; };
-		F9AD5E5F0DFEE51200775FCC /* DmqlCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5B07F9F2E700402C35 /* DmqlCriterion.cpp */; };
-		F9AD5E600DFEE51200775FCC /* DmqlExpression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5C07F9F2E700402C35 /* DmqlExpression.cpp */; };
-		F9AD5E610DFEE51200775FCC /* DmqlQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5D07F9F2E700402C35 /* DmqlQuery.cpp */; };
-		F9AD5E620DFEE51200775FCC /* GetObjectQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5504F156081D563E0043B5CF /* GetObjectQuery.cpp */; };
-		F9AD5E630DFEE51200775FCC /* EqCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5E07F9F2E700402C35 /* EqCriterion.cpp */; };
-		F9AD5E640DFEE51200775FCC /* FieldCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6007F9F2E700402C35 /* FieldCriterion.cpp */; };
-		F9AD5E650DFEE51200775FCC /* GtCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6107F9F2E700402C35 /* GtCriterion.cpp */; };
-		F9AD5E660DFEE51200775FCC /* JunctionCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6207F9F2E700402C35 /* JunctionCriterion.cpp */; };
-		F9AD5E670DFEE51200775FCC /* LiteralCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6407F9F2E700402C35 /* LiteralCriterion.cpp */; };
-		F9AD5E680DFEE51200775FCC /* NotCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7D07F9F2E700402C35 /* NotCriterion.cpp */; };
-		F9AD5E690DFEE51200775FCC /* OrCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7E07F9F2E700402C35 /* OrCriterion.cpp */; };
-		F9AD5E6A0DFEE51200775FCC /* RetsAST.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8007F9F2E700402C35 /* RetsAST.cpp */; };
-		F9AD5E6B0DFEE51200775FCC /* RetsSqlException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8907F9F2E700402C35 /* RetsSqlException.cpp */; };
-		F9AD5E6C0DFEE51200775FCC /* SqlToDmqlCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9207F9F2E700402C35 /* SqlToDmqlCompiler.cpp */; };
+		F95773360E019D2900836850 /* ServerInfoResponseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F95773350E019D2900836850 /* ServerInfoResponseTest.cpp */; };
+		F9E64D910E03325D00231C0E /* CurlMulti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEAFBDE50DAD23D500EA99C7 /* CurlMulti.cpp */; };
+		F9E64D920E03325D00231C0E /* CurlStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEAFBDE60DAD23D500EA99C7 /* CurlStream.cpp */; };
+		F9E64D930E03325D00231C0E /* CurlEasy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F23D84088EACDE0090B325 /* CurlEasy.cpp */; };
+		F9E64D940E03325D00231C0E /* CurlHttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5607F9F2E700402C35 /* CurlHttpClient.cpp */; };
+		F9E64D950E03325D00231C0E /* CurlHttpResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5707F9F2E700402C35 /* CurlHttpResponse.cpp */; };
+		F9E64D960E03325D00231C0E /* CurlSlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5807F9F2E700402C35 /* CurlSlist.cpp */; };
+		F9E64D970E03325D00231C0E /* RetsHttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8207F9F2E700402C35 /* RetsHttpClient.cpp */; };
+		F9E64D980E03325D00231C0E /* RetsHttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8307F9F2E700402C35 /* RetsHttpRequest.cpp */; };
+		F9E64D990E03325D00231C0E /* RetsHttpResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8407F9F2E700402C35 /* RetsHttpResponse.cpp */; };
+		F9E64D9A0E03325D00231C0E /* RetsHttpLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F23737087C76A50090B325 /* RetsHttpLogger.cpp */; };
+		F9E64D9B0E03325D00231C0E /* StreamHttpLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F237A5087C7DA30090B325 /* StreamHttpLogger.cpp */; };
+		F9E64D9C0E03327700231C0E /* ExceptionErrorHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 551131FC08D5DEB300CC048D /* ExceptionErrorHandler.cpp */; };
+		F9E64D9D0E03327700231C0E /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554662330A62BAF600F3B94E /* md5.cpp */; };
+		F9E64D9E0E03327700231C0E /* RetsErrorHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 551131F208D5DAD500CC048D /* RetsErrorHandler.cpp */; };
+		F9E64D9F0E03327700231C0E /* RetsException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8107F9F2E700402C35 /* RetsException.cpp */; };
+		F9E64DA00E03327700231C0E /* RetsExceptionContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 558F6A5007FDEA9E00CE8AF2 /* RetsExceptionContext.cpp */; };
+		F9E64DA10E03327700231C0E /* RetsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8607F9F2E700402C35 /* RetsObject.cpp */; };
+		F9E64DA20E03327700231C0E /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9307F9F2E700402C35 /* Uri.cpp */; };
+		F9E64DA30E03327700231C0E /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9407F9F2E700402C35 /* util.cpp */; };
+		F9E64DA40E03328400231C0E /* IncrementalMetadataFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9040708FEDB8800D76E8C /* IncrementalMetadataFinder.cpp */; };
+		F9E64DA50E03328400231C0E /* MetadataFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F902A508FEC3C300D76E8C /* MetadataFinder.cpp */; };
+		F9E64DA60E03328400231C0E /* MetadataLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5570971D08FDBC400067D309 /* MetadataLoader.cpp */; };
+		F9E64DA70E03328400231C0E /* DefaultMetadataElementFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5907F9F2E700402C35 /* DefaultMetadataElementFactory.cpp */; };
+		F9E64DA80E03328400231C0E /* RetsMetadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8507F9F2E700402C35 /* RetsMetadata.cpp */; };
+		F9E64DA90E03328400231C0E /* DefaultMetadataCollector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F9061408FEFDCE00D76E8C /* DefaultMetadataCollector.cpp */; };
+		F9E64DAA0E03328400231C0E /* MetadataElementCollector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6D07F9F2E700402C35 /* MetadataElementCollector.cpp */; };
+		F9E64DAB0E03328400231C0E /* MetadataElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6C07F9F2E700402C35 /* MetadataElement.cpp */; };
+		F9E64DAC0E03328400231C0E /* MetadataForeignKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F23658087B2AB00090B325 /* MetadataForeignKey.cpp */; };
+		F9E64DAD0E03328400231C0E /* MetadataClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6A07F9F2E700402C35 /* MetadataClass.cpp */; };
+		F9E64DAE0E03328400231C0E /* MetadataEditMask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6B07F9F2E700402C35 /* MetadataEditMask.cpp */; };
+		F9E64DAF0E03328400231C0E /* MetadataLookup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6E07F9F2E700402C35 /* MetadataLookup.cpp */; };
+		F9E64DB00E03328400231C0E /* MetadataLookupType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6F07F9F2E700402C35 /* MetadataLookupType.cpp */; };
+		F9E64DB10E03328400231C0E /* MetadataObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7007F9F2E700402C35 /* MetadataObject.cpp */; };
+		F9E64DB20E03328400231C0E /* MetadataResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7107F9F2E700402C35 /* MetadataResource.cpp */; };
+		F9E64DB30E03328400231C0E /* MetadataSearchHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7207F9F2E700402C35 /* MetadataSearchHelp.cpp */; };
+		F9E64DB40E03328400231C0E /* MetadataSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7307F9F2E700402C35 /* MetadataSystem.cpp */; };
+		F9E64DB50E03328400231C0E /* MetadataTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7407F9F2E700402C35 /* MetadataTable.cpp */; };
+		F9E64DB60E03328400231C0E /* MetadataUpdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7507F9F2E700402C35 /* MetadataUpdate.cpp */; };
+		F9E64DB70E03328400231C0E /* MetadataUpdateHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7607F9F2E700402C35 /* MetadataUpdateHelp.cpp */; };
+		F9E64DB80E03328400231C0E /* MetadataUpdateType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7707F9F2E700402C35 /* MetadataUpdateType.cpp */; };
+		F9E64DB90E03328400231C0E /* MetadataValidationExpression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7807F9F2E700402C35 /* MetadataValidationExpression.cpp */; };
+		F9E64DBA0E03328400231C0E /* MetadataValidationExternal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7907F9F2E700402C35 /* MetadataValidationExternal.cpp */; };
+		F9E64DBB0E03328400231C0E /* MetadataValidationExternalType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7A07F9F2E700402C35 /* MetadataValidationExternalType.cpp */; };
+		F9E64DBC0E03328400231C0E /* MetadataValidationLookup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7B07F9F2E700402C35 /* MetadataValidationLookup.cpp */; };
+		F9E64DBD0E03328400231C0E /* MetadataValidationLookupType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7C07F9F2E700402C35 /* MetadataValidationLookupType.cpp */; };
+		F9E64DBE0E03328400231C0E /* RetsUnknownMetadataException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 551131FA08D5DE9100CC048D /* RetsUnknownMetadataException.cpp */; };
+		F9E64DD10E0332F700231C0E /* AndCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5207F9F2E700402C35 /* AndCriterion.cpp */; };
+		F9E64DD20E0332F700231C0E /* DmqlCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5B07F9F2E700402C35 /* DmqlCriterion.cpp */; };
+		F9E64DD30E0332F700231C0E /* DmqlExpression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5C07F9F2E700402C35 /* DmqlExpression.cpp */; };
+		F9E64DD40E0332F700231C0E /* DmqlQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5D07F9F2E700402C35 /* DmqlQuery.cpp */; };
+		F9E64DD50E0332F700231C0E /* EqCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5E07F9F2E700402C35 /* EqCriterion.cpp */; };
+		F9E64DD60E0332F700231C0E /* FieldCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6007F9F2E700402C35 /* FieldCriterion.cpp */; };
+		F9E64DD70E0332F700231C0E /* GetObjectQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5504F156081D563E0043B5CF /* GetObjectQuery.cpp */; };
+		F9E64DD80E0332F700231C0E /* GtCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6107F9F2E700402C35 /* GtCriterion.cpp */; };
+		F9E64DD90E0332F700231C0E /* JunctionCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6207F9F2E700402C35 /* JunctionCriterion.cpp */; };
+		F9E64DDA0E0332F700231C0E /* LiteralCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6407F9F2E700402C35 /* LiteralCriterion.cpp */; };
+		F9E64DDB0E0332F700231C0E /* LookupColumnsQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9310B640DFEC376004DE8BB /* LookupColumnsQuery.cpp */; };
+		F9E64DDC0E0332F700231C0E /* LookupCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 555970C408CF520F003A6B24 /* LookupCriterion.cpp */; };
+		F9E64DDD0E0332F700231C0E /* LookupOrCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F23EFF088FFC2D0090B325 /* LookupOrCriterion.cpp */; };
+		F9E64DDE0E0332F700231C0E /* LookupQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9310B650DFEC376004DE8BB /* LookupQuery.cpp */; };
+		F9E64DDF0E0332F700231C0E /* LtCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6707F9F2E700402C35 /* LtCriterion.cpp */; };
+		F9E64DE00E0332F700231C0E /* NotCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7D07F9F2E700402C35 /* NotCriterion.cpp */; };
+		F9E64DE10E0332F700231C0E /* OrCriterion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F7E07F9F2E700402C35 /* OrCriterion.cpp */; };
+		F9E64DE20E0332F700231C0E /* RetsAST.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8007F9F2E700402C35 /* RetsAST.cpp */; };
+		F9E64DE30E0332F700231C0E /* RetsSqlException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8907F9F2E700402C35 /* RetsSqlException.cpp */; };
+		F9E64DE40E0332F700231C0E /* SqlToDmqlCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9207F9F2E700402C35 /* SqlToDmqlCompiler.cpp */; };
+		F9E64DE50E03330300231C0E /* CapabilityUrls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5307F9F2E700402C35 /* CapabilityUrls.cpp */; };
+		F9E64DE60E03330300231C0E /* GetObjectRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5552AA6B08046692002288F1 /* GetObjectRequest.cpp */; };
+		F9E64DE70E03330300231C0E /* GetObjectResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 558F6ACF07FE088600CE8AF2 /* GetObjectResponse.cpp */; };
+		F9E64DE80E03330300231C0E /* KeyValueResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6307F9F2E700402C35 /* KeyValueResponse.cpp */; };
+		F9E64DE90E03330300231C0E /* LoginResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6507F9F2E700402C35 /* LoginResponse.cpp */; };
+		F9E64DEA0E03330300231C0E /* LogoutResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F6607F9F2E700402C35 /* LogoutResponse.cpp */; };
+		F9E64DEB0E03330300231C0E /* ObjectDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 558F6AD107FE089700CE8AF2 /* ObjectDescriptor.cpp */; };
+		F9E64DEC0E03330300231C0E /* RetsReplyException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8707F9F2E700402C35 /* RetsReplyException.cpp */; };
+		F9E64DED0E03330300231C0E /* RetsSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8807F9F2E700402C35 /* RetsSession.cpp */; };
+		F9E64DEE0E03330300231C0E /* SearchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9007F9F2E700402C35 /* SearchRequest.cpp */; };
+		F9E64DEF0E03330300231C0E /* SearchResultSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9107F9F2E700402C35 /* SearchResultSet.cpp */; };
+		F9E64DF00E03330300231C0E /* ServerInfoRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9310AD20DFDEB4D004DE8BB /* ServerInfoRequest.cpp */; };
+		F9E64DF10E03330300231C0E /* ServerInfoResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9310B440DFE08A0004DE8BB /* ServerInfoResponse.cpp */; };
+		F9E64DF20E03330300231C0E /* UserAgentAuthCalculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5546624F0A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp */; };
+		F9E64DF30E03330B00231C0E /* ExpatXmlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F5F07F9F2E700402C35 /* ExpatXmlParser.cpp */; };
+		F9E64DF40E03330B00231C0E /* RetsXmlAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8A07F9F2E700402C35 /* RetsXmlAttribute.cpp */; };
+		F9E64DF50E03330B00231C0E /* RetsXmlEndDocumentEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55766CBE08D874450035838D /* RetsXmlEndDocumentEvent.cpp */; };
+		F9E64DF60E03330B00231C0E /* RetsXmlEndElementEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8B07F9F2E700402C35 /* RetsXmlEndElementEvent.cpp */; };
+		F9E64DF70E03330B00231C0E /* RetsXmlEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8C07F9F2E700402C35 /* RetsXmlEvent.cpp */; };
+		F9E64DF80E03330B00231C0E /* RetsXmlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8D07F9F2E700402C35 /* RetsXmlParser.cpp */; };
+		F9E64DF90E03330B00231C0E /* RetsXmlStartElementEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8E07F9F2E700402C35 /* RetsXmlStartElementEvent.cpp */; };
+		F9E64DFA0E03330B00231C0E /* RetsXmlTextEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F8F07F9F2E700402C35 /* RetsXmlTextEvent.cpp */; };
+		F9E64DFB0E03330B00231C0E /* XmlMetadataElementFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9507F9F2E700402C35 /* XmlMetadataElementFactory.cpp */; };
+		F9E64DFC0E03330B00231C0E /* XmlMetadataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554A9F9607F9F2E700402C35 /* XmlMetadataParser.cpp */; };
+		F9E64E400E03381D00231C0E /* LookupColumnsTreeParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AD5E150DFEE07F00775FCC /* LookupColumnsTreeParser.cpp */; };
+		F9E64E410E03381D00231C0E /* LookupTreeParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AD5E180DFEE07F00775FCC /* LookupTreeParser.cpp */; };
+		F9E64E420E03381D00231C0E /* GetObjectTreeParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5504F1B4081D79BF0043B5CF /* GetObjectTreeParser.cpp */; };
+		F9E64E430E03381D00231C0E /* DmqlTreeParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA2AB07FB16D500402C35 /* DmqlTreeParser.cpp */; };
+		F9E64E440E03381D00231C0E /* RetsSqlLexer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA2AF07FB16D500402C35 /* RetsSqlLexer.cpp */; };
+		F9E64E450E03381D00231C0E /* RetsSqlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA2B107FB16D500402C35 /* RetsSqlParser.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -728,6 +697,24 @@
 		F9310B610DFEC347004DE8BB /* CurlStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CurlStream.h; sourceTree = "<group>"; };
 		F9310B640DFEC376004DE8BB /* LookupColumnsQuery.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = LookupColumnsQuery.cpp; sourceTree = "<group>"; };
 		F9310B650DFEC376004DE8BB /* LookupQuery.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = LookupQuery.cpp; sourceTree = "<group>"; };
+		F95773200E019C5200836850 /* get-object-response-cris.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-cris.txt"; sourceTree = "<group>"; };
+		F95773210E019C5200836850 /* get-object-response-normls.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-normls.txt"; sourceTree = "<group>"; };
+		F95773220E019C5200836850 /* get-object-response-rapattoni.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-rapattoni.txt"; sourceTree = "<group>"; };
+		F95773230E019C5200836850 /* get-object-response-single-empty-headers.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-single-empty-headers.txt"; sourceTree = "<group>"; };
+		F95773240E019C5200836850 /* get-object-response-single-no-headers.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-single-no-headers.txt"; sourceTree = "<group>"; };
+		F95773250E019C5200836850 /* login-cris.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "login-cris.xml"; sourceTree = "<group>"; };
+		F95773260E019C5200836850 /* logout-cris.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "logout-cris.xml"; sourceTree = "<group>"; };
+		F95773270E019C5200836850 /* logout-tarasoft.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "logout-tarasoft.xml"; sourceTree = "<group>"; };
+		F95773280E019C5200836850 /* metadata-extended-char.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "metadata-extended-char.xml"; sourceTree = "<group>"; };
+		F95773290E019C5200836850 /* metadata-system-empty-comments.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "metadata-system-empty-comments.xml"; sourceTree = "<group>"; };
+		F957732A0E019C5200836850 /* metadata-unknown.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "metadata-unknown.xml"; sourceTree = "<group>"; };
+		F957732B0E019C5200836850 /* search-response-error-extended.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "search-response-error-extended.xml"; sourceTree = "<group>"; };
+		F957732C0E019C5200836850 /* search-response-no-count.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "search-response-no-count.xml"; sourceTree = "<group>"; };
+		F957732D0E019C5200836850 /* search-response-pipe.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "search-response-pipe.xml"; sourceTree = "<group>"; };
+		F957732E0E019C5200836850 /* server-response-custom.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "server-response-custom.xml"; sourceTree = "<group>"; };
+		F957732F0E019C5200836850 /* server-response-no-class.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "server-response-no-class.xml"; sourceTree = "<group>"; };
+		F95773300E019C5200836850 /* server-response-property.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "server-response-property.xml"; sourceTree = "<group>"; };
+		F95773350E019D2900836850 /* ServerInfoResponseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ServerInfoResponseTest.cpp; sourceTree = "<group>"; };
 		F9AD5E0E0DFEDF7000775FCC /* get-object-tree.g */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "get-object-tree.g"; path = "../librets/src/get-object-tree.g"; sourceTree = SOURCE_ROOT; };
 		F9AD5E0F0DFEDF7000775FCC /* lookup-columns-tree.g */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "lookup-columns-tree.g"; path = "../librets/src/lookup-columns-tree.g"; sourceTree = SOURCE_ROOT; };
 		F9AD5E100DFEDF7000775FCC /* lookup-tree.g */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "lookup-tree.g"; path = "../librets/src/lookup-tree.g"; sourceTree = SOURCE_ROOT; };
@@ -1162,21 +1149,21 @@
 		558F6AC107FE054300CE8AF2 /* SQL */ = {
 			isa = PBXGroup;
 			children = (
-				F9310B640DFEC376004DE8BB /* LookupColumnsQuery.cpp */,
-				F9310B650DFEC376004DE8BB /* LookupQuery.cpp */,
-				555970C408CF520F003A6B24 /* LookupCriterion.cpp */,
-				55F23EFF088FFC2D0090B325 /* LookupOrCriterion.cpp */,
-				554A9F6707F9F2E700402C35 /* LtCriterion.cpp */,
 				554A9F5207F9F2E700402C35 /* AndCriterion.cpp */,
 				554A9F5B07F9F2E700402C35 /* DmqlCriterion.cpp */,
 				554A9F5C07F9F2E700402C35 /* DmqlExpression.cpp */,
 				554A9F5D07F9F2E700402C35 /* DmqlQuery.cpp */,
-				5504F156081D563E0043B5CF /* GetObjectQuery.cpp */,
 				554A9F5E07F9F2E700402C35 /* EqCriterion.cpp */,
 				554A9F6007F9F2E700402C35 /* FieldCriterion.cpp */,
+				5504F156081D563E0043B5CF /* GetObjectQuery.cpp */,
 				554A9F6107F9F2E700402C35 /* GtCriterion.cpp */,
 				554A9F6207F9F2E700402C35 /* JunctionCriterion.cpp */,
 				554A9F6407F9F2E700402C35 /* LiteralCriterion.cpp */,
+				F9310B640DFEC376004DE8BB /* LookupColumnsQuery.cpp */,
+				555970C408CF520F003A6B24 /* LookupCriterion.cpp */,
+				55F23EFF088FFC2D0090B325 /* LookupOrCriterion.cpp */,
+				F9310B650DFEC376004DE8BB /* LookupQuery.cpp */,
+				554A9F6707F9F2E700402C35 /* LtCriterion.cpp */,
 				554A9F7D07F9F2E700402C35 /* NotCriterion.cpp */,
 				554A9F7E07F9F2E700402C35 /* OrCriterion.cpp */,
 				554A9F8007F9F2E700402C35 /* RetsAST.cpp */,
@@ -1240,13 +1227,13 @@
 		558F6AC407FE06A200CE8AF2 /* General */ = {
 			isa = PBXGroup;
 			children = (
-				554662330A62BAF600F3B94E /* md5.cpp */,
-				551131FC08D5DEB300CC048D /* ExceptionErrorHandler.cpp */,
-				551131F208D5DAD500CC048D /* RetsErrorHandler.cpp */,
-				554AA20B07FA174200402C35 /* librets_Prefix.pch */,
 				554A9F5407F9F2E700402C35 /* config.h */,
 				554A9F5507F9F2E700402C35 /* config.h.in */,
+				551131FC08D5DEB300CC048D /* ExceptionErrorHandler.cpp */,
+				554AA20B07FA174200402C35 /* librets_Prefix.pch */,
 				554A9F6807F9F2E700402C35 /* Makefile.vc */,
+				554662330A62BAF600F3B94E /* md5.cpp */,
+				551131F208D5DAD500CC048D /* RetsErrorHandler.cpp */,
 				554A9F8107F9F2E700402C35 /* RetsException.cpp */,
 				558F6A5007FDEA9E00CE8AF2 /* RetsExceptionContext.cpp */,
 				554A9F8607F9F2E700402C35 /* RetsObject.cpp */,
@@ -1314,28 +1301,28 @@
 		558F6AC707FE06D300CE8AF2 /* SQL */ = {
 			isa = PBXGroup;
 			children = (
-				F9310B5C0DFEC30F004DE8BB /* LookupColumnsQuery.h */,
-				F9310B5D0DFEC30F004DE8BB /* LookupQuery.h */,
-				555970C208CF5034003A6B24 /* LookupCriterion.h */,
-				554A9EF807F9F2D200402C35 /* sql_forward.h */,
 				554A9EB607F9F2D200402C35 /* AndCriterion.h */,
 				554A9EBD07F9F2D200402C35 /* DmqlCriterion.h */,
 				554A9EBE07F9F2D200402C35 /* DmqlExpression.h */,
 				554A9EBF07F9F2D200402C35 /* DmqlQuery.h */,
-				5504F140081D532B0043B5CF /* GetObjectQuery.h */,
 				554A9EC007F9F2D200402C35 /* EqCriterion.h */,
 				554A9EC207F9F2D200402C35 /* FieldCriterion.h */,
+				5504F140081D532B0043B5CF /* GetObjectQuery.h */,
 				554A9EC507F9F2D200402C35 /* GtCriterion.h */,
 				554A9EC707F9F2D200402C35 /* JunctionCriterion.h */,
 				554A9EC907F9F2D200402C35 /* LiteralCriterion.h */,
+				F9310B5C0DFEC30F004DE8BB /* LookupColumnsQuery.h */,
+				555970C208CF5034003A6B24 /* LookupCriterion.h */,
 				55F23EF0088FFB900090B325 /* LookupOrCriterion.h */,
+				F9310B5D0DFEC30F004DE8BB /* LookupQuery.h */,
 				554A9ECC07F9F2D200402C35 /* LtCriterion.h */,
 				554A9EE307F9F2D200402C35 /* NotCriterion.h */,
 				554A9EE407F9F2D200402C35 /* OrCriterion.h */,
 				554A9EE607F9F2D200402C35 /* RetsAST.h */,
 				554A9EEF07F9F2D200402C35 /* RetsSqlException.h */,
-				554A9EF907F9F2D200402C35 /* SqlToDmqlCompiler.h */,
+				554A9EF807F9F2D200402C35 /* sql_forward.h */,
 				55F23E6D088EECB80090B325 /* SqlMetadata.h */,
+				554A9EF907F9F2D200402C35 /* SqlToDmqlCompiler.h */,
 			);
 			name = SQL;
 			sourceTree = "<group>";
@@ -1343,8 +1330,8 @@
 		558F6AC807FE06DA00CE8AF2 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				F9310B5E0DFEC32C004DE8BB /* EncodingType.h */,
 				554A9EB707F9F2D200402C35 /* CapabilityUrls.h */,
+				F9310B5E0DFEC32C004DE8BB /* EncodingType.h */,
 				5552AA91080467F8002288F1 /* GetObjectRequest.h */,
 				558F6AB207FE03A700CE8AF2 /* GetObjectResponse.h */,
 				554A9EC807F9F2D200402C35 /* KeyValueResponse.h */,
@@ -1431,24 +1418,41 @@
 			isa = PBXGroup;
 			children = (
 				55F2405B08904F0C0090B325 /* abc123-1.gif */,
+				F95773200E019C5200836850 /* get-object-response-cris.txt */,
 				55F2405C08904F0C0090B325 /* get-object-response-multi-location.txt */,
 				55F2405D08904F0C0090B325 /* get-object-response-no-object-variman.txt */,
 				55F2405E08904F0C0090B325 /* get-object-response-no-object.txt */,
+				F95773210E019C5200836850 /* get-object-response-normls.txt */,
+				F95773220E019C5200836850 /* get-object-response-rapattoni.txt */,
+				F95773230E019C5200836850 /* get-object-response-single-empty-headers.txt */,
 				55F2405F08904F0C0090B325 /* get-object-response-single-location.txt */,
+				F95773240E019C5200836850 /* get-object-response-single-no-headers.txt */,
 				55F2406008904F0C0090B325 /* get-object-response-single.txt */,
 				55F2406108904F0C0090B325 /* invalid-http-response.txt */,
+				F95773250E019C5200836850 /* login-cris.xml */,
 				55F2406208904F0C0090B325 /* login-valid10.xml */,
 				55F2406308904F0C0090B325 /* login-valid15.xml */,
+				F95773260E019C5200836850 /* logout-cris.xml */,
+				F95773270E019C5200836850 /* logout-tarasoft.xml */,
 				55F2406408904F0C0090B325 /* logout-valid15.xml */,
 				55F2406508904F0C0090B325 /* metadata-blank-data.xml */,
 				55F2406608904F0C0090B325 /* metadata-class.xml */,
+				F95773280E019C5200836850 /* metadata-extended-char.xml */,
 				55F2406708904F0C0090B325 /* metadata-response.xml */,
+				F95773290E019C5200836850 /* metadata-system-empty-comments.xml */,
 				55F2406808904F0C0090B325 /* metadata-system.xml */,
+				F957732A0E019C5200836850 /* metadata-unknown.xml */,
+				F957732B0E019C5200836850 /* search-response-error-extended.xml */,
 				55F2406908904F0C0090B325 /* search-response-error.xml */,
 				F90D477E0CF8D29200B9AC65 /* search-response-extended-char.xml */,
+				F957732C0E019C5200836850 /* search-response-no-count.xml */,
 				55F2406A08904F0C0090B325 /* search-response-no-records.xml */,
+				F957732D0E019C5200836850 /* search-response-pipe.xml */,
 				55F2406B08904F0C0090B325 /* search-response-single-column.xml */,
 				55F2406C08904F0C0090B325 /* search-response.xml */,
+				F957732E0E019C5200836850 /* server-response-custom.xml */,
+				F957732F0E019C5200836850 /* server-response-no-class.xml */,
+				F95773300E019C5200836850 /* server-response-property.xml */,
 				55F2406D08904F0C0090B325 /* short-success-response.xml */,
 				55F2406E08904F0C0090B325 /* test-response.txt */,
 			);
@@ -1519,12 +1523,13 @@
 		55F902BE08FEC6D000D76E8C /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				55BD578007FDAAFD00526D69 /* CapabilityUrlsTest.cpp */,
 				5552AA6108046478002288F1 /* GetObjectRequestTest.cpp */,
 				5552A92B08033C19002288F1 /* GetObjectResponseTest.cpp */,
-				55BD578007FDAAFD00526D69 /* CapabilityUrlsTest.cpp */,
 				55BD578707FDAAFD00526D69 /* LoginResponseTest.cpp */,
 				55BD578907FDAAFD00526D69 /* LogoutResponseTest.cpp */,
 				55BD579B07FDAAFD00526D69 /* SearchResultSetTest.cpp */,
+				F95773350E019D2900836850 /* ServerInfoResponseTest.cpp */,
 				554662BF0A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp */,
 			);
 			name = Protocol;
@@ -1560,18 +1565,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554662320A62BAD900F3B94E /* md5.hpp in Headers */,
-				554662420A62EBB400F3B94E /* UserAgentAuthType.h in Headers */,
-				5546624C0A62EE7200F3B94E /* UserAgentAuthCalculator.h in Headers */,
-				F9310AD10DFDEB0C004DE8BB /* ServerInfoRequest.h in Headers */,
-				F9310B470DFE08D2004DE8BB /* ServerInfoResponse.h in Headers */,
-				F9310B5F0DFEC32C004DE8BB /* EncodingType.h in Headers */,
-				F9310B620DFEC347004DE8BB /* CurlMulti.h in Headers */,
-				F9310B630DFEC347004DE8BB /* CurlStream.h in Headers */,
-				F9AD5E1C0DFEE07F00775FCC /* LookupColumnsTreeParser.hpp in Headers */,
-				F9AD5E1D0DFEE07F00775FCC /* LookupColumnsTreeParserTokenTypes.hpp in Headers */,
-				F9AD5E1F0DFEE07F00775FCC /* LookupTreeParser.hpp in Headers */,
-				F9AD5E200DFEE07F00775FCC /* LookupTreeParserTokenTypes.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1891,7 +1884,6 @@
 			files = (
 				554AA16F07FA0EF600402C35 /* sql2dmql.cpp in Sources */,
 				F931097B0DF4C162004DE8BB /* Options.cpp in Sources */,
-				F9310B670DFEC376004DE8BB /* LookupQuery.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1962,6 +1954,7 @@
 				55F9055508FEED5C00D76E8C /* DefaultMetadataCollectorTest.cpp in Sources */,
 				550A6DEA09E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp in Sources */,
 				554662C00A64017F00F3B94E /* UserAgentAuthCalculatorTest.cpp in Sources */,
+				F95773360E019D2900836850 /* ServerInfoResponseTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1969,121 +1962,102 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55EE8575093E64E700812582 /* GetObjectTreeParser.cpp in Sources */,
-				55EE8576093E64E700812582 /* DmqlTreeParser.cpp in Sources */,
-				55EE8577093E64E700812582 /* RetsSqlLexer.cpp in Sources */,
-				55EE8578093E64E700812582 /* RetsSqlParser.cpp in Sources */,
-				55EE8504093E628900812582 /* AndCriterion.cpp in Sources */,
-				55EE84DE093E600300812582 /* CapabilityUrls.cpp in Sources */,
-				55EE8507093E628900812582 /* CurlEasy.cpp in Sources */,
-				55EE8508093E628900812582 /* CurlHttpClient.cpp in Sources */,
-				55EE8509093E628900812582 /* CurlHttpResponse.cpp in Sources */,
-				55EE850A093E628900812582 /* CurlSlist.cpp in Sources */,
-				55EE850B093E628900812582 /* DefaultMetadataCollector.cpp in Sources */,
-				55EE850C093E628900812582 /* DefaultMetadataElementFactory.cpp in Sources */,
-				55EE850D093E628900812582 /* DmqlCriterion.cpp in Sources */,
-				55EE850E093E628900812582 /* DmqlExpression.cpp in Sources */,
-				55EE850F093E628900812582 /* DmqlQuery.cpp in Sources */,
-				55EE8510093E628900812582 /* EqCriterion.cpp in Sources */,
-				55EE8511093E628900812582 /* ExceptionErrorHandler.cpp in Sources */,
-				55EE8512093E628900812582 /* ExpatXmlParser.cpp in Sources */,
-				55EE8513093E628900812582 /* FieldCriterion.cpp in Sources */,
-				55EE8514093E628900812582 /* GetObjectQuery.cpp in Sources */,
-				55EE84D6093E600300812582 /* GetObjectRequest.cpp in Sources */,
-				55EE84D8093E600300812582 /* GetObjectResponse.cpp in Sources */,
-				55EE8515093E628900812582 /* GtCriterion.cpp in Sources */,
-				55EE8516093E628900812582 /* IncrementalMetadataFinder.cpp in Sources */,
-				55EE8517093E628900812582 /* JunctionCriterion.cpp in Sources */,
-				55EE84D9093E600300812582 /* KeyValueResponse.cpp in Sources */,
-				55EE8519093E628900812582 /* LiteralCriterion.cpp in Sources */,
-				55EE84DA093E600300812582 /* LoginResponse.cpp in Sources */,
-				55EE84DB093E600300812582 /* LogoutResponse.cpp in Sources */,
-				55EE851A093E628900812582 /* LookupCriterion.cpp in Sources */,
-				55EE851B093E628900812582 /* LookupOrCriterion.cpp in Sources */,
-				55EE851C093E628900812582 /* LtCriterion.cpp in Sources */,
-				55EE851E093E628900812582 /* MetadataClass.cpp in Sources */,
-				55EE851F093E628900812582 /* MetadataEditMask.cpp in Sources */,
-				55EE8520093E628900812582 /* MetadataElement.cpp in Sources */,
-				55EE8521093E628900812582 /* MetadataElementCollector.cpp in Sources */,
-				55EE8522093E628900812582 /* MetadataFinder.cpp in Sources */,
-				55EE8523093E628900812582 /* MetadataForeignKey.cpp in Sources */,
-				55EE8524093E628900812582 /* MetadataLoader.cpp in Sources */,
-				55EE8525093E628900812582 /* MetadataLookup.cpp in Sources */,
-				55EE8526093E628900812582 /* MetadataLookupType.cpp in Sources */,
-				55EE8527093E628900812582 /* MetadataObject.cpp in Sources */,
-				55EE8528093E628900812582 /* MetadataResource.cpp in Sources */,
-				55EE8529093E628900812582 /* MetadataSearchHelp.cpp in Sources */,
-				55EE852A093E628900812582 /* MetadataSystem.cpp in Sources */,
-				55EE852B093E628900812582 /* MetadataTable.cpp in Sources */,
-				55EE852C093E628900812582 /* MetadataUpdate.cpp in Sources */,
-				55EE852D093E628900812582 /* MetadataUpdateHelp.cpp in Sources */,
-				55EE852E093E628900812582 /* MetadataUpdateType.cpp in Sources */,
-				55EE852F093E628900812582 /* MetadataValidationExpression.cpp in Sources */,
-				55EE8530093E628900812582 /* MetadataValidationExternal.cpp in Sources */,
-				55EE8531093E628900812582 /* MetadataValidationExternalType.cpp in Sources */,
-				55EE8532093E628900812582 /* MetadataValidationLookup.cpp in Sources */,
-				55EE8533093E628900812582 /* MetadataValidationLookupType.cpp in Sources */,
-				55EE8534093E628900812582 /* NotCriterion.cpp in Sources */,
-				55EE84D7093E600300812582 /* ObjectDescriptor.cpp in Sources */,
-				55EE8535093E628900812582 /* OrCriterion.cpp in Sources */,
-				55EE8536093E628900812582 /* RetsAST.cpp in Sources */,
-				55EE8537093E628900812582 /* RetsErrorHandler.cpp in Sources */,
-				55EE8538093E628900812582 /* RetsException.cpp in Sources */,
-				55EE8539093E628900812582 /* RetsExceptionContext.cpp in Sources */,
-				55EE853A093E628900812582 /* RetsHttpClient.cpp in Sources */,
-				55EE853B093E628900812582 /* RetsHttpLogger.cpp in Sources */,
-				55EE853C093E628900812582 /* RetsHttpRequest.cpp in Sources */,
-				55EE853D093E628900812582 /* RetsHttpResponse.cpp in Sources */,
-				55EE853E093E628900812582 /* RetsMetadata.cpp in Sources */,
-				55EE853F093E628900812582 /* RetsObject.cpp in Sources */,
-				55EE84DC093E600300812582 /* RetsReplyException.cpp in Sources */,
-				55EE84DD093E600300812582 /* RetsSession.cpp in Sources */,
-				55EE8540093E628900812582 /* RetsSqlException.cpp in Sources */,
-				55EE8541093E628900812582 /* RetsUnknownMetadataException.cpp in Sources */,
-				55EE8542093E628900812582 /* RetsXmlAttribute.cpp in Sources */,
-				55EE8543093E628900812582 /* RetsXmlEndDocumentEvent.cpp in Sources */,
-				55EE8544093E628900812582 /* RetsXmlEndElementEvent.cpp in Sources */,
-				55EE8545093E628900812582 /* RetsXmlEvent.cpp in Sources */,
-				55EE8546093E628900812582 /* RetsXmlParser.cpp in Sources */,
-				55EE8547093E628900812582 /* RetsXmlStartElementEvent.cpp in Sources */,
-				55EE8548093E628900812582 /* RetsXmlTextEvent.cpp in Sources */,
-				55EE84DF093E600300812582 /* SearchRequest.cpp in Sources */,
-				55EE84E0093E600300812582 /* SearchResultSet.cpp in Sources */,
-				55EE8549093E628900812582 /* SqlToDmqlCompiler.cpp in Sources */,
-				55EE854A093E628900812582 /* StreamHttpLogger.cpp in Sources */,
-				55EE854B093E628900812582 /* Uri.cpp in Sources */,
-				55EE854C093E628900812582 /* util.cpp in Sources */,
-				55EE854D093E628900812582 /* XmlMetadataElementFactory.cpp in Sources */,
-				55EE854E093E628900812582 /* XmlMetadataParser.cpp in Sources */,
-				554662340A62BAF600F3B94E /* md5.cpp in Sources */,
-				554662500A62F2EE00F3B94E /* UserAgentAuthCalculator.cpp in Sources */,
-				DEAFBDE70DAD23D500EA99C7 /* CurlMulti.cpp in Sources */,
-				DEAFBDE80DAD23D500EA99C7 /* CurlStream.cpp in Sources */,
-				F9310AD30DFDEB4D004DE8BB /* ServerInfoRequest.cpp in Sources */,
-				F9310B450DFE08A0004DE8BB /* ServerInfoResponse.cpp in Sources */,
-				F9AD5E1B0DFEE07F00775FCC /* LookupColumnsTreeParser.cpp in Sources */,
-				F9AD5E1E0DFEE07F00775FCC /* LookupTreeParser.cpp in Sources */,
-				F9AD5E420DFEE4DC00775FCC /* LookupColumnsQuery.cpp in Sources */,
-				F9AD5E590DFEE51200775FCC /* LookupColumnsQuery.cpp in Sources */,
-				F9AD5E5A0DFEE51200775FCC /* LookupQuery.cpp in Sources */,
-				F9AD5E5B0DFEE51200775FCC /* LookupCriterion.cpp in Sources */,
-				F9AD5E5C0DFEE51200775FCC /* LookupOrCriterion.cpp in Sources */,
-				F9AD5E5D0DFEE51200775FCC /* LtCriterion.cpp in Sources */,
-				F9AD5E5E0DFEE51200775FCC /* AndCriterion.cpp in Sources */,
-				F9AD5E5F0DFEE51200775FCC /* DmqlCriterion.cpp in Sources */,
-				F9AD5E600DFEE51200775FCC /* DmqlExpression.cpp in Sources */,
-				F9AD5E610DFEE51200775FCC /* DmqlQuery.cpp in Sources */,
-				F9AD5E620DFEE51200775FCC /* GetObjectQuery.cpp in Sources */,
-				F9AD5E630DFEE51200775FCC /* EqCriterion.cpp in Sources */,
-				F9AD5E640DFEE51200775FCC /* FieldCriterion.cpp in Sources */,
-				F9AD5E650DFEE51200775FCC /* GtCriterion.cpp in Sources */,
-				F9AD5E660DFEE51200775FCC /* JunctionCriterion.cpp in Sources */,
-				F9AD5E670DFEE51200775FCC /* LiteralCriterion.cpp in Sources */,
-				F9AD5E680DFEE51200775FCC /* NotCriterion.cpp in Sources */,
-				F9AD5E690DFEE51200775FCC /* OrCriterion.cpp in Sources */,
-				F9AD5E6A0DFEE51200775FCC /* RetsAST.cpp in Sources */,
-				F9AD5E6B0DFEE51200775FCC /* RetsSqlException.cpp in Sources */,
-				F9AD5E6C0DFEE51200775FCC /* SqlToDmqlCompiler.cpp in Sources */,
+				F9E64D910E03325D00231C0E /* CurlMulti.cpp in Sources */,
+				F9E64D920E03325D00231C0E /* CurlStream.cpp in Sources */,
+				F9E64D930E03325D00231C0E /* CurlEasy.cpp in Sources */,
+				F9E64D940E03325D00231C0E /* CurlHttpClient.cpp in Sources */,
+				F9E64D950E03325D00231C0E /* CurlHttpResponse.cpp in Sources */,
+				F9E64D960E03325D00231C0E /* CurlSlist.cpp in Sources */,
+				F9E64D970E03325D00231C0E /* RetsHttpClient.cpp in Sources */,
+				F9E64D980E03325D00231C0E /* RetsHttpRequest.cpp in Sources */,
+				F9E64D990E03325D00231C0E /* RetsHttpResponse.cpp in Sources */,
+				F9E64D9A0E03325D00231C0E /* RetsHttpLogger.cpp in Sources */,
+				F9E64D9B0E03325D00231C0E /* StreamHttpLogger.cpp in Sources */,
+				F9E64D9C0E03327700231C0E /* ExceptionErrorHandler.cpp in Sources */,
+				F9E64D9D0E03327700231C0E /* md5.cpp in Sources */,
+				F9E64D9E0E03327700231C0E /* RetsErrorHandler.cpp in Sources */,
+				F9E64D9F0E03327700231C0E /* RetsException.cpp in Sources */,
+				F9E64DA00E03327700231C0E /* RetsExceptionContext.cpp in Sources */,
+				F9E64DA10E03327700231C0E /* RetsObject.cpp in Sources */,
+				F9E64DA20E03327700231C0E /* Uri.cpp in Sources */,
+				F9E64DA30E03327700231C0E /* util.cpp in Sources */,
+				F9E64DA40E03328400231C0E /* IncrementalMetadataFinder.cpp in Sources */,
+				F9E64DA50E03328400231C0E /* MetadataFinder.cpp in Sources */,
+				F9E64DA60E03328400231C0E /* MetadataLoader.cpp in Sources */,
+				F9E64DA70E03328400231C0E /* DefaultMetadataElementFactory.cpp in Sources */,
+				F9E64DA80E03328400231C0E /* RetsMetadata.cpp in Sources */,
+				F9E64DA90E03328400231C0E /* DefaultMetadataCollector.cpp in Sources */,
+				F9E64DAA0E03328400231C0E /* MetadataElementCollector.cpp in Sources */,
+				F9E64DAB0E03328400231C0E /* MetadataElement.cpp in Sources */,
+				F9E64DAC0E03328400231C0E /* MetadataForeignKey.cpp in Sources */,
+				F9E64DAD0E03328400231C0E /* MetadataClass.cpp in Sources */,
+				F9E64DAE0E03328400231C0E /* MetadataEditMask.cpp in Sources */,
+				F9E64DAF0E03328400231C0E /* MetadataLookup.cpp in Sources */,
+				F9E64DB00E03328400231C0E /* MetadataLookupType.cpp in Sources */,
+				F9E64DB10E03328400231C0E /* MetadataObject.cpp in Sources */,
+				F9E64DB20E03328400231C0E /* MetadataResource.cpp in Sources */,
+				F9E64DB30E03328400231C0E /* MetadataSearchHelp.cpp in Sources */,
+				F9E64DB40E03328400231C0E /* MetadataSystem.cpp in Sources */,
+				F9E64DB50E03328400231C0E /* MetadataTable.cpp in Sources */,
+				F9E64DB60E03328400231C0E /* MetadataUpdate.cpp in Sources */,
+				F9E64DB70E03328400231C0E /* MetadataUpdateHelp.cpp in Sources */,
+				F9E64DB80E03328400231C0E /* MetadataUpdateType.cpp in Sources */,
+				F9E64DB90E03328400231C0E /* MetadataValidationExpression.cpp in Sources */,
+				F9E64DBA0E03328400231C0E /* MetadataValidationExternal.cpp in Sources */,
+				F9E64DBB0E03328400231C0E /* MetadataValidationExternalType.cpp in Sources */,
+				F9E64DBC0E03328400231C0E /* MetadataValidationLookup.cpp in Sources */,
+				F9E64DBD0E03328400231C0E /* MetadataValidationLookupType.cpp in Sources */,
+				F9E64DBE0E03328400231C0E /* RetsUnknownMetadataException.cpp in Sources */,
+				F9E64DD10E0332F700231C0E /* AndCriterion.cpp in Sources */,
+				F9E64DD20E0332F700231C0E /* DmqlCriterion.cpp in Sources */,
+				F9E64DD30E0332F700231C0E /* DmqlExpression.cpp in Sources */,
+				F9E64DD40E0332F700231C0E /* DmqlQuery.cpp in Sources */,
+				F9E64DD50E0332F700231C0E /* EqCriterion.cpp in Sources */,
+				F9E64DD60E0332F700231C0E /* FieldCriterion.cpp in Sources */,
+				F9E64DD70E0332F700231C0E /* GetObjectQuery.cpp in Sources */,
+				F9E64DD80E0332F700231C0E /* GtCriterion.cpp in Sources */,
+				F9E64DD90E0332F700231C0E /* JunctionCriterion.cpp in Sources */,
+				F9E64DDA0E0332F700231C0E /* LiteralCriterion.cpp in Sources */,
+				F9E64DDB0E0332F700231C0E /* LookupColumnsQuery.cpp in Sources */,
+				F9E64DDC0E0332F700231C0E /* LookupCriterion.cpp in Sources */,
+				F9E64DDD0E0332F700231C0E /* LookupOrCriterion.cpp in Sources */,
+				F9E64DDE0E0332F700231C0E /* LookupQuery.cpp in Sources */,
+				F9E64DDF0E0332F700231C0E /* LtCriterion.cpp in Sources */,
+				F9E64DE00E0332F700231C0E /* NotCriterion.cpp in Sources */,
+				F9E64DE10E0332F700231C0E /* OrCriterion.cpp in Sources */,
+				F9E64DE20E0332F700231C0E /* RetsAST.cpp in Sources */,
+				F9E64DE30E0332F700231C0E /* RetsSqlException.cpp in Sources */,
+				F9E64DE40E0332F700231C0E /* SqlToDmqlCompiler.cpp in Sources */,
+				F9E64DE50E03330300231C0E /* CapabilityUrls.cpp in Sources */,
+				F9E64DE60E03330300231C0E /* GetObjectRequest.cpp in Sources */,
+				F9E64DE70E03330300231C0E /* GetObjectResponse.cpp in Sources */,
+				F9E64DE80E03330300231C0E /* KeyValueResponse.cpp in Sources */,
+				F9E64DE90E03330300231C0E /* LoginResponse.cpp in Sources */,
+				F9E64DEA0E03330300231C0E /* LogoutResponse.cpp in Sources */,
+				F9E64DEB0E03330300231C0E /* ObjectDescriptor.cpp in Sources */,
+				F9E64DEC0E03330300231C0E /* RetsReplyException.cpp in Sources */,
+				F9E64DED0E03330300231C0E /* RetsSession.cpp in Sources */,
+				F9E64DEE0E03330300231C0E /* SearchRequest.cpp in Sources */,
+				F9E64DEF0E03330300231C0E /* SearchResultSet.cpp in Sources */,
+				F9E64DF00E03330300231C0E /* ServerInfoRequest.cpp in Sources */,
+				F9E64DF10E03330300231C0E /* ServerInfoResponse.cpp in Sources */,
+				F9E64DF20E03330300231C0E /* UserAgentAuthCalculator.cpp in Sources */,
+				F9E64DF30E03330B00231C0E /* ExpatXmlParser.cpp in Sources */,
+				F9E64DF40E03330B00231C0E /* RetsXmlAttribute.cpp in Sources */,
+				F9E64DF50E03330B00231C0E /* RetsXmlEndDocumentEvent.cpp in Sources */,
+				F9E64DF60E03330B00231C0E /* RetsXmlEndElementEvent.cpp in Sources */,
+				F9E64DF70E03330B00231C0E /* RetsXmlEvent.cpp in Sources */,
+				F9E64DF80E03330B00231C0E /* RetsXmlParser.cpp in Sources */,
+				F9E64DF90E03330B00231C0E /* RetsXmlStartElementEvent.cpp in Sources */,
+				F9E64DFA0E03330B00231C0E /* RetsXmlTextEvent.cpp in Sources */,
+				F9E64DFB0E03330B00231C0E /* XmlMetadataElementFactory.cpp in Sources */,
+				F9E64DFC0E03330B00231C0E /* XmlMetadataParser.cpp in Sources */,
+				F9E64E400E03381D00231C0E /* LookupColumnsTreeParser.cpp in Sources */,
+				F9E64E410E03381D00231C0E /* LookupTreeParser.cpp in Sources */,
+				F9E64E420E03381D00231C0E /* GetObjectTreeParser.cpp in Sources */,
+				F9E64E430E03381D00231C0E /* DmqlTreeParser.cpp in Sources */,
+				F9E64E440E03381D00231C0E /* RetsSqlLexer.cpp in Sources */,
+				F9E64E450E03381D00231C0E /* RetsSqlParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
