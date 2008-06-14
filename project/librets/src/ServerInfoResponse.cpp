@@ -39,22 +39,23 @@ using std::invalid_argument;
 namespace b = boost;
 namespace ba = boost::algorithm;
 
-ServerInfoResponse::ServerInfoResponse() 
+ServerInformationResponse::ServerInformationResponse() 
             : mParseInputStream()
 {
-    mColumns.reset(new StringVector());
-    mCount = -1;
     mEncoding = RETS_XML_DEFAULT_ENCODING;
-    mMaxRows = false;
     mReplyCode = 0;
     mReplyText.clear();
+    mValues.clear();
+    mClasses.clear();
+    mResources.clear();
+    mParameters.clear();
 }
 
-ServerInfoResponse::~ServerInfoResponse()
+ServerInformationResponse::~ServerInformationResponse()
 {
 }
 
-void ServerInfoResponse::FixCompactArray(StringVector & compactArray,
+void ServerInformationResponse::FixCompactArray(StringVector & compactArray,
                                       std::string context)
 {
     if (compactArray.size() < 2)
@@ -86,14 +87,9 @@ void ServerInfoResponse::FixCompactArray(StringVector & compactArray,
 #endif
 }
 
-void ServerInfoResponse::Parse(istreamPtr inputStream)
+void ServerInformationResponse::Parse(istreamPtr inputStream)
 {
     SetInputStream(inputStream);
-}
-
-bool ServerInfoResponse::Parse()
-{
-    bool retval = false;
     
     while (mXmlParser->HasNext())
     {
@@ -113,13 +109,7 @@ bool ServerInfoResponse::Parse()
                 startEvent->GetAttributeValue("ReplyCode"));
             int replyCode;
             replyCodeString >> replyCode;
-            if (replyCode == 20201)
-            {
-                // No records found
-                mCount = 0;
-                continue;
-            }
-            else if (replyCode != 0)
+            if (replyCode != 0)
             {
                 string meaning = startEvent->GetAttributeValue("ReplyText");
                 string extendedMeaning;
@@ -144,71 +134,52 @@ bool ServerInfoResponse::Parse()
                 ba::erase_all(extendedMeaning, "\n");
                 throw RetsReplyException(replyCode, meaning, extendedMeaning);
             }
-            /*
-             * Beginning a transaction. Clear mMaxRows, mReplyCode and mReplyText.
-             */
-            mMaxRows = false;
             mReplyCode = 0;
             mReplyText.clear();
         }
-        else if (name == "COUNT")
+        else if (name == "ServerInformation")
         {
-            istringstream count(startEvent->GetAttributeValue("Records"));
-            count >> mCount;
-        }
-        else if (name == "COLUMNS")
-        {
-            RetsXmlTextEventPtr textEvent =
-                mXmlParser->AssertNextIsTextEvent();
-            string text = textEvent->GetText();
-            StringVector columns;
-            ba::split(columns, text, ba::is_any_of(mDelimiter));
-            FixCompactArray(columns, "columns");
-
-            for (StringVector::size_type i = 0; i < columns.size(); i++)
-            {
-                mColumns->push_back(columns.at(i));
-                // Need to subtract 1, so it's zero-based
-                mColumnToIndex[columns.at(i)] = i;
-            }
-            mXmlParser->AssertNextIsEndEvent();
-        }
-        else if (name == "DATA")
-        {
-            // AssertNextIsTextEvent() ignores empty text events. In this
-            // case, an empty text event (one with just tabs) is valid.  So
-            // here we use GetNextEvent() which does not ignore empty text
-            // events.
-            RetsXmlEventPtr xmlEvent = mXmlParser->GetNextEvent();
-            RetsXmlTextEventPtr textEvent =
-                mXmlParser->AssertTextEvent(xmlEvent, "DATA: ");
-            string text = textEvent->GetText();
-            StringVectorPtr data(new StringVector());
-            ba::split(*data, text, ba::is_any_of(mDelimiter));
-            FixCompactArray(*data, "data");
+            int i;
+            RetsXmlEventListPtr eventList = mXmlParser->GetEventListSkippingEmptyText();
             
-            mRows.push_back(data);
-            mXmlParser->AssertNextIsEndEvent();
-            /*
-             * Once a single data row has been parsed, return to the caller.
-             */
-            retval = true;
-            break;
-        }
-        else if (name == "DELIMITER")
-        {
-            istringstream hexString(startEvent->GetAttributeValue("value"));
-            // Must go into an int, not a char, due to the special handling of
-            // chars in istringstream
-            int delimiterChar;
-            hexString >> std::hex >> delimiterChar;
-            mDelimiter.clear();
-            mDelimiter += (char) delimiterChar;
-        }
-        else if (name == "MAXROWS")
-        {
-            mMaxRows = true;
-        }
+            int events = eventList->size();
+     
+            for (i = 0; i < events; i+=3)
+            {
+                RetsXmlEventPtr serverEvent = eventList->at(i);
+            
+                RetsXmlStartElementEventPtr startEvent = b::dynamic_pointer_cast<RetsXmlStartElementEvent>(serverEvent);
+                if (!startEvent)
+                {
+                    break;
+                }
+                /*
+                 * We've found the <ServerInformation> tag. Parse it.
+                 */
+                string parameterName = startEvent->GetAttributeValue("name");
+                string resourceName = startEvent->GetAttributeValue("resource");
+                string className = startEvent->GetAttributeValue("class");
+                RetsXmlTextEventPtr textEvent = RetsXmlParser::AssertTextEvent(eventList->at(i + 1));
+                RetsXmlEndElementEventPtr endEvent = RetsXmlParser::AssertEndEvent(eventList->at(i + 2));
+                
+                /*
+                 * Save the values.
+                 */
+                mParameters.push_back(parameterName);
+                mResources[parameterName] = resourceName;
+                mClasses[parameterName] = className;
+                string value = textEvent->GetText();
+                ba::trim(value);
+                mValues[parameterName] = value;
+            }
+
+            // </ServerInformation>
+            RetsXmlParser::AssertEndEvent(eventList->at(i));
+            // </RETS>
+            RetsXmlParser::AssertEndEvent(eventList->at(i + 1));
+            // End of Document.
+            RetsXmlParser::AssertEndDocumentEvent(eventList->at(i + 2));
+         }
         else if (name == "RETS-STATUS")
         {
             istringstream replyCodeString(
@@ -221,77 +192,70 @@ bool ServerInfoResponse::Parse()
             }
         }
     }
+}
+
+const StringVector ServerInformationResponse::GetParameters()
+{
+    return mParameters;
+}
+
+string ServerInformationResponse::GetClass(string parameterName)
+{
+    StringMap::const_iterator value = mClasses.find(parameterName);
     
-    return retval;
-}
-
-bool ServerInfoResponse::HasNext()
-{
-    /*
-     * We are in streaming mode. We need to fetch a row until we either successfully
-     * get a row, or run out of data to parse.
-     */
-    while (mNextRow == mRows.end() && Parse());
-    if (mNextRow == mRows.end())
+    if (value == mClasses.end())
     {
-        mCurrentRow.reset();
-        return false;
+        return "";
     }
-    /*
-     * Since the parsing returns after parsing a single <DATA/> tag, the current
-     * row will always be the one prior to the end of mRows.
-     */
-    mCurrentRow = *(mRows.end() - 1);
-    mNextRow = mRows.end();
-    return true;
+    
+    return value->second;
 }
 
-int ServerInfoResponse::GetCount()
+string ServerInformationResponse::GetResource(string parameterName)
 {
-    return mCount;
-}
-
-const StringVector ServerInfoResponse::GetColumns()
-{
-    return *mColumns;
-}
-
-string ServerInfoResponse::GetString(int columnIndex)
-{
-    return mCurrentRow->at(columnIndex);
-}
-
-string ServerInfoResponse::GetString(string columnName)
-{
-    ColumnToIndexMap::const_iterator i = mColumnToIndex.find(columnName);
-    if (i == mColumnToIndex.end())
+    StringMap::const_iterator value = mResources.find(parameterName);
+    
+    if (value == mResources.end())
     {
-        throw invalid_argument("Invalid columnName: " + columnName);
+        return "";
     }
-    return GetString(i->second);
+    
+    return value->second;
 }
 
-void ServerInfoResponse::SetEncoding(EncodingType encoding)
+string ServerInformationResponse::GetValue(string parameterName)
+{
+    StringMap::const_iterator value = mValues.find(parameterName);
+    
+    if (value == mValues.end())
+    {
+        return "";
+    }
+    
+    return value->second;
+}
+
+void ServerInformationResponse::SetEncoding(EncodingType encoding)
 {
     mEncoding = encoding;
 }
 
-EncodingType ServerInfoResponse::GetEncoding()
+EncodingType ServerInformationResponse::GetEncoding()
 {
     return mEncoding;
 }
 
-int ServerInfoResponse::GetReplyCode()
+int ServerInformationResponse::GetReplyCode()
 {
     return mReplyCode;
 }
 
-string ServerInfoResponse::GetReplyText()
+string ServerInformationResponse::GetReplyText()
 {
     return mReplyText;
 }
 
-void ServerInfoResponse::SetInputStream(istreamPtr inputStream)
+void ServerInformationResponse::SetInputStream(istreamPtr inputStream)
 {
     /*
      * Initialize for streaming mode.
@@ -303,14 +267,5 @@ void ServerInfoResponse::SetInputStream(istreamPtr inputStream)
                         ? "iso-8859-1"    
                         : "US-ASCII")));
     mXmlParser = XmlParser;
-
-    mDelimiter = "\t";
-    /*
-     * Perform the initial parse.
-     */
-    Parse();
-    
-    mNextRow = mRows.begin();
-    mCurrentRow.reset();
 }
 

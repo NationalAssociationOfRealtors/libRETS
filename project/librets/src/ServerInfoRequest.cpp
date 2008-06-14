@@ -23,14 +23,6 @@ const char * ServerInformationRequest::CLASS_PARAMETER = "Class";
 const char * ServerInformationRequest::RESOURCE_PARAMETER = "Resource";
 const char * ServerInformationRequest::STANDARD_NAMES_PARAMETER = "StandardNames";
 
-ServerInformationRequest::ServerInformationRequest(string resourceName, string className,
-                             bool standardNames)
-{
-    SetClassName(className);
-    SetResourceName(resourceName);
-    SetStandardNames(standardNames);
-}
-
 ServerInformationRequest::ServerInformationRequest()
 {
     SetClassName("");

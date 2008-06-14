@@ -22,6 +22,8 @@
 #include "librets/DefaultMetadataCollector.h"
 #include "librets/IncrementalMetadataFinder.h"
 #include "librets/SearchRequest.h"
+#include "librets/ServerInfoRequest.h"
+#include "librets/ServerInfoResponse.h"
 #include "librets/GetObjectRequest.h"
 #include "librets/GetObjectResponse.h"
 #include "librets/str_stream.h"
@@ -342,6 +344,31 @@ SearchResultSetAPtr CLASS::Search(SearchRequest * request)
     resultSet->SetInputStream(httpResponse->GetInputStream());
        
     return resultSet;
+}
+
+ServerInformationResponseAPtr CLASS::GetServerInformation(std::string resourceName, 
+                                                    std::string className, 
+                                                    bool standardNames)
+{
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+
+    ServerInformationRequestAPtr request(new ServerInformationRequest());
+    string serverInfoUrl = mCapabilityUrls->GetServerInformationUrl();
+    
+    request->SetClassName(className);
+    request->SetResourceName(resourceName);
+    request->SetStandardNames(standardNames);
+    request->SetUrl(serverInfoUrl);
+    request->SetMethod(mHttpMethod);
+    
+    RetsHttpResponsePtr httpResponse = DoRequest(request.get());
+    
+    ServerInformationResponseAPtr serverInformation(new ServerInformationResponse());
+    
+    serverInformation->SetEncoding(mEncoding);
+    serverInformation->SetInputStream(httpResponse->GetInputStream());
+    
 }
 
 GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)

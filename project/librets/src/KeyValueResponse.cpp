@@ -123,7 +123,7 @@ RetsXmlTextEventPtr CLASS::GetBodyEventFromStandardResponse(
     else
     {
         ostringstream message;
-        message << "Unexpected XML event list for standard RETS respose: "
+        message << "Unexpected XML event list for standard RETS response: "
                 << Output(*eventList);
         throw RetsException(message.str());
     }
