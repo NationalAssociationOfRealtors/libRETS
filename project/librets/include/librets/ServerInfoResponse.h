@@ -29,64 +29,51 @@ namespace librets {
 /**
  * A search result set.
  */
-class ServerInfoResponse : public virtual RetsObject
+class ServerInformationResponse : public virtual RetsObject
 {
   public:
     /**
      * Default constructor.
      */
-    ServerInfoResponse();
+    ServerInformationResponse();
 
     /**
      * Virtual destructor.
      */
-    virtual ~ServerInfoResponse();
+    virtual ~ServerInformationResponse();
 
     void Parse(istreamPtr inputStream);
     
     /**
-     * Returns true if there are more results.  This may block waiting
-     * for data from the RETS server.
+     * Returns the parameter names.
      *
-     * HasNext() has the side effect of incrementing the result set to
-     * the next result.  After a query, this must be called before you
-     * can access the first result row.
-     *
-     * @return If there is a next item or not.
+     * @return The parameter names
      */
-    bool HasNext();
+    const StringVector GetParameters();
 
     /**
-     * Returns the number of rows in the result set, or -1 if not
-     * known.  The number of rows is only available if it was
-     * specified in the SearchRequest.
+     * Returns the resource name of a parameter as a string.
      *
-     * @return The number of rows, or -1
+     * @param parameterName parameter name
+     * @return string value of resource name
      */
-    int GetCount();
-
+    std::string GetResource(std::string parameterName);
+    
     /**
-     * Returns the column names.
+     * Returns the class name of a parameter as a string.
      *
-     * @return The column names
+     * @param parameterName parameter name
+     * @return string value of class name
      */
-    const StringVector GetColumns();
-
+    std::string GetClass(std::string parameterName);
+    
     /**
-     * Returns the value of a column as a string.
+     * Returns the value of a parameter as a string.
      *
-     * @param columnIndex column index
-     * @return string value of column
+     * @param parameterName parameter name
+     * @return string value of parameter
      */
-    std::string GetString(int columnIndex);
-
-    /**
-     * Returns the value of a column as a string.
-     *
-     * @param columnName column name
-     * @return string value of column
-     */
-    std::string GetString(std::string columnName);
+    std::string GetValue(std::string parameterName);
 
     /**
      * Set the data encoding flag to allow for parsing of extended
@@ -128,32 +115,19 @@ class ServerInfoResponse : public virtual RetsObject
     void SetInputStream(istreamPtr inputStream);
     
   private:
-    typedef std::vector<StringVectorPtr> RowData;
-    typedef std::map<std::string, StringVector::size_type> ColumnToIndexMap;
     void FixCompactArray(StringVector & compactVector, std::string context);
-    /**
-     * Parse the XML. An input stream must have already been
-     * established. This method should only be called internally.
-     *
-     * @return Returns TRUE while more data can be fetched.
-     */
-    bool Parse();
+    
+    StringMap mValues;
+    StringMap mResources;
+    StringMap mClasses;
+    StringVector mParameters;
 
-
-    int mCount;
-    StringVectorPtr mColumns;
-    ColumnToIndexMap mColumnToIndex;
-    RowData mRows;
-    RowData::iterator mNextRow;
-    StringVectorPtr mCurrentRow;
     EncodingType mEncoding;
-    bool mMaxRows;
     int mReplyCode;
     std::string mReplyText;
 
     istreamPtr mParseInputStream;
     ExpatXmlParserPtr mXmlParser;
-    std::string mDelimiter;
 };
 
 };

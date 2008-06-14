@@ -91,7 +91,7 @@ class RetsSession : public MetadataLoader
      * @throws RetsException if an error occurs.
      */
     std::string GetAction();
-
+    
     /**
      * Create a new search request with correct query type based on the 
      * detected version.
@@ -105,13 +105,26 @@ class RetsSession : public MetadataLoader
                                           std::string query);
     
     /**
-     * Performs a blocking search on the server.
+     * Performs a search on the server.
      *
      * @param request search request parameters
      * @return Search result set
      * @throws RetsException if an error occurs.
      */
     SearchResultSetAPtr Search(SearchRequest * request);
+
+    /**
+     * Create a new server information request (RETS 1.7).
+     *
+     * @param  resourceName RETS resource name
+     * @param className RETS class name
+     * @param standardNames <code>true</code> indicates Standard Names,
+     * <code>false</code> indicates System Names (default).
+     * @return Server Information Response.
+     */
+    ServerInformationResponseAPtr GetServerInformation(std::string resourceName = "", 
+                                                std::string className = "",
+                                                bool standardNames = false);
 
     /**
      * Returns the metadata for this server.  Only valid after logging

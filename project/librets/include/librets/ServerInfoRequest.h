@@ -32,15 +32,6 @@ class ServerInformationRequest : public RetsHttpRequest
   public:
     /**
      * Create a server information request. This is for RETS 1.7 and later.
-     *
-     * @param resourceName  RETS resource name
-     * @param className  RETS class name
-     * @param standardNames Flag if <code>true</code> indicates that StandardNames is being used.
-     */
-    ServerInformationRequest(std::string resourceName, std::string className, bool standardNames);
-    
-    /**
-     * Create a server information request. This is for RETS 1.7 and later.
      */
     ServerInformationRequest();
     
