@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<RETS ReplyCode="0" ReplyText="Operation Successful">
+    <ServerInformation>
+        <Parameter name="CurrentTimeStamp">
+	    2008-06-12T10:30:00
+	</Parameter>
+    </ServerInformation>
+</RETS>
