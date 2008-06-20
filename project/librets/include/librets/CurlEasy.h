@@ -65,6 +65,8 @@ class CurlEasy
     
     CURL * GetEasyHandle();
     
+    curl_slist * GetCookieSlist();
+    
   private:
     CurlEasy(const CurlEasy & curlEasy);
 

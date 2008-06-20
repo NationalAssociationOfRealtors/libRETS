@@ -51,6 +51,8 @@ class RetsHttpClient
     virtual void SetLogger(RetsHttpLogger * logger) = 0;
 
     virtual RetsHttpLogger* GetLogger() const = 0;
+    
+    virtual std::string GetCookie(const char * name) = 0;
 };
 
 };

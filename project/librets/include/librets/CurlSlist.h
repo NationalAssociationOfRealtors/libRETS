@@ -34,6 +34,8 @@ class CurlSlist
     void free_all();
 
     const curl_slist * slist();
+    
+    void set(curl_slist *slist);
 
   private:
     curl_slist * mSlist;

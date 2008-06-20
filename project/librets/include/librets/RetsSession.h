@@ -66,6 +66,23 @@ class RetsSession : public MetadataLoader
     bool Login(std::string userName, std::string password);
 
     /**
+     * Logs into the RETS server with optional brokercode and saved
+     * metadata timestamp.
+     *
+     * @param userName user name
+     * @param password password
+     * @param brokerCode Broker Code
+     * @param savedMetadataTimestamp The saved metadata timestamp (RETS 1.7+)
+     *
+     * @return True, if login is successful.
+     * @throws RetsException if an error occurs.
+     */
+    bool Login(std::string userName, 
+                std::string password, 
+                std::string brokerCode,
+                std::string savedMetadataTimestamp);
+
+    /**
      * Returns the login response from the last successful login transaction.
      * If the last login trasaction was not successful, NULL is returned.
      *
@@ -216,6 +233,14 @@ class RetsSession : public MetadataLoader
      * @return the detected RETS version
      */
     RetsVersion GetDetectedRetsVersion() const;
+    /**
+     * Returns the RETS version as a printable string.
+     *
+     * @param retsVersion RETS version to convert to a string.
+     *
+     * @return String representation of RETS version.
+     */
+    std::string RetsVersionToString(RetsVersion retsVersion);
 
     /**
      * Changes the error handler. The default error handler throws exceptions
@@ -278,6 +303,7 @@ class RetsSession : public MetadataLoader
     void Cleanup();
 
 private:
+    static const char * RETS_SESSION_ID_HEADER;
     static const char * RETS_VERSION_HEADER;
     static const char * RETS_UA_AUTH_HEADER;
     static const char * RETS_1_0_STRING;
@@ -292,8 +318,6 @@ private:
 
     void AssertSuccessfulResponse(RetsHttpResponsePtr response,
                                   std::string url);
-    
-    std::string RetsVersionToString(RetsVersion retsVersion);
     
     RetsVersion RetsVersionFromString(std::string versionString);
     

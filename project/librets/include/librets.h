@@ -41,6 +41,8 @@
 #include "librets/CapabilityUrls.h"
 #include "librets/LoginResponse.h"
 #include "librets/LogoutResponse.h"
+#include "librets/ServerInfoRequest.h"
+#include "librets/ServerInfoResponse.h"
 #include "librets/SearchRequest.h"
 #include "librets/SearchResultSet.h"
 #include "librets/GetObjectRequest.h"

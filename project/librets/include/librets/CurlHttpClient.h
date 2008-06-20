@@ -40,6 +40,8 @@ class CurlHttpClient : public RetsHttpClient
     virtual void SetUserCredentials(std::string userName,
                                     std::string password);
 
+    std::string GetCookie(const char * name);
+
     virtual void SetDefaultHeader(std::string name, std::string value);
     
     virtual std::string GetDefaultHeader(std::string name) const;
@@ -58,7 +60,6 @@ class CurlHttpClient : public RetsHttpClient
     
     virtual int GetResponseCode();
     
-
     virtual RetsHttpLogger* GetLogger() const;
 
   private:
@@ -92,6 +93,8 @@ class CurlHttpClient : public RetsHttpClient
     RetsHttpLogger * mLogger;
     
     int mResponseCode;
+    
+    CurlSlist mCookies;
 };
 
 };

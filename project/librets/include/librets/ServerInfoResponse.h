@@ -14,7 +14,7 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#ifndef LIBRETS_SERVERINFO_REWSPONSE_H
+#ifndef LIBRETS_SERVERINFO_RESPONSE_H
 #define LIBRETS_SERVERINFO_RESPONSE_H
 
 #include <string>
