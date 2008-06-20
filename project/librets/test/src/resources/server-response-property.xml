@@ -1,17 +1,14 @@
 <?xml version="1.0"?>
 <RETS ReplyCode="0" ReplyText="Operation Successful">
     <ServerInformation>
-        <Parameter name="LastTimeStamp" resource="Property" class="ResidentialProperty">
-	    2008-06-12T10:30:00
-	</Parameter>
         <Parameter name="MinimumLimit" resource="Property" class="ResidentialProperty">
-	    NONE
-	</Parameter>
+	        NONE
+	    </Parameter>
         <Parameter name="KeyLimit" resource="Property" class="ResidentialProperty">
-	    1234
-	</Parameter>
+	        1234
+	    </Parameter>
         <Parameter name="ReplicationSupport" resource="Property" class="ResidentialProperty">
-	    N
-	</Parameter>
+	        N
+	    </Parameter>
     </ServerInformation>
 </RETS>

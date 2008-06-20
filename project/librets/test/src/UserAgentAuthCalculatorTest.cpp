@@ -29,11 +29,13 @@ class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testAuthorizationValue);
+    CPPUNIT_TEST(testAuthorizationValue1_7);
     CPPUNIT_TEST(testNoPassword);
     CPPUNIT_TEST_SUITE_END();
     
 protected:
     void testAuthorizationValue();
+    void testAuthorizationValue1_7();
     void testNoPassword();
 };
 
@@ -50,6 +52,20 @@ void CLASS::testAuthorizationValue()
     
     CPPUNIT_ASSERT(authCalc.HasAuthorizationValue());
     ASSERT_STRING_EQUAL("07554bfdcfb2b37e280b6d9c4826bc46",
+                        authCalc.AuthorizationValue());
+}
+
+void CLASS::testAuthorizationValue1_7()
+{
+    UserAgentAuthCalculator authCalc;
+    authCalc.SetUserAgent("MyAgent/1.2.3");
+    authCalc.SetUserAgentPassword("secret");
+    authCalc.SetRequestId("");
+    authCalc.SetSessionId("1234567");
+    authCalc.SetVersionInfo("RETS/1.7");
+    
+    CPPUNIT_ASSERT(authCalc.HasAuthorizationValue());
+    ASSERT_STRING_EQUAL("8367a86c3d5549265d43995cd91b76fc",
                         authCalc.AuthorizationValue());
 }
 

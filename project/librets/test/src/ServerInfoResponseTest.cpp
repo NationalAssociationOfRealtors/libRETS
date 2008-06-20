@@ -30,13 +30,13 @@ class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testValidResponse);
-//    CPPUNIT_TEST(testNoClass);
+    CPPUNIT_TEST(testNoClass);
     CPPUNIT_TEST(testCustomResponse);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
     void testCustomResponse();
-//    void testNoClass();
+    void testNoClass();
     void testValidResponse();
 };
 
@@ -53,22 +53,39 @@ void CLASS::testCustomResponse()
     ASSERT_STRING_EQUAL("This is a custom field.", serverResponse.GetValue("X-Custom"));
 }
 
+void CLASS::testNoClass()
+{
+    ServerInformationResponse serverResponse;
+    istreamPtr inputStream = getResource("server-response-no-class.xml");
+    serverResponse.Parse(inputStream);
+    StringVector parameters = serverResponse.GetParameters();
+    ASSERT_EQUAL(StringVector::size_type(1), parameters.size());
+    ASSERT_STRING_EQUAL("CurrentTimeStamp", parameters.at(0));
+    ASSERT_STRING_EQUAL("2008-06-12T10:30:00", serverResponse.GetValue("CurrentTimeStamp"));
+    ASSERT_STRING_EQUAL("", serverResponse.GetClass("CurrentTimeStamp"));
+    ASSERT_STRING_EQUAL("", serverResponse.GetResource("CurrentTimeStamp"));
+}
+
 void CLASS::testValidResponse()
 {
     ServerInformationResponse serverResponse;
     istreamPtr inputStream = getResource("server-response-property.xml");
     serverResponse.Parse(inputStream);
     StringVector parameters = serverResponse.GetParameters();
-    ASSERT_EQUAL(StringVector::size_type(4), parameters.size());
-    ASSERT_STRING_EQUAL("LastTimeStamp", parameters.at(0));
-    ASSERT_STRING_EQUAL("MinimumLimit", parameters.at(1));
-    ASSERT_STRING_EQUAL("KeyLimit", parameters.at(2));
-    ASSERT_STRING_EQUAL("ReplicationSupport", parameters.at(3));
+    ASSERT_EQUAL(StringVector::size_type(3), parameters.size());
+    ASSERT_STRING_EQUAL("MinimumLimit", parameters.at(0));
+    ASSERT_STRING_EQUAL("KeyLimit", parameters.at(1));
+    ASSERT_STRING_EQUAL("ReplicationSupport", parameters.at(2));
     
-    ASSERT_STRING_EQUAL("2008-06-12T10:30:00", serverResponse.GetValue("LastTimeStamp"));
     ASSERT_STRING_EQUAL("NONE", serverResponse.GetValue("MinimumLimit"));
+    ASSERT_STRING_EQUAL("ResidentialProperty", serverResponse.GetClass("MinimumLimit"));
+    ASSERT_STRING_EQUAL("Property", serverResponse.GetResource("MinimumLimit"));
     ASSERT_STRING_EQUAL("1234", serverResponse.GetValue("KeyLimit"));
+    ASSERT_STRING_EQUAL("ResidentialProperty", serverResponse.GetClass("KeyLimit"));
+    ASSERT_STRING_EQUAL("Property", serverResponse.GetResource("KeyLimit"));
     ASSERT_STRING_EQUAL("N", serverResponse.GetValue("ReplicationSupport"));
+    ASSERT_STRING_EQUAL("ResidentialProperty", serverResponse.GetClass("ReplicationSupport"));
+    ASSERT_STRING_EQUAL("Property", serverResponse.GetResource("ReplicationSupport"));
 }
 
 
