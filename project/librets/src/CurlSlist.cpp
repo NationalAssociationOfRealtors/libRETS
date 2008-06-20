@@ -51,6 +51,11 @@ void CLASS::free_all()
     }
 }
 
+void CLASS::set(curl_slist *slist)
+{
+    mSlist = slist;
+}
+
 const curl_slist * CLASS::slist()
 {
     return mSlist;

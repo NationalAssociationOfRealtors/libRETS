@@ -56,6 +56,52 @@ CurlHttpClient::~CurlHttpClient()
     mCurlMulti.RemoveEasy(mCurl);
 }
 
+string CurlHttpClient::GetCookie(const char * name)
+{
+    string cookie(name);
+    
+    mCookies.free_all();
+    mCookies.set(mCurl.GetCookieSlist());
+    
+    curl_slist *slist = (curl_slist *)mCookies.slist();
+    
+    if (!slist)
+    {
+        return "";
+    }
+    
+    /*
+     * Each data entry in the slist is in Netscape Format. The fields are:
+     *    domain    The domain name
+     *    flag      TRUE/FALSE indicating whether all domains can access
+     *    path      The path in the domain for which the cookie is valid
+     *    secure    TRUE/FALSE indicating whether or not a secure connection needed
+     *    expiration The expiration in seconds since 1/1/1970 00:00:00 GMT
+     *    name      The name of the cookie
+     *    value     The value of the cookie
+     */
+    
+    while (slist)
+    {
+        StringVector values;
+        StringVector::const_iterator i;
+    
+        ba::split(values, slist->data, ba::is_any_of("\t"));
+
+        string key = values[5];
+        string value = values[6];
+        ba::trim(key);
+        ba::trim(value);
+
+        if (cookie == key)
+        {
+            return value;
+        }
+        slist = slist->next;
+    }
+    return "";
+}
+
 void CurlHttpClient::SetDefaultHeader(string name, string value)
 {
     mDefaultHeaders[name] = value;

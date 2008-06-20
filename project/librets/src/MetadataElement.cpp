@@ -52,7 +52,8 @@ StringVector CLASS::GetAttributeNames() const
 string CLASS::GetStringAttribute(string attributeName,
                                  string defaultValue) const
 {
-    StringMap::const_iterator i = mAttributes.find(attributeName);
+    string value = ba::to_lower_copy(attributeName);
+    StringMap::const_iterator i = mAttributes.find(value);
     if (i != mAttributes.end())
     {
         return i->second;
@@ -65,7 +66,8 @@ string CLASS::GetStringAttribute(string attributeName,
 
 int CLASS::GetIntAttribute(string attributeName, int defaultValue) const
 {
-    StringMap::const_iterator i = mAttributes.find(attributeName);
+    string value = ba::to_lower_copy(attributeName);
+    StringMap::const_iterator i = mAttributes.find(value);
     if (i != mAttributes.end() && !isEmpty(i->second))
     {
         return lexical_cast<int>(i->second);
@@ -78,7 +80,8 @@ int CLASS::GetIntAttribute(string attributeName, int defaultValue) const
 
 bool CLASS::GetBoolAttribute(string attributeName, bool defaultValue) const
 {
-    StringMap::const_iterator i = mAttributes.find(attributeName);
+    string value = ba::to_lower_copy(attributeName);
+    StringMap::const_iterator i = mAttributes.find(value);
     if (i != mAttributes.end())
     {
         string value = ba::to_lower_copy(i->second);
@@ -92,7 +95,8 @@ bool CLASS::GetBoolAttribute(string attributeName, bool defaultValue) const
 
 void CLASS::SetAttribute(string attributeName, string attributeValue)
 {
-    mAttributes[attributeName] = attributeValue;
+    string value = ba::to_lower_copy(attributeName);
+    mAttributes[value] = attributeValue;
 }
 
 string CLASS::GetId() const
@@ -125,7 +129,7 @@ string CLASS::GetPath() const
 
 string CLASS::GetMetadataEntryID() const
 {
-    return GetStringAttribute("MetadataEntryID", "None");
+    return GetStringAttribute("MetadataEntryID", "");
 }
 
 std::ostream & CLASS::Print(std::ostream & outputStream) const

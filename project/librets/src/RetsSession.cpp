@@ -38,6 +38,7 @@ typedef RetsSession CLASS;
 
 const char * CLASS::DEFAULT_USER_AGENT = "librets/" LIBRETS_VERSION;
 const RetsVersion CLASS::DEFAULT_RETS_VERSION = RETS_1_5;
+const char * CLASS::RETS_SESSION_ID_HEADER = "RETS-Session-ID";
 const char * CLASS::RETS_VERSION_HEADER = "RETS-Version";
 const char * CLASS::RETS_UA_AUTH_HEADER = "RETS-UA-Authorization";
 const char * CLASS::RETS_1_0_STRING = "RETS/1.0";
@@ -55,7 +56,7 @@ CLASS::RetsSession(string login_url)
     mRetsVersion = DEFAULT_RETS_VERSION;
     mErrorHandler = ExceptionErrorHandler::GetInstance();
     mIncrementalMetadata = true;
-    mUserAgentAuthType = USER_AGENT_AUTH_INTEREALTY;
+    mUserAgentAuthType = USER_AGENT_AUTH_RETS_1_7;
     mUserAgentAuthCalculator.SetUserAgentPassword("");
     SetDefaultEncoding(RETS_XML_DEFAULT_ENCODING);
     mLoggedIn = false;
@@ -76,11 +77,18 @@ RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
     {
         mUserAgentAuthCalculator.SetRequestId("");
         mUserAgentAuthCalculator.SetSessionId("");
+        if (mUserAgentAuthType == USER_AGENT_AUTH_RETS_1_7)
+        {
+            string sessionId = mHttpClient->GetCookie(RETS_SESSION_ID_HEADER);
+    
+            mUserAgentAuthCalculator.SetSessionId(sessionId);
+        }
         mUserAgentAuthCalculator.SetVersionInfo(
             mHttpClient->GetDefaultHeader(RETS_VERSION_HEADER));
         string headerValue = "Digest " + mUserAgentAuthCalculator.AuthorizationValue();
         request->SetHeader(RETS_UA_AUTH_HEADER, headerValue);
     }
+
     return mHttpClient->StartRequest(request);
 }
 
@@ -99,6 +107,14 @@ void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
 
 bool CLASS::Login(string user_name, string passwd)
 {
+    return Login(user_name, passwd, "", "");
+}
+
+bool CLASS::Login(string user_name, 
+                    string passwd, 
+                    string brokerCode, 
+                    string savedMetadataTimestamp)
+{
     mLoginResponse.reset();
     mCapabilityUrls.reset();
     mLoggedIn = false;
@@ -106,6 +122,16 @@ bool CLASS::Login(string user_name, string passwd)
                                   RetsVersionToString(mRetsVersion));
     RetsHttpRequest request;
     request.SetUrl(mLoginUrl);
+    if (!brokerCode.empty())
+    {
+        request.SetQueryParameter("BrokerCode", brokerCode);
+    }
+    
+    if (!savedMetadataTimestamp.empty())
+    {
+        request.SetQueryParameter("SavedMetadataTimestamp", savedMetadataTimestamp);
+    }
+    
     mHttpClient->SetUserCredentials(user_name, passwd);
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
     
@@ -356,6 +382,9 @@ ServerInformationResponseAPtr CLASS::GetServerInformation(std::string resourceNa
     ServerInformationRequestAPtr request(new ServerInformationRequest());
     string serverInfoUrl = mCapabilityUrls->GetServerInformationUrl();
     
+    if (serverInfoUrl.empty())
+        throw RetsException("The ServerInformation Transaction is not supported.");
+    
     request->SetClassName(className);
     request->SetResourceName(resourceName);
     request->SetStandardNames(standardNames);
@@ -363,12 +392,15 @@ ServerInformationResponseAPtr CLASS::GetServerInformation(std::string resourceNa
     request->SetMethod(mHttpMethod);
     
     RetsHttpResponsePtr httpResponse = DoRequest(request.get());
-    
+
+    AssertSuccessfulResponse(httpResponse, serverInfoUrl);
+
     ServerInformationResponseAPtr serverInformation(new ServerInformationResponse());
     
     serverInformation->SetEncoding(mEncoding);
-    serverInformation->SetInputStream(httpResponse->GetInputStream());
-    
+    serverInformation->Parse(httpResponse->GetInputStream());
+
+    return serverInformation;    
 }
 
 GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)
@@ -518,7 +550,7 @@ void CLASS::SetErrorHandler(RetsErrorHandler * errorHandler)
 
 void CLASS::SetUserAgentAuthType(UserAgentAuthType type)
 {
-    if (type != USER_AGENT_AUTH_INTEREALTY)
+    if (type != USER_AGENT_AUTH_INTEREALTY && type != USER_AGENT_AUTH_RETS_1_7)
     {
         throw RetsException(str_stream()
                             << "Unsupported User-Agent authentication type: "

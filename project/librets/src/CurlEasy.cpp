@@ -187,3 +187,13 @@ CURL * CurlEasy::GetEasyHandle()
 {
     return mCurl;
 }
+
+curl_slist * CurlEasy::GetCookieSlist()
+{
+    curl_slist * cookieList;
+    
+    CurlAssert(curl_easy_getinfo(mCurl, CURLINFO_COOKIELIST, &cookieList),
+                "Get Cookie Slist");
+    
+    return cookieList;
+}
