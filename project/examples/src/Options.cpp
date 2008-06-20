@@ -53,7 +53,12 @@ Options::Options()
          ->default_value("1.5", ""), "RETS Version")
         ("full-metadata,F", 
          "Use full metadata (instead of incremental)")
+        ("broker-code,b", po::value<string>(&brokerCode)->default_value("", ""),
+         "Broker Code")
+        ("metadata-timestamp,t", po::value<string>(&savedMetadataTimestamp)->default_value("", ""),
+         "Saved Metadata Timestamp (RETS 1.7+)")
         ;
+        
 }
 
 bool Options::ParseCommandLine(int argc, char * argv[])
@@ -114,9 +119,19 @@ RetsSessionPtr Options::RetsLogin()
 	if (options.count("http-log-everything"))
 	  session->SetLogEverything(true);
     }
-    if (!session->Login(username, password))
+    if (retsVersion == RETS_1_0 || retsVersion == RETS_1_5)
     {
-        session.reset();
+        if (!session->Login(username, password))
+        {
+            session.reset();
+        }
+    }
+    else
+    {
+        if (!session->Login(username, password, brokerCode, savedMetadataTimestamp))
+        {
+            session.reset();
+        }
     }
     return session;
 }

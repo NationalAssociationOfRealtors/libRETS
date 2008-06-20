@@ -45,6 +45,15 @@ int main(int argc, char * argv[])
             return -1;
         }
         cout << "Logged in\n";
+        
+        if (session->GetDetectedRetsVersion() != session->GetRetsVersion())
+        {
+            cout << "** Warning, requested RETS version \"" 
+                 << session->RetsVersionToString(session->GetRetsVersion())
+                 << "\", got version \""
+                 << session->RetsVersionToString(session->GetDetectedRetsVersion())
+                 << "\" ** " << endl;
+        }
 
         LoginResponse * login = session->GetLoginResponse();
         cout << "Member name: " << login->GetMemberName() << endl;

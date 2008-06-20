@@ -38,6 +38,8 @@ class Options
     bool useHttpGet;
     librets::RetsVersion retsVersion;
     bool useFullMetadata;
+    std::string brokerCode;
+    std::string savedMetadataTimestamp;
 
     Options();
 

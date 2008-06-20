@@ -50,6 +50,44 @@ int main(int argc, char * argv[])
             return -1;
         }
 
+        if (session->GetDetectedRetsVersion() != session->GetRetsVersion())
+        {
+            cout << "** Warning, requested RETS version \"" 
+                 << session->RetsVersionToString(session->GetRetsVersion())
+                 << "\", got version \""
+                 << session->RetsVersionToString(session->GetDetectedRetsVersion())
+                 << "\" ** " << endl;
+        }
+        
+        if (session->GetDetectedRetsVersion() == RETS_1_7)
+        {
+            try
+            {
+                ServerInformationResponseAPtr serverInfo = session->GetServerInformation();
+                
+                if (serverInfo.get())
+                {
+                    StringVector parameters = serverInfo->GetParameters();
+                    StringVector::const_iterator i;
+                    for (i = parameters.begin(); i != parameters.end(); i++)
+                    {
+                        if (i->empty())
+                        {
+                            continue;
+                        }
+                        cout << *i << ": " << serverInfo->GetValue(*i) << endl;
+                    }
+                }
+            }
+            catch (RetsException & e)
+            {
+               /*
+                * The ServerInformation Transaction is not supported.
+                * Continue silently.
+                */
+            }
+        }
+
         RetsMetadata * metadata = session->GetMetadata();
         dumpSystem(metadata);
         dumpAllResources(metadata);
@@ -123,7 +161,12 @@ void dumpAllTables(RetsMetadata * metadata, MetadataClass * aClass)
         MetadataTable * table = *i;
         cout << "Table name: " << table->GetSystemName() << " ["
              << table->GetStandardName() << "]" << " ("
-             << table->GetDataType() << ")" << endl;
+             << table->GetDataType() << ")";
+        if (!table->GetMetadataEntryID().empty())
+        {
+            cout << " MetadataEntryID: " << table->GetMetadataEntryID();
+        }
+        cout << endl;
     }
 }
 
@@ -140,7 +183,14 @@ void dumpAllLookups(RetsMetadata * metadata, MetadataResource * resource)
         cout << "Resource name: " << resourceName << " ["
              << resource->GetStandardName() << "]" << endl;
         cout << "Lookup name: " << lookup->GetLookupName() << " ("
-             << lookup->GetVisibleName() << ")" << endl;
+             << lookup->GetVisibleName() << ")";
+
+        if (!lookup->GetMetadataEntryID().empty())
+        {
+            cout << " MetadataEntryID: " << lookup->GetMetadataEntryID();
+        }
+            
+        cout << endl;
         dumpAllLookupTypes(metadata, lookup);
         cout << endl;
     }
@@ -155,6 +205,13 @@ void dumpAllLookupTypes(RetsMetadata * metadata, MetadataLookup * lookup)
         MetadataLookupType * lookupType = *i;
         cout << "Lookup value: " << lookupType->GetValue() << " ("
              << lookupType->GetShortValue() << ", "
-             << lookupType->GetLongValue() << ")" << endl;
+             << lookupType->GetLongValue() << ")"; 
+
+        if (!lookupType->GetMetadataEntryID().empty())
+        {
+            cout << " MetadataEntryID: " << lookupType->GetMetadataEntryID();
+        }
+       
+        cout << endl;
     }
 }
