@@ -46,7 +46,7 @@ $(PYTHON_WRAP): $(SWIG_FILES)
 $(PHP5_WRAP): $(SWIG_FILES)
 	$(SWIG) -c++ -php5 -o $(PHP5_WRAP) librets.i
 
-clean: clean-csharp clean-ruby clean-python
+clean: clean-csharp clean-ruby clean-python clean-php5
 
 clean-csharp:
 	cd csharp
