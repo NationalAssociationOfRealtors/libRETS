@@ -1,6 +1,3 @@
-BUILD=debug
-RUNTIME_LIBS=static
-
 !include <../../build/Makefile.vc>
 
 LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)

@@ -62,15 +62,6 @@ AC_DEFUN([MY_TEST_BOOST], [
        	  BOOST_SYSTEM="-lboost_system"
        fi
 
-dnl Look at AC_LINK_IFELSE test in expat to turn the following into
-dnl something that provides code
-dnl       AC_CHECK_LIB([boost_system], [boost::system::get_system_category],
-dnl                    [boost_system_lib="-lboost_system"])
-dnl
-dnl       save_LIBS=$LIBS
-dnl       LIBS="$LIBS -lboost_system"
-dnl       AC_LANG_PUSH(C++)
-
     else
        my_lib="${BOOST_PREFIX}/lib/libboost_filesystem.a"
        AC_CHECK_FILE([$my_lib], [BOOST_FILESYSTEM=$my_lib])
