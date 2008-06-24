@@ -1,0 +1,26 @@
+!include <../../build/Makefile.vc>
+
+LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
+
+SYS_LIBS = winmm.lib wsock32.lib
+
+WRAP = librets_wrap.cpp
+OBJWRAP = librets_wrap.obj
+
+CFLAGS  = $(CFLAGS_STD) /DLIBRETS_VERSION=\"$(VERSION)\" /I../../librets/include $(PHP_CFLAGS) $(BOOST_CFLAGS) $(CURL_CFLAGS)
+LINK = $(LINK_EXE) /FORCE:MULTIPLE /dll
+
+PHP_EXT = php_librets.dll
+
+all: $(PHP_EXT)
+
+$(OBJWRAP): $(WRAP)
+
+$(PHP_EXT): $(OBJWRAP)
+	$(LINK) $(LIBRETS_LIB) $(BOOST_LDFLAGS) /out:$(PHP_EXT) $(OBJWRAP) $(SYS_LIBS) $(PHP_LIBS)
+
+{.\}.cpp.obj:
+	$(CXX) $(CFLAGS) /Fo"$@"  $<
+
+clean:
+	@-erase /q vc70.* php_librets.exp php_librets.lib $(PHP_EXT) $(WRAP) $(OBJWRAP) librets.php php_librets.h 2> NUL

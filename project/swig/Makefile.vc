@@ -6,9 +6,11 @@ RUBY_WRAP = ruby\librets_wrap.cpp
 
 PYTHON_WRAP = python\librets_wrap.cpp
 
+PHP5_WRAP = php5\librets_wrap.cpp
+
 SWIG_FILES = librets.i auto_ptr_release.i shared_ptr_release.i
 
-all: csharp_ ruby_ python_
+all: csharp_ ruby_ python_ php5_
 
 csharp_:
 	cd csharp
@@ -25,6 +27,11 @@ python_: $(PYTHON_WRAP)
 	 $(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic dist
 	 cd ..
 
+php5_ : $(PHP5_WRAP)
+	cd php5
+	$(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=static
+	cd ..
+
 $(RUBY_MAKEFILE): $(RUBY_WRAP) ruby\extconf.rb
 	cd ruby
 	$(RUBY) extconf.rb --with-swig-dir=../
@@ -36,7 +43,10 @@ $(RUBY_WRAP): $(SWIG_FILES)
 $(PYTHON_WRAP): $(SWIG_FILES)
 	$(SWIG) -c++ -python -o $(PYTHON_WRAP) librets.i
 
-clean: clean-csharp clean-ruby clean-python
+$(PHP5_WRAP): $(SWIG_FILES)
+	$(SWIG) -c++ -php5 -o $(PHP5_WRAP) librets.i
+
+clean: clean-csharp clean-ruby clean-python clean-php5
 
 clean-csharp:
 	cd csharp
@@ -54,3 +64,9 @@ clean-python:
 	$(NMAKE) -f Makefile.vc clean
 	cd ..
 	@-erase /q $(PYTHON_WRAP) 2> NUL
+
+clean-php5:
+	cd php5
+	$(NMAKE) -f Makefile.vc clean
+	cd ..
+	@-erase /q $(PHP5_WRAP) 2> NUL
