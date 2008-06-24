@@ -78,6 +78,8 @@ X_OBJS = \
 	$(DIROBJ)\RetsXmlTextEvent.obj \
 	$(DIROBJ)\SearchRequest.obj \
 	$(DIROBJ)\SearchResultSet.obj \
+	$(DIROBJ)\ServerInfoRequest.obj \
+	$(DIROBJ)\ServerInfoResponse.obj \
 	$(DIROBJ)\StreamHttpLogger.obj \
 	$(DIROBJ)\Uri.obj \
 	$(DIROBJ)\UserAgentAuthCalculator.obj \
