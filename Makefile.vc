@@ -20,7 +20,6 @@ clean:
 	cd project\swig
 	$(NMAKE) /f Makefile.vc clean
 	cd ..\..
-	
 	@-rmdir /q  /s build 2>NUL
 	@-rmdir /q  /s dist 2>NUL
 
@@ -46,6 +45,7 @@ prepare:
 	@$(MKDIR_P) $(DISTDIR)/dotnet
 	@$(MKDIR_P) $(DISTDIR)/ruby
 	@$(MKDIR_P) $(DISTDIR)/python
+	@$(MKDIR_P) $(DISTDIR)/php5
 
 docs: prepare
 	rm -rf build/doc/api
@@ -79,8 +79,9 @@ _dist:
 	cp -u project/swig/ruby/*.so $(DISTDIR)/ruby
 	cp -u project/swig/ruby/librets.rb $(DISTDIR)/ruby
 	cp -u project/swig/python/dist/*.exe $(DISTDIR)/python
+	cp -u project/swig/php5/librets.php $(DISTDIR)/php5
+	cp -u project/swig/php5/php_librets.dll $(DISTDIR)/php5
 	rm -f $(DIST_ZIP)
 	cd build
 	zip -rq ../$(DIST_ZIP) $(DIST_BASE)
 	cd ..
-

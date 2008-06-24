@@ -21,6 +21,9 @@
 #define CLASS KLASS
 %{
 #define KLASS CLASS
+#ifdef WIN32
+#include "librets/winundef.h"
+#endif
 %}
 %copyctor;
 %pragma(php4) phpinfo="

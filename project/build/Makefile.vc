@@ -201,3 +201,21 @@ SWIG_PATH = $(BASE_PATH)\swig
 !if "$(SWIG)" == ""
 SWIG = $(SWIG_PATH)\swig.exe
 !endif
+
+########################################################################
+#
+# PHP Configuration
+
+!if "$(PHP_PATH)" == ""
+PHP_PATH = $(BASE_PATH)/php
+!endif
+!if "$(PHP_CFLAGS)" == ""
+PHP_CFLAGS = /I$(PHP_PATH) /I$(PHP_PATH)/TSRM /I$(PHP_PATH)/Zend /I$(PHP_PATH)/main /DPHP_WIN32 /DWIN32 /DZEND_WIN32 /DZTS=1 /DZEND_DEBUG=0 
+!endif
+!if "$(PHPWIN_PATH)" == ""
+PHPWIN_PATH = $(BASE_PATH)/phpwin
+!endif
+!if "$(PHP_LIBS)" == ""
+PHP_LIBS = $(PHPWIN_PATH)/dev/php5ts.lib
+!endif
+
