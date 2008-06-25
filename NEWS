@@ -1,22 +1,22 @@
-Version 1.2.x - x xxx 2008
+Version 1.2.1 - 25 Jun 2008
 
   * Add Rets 1.7 support.
     Ticket #39.
 
   * Metadata field names and reserved values should be case insensitive.
     Ticket #57.
-    
-Version 1.2.1 - x xxx 2008
 
-  * Add PHP interface.
+  * Add Perl interface.
+    Ticket #52.
+    
+  * Add PHP interface.  (And added PHP to the windows binary build.)
     Ticket #51.
 
   * Add JAVA interface. On Unixen, you need to include --with-java-prefix and
     point it to the JDK as in --with-java-prefix=/usr/local/jdk1.6.0.
-    Ticket #52.
+    Ticket #53.
 
-
-Version 1.2.0 - x xxx 2008
+Version 1.2.0 - 9 May 2008
 
   * Add "streaming" enhancement. This enhancement improves performance
     for larger fetches at expense of risking timeouts with the RETS server.
