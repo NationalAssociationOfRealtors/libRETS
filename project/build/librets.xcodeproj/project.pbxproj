@@ -493,7 +493,7 @@
 		55BD57A307FDAAFD00526D69 /* utilTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = utilTest.cpp; sourceTree = "<group>"; };
 		55BD57A407FDAAFD00526D69 /* XmlMetadataParserTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = XmlMetadataParserTest.cpp; sourceTree = "<group>"; };
 		55BD57C107FDAB4500526D69 /* libcppunit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcppunit.dylib; path = lib/libcppunit.dylib; sourceTree = CPPUNIT; };
-		55BD57ED07FDAFE000526D69 /* test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
+		55BD57ED07FDAFE000526D69 /* test */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
 		55EE8499093E5AAA00812582 /* librets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librets.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F23658087B2AB00090B325 /* MetadataForeignKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MetadataForeignKey.cpp; sourceTree = "<group>"; };
 		55F23735087C75710090B325 /* RetsHttpLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetsHttpLogger.h; sourceTree = "<group>"; };
