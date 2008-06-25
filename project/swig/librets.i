@@ -562,7 +562,7 @@ class ObjectDescriptor
     
     std::string GetContentType() const;
     
-#if defined(SWIGRUBY) || defined(SWIGPYTHON) || defined(SWIGPHP)
+#if defined(SWIGRUBY) || defined(SWIGPYTHON) || defined(SWIGPHP) || defined(SWIGPERL)
     %extend {
         std::string GetDataAsString()
         {
