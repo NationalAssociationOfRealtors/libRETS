@@ -620,7 +620,7 @@
 		55BD57A307FDAAFD00526D69 /* utilTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = utilTest.cpp; sourceTree = "<group>"; };
 		55BD57A407FDAAFD00526D69 /* XmlMetadataParserTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = XmlMetadataParserTest.cpp; sourceTree = "<group>"; };
 		55BD57C107FDAB4500526D69 /* libcppunit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcppunit.dylib; path = lib/libcppunit.dylib; sourceTree = CPPUNIT; };
-		55BD57ED07FDAFE000526D69 /* test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
+		55BD57ED07FDAFE000526D69 /* test */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
 		55EE8499093E5AAA00812582 /* librets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librets.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F23658087B2AB00090B325 /* MetadataForeignKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MetadataForeignKey.cpp; sourceTree = "<group>"; };
 		55F23735087C75710090B325 /* RetsHttpLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetsHttpLogger.h; sourceTree = "<group>"; };
@@ -678,12 +678,12 @@
 		F93109160DF4A81F004DE8BB /* Options.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
 		F93109330DF4BE5C004DE8BB /* Options.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
 		F93109340DF4BE75004DE8BB /* demo-search.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = "demo-search.cpp"; sourceTree = "<group>"; };
-		F93109460DF4C083004DE8BB /* demo-search */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = "demo-search"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F931094F0DF4C0BA004DE8BB /* http */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = http; sourceTree = BUILT_PRODUCTS_DIR; };
+		F93109460DF4C083004DE8BB /* demo-search */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "demo-search"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F931094F0DF4C0BA004DE8BB /* http */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = http; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93109540DF4C0CF004DE8BB /* login */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = login; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93109590DF4C0E4004DE8BB /* metadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = metadata; sourceTree = BUILT_PRODUCTS_DIR; };
-		F931095E0DF4C0F5004DE8BB /* raw-rets */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = "raw-rets"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F93109730DF4C114004DE8BB /* search */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = search; sourceTree = BUILT_PRODUCTS_DIR; };
+		F931095E0DF4C0F5004DE8BB /* raw-rets */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "raw-rets"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F93109730DF4C114004DE8BB /* search */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = search; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93109780DF4C12E004DE8BB /* xml */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xml; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = lib/libboost_program_options.a; sourceTree = BOOST; };
 		F9310AD00DFDEB0C004DE8BB /* ServerInfoRequest.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerInfoRequest.h; sourceTree = "<group>"; };
@@ -2622,7 +2622,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 553844F80A349A5F00415742 /* librets.xcconfig */;
 			buildSettings = {
-				ARCHS = ppc;
+				ARCHS = (
+					ppc,
+					i386,
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1)",
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",

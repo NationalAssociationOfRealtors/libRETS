@@ -1,5 +1,13 @@
 Version 1.2.x - x xxx 2008
 
+  * Add Rets 1.7 support.
+    Ticket #39.
+
+  * Metadata field names and reserved values should be case insensitive.
+    Ticket #57.
+    
+Version 1.2.1 - x xxx 2008
+
   * Add PHP interface.
     Ticket #51.
 
