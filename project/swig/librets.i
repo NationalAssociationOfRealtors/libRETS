@@ -950,12 +950,12 @@ static void mark_RetsSession(void* ptr)
     }
 }
 %}
+#endif
 
+#if defined(SWIGRUBY) || defined(SWIGPYTHON) || defined(SWIGJAVA)
 %feature("director") RetsHttpLogger;
 #endif
-#ifdef SWIGJAVA
-%feature("director") RetsHttpLogger;
-#endif
+
 class RetsHttpLogger
 {
   public:
