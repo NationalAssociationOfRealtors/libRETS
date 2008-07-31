@@ -74,10 +74,6 @@ CURLM * CLASS::GetMultiHandle()
     return mMultiHandle;
 }
 
-/**
- * Perform a multi operation. The caller will need to handle the determination as
- * to whether enough data has arrived and if not, call Perform() again in a loop.
- */
 void CLASS::Perform()
 {
     fd_set fdread;
@@ -133,9 +129,6 @@ void CLASS::Perform()
     }
 }
 
-/**
- * Reset for a new transaction.
- */
 void CLASS::Reset()
 {
     mStillRunning = 2;

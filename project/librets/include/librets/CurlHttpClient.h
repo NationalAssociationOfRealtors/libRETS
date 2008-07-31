@@ -15,7 +15,13 @@
  * appear in supporting documentation.
  */
 #ifndef LIBRETS_CURL_HTTP_CLIENT_H
+
 #define LIBRETS_CURL_HTTP_CLIENT_H
+/** 
+ * @file CurlHttpClient.h
+ * (Internal) Contains the Curl Http interface class for use with libCURL.
+ */
+/// @cond MAINTAINER
 
 #include <sstream>
 #include <istream>
@@ -30,6 +36,10 @@ namespace librets {
 
 typedef boost::shared_ptr<std::stringstream> stringstreamPtr;
 
+/**
+ * (Internal) CurlHttpClient is a class that wraps client side interaction with
+ * libcurl.
+ */
 class CurlHttpClient : public RetsHttpClient
 {
   public:
@@ -95,10 +105,12 @@ class CurlHttpClient : public RetsHttpClient
     int mResponseCode;
     
     CurlSlist mCookies;
+    
+    bool mLogging;
 };
 
 };
-
+///@endcond
 #endif
 
 /* Local Variables: */

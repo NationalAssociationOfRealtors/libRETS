@@ -17,13 +17,18 @@
 
 #ifndef LIBRETS_METADATA_EDIT_MASK_H
 #define LIBRETS_METADATA_EDIT_MASK_H
+/** 
+ * @file MetadataEditMask.h
+ * Contains the MetadataEditMask class declaration.
+ */
 
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
- * Edit mask metadata.
+ * MetadataEditMask is an implementation of MetadataElement that
+ * represents Edit mask metadata.
  */
 class MetadataEditMask : public MetadataElement
 {
@@ -36,7 +41,10 @@ class MetadataEditMask : public MetadataElement
     virtual MetadataType GetType() const;
     
     virtual std::string GetId() const;
-    
+    /**
+     * Returns the Edit Mask ID attribute.
+     * @return A string containing the edit mask ID.
+     */
     std::string GetEditMaskID() const;
 };
 

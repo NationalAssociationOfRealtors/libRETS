@@ -17,13 +17,18 @@
 
 #ifndef LIBRETS_METADATA_SEARCH_HELP_H
 #define LIBRETS_METADATA_SEARCH_HELP_H
+/** 
+ * @file MetadataSearchHelp.h
+ * Contains the MetadataSearchHelp class declaration.
+ */
 
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
- * Search help metadata.
+ * MetadataSearchHelp is an implementation of MetadataElement that
+ * represents Search help metadata.
  */
 class MetadataSearchHelp : public MetadataElement
 {
@@ -36,9 +41,16 @@ class MetadataSearchHelp : public MetadataElement
     virtual MetadataType GetType() const;
     
     virtual std::string GetId() const;
-    
+    /**
+     * Return the Search Help ID
+     * @return A string representing the Search Help ID.
+     */
     std::string GetSearchHelpID() const;
-
+    
+    /**
+     * Return the Search Help value.
+     * @return A string representing the Search Help value.
+     */
     std::string GetValue() const;
 };
 

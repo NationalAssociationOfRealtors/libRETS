@@ -16,13 +16,18 @@
  */
 #ifndef LIBRETS_METADATA_UPDATE_TYPE_H
 #define LIBRETS_METADATA_UPDATE_TYPE_H
+/** 
+ * @file MetadataUpdateType.h
+ * Contains the MetadataUpdateType class declaration.
+ */
 
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
- * Update type metadata.
+ * MetadataUpdateType is an implementation of MetadataElement that represents
+ * Update Type metadata.
  */
 class MetadataUpdateType : public MetadataElement
 {

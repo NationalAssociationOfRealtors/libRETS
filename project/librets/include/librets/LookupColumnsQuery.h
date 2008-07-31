@@ -17,6 +17,11 @@
 
 #ifndef LIBRETS_LOOKUP_COLUMN_QUERY_H
 #define LIBRETS_LOOKUP_COLUMN_QUERY_H
+/** 
+ * @file LookupColumnsQuery.h
+ * (Internal) Contains the LookupColumnQuery class.
+ */
+ /// @cond MAINTAINER
 
 #include "RetsObject.h"
 
@@ -42,7 +47,7 @@ class LookupColumnsQuery : public RetsObject
 };
 
 };
-
+/// @endcond
 #endif /* LIBRETS_LOOKUP_COLUMN_QUERY_H */
 
 /* Local Variables: */

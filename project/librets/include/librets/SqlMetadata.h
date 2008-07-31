@@ -17,7 +17,11 @@
 
 #ifndef LIBRETS_SQL_METADATA_H
 #define LIBRETS_SQL_METADATA_H
-
+/** 
+ * @file SqlMetadata.h
+ * (Internal) Contains the SqlMetadata class definition.
+ */
+ /// @cond MAINTAINER
 #include <string>
 
 namespace librets {
@@ -32,7 +36,7 @@ class SqlMetadata
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

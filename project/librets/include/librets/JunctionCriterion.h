@@ -17,6 +17,11 @@
 
 #ifndef LIBRETS_JUNCTION_CRITERION_H
 #define LIBRETS_JUNCTION_CRITERION_H
+/** 
+ * @file JunctionCriterion.h
+ * (Internal) Contains the JunctionCriterion parser class.
+ */
+ /// @cond MAINTAINER
 
 #include <string>
 #include <vector>
@@ -51,7 +56,7 @@ class JunctionCriterion : public DmqlCriterion
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

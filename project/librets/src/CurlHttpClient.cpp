@@ -169,6 +169,9 @@ void CurlHttpClient::SetUserCredentials(string userName, string password)
  */
 bool CurlHttpClient::ContinueRequest()
 {
+    bool wasVerbose = mCurl.GetVerbose();
+    mCurl.SetVerbose(mLogging);
+
     if (mCurlMulti.StillRunning())
         mCurlMulti.Perform();
         
@@ -176,7 +179,9 @@ bool CurlHttpClient::ContinueRequest()
     {
         mResponseCode = mCurl.GetResponseCode();
     }
-        
+    
+    mCurl.SetVerbose(wasVerbose);
+    
     return mCurlMulti.StillRunning();
 }
 
@@ -185,6 +190,9 @@ RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
     string url = request->GetUrl();
     string queryString = request->GetQueryString();
     bool wasVerbose = mCurl.GetVerbose();
+    mLogging = request->GetLogging();
+    mCurl.SetVerbose(mLogging);
+
     if (request->GetMethod() == RetsHttpRequest::GET)
     {
         mCurl.SetHttpGet(true);

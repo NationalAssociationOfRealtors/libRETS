@@ -16,13 +16,19 @@
  */
 #ifndef LIBRETS_RETS_OBJECT_H
 #define LIBRETS_RETS_OBJECT_H
-
+/**
+ * @file RetsObject.h
+ * (Internal) Contains the RetsObject base class declaration.
+ */
+/// @cond MAINTAINER
 #include <iosfwd>
 #include <string>
 #include <boost/shared_ptr.hpp>
 
 namespace librets {
-
+/**
+ * RetsObject is the base class for libRETS.
+ */
 class RetsObject
 {
   public:
@@ -47,7 +53,7 @@ bool operator==(const RetsObject & lhs, const RetsObject & rhs);
 bool operator!=(const RetsObject & lhs, const RetsObject & rhs);
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

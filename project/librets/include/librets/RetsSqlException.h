@@ -16,18 +16,34 @@
  */
 #ifndef LIBRETS_RETS_SQL_EXCEPTION_H
 #define LIBRETS_RETS_SQL_EXCEPTION_H
-
+/** 
+ * @file RetsSqlException.h
+ * Contains the RetsSqlException class.
+ */
 #include "librets/RetsException.h"
 
 namespace librets {
 
+/**
+ * RetsSqlException is an implementation of RetsException that is
+ * thrown for errors in the Sql to Dmql parser.
+ */
 class RetsSqlException : public RetsException
 {
   public:
+    /// @cond MAINTAINER
+    /**
+     * Constructor with the error message.
+     * @param message A string containing the error message.
+     */
     RetsSqlException(std::string message);
-
     virtual ~RetsSqlException() throw();
+    /// @endcond
     
+    /**
+     * Returns the name of this exception.
+     * @return Always returns "RetsSqlException"
+     */
     virtual std::string GetName() const throw();
 };
 

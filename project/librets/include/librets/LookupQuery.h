@@ -17,7 +17,11 @@
 
 #ifndef LIBRETS_LOOKUP_QUERY_H
 #define LIBRETS_LOOKUP_QUERY_H
-
+/** 
+ * @file LookupQuery.h
+ * (Internal) Contains the LookupCriterion class definition.
+ */
+ /// @cond MAINTAINER
 #include "RetsObject.h"
 
 namespace librets {
@@ -42,7 +46,7 @@ class LookupQuery : public RetsObject
 };
 
 };
-
+/// @endcond
 #endif /* LIBRETS_LOOKUP_QUERY_H */
 
 /* Local Variables: */

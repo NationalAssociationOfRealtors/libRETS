@@ -16,13 +16,18 @@
  */
 #ifndef LIBRETS_METADATA_VALIDATION_EXPRESSION_H
 #define LIBRETS_METADATA_VALIDATION_EXPRESSION_H
+/** 
+ * @file MetadataValidationExpression.h
+ * Contains the MetadataValidationExpression class declaration.
+ */
 
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
- * Validation expression metadata.
+ * MetadataValidationExpression is an implementation of MetadataElement that represents
+ * Validation Expression metadata.
  */
 class MetadataValidationExpression : public MetadataElement
 {

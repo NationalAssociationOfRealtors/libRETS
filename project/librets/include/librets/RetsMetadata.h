@@ -17,6 +17,10 @@
 
 #ifndef LIBRETS_RETS_METADATA_H
 #define LIBRETS_RETS_METADATA_H
+/** 
+ * @file RetsMetadata.h
+ * Contains the RetsMetadata class declaration.
+ */
 
 #include <string>
 #include <vector>
@@ -51,16 +55,19 @@ typedef std::vector<MetadataLookupType *> MetadataLookupTypeList;
 typedef std::vector<MetadataObject *> MetadataObjectList;
 
 /**
- * Contains all the metadata.
+ * RetsMetadata contains the API that is the main interface to
+ * all of the metadata.
  */
 class RetsMetadata
 {
   public:
+    /// @cond MAINTAINER
     /**
      * Creates metadata from a metadata by-level collector.
      */
     RetsMetadata(MetadataFinderPtr finder);
-
+    /// @endcond
+    
     /**
      * Returns the system metdata element.
      *

@@ -17,13 +17,18 @@
 
 #ifndef LIBRETS_METADATA_LOOKUP_H
 #define LIBRETS_METADATA_LOOKUP_H
+/** 
+ * @file MetadataLookup.h
+ * Contains the MetadataLookup class declaration.
+ */
 
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
- * Lookup metadata.
+ * MetadataLookup is an implementation of MetadataElement that
+ * represents Lookup metadata.
  */
 class MetadataLookup : public MetadataElement
 {
@@ -36,13 +41,28 @@ class MetadataLookup : public MetadataElement
     virtual MetadataType GetType() const;
     
     virtual std::string GetId() const;
-    
+    /**
+     * Return the Lookup Name.
+     * @return A string containing the Lookup Name.
+     */
     std::string GetLookupName() const;
     
+    /**
+     * Return the visible name of the Lookup.
+     * @return A string containing the Visible Name.
+     */
     std::string GetVisibleName() const;
     
+    /**
+     * Return the version of this lookup.
+     * @return A string containing the metadata version for this lookup.
+     */
     std::string GetVersion() const;
     
+    /**
+     * Return the metadata data associated with this lookup.
+     * @return A string containing the date.
+     */
     std::string GetDate() const;
 };
 

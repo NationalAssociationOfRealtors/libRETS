@@ -16,6 +16,13 @@
  */
 #ifndef LIBRETS_METADATA_FORWARD_H
 #define LIBRETS_METADATA_FORWARD_H
+/**
+ * @file metadata_forward.h
+ * (Internal) Contains the metadata protocol forward
+ * declarations.
+ */
+/// @cond MAINTAINER
+
 
 #include <boost/shared_ptr.hpp>
 
@@ -107,31 +114,39 @@ class MetadataForeignKey;
 typedef boost::shared_ptr<MetadataForeignKey> MetadataForeignKeyPtr;
 
 class MetadataElementCollector;
+/** Smart pointer to MetadataElementCollector */
 typedef boost::shared_ptr<MetadataElementCollector>
     MetadataElementCollectorPtr;
 
 class MetadataLoader;
+/** Smart pointer to MetadataLoader */
 typedef boost::shared_ptr<MetadataLoader> MetadataLoaderPtr;
 
 class MetadataFinder;
+/** Smart pointer to MetadataFinder */
 typedef boost::shared_ptr<MetadataFinder> MetadataFinderPtr;
 
 class IncrementalMetadataFinder;
+/** Smart pointer to IncrementalMetadataFinder */
 typedef boost::shared_ptr<IncrementalMetadataFinder>
     IncrementalMetadataFinderPtr;
 
 class XmlMetadataParser;
+/** Smart pointer to XmlMetadataParser */
 typedef boost::shared_ptr<XmlMetadataParser> XmlMetadataParserPtr;
 
 class XmlMetadataElementFactory;
+/** Smart pointer to XmlMetadataElementFactory */
 typedef boost::shared_ptr<XmlMetadataElementFactory>
     XmlMetadataElementFactoryPtr;
 
 class DefaultMetadataElementFactory;
+/** Smart pointer to DefaultMetadataElementFactory */
 typedef boost::shared_ptr<DefaultMetadataElementFactory>
     DefaultMetadataElementFactoryPtr;
 
 class DefaultMetadataCollector;
+/** Smart pointer to DefaultMetadataCollector */
 typedef boost::shared_ptr<DefaultMetadataCollector>
     DefaultMetadataCollectorPtr;
 
@@ -139,6 +154,7 @@ class RetsUnknownMetadataException;
 
 };
 
+/// @endcond
 #endif
 
 /* Local Variables: */

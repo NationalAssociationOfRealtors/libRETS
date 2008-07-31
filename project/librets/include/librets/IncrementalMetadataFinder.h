@@ -17,6 +17,12 @@
 
 #ifndef LIBRETS_INCREMENTAL_METADATA_FINDER_H
 #define LIBRETS_INCREMENTAL_METADATA_FINDER_H
+/**
+ * @file IncrementalMetadataFinder.h
+ * (Internal) Contains the IncrementalMetadataFinder class definition.
+ */
+/// @cond MAINTAINER
+
 
 #include <set>
 #include "librets/metadata_forward.h"
@@ -24,16 +30,23 @@
 #include "librets/MetadataLoader.h"
 
 namespace librets {
-    
+/**
+ * (Internal) IncrementalMetadataFinder implements MetadataFinder and will locate
+ * metadata as needed.
+ */    
 class IncrementalMetadataFinder : public RetsObject,
     public MetadataFinder
 {
   public:
+    /**
+     * Constructor
+     * @param loader A pointer to the method that will handle the retrieval
+     * of the metadtata.
+     */
     IncrementalMetadataFinder(MetadataLoader * loader);
     
     virtual MetadataElementListPtr FindByLevel(MetadataElement::Type type,
                                                std::string level);
-    
     virtual MetadataElementPtr FindByPath(MetadataElement::Type type,
                                           std::string level,
                                           std::string id);
@@ -53,7 +66,7 @@ class IncrementalMetadataFinder : public RetsObject,
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

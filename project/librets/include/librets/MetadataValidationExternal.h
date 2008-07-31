@@ -16,6 +16,10 @@
  */
 #ifndef LIBRETS_METADATA_VALIDATION_EXTERNAL_H
 #define LIBRETS_METADATA_VALIDATION_EXTERNAL_H
+/** 
+ * @file MetadataValidationExternal.h
+ * Contains the MetadataValidationExternal class declaration.
+ */
 
 #include "librets/MetadataElement.h"
 
@@ -29,7 +33,8 @@ typedef boost::shared_ptr<MetadataValidationExternalTypeList>
     MetadataValidationExternalTypeListPtr;
 
 /**
- * Validation external metadata.
+ * MetadataValidationExternal is an implementation of MetadataElement that represents
+ * Validation External metadata.
  */
 class MetadataValidationExternal : public MetadataElement
 {

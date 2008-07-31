@@ -55,38 +55,6 @@ ServerInformationResponse::~ServerInformationResponse()
 {
 }
 
-void ServerInformationResponse::FixCompactArray(StringVector & compactArray,
-                                      std::string context)
-{
-    if (compactArray.size() < 2)
-    {
-        ostringstream message;
-        message << "Unknown compact format: " << context << ": "
-                << Output(compactArray);
-        throw RetsException(message.str());
-    }
-
-    if (!compactArray.front().empty())
-    {
-        ostringstream message;
-        message << "First element should be empty: " << context << ": "
-                << Output(compactArray);
-        throw RetsException(message.str());
-    }
-    compactArray.erase(compactArray.begin());
-    
-#if BOOST_VERSION >= 103300
-    if (!compactArray.back().empty())
-    {
-        ostringstream message;
-        message << "Last element should be empty: " << context << ": "
-                << Output(compactArray);
-        throw RetsException(message.str());
-    }
-    compactArray.pop_back();
-#endif
-}
-
 void ServerInformationResponse::Parse(istreamPtr inputStream)
 {
     SetInputStream(inputStream);

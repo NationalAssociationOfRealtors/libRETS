@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_DMQL_QUERY_H
 #define LIBRETS_DMQL_QUERY_H
+/** 
+ * @file DmqlQuery.h
+ * (Internal) Contains the DmqlQuery parser class.
+ */
+ /// @cond MAINTAINER
 
 #include "librets/std_forward.h"
 #include "librets/sql_forward.h"
@@ -83,7 +88,7 @@ class DmqlQuery : public RetsObject
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

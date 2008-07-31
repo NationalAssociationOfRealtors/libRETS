@@ -17,6 +17,11 @@
 
 #ifndef LIBRETS_STD_FORWARD_H
 #define LIBRETS_STD_FORWARD_H
+/** 
+ * @file xml_forward.h
+ * (Internal) Contains a handful of declarations used system wide.
+ */
+/// @cond MAINTAINER
 
 #include <iosfwd>
 #include <string>
@@ -25,25 +30,36 @@
 #include <boost/shared_ptr.hpp>
 
 namespace librets {
-
+/** A smart pointer to a standard input stream. */
 typedef boost::shared_ptr<std::istream> istreamPtr;
+/** A smart pointer to a standard output stream. */
 typedef boost::shared_ptr<std::ostream> ostreamPtr;
+/** A smart pointer to a standard input/output stream. */
 typedef boost::shared_ptr<std::iostream> iostreamPtr;
 
+/** An auto_ptr to a standard input stream. */
 typedef std::auto_ptr<std::istream> istreamAPtr;
+/** An auto_ptr to a standard output stream. */
 typedef std::auto_ptr<std::ostream> ostreamAPtr;
+/** An auto_ptr to a standard input/output stream. */
 typedef std::auto_ptr<std::iostream> iostreamAPtr;
 
+/** A key/value map using strings. */
 typedef std::map<std::string, std::string> StringMap;
 
+/** A vector of strings. */
 typedef std::vector<std::string> StringVector;
+/** A smart pointer to a vector of strings. */
 typedef boost::shared_ptr<StringVector> StringVectorPtr;
 
+/** A vector of integers. */
 typedef std::vector<int> IntVector;
+/** A smart pointer to a vector of integers. */
 typedef boost::shared_ptr<IntVector> IntVectorPtr;
 
 };
 
+/// @endcond
 #endif
 
 /* Local Variables: */

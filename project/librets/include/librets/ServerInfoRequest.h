@@ -17,7 +17,10 @@
 
 #ifndef LIBRETS_SERVERINFO_REQUEST_H
 #define LIBRETS_SERVERINFO_REQUEST_H
-
+/**
+ * @file ServerInfoRequest.h
+ * Contains the ServerInformationRequest class definition
+ */
 #include <string>
 
 #include "librets/RetsHttpRequest.h"
@@ -25,7 +28,8 @@
 namespace librets {
 
 /**
- * RETS 1.7 Server Information request.
+ * ServerInformationRequest is the API that allows access to the RETS 1.7
+ * SERVERINFORMATION transaction.
  */
 class ServerInformationRequest : public RetsHttpRequest
 {
@@ -56,7 +60,6 @@ class ServerInformationRequest : public RetsHttpRequest
      */
     void SetStandardNames(bool standardNames);
     
-
   private:
     static const char * RESOURCE_PARAMETER;
     static const char * CLASS_PARAMETER;

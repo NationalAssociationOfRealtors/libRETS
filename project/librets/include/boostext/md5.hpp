@@ -1,6 +1,12 @@
+
 #ifndef BOOSTEXT_MD5_HPP_INCLUDED
 #define BOOSTEXT_MD5_HPP_INCLUDED
-
+ 
+/**
+ * @file md5.hpp 
+ * (Internal) Contains a class that implements the MD5 algorithm.
+ */
+ 
 /*
     See http://www.boost.org for updates and documentation.
 
@@ -28,11 +34,17 @@
 
 #include <cstring>  // memset, memcpy, memcmp
 #include <iostream>  // std::istream
+/// @cond MAINTAINER
 
+/**
+ * From Boost: a Boost extension.
+ */
 namespace boostext
 {
 
-/*
+/**
+    Implementation of the MD5 algorithm.
+    
     "The [MD5] algorithm takes as input a message of arbitrary length and
     produces as output a 128-bit "fingerprint" or "message digest" of the
     input. It is conjectured that it is computationally infeasible to produce
@@ -63,7 +75,9 @@ public:
     void update(std::istream& a_istream);
     void update(std::istream& a_istream, uint32_t a_size);
 
-    // A message digest.
+    /**
+      * A message digest.
+      */
     class digest_type
     {
     public:
@@ -170,3 +184,5 @@ inline bool operator!=(const md5::digest_type& a, const md5::digest_type& b)
 }
 
 #endif
+/// @endcond DEVELOPER
+

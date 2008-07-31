@@ -16,7 +16,10 @@
  */
 #ifndef LIBRETS_RETS_EXCEPTION_H
 #define LIBRETS_RETS_EXCEPTION_H
-
+/**
+ * @file RetsException.h
+ * Contains the RetsException class declaration.
+ */
 #include <string>
 #include <exception>
 
@@ -25,7 +28,7 @@
 namespace librets {
 
 /**
- * The base class for all libret exceptions.
+ * RetsException is the base class for all libRETS exceptions.
  */
 class RetsException : public std::exception
 {

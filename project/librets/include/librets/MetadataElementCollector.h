@@ -17,21 +17,36 @@
 
 #ifndef LIBRETS_METADATA_ELEMENT_COLLECTOR_H
 #define LIBRETS_METADATA_ELEMENT_COLLECTOR_H
+/** 
+ * @file MetadataElementCollector.h
+ * Contains the MetadataElementCollector class declaration.
+ */
+/// @cond MAINTAINER
 
 #include "librets/metadata_forward.h"
 
 namespace librets {
 
+/**
+ * (Internal) Contains the prototype for the MetadataElementCollector
+ * from which other classes inherit.
+ */
 class MetadataElementCollector
 {
   public:
     virtual ~MetadataElementCollector();
 
+    /**
+     * Add the element to the list of elements.
+     * @param element A pointer to the MetadataElement to be added to the
+     * list.
+     */
     virtual void AddElement(MetadataElementPtr element) = 0;
 };
 
 };
 
+/// @endcond
 #endif
 
 /* Local Variables: */

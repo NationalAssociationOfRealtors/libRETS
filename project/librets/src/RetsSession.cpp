@@ -96,7 +96,7 @@ void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
                                      string url)
 {
     int responseCode = response->GetResponseCode();
-    if (responseCode != 200)
+    if (responseCode != 200 && responseCode != 0)   // Ticket #62
     {
         ostringstream message;
         message << "Could not get URL [ " << url << ": "

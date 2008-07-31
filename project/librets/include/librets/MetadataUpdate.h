@@ -16,12 +16,17 @@
  */
 #ifndef LIBRETS_METADATA_UPDATE_H
 #define LIBRETS_METADATA_UPDATE_H
+/** 
+ * @file MetadataUpdate.h
+ * Contains the MetadataUpdate class declaration.
+ */
 
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
+ * MetadataUpdate is an implementation of MetadataElement that represents
  * Update metadata.
  */
 class MetadataUpdate : public MetadataElement
@@ -36,6 +41,10 @@ class MetadataUpdate : public MetadataElement
     
     virtual std::string GetId() const;
     
+    /**
+     * Return the nature of this update type.
+     * @return A string representing the nature of this update metadata.
+     */
     std::string GetUpdateName() const;
 };
 

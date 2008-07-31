@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_DEFAULT_METADATA_ELEMENT_FACTORY_H
 #define LIBRETS_DEFAULT_METADATA_ELEMENT_FACTORY_H
+/** 
+ * @file DefaultMetadataElementFactory.h
+ * Contains the DefaultMetadataElementFactory class declaration.
+ */
+/// @cond MAINTAINER
 
 #include <map>
 #include "librets/XmlMetadataElementFactory.h"
@@ -23,6 +28,10 @@
 
 namespace librets {
 
+/**
+ * (Internal) DefaultMetadataElementFactory is the default implementation of
+ * XmlMetadataElementFactory.
+ */
 class DefaultMetadataElementFactory : public XmlMetadataElementFactory
 {
   public:
@@ -30,11 +39,26 @@ class DefaultMetadataElementFactory : public XmlMetadataElementFactory
 
     virtual ~DefaultMetadataElementFactory();
 
+    /**
+     * Set the error handler.
+     * @param errorHandler A pointer to the RetsErrorHandler that will be called
+     * on errors.
+     */
     virtual void SetErrorHandler(RetsErrorHandler * errorHandler);
 
+    /**
+     * Create a metadata element.
+     * @param startElementEvent A pointer to the RetsXmlStartElementEvent that begins
+     * this metadata element.
+     */ 
     virtual MetadataElementPtr CreateMetadataElement(
         RetsXmlStartElementEventPtr startElementEvent);
 
+    /**
+     * Locate the metadata element for the given type and resource/class.
+     * @param type The metadata type such as SYSTEM or TABLE.
+     * @param level A string containing the reosurce/class to find.
+     */
     MetadataElementListPtr Find(MetadataElement::MetadataType type,
                                 std::string level);
 
@@ -140,6 +164,7 @@ class DefaultMetadataElementFactory : public XmlMetadataElementFactory
 };
 
 #endif
+/// @endcond
 
 /* Local Variables: */
 /* mode: c++ */

@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_AND_CRITERION_H
 #define LIBRETS_AND_CRITERION_H
+/** 
+ * @file AndCriterion.h
+ * (Internal) Contains the AndCriterion parser class.
+ */
+ /// @cond MAINTAINER
 
 #include <string>
 #include "librets/sql_forward.h"
@@ -35,6 +40,7 @@ class AndCriterion : public JunctionCriterion
 
 };
 
+///@endcond
 #endif
 
 /* Local Variables: */

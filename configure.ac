@@ -26,13 +26,26 @@ AC_SUBST(VERSION)
 HEX_VERSION=`perl -ane 'print $1 if /^HEX_VERSION\s+\=\s+(\S+)/' ${ac_top_builddir}project/build/version.mk`
 AC_SUBST(HEX_VERSION)
 
+AC_ARG_ENABLE(maintainer-documentation,
+              AC_HELP_STRING([--enable-maintainer-documentation],
+                             [Enables documentation used by libRETS maintainers.]),
+              test "X$enableval" != "Xno" && my_enable_maintainer_documentation=yes,
+              my_enable_maintainer_documentation=no)
+
 AC_CHECK_PROG(my_have_doxygen, doxygen, yes, no)
 if test x"$my_have_doxygen" = "xyes"; then
-  HAVE_DOXGYEN=1
+  HAVE_DOXYGEN=1
 else
   HAVE_DOXYGEN=0
 fi
 AC_SUBST(HAVE_DOXYGEN)
+
+if test x"$my_enable_maintainer_documentation" = "xyes"; then
+  ENABLED_SECTIONS=MAINTAINER
+else
+  ENABLED_SECTIONS=
+fi
+AC_SUBST(ENABLED_SECTIONS)
 
 MY_PROG_CCACHE
 AC_CACHE_SAVE
@@ -155,6 +168,7 @@ echo Compile SWIG bindings.......: $my_use_swig_bindings
   echo "  With PHP..................: $my_have_php"
   echo "  With Python...............: $my_have_python"
   echo "  With Ruby.................: $my_have_ruby"
+echo Enable Maintainer Docs......: $my_enable_maintainer_documentation
 
 
 echo

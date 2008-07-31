@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_EQ_CRITERION_H
 #define LIBRETS_EQ_CRITERION_H
+/** 
+ * @file EqCriterion.h
+ * (Internal) Contains the EqCriterion parser class.
+ */
+ /// @cond MAINTAINER
 
 #include <string>
 #include "librets/sql_forward.h"
@@ -35,7 +40,7 @@ class EqCriterion : public FieldCriterion
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

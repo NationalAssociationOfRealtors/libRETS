@@ -17,6 +17,11 @@
 
 #ifndef LIBRETS_CURL_STREAM_H
 #define LIBRETS_CURL_STREAM_H
+/** 
+ * @file CurlStream.h
+ * (Internal) Contains the Curl Http iostream interface class for use with libCURL.
+ */
+/// @cond MAINTAINER
 
 #include <sstream>
 #include <iostream>
@@ -24,6 +29,10 @@
 #include "librets/CurlHttpClient.h"
 
 namespace librets {
+/**
+ * (Internal) CurlStream inherits from std::stringstream and is used to support the librets
+ * "streaming" data feature.
+ */
 class CurlStream : public std::stringstream
 {
   public:
@@ -65,5 +74,5 @@ private:
 
 
 }
-
+///@endcond
 #endif

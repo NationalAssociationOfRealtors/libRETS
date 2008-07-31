@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_XML_METADATA_ELEMENT_FACTORY_H
 #define LIBRETS_XML_METADATA_ELEMENT_FACTORY_H
+/** 
+ * @file XmlMetadataElementFactory.h
+ * (Internal) Contains the XML Parser Metadata Element Factory interface class for use with libexpatL.
+ */
+/// @cond MAINTAINER
 
 #include "librets/xml_forward.h"
 #include "librets/error_forward.h"
@@ -23,7 +28,10 @@
 #include "librets/RetsObject.h"
 
 namespace librets {
-
+/**
+ * (Internal) Contains the prototype for the XmlMetadataElementFactory from which other classes
+ * inherit.
+ */
 class XmlMetadataElementFactory : public RetsObject
 {
   public:
@@ -36,7 +44,7 @@ class XmlMetadataElementFactory : public RetsObject
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

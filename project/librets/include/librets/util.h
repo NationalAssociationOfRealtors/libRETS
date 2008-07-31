@@ -16,7 +16,11 @@
  */
 #ifndef LIBRETS_UTIL_H
 #define LIBRETS_UTIL_H
-
+/**
+ * @file util.h
+ * (Internal) Contains utilities.
+ */
+/// @cond MAINTAINER
 #include <vector>
 #include <locale>
 #include "librets/std_forward.h"
@@ -158,7 +162,7 @@ struct Printer< std::vector<X> >
 };
 
 }; };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

@@ -17,6 +17,11 @@
 
 #ifndef LIBRETS_ERROR_FORWARD_H
 #define LIBRETS_ERROR_FORWARD_H
+/** 
+ * @file error_forward.h
+ * (Internal) Contains the error classes forward declarations.
+ */
+/// @cond MAINTAINER
 
 #include <boost/shared_ptr.hpp>
 
@@ -29,6 +34,7 @@ class NullErroHandler;
 class ExceptionErrorHandler;
 
 };
+/// @endcond
 
 #endif
 

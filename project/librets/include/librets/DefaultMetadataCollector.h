@@ -17,6 +17,11 @@
 
 #ifndef LIBRETS_DEFAULT_METADATA_COLLECTOR_H
 #define LIBRETS_DEFAULT_METADATA_COLLECTOR_H
+/** 
+ * @file DefaultMetadataCollector.h
+ * Contains the DefaultMetadataCollector class declaration.
+ */
+/// @cond MAINTAINER
 
 #include <map>
 #include "librets/RetsObject.h"
@@ -25,7 +30,10 @@
 #include "librets/MetadataElement.h"
 
 namespace librets {
-
+/**
+ * (Internal) DefaultMetadataCollector is a class that implements the default
+ * MetadataFinder/MetadataElementCollector.
+ */
 class DefaultMetadataCollector :
     public virtual RetsObject, public MetadataElementCollector,
     public MetadataFinder
@@ -35,6 +43,10 @@ class DefaultMetadataCollector :
 
     virtual ~DefaultMetadataCollector();
 
+    /**
+     * Add the metadata element to the list.
+     * @param element A pointer to the MetadataElemnent to add to the list.
+     */
     void AddElement(MetadataElementPtr element);
     
     MetadataElementListPtr FindByLevel(MetadataElement::MetadataType type,
@@ -43,7 +55,10 @@ class DefaultMetadataCollector :
     virtual MetadataElementPtr FindByPath(MetadataElement::Type type,
                                           std::string level,
                                           std::string id);
-    
+    /**
+     * Prints the object in a standard form for debugging
+     * and error reporting.
+     */
     virtual std::ostream & Print(std::ostream & outputStream) const;
     
   private:
@@ -71,7 +86,7 @@ class DefaultMetadataCollector :
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

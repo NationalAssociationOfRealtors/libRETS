@@ -79,7 +79,6 @@
 		55BD580707FDB01500526D69 /* utilTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD57A307FDAAFD00526D69 /* utilTest.cpp */; };
 		55BD580807FDB01500526D69 /* XmlMetadataParserTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD57A407FDAAFD00526D69 /* XmlMetadataParserTest.cpp */; };
 		55BD580A07FDB03100526D69 /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565907FC3BBE00526D69 /* libexpat.a */; };
-		55BD580C07FDB03100526D69 /* libcppunit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD57C107FDAB4500526D69 /* libcppunit.dylib */; };
 		55EE855D093E638C00812582 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
 		55F238AB087DB2530090B325 /* LogController.h in Resources */ = {isa = PBXBuildFile; fileRef = 55F238A9087DB2530090B325 /* LogController.h */; };
 		55F238AC087DB2530090B325 /* LogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55F238AA087DB2530090B325 /* LogController.mm */; };
@@ -93,6 +92,8 @@
 		F904343B0D03971C004E3017 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
 		F90434580D039AEA004E3017 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
 		F90434590D039AEA004E3017 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
+		F90624980E185ABC002AFBA0 /* libcppunit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD57C107FDAB4500526D69 /* libcppunit.dylib */; };
+		F90624990E185AD4002AFBA0 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */; };
 		F93109170DF4A81F004DE8BB /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109160DF4A81F004DE8BB /* Options.cpp */; };
 		F931097A0DF4C14B004DE8BB /* demo-search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109340DF4BE75004DE8BB /* demo-search.cpp */; };
 		F931097B0DF4C162004DE8BB /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109160DF4A81F004DE8BB /* Options.cpp */; };
@@ -139,7 +140,6 @@
 		F9310A030DF4CE56004DE8BB /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */; };
 		F9310A040DF4CE58004DE8BB /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */; };
 		F9310A050DF4CE59004DE8BB /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */; };
-		F9310A060DF4CE62004DE8BB /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
 		F9310A070DF4CE62004DE8BB /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
 		F9310A080DF4CE63004DE8BB /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
 		F9310A090DF4CE64004DE8BB /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
@@ -165,6 +165,16 @@
 		F9310A990DF4E267004DE8BB /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */; };
 		F9310AA10DF4E3FE004DE8BB /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
 		F95773360E019D2900836850 /* ServerInfoResponseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F95773350E019D2900836850 /* ServerInfoResponseTest.cpp */; };
+		F99B81B40E3E5C320051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
+		F99B81B50E3E5C340051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
+		F99B81B60E3E5C360051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
+		F99B81B70E3E5C370051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
+		F99B81B80E3E5C380051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
+		F99B81B90E3E5C390051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
+		F99B81BA0E3E5C3A0051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
+		F99B81BB0E3E5C3B0051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
+		F99B81BC0E3E5C3C0051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
+		F99B81BD0E3E5C3C0051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
 		F9E64D910E03325D00231C0E /* CurlMulti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEAFBDE50DAD23D500EA99C7 /* CurlMulti.cpp */; };
 		F9E64D920E03325D00231C0E /* CurlStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEAFBDE60DAD23D500EA99C7 /* CurlStream.cpp */; };
 		F9E64D930E03325D00231C0E /* CurlEasy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F23D84088EACDE0090B325 /* CurlEasy.cpp */; };
@@ -261,6 +271,7 @@
 		F9E64E430E03381D00231C0E /* DmqlTreeParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA2AB07FB16D500402C35 /* DmqlTreeParser.cpp */; };
 		F9E64E440E03381D00231C0E /* RetsSqlLexer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA2AF07FB16D500402C35 /* RetsSqlLexer.cpp */; };
 		F9E64E450E03381D00231C0E /* RetsSqlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AA2B107FB16D500402C35 /* RetsSqlParser.cpp */; };
+		F9FCDDFA0E42574900CA72F9 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -620,7 +631,7 @@
 		55BD57A307FDAAFD00526D69 /* utilTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = utilTest.cpp; sourceTree = "<group>"; };
 		55BD57A407FDAAFD00526D69 /* XmlMetadataParserTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = XmlMetadataParserTest.cpp; sourceTree = "<group>"; };
 		55BD57C107FDAB4500526D69 /* libcppunit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcppunit.dylib; path = lib/libcppunit.dylib; sourceTree = CPPUNIT; };
-		55BD57ED07FDAFE000526D69 /* test */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
+		55BD57ED07FDAFE000526D69 /* test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
 		55EE8499093E5AAA00812582 /* librets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librets.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F23658087B2AB00090B325 /* MetadataForeignKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MetadataForeignKey.cpp; sourceTree = "<group>"; };
 		55F23735087C75710090B325 /* RetsHttpLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetsHttpLogger.h; sourceTree = "<group>"; };
@@ -674,6 +685,8 @@
 		DEAFBDE50DAD23D500EA99C7 /* CurlMulti.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurlMulti.cpp; sourceTree = "<group>"; };
 		DEAFBDE60DAD23D500EA99C7 /* CurlStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurlStream.cpp; sourceTree = "<group>"; };
 		F90434570D039AE9004E3017 /* libantlr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libantlr.a; path = lib/libantlr.a; sourceTree = ANTLR_DIR; };
+		F90624920E185A1C002AFBA0 /* libcppunit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcppunit.a; path = /opt/local/lib/libcppunit.a; sourceTree = "<absolute>"; };
+		F90624A40E19705A002AFBA0 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = /opt/local/lib/libboost_system.a; sourceTree = "<absolute>"; };
 		F90D477E0CF8D29200B9AC65 /* search-response-extended-char.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "search-response-extended-char.xml"; sourceTree = "<group>"; };
 		F93109160DF4A81F004DE8BB /* Options.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
 		F93109330DF4BE5C004DE8BB /* Options.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
@@ -737,6 +750,7 @@
 				F931099C0DF4C48A004DE8BB /* libexpat.a in Frameworks */,
 				F93109A70DF4C4AC004DE8BB /* libcurl.a in Frameworks */,
 				F9310A990DF4E267004DE8BB /* libboost_program_options.a in Frameworks */,
+				F99B81B50E3E5C340051D661 /* libboost_system.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -764,8 +778,9 @@
 				F931099D0DF4C48D004DE8BB /* libexpat.a in Frameworks */,
 				F93109A90DF4C4B1004DE8BB /* libcurl.a in Frameworks */,
 				F93109FC0DF4CE20004DE8BB /* libboost_program_options.a in Frameworks */,
-				F9310A060DF4CE62004DE8BB /* libboost_filesystem.a in Frameworks */,
 				F9310A330DF4D2DD004DE8BB /* libantlr.a in Frameworks */,
+				F99B81B60E3E5C360051D661 /* libboost_system.a in Frameworks */,
+				F9FCDDFA0E42574900CA72F9 /* libboost_filesystem.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,10 +790,12 @@
 			files = (
 				55EE855D093E638C00812582 /* librets.a in Frameworks */,
 				55BD580A07FDB03100526D69 /* libexpat.a in Frameworks */,
-				55BD580C07FDB03100526D69 /* libcppunit.dylib in Frameworks */,
 				F90434580D039AEA004E3017 /* libantlr.a in Frameworks */,
 				F93109A60DF4C4AB004DE8BB /* libcurl.a in Frameworks */,
 				F9310A950DF4E1EE004DE8BB /* libboost_filesystem.a in Frameworks */,
+				F90624980E185ABC002AFBA0 /* libcppunit.dylib in Frameworks */,
+				F90624990E185AD4002AFBA0 /* libboost_program_options.a in Frameworks */,
+				F99B81B40E3E5C320051D661 /* libboost_system.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -799,6 +816,7 @@
 				F93109FF0DF4CE52004DE8BB /* libboost_program_options.a in Frameworks */,
 				F9310A070DF4CE62004DE8BB /* libboost_filesystem.a in Frameworks */,
 				F9310A2B0DF4D225004DE8BB /* libantlr.a in Frameworks */,
+				F99B81B70E3E5C370051D661 /* libboost_system.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -812,6 +830,7 @@
 				F9310A000DF4CE52004DE8BB /* libboost_program_options.a in Frameworks */,
 				F9310A080DF4CE63004DE8BB /* libboost_filesystem.a in Frameworks */,
 				F9310A340DF4D2DE004DE8BB /* libantlr.a in Frameworks */,
+				F99B81B80E3E5C380051D661 /* libboost_system.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,6 +844,7 @@
 				F9310A010DF4CE54004DE8BB /* libboost_program_options.a in Frameworks */,
 				F9310A090DF4CE64004DE8BB /* libboost_filesystem.a in Frameworks */,
 				F9310A350DF4D2DF004DE8BB /* libantlr.a in Frameworks */,
+				F99B81B90E3E5C390051D661 /* libboost_system.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,6 +858,7 @@
 				F9310A020DF4CE55004DE8BB /* libboost_program_options.a in Frameworks */,
 				F9310A0A0DF4CE65004DE8BB /* libboost_filesystem.a in Frameworks */,
 				F9310A360DF4D2DF004DE8BB /* libantlr.a in Frameworks */,
+				F99B81BA0E3E5C3A0051D661 /* libboost_system.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -851,6 +872,7 @@
 				F9310A030DF4CE56004DE8BB /* libboost_program_options.a in Frameworks */,
 				F9310A0B0DF4CE66004DE8BB /* libboost_filesystem.a in Frameworks */,
 				F9310A370DF4D2E0004DE8BB /* libantlr.a in Frameworks */,
+				F99B81BB0E3E5C3B0051D661 /* libboost_system.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -864,6 +886,7 @@
 				F9310A040DF4CE58004DE8BB /* libboost_program_options.a in Frameworks */,
 				F9310A0C0DF4CE67004DE8BB /* libboost_filesystem.a in Frameworks */,
 				F9310A380DF4D2E2004DE8BB /* libantlr.a in Frameworks */,
+				F99B81BC0E3E5C3C0051D661 /* libboost_system.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -877,6 +900,7 @@
 				F9310A050DF4CE59004DE8BB /* libboost_program_options.a in Frameworks */,
 				F9310A0D0DF4CE68004DE8BB /* libboost_filesystem.a in Frameworks */,
 				F9310A390DF4D2E2004DE8BB /* libantlr.a in Frameworks */,
+				F99B81BD0E3E5C3C0051D661 /* libboost_system.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1010,15 +1034,17 @@
 		554AA18C07FA110900402C35 /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */,
 				F90434570D039AE9004E3017 /* libantlr.a */,
 				55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */,
+				F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */,
+				F90624A40E19705A002AFBA0 /* libboost_system.a */,
+				F90624920E185A1C002AFBA0 /* libcppunit.a */,
 				55BD57C107FDAB4500526D69 /* libcppunit.dylib */,
 				55BD56E907FC823E00526D69 /* libcrypto.dylib */,
+				55BD565707FC3BA100526D69 /* libcurl.a */,
+				55BD565907FC3BBE00526D69 /* libexpat.a */,
 				55BD56EA07FC823E00526D69 /* libssl.dylib */,
 				55BD56AE07FC48A000526D69 /* libz.dylib */,
-				55BD565907FC3BBE00526D69 /* libexpat.a */,
-				55BD565707FC3BA100526D69 /* libcurl.a */,
 			);
 			name = "External Libraries";
 			sourceTree = "<group>";
@@ -1493,19 +1519,19 @@
 		55F902BC08FEC65600D76E8C /* SQL */ = {
 			isa = PBXGroup;
 			children = (
-				550A6DE909E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp */,
-				55BD578207FDAAFD00526D69 /* EqCriterionTest.cpp */,
 				55BD577F07FDAAFD00526D69 /* AndCriterionTest.cpp */,
+				5559722808CF66F6003A6B24 /* DmqlExpressionTest.cpp */,
+				55BD578207FDAAFD00526D69 /* EqCriterionTest.cpp */,
 				55BD578407FDAAFD00526D69 /* GtCriterionTest.cpp */,
 				55BD578507FDAAFD00526D69 /* LiteralCriterionTest.cpp */,
-				55F23F8A089003B60090B325 /* TestSqlMetadata.h */,
-				55F23F8B089003B60090B325 /* TestSqlMetadata.cpp */,
-				5559722808CF66F6003A6B24 /* DmqlExpressionTest.cpp */,
-				55BD579C07FDAAFD00526D69 /* SqlToDmqlCompilerTest.cpp */,
 				55F23F09088FFC720090B325 /* LookupOrCriterionTest.cpp */,
 				55BD578A07FDAAFD00526D69 /* LtCriterionTest.cpp */,
 				55BD579007FDAAFD00526D69 /* NotCriterionTest.cpp */,
 				55BD579107FDAAFD00526D69 /* OrCriterionTest.cpp */,
+				55BD579C07FDAAFD00526D69 /* SqlToDmqlCompilerTest.cpp */,
+				550A6DE909E1C5C90030D1A7 /* SqlToDmqlObjectTest.cpp */,
+				55F23F8B089003B60090B325 /* TestSqlMetadata.cpp */,
+				55F23F8A089003B60090B325 /* TestSqlMetadata.h */,
 			);
 			name = SQL;
 			sourceTree = "<group>";
@@ -2221,7 +2247,6 @@
 					"$(BOOST)/lib",
 					"$(EXPAT)/lib",
 					"$(CPPUNIT)/lib",
-					"$(SRCROOT)/../../build/xcode/Development",
 				);
 				OTHER_CFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -2622,17 +2647,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 553844F80A349A5F00415742 /* librets.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
+				ARCHS = ppc;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1)",
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1 = "LIBRETS_VERSION=\\\"$(VERSION)\\\"";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-				VERSION = 1.2.x;
 			};
 			name = Development;
 		};
@@ -2679,6 +2700,10 @@
 					"$(SRCROOT)/../librets/include",
 					"$(HEADER_SEARCH_PATHS)",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = rets;
 				ZERO_LINK = YES;
@@ -2700,6 +2725,10 @@
 					"$(SRCROOT)/../librets/include",
 					"$(HEADER_SEARCH_PATHS)",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = rets;
 				ZERO_LINK = NO;
@@ -2718,6 +2747,10 @@
 					"$(ANTLR)/include",
 					"$(SRCROOT)/../librets/include",
 					"$(HEADER_SEARCH_PATHS)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = rets;

@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_EXPAT_XML_PARSER_H
 #define LIBRETS_EXPAT_XML_PARSER_H
+/** 
+ * @file ExpatXmlParser.h
+ * (Internal) Contains the XML Parser interface class for use with libexpat.
+ */
+/// @cond MAINTAINER
 
 #include <istream>
 #include <list>
@@ -26,17 +31,40 @@
 #include "librets/RetsXmlParser.h"
 
 namespace librets {
-
+/**
+ * (Internal) ExpatXmlParser defines the primary controlling class for the Expat
+ * XML Parser.
+ */
 class ExpatXmlParser : public RetsXmlParser
 {
   public:
+    /**
+     * Constructor used to parse XML data arriving through a stream.
+     * @param inputStream The input stream.
+     * @param encoding The encoding of the data within the stream. This
+     * defaults to "US-ASCII".
+     */
     ExpatXmlParser(istreamPtr inputStream, const char *encoding = "US-ASCII");
+    /**
+     * Constructor used to parse XML data in a string.
+     * @param inputString The string containing the XML data.
+     * @param encoding The encoding of the data within the string. This 
+     * defaults to "US-ASCII".
+     */
     ExpatXmlParser(std::string inputString, const char *encoding = "US-ASCII");
 
     virtual ~ExpatXmlParser();
 
+    /**
+     * Indicates whether or not there are additional XML events to process.
+     * @return TRUE indicates that there are more XML tags to process.
+     */
     virtual bool HasNext();
 
+    /**
+     * Returns a reference to the next XML event to process.
+     * @return A pointer as returned from Expat for the next event.
+     */
     virtual RetsXmlEventPtr GetNextEvent();
 
   private:
@@ -64,7 +92,7 @@ class ExpatXmlParser : public RetsXmlParser
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

@@ -16,11 +16,18 @@
  */
 #ifndef LIBRETS_RETS_EXCEPTION_CONTEXT_H
 #define LIBRETS_RETS_EXCEPTION_CONTEXT_H
-
+/**
+ * @file RetsExceptionContext.h
+ * (Internal) Contains the RetsExceptionContext declaration.
+ */
+/// @cond MAINTAINER
 #include <string>
 
 namespace librets {
-    
+/**
+ * RetsExceptionContext implements the exception handling context
+ * for the library.
+ */    
 class RetsExceptionContext
 {
   public:
@@ -41,5 +48,5 @@ class RetsExceptionContext
 #define LIBRETS_ECTXT() RetsExceptionContext(__FILE__, __LINE__)
 
 }
-
+/// @endcond
 #endif

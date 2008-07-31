@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_FIELD_CRITERION_H
 #define LIBRETS_FIELD_CRITERION_H
+/** 
+ * @file FieldCriterion.h
+ * (Internal) Contains the FieldCriterion parser class.
+ */
+ /// @cond MAINTAINER
 
 #include <string>
 #include "librets/sql_forward.h"
@@ -40,7 +45,7 @@ class FieldCriterion : public DmqlCriterion
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

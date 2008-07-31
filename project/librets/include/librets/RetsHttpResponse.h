@@ -17,6 +17,11 @@
 
 #ifndef LIBRETS_RETS_HTTP_RESPONSE_H
 #define LIBRETS_RETS_HTTP_RESPONSE_H
+/** 
+ * @file RetsHttpResponse.h
+ * (Internal) Contains the Curl Http response interface class for use with libCURL.
+ */
+/// @cond MAINTAINER
 
 #include <string>
 #include <istream>
@@ -25,14 +30,12 @@
 namespace librets {
 
 /**
- * HTTP response expected for RETS.
+ * (Internal) RetsHttpResponse is the super class that defines those operations to be
+ * returned as the result of an http transaction by libcurl.
  */
 class RetsHttpResponse
 {
   public:
-    /**
-     * Virtual destructor.
-     */
     virtual ~RetsHttpResponse();
 
     /**
@@ -63,7 +66,7 @@ class RetsHttpResponse
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

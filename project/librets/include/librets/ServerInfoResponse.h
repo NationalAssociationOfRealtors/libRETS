@@ -16,7 +16,11 @@
  */
 #ifndef LIBRETS_SERVERINFO_RESPONSE_H
 #define LIBRETS_SERVERINFO_RESPONSE_H
-
+/** 
+ * @file ServerInfoResponse.h
+ * Contains the ServerInformationResponse class definition.
+ */
+ 
 #include <string>
 #include <vector>
 #include "librets/std_forward.h"
@@ -27,7 +31,8 @@
 namespace librets {
 
 /**
- * A search result set.
+ * ServerInformationResponse is the API that allows access to the RETS 1.7
+ * SERVERINFORMATION transaction results.
  */
 class ServerInformationResponse : public virtual RetsObject
 {
@@ -37,12 +42,16 @@ class ServerInformationResponse : public virtual RetsObject
      */
     ServerInformationResponse();
 
-    /**
-     * Virtual destructor.
-     */
     virtual ~ServerInformationResponse();
-
+    
+    /// @cond MAINTAINER
+    /**
+     * Parse the Server Information Response.
+     * @param inputStream The stream containing the response to be parsed.
+     * @throw RetsReplyException
+     */
     void Parse(istreamPtr inputStream);
+    /// @endcond
     
     /**
      * Returns the parameter names.
@@ -107,15 +116,16 @@ class ServerInformationResponse : public virtual RetsObject
      */
     std::string GetReplyText();
 
+    /// @cond MAINTAINER
     /**
      * Set the input stream for Parse.
      *
      * @param inputStream Input Stream 
      */
     void SetInputStream(istreamPtr inputStream);
+    /// @endcond
     
   private:
-    void FixCompactArray(StringVector & compactVector, std::string context);
     
     StringMap mValues;
     StringMap mResources;

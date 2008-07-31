@@ -17,6 +17,12 @@
 #ifndef LIBRETS_PROTOCOL_FORWARD_H
 #define LIBRETS_PROTOCOL_FORWARD_H
 
+/** 
+ * @file protocol_forward.h
+ * (Internal) Contains the RETS protocolclasses forward declarations.
+ */
+/// @cond MAINTAINER
+
 #include <boost/shared_ptr.hpp>
 
 namespace librets {
@@ -76,7 +82,7 @@ typedef boost::shared_ptr<ServerInformationResponse> ServerInformationResponsePt
 typedef std::auto_ptr<ServerInformationResponse> ServerInformationResponseAPtr;
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

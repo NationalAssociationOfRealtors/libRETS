@@ -17,11 +17,19 @@
 
 #ifndef LIBRETS_RETS_HTTP_LOGGER_H
 #define LIBRETS_RETS_HTTP_LOGGER_H
+/** 
+ * @file RetsHttpLogger.h
+ * (Internal) Contains the Curl Http Logging class for use with libCURL.
+ */
+/// @cond MAINTAINER
 
 #include <string>
 
 namespace librets {
-
+/**
+ * (Internal) RetsHttpLogger is the super class that defines those operations that can be
+ * logged by libcurl when the verbose option is enabled.
+ */
 class RetsHttpLogger
 {
   public:
@@ -36,7 +44,10 @@ class RetsHttpLogger
 
     virtual void logHttpData(Type type, std::string data) = 0;
 };
-
+/**
+ * NullHttpLogger is a Null RetsHttpLogger class that is used with libcurl when
+ * no logging is desired.
+ */
 class NullHttpLogger : public RetsHttpLogger
 {
   public:
@@ -49,7 +60,7 @@ class NullHttpLogger : public RetsHttpLogger
 };
 
 }
-
+/// @endcond
 #endif
 
 /* Local Variables: */

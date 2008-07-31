@@ -16,6 +16,10 @@
  */
 #ifndef LIBRETS_METADATA_TABLE_H
 #define LIBRETS_METADATA_TABLE_H
+/** 
+ * @file MetadataTable.h
+ * Contains the MetadataTable class declaration.
+ */
 
 #include <string>
 
@@ -24,7 +28,8 @@
 namespace librets {
 
 /**
- * Table metadata.
+ * MetadataTable is an implementation of MetadataElement that
+ * represents Table metadata.
  */
 class MetadataTable : public MetadataElement
 {
@@ -127,10 +132,22 @@ class MetadataTable : public MetadataElement
      */
     std::string GetLongName() const;
     
+    /**
+     * Returns the DB name for this field.
+     * @return A string representing the DB name.
+     */
     std::string GetDBName() const;
     
+    /**
+     * Return the short name for this field.
+     * @return A string representing the short name.
+     */
     std::string GetShortName() const;
     
+    /**
+     * Return the maximum length for this field.
+     * @return An integer representing the maximum length
+     */
     int GetMaximumLength() const;
 
     /**
@@ -157,36 +174,106 @@ class MetadataTable : public MetadataElement
      */
     bool IsSearchable() const;
 
+    /**
+     * Returns the intepretation of this field.
+     * @return An enum representing the interpretation of this field.
+     */
     Interpretation GetInterpretation() const;
     
+    /**
+     * Return the alignment of this field.
+     * @return An enum representing the alignment of this field.
+     */
     Alignment GetAlignment() const;
     
+    /**
+     * Return whether or not this field uses a separator.
+     * @return A boolen that if TRUE indications that a separator is used.
+     */
     bool UseSeparator() const;
     
+    /**
+     * Return the edit mask ID for this field.
+     * @return A string representing the edit mask ID.
+     */
     std::string GetEditMaskId() const;
     
+    /**
+     * Return the lookup name for this field.
+     * @return A string representing the lookup name.
+     */
     std::string GetLookupName() const;
     
+    /**
+     * Return the Max Select value for this field.
+     * @return An integer representing the maximum select value.
+     */
     int GetMaxSelect() const;
     
+    /**
+     * Return the units type for this field.
+     * @return An enum representing the units.
+     */
     Units GetUnits() const;
     
+    /**
+     * Return the index for this field.
+     * @return An integer representing the index.
+     */
     int GetIndex() const;
     
+    /**
+     * Get the minimum value for this field.
+     * @return An integer representing the minimum value.
+     */
     int GetMinimum() const;
     
+    /**
+     * Get the minimum value for this field as a string.
+     * This is a workaround to allow the ability to fetch minimum values
+     * for floating point fields. It is up to the user code to handle the
+     * parsing of this value.
+     * @return A string represnting the minimum value of this field.
+     */
     std::string GetMinimumAsString() const;
     
+    /**
+     * Get the maximum value for this field.
+     * @return An integer representing the maximum value.
+     */
     int GetMaximum() const;
     
+    /**
+     * Get the maximum value for this field as a string.
+     * This is a workaround to allow the ability to fetch maximum values
+     * for floating point fields. It is up to the user code to handle the
+     * parsing of this value.
+     * @return A string representing the maximum value of this field.
+     */
     std::string GetMaximumAsString() const;
     
+    /**
+     * Get the default value for this field.
+     * @return An integer represnting the default value
+     */
     int GetDefault() const;
     
+    /**
+     * Get whether or not this is a required field for searching.
+     * @return An integer representing the value.
+     */
     int GetRequired() const;
     
+    /**
+     * Get the Search Help ID.
+     * @return A string representing the Search Help ID.
+     */
     std::string GetSearchHelpId() const;
     
+    /**
+     * Get whether or not this field is supposed to be unique.
+     * @return A boolean that when TRUE indicates the field should be unique.
+     */
     bool IsUnique() const;
     
     /**

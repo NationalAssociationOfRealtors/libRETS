@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_GT_CRITERION_H
 #define LIBRETS_GT_CRITERION_H
+/** 
+ * @file GtCriterion.h
+ * (Internal) Contains the AndCriterion parser class.
+ */
+ /// @cond MAINTAINER
 
 #include <string>
 #include "librets/sql_forward.h"
@@ -35,7 +40,7 @@ class GtCriterion : public FieldCriterion
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

@@ -16,12 +16,19 @@
  */
 #ifndef LIBRETS_RETS_HTTP_CLIENT_H
 #define LIBRETS_RETS_HTTP_CLIENT_H
+/** 
+ * @file RetsHttpClient.h
+ * (Internal) Contains the Curl Http Client interface prototype for use with libCURL.
+ */
+/// @cond MAINTAINER
 
 #include <string>
 #include "librets/http_forward.h"
 
 namespace librets {
-
+/**
+ * (Internal) RetsHttpClient is the super class defining the activities that a client may perform.
+ */
 class RetsHttpClient
 {
   public:
@@ -56,6 +63,7 @@ class RetsHttpClient
 };
 
 };
+/// @endcond
 
 #endif
 

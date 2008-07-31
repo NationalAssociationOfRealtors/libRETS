@@ -16,7 +16,10 @@
  */
 #ifndef LIBRETS_METADATA_VALIDATION_LOOKUP_H
 #define LIBRETS_METADATA_VALIDATION_LOOKUP_H
-
+/** 
+ * @file MetadataValidationLookup.h
+ * Contains the MetadataValidationLookup class declaration.
+ */
 #include "librets/MetadataElement.h"
 
 namespace librets {
@@ -29,7 +32,8 @@ typedef boost::shared_ptr<MetadataValidationLookupTypeList>
     MetadataValidationLookupTypeListPtr;
 
 /**
- * Validation lookup metadata.
+ * MetadataValidationLookup is an implementation of MetadataElement that represents
+ * Validation Lookup metadata.
  */
 class MetadataValidationLookup : public MetadataElement
 {

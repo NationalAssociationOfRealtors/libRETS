@@ -16,7 +16,13 @@
  */
 #ifndef LIBRETS_KEY_VALUE_RESPONSE_H
 #define LIBRETS_KEY_VALUE_RESPONSE_H
-
+/**
+ * @file KeyValueResponse.h 
+ * (Internal) Contains the KeyValueResponse class definition.
+ */
+ 
+ /// @cond MAINTAINER
+ 
 #include "librets/std_forward.h"
 #include "librets/xml_forward.h"
 #include "librets/RetsObject.h"
@@ -24,13 +30,28 @@
 
 namespace librets {
 
+/**
+ * KeyValueResponse is a class that parses a stream in the form of 
+ * <code>key=value</code>, saves and enables access to the results.
+ */
 class KeyValueResponse : public RetsObject
 {
   public:
     virtual ~KeyValueResponse();
 
+    /**
+     * Parse the input stream, converting the data into keys and values.
+     * @param inputStream A pointer to the input stream.
+     * @param retsVersion The RETS version.
+     */
     void Parse(istreamPtr inputStream, RetsVersion retsVersion);
 
+    /**
+     * For a given key, return the associated value. If the key is not found
+     * and empty string is returned.
+     * @param key A string representing the key whose value is to be returned.
+     * @return A string containing the value.
+     */
     std::string GetValue(std::string key) const;
 
   protected:
@@ -64,6 +85,7 @@ class KeyValueResponse : public RetsObject
 
 };
 
+/// @endcond
 #endif
 
 /* Local Variables: */

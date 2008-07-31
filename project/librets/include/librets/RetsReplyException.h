@@ -16,24 +16,61 @@
  */
 #ifndef LIBRETS_RETS_REPLY_EXCEPTION_H
 #define LIBRETS_RETS_REPLY_EXCEPTION_H
+/** 
+ * @file RetsReplyException.h
+ * Contains the RetsReplyException class declaration.
+ */
 
 #include "RetsException.h"
 
 namespace librets {
 
+/**
+ * RetsReplyException is an implementation of RetsException that is
+ * thrown when the RETS REPLY-CODE is non-zero.
+ */
 class RetsReplyException : public RetsException
 {
   public:
+    /// @cond MAINTAINER
+    /**
+     * Construct the exception with the reply code and meaning.
+     * @param replyCode The RETS <code>REPLY-CODE</code> sent with the transaction.
+     * @param meaning A string containing the meaning of the reply code.
+     */
     RetsReplyException(int replyCode, std::string meaning);
-
+    /// @endcond
+    
+    /// @cond MAINTAINER
+    /**
+     * Construct the exception with the reply code, meaning and extended meaning.
+     * @param replyCode The RETS <code>REPLY-CODE</code> sent with the transaction.
+     * @param meaning A string containing the meaning of the reply code.
+     * @param extendedMeaning A string containing optional additional text qualifying
+     * the exception.
+     */
     RetsReplyException(int replyCode, std::string meaning, std::string extendedMeaning);
-
+    /// @endcond
+    
     virtual ~RetsReplyException() throw();
 
+    /**
+     * Return the RETS <code>REPLY-CODE</code> for this exception.
+     * @return An integer representation of the reply code.
+     */
     int GetReplyCode() const throw();
-
+    
+    /**
+     * Return the meaning associate with the reply code.
+     * @return A string containing the meaning associated with the reply code.
+     */
     std::string GetMeaning() const throw();
-
+    
+    /**
+     * Return any extended meaning associated with this reply code.
+     * @return A string containing the extended meaning. This will be an empty 
+     * string if no extended meaning exists.
+     */
     std::string GetExtendedMeaning() const throw();
     
   private:

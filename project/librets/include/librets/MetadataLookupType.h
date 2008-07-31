@@ -17,13 +17,18 @@
 
 #ifndef LIBRETS_METADATA_LOOKUP_TYPE_H
 #define LIBRETS_METADATA_LOOKUP_TYPE_H
+/** 
+ * @file MetadataLookupType.h
+ * Contains the MetadataLookupType class declaration.
+ */
 
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
- * Lookup type metadata.
+ * MetadataLookupType is an implementation of MetadataElement that
+ * represents Lookup Type metadata.
  */
 class MetadataLookupType : public MetadataElement
 {
@@ -37,10 +42,22 @@ class MetadataLookupType : public MetadataElement
     
     virtual std::string GetId() const;
     
+    /**
+     * Return the value for this lookup type.
+     * @return A string representing the value.
+     */
     std::string GetValue() const;
     
+    /**
+     * Return the "long value" metadata for this lookup type.
+     * @return A string representing the long value.
+     */
     std::string GetLongValue() const;
     
+    /**
+     * Return the "short value" metadata for this lookup type.
+     * @return A string representing the short value.
+     */
     std::string GetShortValue() const;
 };
 

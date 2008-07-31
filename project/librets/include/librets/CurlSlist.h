@@ -16,11 +16,20 @@
  */
 #ifndef LIBRETS_CURL_SLIST_H
 #define LIBRETS_CURL_SLIST_H
+/** 
+ * @file CurlSlist.h
+ * (Internal) Contains the Curl Http Slist interface class for use with libCURL.
+ */
+
+/// @cond MAINTAINER
 
 struct curl_slist;
 
 namespace librets {
-
+/**
+ * (Internal) CurlSlist is a class that wraps the libcurl curl_slist type. Refer to the
+ * libcurl documentation.
+ */
 class CurlSlist
 {
   public:
@@ -43,7 +52,7 @@ class CurlSlist
 
 
 };
-
+///@endcond
 #endif
 
 /* Local Variables: */

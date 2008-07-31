@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_HTTP_FORWARD_H
 #define LIBRETS_HTTP_FORWARD_H
+/** 
+ * @file http_forward.h
+ * (Internal) Contains the Curl Http forward declarations for use with libCURL.
+ */
+/// @cond MAINTAINER
 
 #include <boost/shared_ptr.hpp>
 
@@ -42,16 +47,19 @@ class NullHttpLogger;
 class StreamHttpLogger;
 
 class CurlHttpClient;
+/** Smart pointer to CurlHttpClient. */
 typedef boost::shared_ptr<CurlHttpClient> CurlHttpClientPtr;
 
 class CurlHttpRequest;
+/** Smart pointer to CurlHttpRequest. */
 typedef boost::shared_ptr<CurlHttpRequest> CurlHttpRequestPtr;
 
 class CurlHttpResponse;
+/** Smart pointer to CurlHttpResponse. */
 typedef boost::shared_ptr<CurlHttpResponse> CurlHttpResponsePtr;
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

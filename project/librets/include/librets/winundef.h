@@ -30,7 +30,11 @@
  * its wx/msw/winundef.h.
  */
 
-
+/**
+ * @file winundef.h
+ * (Internal) Contains a few undefs needed for the Windows builds.
+ */
+/// @cond MAINTAINER
 #ifdef GetMessage
 #undef GetMessage
 #endif
@@ -42,3 +46,4 @@
 #ifdef GetObject
 #undef GetObject
 #endif
+/// @endcond

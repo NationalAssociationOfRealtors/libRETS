@@ -17,12 +17,19 @@
 
 #ifndef LIBRETS_STREAM_HTTP_LOGGER_H
 #define LIBRETS_STREAM_HTTP_LOGGER_H
+/** 
+ * @file StreamHttpLogger.h
+ * (Internal) Contains the Curl Http logging interface class for use with libCURL.
+ */
+/// @cond MAINTAINER
 
 #include "librets/RetsHttpLogger.h"
 #include "librets/std_forward.h"
 
 namespace librets {
-    
+/**
+ * (Internal) StreamHttpLogger defines the interface to be used with libcurl for logging operations.
+ */    
 class StreamHttpLogger : public RetsHttpLogger
 {
   public:
@@ -38,7 +45,7 @@ class StreamHttpLogger : public RetsHttpLogger
     bool mUseTimestamp;
 };
 }
-
+/// @endcond
 #endif
 
 /* Local Variables: */

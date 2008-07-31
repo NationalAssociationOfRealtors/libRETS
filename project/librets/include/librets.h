@@ -16,14 +16,24 @@
  */
 #ifndef LIBRETS_H
 #define LIBRETS_H
-
 /**
+ * @file librets.h 
+ * This file includes all of the headers needed for libRETS. It should be
+ * only file included by users of libRETS.
+ *
  * @mainpage librets: A C++ RETS Library
  *
  * librets is a C++ RETS library.  It provides support for logging in,
  * logging out, searching, and metadata retrieval.  The main interface
- * is through the librets::RetsSession class.  Here is a example
- * demonstrationg searching:
+ * is through the librets::RetsSession class.  
+ *
+ * @if DEVELOPER
+ * This is the full libRETS documentation, including all of the internal
+ * classes used by libRETS itself. Things marked "(Internal)" should not
+ * be directly called by user code.
+ * @endif
+ *
+ * Here is a example demonstrating searching:
  *
  * @verbinclude "demo-search.cpp"
  *

@@ -18,6 +18,11 @@
 #ifndef LIBRETS_GET_OBJECT_RESPONSE_H
 #define LIBRETS_GET_OBJECT_RESPONSE_H
 
+/** 
+ * @file GetObjectResponse.h
+ * Contains the GetObjectResponse class definition.
+ */
+
 #include <vector>
 #include "librets/RetsObject.h"
 #include "librets/http_forward.h"
@@ -27,7 +32,7 @@
 namespace librets {
 
 /**
- * The GetObjectResponse represents a response from a RETS GetObject
+ * A GetObjectResponse represents a response from a RETS GetObject
  * transaction.  A response may result in zero or more objects.  RETS
  * does not provide a mechanism for getting all objects returned in a
  * response, so a user must retrieve each object in turn, until there
@@ -36,15 +41,32 @@ namespace librets {
 class GetObjectResponse : public RetsObject
 {
   public:
+    /**
+     * Default constructor.
+     */
     GetObjectResponse();
     
     virtual ~GetObjectResponse();
-    
+    /// @cond MAINTAINER
+    /**
+     * (Internal) Set the default object key and object ID.
+     * @param defaultObjectKey A string representing the default object key.
+     * @param defaultObjectId An integer representing the default object ID.
+     */
     void SetDefaultObjectKeyAndId(std::string defaultObjectKey,
                                   int defaultObjectId);
     
+    /**
+     * (Internal) Parse the response from the server into one or more
+     * objects.
+     * @param httpResponse A pointer to RetsHttpResponse containing the response
+     * from the GetObject request.
+     * @param ignoreMalformedHeaders A boolean that when <code>true</code> indicates
+     * to the parser that malformed headers and expected and to ignore them.
+     */
     void Parse(RetsHttpResponsePtr httpResponse,
                bool ignoreMalformedHeaders = false);
+    /// @endcond
     
     /**
      * Returns the next object found in the response.

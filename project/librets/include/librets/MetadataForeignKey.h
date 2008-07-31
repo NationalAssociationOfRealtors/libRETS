@@ -16,13 +16,18 @@
  */
 #ifndef LIBRETS_METADATA_FOREIGN_KEY_H
 #define LIBRETS_METADATA_FOREIGN_KEY_H
+/** 
+ * @file MetadataForeignKey.h
+ * Contains the MetadataForeighKey class declaration.
+ */
 
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
- * Foreign key metadata.
+ * MetadataForeignKen is an implementation of MetadataElement that
+ * represents Foreign Key information for the metadata
  */
 class MetadataForeignKey : public MetadataElement
 {

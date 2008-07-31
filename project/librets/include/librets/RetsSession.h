@@ -17,7 +17,10 @@
 
 #ifndef LIBRETS_RETS_SESSION_H
 #define LIBRETS_RETS_SESSION_H
-
+/** 
+ * @file RetsSession.h
+ * Contains the RetsSession class definition.
+ */
 #include <string>
 #include "librets/protocol_forward.h"
 #include "librets/RetsHttpRequest.h"
@@ -35,7 +38,8 @@
 namespace librets {
 
 /**
- * Interface to RETS session.
+ * RetsSession contains the API that is the main controlling
+ * interface to the RETS server.
  */
 class RetsSession : public MetadataLoader
 {
@@ -167,6 +171,11 @@ class RetsSession : public MetadataLoader
      */
     void SetIncrementalMetadata(bool incrementalMetadata);
     
+    /**
+     * Fetches media from the server.
+     * @param request A pointer to the GetObjectRequest containing the
+     * objects to fetch with this request.
+     */
     GetObjectResponseAPtr GetObject(GetObjectRequest * request);
 
     /**
@@ -249,11 +258,24 @@ class RetsSession : public MetadataLoader
      * @param errorHandler the new error handler.
      */
     void SetErrorHandler(RetsErrorHandler * errorHandler);
-
-    virtual void SetCollector(MetadataElementCollectorPtr collector);
     
+    /// @cond MAINTAINER
+    /**
+     * Sets the method that will be used to collect the metadata.
+     * @param collector A pointer to the MetadtaElementCollector.
+     */
+    virtual void SetCollector(MetadataElementCollectorPtr collector);
+    /// @endcond
+    
+    /// @cond MAINTAINER
+    /**
+     * Fetch the specified metadata.
+     * @param type The MetadataElement::Type for this request.
+     * @param level A string containing the level for the current type.
+     */
     virtual void LoadMetadata(MetadataElement::Type type,
                               std::string level);
+    /// @endcond
     
     /**
      * Sets the User-Agent authorzation type.  Currently, only 
@@ -290,6 +312,7 @@ class RetsSession : public MetadataLoader
      */
     void SetLogEverything(bool logging);
     
+    /// @cond MAINTAINER
     /**
      * Cleans up/frees some underlying resources including the HTTP
      * interface.  This method is only really intended to be called by
@@ -301,7 +324,8 @@ class RetsSession : public MetadataLoader
      * call.
      */
     void Cleanup();
-
+    /// @endcond
+    
 private:
     static const char * RETS_SESSION_ID_HEADER;
     static const char * RETS_VERSION_HEADER;

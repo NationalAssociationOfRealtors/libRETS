@@ -16,7 +16,11 @@
  */
 #ifndef LIBRETS_LT_CRITERION_H
 #define LIBRETS_LT_CRITERION_H
-
+/** 
+ * @file LtCriterion.h
+ * (Internal) Contains the LtCriterion parser class.
+ */
+ /// @cond MAINTAINER
 #include <string>
 #include "librets/sql_forward.h"
 #include "librets/FieldCriterion.h"
@@ -35,7 +39,7 @@ class LtCriterion : public FieldCriterion
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

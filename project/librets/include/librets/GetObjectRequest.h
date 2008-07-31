@@ -18,6 +18,11 @@
 #ifndef LIBRETS_GET_OBJECT_REQUEST_H
 #define LIBRETS_GET_OBJECT_REQUEST_H
 
+/** 
+ * @file GetObjectRequest.h
+ * Contains the GetObjectRequest class definition.
+ */
+
 #include "librets/RetsObject.h"
 #include "librets/http_forward.h"
 #include "librets/std_forward.h"
@@ -25,7 +30,7 @@
 namespace librets {
 
 /**
- * A GetObjectRequest represents the parameters needed to peform a
+ * A GetObjectRequest represents the parameters needed to perform a
  * RETS GetObject transaction.  A server does not have to provide
  * objects for all well-known types, but a server should use well-known
  * types, where appropriate.  Multiple objects for multiple
@@ -96,9 +101,20 @@ class GetObjectRequest : public RetsObject
      */
     void AddAllObjects(std::string resourceEntity);
     
+    /// @cond MAINTAINER
+    /**
+     * (Internal) Create the Http Request object that will control access
+     * to the server to fetch the objects.
+     */
     RetsHttpRequestPtr CreateHttpRequest() const;
     
+    /**
+     * (Internal) Set up the Http Request. This should only be called by
+     * CreateHttpRequest.
+     * @param httpRequest A pointer to the RetsHttpRequest.
+     */
     void PrepareHttpRequest(RetsHttpRequestPtr httpRequest) const;
+    /// @endcond
     
     /**
      * Returns <code>true</code> if a default object key and ID are
@@ -110,8 +126,16 @@ class GetObjectRequest : public RetsObject
      */
     bool HasDefaultObjectKeyAndId() const;
     
+    /**
+     * Returns the default object key.
+     * @return A string containing the default object key.
+     */
     std::string GetDefaultObjectKey() const;
     
+    /**
+     * Returns the default object ID.
+     * @return An integer containing the default object ID.
+     */
     int GetDefaultObjectId() const;
 
     /**
@@ -125,6 +149,8 @@ class GetObjectRequest : public RetsObject
      * doing.  It is NOT recommended that this be used.  This only
      * effects multi-part responses.  The default is
      * <code>false</code>.
+     * @param ignore A boolean that when <code>true</code> indicates that
+     * malformed headers should be ignored.
      */
     void SetIgnoreMalformedHeaders(bool ignore);
 

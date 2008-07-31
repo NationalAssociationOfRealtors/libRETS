@@ -16,7 +16,11 @@
  */
 #ifndef LIBRETS_RETS_AST_H
 #define LIBRETS_RETS_AST_H
-
+/** 
+ * @file RetsAST.h
+ * (Internal) Contains the RetsAST class that inherits from antlr.
+ */
+ /// @cond MAINTAINER
 #include <antlr/CommonAST.hpp>
 
 namespace librets {
@@ -98,7 +102,7 @@ class RetsAST : public antlr::CommonAST
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

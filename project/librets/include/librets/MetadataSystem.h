@@ -16,6 +16,10 @@
  */
 #ifndef LIBRETS_METADATA_SYSTEM_H
 #define LIBRETS_METADATA_SYSTEM_H
+/** 
+ * @file MetadataSystem.h
+ * Contains the MetadataSystem class declaration.
+ */
 
 #include <string>
 #include "librets/MetadataElement.h"
@@ -28,14 +32,12 @@ typedef std::vector<MetadataForeignKeyPtr> MetadataForeignKeyList;
 typedef boost::shared_ptr<MetadataForeignKeyList> MetadataForeignKeyListPtr;
 
 /**
- * System metadata.
+ * MetadataSystem is an implementation of MetadataElement that
+ * represents System metadata.
  */
 class MetadataSystem : public MetadataElement
 {
   public:
-    /**
-     * Virtual destructor.
-     */
     virtual ~MetadataSystem();
 
     /**

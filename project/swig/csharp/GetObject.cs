@@ -3,7 +3,7 @@ using System.Collections;
 using System.IO;
 using librets;
 
-public class Search
+public class GetObject
 {
     static void Main(string[] args)
     {

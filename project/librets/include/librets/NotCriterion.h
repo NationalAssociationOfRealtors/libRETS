@@ -16,7 +16,11 @@
  */
 #ifndef LIBRETS_NOT_CRITERION_H
 #define LIBRETS_NOT_CRITERION_H
-
+/** 
+ * @file NotCriterion.h
+ * (Internal) Contains the NotCriterion parser class.
+ */
+ /// @cond MAINTAINER
 #include <string>
 #include "librets/sql_forward.h"
 #include "librets/DmqlCriterion.h"
@@ -39,7 +43,7 @@ class NotCriterion : public DmqlCriterion
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

@@ -17,20 +17,41 @@
 
 #ifndef LIBRETS_RETS_UNKNOWN_METADATA_EXCEPTION_H
 #define LIBRETS_RETS_UNKNOWN_METADATA_EXCEPTION_H
-
+/** 
+ * @file RetsUnknownMetadataException.h
+ * Contains the RetsUnknownMetadataException class definition.
+ */
 #include "librets/RetsException.h"
 
 namespace librets {
 
+/**
+ * RetsReplyException is an implementation of RetsException that is
+ * thrown when the RETS REPLY-CODE is non-zero.
+ */
 class RetsUnknownMetadataException : public RetsException
 {
   public:
+    /// @cond MAINTAINER
+    /**
+     * Construct the exception with the name of the unknown element.
+     * @param metadataName A string containing the unknown metadata element.
+     */
     RetsUnknownMetadataException(std::string metadataName);
-
+    /// @endcond
+    
     virtual ~RetsUnknownMetadataException() throw();
 
+    /**
+     * Returns the name of this exception.
+     * @return Always returns "RetsUnknownMetadataException"
+     */
     virtual std::string GetName() const throw();
     
+    /**
+     * Returns the name of the unknown element.
+     * @return A string containing the name of the unknown element.
+     */
     std::string GetMetadataName() const throw();
     
   private:

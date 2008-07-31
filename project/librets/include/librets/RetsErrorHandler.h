@@ -17,14 +17,18 @@
 
 #ifndef LIBRETS_RETS_ERROR_HANDLER_H
 #define LIBRETS_RETS_ERROR_HANDLER_H
+/** 
+ * @file RetsErrorHandler.h
+ * Contains the RetsErrorHandler class declaration.
+ */
 
 #include <string>
 
 namespace librets {
     
 /**
- * An error handling interface that can be used by users to set error
- * handling policy.
+ * RetsErrorHandler is an error handling interface that can be used by 
+ * users to set error handling policy.
  */
 class RetsErrorHandler
 {

@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_FORWARD_H
 #define LIBRETS_FORWARD_H
+/**
+ * @file forward.h
+ * (Internal) Includes the other forward declaration files.
+ */
+/// @cond MAINTAINER
 
 #include <boost/shared_ptr.hpp>
 
@@ -25,7 +30,7 @@
 #include "librets/xml_forward.h"
 #include "librets/sql_forward.h"
 #include "librets/std_forward.h"
-
+/// @endcond
 #endif
 
 /* Local Variables: */

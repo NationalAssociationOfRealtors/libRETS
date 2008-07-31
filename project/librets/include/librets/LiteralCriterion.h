@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_LITERAL_CRITERION_H
 #define LIBRETS_LITERAL_CRITERION_H
+/** 
+ * @file LiteralCriterion.h
+ * (Internal) Contains the LiteralCriterion parser class.
+ */
+ /// @cond MAINTAINER
 
 #include <string>
 #include "librets/DmqlCriterion.h"
@@ -39,7 +44,7 @@ class LiteralCriterion : public DmqlCriterion
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

@@ -17,6 +17,10 @@
 
 #ifndef LIBRETS_RETS_USER_AGENT_AUTH_TYPE_H
 #define LIBRETS_RETS_USER_AGENT_AUTH_TYPE_H
+/** 
+ * @file UserAgentAuthType.h
+ * Contains the UserAgentAuthType enum declaration.
+ */
 
 namespace librets {
     

@@ -17,7 +17,10 @@
 
 #ifndef LIBRETS_SEARCH_REQUEST_H
 #define LIBRETS_SEARCH_REQUEST_H
-
+/**
+ * @file SearchRequest.h
+ * Contains the SearchRequest class definition.
+ */
 #include <string>
 
 #include "librets/RetsHttpRequest.h"
@@ -25,7 +28,8 @@
 namespace librets {
 
 /**
- * A search request.
+ * SearchRequest contains the API that is used to set up and
+ * customer a RETS SEARCH transaciton.
  */
 class SearchRequest : public RetsHttpRequest
 {

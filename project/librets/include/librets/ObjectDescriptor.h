@@ -17,6 +17,10 @@
 
 #ifndef LIBRETS_OBJECT_DESCRIPTOR_H
 #define LIBRETS_OBJECT_DESCRIPTOR_H
+/**
+ * @file ObjectDescriptor.h 
+ * Contains classes used to fetch media from the RETS server.
+ */
 
 #include <string>
 #include "librets/RetsObject.h"
@@ -24,14 +28,40 @@
 
 namespace librets {
 	
+/**
+ * A helper class that wraps the media.
+ * The BinaryData class wraps the media returned from the RETS server
+ * into a string.
+ */
 class BinaryData
 {
   public:
-	int Size() const;
-	std::string AsString() const;
-	const char * AsChar() const;
-	void Copy(unsigned char buffer[], int length) const; 
-	void ReadToEof(istreamPtr inputStream);
+	/**
+     * Report the size of the media object.
+     * @return int representing the size in bytes of the media object.
+     */
+    int Size() const;
+	/**
+     * Obtain the media as a string.
+     * @return std::string representing the media object.
+     */
+    std::string AsString() const;
+	/**
+     * Obtain the media as an array of characters.
+     * @return pointer to the media.
+     */
+    const char * AsChar() const;
+	/**
+     * Make a copy of the data as the media object.
+     * @param buffer[] An array of characters containing the media object.
+     * @param length An int representing the length of the media object in bytes.
+     */
+    void Copy(unsigned char buffer[], int length) const; 
+	/**
+     * Load the data contained in the input stream as the media object.
+     * @param inputStream A pointer to the input stream.
+     */
+    void ReadToEof(istreamPtr inputStream);
 	
   private:
 	std::string mData;

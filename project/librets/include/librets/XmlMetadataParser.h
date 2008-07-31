@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_XML_METADATA_PARSER_H
 #define LIBRETS_XML_METADATA_PARSER_H
+/** 
+ * @file XmlMetadataParser.h
+ * (Internal) Contains the XML Parser for metadata interface class for use with libexpat.
+ */
+/// @cond MAINTAINER
 
 #include "librets/std_forward.h"
 #include "librets/xml_forward.h"
@@ -25,7 +30,9 @@
 #include "librets/EncodingType.h"
 
 namespace librets {
-
+/**
+ * (Internal) XmlMetadataParser is the primary class for parsing metadata.
+ */
 class XmlMetadataParser : public RetsObject
 {
   public:
@@ -33,17 +40,52 @@ class XmlMetadataParser : public RetsObject
                       RetsErrorHandler * errorHandler);
 
     void SetElementFactory(XmlMetadataElementFactoryPtr elementFactory);
-    
+
+    /**
+     * Set the data encoding flag to allow for parsing of extended
+     * characters by Expat.  RETS is officially US-ASCII, but this
+     * will allow a work around for servers that haven't properly
+     * sanitized their data.
+     *
+     * @param encoding Either RETS_XML_DEFAULT_ENCODING or
+     * RETS_XML_ISO_ENCODING.
+     */
     void SetEncoding(EncodingType encoding);
 
+    /**
+     * Set the error handler.
+     * @param errorHandler The RetsErrorHandler pointer
+     */
     void SetErrorHandler(RetsErrorHandler * errorHandler);
 
+    /**
+     * Parse the input stream for metadata.
+     * @param inputStream The stream from which the metadata is to be parsed.
+     */
     void Parse(istreamPtr inputStream);
 
   private:
+    /**
+     * Handle the &lt;METADATA-SYSTEM&gt; element.
+     * @param metadataEvent A pointer to the RetsXmlStartElementEvent.
+     */
     void HandleSystemMetadata(RetsXmlStartElementEventPtr metadataEvent);
+    
+    /**
+     * Handles elements such as &lt;COLUMN&gt; and &lt;DATA&gt;
+     * @param metadataEvent A pointer to the RetsXmlEvent.
+     */
     void HandleOtherMetadata(RetsXmlStartElementEventPtr metadataEvent);
+    
+    /**
+     * Parse the column header detail.
+     */
     void HandleColumns();
+    
+    /**
+     * Parse the row data.
+     * @param metadataEvent A pointer to the RetsXmlStartElementEvent.
+     */
     void HandleData(RetsXmlStartElementEventPtr metadataEvent);
 
     MetadataElementCollectorPtr mElementCollector;
@@ -56,7 +98,7 @@ class XmlMetadataParser : public RetsObject
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

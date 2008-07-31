@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_GET_OBJECT_QUERY_H
 #define LIBRETS_GET_OBJECT_QUERY_H
+/** 
+ * @file GetObjectQuery.h
+ * (Internal) Contains the GetObjectQuery class.
+ */
+ /// @cond MAINTAINER
 
 #include "librets/std_forward.h"
 #include "librets/sql_forward.h"
@@ -71,7 +76,7 @@ class GetObjectQuery : public RetsObject
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

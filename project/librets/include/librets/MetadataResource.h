@@ -16,13 +16,18 @@
  */
 #ifndef LIBRETS_METADATA_RESOURCE_H
 #define LIBRETS_METADATA_RESOURCE_H
+/** 
+ * @file MetadataResource.h
+ * Contains the MetadataResource class declaration.
+ */
 
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
- * Resource metadata.
+ * MetadataResource is an implementation of MetadataElement that
+ * represents Resource metadata.
  */
 class MetadataResource : public MetadataElement
 {
@@ -36,8 +41,16 @@ class MetadataResource : public MetadataElement
     
     std::string GetId() const;
 
+    /**
+     * Return the Resource ID
+     * @return A string representing the Resource ID.
+     */
     std::string GetResourceID() const;
 
+    /**
+     * Return the Standard Name for the resource.
+     * @return A string representing the Standard Name for the resource.
+     */
     std::string GetStandardName() const;
 
     /**

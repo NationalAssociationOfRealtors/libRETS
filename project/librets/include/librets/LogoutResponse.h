@@ -17,6 +17,10 @@
 
 #ifndef LIBRETS_LOGOUT_RESPONSE_H
 #define LIBRETS_LOGOUT_RESPONSE_H
+/**
+ * @file LogoutResponse.h 
+ * Contains the LogoutResponse class definition.
+ */
 
 #include <string>
 
@@ -25,7 +29,8 @@
 namespace librets {
 
 /**
- *  Logout information.
+ * LogoutResponse contains the API that allows access to the information
+ * sent in response to a successful RETS LOGOUT transaction.
  */
 class LogoutResponse : public KeyValueResponse
 {
@@ -33,21 +38,21 @@ class LogoutResponse : public KeyValueResponse
     /**
      * Returns billing information given by the server.
      *
-     * @return Billing informaiton
+     * @return A string containing the Billing informaiton
      */
     std::string GetBillingInfo() const;
 
     /**
      * Returns the logout message from the server.
      *
-     * @return logout message
+     * @return A string containing the logout message
      */
     std::string GetLogoutMessage() const;
 
     /**
      * Returns the number of seconds connected.
      *
-     * @return The number of seconds connected
+     * @return An integer representing the number of seconds connected
      */
     int GetConnectTime() const;
 

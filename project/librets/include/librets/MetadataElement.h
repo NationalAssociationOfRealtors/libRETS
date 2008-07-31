@@ -16,6 +16,10 @@
  */
 #ifndef LIBRETS_METADATA_ELEMENT_H
 #define LIBRETS_METADATA_ELEMENT_H
+/** 
+ * @file MetadataElement.h
+ * Contains the MetadataElement class declaration.
+ */
 
 #include <string>
 #include <vector>
@@ -32,7 +36,8 @@ typedef std::vector<MetadataElementPtr> MetadataElementList;
 typedef boost::shared_ptr<MetadataElementList> MetadataElementListPtr;
 
 /**
- * A metadata element.
+ * MetadataElement is the fundamental class that represents an element of 
+ * metadata.
  */
 class MetadataElement : public RetsObject
 {
@@ -104,19 +109,37 @@ class MetadataElement : public RetsObject
     /**
      * Returns the value of an attribute.
      *
-     * @param attributeName the name of an attribute
-     * @param defaultValue the value to use if the attribute does not exist
-     * @return the value of the attribute
+     * @param attributeName A string containing the name of the attribute.
+     * @param defaultValue The value to use if the attribute does not exist.
+     * @return The value of the attribute as a string.
      */
     std::string GetStringAttribute(std::string attributeName,
                                    std::string defaultValue = "") const;
-   
+    /**
+     * Returns the value of an attribute as an integer.
+     * @param attributeName A string containing the name of the attribute.
+     * @param defaultValue The value to use if the attribute does not exist.
+     * @return The value of the attribute as an integer.
+     */
     int GetIntAttribute(std::string attributeName, int defaultValue = 0) const;
     
+    /**
+     * Returns the value of an attribute as a boolean.
+     * @param attributeName A string containing the name of the attribute.
+     * @param defaultValue The value to use if the attribute does not exist.
+     * @return The value of the attribute as a boolean.
+     */
     bool GetBoolAttribute(std::string attributeName, bool defaultValue = false)
         const;
-
+        
+    /// @cond MAINTAINER
+    /**
+     * Set the value of an attribute.
+     * @param attributeName A string containing the name of the attribute.
+     * @param attributeValue A string containing the value of the attribute.
+     */
     void SetAttribute(std::string attributeName, std::string attributeValue);
+    /// @endcond
     
     /**
      * Returns the ID attribute.  The ID attribute is a non-empty and unique
@@ -130,9 +153,19 @@ class MetadataElement : public RetsObject
      */
     virtual std::string GetId() const;
 
+    /**
+     * Returns the level of the current metadata element.
+     * @return A string containing the level.
+     */
     std::string GetLevel() const;
 
+    /// @cond MAINTAINER
+    /**
+     * Set the level for the current metadata element.
+     * @param level A string containing the level.
+     */
     void SetLevel(std::string level);
+    /// @endcond
     
     /**
      * Returns the path of this element.  The path uniquely identifies this
@@ -150,7 +183,11 @@ class MetadataElement : public RetsObject
      * @return MetadataEntryId
      */
     std::string GetMetadataEntryID() const;
-    
+
+    /**
+     * Prints the attribute in a standard form for debugging
+     * and error reporting.
+     */
     virtual std::ostream & Print(std::ostream & outputStream) const;
 
   protected:
@@ -158,6 +195,12 @@ class MetadataElement : public RetsObject
     std::string mLevel;
 };
 
+/// @cond MAINTAINER
+/**
+ * MetadataElementIdEqual is a class that determines whether or not
+ * the ID of two metadata elements are the same. This only appears to
+ * be used in the test suite as of 1.2.1.
+ */
 class MetadataElementIdEqual :
     public std::unary_function<MetadataElement *, bool>
 {
@@ -175,7 +218,7 @@ class MetadataElementIdEqual :
         return (*this)(element.get());
     }
 };
-
+/// @endcond
 };
 
 #endif

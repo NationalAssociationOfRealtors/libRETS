@@ -16,13 +16,17 @@
  */
 #ifndef LIBRETS_METADATA_VALIDATION_EXTERNAL_TYPE_H
 #define LIBRETS_METADATA_VALIDATION_EXTERNAL_TYPE_H
-
+/** 
+ * @file MetadataValidationExternal.h
+ * Contains the MetadataValidationExternal class declaration.
+ */
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
- * Validation external type metadata.
+ * MetadataValidationExternalType is an implementation of MetadataElement that represents
+ * Validation External Type metadata.
  */
 class MetadataValidationExternalType : public MetadataElement
 {

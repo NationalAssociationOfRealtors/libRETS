@@ -17,6 +17,11 @@
 
 #ifndef LIBRETS_LOOKUP_CRITERION_H
 #define LIBRETS_LOOKUP_CRITERION_H
+/** 
+ * @file LookupCriterion.h
+ * (Internal) Contains the LookupCriterion parser class.
+ */
+ /// @cond MAINTAINER
 
 #include <string>
 #include <vector>
@@ -55,7 +60,7 @@ class LookupCriterion : public DmqlCriterion
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2008 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -16,6 +16,12 @@
  */
 #ifndef LIBRETS_METADATA_ELEMENT_H
 #define LIBRETS_METADATA_ELEMENT_H
+/**
+ * @file template.h
+ * (Internal) Contains the template that can be used when creating
+ * new files within libRETS.
+ */
+/// @cond MAINTAINER
 
 namespace librets {
 
@@ -23,6 +29,7 @@ namespace librets {
 
 };
 
+/// @endcond
 #endif
 
 /* Local Variables: */

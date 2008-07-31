@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_RETS_HTTP_REQUEST_H
 #define LIBRETS_RETS_HTTP_REQUEST_H
+/** 
+ * @file RetsHttpRequest.h
+ * (Internal) Contains the Curl Http Request interface class for use with libCURL.
+ */
+/// @cond MAINTAINER
 
 #include <string>
 #include <map>
@@ -26,6 +31,10 @@ namespace librets {
 
 typedef std::map<std::string, std::string> StringMap;
 
+/**
+ * (Internal) RetsHttpRequest is a class that defines the http client requests that can be made
+ * through libcurl.
+ */
 class RetsHttpRequest : public virtual RetsObject
 {
   public:
@@ -78,7 +87,7 @@ class RetsHttpRequest : public virtual RetsObject
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

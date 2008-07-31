@@ -16,13 +16,17 @@
  */
 #ifndef LIBRETS_METADATA_UPDATE_HELP_H
 #define LIBRETS_METADATA_UPDATE_HELP_H
-
+/** 
+ * @file MetadataUpdateHelp.h
+ * Contains the MetadataUpdateHelp class declaration.
+ */
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
- * Update help metadata.
+ * MetadataUpdateHelp is an implementation of MetadataElement that represents
+ * Update Help metadata.
  */
 class MetadataUpdateHelp : public MetadataElement
 {
@@ -35,7 +39,10 @@ class MetadataUpdateHelp : public MetadataElement
     virtual MetadataType GetType() const;
     
     virtual std::string GetId() const;
-    
+    /**
+     * Return the Help ID.
+     * @return A string representing the Help ID.
+     */
     std::string GetUpdateHelpID() const;
 };
 

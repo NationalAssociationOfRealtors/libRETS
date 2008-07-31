@@ -16,6 +16,10 @@
  */
 #ifndef LIBRETS_METADATA_CLASS_H
 #define LIBRETS_METADATA_CLASS_H
+/** 
+ * @file MetadataClass.h
+ * Contains the MetadataClass class declaration.
+ */
 
 #include <string>
 
@@ -24,7 +28,8 @@
 namespace librets {
 
 /**
- * Class metadata.
+ * MetadataClass is an implementation of MetadataElement that represents
+ * Class information for the metadata.
  */
 class MetadataClass : public MetadataElement
 {

@@ -18,8 +18,20 @@
 #ifndef LIBRETS_ENCODING_TYPE_H
 #define LIBRETS_ENCODING_TYPE_H
 
+/** 
+ * @file EncodingType.h
+ * Contains the EncodingType enum definition.
+ */
 namespace librets {
 
+/**
+ * EncodingType contains the definitions of which type of parsing the
+ * XML parser will perform. Note that the RETS standard is supposed to be
+ * US-ASCII, but there are non-compliant servers that provide data with
+ * ISO or UNICODE values that will cause the XML parsing to fail. In 
+ * those instances, use RETS_XML_ISO_ENCODING to tell the parser to handle
+ * those characters.
+ */
 enum EncodingType
 {
     /**

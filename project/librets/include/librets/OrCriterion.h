@@ -16,7 +16,11 @@
  */
 #ifndef LIBRETS_OR_CRITERION_H
 #define LIBRETS_OR_CRITERION_H
-
+/** 
+ * @file OrCriterion.h
+ * (Internal) Contains the OrCriterion parser class.
+ */
+ /// @cond MAINTAINER
 #include <string>
 #include "librets/sql_forward.h"
 #include "librets/JunctionCriterion.h"
@@ -35,7 +39,7 @@ class OrCriterion : public JunctionCriterion
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

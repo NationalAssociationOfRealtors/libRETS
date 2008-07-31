@@ -17,13 +17,30 @@
 
 #ifndef LIBRETS_RETS_VERSION_H
 #define LIBRETS_RETS_VERSION_H
+/** 
+ * @file RetsVersion.h
+ * Contains the RetsVersion enum declaration.
+ */
 
 namespace librets {
 
+/**
+ * RetsVersion contains the definitions of types the various protocol
+ * versions of RETS servers.
+ */
 enum RetsVersion
 {
+    /**
+     * This is a RETS 1.0 server.
+     */
     RETS_1_0,
+    /**
+     * This is a RETS 1.5 server.
+     */
     RETS_1_5,
+    /**
+     * This is a RETS 1.7 server.
+     */
     RETS_1_7
 };
 

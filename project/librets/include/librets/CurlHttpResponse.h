@@ -17,12 +17,20 @@
 #ifndef LIBRETS_CURL_HTTP_RESPONSE_H
 #define LIBRETS_CURL_HTTP_RESPONSE_H
 
+/** 
+ * @file CurlHttpResponse.h
+ * (Internal) Contains the Curl Http Response interface class for use with libCURL.
+ */
+/// @cond MAINTAINER
+
 #include "librets/RetsHttpResponse.h"
 #include "librets/std_forward.h"
 #include "librets/CurlStream.h"
 
 namespace librets {
-
+/**
+ * (Internal) CurlHttpResponse is a class that wraps the response from libcurl.
+ */
 class CurlHttpResponse : public RetsHttpResponse
 {
   public:
@@ -54,7 +62,7 @@ class CurlHttpResponse : public RetsHttpResponse
 };
 
 };
-
+///@endcond
 #endif
 
 /* Local Variables: */

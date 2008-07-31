@@ -17,6 +17,11 @@
 
 #ifndef LIBRETS_METADATA_LOADER_H
 #define LIBRETS_METADATA_LOADER_H
+/**
+ * @file MetadataLoader.h
+ * (Internal) Contains the MetadataLoader class definition.
+ */
+/// @cond MAINTAINER
 
 #include "librets/metadata_forward.h"
 #include "librets/MetadataElement.h"
@@ -24,21 +29,31 @@
 namespace librets {
     
 /**
- * An interface used to load a portion of the metadata tree.
- */
+ * (Internal) MetadataLoader defines the API that loads the metadata tree
+ */    
 class MetadataLoader
 {
   public:
     virtual ~MetadataLoader();
     
+    /**
+     * Set the method that will collect the metadata.
+     * @param collector A pointer to the MetadataElementCollector that will
+     * do the actual loading.
+     */
     virtual void SetCollector(MetadataElementCollectorPtr collector) = 0;
     
+    /**
+     * Load the metadata for the level and resource/class.
+     * @param type The metadata level such as SYSTEM or TABLE.
+     * @param level A string representing the Resource/Class to load.
+     */
     virtual void LoadMetadata(MetadataElement::Type type,
                               std::string level) = 0;
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

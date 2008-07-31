@@ -16,13 +16,18 @@
  */
 #ifndef LIBRETS_METADATA_OBJECT_H
 #define LIBRETS_METADATA_OBJECT_H
+/** 
+ * @file MetadataObject.h
+ * Contains the MetadataObject class declaration.
+ */
 
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
- * Object metadata.
+ * MetadataObject is an implementation of MetadataElement that 
+ * represents Object metadata.
  */
 class MetadataObject : public MetadataElement
 {
@@ -36,12 +41,28 @@ class MetadataObject : public MetadataElement
     
     virtual std::string GetId() const;
     
+    /** 
+     * Return the type of the object.
+     * @return A string representing the type of the object.
+     */
     std::string GetObjectType() const;
-
+    
+    /**
+     * Return the MIME type of the object.
+     * @return A string containing the MIME type of the object.
+     */
     std::string GetMIMEType() const;
-
+    
+    /**
+     * Return the Visible Name of the object.
+     * @return A string containing the Visible Name of the object.
+     */
     std::string GetVisibleName() const;
 
+    /**
+     * Return the Description of the object.
+     * @return A string containing the Description of the object.
+     */
     std::string GetDescription() const;
 };
 

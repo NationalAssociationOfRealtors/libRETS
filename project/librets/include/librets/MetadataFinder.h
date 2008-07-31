@@ -17,27 +17,48 @@
 
 #ifndef LIBRETS_METADATA_FINDER_H
 #define LIBRETS_METADATA_FINDER_H
+/**
+ * @file MetadataFinder.h
+ * (Internal) Contains the MetadataFinder class definition.
+ */
+/// @cond MAINTAINER
 
 #include "librets/metadata_forward.h"
 #include "librets/MetadataElement.h"
 
 namespace librets {
-    
+
+/**
+ * (Internal) MetadataFinder defines the API by which other classes that implement
+ * the actual metadata finding process inherit.
+ */    
 class MetadataFinder
 {
   public:
     virtual ~MetadataFinder();
-    
+
+    /**
+     * Find the metadta for a given table/object.
+     * @param type The type of the metadata such as TABLE, SYSTEM, RESOURCE.
+     * @param level The resource/class of the metadata such as "Property:RES".
+     * @return A pointer to the MetadataElementList containing the metadata.
+     */
     virtual MetadataElementListPtr FindByLevel(MetadataElement::Type type,
                                                std::string level) = 0;
-    
+    /**
+     * Find the metadata for a given table/object by Id.
+     * @param type The type of the metadata such as TABLE, SYSTEM, RESOURCE.
+     * @param level The resource/class of the metadata such as "Property:RES".
+     * @param id The Id of the specific metadata element to retrieve.
+     * @return A pointer to the MetadataElement containing the metadata.
+     */
     virtual MetadataElementPtr FindByPath(MetadataElement::Type type,
                                           std::string level,
                                           std::string id) = 0;
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

@@ -17,7 +17,11 @@
 
 #ifndef LIBRETS_STR_STREAM_H
 #define LIBRETS_STR_STREAM_H
-
+/**
+ * @file str_stream.h
+ * (Internal) Contains the str-stream class definition.
+ */
+/// @cond MAINTAINER
 #include <string>
 #include <sstream>
 
@@ -55,7 +59,7 @@ template <class type>
     
 
 }
-
+/// @endcond
 #endif
 
 /* Local Variables: */

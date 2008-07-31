@@ -17,7 +17,11 @@
 
 #ifndef LIBRETS_SQL_TO_DMQL_COMPILER_H
 #define LIBRETS_SQL_TO_DMQL_COMPILER_H
-
+/** 
+ * @file SqlToDmqlCompiler.h
+ * (Internal) Contains the SqlToDmqlCompiler class definition.
+ */
+ /// @cond MAINTAINER
 #include <iosfwd>
 #include "librets/sql_forward.h"
 #include "librets/RetsObject.h"
@@ -53,7 +57,7 @@ class SqlToDmqlCompiler : public RetsObject
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

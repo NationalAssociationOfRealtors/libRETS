@@ -16,6 +16,10 @@
  */
 #ifndef LIBRETS_SEARCH_RESULT_SET_H
 #define LIBRETS_SEARCH_RESULT_SET_H
+/**
+ * @file SearchResultSet.h
+ * Contains the SearchResultSet class definition.
+ */
 
 #include <string>
 #include <vector>
@@ -27,7 +31,8 @@
 namespace librets {
 
 /**
- * A search result set.
+ * SearchResultSet contains the API that is used to handle the
+ * response to the RETS SEARCH transaciton.
  */
 class SearchResultSet : public virtual RetsObject
 {
@@ -37,12 +42,16 @@ class SearchResultSet : public virtual RetsObject
      */
     SearchResultSet();
 
-    /**
-     * Virtual destructor.
-     */
     virtual ~SearchResultSet();
 
+    /// @cond MAINTAINER
+    /**
+     * Parse the result sent back from the client.
+     * @param inputStream The input stream containing the data to be parsed.
+     * @throw RetsReplyException
+     */
     void Parse(istreamPtr inputStream);
+    /// @endcond
     
     /**
      * Returns true if there are more results.  This may block waiting
@@ -61,14 +70,14 @@ class SearchResultSet : public virtual RetsObject
      * known.  The number of rows is only available if it was
      * specified in the SearchRequest.
      *
-     * @return The number of rows, or -1
+     * @return An integer representing the number of rows, or -1
      */
     int GetCount();
 
     /**
      * Returns the column names.
      *
-     * @return The column names
+     * @return A string vector containing the column names
      */
     const StringVector GetColumns();
 

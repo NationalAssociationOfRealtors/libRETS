@@ -16,6 +16,11 @@
  */
 #ifndef LIBRETS_DMQL_EXPRESSION_H
 #define LIBRETS_DMQL_EXPRESSION_H
+/** 
+ * @file DmqlExpression.h
+ * (Internal) Contains the DmqlExpression parser class.
+ */
+ /// @cond MAINTAINER
 
 #include "librets/sql_forward.h"
 
@@ -43,7 +48,7 @@ DmqlCriterionPtr logicAnd(DmqlCriterionPtr first, DmqlCriterionPtr second);
 DmqlCriterionPtr logicNot(DmqlCriterionPtr criterion);
 
 }; };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

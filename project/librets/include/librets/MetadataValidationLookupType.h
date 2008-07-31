@@ -16,13 +16,18 @@
  */
 #ifndef LIBRETS_METADATA_VALIDATION_LOOKUP_TYPE_H
 #define LIBRETS_METADATA_VALIDATION_LOOKUP_TYPE_H
+/** 
+ * @file MetadataValidationLookupType.h
+ * Contains the MetadataValidationLookupType class declaration.
+ */
 
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
- * Validation lookup type metadata.
+ * MetadataValidationLookupType is an implementation of MetadataElement that represents
+ * Validation Lookup Type metadata.
  */
 class MetadataValidationLookupType : public MetadataElement
 {

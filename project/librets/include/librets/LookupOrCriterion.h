@@ -17,7 +17,11 @@
 
 #ifndef LIBRETS_IN_CRITERION_H
 #define LIBRETS_IN_CRITERION_H
-
+/** 
+ * @file LookupOrCriterion.h
+ * (Internal) Contains the LookupOrCriterion parser class.
+ */
+ /// @cond MAINTAINER
 #include <string>
 #include "librets/sql_forward.h"
 #include "librets/LookupCriterion.h"
@@ -35,7 +39,7 @@ class LookupOrCriterion : public LookupCriterion
 };
     
 }
-
+/// @endcond
 #endif
 
 /* Local Variables: */

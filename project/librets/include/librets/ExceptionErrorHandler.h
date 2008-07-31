@@ -17,20 +17,34 @@
 
 #ifndef LIBRETS_EXCEPTION_ERROR_HANDLER_H
 #define LIBRETS_EXCEPTION_ERROR_HANDLER_H
+/// @cond MAINTAINER
+/** 
+ * @file ExceptionErrorHandler.h
+ * Contains the RetsMetadata class declaration.
+ */
 
 #include "librets/RetsErrorHandler.h"
 
 namespace librets {
 
 /**
- * An implementation of RetsErrorHandler that throws exception on error
- * conditions.
+ * ExceptionErrorHandler is an implementation of RetsErrorHandler that throws 
+ * an exception on error conditions.
  */
 class ExceptionErrorHandler : public RetsErrorHandler
 {
   public:
+    /** 
+     * Return the default instance of the error handler.
+     * @return A pointer to the default error handler.
+     */
     static ExceptionErrorHandler * GetInstance();
     
+    /**
+     * Throws RetsUnknownMetadataException.
+     * @param name A string containing a reference to the unknown metadata.
+     * @throw RetsUnknownMetadataException.
+     */
     void HandleUnknownMetadata(std::string name) const;
     
   private:
@@ -38,7 +52,7 @@ class ExceptionErrorHandler : public RetsErrorHandler
 };
 
 };
-
+/// @endcond
 #endif
 
 /* Local Variables: */

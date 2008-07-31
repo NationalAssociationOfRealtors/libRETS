@@ -17,22 +17,65 @@
 
 #ifndef LIBRETS_RETS_USER_AGENT_AUTH_CALCULATOR_H
 #define LIBRETS_RETS_USER_AGENT_AUTH_CALCULATOR_H
+/** 
+ * @file UserAgentAuthCalculator.h
+ * Contains the UserAgentAuthCalculator class definition.
+ */
+/// @cond MAINTAINER
 
 #include <string>
 #include "librets/RetsObject.h"
 
 namespace librets {
-    
+
+/**
+ * (Internal) UserAgentAuthCalculator is an internal support class
+ * used during the calculation of User Agent Authentication value.
+ */    
 class UserAgentAuthCalculator : public RetsObject
 {
   public:
+    /**
+     * Set the User Agent name
+     * @param userAgent A string containing the User Agent Name.
+     */
     void SetUserAgent(std::string userAgent);
+    
+    /**
+     * Set the Uesr Agent Password
+     * @param userAgentPassword A string containing the User Agent Password.
+     */
     void SetUserAgentPassword(std::string userAgentPassword);
+    
+    /**
+     * Set the Requst Id.
+     * @param requestId A string containing the Request ID from the http header.
+     */
     void SetRequestId(std::string requestId);
+    
+    /**
+     * Set the Session Id.
+     * @param sessionId A string containing the Session ID from the http header.
+     */
     void SetSessionId(std::string sessionId);
+    
+    /**
+     * Set the version information.
+     * @param versionInfo A string containing the version information.
+     */
     void SetVersionInfo(std::string versionInfo);
     
+    /**
+     * Indicate whether or not an authorization value has been calculated.
+     * @return A boolean that if <code>true</code> indicates a valid authorization value 
+     * has been calculated.
+     */
     bool HasAuthorizationValue() const;
+    
+    /**
+     * Returns the Authorization Value
+     * @return The calculated Authorization Value as a string.
+     */
     std::string AuthorizationValue() const;;
     
   private:
@@ -44,7 +87,7 @@ class UserAgentAuthCalculator : public RetsObject
 };
     
 }
-
+/// @endcond
 #endif
 
 /* Local Variables: */
