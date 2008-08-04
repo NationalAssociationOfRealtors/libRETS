@@ -2654,6 +2654,7 @@
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1 = "LIBRETS_VERSION=\\\"$(VERSION)\\\"";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				ZERO_LINK = NO;
 			};
 			name = Development;
 		};

@@ -86,6 +86,7 @@ _dist-cpp:
 
 _dist-csharp:
 	cp -u project/swig/csharp/bin/*.dll $(DISTDIR)/dotnet
+	cp -u project/swig/csharp/bin/Search.exe $(DISTDIR)/dotnet
 
 _dist-ruby:
 	cp -u project/swig/ruby/*.so $(DISTDIR)/ruby
