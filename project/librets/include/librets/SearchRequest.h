@@ -80,7 +80,10 @@ class SearchRequest : public RetsHttpRequest
     /**
      * Sets the select string to choose which fields are returned.
      * Setting the select to an empty string returns all fields.  The
-     * default select string is the empty string.
+     * default select string is the empty string. The string should be
+     * a comma delimited list of names from the metadata and are either
+     * standard names or system names, depending on the value of the
+     * standard names flag.
      *
      * @param select The select string
      */

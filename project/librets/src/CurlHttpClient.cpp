@@ -49,6 +49,7 @@ CurlHttpClient::CurlHttpClient()
     mResponseCode = 0;
 
     SetUserAgent("librets-curl/" LIBRETS_VERSION);
+    SetDefaultHeader("Librets-Version", LIBRETS_VERSION ", libCURL - " + mCurl.GetVersion());
 }
 
 CurlHttpClient::~CurlHttpClient()

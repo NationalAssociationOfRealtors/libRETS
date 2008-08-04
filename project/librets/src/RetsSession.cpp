@@ -584,3 +584,8 @@ void CLASS::SetLogEverything(bool logging)
 {
     mLogEverything = logging;
 }
+
+string CLASS::GetLibraryVersion()
+{
+    return LIBRETS_VERSION;
+}

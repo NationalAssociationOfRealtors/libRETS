@@ -56,6 +56,7 @@ CurlEasy::CurlEasy()
     try
     {
         SetErrorBuffer(mErrorBuffer);
+        mCurlVersion.assign(curl_version());
     }
     catch (RetsException &)
     {
@@ -196,4 +197,9 @@ curl_slist * CurlEasy::GetCookieSlist()
                 "Get Cookie Slist");
     
     return cookieList;
+}
+
+string CurlEasy::GetVersion()
+{
+    return mCurlVersion;
 }

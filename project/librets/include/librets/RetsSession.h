@@ -326,6 +326,12 @@ class RetsSession : public MetadataLoader
     void Cleanup();
     /// @endcond
     
+    /**
+     * Return the version of libRETS.
+     * @return A string representing the libRETS version information.
+     */
+    static std::string GetLibraryVersion();
+    
 private:
     static const char * RETS_SESSION_ID_HEADER;
     static const char * RETS_VERSION_HEADER;

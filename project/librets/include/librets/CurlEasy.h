@@ -168,6 +168,12 @@ class CurlEasy
      */
     curl_slist * GetCookieSlist();
     
+    /**
+     * Get the current curl library version information.
+     * @return A string representing the libCURL verison.
+     */
+    std::string GetVersion();
+    
   private:
     CurlEasy(const CurlEasy & curlEasy);
 
@@ -186,6 +192,8 @@ class CurlEasy
     std::string mPostFields;
     std::string mUrl;
     bool mVerbose;
+    
+    std::string mCurlVersion;
 };
     
 }

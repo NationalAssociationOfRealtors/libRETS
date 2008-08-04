@@ -26,7 +26,7 @@
 namespace librets {
 
 /**
- * MetadataForeignKen is an implementation of MetadataElement that
+ * MetadataForeignKey is an implementation of MetadataElement that
  * represents Foreign Key information for the metadata
  */
 class MetadataForeignKey : public MetadataElement

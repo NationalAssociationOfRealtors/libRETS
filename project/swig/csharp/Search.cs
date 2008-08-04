@@ -1,14 +1,21 @@
 using System;
 using System.Collections;
+using System.IO;
+using System.Collections.Specialized;
 using librets;
 
 public class Search
 {
     static void Main(string[] args)
     {
-        RetsSession session = new RetsSession(
-            "http://demo.crt.realtors.org:6103/rets/login");
-        if (!session.Login("Joe", "Schmoe"))
+        Options options  = new Options();
+
+        if (!options.Parse(args))
+	    Environment.Exit(1);
+
+        RetsSession session = options.SessionFactory();
+
+        if (!session.Login(options.user_name, options.user_password))
         {
             Console.WriteLine("Invalid login");
             Environment.Exit(1);
@@ -17,16 +24,17 @@ public class Search
         Console.WriteLine("Action: " + session.GetAction());
         RetsVersion version = session.GetDetectedRetsVersion();
         Console.WriteLine("RETS Version: " +
-            ((version == RetsVersion.RETS_1_5) ? "1.5" : "1.0"));
+            ((version == RetsVersion.RETS_1_5) ? "1.5" : 
+            ((version == RetsVersion.RETS_1_7) ? "1.7" : "1.0")));
 
         SearchRequest searchRequest = session.CreateSearchRequest(
-            "Property", "ResidentialProperty", "(ListPrice=300000-)");
+	    options.search_type, options.search_class, options.query);
 
-        searchRequest.SetSelect("ListingID,ListPrice,Beds,City");
-        searchRequest.SetLimit(SearchRequest.LIMIT_DEFAULT);
-        searchRequest.SetOffset(SearchRequest.OFFSET_NONE);
-        searchRequest.SetCountType(SearchRequest.CountType.RECORD_COUNT_AND_RESULTS);
-	searchRequest.SetStandardNames(true);
+        searchRequest.SetSelect(options.select);
+        searchRequest.SetLimit(options.limit);
+        searchRequest.SetOffset(options.offset);
+        searchRequest.SetCountType(options.count);
+        searchRequest.SetStandardNames(options.standard_names);
         SearchResultSet results = session.Search(searchRequest);
         
         Console.WriteLine("Record count: " + results.GetCount());
@@ -46,4 +54,6 @@ public class Search
         Console.WriteLine("Logout message: " + logout.GetLogoutMessage());
         Console.WriteLine("Connect time: " + logout.GetConnectTime());
     }
+
+    
 }

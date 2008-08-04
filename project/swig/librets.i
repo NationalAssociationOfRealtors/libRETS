@@ -904,7 +904,8 @@ class RetsMetadata
 enum RetsVersion
 {
     RETS_1_0,
-    RETS_1_5
+    RETS_1_5,
+    RETS_1_7
 };
 
 enum EncodingType
@@ -1353,6 +1354,9 @@ class RetsSession
     void Cleanup();
 
     void SetLogEverything(bool logging);
+
+    static std::string GetLibraryVersion();
+
 #ifdef SWIGPHP
     %extend
     {
@@ -1371,6 +1375,7 @@ class RetsSession
         
     }
 #endif
+
 };
 
 
