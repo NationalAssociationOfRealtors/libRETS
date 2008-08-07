@@ -164,6 +164,18 @@ void CurlHttpClient::SetUserCredentials(string userName, string password)
     mCurl.SetUserCredentials(userName, password);
 }
 
+void CurlHttpClient::SetProxy(string url, string password)
+{
+	ba::trim(url);
+	ba::trim(password);
+	if (!url.empty())
+	{
+		mCurl.SetProxyUrl(url);
+		if (!password.empty())
+			mCurl.SetProxyPassword(password);
+	}
+}
+
 /**
  * Continue with the request if not completed.
  * @return boolean that indicates whether or not the transaction has finished.

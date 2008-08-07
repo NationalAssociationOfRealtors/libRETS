@@ -33,6 +33,8 @@ public class Options
     private string mUAPass                  = "";
     private string mUrl                     = "http://demo.crt.realtors.org:6103/rets/login";
     private string mUser                    = "Joe";
+    private string mProxyUrl		    = "";
+    private string mProxyPassword           = "";
 
     /**
      * The broker code.
@@ -288,6 +290,24 @@ public class Options
     }
 
     /**
+     * The proxy Url.
+     */
+    public string proxy_url
+    {
+        get { return mProxyUrl; }
+        set { mProxyUrl = value; }
+    }
+
+    /**
+     * The proxy password.
+     */
+    public string proxy_password
+    {
+        get { return mProxyPassword; }
+        set { mProxyPassword = value; }
+    }
+
+    /**
      * A very simple parsing method to pull apart the arguments.
      */
     public bool Parse( string[] args)
@@ -364,6 +384,12 @@ public class Options
                 case "--password":
                             user_password       = value;
                             break;
+                case "--proxy-url":
+                            proxy_url           = value;
+                            break;
+                case "--proxy-password":
+                            proxy_password      = value;
+                            break;
                 case "--query":
                             query               = value;
                             break;
@@ -427,6 +453,8 @@ public class Options
         Console.WriteLine("\t--offset\t\tSet the offset (default 0)");
         Console.WriteLine("\t--count\t\t\tSet count type: \"no\", \"yes\", or \"count-only\"");
         Console.WriteLine("\t--default-encoding\t\"US-ASCII\" or \"ISO\"");
+        Console.WriteLine("\t--proxy-url\t\tProxy url");
+        Console.WriteLine("\t--proxy-password\tProxy password");
     }
 
     /**

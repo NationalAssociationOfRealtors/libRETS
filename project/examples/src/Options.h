@@ -40,6 +40,8 @@ class Options
     bool useFullMetadata;
     std::string brokerCode;
     std::string savedMetadataTimestamp;
+	std::string proxyUrl;
+	std::string proxyPassword;
 
     Options();
 

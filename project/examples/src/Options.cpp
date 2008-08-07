@@ -57,6 +57,10 @@ Options::Options()
          "Broker Code")
         ("metadata-timestamp,t", po::value<string>(&savedMetadataTimestamp)->default_value("", ""),
          "Saved Metadata Timestamp (RETS 1.7+)")
+		("proxy-url,U", po::value<string>(&proxyUrl)->default_value("",""),
+		 "Proxy URL")
+		("proxy-password,P", po::value<string>(&proxyPassword)->default_value("",""),
+		 "Proxy Password")
         ;
         
 }
@@ -110,6 +114,10 @@ RetsSessionPtr Options::RetsLogin()
     session->SetRetsVersion(retsVersion);
     session->SetIncrementalMetadata(!useFullMetadata);
     session->SetUserAgentPassword(userAgentPassword);
+	if (!proxyUrl.empty())
+	{
+		session->SetProxy(proxyUrl,proxyPassword);
+	}
 
     if (options.count("http-log") || options.count("http-log-everything"))
     {

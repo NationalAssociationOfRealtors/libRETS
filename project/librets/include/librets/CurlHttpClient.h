@@ -71,6 +71,8 @@ class CurlHttpClient : public RetsHttpClient
     virtual int GetResponseCode();
     
     virtual RetsHttpLogger* GetLogger() const;
+	
+	virtual void SetProxy(std::string url, std::string password);
 
   private:
     static size_t StaticWriteData(char * buffer, size_t size, size_t nmemb,

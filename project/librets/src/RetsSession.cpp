@@ -585,6 +585,11 @@ void CLASS::SetLogEverything(bool logging)
     mLogEverything = logging;
 }
 
+void CLASS::SetProxy(std::string url, std::string password)
+{
+	mHttpClient->SetProxy(url,password);
+}
+
 string CLASS::GetLibraryVersion()
 {
     return LIBRETS_VERSION;

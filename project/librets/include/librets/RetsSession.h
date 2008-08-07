@@ -311,6 +311,15 @@ class RetsSession : public MetadataLoader
      * indicates to not log GetObject() requests.
      */
     void SetLogEverything(bool logging);
+	
+	/**
+	 * Set the html proxy information.
+	 *
+	 * @param url A string containing the url of the proxy server. If non-standard ports
+	 * are used, it should be part of the url as in: http://demo.crt.realtors.org:6103.
+	 * @param password A string containing the proxy password if one is needed.
+	 */
+	 void SetProxy(std::string url, std::string password);
     
     /// @cond MAINTAINER
     /**

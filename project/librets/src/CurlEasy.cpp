@@ -166,6 +166,20 @@ void CurlEasy::SetUrl(string url)
                "set url");
 }
 
+void CurlEasy::SetProxyUrl(string url)
+{
+    mProxyUrl = url;
+	CurlAssert(curl_easy_setopt(mCurl, CURLOPT_PROXY, mProxyUrl.c_str()),
+				"set proxy url");
+}
+
+void CurlEasy::SetProxyPassword(string password)
+{
+    mProxyPassword = password;
+	CurlAssert(curl_easy_setopt(mCurl, CURLOPT_PROXYUSERPWD, 
+				mProxyPassword.c_str()), "set proxy password");
+}
+
 void CurlEasy::Perform()
 {
     CurlAssert(curl_easy_perform(mCurl));

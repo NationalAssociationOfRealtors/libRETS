@@ -21,6 +21,9 @@ Version 1.2.2 - xx xxx 2008
   * Added API documentation and a new switch to "configure" that
     controls whether user or maintainer documentation is produced.
 
+  * Added http proxy capability through RetsSession::SetProxy.
+    Ticket #66
+
 Version 1.2.1 - 25 Jun 2008
 
   * Add Rets 1.7 support.

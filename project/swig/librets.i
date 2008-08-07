@@ -1357,6 +1357,8 @@ class RetsSession
 
     static std::string GetLibraryVersion();
 
+    void SetProxy(std::string url, std::string password);
+
 #ifdef SWIGPHP
     %extend
     {

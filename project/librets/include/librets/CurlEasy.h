@@ -139,6 +139,19 @@ class CurlEasy
      * @param url A string containing a URL.
      */
     void SetUrl(std::string url);
+	
+	/**
+	 * Provide to cURL a string containing the URL of the proxy server.
+	 * The URL should include the proxy port.
+	 * @param url A string containing the proxy URL.
+	 */
+	void SetProxyUrl(std::string url);
+	
+	/**
+	 * Provide to cURL the proxy authentication password if required.
+	 * @param password A string containing the proxy password.
+	 */
+	void SetProxyPassword(std::string password);
     
     /**
      * Tell cURL to perform the current request.
@@ -191,6 +204,8 @@ class CurlEasy
     std::string mUserpwd;
     std::string mPostFields;
     std::string mUrl;
+	std::string mProxyUrl;
+	std::string mProxyPassword;
     bool mVerbose;
     
     std::string mCurlVersion;
