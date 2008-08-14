@@ -377,7 +377,10 @@ CSHARP_MANAGED_DLL	= ${CSHARP_OBJ_DIR}/librets-dotnet.dll
 CSHARP_MANAGED_SRC	= ${CSHARP_GENERATED_SRC}		 		\
 				${CSHARP_DIR}/CppInputStream.cs 		\
         			${CSHARP_DIR}/ObjectDescriptorEnumerator.cs 	\
-				${CSHARP_DIR}/TextWriterLogger.cs
+				${CSHARP_DIR}/TextWriterLogger.cs		\
+				${CSHARP_DIR}/RetsExceptionNative.cs		\
+				${CSHARP_DIR}/RetsReplyExceptionNative.cs	\
+				${CSHARP_DIR}/RetsHttpExceptionNative.cs
 
 CSHARP_METADATA_EXE	= ${CSHARP_OBJ_DIR}/Metadata.exe
 CSHARP_METADATA_SRC	= ${CSHARP_DIR}/Metadata.cs

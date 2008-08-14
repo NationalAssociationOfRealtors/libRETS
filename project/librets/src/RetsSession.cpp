@@ -28,6 +28,7 @@
 #include "librets/GetObjectResponse.h"
 #include "librets/str_stream.h"
 #include "librets/ExceptionErrorHandler.h"
+#include "librets/RetsHttpException.h"
 
 using namespace librets;
 using namespace librets::util;
@@ -96,12 +97,12 @@ void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
                                      string url)
 {
     int responseCode = response->GetResponseCode();
-    if (responseCode != 200 && responseCode != 0)   // Ticket #62
+    if (responseCode != 200) 
     {
         ostringstream message;
-        message << "Could not get URL [ " << url << ": "
+        message << "Could not get URL [ " << url << "] - HTTP response code: "
                 << responseCode;
-        throw RetsException(message.str());
+        throw RetsHttpException(responseCode, message.str());
     }
 }
 
@@ -151,7 +152,7 @@ bool CLASS::Login(string user_name,
                                   RetsVersionToString(mDetectedRetsVersion));
     
     mLoginResponse.reset(new LoginResponse);
-    mLoginResponse->Parse(httpResponse->GetInputStream(), mDetectedRetsVersion);
+    mLoginResponse->Parse(httpResponse->GetInputStream(), mDetectedRetsVersion, mEncoding);
     mCapabilityUrls.reset(
         mLoginResponse->CreateCapabilityUrls(mLoginUrl).release());
 
@@ -587,7 +588,7 @@ void CLASS::SetLogEverything(bool logging)
 
 void CLASS::SetProxy(std::string url, std::string password)
 {
-	mHttpClient->SetProxy(url,password);
+    mHttpClient->SetProxy(url,password);
 }
 
 string CLASS::GetLibraryVersion()

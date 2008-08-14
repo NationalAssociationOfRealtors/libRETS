@@ -15,11 +15,18 @@ public class Search
 
         RetsSession session = options.SessionFactory();
 
+	try {
+
         if (!session.Login(options.user_name, options.user_password))
         {
             Console.WriteLine("Invalid login");
             Environment.Exit(1);
         }
+	} catch (Exception e)
+	{
+	    Console.WriteLine("RetsException: " + e);
+            Environment.Exit(1);
+	}
 
         Console.WriteLine("Action: " + session.GetAction());
         RetsVersion version = session.GetDetectedRetsVersion();

@@ -1,5 +1,8 @@
 Version 1.2.2 - xx xxx 2008
 
+  * Updated KeyValueResponse parsing to allow for ISO characters.
+    Ticket #40.
+
   * Consider http response of "0" to be successful. It is possible
     with the streaming enhancement to see no status if the http
     transaction hasn't yet completed. Ticket #62.
@@ -23,6 +26,12 @@ Version 1.2.2 - xx xxx 2008
 
   * Added http proxy capability through RetsSession::SetProxy.
     Ticket #66
+
+  * Improved exception handling so more detailed error information
+    could be returned to .NET languages. Added RetsHttpException
+    to handle cURL/http exceptions.
+    Modeled on patch supplied by Tony Manhollan.
+    Ticket #67.
 
 Version 1.2.1 - 25 Jun 2008
 

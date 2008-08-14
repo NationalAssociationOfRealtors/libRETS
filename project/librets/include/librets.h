@@ -46,6 +46,8 @@
 
 #include "librets/RetsSession.h"
 #include "librets/RetsException.h"
+#include "librets/RetsHttpException.h"
+#include "librets/RetsReplyException.h"
 #include "librets/RetsErrorHandler.h"
 #include "librets/ExceptionErrorHandler.h"
 #include "librets/CapabilityUrls.h"

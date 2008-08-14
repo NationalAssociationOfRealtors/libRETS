@@ -23,6 +23,7 @@
 #include "librets/RetsHttpResponse.h"
 #include "librets/ObjectDescriptor.h"
 #include "librets/RetsException.h"
+#include "librets/RetsHttpException.h"
 #include "librets/util.h"
 
 using namespace librets;
@@ -81,9 +82,9 @@ void GetObjectResponse::Parse(RetsHttpResponsePtr httpResponse,
     if (httpResponse->GetResponseCode() != 200)
     {
         ostringstream message;
-        message << "Invalid response code: ";
+        message << "Unexpected HHTP response code: ";
         message << httpResponse->GetResponseCode();
-        LIBRETS_THROW(RetsException, (message.str()));
+        LIBRETS_THROW(RetsHttpException, (httpResponse->GetResponseCode(), message.str()));
     }
     string contentType = httpResponse->GetContentType();
     if (ba::starts_with(contentType, "text/xml"))

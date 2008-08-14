@@ -139,19 +139,19 @@ class CurlEasy
      * @param url A string containing a URL.
      */
     void SetUrl(std::string url);
-	
-	/**
-	 * Provide to cURL a string containing the URL of the proxy server.
-	 * The URL should include the proxy port.
-	 * @param url A string containing the proxy URL.
-	 */
-	void SetProxyUrl(std::string url);
-	
-	/**
-	 * Provide to cURL the proxy authentication password if required.
-	 * @param password A string containing the proxy password.
-	 */
-	void SetProxyPassword(std::string password);
+    
+    /**
+     * Provide to cURL a string containing the URL of the proxy server.
+     * The URL should include the proxy port.
+     * @param url A string containing the proxy URL.
+     */
+    void SetProxyUrl(std::string url);
+    
+    /**
+     * Provide to cURL the proxy authentication password if required.
+     * @param password A string containing the proxy password.
+     */
+    void SetProxyPassword(std::string password);
     
     /**
      * Tell cURL to perform the current request.
@@ -159,7 +159,12 @@ class CurlEasy
     void Perform();
     
     /**
-     * Obtain the response code from cURL for the last transaction.
+     * Obtain the response code from cURL for the last transaction. Because of the
+     * use of the cURL multi-interface, it is possible for the status to be zero until
+     * the entire transaction has been satisfied. It is assumed, therefore, that when
+     * this method is called, the caller desires the transaction to be completed. This
+     * method will therefore continue the request until a non-zero response is returned
+     * by cURL.
      * @returns An integer representation of the http response code.
      */
     long GetResponseCode();
@@ -204,8 +209,8 @@ class CurlEasy
     std::string mUserpwd;
     std::string mPostFields;
     std::string mUrl;
-	std::string mProxyUrl;
-	std::string mProxyPassword;
+    std::string mProxyUrl;
+    std::string mProxyPassword;
     bool mVerbose;
     
     std::string mCurlVersion;

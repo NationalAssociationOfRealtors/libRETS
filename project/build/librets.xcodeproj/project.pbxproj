@@ -94,6 +94,8 @@
 		F90434590D039AEA004E3017 /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
 		F90624980E185ABC002AFBA0 /* libcppunit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD57C107FDAB4500526D69 /* libcppunit.dylib */; };
 		F90624990E185AD4002AFBA0 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */; };
+		F9181EC50E51F18B00BE23EF /* RetsHttpException.h in Headers */ = {isa = PBXBuildFile; fileRef = F9181EC40E51F18B00BE23EF /* RetsHttpException.h */; };
+		F9181EC70E51F1E000BE23EF /* RetsHttpException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9181EC60E51F1DF00BE23EF /* RetsHttpException.cpp */; };
 		F93109170DF4A81F004DE8BB /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109160DF4A81F004DE8BB /* Options.cpp */; };
 		F931097A0DF4C14B004DE8BB /* demo-search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109340DF4BE75004DE8BB /* demo-search.cpp */; };
 		F931097B0DF4C162004DE8BB /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109160DF4A81F004DE8BB /* Options.cpp */; };
@@ -688,6 +690,8 @@
 		F90624920E185A1C002AFBA0 /* libcppunit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcppunit.a; path = /opt/local/lib/libcppunit.a; sourceTree = "<absolute>"; };
 		F90624A40E19705A002AFBA0 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = /opt/local/lib/libboost_system.a; sourceTree = "<absolute>"; };
 		F90D477E0CF8D29200B9AC65 /* search-response-extended-char.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "search-response-extended-char.xml"; sourceTree = "<group>"; };
+		F9181EC40E51F18B00BE23EF /* RetsHttpException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RetsHttpException.h; sourceTree = "<group>"; };
+		F9181EC60E51F1DF00BE23EF /* RetsHttpException.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsHttpException.cpp; sourceTree = "<group>"; };
 		F93109160DF4A81F004DE8BB /* Options.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
 		F93109330DF4BE5C004DE8BB /* Options.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
 		F93109340DF4BE75004DE8BB /* demo-search.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = "demo-search.cpp"; sourceTree = "<group>"; };
@@ -1123,16 +1127,17 @@
 		5552A8830803311C002288F1 /* HTTP */ = {
 			isa = PBXGroup;
 			children = (
-				DEAFBDE50DAD23D500EA99C7 /* CurlMulti.cpp */,
-				DEAFBDE60DAD23D500EA99C7 /* CurlStream.cpp */,
 				55F23D84088EACDE0090B325 /* CurlEasy.cpp */,
 				554A9F5607F9F2E700402C35 /* CurlHttpClient.cpp */,
 				554A9F5707F9F2E700402C35 /* CurlHttpResponse.cpp */,
+				DEAFBDE50DAD23D500EA99C7 /* CurlMulti.cpp */,
 				554A9F5807F9F2E700402C35 /* CurlSlist.cpp */,
+				DEAFBDE60DAD23D500EA99C7 /* CurlStream.cpp */,
 				554A9F8207F9F2E700402C35 /* RetsHttpClient.cpp */,
+				F9181EC60E51F1DF00BE23EF /* RetsHttpException.cpp */,
+				55F23737087C76A50090B325 /* RetsHttpLogger.cpp */,
 				554A9F8307F9F2E700402C35 /* RetsHttpRequest.cpp */,
 				554A9F8407F9F2E700402C35 /* RetsHttpResponse.cpp */,
-				55F23737087C76A50090B325 /* RetsHttpLogger.cpp */,
 				55F237A5087C7DA30090B325 /* StreamHttpLogger.cpp */,
 			);
 			name = HTTP;
@@ -1408,6 +1413,7 @@
 				F9310B610DFEC347004DE8BB /* CurlStream.h */,
 				554A9EC607F9F2D200402C35 /* http_forward.h */,
 				554A9EE807F9F2D200402C35 /* RetsHttpClient.h */,
+				F9181EC40E51F18B00BE23EF /* RetsHttpException.h */,
 				55F23735087C75710090B325 /* RetsHttpLogger.h */,
 				554A9EE907F9F2D200402C35 /* RetsHttpRequest.h */,
 				554A9EEA07F9F2D200402C35 /* RetsHttpResponse.h */,
@@ -1591,6 +1597,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9181EC50E51F18B00BE23EF /* RetsHttpException.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2083,6 +2090,7 @@
 				F9E64E430E03381D00231C0E /* DmqlTreeParser.cpp in Sources */,
 				F9E64E440E03381D00231C0E /* RetsSqlLexer.cpp in Sources */,
 				F9E64E450E03381D00231C0E /* RetsSqlParser.cpp in Sources */,
+				F9181EC70E51F1E000BE23EF /* RetsHttpException.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

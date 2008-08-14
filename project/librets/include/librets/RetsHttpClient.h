@@ -60,8 +60,8 @@ class RetsHttpClient
     virtual RetsHttpLogger* GetLogger() const = 0;
     
     virtual std::string GetCookie(const char * name) = 0;
-	
-	virtual void SetProxy(std::string url, std::string password) = 0;
+
+    virtual void SetProxy(std::string url, std::string password) = 0;
 };
 
 };

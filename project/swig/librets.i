@@ -178,6 +178,120 @@ class RetsException
     virtual std::string GetExtendedMessage();
 };
 
+#ifdef SWIGCSHARP
+%insert(runtime) %{
+  typedef void (SWIGSTDCALL* CSharpExceptionCallback_tt)(const char *, const char *);
+  CSharpExceptionCallback_tt retsExceptionCallback = NULL;
+
+  extern "C" SWIGEXPORT
+  void SWIGSTDCALL RetsExceptionRegisterCallback(CSharpExceptionCallback_tt retsCallback) {
+    retsExceptionCallback = retsCallback;
+  }
+
+  static void SWIG_CSharpSetPendingExceptionRets(const char *msg, const char *extMsg) {
+    retsExceptionCallback(msg, extMsg);
+  }
+
+  typedef void (SWIGSTDCALL* CSharpExceptionCallback_t)(int, const char *, const char *);
+  CSharpExceptionCallback_t retsReplyExceptionCallback = NULL;
+
+  extern "C" SWIGEXPORT
+  void SWIGSTDCALL RetsReplyExceptionRegisterCallback(CSharpExceptionCallback_t retsReplyCallback) {
+    retsReplyExceptionCallback = retsReplyCallback;
+  }
+
+  static void SWIG_CSharpSetPendingExceptionRetsReply(int replyCode, const char *msg, const char *extMsg) {
+    retsReplyExceptionCallback(replyCode, msg, extMsg);
+  }
+
+  typedef void (SWIGSTDCALL* CSharpHttpExceptionCallback_t)(int, const char *);
+  CSharpHttpExceptionCallback_t retsHttpExceptionCallback = NULL;
+
+  extern "C" SWIGEXPORT
+  void SWIGSTDCALL RetsHttpExceptionRegisterCallback(CSharpHttpExceptionCallback_t retsCallback) {
+    retsHttpExceptionCallback = retsCallback;
+  }
+
+  static void SWIG_CSharpSetPendingExceptionHttp(int httpResult, const char *msg) {
+    retsHttpExceptionCallback(httpResult, msg);
+  }
+%}
+
+%pragma(csharp) imclasscode=%{
+  class RetsExceptionHelper {
+    public delegate void RetsExceptionDelegate(string message, string extendedMessage);
+    static RetsExceptionDelegate retsExceptionDelegate =
+                                   new RetsExceptionDelegate(SetPendingRetsException);
+
+    [DllImport("$dllimport", EntryPoint="RetsExceptionRegisterCallback")]
+    public static extern
+           void RetsExceptionRegisterCallback(RetsExceptionDelegate retsExceptionCallback);
+
+    static void SetPendingRetsException(string message, string extendedMessage) {
+      SWIGPendingException.Set(new RetsExceptionNative(message, extendedMessage));
+    }
+
+    static RetsExceptionHelper() {
+      RetsExceptionRegisterCallback(retsExceptionDelegate);
+    }
+  }
+  static RetsExceptionHelper retsExceptionHelper = new RetsExceptionHelper();
+  
+  class RetsReplyExceptionHelper {
+    public delegate void RetsReplyExceptionDelegate(int replyCode, string message, string extendedMessage);
+    static RetsReplyExceptionDelegate retsReplyExceptionDelegate =
+                                   new RetsReplyExceptionDelegate(SetPendingRetsException);
+
+    [DllImport("$dllimport", EntryPoint="RetsReplyExceptionRegisterCallback")]
+    public static extern
+           void RetsReplyExceptionRegisterCallback(RetsReplyExceptionDelegate retsReplyExceptionCallback);
+
+    static void SetPendingRetsException(int replyCode, string message, string extendedMessage) {
+      SWIGPendingException.Set(new RetsReplyExceptionNative(replyCode, message, extendedMessage));
+    }
+
+    static RetsReplyExceptionHelper() {
+      RetsReplyExceptionRegisterCallback(retsReplyExceptionDelegate);
+    }
+  }
+  static RetsReplyExceptionHelper retsReplyExceptionHelper = new RetsReplyExceptionHelper();
+
+  class RetsHttpExceptionHelper {
+    public delegate void RetsHttpExceptionDelegate(int httpResult, string message);
+    static RetsHttpExceptionDelegate retsHttpExceptionDelegate =
+                                   new RetsHttpExceptionDelegate(SetPendingRetsException);
+
+    [DllImport("$dllimport", EntryPoint="RetsHttpExceptionRegisterCallback")]
+    public static extern
+           void RetsHttpExceptionRegisterCallback(RetsHttpExceptionDelegate retsHttpExceptionCallback);
+
+    static void SetPendingRetsException(int httpResult, string message) {
+      SWIGPendingException.Set(new RetsHttpExceptionNative(httpResult, message));
+    }
+
+    static RetsHttpExceptionHelper() {
+      RetsHttpExceptionRegisterCallback(retsHttpExceptionDelegate);
+    }
+  }
+  static RetsHttpExceptionHelper retsHttpExceptionHelper = new RetsHttpExceptionHelper();
+%}
+
+%typemap(throws, canthrow=1) RetsException {
+  SWIG_CSharpSetPendingExceptionRets($1.GetMessage().c_str(), $1.GetExtendedMessage().c_str());
+  return $null;
+}
+
+%typemap(throws, canthrow=1) RetsReplyException {
+  SWIG_CSharpSetPendingExceptionRetsReply($1.GetReplyCode(), $1.GetMessage().c_str(), $1.GetExtendedMessage().c_str());
+  return $null;
+}
+
+%typemap(throws, canthrow=1) RetsHttpException {
+  SWIG_CSharpSetPendingExceptionHttp($1.GetHttpResult(), $1.GetMessage().c_str());
+  return $null;
+}
+#endif
+
 class LoginResponse 
 {
   public:
@@ -1303,51 +1417,134 @@ class SqlToDmqlCompiler
 class RetsSession
 {
   public:
-    RetsSession(std::string loginUrl);
+    RetsSession(std::string loginUrl) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
     std::string GetLoginUrl() const;
 
-    bool Login(std::string userName, std::string password);
+    bool Login(std::string userName, std::string password) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
-    LoginResponse * GetLoginResponse() const;
+    LoginResponse * GetLoginResponse() const 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
     
-    CapabilityUrls * GetCapabilityUrls() const;
+    CapabilityUrls * GetCapabilityUrls() const 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
-    std::string GetAction();
+    std::string GetAction()       throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
     SearchRequestAPtr CreateSearchRequest(std::string searchType, 
                                           std::string searchClass,
-                                          std::string query);
+                                          std::string query) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
-    SearchResultSetAPtr Search(SearchRequest * request);
+    SearchResultSetAPtr Search(SearchRequest * request) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
     
-    LogoutResponseAPtr Logout();
+    LogoutResponseAPtr Logout() 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
     
-    RetsMetadata * GetMetadata();
+    RetsMetadata * GetMetadata() 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
     
-    bool IsIncrementalMetadata() const;
+    bool IsIncrementalMetadata() const 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
     
-    void SetIncrementalMetadata(bool incrementalMetadata);
+    void SetIncrementalMetadata(bool incrementalMetadata) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
     
-    GetObjectResponseAPtr GetObject(GetObjectRequest * request);
+    GetObjectResponseAPtr GetObject(GetObjectRequest * request) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
-    void SetUserAgent(std::string userAgent);
+    void SetUserAgent(std::string userAgent) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
-    void UseHttpGet(bool useHttpGet);
+    void UseHttpGet(bool useHttpGet) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
     
-    void SetRetsVersion(RetsVersion retsVersion);
+    void SetRetsVersion(RetsVersion retsVersion) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
     
-    RetsVersion GetRetsVersion() const;
+    RetsVersion GetRetsVersion() const 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
     
-    RetsVersion GetDetectedRetsVersion() const;
+    RetsVersion GetDetectedRetsVersion() const 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
-    void SetHttpLogger(RetsHttpLogger * logger);
+    void SetHttpLogger(RetsHttpLogger * logger) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException
+                                        ,std::exception);
 
-    void SetUserAgentAuthType(UserAgentAuthType type);
+    void SetUserAgentAuthType(UserAgentAuthType type) 
+                                  throw(RetsHttpException,
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
-    UserAgentAuthType GetUserAgentAuthType() const;
+    UserAgentAuthType GetUserAgentAuthType() const 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
     
-    void SetUserAgentPassword(std::string userAgentPassword);
+    void SetUserAgentPassword(std::string userAgentPassword) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
     void SetDefaultEncoding(EncodingType encoding);
 

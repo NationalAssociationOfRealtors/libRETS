@@ -25,6 +25,7 @@
  
 #include "librets/std_forward.h"
 #include "librets/xml_forward.h"
+#include "librets/EncodingType.h"
 #include "librets/RetsObject.h"
 #include "librets/RetsVersion.h"
 
@@ -45,6 +46,14 @@ class KeyValueResponse : public RetsObject
      * @param retsVersion The RETS version.
      */
     void Parse(istreamPtr inputStream, RetsVersion retsVersion);
+    
+    /**
+     * Parse the input stream, converting the data into keys and values.
+     * @param inputStream A pointer to the input stream.
+     * @param retsVersion The RETS version.
+     * @param encoding The character encoding to use when parsing.
+     */
+    void Parse(istreamPtr inputStream, RetsVersion retsVersion, EncodingType encoding);
 
     /**
      * For a given key, return the associated value. If the key is not found

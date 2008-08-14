@@ -75,7 +75,16 @@ void CLASS::AssertEventListSize(int expected,
 
 void CLASS::Parse(istreamPtr inputStream, RetsVersion retsVersion)
 {
-    RetsXmlParserPtr xmlParser(new ExpatXmlParser(inputStream));
+    Parse(inputStream, retsVersion, RETS_XML_DEFAULT_ENCODING);
+}
+
+void CLASS::Parse(istreamPtr inputStream, RetsVersion retsVersion, EncodingType encoding)
+{
+    RetsXmlParserPtr xmlParser(new ExpatXmlParser(inputStream,
+                        (encoding == RETS_XML_ISO_ENCODING
+                           ? "iso-8859-1"
+                           : "US-ASCII")));
+                           
     RetsXmlEventListPtr eventList = xmlParser->GetEventListSkippingEmptyText();
     RetsXmlTextEventPtr bodyEvent = GetBodyEvent(eventList, retsVersion);
     if (bodyEvent)

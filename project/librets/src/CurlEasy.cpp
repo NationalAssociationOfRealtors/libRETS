@@ -18,6 +18,7 @@
 #include <sstream>
 #include "librets/CurlEasy.h"
 #include "librets/RetsException.h"
+#include "librets/RetsHttpException.h"
 #include "librets/str_stream.h"
 
 using namespace librets;
@@ -40,7 +41,7 @@ void CurlEasy::CurlAssert(CURLcode errorCode, const string & prefix)
         {
             message << ": " << mErrorBuffer;
         }
-        throw RetsException(message.str());
+        throw RetsHttpException(errorCode, message.str());
     }
 }
 
@@ -169,15 +170,15 @@ void CurlEasy::SetUrl(string url)
 void CurlEasy::SetProxyUrl(string url)
 {
     mProxyUrl = url;
-	CurlAssert(curl_easy_setopt(mCurl, CURLOPT_PROXY, mProxyUrl.c_str()),
-				"set proxy url");
+    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_PROXY, mProxyUrl.c_str()),
+                                "set proxy url");
 }
 
 void CurlEasy::SetProxyPassword(string password)
 {
     mProxyPassword = password;
-	CurlAssert(curl_easy_setopt(mCurl, CURLOPT_PROXYUSERPWD, 
-				mProxyPassword.c_str()), "set proxy password");
+    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_PROXYUSERPWD, 
+                               mProxyPassword.c_str()), "set proxy password");
 }
 
 void CurlEasy::Perform()

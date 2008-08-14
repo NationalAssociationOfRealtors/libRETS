@@ -62,14 +62,14 @@ void SearchRequest::SetLimit(int limit)
 
 void SearchRequest::SetOffset(int offset)
 {
-	if (offset == OFFSET_NONE)
-	{
-		SetQueryParameter(OFFSET_PARAMETER, "");
-	}
-	else
-	{
-		SetQueryParameter(OFFSET_PARAMETER, offset);
-	}
+    if (offset == OFFSET_NONE)
+    {
+        SetQueryParameter(OFFSET_PARAMETER, "");
+    }
+    else
+    {
+        SetQueryParameter(OFFSET_PARAMETER, offset);
+    }
 }
 
 void SearchRequest::SetSelect(string select)

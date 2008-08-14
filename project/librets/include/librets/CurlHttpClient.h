@@ -61,17 +61,42 @@ class CurlHttpClient : public RetsHttpClient
     virtual void SetUserAgent(std::string userAgent);
     
     virtual std::string GetUserAgent() const;
-
+    
+    /**
+     * Start an HTTP request using the cURL multi-interface. This will perform
+     * the first invocation if cURL using the multi-interface for the current
+     * transaction.
+     * @param request A pointer to a RetsHttpRequest to be sent to cURL.
+     */
     virtual RetsHttpResponsePtr StartRequest(RetsHttpRequest * request);
     
+    /**
+     * Continue the current in process request. This is part of the streaming
+     * interface and should only be called by CurlHttpClient::GetResponseCode and
+     * CurlStream::read and CurlStream::eof.
+     * @see CurlHttpClient::GetResponseCode
+     * @see CurlStream::eof
+     * @see CurlStream::read
+     */
     virtual bool ContinueRequest();
     
     virtual void SetLogger(RetsHttpLogger * logger);
     
+    /**
+     * Return the HTTP response code. With the streaming interface, this will
+     * have the side-effect of completing the in process transaction.
+     * @return An integer representing the HTTP response code.
+     */
     virtual int GetResponseCode();
     
     virtual RetsHttpLogger* GetLogger() const;
 	
+    /**
+     * Set the proxy url and password.
+     * @param url A string containing the URL of the proxy server.
+     * @param password A string containing the password when the proxy
+     * server requires authentication. Leave this as an empty string otherwise.
+     */
 	virtual void SetProxy(std::string url, std::string password);
 
   private:
