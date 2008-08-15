@@ -61,6 +61,7 @@ X_OBJS = \
 	$(DIROBJ)\RetsException.obj \
 	$(DIROBJ)\RetsExceptionContext.obj \
 	$(DIROBJ)\RetsHttpClient.obj \
+	$(DIROBJ)\RetsHttpException.obj \
 	$(DIROBJ)\RetsHttpLogger.obj \
 	$(DIROBJ)\RetsHttpRequest.obj \
 	$(DIROBJ)\RetsHttpResponse.obj \
