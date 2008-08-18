@@ -2,23 +2,17 @@ using System;
 using System.IO;
 using librets;
 
-public class Search
+public class Login
 {
     static void Main(string[] args)
     {
-        TextWriter logWriter;
-        if (args.Length == 1)
-            logWriter = new StreamWriter(args[0]);
-        else
-            logWriter = TextWriter.Null;
-            
         RetsSession session = null;
         try
         {
             session = new RetsSession(
                 "http://demo.crt.realtors.org:6103/rets/login");
-            session.LoggerDelegate =
-                TextWriterLogger.CreateDelegate(logWriter);
+	    if (args.Length == 1)
+	        session.SetHttpLogName(args[0]);
             if (!session.Login("Joe", "Schmoe"))
             {
                 Console.WriteLine("Invalid login");
@@ -44,7 +38,6 @@ public class Search
             // TextWriter Dispose() method may be called prior to RetsSession.
             if (session != null)
                 session.Dispose();
-            logWriter.Close();
         }
     }
 }

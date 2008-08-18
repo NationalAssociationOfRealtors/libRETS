@@ -3,7 +3,7 @@ include_once('librets.php');
 
 $session = new RetsSession("http://demo.crt.realtors.org:6103/rets/login");
 
-$session->SetHttpLogger("logfile");
+$session->SetHttpLogName("logfile");
 
 if (!$session->Login("Joe", "Schmoe"))
 {

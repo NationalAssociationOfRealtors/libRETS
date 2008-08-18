@@ -212,6 +212,18 @@ class RetsSession : public MetadataLoader
      */
     void SetHttpLogger(RetsHttpLogger * logger);
 
+#ifdef DOXYGEN
+    /**
+     * This is for the SWIG bound languages only - Enables http logging.
+     * Accepts a string that contains the name of a logfile. Http
+     * logging will be enabled and the output will go to the named
+     * file.
+     *
+     * @param logfile  A string containing the name of the log file.
+     */
+    void SetHttpLogName(std::string logfile);
+#endif
+
     /**
      * Returns a pointer to the instances of the RetsHttpLogger that
      * will be/is being used.

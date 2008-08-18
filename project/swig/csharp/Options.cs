@@ -17,7 +17,6 @@ public class Options
     private string mHttpLog                 = "";
     private int mLimit                      = -1;
     private bool mLogEverything             = false;
-    private TextWriter mLogWriter           = TextWriter.Null;
     private string mMetadataTimestamp       = "";
     private int mOffset                     = 0;
     private string mPass                    = "Schmoe";
@@ -345,13 +344,11 @@ public class Options
                 case "--http-log":
                             try
                             {
-                                mLogWriter      = new StreamWriter(value);
                                 http_log        = value;
                                 mLogEverything  = false;
                             }
                             catch
                             {
-                                mLogWriter      = TextWriter.Null;
                                 Console.WriteLine("Expected valid file name for --http-log: " +
                                         value + " is invalid.");
                                 ret_val         = false;
@@ -360,13 +357,11 @@ public class Options
                 case "--http-log-everything":
                             try
                             {
-                                mLogWriter      = new StreamWriter(value);
                                 http_log        = value;
                                 mLogEverything  = true;
                             }
                             catch
                             {
-                                mLogWriter      = TextWriter.Null;
                                 Console.WriteLine("Expected valid file name for --http-log: " +
                                         value + " is invalid.");
                                 ret_val         = false;
@@ -469,9 +464,9 @@ public class Options
         }
         mRetsSession = new RetsSession(mUrl);
 
-        mRetsSession.LoggerDelegate        = TextWriterLogger.CreateDelegate(mLogWriter);
-
         mRetsSession.SetDefaultEncoding(mEncoding);
+	if (mHttpLog.Length > 0)
+	    mRetsSession.SetHttpLogName(mHttpLog);
         mRetsSession.SetLogEverything(mLogEverything);
         mRetsSession.SetRetsVersion(mRetsVersion);
         mRetsSession.SetUserAgent(mUA);

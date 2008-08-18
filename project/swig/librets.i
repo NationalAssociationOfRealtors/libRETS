@@ -59,45 +59,7 @@ using std::string;
 %{
 #include <vector>
 #include <algorithm>
-#include <stdexcept>
-#include <fstream>
 %}
-%ignore phpLogging;
-%inline
-%{
-    class phpLogging
-    {
-        public:
-            phpLogging(std::string filename)
-            {
-                if (mLogStream.is_open())
-                {
-                    mLogStream.close();
-                }
-                if (filename.length() > 0)
-                {
-                    mLogStream.open(filename.c_str());
-                    mLogger.reset(new StreamHttpLogger(&mLogStream));
-                }
-            };
-            ~phpLogging()
-            {
-                if (mLogStream.is_open())
-                {
-                    mLogStream.close();
-                }
-            };
-
-            RetsHttpLogger * get()
-            {
-                return mLogger.get();
-            };
-
-            std::ofstream mLogStream;
-            RetsHttpLoggerPtr mLogger;
-    };
-%}
-
 namespace std {
 
     template<class T> class vector {
@@ -137,6 +99,49 @@ namespace std {
 }
 #endif
 #endif
+
+%{
+#include <algorithm>
+#include <stdexcept>
+#include <fstream>
+%}
+
+%ignore httpLogging;
+%inline
+%{
+    class httpLogging
+    {
+        public:
+            httpLogging(std::string filename)
+            {
+                if (mLogStream.is_open())
+                {
+                    mLogStream.close();
+                }
+                if (filename.length() > 0)
+                {
+                    mLogStream.open(filename.c_str());
+                    mLogger.reset(new StreamHttpLogger(&mLogStream));
+                }
+            };
+            ~httpLogging()
+            {
+                if (mLogStream.is_open())
+                {
+                    mLogStream.close();
+                }
+            };
+
+            RetsHttpLogger * get()
+            {
+                return mLogger.get();
+            };
+
+            std::ofstream mLogStream;
+            RetsHttpLoggerPtr mLogger;
+    };
+%}
+
 %include "exception.i"
 %include "auto_ptr_release.i"
 
@@ -1525,8 +1530,8 @@ class RetsSession
     void SetHttpLogger(RetsHttpLogger * logger) 
                                   throw(RetsHttpException, 
                                         RetsReplyException,
-                                        RetsException
-                                        ,std::exception);
+                                        RetsException,
+                                        std::exception);
 
     void SetUserAgentAuthType(UserAgentAuthType type) 
                                   throw(RetsHttpException,
@@ -1556,16 +1561,15 @@ class RetsSession
 
     void SetProxy(std::string url, std::string password);
 
-#ifdef SWIGPHP
     %extend
     {
-        void SetHttpLogger(std::string filename)
+        void SetHttpLogName(std::string filename)
         {
-            static phpLogging  *logger = 0;
+            static httpLogging  *logger = 0;
             if (logger)
                 delete logger;
 
-            logger = new phpLogging(filename);
+            logger = new httpLogging(filename);
             if (logger)
             {
                 self->SetHttpLogger(logger->get());
@@ -1573,7 +1577,6 @@ class RetsSession
         }
         
     }
-#endif
 
 };
 
