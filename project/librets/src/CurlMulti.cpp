@@ -74,6 +74,14 @@ CURLM * CLASS::GetMultiHandle()
     return mMultiHandle;
 }
 
+/*
+ * Use curl_multi_perform to process an http transaction. This (through
+ * the curl callbacks), will load data into a stream for consumption
+ * through CurlStream. This is only ever intended to be called from
+ * CurlHttpClient::ContinueRequest(). As a side effect, the curl flag
+ * that indicates that the transaction continues (stored in mStillRunning)
+ * is updated.
+ */
 void CLASS::Perform()
 {
     fd_set fdread;
@@ -93,7 +101,7 @@ void CLASS::Perform()
         return;
         
     /*
-     * If mStillRunning is 2, we need to prime the pump.
+     * If mStillRunning is 2 (initial state), we need to prime the pump.
      */
     if (mStillRunning == 2)
     {
@@ -114,10 +122,19 @@ void CLASS::Perform()
         throw RetsException("curl_multi_fdset failed.");
     }
     
+    /*
+     * See if one of the curl handles need esrvice.
+     */
     rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
     
     if (rc > 0)
     {
+        /*
+         * Yes, so service it. When done here, we'll return and let the code
+         * elsewhere handle deblocking and serving it. We will re-enter this
+         * routine only when a request for data exceeds what remains in the
+         * stream.
+         */
         while (curl_multi_perform(mMultiHandle, &mStillRunning) == CURLM_CALL_MULTI_PERFORM);
     }
     else
@@ -131,6 +148,9 @@ void CLASS::Perform()
 
 void CLASS::Reset()
 {
+    /*
+     * Reset to the initial state.
+     */
     mStillRunning = 2;
 }
 

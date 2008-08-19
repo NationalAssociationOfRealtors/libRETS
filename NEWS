@@ -33,6 +33,11 @@ Version 1.2.2 - xx xxx 2008
     Modeled on patch supplied by Tony Manhollan.
     Ticket #67.
 
+  * Added some additional checking to the http transaction flow in an attempt
+    to masquerade networking issues as 503 (service unavailable) erorrs when
+    libCURL returns a zero status to us.
+    Ticket #69.
+
   * Revised http logging methodology for SWIG bound languages and
     updated developer documentation accordingly. For all SWIG languages,
     RetsSession::SetHttpLogName("log.name") is all that is needed to 

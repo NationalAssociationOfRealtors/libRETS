@@ -35,7 +35,7 @@ std::istream& CurlStream::read(char* s, std::streamsize n)
      */
     while ((n > (std::stringstream::tellp() - std::stringstream::tellg())) && 
         mHttpClient.ContinueRequest());
-    
+
     return std::stringstream::read(s,n);
 }
 
@@ -45,6 +45,9 @@ bool CurlStream::eof()
     
     if (atEof)
     {
+        /*
+         * Make sure we clear things if we need to.
+         */
         mHttpClient.ContinueRequest();
         
         return std::stringstream::eof(); 

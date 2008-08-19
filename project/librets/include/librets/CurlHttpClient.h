@@ -73,7 +73,8 @@ class CurlHttpClient : public RetsHttpClient
     /**
      * Continue the current in process request. This is part of the streaming
      * interface and should only be called by CurlHttpClient::GetResponseCode and
-     * CurlStream::read and CurlStream::eof.
+     * CurlStream::read and CurlStream::eof. Data may be transferred with this request.
+     * @return A boolean that if TRUE indicates that there is more data to process.
      * @see CurlHttpClient::GetResponseCode
      * @see CurlStream::eof
      * @see CurlStream::read

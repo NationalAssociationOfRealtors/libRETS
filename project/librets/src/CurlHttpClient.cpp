@@ -146,6 +146,15 @@ int CurlHttpClient::GetResponseCode()
      */
     while (mResponseCode == 0 && ContinueRequest());
     
+    /*
+     * If the response code is still zero, the socket may have been closed or there is some error.
+     * If that is the case, masquerade as a 503 (service unavailble) error.
+     */
+    if (mResponseCode == 0 && !ContinueRequest())
+    {
+        return 503;
+    }
+    
     return mResponseCode;
 }
 
