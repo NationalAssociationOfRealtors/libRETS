@@ -5,8 +5,8 @@ AC_DEFUN([MY_TEST_CURL], [
   AC_CACHE_VAL(my_cv_curl_vers, [
     my_cv_curl_vers=NONE
     dnl check is the plain-text version of the required version
-    check="7.13.1"
-    check_hex="070d01"
+    check="7.18.2"
+    check_hex="071202"
 
     AC_MSG_CHECKING([for curl >= $check])
 
