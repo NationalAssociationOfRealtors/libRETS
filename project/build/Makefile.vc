@@ -105,6 +105,14 @@ BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib"
 
 ########################################################################
 #
+# OpenSSL Configuration
+
+OPENSSL_PATH = $(BASE_PATH)/openssl
+
+OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib gdi32.lib advapi32.lib user32.lib
+
+########################################################################
+#
 # Curl Configuration
 
 CURL_PATH  = $(BASE_PATH)/curl
