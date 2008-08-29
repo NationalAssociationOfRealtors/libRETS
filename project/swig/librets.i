@@ -14,6 +14,11 @@
 #ifdef SWIGRUBY
 %{
 #include "librets_ruby.h"
+#ifdef WIN32
+#ifdef close
+# undef close
+#endif
+#endif
 %}
 #endif
 
