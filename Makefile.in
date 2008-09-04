@@ -87,6 +87,12 @@ install:
 test:
 	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _test
 
+test-network:
+	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _test-network
+
+run-server:
+	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _run_httpServer
+
 doc: _doc
 doc-api: _doc-api
 

@@ -1,0 +1,16 @@
+HTTP/1.1 200 OK
+RETS-Version: RETS/1.5
+RETS-Server: Variman/2.1.7
+Content-Type: text/xml
+Content-Length: 691
+Date: Tue, 26 Aug 2008 17:21:20 GMT
+Server: Apache-Coyote/1.1
+
+<?xml version="1.0"?>
+<RETS ReplyCode="0" ReplyText="Operation Successful">
+<METADATA-TABLE Resource="ActiveAgent" Class="ACTAGT" Version="100.00.001" Date="Mon, 18 Aug 2003 17:00:00 GMT">
+<COLUMNS>	SystemName	StandardName	LongName	DBName	ShortName	MaximumLength	DataType	Precision	Searchable	Interpretation	Alignment	UseSeparator	EditMaskID	LookupName	MaxSelect	Units	Index	Minimum	Maximum	Default	Required	SearchHelpID	Unique	</COLUMNS>
+<DATA>	OFFICE_ID	ListOfficeOfficeID	Office ID	OFFICE_ID	OFFICE_ID	7	Character	0	1		Left	0			0		0	0	0	0	0		0	</DATA>
+<DATA>	AGENT_ID	ListAgentAgentID	Agent ID	AGENT_ID	AGENT	6	Character	0	1		Left	0			0		0	0	0	1	1		1	</DATA>
+</METADATA-TABLE>
+</RETS>

@@ -1,0 +1,24 @@
+HTTP/1.1 200 OK
+RETS-Version: RETS/1.5
+RETS-Server: Variman/2.1.7
+Content-Type: text/xml
+Content-Length: 568
+Date: Tue, 26 Aug 2008 17:21:32 GMT
+Server: Apache-Coyote/1.1
+
+<?xml version="1.0"?>
+<RETS ReplyCode="0" ReplyText="Operation Successful">
+<METADATA-LOOKUP_TYPE Resource="Property" Lookup="LISTING_STATUS" Version="100.00.001" Date="Mon, 18 Aug 2003 17:00:00 GMT">
+<COLUMNS>	LongValue	ShortValue	Value	</COLUMNS>
+<DATA>	Expired	X	X	</DATA>
+<DATA>	Under Contract	U	U	</DATA>
+<DATA>	Active	A	A	</DATA>
+<DATA>	Off Market	0	O	</DATA>
+<DATA>	Temp Off Market	T	T	</DATA>
+<DATA>	Leased	L	L	</DATA>
+<DATA>	Withdrawn	W	W	</DATA>
+<DATA>	Closed	C	C	</DATA>
+<DATA>	Sold	S	S	</DATA>
+<DATA>	Pending	P	P	</DATA>
+</METADATA-LOOKUP_TYPE>
+</RETS>

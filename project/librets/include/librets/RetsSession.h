@@ -329,7 +329,8 @@ class RetsSession : public MetadataLoader
      *
      * @param url A string containing the url of the proxy server. If non-standard ports
      * are used, it should be part of the url as in: http://demo.crt.realtors.org:6103.
-     * @param password A string containing the proxy password if one is needed.
+     * @param password A string containing the proxy password if one is needed. This can be of
+     * the form "userid:password".
      */
      void SetProxy(std::string url, std::string password);
     

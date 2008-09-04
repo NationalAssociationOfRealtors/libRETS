@@ -1,4 +1,9 @@
-Version 1.2.2 - xx xxx 2008
+Version 1.2.3 - xx xxx 2008
+
+  * Added test-network target and httpServer to test actual 
+    network activity in the test harness.
+
+Version 1.2.2 - 29 Aug 2008
 
   * Updated KeyValueResponse parsing to allow for ISO characters.
     Ticket #40.

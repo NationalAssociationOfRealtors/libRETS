@@ -1,0 +1,41 @@
+HTTP/1.1 200 OK
+RETS-Version: RETS/1.5
+RETS-Server: Variman/2.1.7
+Content-Type: text/xml
+Content-Length: 3374
+Date: Tue, 26 Aug 2008 17:21:26 GMT
+Server: Apache-Coyote/1.1
+
+<?xml version="1.0"?>
+<RETS ReplyCode="0" ReplyText="Operation Successful">
+<METADATA-TABLE Resource="Property" Class="ResidentialProperty" Version="100.00.001" Date="Mon, 18 Aug 2003 17:00:00 GMT">
+<COLUMNS>	SystemName	StandardName	LongName	DBName	ShortName	MaximumLength	DataType	Precision	Searchable	Interpretation	Alignment	UseSeparator	EditMaskID	LookupName	MaxSelect	Units	Index	Minimum	Maximum	Default	Required	SearchHelpID	Unique	</COLUMNS>
+<DATA>	Garage	Garage	Garage	r_garage	Garage	8	Int	0	1		Left	0			0		0	0	0	18	0		0	</DATA>
+<DATA>	COUNTY	County	County	r_county	County	24	Character	0	1		Left	0			0		0	0	0	14	0		0	</DATA>
+<DATA>	STNUM	StreetNumber	Street Number	r_stnum	St Num	12	Character	0	0		Left	0			0		0	0	0	10	0		0	</DATA>
+<DATA>	SQFT		Square Footage	r_sqft	SqrFt	15	Decimal	5	1		Left	0			0	SqFt	0	0	0	21	0		0	</DATA>
+<DATA>	LN	ListingID	Listing ID	r_ln	ListID	40	Character	0	1	Number	Left	0	LN_EDITMASK		0		0	1	0	1	0	LN_SEARCH_HELP	1	</DATA>
+<DATA>	CLDATE	CloseDate	Close Date	r_cldate	Cls Dt	10	Date	0	1		Left	0	DATE_EDITMASK		0		0	0	0	2	0	DATE_SEARCH_HELP	0	</DATA>
+<DATA>	CITY	City	City	r_city	City	24	Character	0	1		Left	0			0		0	0	0	13	0		0	</DATA>
+<DATA>	BEDROOMS	Beds	Bedrooms	r_beds	Beds	8	Int	0	1		Left	0			0		0	0	0	9	0		0	</DATA>
+<DATA>	TotalRooms	TotalRooms	TotalRooms	r_rooms	TotalRooms	8	Int	0	1		Left	0			0		0	0	0	20	0		0	</DATA>
+<DATA>	LivingArea	LivingArea	LivingArea	r_area	LivingArea	8	Int	0	1		Left	0			0		0	0	0	19	0		0	</DATA>
+<DATA>	YearBuilt	YearBuilt	YearBuilt	r_year_built	YearBuilt	4	Int	0	1		Left	0			0		0	0	0	17	0		0	</DATA>
+<DATA>	LS	ListingStatus	Listing Status	r_ls	Status	12	Character	0	1		Left	0			0		0	0	0	10	1		0	</DATA>
+<DATA>	AGENTID	AgentID	Agent ID	r_agent_id	AgentID	12	Character	0	1		Left	0			0		0	0	0	5	0		0	</DATA>
+<DATA>	LD	ListDate	Listing Date	r_ld	Lst Dt	10	Date	0	1		Left	0	DATE_EDITMASK		0		0	0	0	2	0	DATE_SEARCH_HELP	0	</DATA>
+<DATA>	CODATE	ContractDate	Contract Date	r_codate	Con Date	10	Date	0	1		Left	0	DATE_EDITMASK		0		0	0	0	2	0	DATE_SEARCH_HELP	0	</DATA>
+<DATA>	CP	ClosePrice	Close Price	r_cp	Cls Pr	8	Int	0	1	Currency	Right	1			0		0	14	0	4	0		0	</DATA>
+<DATA>	UNNUM	UnitNumber	Unit Number	r_unnum	Un Num	12	Character	0	0		Left	0			0		0	0	0	10	0		0	</DATA>
+<DATA>	STATE	StateOrProvince	State	r_state	State	24	Character	0	1		Left	0			0		0	0	0	15	0		0	</DATA>
+<DATA>	STNAME	StreetName	Street Name	r_stname	St Nam	24	Character	0	1		Left	0			0		0	0	0	12	0		0	</DATA>
+<DATA>	ZIPCODE	PostalCode	Zip Code	r_zip_code	Zip	10	Character	0	0		Left	0			0		0	0	0	16	0		0	</DATA>
+<DATA>	BOARD	Board	Board	r_board	Board	24	Character	0	1		Left	0			0		0	0	0	7	0		0	</DATA>
+<DATA>	OFFICEID	OfficeID	Office ID	r_office_id	OfficeID	12	Character	0	1		Left	0			0		0	0	0	6	0		0	</DATA>
+<DATA>	BATHS	Baths	Baths Total	r_baths	Baths	8	Int	0	1		Left	0			0		0	0	0	8	0		0	</DATA>
+<DATA>	LP	ListPrice	Listing Price	r_lp	Lst Pr	8	Int	0	1	Currency	Right	1			0		0	14	0	4	0		0	</DATA>
+<DATA>	TIMESTAMP	ModificationTimestamp	Modification Time Stamp	r_md	Mod Dt	24	DateTime	0	1		Left	0	DATETIME_EDITMASK		0		0	0	0	3	0		0	</DATA>
+<DATA>	STREETDIRECTION	StreetDirPrefix	Street Direction Prefix	r_street_dir_prefix	StreetDirPrefix	12	Character	0	1		Left	0			0		0	0	0	11	0		0	</DATA>
+<DATA>	LTYP	Type	Listing Type (deprecated)	r_ltyp	Lst Type	4	Character	0	1	Lookup	Left	0		LISTING_TYPE	0		0	0	0	0	0		0	</DATA>
+</METADATA-TABLE>
+</RETS>

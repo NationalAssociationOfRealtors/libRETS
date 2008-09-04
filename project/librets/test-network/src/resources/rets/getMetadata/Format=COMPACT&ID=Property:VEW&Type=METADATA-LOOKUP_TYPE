@@ -1,0 +1,27 @@
+HTTP/1.1 200 OK
+RETS-Version: RETS/1.5
+RETS-Server: Variman/2.1.7
+Content-Type: text/xml
+Content-Length: 635
+Date: Tue, 26 Aug 2008 17:21:34 GMT
+Server: Apache-Coyote/1.1
+
+<?xml version="1.0"?>
+<RETS ReplyCode="0" ReplyText="Operation Successful">
+<METADATA-LOOKUP_TYPE Resource="Property" Lookup="VEW" Version="100.00.001" Date="Mon, 18 Aug 2003 17:00:00 GMT">
+<COLUMNS>	LongValue	ShortValue	Value	</COLUMNS>
+<DATA>	Lake	LK	32	</DATA>
+<DATA>	Creek	CR	2	</DATA>
+<DATA>	Desert	DS	4	</DATA>
+<DATA>	River	RV	1024	</DATA>
+<DATA>	Urban	UB	2048	</DATA>
+<DATA>	Ravine	RA	512	</DATA>
+<DATA>	Mountain	MT	64	</DATA>
+<DATA>	Hills	HL	16	</DATA>
+<DATA>	Woods	WD	4096	</DATA>
+<DATA>	Ocean	OC	128	</DATA>
+<DATA>	Alley	AL	1	</DATA>
+<DATA>	Open Lot	OL	256	</DATA>
+<DATA>	Farm	FM	8	</DATA>
+</METADATA-LOOKUP_TYPE>
+</RETS>

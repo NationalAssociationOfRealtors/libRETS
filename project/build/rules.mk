@@ -18,6 +18,8 @@ ALL_OBJ_DIRS	= \
 	build/librets/test/objects \
 	build/librets/test/sql \
 	build/librets/test/bin \
+	build/librets/test-network/bin \
+	build/librets/test-network/objects \
 	build/examples/objects \
 	build/examples/bin \
 	build/doc/api \
@@ -137,6 +139,16 @@ _veryclean: _distclean
 _test: cppunit prepare $(LIBRETS_TEST_EXE)
 	./$(LIBRETS_TEST_EXE) $(top_srcdir)
 
+_test-network: cppunit prepare $(LIBRETS_NETTEST_EXE) ${LIBRETS_NETTEST_HTTPSERVER}
+	./$(LIBRETS_NETTEST_EXE) $(top_srcdir) || \
+	(echo You must enable httpServer. && \
+	echo You can do this by typeing: && \
+	echo make run-server && \
+	echo in another shell.)
+
+_run_httpServer: ${LIBRETS_NETTEST_HTTPSERVER}
+	java -cp ${LIBRETS_NETTEST_BIN_DIR} httpServer --resource=${LIBRETS_NETTEST_SRC_DIR}/resources --port=4444 
+	
 _maintainer-clean: _veryclean
 	$(RM) configure
 
@@ -152,4 +164,4 @@ endif
 .PHONY: all debug build doc doc-api \
 	install install-bin install-data install-config no-cppunit \
 	_all _debug _build _doc _doc-api _clean _distclean _veryclean \
-	_maintainer-clean test _test
+	_maintainer-clean test _test test-network _test-network

@@ -188,6 +188,54 @@ $(LIBRETS_TEST_EXE): $(LIBRETS_TEST_OBJECTS) $(LIBRETS_LIB)
 
 ########################################################################
 #
+# librets network test
+#
+
+LIBRETS_NETTEST_SRC_DIR	= $(top_srcdir)/project/librets/test-network/src
+LIBRETS_NETTEST_INC_DIR	= ${LIBRETS_TEST_SRC_DIR}
+LIBRETS_NETTEST_BIN_DIR	= build/librets/test-network/bin
+LIBRETS_NETTEST_OBJ_DIR	= build/librets/test-network/objects
+LIBRETS_NETTEST_CFLAGS = $(CFLAGS) $(BOOST_CFLAGS) $(CPPUNIT_CFLAGS)
+
+LIBRETS_NETTEST_HTTPSERVER = build/librets/test-network/bin/httpServer.class
+LIBRETS_NETTEST_SRC_FILES	:= $(wildcard $(LIBRETS_NETTEST_SRC_DIR)/*.cpp) 
+LIBRETS_NETTEST_OBJECTS	:= $(patsubst $(LIBRETS_NETTEST_SRC_DIR)/%.cpp,  \
+	$(LIBRETS_NETTEST_OBJ_DIR)/%.o, $(LIBRETS_NETTEST_SRC_FILES)) \
+	${LIBRETS_NETTEST_OBJ_DIR}/main.o ${LIBRETS_NETTEST_OBJ_DIR}/testUtil.o
+LIBRETS_NETTEST_DEPENDS	:= $(patsubst $(LIBRETS_NETTEST_SRC_DIR)/%.cpp, \
+	$(LIBRETS_NETTEST_OBJ_DIR)/%.d, $(LIBRETS_NETTEST_SRC_FILES)) \
+	${LIBRETS_NETTEST_OBJ_DIR}/main.d ${LIBRETS_NETTEST_OBJ_DIR}/testUtil.d
+LIBRETS_NETTEST_EXE	= ${LIBRETS_NETTEST_BIN_DIR}/test
+
+$(LIBRETS_NETTEST_OBJ_DIR)/%.o: $(LIBRETS_NETTEST_SRC_DIR)/%.cpp
+	$(CXX) $(LIBRETS_TEST_CFLAGS) -I$(LIBRETS_NETTEST_INC_DIR) \
+		-I${LIBRETS_INC_DIR} -c $< -o $@
+
+$(LIBRETS_NETTEST_OBJ_DIR)/main.o: $(LIBRETS_TEST_SRC_DIR)/main.cpp
+	$(CXX) $(LIBRETS_TEST_CFLAGS) -I$(LIBRETS_NETTEST_INC_DIR) \
+		-I${LIBRETS_INC_DIR} -c $< -o $@
+
+$(LIBRETS_NETTEST_OBJ_DIR)/testUtil.o: $(LIBRETS_TEST_SRC_DIR)/testUtil.cpp
+	$(CXX) $(LIBRETS_TEST_CFLAGS) -I$(LIBRETS_NETTEST_INC_DIR) \
+		-I${LIBRETS_INC_DIR} -c $< -o $@
+
+$(LIBRETS_NETTEST_HTTPSERVER): $(LIBRETS_NETTEST_SRC_DIR)/httpServer.java
+	$(JAVAC)  $< -d ${LIBRETS_NETTEST_BIN_DIR}
+
+$(LIBRETS_NETTEST_OBJ_DIR)/%.d: $(LIBRETS_NETTEST_SRC_DIR)/%.cpp ${LIBRETS_TEST_SRC_DIR}/main.cpp
+	@echo Generating dependencies for $<
+	@mkdir -p $(dir $@)
+	@$(CC) -MM $(LIBRETS_TEST_CFLAGS) -I$(LIBRETS_NETTEST_INC_DIR) $< \
+	-I${LIBRETS_INC_DIR} \
+	| $(FIXDEP) $(LIBRETS_NETTEST_SRC_DIR) $(LIBRETS_NETTEST_OBJ_DIR) > $@
+
+$(LIBRETS_NETTEST_EXE): $(LIBRETS_NETTEST_OBJECTS) $(LIBRETS_LIB)
+	$(CXX) -o $(LIBRETS_NETTEST_EXE) $(LIBRETS_NETTEST_OBJECTS) $(LIBRETS_LIB) \
+	-I${LIBRETS_NETTEST_INC_DIR} -I${LIBRETS_INC_DIR} \
+	$(LIBRETS_LDFLAGS) $(CPPUNIT_LDFLAGS)
+
+########################################################################
+#
 # examples
 #
 

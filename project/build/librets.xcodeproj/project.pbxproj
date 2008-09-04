@@ -96,6 +96,17 @@
 		F90624990E185AD4002AFBA0 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */; };
 		F9181EC50E51F18B00BE23EF /* RetsHttpException.h in Headers */ = {isa = PBXBuildFile; fileRef = F9181EC40E51F18B00BE23EF /* RetsHttpException.h */; };
 		F9181EC70E51F1E000BE23EF /* RetsHttpException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9181EC60E51F1DF00BE23EF /* RetsHttpException.cpp */; };
+		F91821410E6F5A7F00BE23EF /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
+		F91821440E6F5A9900BE23EF /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565907FC3BBE00526D69 /* libexpat.a */; };
+		F91821450E6F5AA200BE23EF /* libantlr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90434570D039AE9004E3017 /* libantlr.a */; };
+		F91821460E6F5AB100BE23EF /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565707FC3BA100526D69 /* libcurl.a */; };
+		F91821470E6F5AB900BE23EF /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
+		F91821480E6F5AC300BE23EF /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */; };
+		F91821490E6F5ADA00BE23EF /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
+		F918214A0E6F5B1000BE23EF /* libcppunit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD57C107FDAB4500526D69 /* libcppunit.dylib */; };
+		F918214B0E6F5B2800BE23EF /* NetworkTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F91821020E6F55AA00BE23EF /* NetworkTest.cpp */; };
+		F918214C0E6F5B3500BE23EF /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578B07FDAAFD00526D69 /* main.cpp */; };
+		F918214D0E6F5B3B00BE23EF /* testUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD57A007FDAAFD00526D69 /* testUtil.cpp */; };
 		F93109170DF4A81F004DE8BB /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109160DF4A81F004DE8BB /* Options.cpp */; };
 		F931097A0DF4C14B004DE8BB /* demo-search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109340DF4BE75004DE8BB /* demo-search.cpp */; };
 		F931097B0DF4C162004DE8BB /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109160DF4A81F004DE8BB /* Options.cpp */; };
@@ -296,6 +307,13 @@
 			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 55EE8498093E5AAA00812582;
+			remoteInfo = librets;
+		};
+		F918213D0E6F59ED00BE23EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55EE8498093E5AAA00812582 /* librets */;
 			remoteInfo = librets;
 		};
 		F931098B0DF4C1DE004DE8BB /* PBXContainerItemProxy */ = {
@@ -652,7 +670,7 @@
 		55F23EF0088FFB900090B325 /* LookupOrCriterion.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = LookupOrCriterion.h; sourceTree = "<group>"; };
 		55F23EFF088FFC2D0090B325 /* LookupOrCriterion.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = LookupOrCriterion.cpp; sourceTree = "<group>"; };
 		55F23F09088FFC720090B325 /* LookupOrCriterionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = LookupOrCriterionTest.cpp; sourceTree = "<group>"; };
-		55F23F8A089003B60090B325 /* TestSqlMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSqlMetadata.h; sourceTree = "<group>"; };
+		55F23F8A089003B60090B325 /* TestSqlMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestSqlMetadata.h; path = ../sql/TestSqlMetadata.h; sourceTree = "<group>"; };
 		55F23F8B089003B60090B325 /* TestSqlMetadata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestSqlMetadata.cpp; path = ../sql/TestSqlMetadata.cpp; sourceTree = "<group>"; };
 		55F2405B08904F0C0090B325 /* abc123-1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "abc123-1.gif"; sourceTree = "<group>"; };
 		55F2405C08904F0C0090B325 /* get-object-response-multi-location.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-multi-location.txt"; sourceTree = "<group>"; };
@@ -692,6 +710,43 @@
 		F90D477E0CF8D29200B9AC65 /* search-response-extended-char.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "search-response-extended-char.xml"; sourceTree = "<group>"; };
 		F9181EC40E51F18B00BE23EF /* RetsHttpException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RetsHttpException.h; sourceTree = "<group>"; };
 		F9181EC60E51F1DF00BE23EF /* RetsHttpException.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsHttpException.cpp; sourceTree = "<group>"; };
+		F91821010E6F55AA00BE23EF /* httpServer.java */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.java; name = httpServer.java; path = "../librets/test-network/src/httpServer.java"; sourceTree = SOURCE_ROOT; };
+		F91821020E6F55AA00BE23EF /* NetworkTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkTest.cpp; path = "../librets/test-network/src/NetworkTest.cpp"; sourceTree = SOURCE_ROOT; };
+		F91821060E6F55FC00BE23EF /* Format=COMPACT&ID=*&Type=METADATA-SYSTEM */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=*&Type=METADATA-SYSTEM"; sourceTree = "<group>"; };
+		F91821070E6F55FC00BE23EF /* Format=COMPACT&ID=0&Type=METADATA-RESOURCE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=0&Type=METADATA-RESOURCE"; sourceTree = "<group>"; };
+		F91821080E6F55FC00BE23EF /* Format=COMPACT&ID=0&Type=METADATA-SYSTEM */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=0&Type=METADATA-SYSTEM"; sourceTree = "<group>"; };
+		F91821090E6F55FC00BE23EF /* Format=COMPACT&ID=ActiveAgent&Type=METADATA-CLASS */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=ActiveAgent&Type=METADATA-CLASS"; sourceTree = "<group>"; };
+		F918210A0E6F55FC00BE23EF /* Format=COMPACT&ID=ActiveAgent&Type=METADATA-LOOKUP */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=ActiveAgent&Type=METADATA-LOOKUP"; sourceTree = "<group>"; };
+		F918210B0E6F55FC00BE23EF /* Format=COMPACT&ID=ActiveAgent:ACTAGT&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=ActiveAgent:ACTAGT&Type=METADATA-TABLE"; sourceTree = "<group>"; };
+		F918210C0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent&Type=METADATA-CLASS */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Agent&Type=METADATA-CLASS"; sourceTree = "<group>"; };
+		F918210D0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent&Type=METADATA-LOOKUP */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Agent&Type=METADATA-LOOKUP"; sourceTree = "<group>"; };
+		F918210E0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent:AGT&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Agent:AGT&Type=METADATA-TABLE"; sourceTree = "<group>"; };
+		F918210F0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent:DESIGNATIONS&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Agent:DESIGNATIONS&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
+		F91821100E6F55FC00BE23EF /* Format=COMPACT&ID=Office&Type=METADATA-CLASS */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Office&Type=METADATA-CLASS"; sourceTree = "<group>"; };
+		F91821110E6F55FC00BE23EF /* Format=COMPACT&ID=Office&Type=METADATA-LOOKUP */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Office&Type=METADATA-LOOKUP"; sourceTree = "<group>"; };
+		F91821120E6F55FC00BE23EF /* Format=COMPACT&ID=Office:OFFICE&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Office:OFFICE&Type=METADATA-TABLE"; sourceTree = "<group>"; };
+		F91821130E6F55FC00BE23EF /* Format=COMPACT&ID=Property&Type=METADATA-CLASS */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property&Type=METADATA-CLASS"; sourceTree = "<group>"; };
+		F91821140E6F55FC00BE23EF /* Format=COMPACT&ID=Property&Type=METADATA-LOOKUP */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property&Type=METADATA-LOOKUP"; sourceTree = "<group>"; };
+		F91821150E6F55FC00BE23EF /* Format=COMPACT&ID=Property:AR&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:AR&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
+		F91821160E6F55FC00BE23EF /* Format=COMPACT&ID=Property:CommercialProperty&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:CommercialProperty&Type=METADATA-TABLE"; sourceTree = "<group>"; };
+		F91821170E6F55FC00BE23EF /* Format=COMPACT&ID=Property:CON&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:CON&Type=METADATA-TABLE"; sourceTree = "<group>"; };
+		F91821180E6F55FC00BE23EF /* Format=COMPACT&ID=Property:E_SCHOOL&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:E_SCHOOL&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
+		F91821190E6F55FC00BE23EF /* Format=COMPACT&ID=Property:EFT&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:EFT&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
+		F918211A0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:H_SCHOOL&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:H_SCHOOL&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
+		F918211B0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:IFT&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:IFT&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
+		F918211C0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:LISTING_STATUS&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:LISTING_STATUS&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
+		F918211D0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:LISTING_TYPE&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:LISTING_TYPE&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
+		F918211E0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:LND&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:LND&Type=METADATA-TABLE"; sourceTree = "<group>"; };
+		F918211F0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:M_SCHOOL&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:M_SCHOOL&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
+		F91821200E6F55FC00BE23EF /* Format=COMPACT&ID=Property:MOB&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:MOB&Type=METADATA-TABLE"; sourceTree = "<group>"; };
+		F91821210E6F55FC00BE23EF /* Format=COMPACT&ID=Property:MUL&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:MUL&Type=METADATA-TABLE"; sourceTree = "<group>"; };
+		F91821220E6F55FC00BE23EF /* Format=COMPACT&ID=Property:ResidentialProperty&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:ResidentialProperty&Type=METADATA-TABLE"; sourceTree = "<group>"; };
+		F91821230E6F55FC00BE23EF /* Format=COMPACT&ID=Property:VEW&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:VEW&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
+		F91821280E6F55FC00BE23EF /* ID=LN000001:*&Location=0&Resource=Property&Type=Photo */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ID=LN000001:*&Location=0&Resource=Property&Type=Photo"; sourceTree = "<group>"; };
+		F91821290E6F55FC00BE23EF /* login */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = login; sourceTree = "<group>"; };
+		F918212A0E6F55FC00BE23EF /* logout */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = logout; sourceTree = "<group>"; };
+		F918212D0E6F55FC00BE23EF /* Class=ResidentialProperty&Count=1&Format=COMPACT-DECODED&Query=(ListPrice%3d300000-)&QueryType=DMQL2&SearchType=Property&Select=ListingID,ListPrice,Beds,City&StandardNames=1 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Class=ResidentialProperty&Count=1&Format=COMPACT-DECODED&Query=(ListPrice%3d300000-)&QueryType=DMQL2&SearchType=Property&Select=ListingID,ListPrice,Beds,City&StandardNames=1"; sourceTree = "<group>"; };
+		F91821370E6F584500BE23EF /* test-network */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "test-network"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93109160DF4A81F004DE8BB /* Options.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
 		F93109330DF4BE5C004DE8BB /* Options.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
 		F93109340DF4BE75004DE8BB /* demo-search.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = "demo-search.cpp"; sourceTree = "<group>"; };
@@ -807,6 +862,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F91821350E6F584400BE23EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F91821410E6F5A7F00BE23EF /* librets.a in Frameworks */,
+				F91821440E6F5A9900BE23EF /* libexpat.a in Frameworks */,
+				F91821450E6F5AA200BE23EF /* libantlr.a in Frameworks */,
+				F91821460E6F5AB100BE23EF /* libcurl.a in Frameworks */,
+				F91821470E6F5AB900BE23EF /* libboost_filesystem.a in Frameworks */,
+				F91821480E6F5AC300BE23EF /* libboost_program_options.a in Frameworks */,
+				F91821490E6F5ADA00BE23EF /* libboost_system.a in Frameworks */,
+				F918214A0E6F5B1000BE23EF /* libcppunit.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -947,6 +1017,7 @@
 				F931095E0DF4C0F5004DE8BB /* raw-rets */,
 				F93109730DF4C114004DE8BB /* search */,
 				F93109780DF4C12E004DE8BB /* xml */,
+				F91821370E6F584500BE23EF /* test-network */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1056,6 +1127,7 @@
 		554AA19107FA117A00402C35 /* build */ = {
 			isa = PBXGroup;
 			children = (
+				F91820FF0E6F553F00BE23EF /* test-network */,
 				55BD577D07FDAAFD00526D69 /* test */,
 				554A9F5007F9F2E700402C35 /* Sources */,
 				554A9EB407F9F2D200402C35 /* Headers */,
@@ -1590,6 +1662,98 @@
 			name = Test;
 			sourceTree = "<group>";
 		};
+		F91820FF0E6F553F00BE23EF /* test-network */ = {
+			isa = PBXGroup;
+			children = (
+				F91821030E6F55C000BE23EF /* resources */,
+				F91821000E6F556600BE23EF /* src */,
+			);
+			name = "test-network";
+			sourceTree = "<group>";
+		};
+		F91821000E6F556600BE23EF /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F91821010E6F55AA00BE23EF /* httpServer.java */,
+				F91821020E6F55AA00BE23EF /* NetworkTest.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		F91821030E6F55C000BE23EF /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				F91821040E6F55FC00BE23EF /* rets */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
+		F91821040E6F55FC00BE23EF /* rets */ = {
+			isa = PBXGroup;
+			children = (
+				F91821050E6F55FC00BE23EF /* getMetadata */,
+				F91821240E6F55FC00BE23EF /* getObject */,
+				F91821290E6F55FC00BE23EF /* login */,
+				F918212A0E6F55FC00BE23EF /* logout */,
+				F918212B0E6F55FC00BE23EF /* search */,
+			);
+			name = rets;
+			path = "../librets/test-network/src/resources/rets";
+			sourceTree = SOURCE_ROOT;
+		};
+		F91821050E6F55FC00BE23EF /* getMetadata */ = {
+			isa = PBXGroup;
+			children = (
+				F91821060E6F55FC00BE23EF /* Format=COMPACT&ID=*&Type=METADATA-SYSTEM */,
+				F91821070E6F55FC00BE23EF /* Format=COMPACT&ID=0&Type=METADATA-RESOURCE */,
+				F91821080E6F55FC00BE23EF /* Format=COMPACT&ID=0&Type=METADATA-SYSTEM */,
+				F91821090E6F55FC00BE23EF /* Format=COMPACT&ID=ActiveAgent&Type=METADATA-CLASS */,
+				F918210A0E6F55FC00BE23EF /* Format=COMPACT&ID=ActiveAgent&Type=METADATA-LOOKUP */,
+				F918210B0E6F55FC00BE23EF /* Format=COMPACT&ID=ActiveAgent:ACTAGT&Type=METADATA-TABLE */,
+				F918210C0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent&Type=METADATA-CLASS */,
+				F918210D0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent&Type=METADATA-LOOKUP */,
+				F918210E0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent:AGT&Type=METADATA-TABLE */,
+				F918210F0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent:DESIGNATIONS&Type=METADATA-LOOKUP_TYPE */,
+				F91821100E6F55FC00BE23EF /* Format=COMPACT&ID=Office&Type=METADATA-CLASS */,
+				F91821110E6F55FC00BE23EF /* Format=COMPACT&ID=Office&Type=METADATA-LOOKUP */,
+				F91821120E6F55FC00BE23EF /* Format=COMPACT&ID=Office:OFFICE&Type=METADATA-TABLE */,
+				F91821130E6F55FC00BE23EF /* Format=COMPACT&ID=Property&Type=METADATA-CLASS */,
+				F91821140E6F55FC00BE23EF /* Format=COMPACT&ID=Property&Type=METADATA-LOOKUP */,
+				F91821150E6F55FC00BE23EF /* Format=COMPACT&ID=Property:AR&Type=METADATA-LOOKUP_TYPE */,
+				F91821160E6F55FC00BE23EF /* Format=COMPACT&ID=Property:CommercialProperty&Type=METADATA-TABLE */,
+				F91821170E6F55FC00BE23EF /* Format=COMPACT&ID=Property:CON&Type=METADATA-TABLE */,
+				F91821180E6F55FC00BE23EF /* Format=COMPACT&ID=Property:E_SCHOOL&Type=METADATA-LOOKUP_TYPE */,
+				F91821190E6F55FC00BE23EF /* Format=COMPACT&ID=Property:EFT&Type=METADATA-LOOKUP_TYPE */,
+				F918211A0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:H_SCHOOL&Type=METADATA-LOOKUP_TYPE */,
+				F918211B0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:IFT&Type=METADATA-LOOKUP_TYPE */,
+				F918211C0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:LISTING_STATUS&Type=METADATA-LOOKUP_TYPE */,
+				F918211D0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:LISTING_TYPE&Type=METADATA-LOOKUP_TYPE */,
+				F918211E0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:LND&Type=METADATA-TABLE */,
+				F918211F0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:M_SCHOOL&Type=METADATA-LOOKUP_TYPE */,
+				F91821200E6F55FC00BE23EF /* Format=COMPACT&ID=Property:MOB&Type=METADATA-TABLE */,
+				F91821210E6F55FC00BE23EF /* Format=COMPACT&ID=Property:MUL&Type=METADATA-TABLE */,
+				F91821220E6F55FC00BE23EF /* Format=COMPACT&ID=Property:ResidentialProperty&Type=METADATA-TABLE */,
+				F91821230E6F55FC00BE23EF /* Format=COMPACT&ID=Property:VEW&Type=METADATA-LOOKUP_TYPE */,
+			);
+			path = getMetadata;
+			sourceTree = "<group>";
+		};
+		F91821240E6F55FC00BE23EF /* getObject */ = {
+			isa = PBXGroup;
+			children = (
+				F91821280E6F55FC00BE23EF /* ID=LN000001:*&Location=0&Resource=Property&Type=Photo */,
+			);
+			path = getObject;
+			sourceTree = "<group>";
+		};
+		F918212B0E6F55FC00BE23EF /* search */ = {
+			isa = PBXGroup;
+			children = (
+				F918212D0E6F55FC00BE23EF /* Class=ResidentialProperty&Count=1&Format=COMPACT-DECODED&Query=(ListPrice%3d300000-)&QueryType=DMQL2&SearchType=Property&Select=ListingID,ListPrice,Beds,City&StandardNames=1 */,
+			);
+			path = search;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1690,6 +1854,23 @@
 			productName = rets;
 			productReference = 55EE8499093E5AAA00812582 /* librets.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		F91821360E6F584400BE23EF /* test-network */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F91821390E6F586300BE23EF /* Build configuration list for PBXNativeTarget "test-network" */;
+			buildPhases = (
+				F91821340E6F584400BE23EF /* Sources */,
+				F91821350E6F584400BE23EF /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F918213E0E6F59ED00BE23EF /* PBXTargetDependency */,
+			);
+			name = "test-network";
+			productName = "test-network";
+			productReference = F91821370E6F584500BE23EF /* test-network */;
+			productType = "com.apple.product-type.tool";
 		};
 		F93109450DF4C083004DE8BB /* demo-search */ = {
 			isa = PBXNativeTarget;
@@ -1835,6 +2016,7 @@
 				F931095D0DF4C0F5004DE8BB /* raw-rets */,
 				F93109720DF4C114004DE8BB /* search */,
 				F93109770DF4C12E004DE8BB /* xml */,
+				F91821360E6F584400BE23EF /* test-network */,
 			);
 		};
 /* End PBXProject section */
@@ -2094,6 +2276,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F91821340E6F584400BE23EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F918214B0E6F5B2800BE23EF /* NetworkTest.cpp in Sources */,
+				F918214C0E6F5B3500BE23EF /* main.cpp in Sources */,
+				F918214D0E6F5B3B00BE23EF /* testUtil.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F93109430DF4C083004DE8BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2174,6 +2366,11 @@
 			isa = PBXTargetDependency;
 			target = 55EE8498093E5AAA00812582 /* librets */;
 			targetProxy = F90434360D0396D8004E3017 /* PBXContainerItemProxy */;
+		};
+		F918213E0E6F59ED00BE23EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55EE8498093E5AAA00812582 /* librets */;
+			targetProxy = F918213D0E6F59ED00BE23EF /* PBXContainerItemProxy */;
 		};
 		F931098C0DF4C1DE004DE8BB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2766,6 +2963,68 @@
 			};
 			name = Default;
 		};
+		F918213A0E6F586300BE23EF /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"${BOOST}/include",
+					"${CPPUNIT}/include",
+					../librets/include,
+				);
+				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"${BOOST}/lib",
+					"${EXPAT}/lib",
+					"${CPPUNIT}/lib",
+					"$(inherited)",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "test-network";
+				SKIP_INSTALL = YES;
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		F918213B0E6F586300BE23EF /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "test-network";
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		F918213C0E6F586300BE23EF /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "test-network";
+				ZERO_LINK = YES;
+			};
+			name = Default;
+		};
 		F93109490DF4C0A2004DE8BB /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3254,6 +3513,16 @@
 				55EE84A1093E5AE300812582 /* Development */,
 				55EE84A2093E5AE300812582 /* Deployment */,
 				55EE84A3093E5AE300812582 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		F91821390E6F586300BE23EF /* Build configuration list for PBXNativeTarget "test-network" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F918213A0E6F586300BE23EF /* Development */,
+				F918213B0E6F586300BE23EF /* Deployment */,
+				F918213C0E6F586300BE23EF /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;

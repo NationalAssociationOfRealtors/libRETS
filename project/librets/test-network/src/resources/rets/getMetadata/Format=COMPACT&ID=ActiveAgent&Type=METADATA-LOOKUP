@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+RETS-Version: RETS/1.5
+RETS-Server: Variman/2.1.7
+Content-Type: text/xml
+Content-Length: 87
+Date: Tue, 26 Aug 2008 17:21:29 GMT
+Server: Apache-Coyote/1.1
+
+<?xml version="1.0"?>
+<RETS ReplyCode="0" ReplyText="Operation Successful">
+</RETS>

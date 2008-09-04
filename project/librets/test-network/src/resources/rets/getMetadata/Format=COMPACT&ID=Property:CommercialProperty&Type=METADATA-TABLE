@@ -1,0 +1,46 @@
+HTTP/1.1 200 OK
+RETS-Version: RETS/1.5
+RETS-Server: Variman/2.1.7
+Content-Type: text/xml
+Content-Length: 4703
+Date: Tue, 26 Aug 2008 17:21:26 GMT
+Server: Apache-Coyote/1.1
+
+<?xml version="1.0"?>
+<RETS ReplyCode="0" ReplyText="Operation Successful">
+<METADATA-TABLE Resource="Property" Class="CommercialProperty" Version="100.00.001" Date="Mon, 18 Aug 2003 17:00:00 GMT">
+<COLUMNS>	SystemName	StandardName	LongName	DBName	ShortName	MaximumLength	DataType	Precision	Searchable	Interpretation	Alignment	UseSeparator	EditMaskID	LookupName	MaxSelect	Units	Index	Minimum	Maximum	Default	Required	SearchHelpID	Unique	</COLUMNS>
+<DATA>	SaleSharinglevel		Sale Sharing level	Sale_Sharing_level	Sale Sharing level	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	SaleAgentLastName	usercbc.FamilyName	Sale Agent Last Name	Sale_Agent_Last_Name	Sale Agent Last Name	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	SaleCompanyName	usercbc.Name	Sale Company Name	Sale_Company_Name	Sale Company Name	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	SaleCreatedDate		Sale Created Date	Sale_Created_Date	Sale Created Date	4	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	BuildingNumber	usercbc.BuildingNumber	Building Number	Building_Number	Building Number	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	SpecificUse	usercac.SubTypeCode	Specific Use	Specific_Use	Specific Use	10	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	LN	usercac.PropertyIdentification	Property ID	Property_ID	Property ID	10	Character	0	1		Left	0			0		0	0	0	1	0		1	</DATA>
+<DATA>	SaleEmailAddress	usercbc.Value	Sale Email Address	Sale_Email_Address	Sale Email Address	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	SaleAgentFirstName	usercbc.GivenName	Sale Agent First Name	Sale_Agent_First_Name	Sale Agent First Name	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	City	usercbc.CityName	City	City	City	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	State	usercac.CountrySubentityCode	State	State	State	12	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	SaleAgentID	usercac.IdentificationID	Sale Agent ID	Sale_Agent_ID	Sale Agent ID	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	Zip	usercbc.Zone	Zip	Zip	Zip	24	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	YearBuilt	usercbc.YearBuiltMeasure	Year Built	Year_Built	Year Built	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	Address	usercbc.StreetName	Address	Address	Address	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	TenancyType	usercac.TenancyTypeCode	Tenancy Type	Tenancy_Type	Tenancy Type	10	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	SaleListingStatus	usercac.ListingStatusCode	Sale Listing Status	Sale_Listing_Status	Sale Listing Status	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	noofFloors	usercbc.NumberOfFloorsNumeric	no of Floors	no_of_Floors	no of Floors	4	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	GeneralUse	usercac.TypeCode	General Use	General_Use	General Use	12	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	SaleAskingPrice	usercbc.AskingPriceAmount	Sale Asking Price	Sale_Asking_Price	Sale Asking Price	12	Character	0	1	Currency	Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	PropertyName	usercbc.BuildingName	Property Name	Property_Name	Property Name	24	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	County	usercac.CountrySubentity	County	County	County	24	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	SaleModifiedDate		Sale Modified Date	Sale_Modified_Date	Sale Modified Date	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	GLA	usercbc.GrossLandAreaMeasure	GLA	GLA	GLA	12	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	GBA	usercbc.GrossBuildingAreaMeasure	GBA	GBA	GBA	24	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	ConstructionStatus	usercac.ConstructionStatusCode	Construction Status	Construction_Status	Construction Status	24	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	BuildingSize	usercbc.GrossBuildingAreaMeasure	Building Size	Building_Size	Building Size	12	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	NRA	usercbc.RentableAreaMeasure	NRA	NRA	NRA	24	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	Metro	usercbc.NearestMetropolitanStatisticalArea	Metro	Metro	Metro	40	Character	0	1		Left	0			0		0	1	0	1	0		0	</DATA>
+<DATA>	ConstructionClass	usercac.ConstructionClassCode	Construction Class	Construction_Class	Construction Class	10	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+<DATA>	ListingType	usercac.SaleOrLeaseCode	Listing Type	Listing_Type	Listing Type	12	Character	0	1		Left	0			0		0	0	0	1	1		0	</DATA>
+<DATA>	SaleAgentPhoneNumber	usercbc.Value	Sale Agent Phone Number	Sale_Agent_Phone_Number	Sale Agent Phone Number	8	Character	0	1		Left	0			0		0	0	0	1	0		0	</DATA>
+</METADATA-TABLE>
+</RETS>
