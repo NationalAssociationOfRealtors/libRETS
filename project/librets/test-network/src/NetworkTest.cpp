@@ -53,16 +53,29 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
 void CLASS::testStreaming()
 {
     RetsSessionPtr session(new RetsSession("http://localhost:4444/rets/login"));
-    //system("cd build/librets/test/bin && java httpServer --port=4444 &");
-
+    int total_records = 0;
+    
     session->UseHttpGet(false);
-    session->SetIncrementalMetadata(true);
+    session->SetIncrementalMetadata(false);
 
     ASSERT_EQUAL (true, session->Login("Joe", "Blow"));
-    std::cout << "Logged in!" << std::endl;
 
+    /*
+     * Fetch and spot check some of the metadata.
+     */
     RetsMetadata * metadata = session->GetMetadata();
+    MetadataSystem * system = metadata->GetSystem();
+    ASSERT_STRING_EQUAL("CRT_RETS", system->GetSystemID());
+    
+    MetadataResourceList resources = metadata->GetAllResources();
+    ASSERT_STRING_EQUAL("Agent", resources[0]->GetId());
+    ASSERT_STRING_EQUAL("ActiveAgent", resources[1]->GetId());
+    ASSERT_STRING_EQUAL("Office", resources[2]->GetId());
+    ASSERT_STRING_EQUAL("Property", resources[3]->GetId());
 
+    /*
+     * Perform the search and see if 160 records are returned.
+     */
     SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
     								"(ListPrice=300000-)");
     searchRequest->SetSelect("ListingID,ListPrice,Beds,City");
@@ -72,12 +85,11 @@ void CLASS::testStreaming()
     searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
     searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
 
-    std::cout << "Doing Search" << std::endl;
     SearchResultSetAPtr results = session->Search(searchRequest.get());
 
     while (results->HasNext())
     {
-        std::cout << "Found entry " << results->GetString("ListingID") << std::endl;
+        total_records++;
     }
-    std::cout <<"Yo! testLogin" << std::endl;
+    ASSERT_EQUAL (results->GetCount(), total_records);
 }
