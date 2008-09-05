@@ -50,6 +50,8 @@ Version 1.2.2 - 29 Aug 2008
 
   * Revised Librets-Version header to be "X-Librets-Version".
 
+  * libCURL requirement updated to 7.18.2 to avoid some bugs in curl
+
 Version 1.2.1 - 25 Jun 2008
 
   * Add Rets 1.7 support.
