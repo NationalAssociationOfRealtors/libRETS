@@ -183,9 +183,52 @@ typedef std::vector<std::string> StringVector;
 class RetsException
 {
   public:
-    virtual std::string GetMessage();
+    RetsException(std::string message);
+    
+    RetsException(std::string message, std::string extendedMessage);
 
-    virtual std::string GetExtendedMessage();
+    virtual ~RetsException() throw();
+
+    virtual std::string GetName() const throw();
+
+    virtual std::string GetMessage() const throw();
+
+    virtual std::string GetExtendedMessage() const throw();
+
+    std::string GetFullReport() const throw();
+};
+
+%nodefault RetsHttpException;
+class RetsHttpException
+{
+  public:
+    RetsHttpException(int httpResult, std::string meaning);
+    
+    virtual ~RetsHttpException() throw();
+    
+    int GetHttpResult() const throw();
+    
+    std::string GetMessage() const throw();
+    
+    virtual std::string GetName() const throw();
+};
+
+%nodefault RetsReplyException;
+class RetsReplyException
+{
+  public:
+    RetsReplyException(int replyCode, std::string meaning);
+    
+    RetsReplyException(int replyCode, std::string meaning,
+                       std::string extendedMeaning);
+    
+    virtual ~RetsReplyException() throw();
+    
+    int GetReplyCode() const throw();
+    
+    std::string GetMeaning() const throw();
+    
+    std::string GetExtendedMeaning() const throw();
 };
 
 #ifdef SWIGCSHARP
