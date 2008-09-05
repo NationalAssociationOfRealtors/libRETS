@@ -144,8 +144,8 @@ RetsXmlEventPtr ExpatXmlParser::GetNextEventWithoutCoalescing()
                 
             if (XML_Parse(mParser, buf, len, isLast) == XML_STATUS_ERROR)
             {
-                int lineNumber = GetCurrentLineNumber();
-                int columnNumber = GetCurrentColumnNumber();
+                unsigned int lineNumber = GetCurrentLineNumber();
+                unsigned int columnNumber = GetCurrentColumnNumber();
                 string errorString =
                     XML_ErrorString(XML_GetErrorCode(mParser));
                 ostringstream message;
