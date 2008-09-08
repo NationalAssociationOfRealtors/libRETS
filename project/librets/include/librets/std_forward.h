@@ -18,12 +18,13 @@
 #ifndef LIBRETS_STD_FORWARD_H
 #define LIBRETS_STD_FORWARD_H
 /** 
- * @file xml_forward.h
+ * @file std_forward.h
  * (Internal) Contains a handful of declarations used system wide.
  */
 /// @cond MAINTAINER
 
 #include <iosfwd>
+#include <fstream>
 #include <string>
 #include <map>
 #include <vector>
