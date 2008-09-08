@@ -31,6 +31,8 @@
 #endif
 %}
 %copyctor;
+// Yes, this is says php4 in the swig pragma, but it applies to php5
+// as well.  Don't ask me, check the swig documentation.
 %pragma(php4) phpinfo="
   php_info_print_table_start();
   php_info_print_table_row(2, \"version\", LIBRETS_VERSION);
