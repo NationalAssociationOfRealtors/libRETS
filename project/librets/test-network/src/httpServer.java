@@ -66,6 +66,7 @@ class httpRequestHandler implements Runnable
     OutputStream output;
     BufferedReader br;
     optionsParser options;
+    Properties properties = new Properties();
     String resourcePath;
     boolean verbose;
     boolean delay;
@@ -74,6 +75,8 @@ class httpRequestHandler implements Runnable
     // Constructor
     public httpRequestHandler(Socket socket, optionsParser options) throws Exception
     {
+        FileInputStream fis = new FileInputStream(options.getResourcePath() + "/" + options.getProperties());
+        properties.load(fis);
         this.socket = socket;
         this.input = socket.getInputStream();
         this.output = socket.getOutputStream();
@@ -154,24 +157,22 @@ class httpRequestHandler implements Runnable
                         }
 
                         //
-                        // The content will refer to a file in a directory that is
+                        // The content will refer to a key in the properties file 
                         // related to the "url" as in the GET option. This is the
-                        // file that will be played back. 
+                        // key will be translated to the file to be played back.
                         // For example:
                         //   POST /rets/getMetadata
                         //   content: Format=COMPACT&ID=0&Type=METADATA-SYSTEM
-                        // we would expect to find a directory ./rets/getMetadata
-                        // that contains the file: "Format=COMPACT&ID=0&Type=METADATA-SYSTEM"
-                        //
-                        // This could be an issue with writing scripts for various clients.
-                        // The order of the options is determined by the client and it could
-                        // be an issue with writing "universal" playback scripts. For now,
-                        // the scripts in place are being written to librets usage.
-                        //
-                        // I'll defer enhancing that logic against the time it is really needed.
+                        // would look for the key "/rets/getMetadata/Format=COMPACT&ID=0&Type=METADATA-SYSTEM"
+                        // in the files.properties file. The value associated with that key will be the
+                        // file to be played back.
+                        // 
+                        // Note that the special tokens in the key must be escaped in the properties
+                        // file. So, the above key=value would look like:
+                        // /rets/getMetadata\?Format\=COMPACT\&ID\=0\&Type\=METADATA-SYSTEM = metadata-system
                         //
                         String fileName;
-                        fileName = resourcePath + "/" + thePath + "/" + theLine ;
+                        fileName = resourcePath + "/" + properties.getProperty(thePath + "?" + theLine);
                         if (verbose)
                         {
                             System.out.println("Looking for playback file: " + fileName);
@@ -238,8 +239,8 @@ class httpRequestHandler implements Runnable
             if(temp.equals("GET")) 
             {
                 String fileName = s.nextToken();
-                fileName = resourcePath + "/" + fileName ;
 
+                fileName = resourcePath + "/" + properties.getProperty(fileName);
                 if (verbose)
                 {
                     System.out.println("Looking for playback file: " + fileName);
@@ -325,6 +326,7 @@ class httpRequestHandler implements Runnable
 class optionsParser
 {
     int mPort = 6103;
+    String mProperties = "files.properties";
     String mResourcePath = "./resources";
     boolean mDelay = false;
     int mDelayInterval = 100;
@@ -377,6 +379,11 @@ class optionsParser
                     mPort = Integer.parseInt(value);
                 }
                 else
+                if (key.equals("--properties"))
+                {
+                    mProperties = value;
+                }
+                else
                 if (key.equals("--verbose"))
                 {
                     mVerbose = true;
@@ -408,6 +415,11 @@ class optionsParser
         return mDelayInterval;
     }
 
+    public String getProperties()
+    {
+        return mProperties;
+    }
+
     public String getResourcePath()
     {
         return mResourcePath;
@@ -425,10 +437,11 @@ class optionsParser
 
     public void Usage()
     {
-        System.out.println("--resource=<path>  Path to resource directory.");
-        System.out.println("--port=<port>      Port number to listen on. Default 6103.");
-        System.out.println("--delay[=<ms>]     Add artificial delay when responding to POST. Default 100ms.");
-        System.out.println("--verbose          Set verbose option.");
+        System.out.println("--resource=<path>    Path to resource directory.");
+        System.out.println("--port=<port>        Port number to listen on. Default 6103.");
+        System.out.println("--delay[=<ms>]       Add artificial delay when responding to POST. Default 100ms.");
+        System.out.println("--properties=<file>  Filename mapping file. Default files.properties.");
+        System.out.println("--verbose            Set verbose option.");
     }
 }
  

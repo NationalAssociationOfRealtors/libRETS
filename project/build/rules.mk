@@ -146,7 +146,8 @@ _test-network: cppunit prepare $(LIBRETS_NETTEST_EXE) ${LIBRETS_NETTEST_HTTPSERV
 	echo make run-server && \
 	echo in another shell.)
 
-_run_httpServer: ${LIBRETS_NETTEST_HTTPSERVER}
+_run_httpServer: ${LIBRETS_NETTEST_HTTPSERVER} 
+	$(JAVAC)  ${LIBRETS_NETTEST_SRC_DIR}/httpServer.java -d ${LIBRETS_NETTEST_BIN_DIR}
 	java -cp ${LIBRETS_NETTEST_BIN_DIR} httpServer --resource=${LIBRETS_NETTEST_SRC_DIR}/resources --port=4444 
 	
 _maintainer-clean: _veryclean
