@@ -36,6 +36,8 @@ typedef boost::shared_ptr<std::istream> istreamPtr;
 typedef boost::shared_ptr<std::ostream> ostreamPtr;
 /** A smart pointer to a standard input/output stream. */
 typedef boost::shared_ptr<std::iostream> iostreamPtr;
+/** A smart pointer to an output stream wrapped around a file. */
+typedef boost::shared_ptr<std::ofstream> ofstreamPtr;
 
 /** An auto_ptr to a standard input stream. */
 typedef std::auto_ptr<std::istream> istreamAPtr;

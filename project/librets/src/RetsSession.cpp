@@ -15,6 +15,7 @@
  * appear in supporting documentation.
  */
 
+#include <fstream>
 #include <sstream>
 #include "librets.h"
 #include "librets/CurlHttpClient.h"
@@ -65,6 +66,15 @@ CLASS::RetsSession(string login_url)
      * By default, do not log GetObject() transactions.
      */
     mLogEverything = false;
+    mLogStream.reset(new std::ofstream());
+}
+
+CLASS::~RetsSession()
+{
+    if (mLogStream->is_open())
+    {
+        mLogStream->close();
+    }
 }
 
 string CLASS::GetLoginUrl() const
@@ -481,6 +491,24 @@ void CLASS::SetHttpLogger(RetsHttpLogger * logger)
 RetsHttpLogger* CLASS::GetHttpLogger() const
 {
     return mHttpClient->GetLogger();
+}
+
+void CLASS::SetHttpLogName(std::string logfile)
+{
+    if (mLogStream->is_open())
+    {
+        mLogStream->close();
+    }
+    
+    if (logfile.length() > 0)
+    {
+        mLogStream->open(logfile.c_str());
+        if (mLogStream->is_open())
+        {
+            mLogger.reset(new StreamHttpLogger(mLogStream.get()));
+            SetHttpLogger(mLogger.get());
+        }
+    }
 }
 
 RetsVersion CLASS::GetRetsVersion() const

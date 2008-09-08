@@ -64,7 +64,10 @@ using std::string;
 %{
 #include <vector>
 #include <algorithm>
+#include <stdexcept>
+#include <fstream>
 %}
+
 namespace std {
 
     template<class T> class vector {
@@ -102,6 +105,7 @@ namespace std {
         }
     };
 }
+
 #endif
 #endif
 
@@ -109,42 +113,6 @@ namespace std {
 #include <algorithm>
 #include <stdexcept>
 #include <fstream>
-%}
-
-%ignore httpLogging;
-%inline
-%{
-    class httpLogging
-    {
-        public:
-            httpLogging(std::string filename)
-            {
-                if (mLogStream.is_open())
-                {
-                    mLogStream.close();
-                }
-                if (filename.length() > 0)
-                {
-                    mLogStream.open(filename.c_str());
-                    mLogger.reset(new StreamHttpLogger(&mLogStream));
-                }
-            };
-            ~httpLogging()
-            {
-                if (mLogStream.is_open())
-                {
-                    mLogStream.close();
-                }
-            };
-
-            RetsHttpLogger * get()
-            {
-                return mLogger.get();
-            };
-
-            std::ofstream mLogStream;
-            RetsHttpLoggerPtr mLogger;
-    };
 %}
 
 %include "exception.i"
@@ -1476,6 +1444,8 @@ class RetsSession
                                         RetsException,
                                         std::exception);
 
+    ~RetsSession();
+
     std::string GetLoginUrl() const;
 
     bool Login(std::string userName, std::string password) 
@@ -1599,33 +1569,40 @@ class RetsSession
                                         RetsException,
                                         std::exception);
 
-    void SetDefaultEncoding(EncodingType encoding);
+    void SetDefaultEncoding(EncodingType encoding)
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
-    void Cleanup();
+    void Cleanup()
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
-    void SetLogEverything(bool logging);
+    void SetLogEverything(bool logging)
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
-    static std::string GetLibraryVersion();
+    static std::string GetLibraryVersion()
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 
-    void SetProxy(std::string url, std::string password);
-
-    %extend
-    {
-        void SetHttpLogName(std::string filename)
-        {
-            static httpLogging  *logger = 0;
-            if (logger)
-                delete logger;
-
-            logger = new httpLogging(filename);
-            if (logger)
-            {
-                self->SetHttpLogger(logger->get());
-            }
-        }
-        
-    }
-
+    void SetProxy(std::string url, std::string password)
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
+    void SetHttpLogName(std::string filename)
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 };
 
 

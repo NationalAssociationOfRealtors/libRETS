@@ -1,7 +1,9 @@
 Version 1.2.3 - xx xxx 2008
 
   * Added test-network target and httpServer to test actual 
-    network activity in the test harness.
+    network activity in the test harness. Ticket #70.
+
+  * Expose RetsSession.SetHttpLogName() to all languages. Ticket #71.
 
 Version 1.2.2 - 29 Aug 2008
 

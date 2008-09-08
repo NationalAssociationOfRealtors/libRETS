@@ -22,6 +22,7 @@
  * Contains the RetsSession class definition.
  */
 #include <string>
+#include <fstream>
 #include "librets/protocol_forward.h"
 #include "librets/RetsHttpRequest.h"
 #include "librets/http_forward.h"
@@ -52,6 +53,7 @@ class RetsSession : public MetadataLoader
      */
     RetsSession(std::string loginUrl);
 
+    ~RetsSession();
     /**
      * Returns the LoginUrl that was used when this session was constructed.
      *
@@ -212,9 +214,7 @@ class RetsSession : public MetadataLoader
      */
     void SetHttpLogger(RetsHttpLogger * logger);
 
-#ifdef DOXYGEN
     /**
-     * This is for the SWIG bound languages only - Enables http logging.
      * Accepts a string that contains the name of a logfile. Http
      * logging will be enabled and the output will go to the named
      * file.
@@ -222,8 +222,7 @@ class RetsSession : public MetadataLoader
      * @param logfile  A string containing the name of the log file.
      */
     void SetHttpLogName(std::string logfile);
-#endif
-
+    
     /**
      * Returns a pointer to the instances of the RetsHttpLogger that
      * will be/is being used.
@@ -410,6 +409,10 @@ private:
     bool mLoggedIn;
     
     bool mLogEverything;
+
+    ofstreamPtr mLogStream;
+
+    RetsHttpLoggerPtr mLogger;
 };
 
 };
