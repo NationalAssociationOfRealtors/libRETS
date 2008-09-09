@@ -24,7 +24,6 @@
 /// @cond MAINTAINER
 
 #include <iosfwd>
-#include <fstream>
 #include <string>
 #include <map>
 #include <vector>
