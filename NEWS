@@ -1,4 +1,4 @@
-Version 1.2.3 - xx xxx 2008
+Version 1.2.3 - 9 Sep 2008
 
   * Added test-network target and httpServer to test actual 
     network activity in the test harness. Tickets #70 and #74.
