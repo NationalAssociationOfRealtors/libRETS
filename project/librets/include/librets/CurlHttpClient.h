@@ -99,6 +99,13 @@ class CurlHttpClient : public RetsHttpClient
      * server requires authentication. Leave this as an empty string otherwise.
      */
 	virtual void SetProxy(std::string url, std::string password);
+    
+    /**
+     * Set the timeout for the Http transaction.
+     * @param seconds An integer containing the number of seconds to set for the
+     * timeout. A zero value will disable the timeout.
+     */
+    virtual void SetTimeout(int seconds);
 
   private:
     static size_t StaticWriteData(char * buffer, size_t size, size_t nmemb,

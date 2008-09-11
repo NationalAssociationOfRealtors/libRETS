@@ -1,3 +1,8 @@
+Version 1.2.4 - xx xxx 2008
+
+  * Add RetsSession.SetTimeout() to establish a timeout value
+    with libCURL. Ticket #68.
+
 Version 1.2.3 - 9 Sep 2008
 
   * Added test-network target and httpServer to test actual 

@@ -30,6 +30,7 @@
 #include "librets/str_stream.h"
 #include "librets/ExceptionErrorHandler.h"
 #include "librets/RetsHttpException.h"
+#include "boost/lexical_cast.hpp"
 
 using namespace librets;
 using namespace librets::util;
@@ -62,6 +63,7 @@ CLASS::RetsSession(string login_url)
     mUserAgentAuthCalculator.SetUserAgentPassword("");
     SetDefaultEncoding(RETS_XML_DEFAULT_ENCODING);
     mLoggedIn = false;
+    mTimeout = 0;
     /*
      * By default, do not log GetObject() transactions.
      */
@@ -169,6 +171,16 @@ bool CLASS::Login(string user_name,
     RetrieveAction();
     
     mLoggedIn = true;
+    
+    try
+    {
+        std::string seconds = mLoginResponse->GetTimeout();
+        mTimeout = boost::lexical_cast<int>(seconds);
+    }
+    catch (boost::bad_lexical_cast &)
+    {
+        mTimeout = 0;
+    }
 
     return true;
 }
@@ -617,6 +629,12 @@ void CLASS::SetLogEverything(bool logging)
 void CLASS::SetProxy(std::string url, std::string password)
 {
     mHttpClient->SetProxy(url,password);
+}
+
+void CLASS::SetTimeout(int seconds)
+{
+    mTimeout = seconds;
+    mHttpClient->SetTimeout(mTimeout);
 }
 
 string CLASS::GetLibraryVersion()

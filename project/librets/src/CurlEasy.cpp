@@ -48,6 +48,13 @@ void CurlEasy::CurlAssert(CURLcode errorCode, const string & prefix)
 CurlEasy::CurlEasy()
     : mUseErrorBuffer(false)
 {
+    /*
+     * The libCURL docs indicate that with SSL support, we need to make
+     * sure curl_global_init is called. The easiest way is to tell libCURL
+     * to initialize all modules that are built.
+     */
+    curl_global_init(CURL_GLOBAL_ALL);
+    
     mCurl = curl_easy_init();
     if (!mCurl)
     {
@@ -179,6 +186,16 @@ void CurlEasy::SetProxyPassword(string password)
     mProxyPassword = password;
     CurlAssert(curl_easy_setopt(mCurl, CURLOPT_PROXYUSERPWD, 
                                mProxyPassword.c_str()), "set proxy password");
+}
+
+void CurlEasy::SetTimeout(int seconds)
+{
+    long disable = 1;
+    /*
+     * Disable signals or a timeout may cause a SIGALRM to be sent.
+     */
+    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_NOSIGNAL, disable), "Disable libCURL signals");
+    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_TIMEOUT, seconds), "Set libCURL timeout");
 }
 
 void CurlEasy::Perform()

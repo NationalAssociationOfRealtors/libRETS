@@ -332,6 +332,14 @@ class RetsSession : public MetadataLoader
      * the form "userid:password".
      */
      void SetProxy(std::string url, std::string password);
+     
+     /**
+      * Set a timeout value for the http transaction.
+      *
+      * @param seconds An integer containing the number of seconds to set for the timeout. If
+      * zero, then no timeout is established and the default libCURL timeout will be in effect.
+      */
+    void SetTimeout(int seconds);
     
     /// @cond MAINTAINER
     /**
@@ -413,6 +421,8 @@ private:
     ofstreamPtr mLogStream;
 
     RetsHttpLoggerPtr mLogger;
+    
+    int mTimeout;
 };
 
 };

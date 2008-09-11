@@ -185,6 +185,11 @@ void CurlHttpClient::SetProxy(string url, string password)
     }
 }
 
+void CurlHttpClient::SetTimeout(int seconds)
+{
+    mCurl.SetTimeout(seconds);
+}
+
 /**
  * Continue with the request if not completed.
  * @return boolean that indicates whether or not the transaction has finished.

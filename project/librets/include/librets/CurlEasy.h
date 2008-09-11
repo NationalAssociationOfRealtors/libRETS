@@ -154,6 +154,13 @@ class CurlEasy
     void SetProxyPassword(std::string password);
     
     /**
+     * Provide to cURL an integer containing a timeout in seconds.
+     * @param seconds An integer containing the number of seconds to establish
+     * as a timeout.
+     */
+    void SetTimeout(int seconds);
+    
+    /**
      * Tell cURL to perform the current request.
      */
     void Perform();

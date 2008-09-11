@@ -313,7 +313,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55EE8498093E5AAA00812582 /* librets */;
+			remoteGlobalIDString = 55EE8498093E5AAA00812582;
 			remoteInfo = librets;
 		};
 		F931098B0DF4C1DE004DE8BB /* PBXContainerItemProxy */ = {
@@ -712,41 +712,42 @@
 		F9181EC60E51F1DF00BE23EF /* RetsHttpException.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = RetsHttpException.cpp; sourceTree = "<group>"; };
 		F91821010E6F55AA00BE23EF /* httpServer.java */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.java; name = httpServer.java; path = "../librets/test-network/src/httpServer.java"; sourceTree = SOURCE_ROOT; };
 		F91821020E6F55AA00BE23EF /* NetworkTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkTest.cpp; path = "../librets/test-network/src/NetworkTest.cpp"; sourceTree = SOURCE_ROOT; };
-		F91821060E6F55FC00BE23EF /* Format=COMPACT&ID=*&Type=METADATA-SYSTEM */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=*&Type=METADATA-SYSTEM"; sourceTree = "<group>"; };
-		F91821070E6F55FC00BE23EF /* Format=COMPACT&ID=0&Type=METADATA-RESOURCE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=0&Type=METADATA-RESOURCE"; sourceTree = "<group>"; };
-		F91821080E6F55FC00BE23EF /* Format=COMPACT&ID=0&Type=METADATA-SYSTEM */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=0&Type=METADATA-SYSTEM"; sourceTree = "<group>"; };
-		F91821090E6F55FC00BE23EF /* Format=COMPACT&ID=ActiveAgent&Type=METADATA-CLASS */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=ActiveAgent&Type=METADATA-CLASS"; sourceTree = "<group>"; };
-		F918210A0E6F55FC00BE23EF /* Format=COMPACT&ID=ActiveAgent&Type=METADATA-LOOKUP */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=ActiveAgent&Type=METADATA-LOOKUP"; sourceTree = "<group>"; };
-		F918210B0E6F55FC00BE23EF /* Format=COMPACT&ID=ActiveAgent:ACTAGT&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=ActiveAgent:ACTAGT&Type=METADATA-TABLE"; sourceTree = "<group>"; };
-		F918210C0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent&Type=METADATA-CLASS */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Agent&Type=METADATA-CLASS"; sourceTree = "<group>"; };
-		F918210D0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent&Type=METADATA-LOOKUP */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Agent&Type=METADATA-LOOKUP"; sourceTree = "<group>"; };
-		F918210E0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent:AGT&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Agent:AGT&Type=METADATA-TABLE"; sourceTree = "<group>"; };
-		F918210F0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent:DESIGNATIONS&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Agent:DESIGNATIONS&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
-		F91821100E6F55FC00BE23EF /* Format=COMPACT&ID=Office&Type=METADATA-CLASS */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Office&Type=METADATA-CLASS"; sourceTree = "<group>"; };
-		F91821110E6F55FC00BE23EF /* Format=COMPACT&ID=Office&Type=METADATA-LOOKUP */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Office&Type=METADATA-LOOKUP"; sourceTree = "<group>"; };
-		F91821120E6F55FC00BE23EF /* Format=COMPACT&ID=Office:OFFICE&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Office:OFFICE&Type=METADATA-TABLE"; sourceTree = "<group>"; };
-		F91821130E6F55FC00BE23EF /* Format=COMPACT&ID=Property&Type=METADATA-CLASS */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property&Type=METADATA-CLASS"; sourceTree = "<group>"; };
-		F91821140E6F55FC00BE23EF /* Format=COMPACT&ID=Property&Type=METADATA-LOOKUP */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property&Type=METADATA-LOOKUP"; sourceTree = "<group>"; };
-		F91821150E6F55FC00BE23EF /* Format=COMPACT&ID=Property:AR&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:AR&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
-		F91821160E6F55FC00BE23EF /* Format=COMPACT&ID=Property:CommercialProperty&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:CommercialProperty&Type=METADATA-TABLE"; sourceTree = "<group>"; };
-		F91821170E6F55FC00BE23EF /* Format=COMPACT&ID=Property:CON&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:CON&Type=METADATA-TABLE"; sourceTree = "<group>"; };
-		F91821180E6F55FC00BE23EF /* Format=COMPACT&ID=Property:E_SCHOOL&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:E_SCHOOL&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
-		F91821190E6F55FC00BE23EF /* Format=COMPACT&ID=Property:EFT&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:EFT&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
-		F918211A0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:H_SCHOOL&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:H_SCHOOL&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
-		F918211B0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:IFT&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:IFT&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
-		F918211C0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:LISTING_STATUS&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:LISTING_STATUS&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
-		F918211D0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:LISTING_TYPE&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:LISTING_TYPE&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
-		F918211E0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:LND&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:LND&Type=METADATA-TABLE"; sourceTree = "<group>"; };
-		F918211F0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:M_SCHOOL&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:M_SCHOOL&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
-		F91821200E6F55FC00BE23EF /* Format=COMPACT&ID=Property:MOB&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:MOB&Type=METADATA-TABLE"; sourceTree = "<group>"; };
-		F91821210E6F55FC00BE23EF /* Format=COMPACT&ID=Property:MUL&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:MUL&Type=METADATA-TABLE"; sourceTree = "<group>"; };
-		F91821220E6F55FC00BE23EF /* Format=COMPACT&ID=Property:ResidentialProperty&Type=METADATA-TABLE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:ResidentialProperty&Type=METADATA-TABLE"; sourceTree = "<group>"; };
-		F91821230E6F55FC00BE23EF /* Format=COMPACT&ID=Property:VEW&Type=METADATA-LOOKUP_TYPE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Format=COMPACT&ID=Property:VEW&Type=METADATA-LOOKUP_TYPE"; sourceTree = "<group>"; };
-		F91821280E6F55FC00BE23EF /* ID=LN000001:*&Location=0&Resource=Property&Type=Photo */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ID=LN000001:*&Location=0&Resource=Property&Type=Photo"; sourceTree = "<group>"; };
-		F91821290E6F55FC00BE23EF /* login */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = login; sourceTree = "<group>"; };
-		F918212A0E6F55FC00BE23EF /* logout */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = logout; sourceTree = "<group>"; };
-		F918212D0E6F55FC00BE23EF /* Class=ResidentialProperty&Count=1&Format=COMPACT-DECODED&Query=(ListPrice%3d300000-)&QueryType=DMQL2&SearchType=Property&Select=ListingID,ListPrice,Beds,City&StandardNames=1 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Class=ResidentialProperty&Count=1&Format=COMPACT-DECODED&Query=(ListPrice%3d300000-)&QueryType=DMQL2&SearchType=Property&Select=ListingID,ListPrice,Beds,City&StandardNames=1"; sourceTree = "<group>"; };
 		F91821370E6F584500BE23EF /* test-network */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "test-network"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F91822520E7853F200BE23EF /* files.properties */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = files.properties; path = "../librets/test-network/src/resources/files.properties"; sourceTree = SOURCE_ROOT; };
+		F91822530E7853F200BE23EF /* full-metadata */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "full-metadata"; path = "../librets/test-network/src/resources/full-metadata"; sourceTree = SOURCE_ROOT; };
+		F91822540E7853F200BE23EF /* login */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = login; path = "../librets/test-network/src/resources/login"; sourceTree = SOURCE_ROOT; };
+		F91822550E7853F200BE23EF /* logout */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = logout; path = "../librets/test-network/src/resources/logout"; sourceTree = SOURCE_ROOT; };
+		F91822560E7853F200BE23EF /* metadata-class.1 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.man; name = "metadata-class.1"; path = "../librets/test-network/src/resources/metadata-class.1"; sourceTree = SOURCE_ROOT; };
+		F91822570E7853F200BE23EF /* metadata-class.2 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-class.2"; path = "../librets/test-network/src/resources/metadata-class.2"; sourceTree = SOURCE_ROOT; };
+		F91822580E7853F200BE23EF /* metadata-class.3 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-class.3"; path = "../librets/test-network/src/resources/metadata-class.3"; sourceTree = SOURCE_ROOT; };
+		F91822590E7853F200BE23EF /* metadata-class.4 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-class.4"; path = "../librets/test-network/src/resources/metadata-class.4"; sourceTree = SOURCE_ROOT; };
+		F918225A0E7853F200BE23EF /* metadata-lookup-type.1 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.man; name = "metadata-lookup-type.1"; path = "../librets/test-network/src/resources/metadata-lookup-type.1"; sourceTree = SOURCE_ROOT; };
+		F918225B0E7853F200BE23EF /* metadata-lookup-type.2 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-lookup-type.2"; path = "../librets/test-network/src/resources/metadata-lookup-type.2"; sourceTree = SOURCE_ROOT; };
+		F918225C0E7853F200BE23EF /* metadata-lookup-type.3 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-lookup-type.3"; path = "../librets/test-network/src/resources/metadata-lookup-type.3"; sourceTree = SOURCE_ROOT; };
+		F918225D0E7853F200BE23EF /* metadata-lookup-type.4 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-lookup-type.4"; path = "../librets/test-network/src/resources/metadata-lookup-type.4"; sourceTree = SOURCE_ROOT; };
+		F918225E0E7853F200BE23EF /* metadata-lookup-type.5 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-lookup-type.5"; path = "../librets/test-network/src/resources/metadata-lookup-type.5"; sourceTree = SOURCE_ROOT; };
+		F918225F0E7853F200BE23EF /* metadata-lookup-type.6 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-lookup-type.6"; path = "../librets/test-network/src/resources/metadata-lookup-type.6"; sourceTree = SOURCE_ROOT; };
+		F91822600E7853F200BE23EF /* metadata-lookup-type.7 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-lookup-type.7"; path = "../librets/test-network/src/resources/metadata-lookup-type.7"; sourceTree = SOURCE_ROOT; };
+		F91822610E7853F200BE23EF /* metadata-lookup-type.8 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-lookup-type.8"; path = "../librets/test-network/src/resources/metadata-lookup-type.8"; sourceTree = SOURCE_ROOT; };
+		F91822620E7853F200BE23EF /* metadata-lookup-type.9 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-lookup-type.9"; path = "../librets/test-network/src/resources/metadata-lookup-type.9"; sourceTree = SOURCE_ROOT; };
+		F91822630E7853F200BE23EF /* metadata-lookup-type.10 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-lookup-type.10"; path = "../librets/test-network/src/resources/metadata-lookup-type.10"; sourceTree = SOURCE_ROOT; };
+		F91822640E7853F200BE23EF /* metadata-lookup.1 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.man; name = "metadata-lookup.1"; path = "../librets/test-network/src/resources/metadata-lookup.1"; sourceTree = SOURCE_ROOT; };
+		F91822650E7853F200BE23EF /* metadata-lookup.2 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-lookup.2"; path = "../librets/test-network/src/resources/metadata-lookup.2"; sourceTree = SOURCE_ROOT; };
+		F91822660E7853F200BE23EF /* metadata-lookup.3 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-lookup.3"; path = "../librets/test-network/src/resources/metadata-lookup.3"; sourceTree = SOURCE_ROOT; };
+		F91822670E7853F200BE23EF /* metadata-lookup.4 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-lookup.4"; path = "../librets/test-network/src/resources/metadata-lookup.4"; sourceTree = SOURCE_ROOT; };
+		F91822680E7853F200BE23EF /* metadata-resource */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-resource"; path = "../librets/test-network/src/resources/metadata-resource"; sourceTree = SOURCE_ROOT; };
+		F91822690E7853F200BE23EF /* metadata-system */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-system"; path = "../librets/test-network/src/resources/metadata-system"; sourceTree = SOURCE_ROOT; };
+		F918226A0E7853F200BE23EF /* metadata-table.1 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.man; name = "metadata-table.1"; path = "../librets/test-network/src/resources/metadata-table.1"; sourceTree = SOURCE_ROOT; };
+		F918226B0E7853F200BE23EF /* metadata-table.2 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-table.2"; path = "../librets/test-network/src/resources/metadata-table.2"; sourceTree = SOURCE_ROOT; };
+		F918226C0E7853F200BE23EF /* metadata-table.3 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-table.3"; path = "../librets/test-network/src/resources/metadata-table.3"; sourceTree = SOURCE_ROOT; };
+		F918226D0E7853F200BE23EF /* metadata-table.4 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-table.4"; path = "../librets/test-network/src/resources/metadata-table.4"; sourceTree = SOURCE_ROOT; };
+		F918226E0E7853F200BE23EF /* metadata-table.5 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-table.5"; path = "../librets/test-network/src/resources/metadata-table.5"; sourceTree = SOURCE_ROOT; };
+		F918226F0E7853F200BE23EF /* metadata-table.6 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-table.6"; path = "../librets/test-network/src/resources/metadata-table.6"; sourceTree = SOURCE_ROOT; };
+		F91822700E7853F200BE23EF /* metadata-table.7 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-table.7"; path = "../librets/test-network/src/resources/metadata-table.7"; sourceTree = SOURCE_ROOT; };
+		F91822710E7853F200BE23EF /* metadata-table.8 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-table.8"; path = "../librets/test-network/src/resources/metadata-table.8"; sourceTree = SOURCE_ROOT; };
+		F91822720E7853F200BE23EF /* metadata-table.9 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-table.9"; path = "../librets/test-network/src/resources/metadata-table.9"; sourceTree = SOURCE_ROOT; };
+		F91822730E7853F200BE23EF /* photo.1 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.man; name = photo.1; path = "../librets/test-network/src/resources/photo.1"; sourceTree = SOURCE_ROOT; };
+		F91822740E7853F200BE23EF /* search.1 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.man; name = search.1; path = "../librets/test-network/src/resources/search.1"; sourceTree = SOURCE_ROOT; };
 		F93109160DF4A81F004DE8BB /* Options.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
 		F93109330DF4BE5C004DE8BB /* Options.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
 		F93109340DF4BE75004DE8BB /* demo-search.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = "demo-search.cpp"; sourceTree = "<group>"; };
@@ -1683,75 +1684,43 @@
 		F91821030E6F55C000BE23EF /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				F91821040E6F55FC00BE23EF /* rets */,
+				F91822520E7853F200BE23EF /* files.properties */,
+				F91822530E7853F200BE23EF /* full-metadata */,
+				F91822540E7853F200BE23EF /* login */,
+				F91822550E7853F200BE23EF /* logout */,
+				F91822560E7853F200BE23EF /* metadata-class.1 */,
+				F91822570E7853F200BE23EF /* metadata-class.2 */,
+				F91822580E7853F200BE23EF /* metadata-class.3 */,
+				F91822590E7853F200BE23EF /* metadata-class.4 */,
+				F918225A0E7853F200BE23EF /* metadata-lookup-type.1 */,
+				F918225B0E7853F200BE23EF /* metadata-lookup-type.2 */,
+				F918225C0E7853F200BE23EF /* metadata-lookup-type.3 */,
+				F918225D0E7853F200BE23EF /* metadata-lookup-type.4 */,
+				F918225E0E7853F200BE23EF /* metadata-lookup-type.5 */,
+				F918225F0E7853F200BE23EF /* metadata-lookup-type.6 */,
+				F91822600E7853F200BE23EF /* metadata-lookup-type.7 */,
+				F91822610E7853F200BE23EF /* metadata-lookup-type.8 */,
+				F91822620E7853F200BE23EF /* metadata-lookup-type.9 */,
+				F91822630E7853F200BE23EF /* metadata-lookup-type.10 */,
+				F91822640E7853F200BE23EF /* metadata-lookup.1 */,
+				F91822650E7853F200BE23EF /* metadata-lookup.2 */,
+				F91822660E7853F200BE23EF /* metadata-lookup.3 */,
+				F91822670E7853F200BE23EF /* metadata-lookup.4 */,
+				F91822680E7853F200BE23EF /* metadata-resource */,
+				F91822690E7853F200BE23EF /* metadata-system */,
+				F918226A0E7853F200BE23EF /* metadata-table.1 */,
+				F918226B0E7853F200BE23EF /* metadata-table.2 */,
+				F918226C0E7853F200BE23EF /* metadata-table.3 */,
+				F918226D0E7853F200BE23EF /* metadata-table.4 */,
+				F918226E0E7853F200BE23EF /* metadata-table.5 */,
+				F918226F0E7853F200BE23EF /* metadata-table.6 */,
+				F91822700E7853F200BE23EF /* metadata-table.7 */,
+				F91822710E7853F200BE23EF /* metadata-table.8 */,
+				F91822720E7853F200BE23EF /* metadata-table.9 */,
+				F91822730E7853F200BE23EF /* photo.1 */,
+				F91822740E7853F200BE23EF /* search.1 */,
 			);
 			name = resources;
-			sourceTree = "<group>";
-		};
-		F91821040E6F55FC00BE23EF /* rets */ = {
-			isa = PBXGroup;
-			children = (
-				F91821050E6F55FC00BE23EF /* getMetadata */,
-				F91821240E6F55FC00BE23EF /* getObject */,
-				F91821290E6F55FC00BE23EF /* login */,
-				F918212A0E6F55FC00BE23EF /* logout */,
-				F918212B0E6F55FC00BE23EF /* search */,
-			);
-			name = rets;
-			path = "../librets/test-network/src/resources/rets";
-			sourceTree = SOURCE_ROOT;
-		};
-		F91821050E6F55FC00BE23EF /* getMetadata */ = {
-			isa = PBXGroup;
-			children = (
-				F91821060E6F55FC00BE23EF /* Format=COMPACT&ID=*&Type=METADATA-SYSTEM */,
-				F91821070E6F55FC00BE23EF /* Format=COMPACT&ID=0&Type=METADATA-RESOURCE */,
-				F91821080E6F55FC00BE23EF /* Format=COMPACT&ID=0&Type=METADATA-SYSTEM */,
-				F91821090E6F55FC00BE23EF /* Format=COMPACT&ID=ActiveAgent&Type=METADATA-CLASS */,
-				F918210A0E6F55FC00BE23EF /* Format=COMPACT&ID=ActiveAgent&Type=METADATA-LOOKUP */,
-				F918210B0E6F55FC00BE23EF /* Format=COMPACT&ID=ActiveAgent:ACTAGT&Type=METADATA-TABLE */,
-				F918210C0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent&Type=METADATA-CLASS */,
-				F918210D0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent&Type=METADATA-LOOKUP */,
-				F918210E0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent:AGT&Type=METADATA-TABLE */,
-				F918210F0E6F55FC00BE23EF /* Format=COMPACT&ID=Agent:DESIGNATIONS&Type=METADATA-LOOKUP_TYPE */,
-				F91821100E6F55FC00BE23EF /* Format=COMPACT&ID=Office&Type=METADATA-CLASS */,
-				F91821110E6F55FC00BE23EF /* Format=COMPACT&ID=Office&Type=METADATA-LOOKUP */,
-				F91821120E6F55FC00BE23EF /* Format=COMPACT&ID=Office:OFFICE&Type=METADATA-TABLE */,
-				F91821130E6F55FC00BE23EF /* Format=COMPACT&ID=Property&Type=METADATA-CLASS */,
-				F91821140E6F55FC00BE23EF /* Format=COMPACT&ID=Property&Type=METADATA-LOOKUP */,
-				F91821150E6F55FC00BE23EF /* Format=COMPACT&ID=Property:AR&Type=METADATA-LOOKUP_TYPE */,
-				F91821160E6F55FC00BE23EF /* Format=COMPACT&ID=Property:CommercialProperty&Type=METADATA-TABLE */,
-				F91821170E6F55FC00BE23EF /* Format=COMPACT&ID=Property:CON&Type=METADATA-TABLE */,
-				F91821180E6F55FC00BE23EF /* Format=COMPACT&ID=Property:E_SCHOOL&Type=METADATA-LOOKUP_TYPE */,
-				F91821190E6F55FC00BE23EF /* Format=COMPACT&ID=Property:EFT&Type=METADATA-LOOKUP_TYPE */,
-				F918211A0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:H_SCHOOL&Type=METADATA-LOOKUP_TYPE */,
-				F918211B0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:IFT&Type=METADATA-LOOKUP_TYPE */,
-				F918211C0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:LISTING_STATUS&Type=METADATA-LOOKUP_TYPE */,
-				F918211D0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:LISTING_TYPE&Type=METADATA-LOOKUP_TYPE */,
-				F918211E0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:LND&Type=METADATA-TABLE */,
-				F918211F0E6F55FC00BE23EF /* Format=COMPACT&ID=Property:M_SCHOOL&Type=METADATA-LOOKUP_TYPE */,
-				F91821200E6F55FC00BE23EF /* Format=COMPACT&ID=Property:MOB&Type=METADATA-TABLE */,
-				F91821210E6F55FC00BE23EF /* Format=COMPACT&ID=Property:MUL&Type=METADATA-TABLE */,
-				F91821220E6F55FC00BE23EF /* Format=COMPACT&ID=Property:ResidentialProperty&Type=METADATA-TABLE */,
-				F91821230E6F55FC00BE23EF /* Format=COMPACT&ID=Property:VEW&Type=METADATA-LOOKUP_TYPE */,
-			);
-			path = getMetadata;
-			sourceTree = "<group>";
-		};
-		F91821240E6F55FC00BE23EF /* getObject */ = {
-			isa = PBXGroup;
-			children = (
-				F91821280E6F55FC00BE23EF /* ID=LN000001:*&Location=0&Resource=Property&Type=Photo */,
-			);
-			path = getObject;
-			sourceTree = "<group>";
-		};
-		F918212B0E6F55FC00BE23EF /* search */ = {
-			isa = PBXGroup;
-			children = (
-				F918212D0E6F55FC00BE23EF /* Class=ResidentialProperty&Count=1&Format=COMPACT-DECODED&Query=(ListPrice%3d300000-)&QueryType=DMQL2&SearchType=Property&Select=ListingID,ListPrice,Beds,City&StandardNames=1 */,
-			);
-			path = search;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
