@@ -108,6 +108,16 @@ class SearchResultSet : public virtual RetsObject
      */
     void SetEncoding(EncodingType encoding);
 
+    /// @cond MAINTAINER
+    /**
+     * Enable or disable caching. Disabling caching only works in
+     * streaming mode. It is up to the caller to verify that the
+     * operational mode is proper.
+     * @param cache A boolean that if TRUE enables caching.
+     */
+    void SetCaching(bool enable);
+    /// @endcond
+    
     /**
      * Get the current value for the data encoding flag.
      *
@@ -151,7 +161,7 @@ class SearchResultSet : public virtual RetsObject
      * Parse the XML. An input stream must have already been
      * established. This method should only be called internally.
      *
-     * @return Returns TRUE while more data can be fetched.
+     * @return Returns TRUE if a row was successfully parsed.
      */
     bool Parse();
 
@@ -170,6 +180,7 @@ class SearchResultSet : public virtual RetsObject
     istreamPtr mParseInputStream;
     ExpatXmlParserPtr mXmlParser;
     std::string mDelimiter;
+    bool mCaching;
 };
 
 };

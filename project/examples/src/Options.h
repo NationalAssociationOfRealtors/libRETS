@@ -42,6 +42,8 @@ class Options
     std::string savedMetadataTimestamp;
 	std::string proxyUrl;
 	std::string proxyPassword;
+    bool disableStreaming;
+    bool enableCaching;
 
     Options();
 

@@ -37,6 +37,7 @@ int main(int argc, char * argv[])
         string resourceEntity;
         string objectId;
         string outputPrefix;
+        bool returnUrl;
         vector<string> resourceSets;
         
         Options options;
@@ -49,6 +50,8 @@ int main(int argc, char * argv[])
              ->default_value(""), "Output file prefix")
             ("resource-set,R", po::value< vector<string> >(&resourceSets),
              "Resource sets (e.g. 'resource-id' or 'resource-id:#,#'))")
+            ("return-url,U", po::value<bool>(&returnUrl)
+             ->default_value(false), "Return the URL to the object (true or false)")
             ;
         if (!options.ParseCommandLine(argc, argv))
         {
@@ -91,6 +94,7 @@ int main(int argc, char * argv[])
                 }
             }
         }
+        getObjectRequest.SetLocation(returnUrl);
     
         GetObjectResponseAPtr getObjectResponse =
             session->GetObject(&getObjectRequest);

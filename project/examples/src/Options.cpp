@@ -33,34 +33,36 @@ Options::Options()
 {
     descriptions.add_options()
         ("help,h", "Show help message")
+        ("user-agent,a", po::value<string>(&userAgent)
+         ->default_value(RetsSession::DEFAULT_USER_AGENT, ""), "User agent")
+        ("broker-code,b", po::value<string>(&brokerCode)->default_value("", ""),
+         "Broker Code")
+        ("config-file,c", po::value<string>(&mConfigFile),
+         "Use configuration file")
+        ("disable-streaming,d", "Disable streaming mode")
+        ("full-metadata,F", 
+         "Use full metadata (instead of incremental)")
+        ("http-get,g", "Use HTTP GET")
+        ("http-log,l", po::value<string>(&mLogFile), "HTTP log file - won't log GetObject calls")
+        ("password,p", po::value<string>(&password)
+         ->default_value("Schmoe", ""), "Password")
+		("proxy-password,P", po::value<string>(&proxyPassword)->default_value("",""),
+		 "Proxy Password")
+        ("metadata-timestamp,t", po::value<string>(&savedMetadataTimestamp)->default_value("", ""),
+         "Saved Metadata Timestamp (RETS 1.7+)")
         ("url,u", po::value<string>(&loginUrl)
          ->default_value("http://demo.crt.realtors.org:6103/rets/login", ""),
          "Login URL")
         ("username,U", po::value<string>(&username)->default_value("Joe", ""),
          "User name")
-        ("password,p", po::value<string>(&password)
-         ->default_value("Schmoe", ""), "Password")
-        ("user-agent,a", po::value<string>(&userAgent)
-         ->default_value(RetsSession::DEFAULT_USER_AGENT, ""), "User agent")
-        ("ua-password", po::value<string>(&userAgentPassword)
-         ->default_value(""), "User agent password")
-        ("http-get,g", "Use HTTP GET")
-        ("http-log,l", po::value<string>(&mLogFile), "HTTP log file - won't log GetObject calls")
-        ("http-log-everything,L", po::value<string>(&mLogFile), "HTTP log file - log GetObject calls")
-        ("config-file,c", po::value<string>(&mConfigFile),
-         "Use configuration file")
         ("rets-version,V", po::value<string>(&mRetsVersionString)
          ->default_value("1.5", ""), "RETS Version")
-        ("full-metadata,F", 
-         "Use full metadata (instead of incremental)")
-        ("broker-code,b", po::value<string>(&brokerCode)->default_value("", ""),
-         "Broker Code")
-        ("metadata-timestamp,t", po::value<string>(&savedMetadataTimestamp)->default_value("", ""),
-         "Saved Metadata Timestamp (RETS 1.7+)")
-		("proxy-url,U", po::value<string>(&proxyUrl)->default_value("",""),
+        ("enable-caching", "Enable caching when in streaming mode")
+        ("http-log-everything", po::value<string>(&mLogFile), "HTTP log file - log GetObject calls")
+		("proxy-url", po::value<string>(&proxyUrl)->default_value("",""),
 		 "Proxy URL")
-		("proxy-password,P", po::value<string>(&proxyPassword)->default_value("",""),
-		 "Proxy Password")
+        ("ua-password", po::value<string>(&userAgentPassword)
+         ->default_value(""), "User agent password")
         ;
         
 }
@@ -69,6 +71,8 @@ bool Options::ParseCommandLine(int argc, char * argv[])
 {
     useHttpGet = false;
     useFullMetadata = false;
+    disableStreaming = false;
+    enableCaching = false;
     po::store(po::parse_command_line(argc, argv, descriptions), options);
     po::notify(options);
 
@@ -91,6 +95,14 @@ bool Options::ParseCommandLine(int argc, char * argv[])
         cout << descriptions << endl;
         return false;
     }
+    if (options.count("disable-streaming"))
+    {
+        disableStreaming = true;
+    }
+    if (options.count("enable-caching"))
+    {
+        enableCaching = true;
+    }
     if (mRetsVersionString == "1.5")
     {
         retsVersion = RETS_1_5;
@@ -108,12 +120,23 @@ bool Options::ParseCommandLine(int argc, char * argv[])
 
 RetsSessionPtr Options::RetsLogin()
 {
+    unsigned int flags = 0;
     RetsSessionPtr session(new RetsSession(loginUrl));
     session->SetUserAgent(userAgent);
     session->UseHttpGet(useHttpGet);
     session->SetRetsVersion(retsVersion);
     session->SetIncrementalMetadata(!useFullMetadata);
     session->SetUserAgentPassword(userAgentPassword);
+    if (disableStreaming)
+    {
+        flags |= RetsSession::MODE_NO_STREAM;
+    }
+    if (enableCaching)
+    {
+        flags |= RetsSession::MODE_CACHE;
+    }
+    session->SetModeFlags(flags);
+    
 	if (!proxyUrl.empty())
 	{
 		session->SetProxy(proxyUrl,proxyPassword);

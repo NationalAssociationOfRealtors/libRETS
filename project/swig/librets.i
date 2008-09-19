@@ -1440,6 +1440,9 @@ class SqlToDmqlCompiler
 class RetsSession
 {
   public:
+    static const unsigned int MODE_CACHE      = 0x01;
+    static const unsigned int MODE_NO_STREAM  = 0x02;
+
     RetsSession(std::string loginUrl) 
                                   throw(RetsHttpException, 
                                         RetsReplyException,
@@ -1584,6 +1587,12 @@ class RetsSession
                                         std::exception);
 
     void SetLogEverything(bool logging)
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
+
+    void SetModeFlags(unsigned int flags)
                                   throw(RetsHttpException, 
                                         RetsReplyException,
                                         RetsException,

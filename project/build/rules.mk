@@ -140,7 +140,7 @@ _test: cppunit prepare $(LIBRETS_TEST_EXE)
 	./$(LIBRETS_TEST_EXE) $(top_srcdir)
 
 _test-network: cppunit prepare $(LIBRETS_NETTEST_EXE) ${LIBRETS_NETTEST_HTTPSERVER}
-	./$(LIBRETS_NETTEST_EXE) $(top_srcdir) || \
+	@./$(LIBRETS_NETTEST_EXE) $(top_srcdir) || \
 	(echo You must enable httpServer. && \
 	echo You can do this by typeing: && \
 	echo make run-server && \

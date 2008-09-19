@@ -48,6 +48,9 @@ const char * CLASS::RETS_1_0_STRING = "RETS/1.0";
 const char * CLASS::RETS_1_5_STRING = "RETS/1.5";
 const char * CLASS::RETS_1_7_STRING = "RETS/1.7";
 
+const int CLASS::MODE_CACHE     = 0x01;
+const int CLASS::MODE_NO_STREAM = 0x02;
+
 CLASS::RetsSession(string login_url)
 {
     mLoginUrl = login_url;
@@ -62,6 +65,7 @@ CLASS::RetsSession(string login_url)
     mUserAgentAuthType = USER_AGENT_AUTH_RETS_1_7;
     mUserAgentAuthCalculator.SetUserAgentPassword("");
     SetDefaultEncoding(RETS_XML_DEFAULT_ENCODING);
+    mFlags = 0;
     mLoggedIn = false;
     mTimeout = 0;
     /*
@@ -102,7 +106,17 @@ RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
         request->SetHeader(RETS_UA_AUTH_HEADER, headerValue);
     }
 
-    return mHttpClient->StartRequest(request);
+    RetsHttpResponsePtr httpResponse = mHttpClient->StartRequest(request);
+    
+    /*
+     * If we are not streaming, complete the request.
+     */
+    if (mFlags & MODE_NO_STREAM)
+    {
+        while (mHttpClient->ContinueRequest());
+    }
+    
+    return httpResponse;
 }
 
 void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
@@ -389,9 +403,18 @@ SearchResultSetAPtr CLASS::Search(SearchRequest * request)
     RetsHttpResponsePtr httpResponse = DoRequest(request);
     
     SearchResultSetAPtr resultSet(new SearchResultSet());
+    if (mFlags & MODE_CACHE)
+    {
+        /*
+         * Warning ... must set the caching flag before setting the input stream
+         * because that code has the side effecting of initializing the parser and
+         * will try to parse the first entry if it exists.
+         */
+        resultSet->SetCaching(true);
+    }
     resultSet->SetEncoding(mEncoding);
     resultSet->SetInputStream(httpResponse->GetInputStream());
-       
+    
     return resultSet;
 }
 
@@ -625,6 +648,18 @@ void CLASS::SetLogEverything(bool logging)
 {
     mLogEverything = logging;
 }
+
+void CLASS::SetModeFlags(unsigned int flags)
+{
+    mFlags = flags;
+    
+    /*
+     * If we are in no streaming mode, the cache is required.
+     */
+    if (mFlags & MODE_NO_STREAM)
+        mFlags |= MODE_CACHE;
+}
+
 
 void CLASS::SetProxy(std::string url, std::string password)
 {

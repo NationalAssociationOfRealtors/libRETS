@@ -42,6 +42,7 @@ namespace ba = boost::algorithm;
 SearchResultSet::SearchResultSet() 
             : mParseInputStream()
 {
+    mCaching = false;
     mColumns.reset(new StringVector());
     mCount = -1;
     mEncoding = RETS_XML_DEFAULT_ENCODING;
@@ -187,7 +188,22 @@ bool SearchResultSet::Parse()
             ba::split(*data, text, ba::is_any_of(mDelimiter));
             FixCompactArray(*data, "data");
             
+            if (!mCaching)
+            {
+                /*
+                 * Normal streaming mode does not use a cache. We handle this by
+                 * removing the last element (which will be the only element) in
+                 * the vector after the initial try.
+                 */
+                if (!mRows.empty())
+                {
+                    mRows.pop_back();
+                }
+                mNextRow = mRows.begin();
+                mCurrentRow.reset();
+            }
             mRows.push_back(data);
+            
             mXmlParser->AssertNextIsEndEvent();
             /*
              * Once a single data row has been parsed, return to the caller.
@@ -274,6 +290,11 @@ string SearchResultSet::GetString(string columnName)
 void SearchResultSet::SetEncoding(EncodingType encoding)
 {
     mEncoding = encoding;
+}
+
+void SearchResultSet::SetCaching(bool enabled)
+{
+    mCaching = enabled;
 }
 
 EncodingType SearchResultSet::GetEncoding()

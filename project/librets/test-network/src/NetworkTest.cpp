@@ -29,11 +29,15 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(CLASS);
     CPPUNIT_TEST(testStreaming);
     CPPUNIT_TEST(testCurlTimeout);
+    CPPUNIT_TEST(testCache);
+    CPPUNIT_TEST(testNoStreaming);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
     void testStreaming();
     void testCurlTimeout();
+    void testCache();
+    void testNoStreaming();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -126,6 +130,94 @@ void CLASS::testStreaming()
     SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
     								"(ListPrice=300000-)");
     searchRequest->SetSelect("ListingID,ListPrice,Beds,City");
+    searchRequest->SetStandardNames(true);
+    searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
+    searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
+    searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
+    searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
+
+    SearchResultSetAPtr results = session->Search(searchRequest.get());
+
+    while (results->HasNext())
+    {
+        total_records++;
+    }
+    ASSERT_EQUAL (results->GetCount(), total_records);
+}
+
+void CLASS::testCache()
+{
+    RetsSessionPtr session(new RetsSession("http://localhost:4444/rets/login"));
+    int total_records = 0;
+    
+    session->UseHttpGet(false);
+    session->SetIncrementalMetadata(false);
+    session->SetModeFlags(RetsSession::MODE_CACHE);
+
+    ASSERT_EQUAL (true, session->Login("Joe", "Blow"));
+
+    /*
+     * Fetch and spot check some of the metadata.
+     */
+    RetsMetadata * metadata = session->GetMetadata();
+    MetadataSystem * system = metadata->GetSystem();
+    ASSERT_STRING_EQUAL("CRT_RETS", system->GetSystemID());
+    
+    MetadataResourceList resources = metadata->GetAllResources();
+    ASSERT_STRING_EQUAL("Agent", resources[0]->GetId());
+    ASSERT_STRING_EQUAL("ActiveAgent", resources[1]->GetId());
+    ASSERT_STRING_EQUAL("Office", resources[2]->GetId());
+    ASSERT_STRING_EQUAL("Property", resources[3]->GetId());
+
+    /*
+     * Perform the search and see if 160 records are returned.
+     */
+    SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
+    								"(ListPrice=300000-)");
+    searchRequest->SetStandardNames(true);
+    searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
+    searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
+    searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
+    searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
+
+    SearchResultSetAPtr results = session->Search(searchRequest.get());
+
+    while (results->HasNext())
+    {
+        total_records++;
+    }
+    ASSERT_EQUAL (results->GetCount(), total_records);
+}
+
+void CLASS::testNoStreaming()
+{
+    RetsSessionPtr session(new RetsSession("http://localhost:4444/rets/login"));
+    int total_records = 0;
+    
+    session->UseHttpGet(false);
+    session->SetIncrementalMetadata(false);
+    session->SetModeFlags(RetsSession::MODE_NO_STREAM);
+
+    ASSERT_EQUAL (true, session->Login("Joe", "Blow"));
+
+    /*
+     * Fetch and spot check some of the metadata.
+     */
+    RetsMetadata * metadata = session->GetMetadata();
+    MetadataSystem * system = metadata->GetSystem();
+    ASSERT_STRING_EQUAL("CRT_RETS", system->GetSystemID());
+    
+    MetadataResourceList resources = metadata->GetAllResources();
+    ASSERT_STRING_EQUAL("Agent", resources[0]->GetId());
+    ASSERT_STRING_EQUAL("ActiveAgent", resources[1]->GetId());
+    ASSERT_STRING_EQUAL("Office", resources[2]->GetId());
+    ASSERT_STRING_EQUAL("Property", resources[3]->GetId());
+
+    /*
+     * Perform the search and see if 160 records are returned.
+     */
+    SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
+    								"(ListPrice=300000-)");
     searchRequest->SetStandardNames(true);
     searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
     searchRequest->SetOffset(SearchRequest::OFFSET_NONE);

@@ -13,6 +13,8 @@ public class Options
 {
     private string mBroker                  = "";
     private SearchRequest.CountType mCount  = SearchRequest.CountType.RECORD_COUNT_AND_RESULTS;
+    private bool mDisableStreaming          = false;
+    private bool mEnableCacheing            = false;
     private EncodingType mEncoding          = EncodingType.RETS_XML_DEFAULT_ENCODING;
     private string mHttpLog                 = "";
     private int mLimit                      = -1;
@@ -20,6 +22,8 @@ public class Options
     private string mMetadataTimestamp       = "";
     private int mOffset                     = 0;
     private string mPass                    = "Schmoe";
+    private string mProxyUrl                = "";
+    private string mProxyPassword           = "";
     private string mQuery                   = "(ListPrice=300000-)";
     private RetsSession mRetsSession        = null;
     private RetsVersion mRetsVersion        = RetsVersion.RETS_1_5;
@@ -32,8 +36,6 @@ public class Options
     private string mUAPass                  = "";
     private string mUrl                     = "http://demo.crt.realtors.org:6103/rets/login";
     private string mUser                    = "Joe";
-    private string mProxyUrl		    = "";
-    private string mProxyPassword           = "";
 
     /**
      * The broker code.
@@ -53,6 +55,23 @@ public class Options
         set { mCount = value; }
     }
 
+    /**
+     * Disable streaming mode.
+     */
+    public bool disable_streaming
+    {
+        get { return mDisableStreaming; }
+        set { mDisableStreaming = value; }
+    }
+
+    /**
+     * Enable caching mode. This only applies when streaming is enabled.
+     */
+    public bool enable_caching
+    {
+        get { return mEnableCacheing; }
+        set { mEnableCacheing = value; }
+    }
     /**
      * The default encoding for the XML parser.
      */
@@ -338,6 +357,18 @@ public class Options
                 case "--count":
                             count_string        = value;
                             break;
+                case "--enable-cache":
+                            if (value.ToLower() == "yes")
+                                enable_caching  = true;
+                            if (value.ToLower() == "no")
+                                enable_caching  = false;
+                            break;
+                case "--enable-streaming":
+                            if (value.ToLower() == "yes")
+                              disable_streaming = false;
+                            if (value.ToLower() == "no")
+                                disable_streaming  = true;
+                            break;
                 case "--default-encoding":
                             encoding_string     = value;
                             break;
@@ -450,6 +481,8 @@ public class Options
         Console.WriteLine("\t--default-encoding\t\"US-ASCII\" or \"ISO\"");
         Console.WriteLine("\t--proxy-url\t\tProxy url");
         Console.WriteLine("\t--proxy-password\tProxy password");
+        Console.WriteLine("\t--enable-streaming\tEnable Streaming mode: \"yes\" or \"no\" (default \"yes\")");
+        Console.WriteLine("\t--enable-cache\t\tEnable caching in Streaming mode: \"yes\" or \"no\" (default \"no\")");
     }
 
     /**
@@ -457,6 +490,8 @@ public class Options
      */
     public RetsSession SessionFactory()
     {
+        uint flags = 0;
+
         if (mRetsSession != null)
         {
             mRetsSession.Cleanup();
@@ -465,14 +500,26 @@ public class Options
         mRetsSession = new RetsSession(mUrl);
 
         mRetsSession.SetDefaultEncoding(mEncoding);
-	if (mHttpLog.Length > 0)
-	    mRetsSession.SetHttpLogName(mHttpLog);
+        if (mHttpLog.Length > 0)
+            mRetsSession.SetHttpLogName(mHttpLog);
         mRetsSession.SetLogEverything(mLogEverything);
         mRetsSession.SetRetsVersion(mRetsVersion);
         mRetsSession.SetUserAgent(mUA);
         mRetsSession.SetUserAgentAuthType(mUAAuth);
         if (mUAPass.Length > 0)
             mRetsSession.SetUserAgentPassword(mUAPass);
+
+        if (mEnableCacheing)
+          flags |= RetsSession.MODE_CACHE;
+
+        if (mDisableStreaming)
+        {
+            /*
+             * Caching is required in non-streaming mode.
+             */
+            flags |= RetsSession.MODE_CACHE | RetsSession.MODE_NO_STREAM;
+        }
+        mRetsSession.SetModeFlags(flags);
 
         return mRetsSession;
     }

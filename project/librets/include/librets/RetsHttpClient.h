@@ -64,6 +64,8 @@ class RetsHttpClient
     virtual void SetProxy(std::string url, std::string password) = 0;
     
     virtual void SetTimeout(int seconds) = 0;
+    
+    virtual void SetModeFlags(unsigned int flags) = 0;
 };
 
 };

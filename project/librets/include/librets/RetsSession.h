@@ -324,6 +324,13 @@ class RetsSession : public MetadataLoader
     void SetLogEverything(bool logging);
     
     /**
+     * Set the mode flags for the current session.
+     *
+     * @param A logical OR of the flags to be set.
+     */
+    void SetModeFlags(unsigned int flags);
+    
+    /**
      * Set the html proxy information.
      *
      * @param url A string containing the url of the proxy server. If non-standard ports
@@ -360,6 +367,14 @@ class RetsSession : public MetadataLoader
      * @return A string representing the libRETS version information.
      */
     static std::string GetLibraryVersion();
+    
+    /**
+     * Mode flags for the current session.
+     * MODE_CACHE is used in streaming mode to enable the row cache.
+     * MODE_NO_STREAM will disable the streaming mode.
+     */
+    static const int    MODE_CACHE;
+    static const int    MODE_NO_STREAM;
     
 private:
     static const char * RETS_SESSION_ID_HEADER;
@@ -423,6 +438,8 @@ private:
     RetsHttpLoggerPtr mLogger;
     
     int mTimeout;
+    
+    unsigned int mFlags;
 };
 
 };

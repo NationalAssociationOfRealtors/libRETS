@@ -770,6 +770,7 @@
 		F9310B610DFEC347004DE8BB /* CurlStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CurlStream.h; sourceTree = "<group>"; };
 		F9310B640DFEC376004DE8BB /* LookupColumnsQuery.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = LookupColumnsQuery.cpp; sourceTree = "<group>"; };
 		F9310B650DFEC376004DE8BB /* LookupQuery.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = LookupQuery.cpp; sourceTree = "<group>"; };
+		F94747E60E832DFE00F0A228 /* search.2 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = search.2; path = "../librets/test-network/src/resources/search.2"; sourceTree = SOURCE_ROOT; };
 		F95773200E019C5200836850 /* get-object-response-cris.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-cris.txt"; sourceTree = "<group>"; };
 		F95773210E019C5200836850 /* get-object-response-normls.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-normls.txt"; sourceTree = "<group>"; };
 		F95773220E019C5200836850 /* get-object-response-rapattoni.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "get-object-response-rapattoni.txt"; sourceTree = "<group>"; };
@@ -1693,6 +1694,7 @@
 				F91822580E7853F200BE23EF /* metadata-class.3 */,
 				F91822590E7853F200BE23EF /* metadata-class.4 */,
 				F918225A0E7853F200BE23EF /* metadata-lookup-type.1 */,
+				F91822630E7853F200BE23EF /* metadata-lookup-type.10 */,
 				F918225B0E7853F200BE23EF /* metadata-lookup-type.2 */,
 				F918225C0E7853F200BE23EF /* metadata-lookup-type.3 */,
 				F918225D0E7853F200BE23EF /* metadata-lookup-type.4 */,
@@ -1701,7 +1703,6 @@
 				F91822600E7853F200BE23EF /* metadata-lookup-type.7 */,
 				F91822610E7853F200BE23EF /* metadata-lookup-type.8 */,
 				F91822620E7853F200BE23EF /* metadata-lookup-type.9 */,
-				F91822630E7853F200BE23EF /* metadata-lookup-type.10 */,
 				F91822640E7853F200BE23EF /* metadata-lookup.1 */,
 				F91822650E7853F200BE23EF /* metadata-lookup.2 */,
 				F91822660E7853F200BE23EF /* metadata-lookup.3 */,
@@ -1719,6 +1720,7 @@
 				F91822720E7853F200BE23EF /* metadata-table.9 */,
 				F91822730E7853F200BE23EF /* photo.1 */,
 				F91822740E7853F200BE23EF /* search.1 */,
+				F94747E60E832DFE00F0A228 /* search.2 */,
 			);
 			name = resources;
 			sourceTree = "<group>";

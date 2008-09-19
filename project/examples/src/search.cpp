@@ -114,7 +114,7 @@ int main(int argc, char * argv[])
 
         SearchRequestAPtr searchRequest = session->CreateSearchRequest(
             resource, searchClass, query);
-	if (select.length() != 0)
+        if (select.length() != 0)
             searchRequest->SetSelect(select);
         searchRequest->SetStandardNames(standardNames);
         searchRequest->SetLimit(limit);

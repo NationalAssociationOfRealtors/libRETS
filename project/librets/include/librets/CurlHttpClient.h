@@ -91,6 +91,12 @@ class CurlHttpClient : public RetsHttpClient
     virtual int GetResponseCode();
     
     virtual RetsHttpLogger* GetLogger() const;
+    
+    /**
+     * Set the mode flags to be used.
+     * @param An unsigned integer containing the mode flags.
+     */
+    virtual void SetModeFlags(unsigned int flags);
 	
     /**
      * Set the proxy url and password.
@@ -142,6 +148,8 @@ class CurlHttpClient : public RetsHttpClient
     CurlSlist mCookies;
     
     bool mLogging;
+    
+    unsigned int mFlags;
 };
 
 };

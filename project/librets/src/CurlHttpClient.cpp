@@ -271,6 +271,11 @@ void CurlHttpClient::SetLogger(RetsHttpLogger * logger)
     }
 }
 
+void CurlHttpClient::SetModeFlags(unsigned int flags)
+{
+    mFlags = flags;
+}
+
 RetsHttpLogger* CurlHttpClient::GetLogger() const
 {
     return mLogger;
