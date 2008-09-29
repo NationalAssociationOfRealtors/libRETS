@@ -50,6 +50,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLessThanOrEquals);
     CPPUNIT_TEST(testGreaterThanOrEquals);
     CPPUNIT_TEST(testLookupEquals);
+    CPPUNIT_TEST(testLookupNotEquals);
     CPPUNIT_TEST(testInvalidTableNames);
     CPPUNIT_TEST(testComments);
     CPPUNIT_TEST(testOr);
@@ -91,6 +92,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testLessThanOrEquals();
     void testGreaterThanOrEquals();
     void testLookupEquals();
+    void testLookupNotEquals();
     void testInvalidTableNames();
     void testComments();
     void testOr();
@@ -208,6 +210,24 @@ void CLASS::testLookupEquals()
     ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
     
     DmqlCriterionPtr criterion = lookupOr("Status", literal("Active"));
+    ASSERT_EQUAL(*criterion, *query->GetCriterion());
+}
+
+void CLASS::testLookupNotEquals()
+{
+    DmqlQueryPtr query =
+    sqlToDmql("select * "
+              " from data:Property:RES "
+              " where Status <> 'Active';");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("RES", query->GetClass());
+    
+    StringVector columns;
+    ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
+    
+    DmqlCriterionPtr criterion =
+        logicNot(lookupOr("Status", literal("Active")));
+    
     ASSERT_EQUAL(*criterion, *query->GetCriterion());
 }
 
