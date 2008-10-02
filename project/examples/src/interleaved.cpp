@@ -259,7 +259,7 @@ int main(int argc, char * argv[])
             }
             
             /*
-             * Now set up to fetch the objects associated with this liting.
+             * Now set up to fetch the objects associated with this listing.
              */
             GetObjectRequest getObjectRequest(resource, type);
             getObjectRequest.AddAllObjects(results->GetString(keyField));
