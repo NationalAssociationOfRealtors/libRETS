@@ -171,7 +171,7 @@ bool CLASS::Login(string user_name,
     RetrieveAction();
     
     mLoggedIn = true;
-    
+
     try
     {
         std::string seconds = mLoginResponse->GetTimeout();
@@ -213,6 +213,7 @@ void CLASS::RetrieveAction()
     RetsHttpRequest request;
     request.SetUrl(actionUrl);
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
+
     AssertSuccessfulResponse(httpResponse, actionUrl);
     mAction = readIntoString(httpResponse->GetInputStream());
 }
@@ -387,7 +388,7 @@ SearchResultSetAPtr CLASS::Search(SearchRequest * request)
      * Start the transaction.
      */
     RetsHttpResponsePtr httpResponse = DoRequest(request);
-    
+
     SearchResultSetAPtr resultSet(new SearchResultSet());
     resultSet->SetEncoding(mEncoding);
     resultSet->SetInputStream(httpResponse->GetInputStream());
@@ -469,7 +470,7 @@ LogoutResponseAPtr CLASS::Logout()
     RetsHttpRequest request;
     request.SetUrl(logoutUrl);
     RetsHttpResponsePtr httpResponse(DoRequest(&request));
-    
+  
     AssertSuccessfulResponse(httpResponse, logoutUrl);
 
     logoutResponse.reset(new LogoutResponse());

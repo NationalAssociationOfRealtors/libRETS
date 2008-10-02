@@ -25,6 +25,7 @@
 
 #include <string>
 #include "librets/curl.h"
+#include "librets/http_forward.h"
 
 namespace librets {
 
@@ -154,6 +155,18 @@ class CurlEasy
     void SetProxyPassword(std::string password);
     
     /**
+     * Provide to cURL a pointer to the private data associated with this request.
+     * @param data A pointer to the private data.
+     */
+    void SetPrivateData(void * data);
+    
+    /**
+     * Provide to cURL a refered to the shared object.
+     * @param share A pointer to a CURLSH handle.
+     */
+    void SetShareHandle(CURLSH * shared);
+    
+    /**
      * Provide to cURL an integer containing a timeout in seconds.
      * @param seconds An integer containing the number of seconds to establish
      * as a timeout.
@@ -192,7 +205,13 @@ class CurlEasy
      * @return A pointer to the curl_slist. See the libCURL documentation.
      */
     curl_slist * GetCookieSlist();
-    
+
+    /**
+     * Get the private data associated with this request.
+     * @return A pointer to the private data.
+     */
+    void * GetPrivateData();
+
     /**
      * Get the current curl library version information.
      * @return A string representing the libCURL verison.

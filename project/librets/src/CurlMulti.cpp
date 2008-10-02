@@ -17,8 +17,10 @@
 
 #include <sstream>
 #include <cerrno>
+#include <iostream>
 #include "librets/CurlMulti.h"
 #include "librets/CurlEasy.h"
+#include "librets/CurlHttpResponse.h"
 #include "librets/RetsException.h"
 #include "librets/str_stream.h"
 
@@ -51,17 +53,52 @@ CLASS::CLASS()
     {
         throw RetsException("Could not allocate Curl multi handle");
     }
-    Reset();
+    mShareHandle = curl_share_init();
+    if (!mShareHandle)
+    {
+        throw RetsException("Could not allocate Curl shared handle");
+    }
+    curl_share_setopt(mShareHandle, CURLSHOPT_SHARE, CURL_LOCK_DATA_COOKIE);
 }
 
 CLASS::~CLASS()
 {
     curl_multi_cleanup(mMultiHandle);
+    curl_share_cleanup(mShareHandle);
 }
 
-void CLASS::AddEasy(CurlEasy & curlEasy)
+void CLASS::AddEasy(CurlEasy * curlEasy)
 {
-    CurlAssert(curl_multi_add_handle(mMultiHandle, curlEasy.GetEasyHandle()));
+    CurlAssert(curl_multi_add_handle(mMultiHandle, curlEasy->GetEasyHandle()));
+    mCurlEasyInUse.push_back(curlEasy);
+}
+
+CurlEasy * CLASS::EasyFactory()
+{
+    CurlEasy * curlEasy;
+    /*
+     * See if the cache is empty. If so, create a new one, otherwise use the
+     * last one. We intentionally try to use the last one in the queue in order
+     * to try to maintain the connection and not have to go through the authentication
+     * process for each request.
+     */
+    if (!mCurlEasyAvailable.empty())
+    {
+        curlEasy = mCurlEasyAvailable.back();
+        mCurlEasyAvailable.pop_back();
+    }
+    else
+    {
+        curlEasy = new CurlEasy();
+        curlEasy->SetShareHandle(mShareHandle);
+    }
+
+    return curlEasy;
+}
+
+void CLASS::FreeEasy(CurlEasy * curlEasy)
+{
+    mCurlEasyAvailable.push_back(curlEasy);
 }
 
 void CLASS::RemoveEasy(CurlEasy & curlEasy)
@@ -87,33 +124,30 @@ void CLASS::Perform()
     fd_set fdread;
     fd_set fdwrite;
     fd_set fdexcep;
-    int maxfd;
+    int maxfd               = 0;
     CURLMcode cres;
-    int rc;
+    int rc                  = 0;
     struct timeval timeout;
+    long wait               = 0;
     
     if(!mMultiHandle)
     {
         throw RetsException("No multi handle has been allocated prior to the Perform() call.");
     }
-    
-    if (!mStillRunning)
-        return;
-        
+
     /*
-     * If mStillRunning is 2 (initial state), we need to prime the pump.
+     * See how long curl thinks we should wait before continuing.
      */
-    if (mStillRunning == 2)
-    {
-        while (curl_multi_perform(mMultiHandle, &mStillRunning) == CURLM_CALL_MULTI_PERFORM);
-    }
-     
+    curl_multi_timeout(mMultiHandle, &wait);
+    if (wait == -1) 
+        wait = 1;
+   
     FD_ZERO(&fdread);
     FD_ZERO(&fdwrite);
     FD_ZERO(&fdexcep);
     
-    timeout.tv_sec = 15;
-    timeout.tv_usec = 0;
+    timeout.tv_sec = wait / 1000;
+    timeout.tv_usec = (wait % 1000) * 1000;
     
     cres = curl_multi_fdset(mMultiHandle, &fdread, &fdwrite, &fdexcep, &maxfd);
     
@@ -123,38 +157,86 @@ void CLASS::Perform()
     }
     
     /*
-     * See if one of the curl handles need esrvice.
+     * See if one of the curl handles need service.
      */
-    rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
-    
-    if (rc > 0)
-    {
-        /*
-         * Yes, so service it. When done here, we'll return and let the code
-         * elsewhere handle deblocking and serving it. We will re-enter this
-         * routine only when a request for data exceeds what remains in the
-         * stream.
-         */
-        while (curl_multi_perform(mMultiHandle, &mStillRunning) == CURLM_CALL_MULTI_PERFORM);
-    }
-    else
+    if (maxfd)
+        rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
+
     if (rc < 0)
     {
         ostringstream message;
         message << "CurlMulti::Perform - select failed: " << errno;
         throw RetsException(message.str());
     }
+
+    /*
+     * The libCURL docs seem to indicate that we should periodically call
+     * curl_multi_perform even if we don't have activity. This will also launch
+     * the first I/O if none has already been started.
+     *
+     * When done here, we'll return and let the code
+     * elsewhere handle deblocking and serving it. We will re-enter this
+     * routine only when a request for data exceeds what remains in the
+     * stream.
+     */
+    while (curl_multi_perform(mMultiHandle, &mStillRunning) == CURLM_CALL_MULTI_PERFORM);
+
+    /*
+     * Check status.
+     */
+    CURLMsg * msg;
+    int remaining = 0;
+        
+    while ((msg = curl_multi_info_read(mMultiHandle, &remaining)))
+    {
+        if (msg->msg == CURLMSG_DONE)
+        {
+            /* 
+             * See if we can find the handle in the vector and then delete it.
+             */
+            for (CurlEasyVector::iterator i = mCurlEasyInUse.begin(); i != mCurlEasyInUse.end(); i++)
+            {
+                if ((*i)->GetEasyHandle() == msg->easy_handle)
+                {
+                    CurlHttpClientPrivate * client = (CurlHttpClientPrivate *)(*i)->GetPrivateData();
+                    CurlHttpResponsePtr response;
+                    if (client && (response = client->GetResponse()))
+                    {
+                        if (msg->data.result == CURLE_OPERATION_TIMEDOUT)
+                            response->SetResponseCode(408);
+                        else
+                            response->SetResponseCode((*i)->GetResponseCode());
+                        response->SetInProgress(false);
+                        delete client;
+                    }
+                    FreeEasy(*i);
+                    curl_multi_remove_handle(mMultiHandle, msg->easy_handle);
+                    mCurlEasyInUse.erase(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    mPriorRunning = mStillRunning;
 }
 
-void CLASS::Reset()
+curl_slist * CLASS::GetCookieSlist()
 {
-    /*
-     * Reset to the initial state.
-     */
-    mStillRunning = 2;
+    return mCookieList;
 }
 
 bool CLASS::StillRunning()
 {
     return mStillRunning > 0;
+}
+
+int CLASS::GetPriorRunning()
+{
+    return mPriorRunning;
+}
+
+int CLASS::GetStillRunning()
+{
+    return mStillRunning;
 }

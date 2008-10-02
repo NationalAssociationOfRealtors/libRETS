@@ -54,6 +54,11 @@ TestHttpResponse::~TestHttpResponse()
 {
 }
 
+void TestHttpResponse::SetResponseCode(int responseCode)
+{
+    mResponseCode = responseCode;
+}
+
 int TestHttpResponse::GetResponseCode() const
 {
     return mResponseCode;

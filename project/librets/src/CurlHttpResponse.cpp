@@ -26,6 +26,7 @@ CurlHttpResponse::CurlHttpResponse()
                 : mHttpClient()
 {
     mResponseCode = -1;
+    mInProgress = true;
 }   
 
 CurlHttpResponse::~CurlHttpResponse()
@@ -48,7 +49,27 @@ void CurlHttpResponse::SetUrl(string url)
 
 int CurlHttpResponse::GetResponseCode() const
 {
-    return mHttpClient->GetResponseCode();
+    /*
+     * With the multi interface, we won't get status until the transaction is done.
+     * Here we assume that if someone wants status, they want the request completed, so
+     * complete it.
+     */
+    while (mInProgress && mHttpClient->ContinueRequest());
+    
+    /*
+     * If the response code is still zero, the socket may have been closed or there is some error.
+     * If that is the case, masquerade as a 503 (service unavailble) error.
+     */
+    if (!mInProgress && mResponseCode == 0)
+    {
+        return 503;
+    }
+    return mResponseCode;
+}
+
+void CurlHttpResponse::SetResponseCode(int responseCode)
+{
+    mResponseCode = responseCode;
 }
 
 string CurlHttpResponse::GetHeader(string name) const
@@ -77,4 +98,14 @@ istreamPtr CurlHttpResponse::GetInputStream() const
 void CurlHttpResponse::SetHttpClient(CurlHttpClient* httpClient)
 {
     mHttpClient = httpClient;
+}
+
+void CurlHttpResponse::SetHttpRequest(RetsHttpRequest* httpRequest)
+{
+    mHttpRequest = httpRequest;
+}
+
+void CurlHttpResponse::SetInProgress(bool inProgress)
+{
+    mInProgress = inProgress;
 }

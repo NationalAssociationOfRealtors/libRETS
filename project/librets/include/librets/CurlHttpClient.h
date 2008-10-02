@@ -83,22 +83,15 @@ class CurlHttpClient : public RetsHttpClient
     
     virtual void SetLogger(RetsHttpLogger * logger);
     
-    /**
-     * Return the HTTP response code. With the streaming interface, this will
-     * have the side-effect of completing the in process transaction.
-     * @return An integer representing the HTTP response code.
-     */
-    virtual int GetResponseCode();
-    
     virtual RetsHttpLogger* GetLogger() const;
-	
+    
     /**
      * Set the proxy url and password.
      * @param url A string containing the URL of the proxy server.
      * @param password A string containing the password when the proxy
      * server requires authentication. Leave this as an empty string otherwise.
      */
-	virtual void SetProxy(std::string url, std::string password);
+    virtual void SetProxy(std::string url, std::string password);
     
     /**
      * Set the timeout for the Http transaction.
@@ -108,43 +101,100 @@ class CurlHttpClient : public RetsHttpClient
     virtual void SetTimeout(int seconds);
 
   private:
+  
     static size_t StaticWriteData(char * buffer, size_t size, size_t nmemb,
                                   void * userData);
         
-    size_t WriteData(char * buffer, size_t size, size_t nmemb);
-
     static size_t StaticWriteHeader(char * buffer, size_t size, size_t nmemb,
                                     void * userData);
-    
-    size_t WriteHeader(char * buffer, size_t size, size_t nmemb);
     
     static int StaticDebug(CURL * handle, curl_infotype type, char * data,
                            size_t size, void * userData);
     
-    int Debug(CURL * handle, curl_infotype type, char * data, size_t size);
-    
     void GenerateHeadersSlist(const StringMap & requestHeaders);
-    
-    CurlEasy mCurl;
 
     CurlMulti mCurlMulti;
         
     StringMap mDefaultHeaders;                                                 
 
     CurlSlist mHeaders;
-    
-    CurlHttpResponsePtr mResponse;
-    
+
     RetsHttpLogger * mLogger;
-    
-    int mResponseCode;
     
     CurlSlist mCookies;
     
     bool mLogging;
+    
+    std::string mUrl;
+    
+    std::string mUserName;
+    
+    std::string mPassword;
+    
+    std::string mProxyUrl;
+    
+    std::string mProxyPassword;
+    
+    int mTimeout;
+};
+
+/**
+ * (Internal) CurlHttpClientPrivate is a class that wraps the three libRETS classes
+ * that make up a single request and response. This becomes libCURL's private data for
+ * the particular easy handle that invokes this request.
+ */
+class CurlHttpClientPrivate
+{
+  public:
+    /**
+     * Construct the CurlHttpClientPrivate class.
+     * @param request A pointer to the request object.
+     * @param response A CurlHttpResponsePtr referencing to where the response will be returned.
+     * @param client A pointer to the CurlHttpClient class that controls the transaction.
+     */
+    CurlHttpClientPrivate(RetsHttpRequest * request, CurlHttpResponsePtr response, CurlHttpClient * client)
+                    : mRequest(request)
+                    , mResponse(response)
+                    , mClient(client)
+    {
+    };
+    
+    ~CurlHttpClientPrivate() {};
+    /**
+     * Returns a pointer to the RetsHttpRequest object for this request.
+     * @return A pointer to the RetsHttpRequest.
+     */
+    RetsHttpRequest * GetRequest()
+    {
+        return mRequest;
+    };
+    
+    /**
+     * Return the reference to the response object associated with this request.
+     * @return A CurlHttpResponsePtr.
+     */
+    CurlHttpResponsePtr GetResponse()
+    {
+        return mResponse;
+    };
+    
+    /**
+     * Return a pointer to the CurlHttpClient that controls this request.
+     * @return A pointer to the CurlHttpClient.
+     */
+    CurlHttpClient * GetClient()
+    {
+        return mClient;
+    };
+    
+  private:
+    RetsHttpRequest * mRequest;
+    CurlHttpResponsePtr mResponse;
+    CurlHttpClient * mClient;
 };
 
 };
+
 ///@endcond
 #endif
 

@@ -63,6 +63,13 @@ class RetsHttpResponse
      * @throw RetsException
      */
     virtual int GetResponseCode() const = 0;
+    
+    /**
+     * Set the HTTP response code.
+     *
+     * @param responseCode An integer representing the http response code for this transaction.
+     */
+    virtual void SetResponseCode(int responseCode) = 0;
 };
 
 };

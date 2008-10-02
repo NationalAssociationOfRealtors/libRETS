@@ -47,7 +47,7 @@ Options::Options()
         ("http-get,g", "Use HTTP GET")
         ("http-log,l", po::value<string>(&mLogFile), "HTTP log file - won't log GetObject calls")
         ("http-log-everything,L", po::value<string>(&mLogFile), "HTTP log file - log GetObject calls")
-        ("config-file,c", po::value<string>(&mConfigFile),
+        ("config-file,c", po::value<string>(&mConfigFile)->default_value("",""),
          "Use configuration file")
         ("rets-version,V", po::value<string>(&mRetsVersionString)
          ->default_value("1.5", ""), "RETS Version")
@@ -62,7 +62,7 @@ Options::Options()
 		("proxy-password,P", po::value<string>(&proxyPassword)->default_value("",""),
 		 "Proxy Password")
         ;
-        
+    mLogFile="";
 }
 
 bool Options::ParseCommandLine(int argc, char * argv[])

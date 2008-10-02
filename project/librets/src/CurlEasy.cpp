@@ -48,13 +48,6 @@ void CurlEasy::CurlAssert(CURLcode errorCode, const string & prefix)
 CurlEasy::CurlEasy()
     : mUseErrorBuffer(false)
 {
-    /*
-     * The libCURL docs indicate that with SSL support, we need to make
-     * sure curl_global_init is called. The easiest way is to tell libCURL
-     * to initialize all modules that are built.
-     */
-    curl_global_init(CURL_GLOBAL_ALL);
-    
     mCurl = curl_easy_init();
     if (!mCurl)
     {
@@ -188,6 +181,17 @@ void CurlEasy::SetProxyPassword(string password)
                                mProxyPassword.c_str()), "set proxy password");
 }
 
+void CurlEasy::SetPrivateData(void * data)
+{
+    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_PRIVATE, data), "Set Private Data");
+}
+
+void CurlEasy::SetShareHandle(CURLSH * shared)
+{
+    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_SHARE, shared), "Set Shared Handle");
+}
+
+
 void CurlEasy::SetTimeout(int seconds)
 {
     long disable = 1;
@@ -229,6 +233,15 @@ curl_slist * CurlEasy::GetCookieSlist()
                 "Get Cookie Slist");
     
     return cookieList;
+}
+
+void * CurlEasy::GetPrivateData()
+{
+    void * data;
+    
+    CurlAssert(curl_easy_getinfo(mCurl, CURLINFO_PRIVATE, &data), "Get Private Data");
+    
+    return data;
 }
 
 string CurlEasy::GetVersion()

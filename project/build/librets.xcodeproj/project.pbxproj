@@ -188,6 +188,15 @@
 		F99B81BB0E3E5C3B0051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
 		F99B81BC0E3E5C3C0051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
 		F99B81BD0E3E5C3C0051D661 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
+		F9A916020E7AE48E0022C4EF /* interleaved.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9A915FC0E7AE43E0022C4EF /* interleaved.cpp */; };
+		F9A9160D0E7AE5A60022C4EF /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
+		F9A9160E0E7AE5AE0022C4EF /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565907FC3BBE00526D69 /* libexpat.a */; };
+		F9A9160F0E7AE5B60022C4EF /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565707FC3BA100526D69 /* libcurl.a */; };
+		F9A916100E7AE5BD0022C4EF /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */; };
+		F9A916110E7AE5C40022C4EF /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
+		F9A916120E7AE5CE0022C4EF /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
+		F9A916150E7AE5E70022C4EF /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109160DF4A81F004DE8BB /* Options.cpp */; };
+		F9A916460E7B38C50022C4EF /* libboost_date_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A916450E7B38C50022C4EF /* libboost_date_time.a */; };
 		F9E64D910E03325D00231C0E /* CurlMulti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEAFBDE50DAD23D500EA99C7 /* CurlMulti.cpp */; };
 		F9E64D920E03325D00231C0E /* CurlStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEAFBDE60DAD23D500EA99C7 /* CurlStream.cpp */; };
 		F9E64D930E03325D00231C0E /* CurlEasy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55F23D84088EACDE0090B325 /* CurlEasy.cpp */; };
@@ -366,6 +375,13 @@
 			remoteInfo = librets;
 		};
 		F9310A440DF4D332004DE8BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55EE8498093E5AAA00812582;
+			remoteInfo = librets;
+		};
+		F9A916070E7AE4AC0022C4EF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
 			proxyType = 1;
@@ -788,6 +804,9 @@
 		F957732F0E019C5200836850 /* server-response-no-class.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "server-response-no-class.xml"; sourceTree = "<group>"; };
 		F95773300E019C5200836850 /* server-response-property.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "server-response-property.xml"; sourceTree = "<group>"; };
 		F95773350E019D2900836850 /* ServerInfoResponseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ServerInfoResponseTest.cpp; sourceTree = "<group>"; };
+		F9A915FC0E7AE43E0022C4EF /* interleaved.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = interleaved.cpp; sourceTree = "<group>"; };
+		F9A916000E7AE4710022C4EF /* interleaved */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = interleaved; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9A916450E7B38C50022C4EF /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_date_time.a; path = /opt/local/lib/libboost_date_time.a; sourceTree = "<absolute>"; };
 		F9AD5E0E0DFEDF7000775FCC /* get-object-tree.g */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "get-object-tree.g"; path = "../librets/src/get-object-tree.g"; sourceTree = SOURCE_ROOT; };
 		F9AD5E0F0DFEDF7000775FCC /* lookup-columns-tree.g */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "lookup-columns-tree.g"; path = "../librets/src/lookup-columns-tree.g"; sourceTree = SOURCE_ROOT; };
 		F9AD5E100DFEDF7000775FCC /* lookup-tree.g */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "lookup-tree.g"; path = "../librets/src/lookup-tree.g"; sourceTree = SOURCE_ROOT; };
@@ -979,6 +998,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F9A915FE0E7AE4710022C4EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9A9160D0E7AE5A60022C4EF /* librets.a in Frameworks */,
+				F9A9160E0E7AE5AE0022C4EF /* libexpat.a in Frameworks */,
+				F9A9160F0E7AE5B60022C4EF /* libcurl.a in Frameworks */,
+				F9A916100E7AE5BD0022C4EF /* libboost_program_options.a in Frameworks */,
+				F9A916110E7AE5C40022C4EF /* libboost_filesystem.a in Frameworks */,
+				F9A916120E7AE5CE0022C4EF /* libboost_system.a in Frameworks */,
+				F9A916460E7B38C50022C4EF /* libboost_date_time.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -1019,6 +1052,7 @@
 				F93109730DF4C114004DE8BB /* search */,
 				F93109780DF4C12E004DE8BB /* xml */,
 				F91821370E6F584500BE23EF /* test-network */,
+				F9A916000E7AE4710022C4EF /* interleaved */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1091,6 +1125,7 @@
 		554AA16207FA0E9C00402C35 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				F9A915FC0E7AE43E0022C4EF /* interleaved.cpp */,
 				F93109340DF4BE75004DE8BB /* demo-search.cpp */,
 				F93109330DF4BE5C004DE8BB /* Options.h */,
 				F93109160DF4A81F004DE8BB /* Options.cpp */,
@@ -1110,6 +1145,7 @@
 		554AA18C07FA110900402C35 /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				F9A916450E7B38C50022C4EF /* libboost_date_time.a */,
 				F90434570D039AE9004E3017 /* libantlr.a */,
 				55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */,
 				F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */,
@@ -1960,6 +1996,23 @@
 			productReference = F93109780DF4C12E004DE8BB /* xml */;
 			productType = "com.apple.product-type.tool";
 		};
+		F9A915FF0E7AE4710022C4EF /* interleaved */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F9A916030E7AE4AC0022C4EF /* Build configuration list for PBXNativeTarget "interleaved" */;
+			buildPhases = (
+				F9A915FD0E7AE4710022C4EF /* Sources */,
+				F9A915FE0E7AE4710022C4EF /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F9A916080E7AE4AC0022C4EF /* PBXTargetDependency */,
+			);
+			name = interleaved;
+			productName = interleaved;
+			productReference = F9A916000E7AE4710022C4EF /* interleaved */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1986,6 +2039,7 @@
 				F93109720DF4C114004DE8BB /* search */,
 				F93109770DF4C12E004DE8BB /* xml */,
 				F91821360E6F584400BE23EF /* test-network */,
+				F9A915FF0E7AE4710022C4EF /* interleaved */,
 			);
 		};
 /* End PBXProject section */
@@ -2318,6 +2372,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F9A915FD0E7AE4710022C4EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9A916020E7AE48E0022C4EF /* interleaved.cpp in Sources */,
+				F9A916150E7AE5E70022C4EF /* Options.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2380,6 +2443,11 @@
 			isa = PBXTargetDependency;
 			target = 55EE8498093E5AAA00812582 /* librets */;
 			targetProxy = F9310A440DF4D332004DE8BB /* PBXContainerItemProxy */;
+		};
+		F9A916080E7AE4AC0022C4EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55EE8498093E5AAA00812582 /* librets */;
+			targetProxy = F9A916070E7AE4AC0022C4EF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3413,6 +3481,64 @@
 			};
 			name = Default;
 		};
+		F9A916040E7AE4AC0022C4EF /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(EXPAT)/lib",
+					"$(CURL)/lib",
+					"$(BOOST)/lib",
+					"$(inherited)",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = interleaved;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "../librets/include ${BOOST}/include $(inherited)";
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		F9A916050E7AE4AC0022C4EF /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = interleaved;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		F9A916060E7AE4AC0022C4EF /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = interleaved;
+				ZERO_LINK = YES;
+			};
+			name = Default;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3562,6 +3688,16 @@
 				F93109880DF4C18A004DE8BB /* Development */,
 				F93109890DF4C18A004DE8BB /* Deployment */,
 				F931098A0DF4C18A004DE8BB /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		F9A916030E7AE4AC0022C4EF /* Build configuration list for PBXNativeTarget "interleaved" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F9A916040E7AE4AC0022C4EF /* Development */,
+				F9A916050E7AE4AC0022C4EF /* Deployment */,
+				F9A916060E7AE4AC0022C4EF /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;

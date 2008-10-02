@@ -12,9 +12,11 @@ using librets;
 public class Options
 {
     private string mBroker                  = "";
+    private string mClassTimeStamp;
     private SearchRequest.CountType mCount  = SearchRequest.CountType.RECORD_COUNT_AND_RESULTS;
     private EncodingType mEncoding          = EncodingType.RETS_XML_DEFAULT_ENCODING;
     private string mHttpLog                 = "";
+    private string mLastModified            = "";
     private int mLimit                      = -1;
     private bool mLogEverything             = false;
     private string mMetadataTimestamp       = "";
@@ -32,7 +34,7 @@ public class Options
     private string mUAPass                  = "";
     private string mUrl                     = "http://demo.crt.realtors.org:6103/rets/login";
     private string mUser                    = "Joe";
-    private string mProxyUrl		    = "";
+    private string mProxyUrl                    = "";
     private string mProxyPassword           = "";
 
     /**
@@ -42,6 +44,15 @@ public class Options
     {
         get { return mBroker; }
         set { mBroker = value; }
+    }
+
+    /**
+     * The field containing the class timestamp (RETS 1.7+)
+     */
+    public string classTimeStamp
+    {
+        get { return mClassTimeStamp; }
+        set { mClassTimeStamp = value; }
     }
 
     /**
@@ -130,6 +141,15 @@ public class Options
     {
         get { return mHttpLog; }
         set { mHttpLog = value; }
+    }
+
+    /**
+     * The last modified timestamp.
+     */
+    public string lastModified
+    {
+        get { return mLastModified; }
+        set { mLastModified = value; }
     }
 
     /**
@@ -367,6 +387,9 @@ public class Options
                                 ret_val         = false;
                             }
                             break;
+                case "--last-modified":
+                            lastModified        = value;
+                            break;
                 case "--limit":
                             limit               = int.Parse(value);
                             break;
@@ -402,6 +425,9 @@ public class Options
                             break;
                 case "--select":
                             select              = value;
+                            break;
+                case "--timestamp":
+                            classTimeStamp      = value;
                             break;
                 case "--url":
                             login_url           = value;
@@ -450,6 +476,8 @@ public class Options
         Console.WriteLine("\t--default-encoding\t\"US-ASCII\" or \"ISO\"");
         Console.WriteLine("\t--proxy-url\t\tProxy url");
         Console.WriteLine("\t--proxy-password\tProxy password");
+        Console.WriteLine("-t--timestamp\tSystemname of the Class TimeSTamp Field");
+        Console.WriteLine("\t--lastmodified\tRETS timestamp of the earliest date from which to select.");
     }
 
     /**
@@ -465,8 +493,8 @@ public class Options
         mRetsSession = new RetsSession(mUrl);
 
         mRetsSession.SetDefaultEncoding(mEncoding);
-	if (mHttpLog.Length > 0)
-	    mRetsSession.SetHttpLogName(mHttpLog);
+        if (mHttpLog.Length > 0)
+            mRetsSession.SetHttpLogName(mHttpLog);
         mRetsSession.SetLogEverything(mLogEverything);
         mRetsSession.SetRetsVersion(mRetsVersion);
         mRetsSession.SetUserAgent(mUA);

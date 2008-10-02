@@ -24,6 +24,7 @@
 #include "librets/CurlStream.h"
 #include "librets/RetsException.h"
 #include "librets/RetsHttpLogger.h"
+#include "librets/str_stream.h"
 #include "librets/util.h"
 
 using namespace librets;
@@ -33,38 +34,51 @@ namespace ba = boost::algorithm;
 
 CurlHttpClient::CurlHttpClient()
 {
+    CurlEasy Curl;
+    /*
+     * The libCURL docs indicate that with SSL support, we need to make
+     * sure curl_global_init is called. The easiest way is to tell libCURL
+     * to initialize all modules that are built.
+     */
+    curl_global_init(CURL_GLOBAL_ALL);
+
     mLogger = NullHttpLogger::GetInstance();
-    mCurl.SetVerbose(false);
-    mCurl.SetDebugData(this);
-    mCurl.SetDebugFunction(CurlHttpClient::StaticDebug);
-    mCurl.SetHttpAuth(CURLAUTH_ANY);
-    mCurl.SetCookieFile("");
-    mCurl.SetWriteData(this);
-    mCurl.SetWriteFunction(CurlHttpClient::StaticWriteData);
-    mCurl.SetWriteHeaderData(this);
-    mCurl.SetWriteHeaderFunction(CurlHttpClient::StaticWriteHeader);
-    
-    mCurlMulti.AddEasy(mCurl);
-    
-    mResponseCode = 0;
+    mLogging = false;
 
     SetUserAgent("librets-curl/" LIBRETS_VERSION);
-    SetDefaultHeader("X-Librets-Version", LIBRETS_VERSION ", libCURL - " + mCurl.GetVersion());
+    SetDefaultHeader("X-Librets-Version", LIBRETS_VERSION ", libCURL - " + Curl.GetVersion());
 }
 
 CurlHttpClient::~CurlHttpClient()
 {
-    mCurlMulti.RemoveEasy(mCurl);
 }
 
 string CurlHttpClient::GetCookie(const char * name)
 {
     string cookie(name);
     
-    mCookies.free_all();
-    mCookies.set(mCurl.GetCookieSlist());
-    
-    curl_slist *slist = (curl_slist *)mCookies.slist();
+    CurlEasy *curlEasy  = mCurlMulti.EasyFactory();
+
+    /*
+     * We probably do not need the easy handle fully populated since all
+     * we want to do is fetch the cookies.
+     */
+    curlEasy->SetHttpAuth(CURLAUTH_ANY);
+    curlEasy->SetCookieFile("");
+    curlEasy->SetUserCredentials(mUserName, mPassword);
+
+    if (!mProxyUrl.empty())
+    {
+        curlEasy->SetProxyUrl(mProxyUrl);
+        if (!mProxyPassword.empty())
+            curlEasy->SetProxyPassword(mProxyPassword);
+    }
+
+    curlEasy->SetUrl(mUrl);
+
+    curl_slist *slist = curlEasy->GetCookieSlist();
+
+    mCurlMulti.FreeEasy(curlEasy);
     
     if (!slist)
     {
@@ -137,27 +151,6 @@ void CurlHttpClient::GenerateHeadersSlist(const StringMap & requestHeaders)
     }
 }
 
-int CurlHttpClient::GetResponseCode()
-{
-    /*
-     * With the multi interface, we won't get status until the transaction is done.
-     * Here we assume that if someone wants status, they want the request completed, so
-     * complete it.
-     */
-    while (mResponseCode == 0 && ContinueRequest());
-    
-    /*
-     * If the response code is still zero, the socket may have been closed or there is some error.
-     * If that is the case, masquerade as a 503 (service unavailble) error.
-     */
-    if (mResponseCode == 0 && !ContinueRequest())
-    {
-        return 503;
-    }
-    
-    return mResponseCode;
-}
-
 void CurlHttpClient::SetUserAgent(string userAgent)
 {
     SetDefaultHeader("User-Agent", userAgent);
@@ -170,24 +163,21 @@ string CurlHttpClient::GetUserAgent() const
 
 void CurlHttpClient::SetUserCredentials(string userName, string password)
 {
-    mCurl.SetUserCredentials(userName, password);
+    mUserName = userName;
+    mPassword = password;
 }
 
 void CurlHttpClient::SetProxy(string url, string password)
 {
     ba::trim(url);
     ba::trim(password);
-    if (!url.empty())
-    {
-        mCurl.SetProxyUrl(url);
-        if (!password.empty())
-            mCurl.SetProxyPassword(password);
-    }
+    mProxyUrl = url;
+    mProxyPassword = password;
 }
 
 void CurlHttpClient::SetTimeout(int seconds)
 {
-    mCurl.SetTimeout(seconds);
+    mTimeout = seconds;
 }
 
 /**
@@ -196,33 +186,62 @@ void CurlHttpClient::SetTimeout(int seconds)
  */
 bool CurlHttpClient::ContinueRequest()
 {
-    bool wasVerbose = mCurl.GetVerbose();
-    mCurl.SetVerbose(mLogging);
-
+    /*
+     * If there is at least one easy handle registered and running, we need to
+     * invoke the Perform() loop.
+     */
     if (mCurlMulti.StillRunning())
         mCurlMulti.Perform();
         
-    if (!mCurlMulti.StillRunning())
-    {
-        mResponseCode = mCurl.GetResponseCode();
-    }
-    
-    mCurl.SetVerbose(wasVerbose);
-    
     return mCurlMulti.StillRunning();
 }
 
 RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
 {
+    CurlEasy            *curlEasy  = mCurlMulti.EasyFactory();
+    CurlHttpResponsePtr response(new CurlHttpResponse());
+    CurlHttpClientPrivate  *client = new CurlHttpClientPrivate(request, response, this);
+    
+    if (curlEasy == NULL)
+    {
+        throw RetsException(str_stream() << "Unable to create CurlEasy handle");
+    }
+    
+    if (client == NULL)
+    {
+        throw RetsException(str_stream() << "Unable to create Curl Private data structure");
+    }
+
+    /*
+     * Initialize the object for this request.
+     */
+    curlEasy->SetDebugData(client);
+    curlEasy->SetDebugFunction(CurlHttpClient::StaticDebug);
+    curlEasy->SetHttpAuth(CURLAUTH_ANY);
+    curlEasy->SetCookieFile("");
+    curlEasy->SetTimeout(mTimeout);
+    curlEasy->SetUserCredentials(mUserName, mPassword);
+    curlEasy->SetWriteData(client);
+    curlEasy->SetWriteFunction(CurlHttpClient::StaticWriteData);
+    curlEasy->SetWriteHeaderData(client);
+    curlEasy->SetWriteHeaderFunction(CurlHttpClient::StaticWriteHeader);
+
     string url = request->GetUrl();
+    mUrl = url;
     string queryString = request->GetQueryString();
-    bool wasVerbose = mCurl.GetVerbose();
-    mLogging = request->GetLogging();
-    mCurl.SetVerbose(mLogging);
+    if (mLogging)
+        curlEasy->SetVerbose(request->GetLogging());
+
+    if (!mProxyUrl.empty())
+    {
+        curlEasy->SetProxyUrl(mProxyUrl);
+        if (!mProxyPassword.empty())
+            curlEasy->SetProxyPassword(mProxyPassword);
+    }
 
     if (request->GetMethod() == RetsHttpRequest::GET)
     {
-        mCurl.SetHttpGet(true);
+        curlEasy->SetHttpGet(true);
         if (!queryString.empty())
         {
             url += "?" + queryString;  
@@ -230,44 +249,44 @@ RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
     }
     else
     {
-        mCurl.SetPostFields(queryString);
+        curlEasy->SetPostFields(queryString);
     }
     GenerateHeadersSlist(request->GetHeaderMap());
-    mCurl.SetHttpHeaders(mHeaders.slist());
-    mCurl.SetUrl(url);
-    mResponse.reset(new CurlHttpResponse());
-    iostreamPtr dataStream(new CurlStream(*this));
-    mResponse->SetStream(dataStream);
-    mResponse->SetHttpClient(this);
+    curlEasy->SetHttpHeaders(mHeaders.slist());
+    curlEasy->SetUrl(url);
+    
     /*
-     * It appears that to start a new transaction, we must remove and then
-     * add the Easy handle back.
+     * Register the client object with the easy handle as its private data.
+     * This will allow the CurlMulti handling loop to determine the proper context
+     * for that handle.
      */
-    mCurlMulti.RemoveEasy(mCurl);
-    mCurlMulti.AddEasy(mCurl);
-    mCurlMulti.Reset();
+    curlEasy->SetPrivateData(client);
+    
+    iostreamPtr dataStream(new CurlStream(*this));
+    response->SetStream(dataStream);
+    response->SetHttpClient(this);
+    response->SetHttpRequest(request);
+
+    mCurlMulti.AddEasy(curlEasy);
     /*
      * Start the html request. This will return immediately.
      */
     mCurlMulti.Perform();
     
-    mCurl.SetVerbose(wasVerbose);
-    mResponse->SetUrl(request->GetUrl());
-    mResponseCode = mCurl.GetResponseCode();
-    return mResponse;
+    return response;
 }
 
 void CurlHttpClient::SetLogger(RetsHttpLogger * logger)
 {
     if (logger == 0)
     {
-        mCurl.SetVerbose(false);
         mLogger = NullHttpLogger::GetInstance();
+        mLogging = false;
     }
     else
     {
         mLogger = logger;
-        mCurl.SetVerbose(true);
+        mLogging = true;
     }
 }
 
@@ -279,26 +298,17 @@ RetsHttpLogger* CurlHttpClient::GetLogger() const
 size_t CurlHttpClient::StaticWriteData(char * buffer, size_t size, size_t nmemb,
                                        void * userData)
 {
-    CurlHttpClient * client = (CurlHttpClient *) userData;
-    return client->WriteData(buffer, size, nmemb);
-}
-
-size_t CurlHttpClient::WriteData(char * buffer, size_t size, size_t nmemb)
-{
+    CurlHttpClientPrivate * client = (CurlHttpClientPrivate *) userData;
     size_t bytes = size * nmemb;
-    mResponse->WriteData(buffer, bytes);
+    client->GetResponse()->WriteData(buffer, bytes);
     return bytes;
 }
 
 size_t CurlHttpClient::StaticWriteHeader(char * buffer, size_t size,
                                          size_t nmemb, void * userData)
 {
-    CurlHttpClient * client = (CurlHttpClient *) userData;
-    return client->WriteHeader(buffer, size, nmemb);
-}
+    CurlHttpClientPrivate * client = (CurlHttpClientPrivate *) userData;
 
-size_t CurlHttpClient::WriteHeader(char * buffer, size_t size, size_t nmemb)
-{
     size_t bytes = size * nmemb;
 
     string header(buffer, bytes);
@@ -307,8 +317,9 @@ size_t CurlHttpClient::WriteHeader(char * buffer, size_t size, size_t nmemb)
     if (splitField(header, ":", name, value))
     {
         ba::trim(value);
-        mResponse->SetHeader(name, value);
+        client->GetResponse()->SetHeader(name, value);
     }
+
 
     return bytes;
 }
@@ -316,30 +327,24 @@ size_t CurlHttpClient::WriteHeader(char * buffer, size_t size, size_t nmemb)
 int CurlHttpClient::StaticDebug(CURL * handle, curl_infotype type, char * data,
                                 size_t size, void * userData)
 {
-    CurlHttpClient * client = (CurlHttpClient *) userData;
-    return client->Debug(handle, type, data, size);
-}
-
-int CurlHttpClient::Debug(CURL * handle, curl_infotype type, char * data,
-                          size_t size)
-{
+    CurlHttpClientPrivate * client = (CurlHttpClientPrivate *) userData;
     string text(data, size);
     switch (type)
     {
         case CURLINFO_TEXT:
-            mLogger->logHttpData(RetsHttpLogger::INFORMATIONAL, text);
+            client->GetClient()->GetLogger()->logHttpData(RetsHttpLogger::INFORMATIONAL, text);
             break;
             
         case CURLINFO_HEADER_IN:
         case CURLINFO_DATA_IN:
         case CURLINFO_SSL_DATA_IN:
-            mLogger->logHttpData(RetsHttpLogger::RECEIVED, text);
+            client->GetClient()->GetLogger()->logHttpData(RetsHttpLogger::RECEIVED, text);
             break;
             
         case CURLINFO_HEADER_OUT:
         case CURLINFO_DATA_OUT:
         case CURLINFO_SSL_DATA_OUT:
-            mLogger->logHttpData(RetsHttpLogger::SENT, text);
+            client->GetClient()->GetLogger()->logHttpData(RetsHttpLogger::SENT, text);
             break;
             
         default:
