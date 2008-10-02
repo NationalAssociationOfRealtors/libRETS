@@ -162,7 +162,7 @@ class CurlEasy
     
     /**
      * Provide to cURL a refered to the shared object.
-     * @param share A pointer to a CURLSH handle.
+     * @param shared A pointer to a CURLSH handle.
      */
     void SetShareHandle(CURLSH * shared);
     

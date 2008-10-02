@@ -292,35 +292,6 @@ int main(int argc, char * argv[])
         for (vector<string>::iterator i = listingIds.begin(); i != listingIds.end(); i++)
             cout << *i << endl;
         
-#if 0
-        searchRequest = session->CreateSearchRequest(
-            resource, searchClass, query);
-        if (select.length() != 0)
-            searchRequest->SetSelect(select);
-        searchRequest->SetStandardNames(standardNames);
-        searchRequest->SetLimit(limit);
-        searchRequest->SetOffset(offset);
-        searchRequest->SetCountType(count);
-        searchRequest->SetFormatType(format);
-        
-        results = session->Search(searchRequest.get());
-        if (printCount)
-        {
-            cout << "Matching record count: " << results->GetCount() << endl;
-        }
-        columns = results->GetColumns();
-        while (results->HasNext())
-        {
-            StringVector::iterator i;
-            for (i = columns.begin(); i != columns.end(); i++)
-            {
-                string column = *i;
-                cout << setw(15) << column << ": "
-                     << setw(0) << results->GetString(column) << endl;
-            }
-            cout << endl;
-        }
-#endif        
         session->Logout();
     }
     catch (RetsException & e)
