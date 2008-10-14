@@ -10,10 +10,15 @@ PHP5_WRAP = php5\librets_wrap.cpp
 
 SWIG_FILES = librets.i auto_ptr_release.i shared_ptr_release.i
 
-all: csharp_ ruby_ python_ php5_
+all: csharp_ ruby_ python_ php5_ java_
 
 csharp_:
 	cd csharp
+	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
+	cd ..
+
+java_:
+	cd java
 	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
 	cd ..
 

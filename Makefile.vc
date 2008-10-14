@@ -43,6 +43,7 @@ prepare:
 	@$(MKDIR_P) $(DISTDIR)/doc/api
 	@$(MKDIR_P) $(DISTDIR)/lib
 	@$(MKDIR_P) $(DISTDIR)/dotnet
+	@$(MKDIR_P) $(DISTDIR)/java
 	@$(MKDIR_P) $(DISTDIR)/ruby
 	@$(MKDIR_P) $(DISTDIR)/python
 	@$(MKDIR_P) $(DISTDIR)/php5
@@ -71,7 +72,7 @@ lib-all-variants:
 
 dist: docs lib-all-variants _dist
 
-_dist: _dist-prepare _dist-cpp _dist-csharp _dist-ruby _dist-python _dist-php5
+_dist: _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-ruby _dist-python _dist-php5
 	rm -f $(DIST_ZIP)
 	cd build
 	zip -rq ../$(DIST_ZIP) $(DIST_BASE)
@@ -87,6 +88,9 @@ _dist-cpp:
 _dist-csharp:
 	cp -u project/swig/csharp/bin/*.dll $(DISTDIR)/dotnet
 	cp -u project/swig/csharp/bin/Search.exe $(DISTDIR)/dotnet
+
+_dist-java:
+	cp -u project/swig/java/bin/*.dll $(DISTDIR)/java
 
 _dist-ruby:
 	cp -u project/swig/ruby/*.so $(DISTDIR)/ruby

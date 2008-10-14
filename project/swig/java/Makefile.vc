@@ -1,0 +1,71 @@
+!include <../../build/Makefile.vc>
+
+LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
+
+!include <generated.vc>
+WRAP = 	librets_wrap.cpp
+
+CFLAGS  = $(CFLAGS_STD) /I ../../librets/include $(BOOST_CFLAGS) $(CURL_CFLAGS) /I "$(JAVA_HOME)/include" /I "$(JAVA_HOME)/include/win32"
+LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS)
+LINK = $(LINK_EXE) $(LDFLAGS)
+SYSLIBS = wsock32.lib winmm.lib
+
+BIN_DIR = bin
+GEN_DIR = generated
+LIB_DIR = librets
+LIBRETS_OBJ = librets_wrap.obj
+LIBRETS_DLL_FILE = librets.dll
+LIBRETS_DLL = $(BIN_DIR)\$(LIBRETS_DLL_FILE)
+LIBRETS_JAR_FILE = librets.jar
+LIBRETS_JAR = $(BIN_DIR)\$(LIBRETS_JAR_FILE)
+LIBRETS_SRC = $(GENERATED_SRC) CppInputStream.cs
+RM = rm -f
+
+all: $(LIBRETS_DLL)  $(LIBRETS_JAR)
+
+$(LIBRETS_DLL): $(LIBRETS_OBJ) $(BIN_DIR) 
+	$(LINK) /dll /out:$(LIBRETS_DLL) $(LIBRETS_OBJ) $(LIBRETS_LIB) $(SYSLIBS)
+
+$(BIN_DIR):
+	@if not exist "$(BIN_DIR)" mkdir $(BIN_DIR)
+
+$(GEN_DIR):
+	@if not exist "$(GEN_DIR)" mkdir $(GEN_DIR)
+
+$(LIB_DIR):
+	@if not exist "$(LIB_DIR)" mkdir $(LIB_DIR)
+
+# Use to generate generated.vc
+win_files:
+	perl ../../build/win_files.pl GENERATED_SRC '$(GEN_DIR)\*.java' > generated.vc
+
+SWIG_JAVA = $(SWIG) -c++ -java -package librets -o librets_wrap.cpp \
+	-outdir $(GEN_DIR) \
+	../librets.i
+
+$(LIBRETS_JAR): $(GENERATED_SRC)
+	@javac -d . $(GENERATED_SRC)
+	@jar -cvf $(LIBRETS_JAR) librets
+	
+librets_wrap.obj: librets_wrap.cpp
+
+librets_wrap.cpp: ../librets.i $(GEN_DIR) 
+	@-erase $(GEN_DIR)\*.java 2> NUL
+	$(SWIG_JAVA)
+
+clean:
+	@-rmdir /q /s $(BIN_DIR) 2> NUL
+	@-rmdir /q /s $(GEN_DIR) 2> NUL
+	@-rmdir /q /s $(LIB_DIR) 2> NUL
+	@-erase /q vc*.pch 2> NUL
+	@-erase /q vc*.idb 2> NUL
+	@-erase /q vc*.pdb 2> NUL
+	@-erase /q librets.* 2> NUL
+	@-erase /q *.obj 2> NUL
+	@-erase librets_wrap.cpp 2> NUL
+
+distclean: clean
+	$(RM) $(GENERATED_SRC) librets_wrap*
+
+{.\}.cpp.obj:
+	$(CXX) $(CFLAGS) /Fo"$@"  $<
