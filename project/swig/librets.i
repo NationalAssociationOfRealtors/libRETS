@@ -1442,6 +1442,7 @@ class RetsSession
   public:
     static const unsigned int MODE_CACHE      = 0x01;
     static const unsigned int MODE_NO_STREAM  = 0x02;
+    static const unsigned int MODE_NO_EXPECT  = 0x04;
 
     RetsSession(std::string loginUrl) 
                                   throw(RetsHttpException, 

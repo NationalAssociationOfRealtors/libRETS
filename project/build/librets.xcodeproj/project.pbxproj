@@ -2947,6 +2947,7 @@
 					"${BOOST}/include",
 					"${CPPUNIT}/include",
 					../librets/include,
+					../test/src,
 				);
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
