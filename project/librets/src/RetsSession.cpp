@@ -41,6 +41,7 @@ typedef RetsSession CLASS;
 
 const char * CLASS::DEFAULT_USER_AGENT = "librets/" LIBRETS_VERSION;
 const RetsVersion CLASS::DEFAULT_RETS_VERSION = RETS_1_5;
+const char * CLASS::HTTP_EXPECT_HEADER = "Expect";
 const char * CLASS::RETS_SESSION_ID_HEADER = "RETS-Session-ID";
 const char * CLASS::RETS_VERSION_HEADER = "RETS-Version";
 const char * CLASS::RETS_UA_AUTH_HEADER = "RETS-UA-Authorization";
@@ -50,6 +51,7 @@ const char * CLASS::RETS_1_7_STRING = "RETS/1.7";
 
 const int CLASS::MODE_CACHE     = 0x01;
 const int CLASS::MODE_NO_STREAM = 0x02;
+const int CLASS::MODE_NO_EXPECT = 0x04;
 
 CLASS::RetsSession(string login_url)
 {
@@ -104,6 +106,11 @@ RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
             mHttpClient->GetDefaultHeader(RETS_VERSION_HEADER));
         string headerValue = "Digest " + mUserAgentAuthCalculator.AuthorizationValue();
         request->SetHeader(RETS_UA_AUTH_HEADER, headerValue);
+    }
+    
+    if (mFlags & MODE_NO_EXPECT && request->GetMethod() == RetsHttpRequest::POST)
+    {
+        mHttpClient->SetDefaultHeader(HTTP_EXPECT_HEADER, "");
     }
 
     RetsHttpResponsePtr httpResponse = mHttpClient->StartRequest(request);

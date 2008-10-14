@@ -372,11 +372,14 @@ class RetsSession : public MetadataLoader
      * Mode flags for the current session.
      * MODE_CACHE is used in streaming mode to enable the row cache.
      * MODE_NO_STREAM will disable the streaming mode.
+     * MODE_NO_EXPECT will disable the Expect: 100-Continue http header.
      */
     static const int    MODE_CACHE;
     static const int    MODE_NO_STREAM;
+    static const int    MODE_NO_EXPECT;
     
 private:
+    static const char * HTTP_EXPECT_HEADER;
     static const char * RETS_SESSION_ID_HEADER;
     static const char * RETS_VERSION_HEADER;
     static const char * RETS_UA_AUTH_HEADER;
