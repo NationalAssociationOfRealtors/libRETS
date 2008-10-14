@@ -29,8 +29,8 @@ namespace librets {
  * XML parser will perform. Note that the RETS standard is supposed to be
  * US-ASCII, but there are non-compliant servers that provide data with
  * ISO or UNICODE values that will cause the XML parsing to fail. In 
- * those instances, use RETS_XML_ISO_ENCODING to tell the parser to handle
- * those characters.
+ * those instances, use RETS_XML_ISO_ENCODING or RETS_XML_UTF8_ENCODING 
+ * to tell the parser to handle those characters.
  */
 enum EncodingType
 {
@@ -41,7 +41,11 @@ enum EncodingType
     /**
      * The data may contain extended characters.
      */
-    RETS_XML_ISO_ENCODING
+    RETS_XML_ISO_ENCODING,
+    /**
+     * The data may contain characters in UTF-8 encoding.
+     */
+    RETS_XML_UTF8_ENCODING
 };
     
 }

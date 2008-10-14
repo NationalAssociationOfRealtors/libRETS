@@ -19,9 +19,11 @@
 #include "librets.h"
 #include <iostream>
 #include <fstream>
+#include "boost/algorithm/string.hpp"
 
 using namespace librets;
 namespace po = boost::program_options;
+namespace ba = boost::algorithm;
 using std::string;
 using std::cout;
 using std::endl;
@@ -40,6 +42,8 @@ Options::Options()
         ("config-file,c", po::value<string>(&mConfigFile),
          "Use configuration file")
         ("disable-streaming,d", "Disable streaming mode")
+        ("encoding", po::value<string>(&mEncoding)->default_value("US-ASCII",""),
+        "Default character encoding - US-ASCII, ISO or UTF8")
         ("full-metadata,F", 
          "Use full metadata (instead of incremental)")
         ("http-get,g", "Use HTTP GET")
@@ -142,13 +146,20 @@ RetsSessionPtr Options::RetsLogin()
 		session->SetProxy(proxyUrl,proxyPassword);
 	}
 
+    string encoding = ba::to_lower_copy(mEncoding);
+    if (encoding == "iso")
+      session->SetDefaultEncoding(RETS_XML_ISO_ENCODING);
+    else
+    if (encoding == "utf8")
+        session->SetDefaultEncoding(RETS_XML_UTF8_ENCODING);
+    
     if (options.count("http-log") || options.count("http-log-everything"))
     {
         mLogStream.open(mLogFile.c_str());
         mLogger.reset(new StreamHttpLogger(&mLogStream));
         session->SetHttpLogger(mLogger.get());
-	if (options.count("http-log-everything"))
-	  session->SetLogEverything(true);
+        if (options.count("http-log-everything"))
+            session->SetLogEverything(true);
     }
     if (retsVersion == RETS_1_0 || retsVersion == RETS_1_5)
     {

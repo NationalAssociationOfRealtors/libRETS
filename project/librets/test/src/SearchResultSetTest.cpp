@@ -40,6 +40,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testExtendedCharResponse);
     CPPUNIT_TEST(testMaxRows);
     CPPUNIT_TEST(testRetsStatus);
+    CPPUNIT_TEST(testUTF8Response);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -54,6 +55,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testExtendedCharResponse();
     void testMaxRows();
     void testRetsStatus();
+    void testUTF8Response();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -359,4 +361,49 @@ void CLASS::testRetsStatus()
     CPPUNIT_ASSERT(resultSet.GetReplyCode() == 0);
     CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
 }
+
+void CLASS::testUTF8Response()
+{
+    SearchResultSet resultSet;
+
+    /*
+     * This represents "nunez" with utf8 characters for the accented "u",
+     * and the "enyay".
+     */
+    const char nunez [] = {0x4e, 0xc3, 0xba, 0xc3, 0xb1, 0x65, 0x7a, 0x00};
+
+    resultSet.SetEncoding(RETS_XML_DEFAULT_ENCODING);
+    try
+    {
+        istreamPtr inputStream = getResource("search-response-extended-utf8.xml");
+        resultSet.Parse(inputStream);
+        CPPUNIT_FAIL("Should have thrown exception");
+    }
+    catch (RetsException &)
+    {
+        // Expected
+    }
+
+    resultSet.SetEncoding(RETS_XML_UTF8_ENCODING);
+    istreamPtr inputStream = getResource("search-response-extended-utf8.xml");
+    resultSet.Parse(inputStream);
+
+    ASSERT_EQUAL(1, resultSet.GetCount());
+    StringVector columns = resultSet.GetColumns();
+    ASSERT_EQUAL(StringVector::size_type(3), columns.size());
+    ASSERT_STRING_EQUAL("AgentID", columns.at(0));
+    ASSERT_STRING_EQUAL("FirstName", columns.at(1));
+    ASSERT_STRING_EQUAL("LastName", columns.at(2));
+
+    CPPUNIT_ASSERT(resultSet.HasNext());
+    ASSERT_STRING_EQUAL("AG000001", resultSet.GetString("AgentID"));
+    ASSERT_STRING_EQUAL("AG000001", resultSet.GetString(0));
+    ASSERT_STRING_EQUAL("Carlos", resultSet.GetString("FirstName"));
+    ASSERT_STRING_EQUAL("Carlos", resultSet.GetString(1));
+    ASSERT_STRING_EQUAL(nunez, resultSet.GetString("LastName"));
+    ASSERT_STRING_EQUAL(nunez, resultSet.GetString(2));
+
+    CPPUNIT_ASSERT(!resultSet.HasNext());
+}
+
 

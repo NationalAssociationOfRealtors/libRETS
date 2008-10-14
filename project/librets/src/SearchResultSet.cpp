@@ -333,7 +333,9 @@ void SearchResultSet::SetInputStream(istreamPtr inputStream)
     ExpatXmlParserPtr XmlParser( new ExpatXmlParser(inputStream,
                     (mEncoding == RETS_XML_ISO_ENCODING 
                         ? "iso-8859-1"    
-                        : "US-ASCII")));
+                        : (mEncoding == RETS_XML_UTF8_ENCODING
+                            ? "UTF-8"
+                            : "US-ASCII"))));
     mXmlParser = XmlParser;
 
     mDelimiter = "\t";

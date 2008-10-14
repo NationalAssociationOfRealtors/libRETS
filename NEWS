@@ -1,12 +1,16 @@
 Version 1.2.4 - xx xxx 2008
 
   * Add RetsSession.SetModeFlags to allow caching to be enabled
-    in streaming mode (RetsSession::MODE_CACHE), and to disable
-    streaming mode (RetsSession::MODE_NO_STREAM).
-    Tickets #59 and #77.
+    in streaming mode (RetsSession::MODE_CACHE), to disable
+    streaming mode (RetsSession::MODE_NO_STREAM), and to disable
+    the "Expect: 100 Continue" header (RetsSession::MODE_NO_EXPECT).
+    Tickets #59, #77 and #79.
 
   * Add RetsSession.SetTimeout() to establish a timeout value
     with libCURL. Ticket #68.
+
+  * Add UTF-8 as an accetable character encoding.
+    Ticket #80.
 
 Version 1.2.3 - 9 Sep 2008
 

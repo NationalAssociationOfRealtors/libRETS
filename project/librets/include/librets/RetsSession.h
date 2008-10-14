@@ -309,8 +309,8 @@ class RetsSession : public MetadataLoader
      * Sets the data encoding for the data to be returned by a Search. Thiss
      * is session wide,
      *
-     * @param encoding Either RETS_XML_DEFAULT_ENCODING or
-     *                 RETS_XML_ISO_ENCODING.
+     * @param encoding RETS_XML_DEFAULT_ENCODING,
+     *                 RETS_XML_ISO_ENCODING or RETS_XML_UTF8_ENCODING.
      */
     void SetDefaultEncoding(EncodingType encoding);
 

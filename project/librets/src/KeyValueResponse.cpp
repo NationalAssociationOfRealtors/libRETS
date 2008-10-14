@@ -83,7 +83,9 @@ void CLASS::Parse(istreamPtr inputStream, RetsVersion retsVersion, EncodingType 
     RetsXmlParserPtr xmlParser(new ExpatXmlParser(inputStream,
                         (encoding == RETS_XML_ISO_ENCODING
                            ? "iso-8859-1"
-                           : "US-ASCII")));
+                           : (encoding == RETS_XML_UTF8_ENCODING
+                                ? "UTF-8"
+                                : "US-ASCII"))));
                            
     RetsXmlEventListPtr eventList = xmlParser->GetEventListSkippingEmptyText();
     RetsXmlTextEventPtr bodyEvent = GetBodyEvent(eventList, retsVersion);

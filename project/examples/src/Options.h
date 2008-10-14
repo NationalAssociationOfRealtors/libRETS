@@ -44,7 +44,8 @@ class Options
 	std::string proxyPassword;
     bool disableStreaming;
     bool enableCaching;
-
+    std::string mEncoding;
+    
     Options();
 
     bool ParseCommandLine(int argc, char * argv[]);

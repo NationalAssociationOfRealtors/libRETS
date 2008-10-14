@@ -47,8 +47,8 @@ class XmlMetadataParser : public RetsObject
      * will allow a work around for servers that haven't properly
      * sanitized their data.
      *
-     * @param encoding Either RETS_XML_DEFAULT_ENCODING or
-     * RETS_XML_ISO_ENCODING.
+     * @param encoding RETS_XML_DEFAULT_ENCODING,
+     * RETS_XML_ISO_ENCODING or RETS_XML_UTF8_ENCODING.
      */
     void SetEncoding(EncodingType encoding);
 
