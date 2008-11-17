@@ -90,6 +90,7 @@ _dist-csharp:
 	cp -u project/swig/csharp/bin/Search.exe $(DISTDIR)/dotnet
 
 _dist-java:
+	cp -u project/swig/java/bin/*.jar $(DISTDIR)/java
 	cp -u project/swig/java/bin/*.dll $(DISTDIR)/java
 
 _dist-ruby:
