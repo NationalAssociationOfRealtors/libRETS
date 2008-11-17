@@ -1,4 +1,4 @@
-Version 1.2.4 - xx xxx 2008
+Version 1.2.4 - 17 Nov 2008
 
   * Add RetsSession.SetModeFlags to allow caching to be enabled
     in streaming mode (RetsSession::MODE_CACHE), to disable
