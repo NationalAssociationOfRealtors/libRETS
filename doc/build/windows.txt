@@ -3,17 +3,27 @@ Installing the Prequisites
 ==========================
 
 Due to modifications needed to make 3rd party libraries compile
-against librets, binaries of all dependant libraries are stored in
-Subversion.  Check out this repository in the parent directory of the
-main librets directory:
+against librets and to aid people who ONLY want to work on libRETS
+code, binaries of all dependant libraries are stored in Subversion.
+Check out this repository in the parent directory of the main librets
+directory:
 
   https://code.crt.realtors.org/svn/librets/vendor/windows/
 
-The best Subversion client for Windows is TortoiseSVN:
+A good Subversion client for Windows is TortoiseSVN:
 
   http://tortoisesvn.tigris.org/
 
 You then need to install Microsoft Visual C++ and a Java JDK.
+
+If you want to get the source to libRETS out of subversion you can
+checkout from the repository using this base url:
+
+  https://code.crt.realtors.org/svn/librets/librets
+
+Following common svn practice, under that URL are a tags, branches,
+and trunk directories.
+
 
 Microsoft Visual C++
 --------------------
