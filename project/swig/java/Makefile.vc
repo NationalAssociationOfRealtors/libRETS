@@ -44,12 +44,12 @@ SWIG_JAVA = $(SWIG) -c++ -java -package librets -o librets_wrap.cpp \
 	../librets.i
 
 $(LIBRETS_JAR): $(GENERATED_SRC)
-	@javac -d . $(GENERATED_SRC)
-	@jar -cvf $(LIBRETS_JAR) librets
+	javac -d . $(GENERATED_SRC)
+	jar -cvf $(LIBRETS_JAR) librets
 	
 librets_wrap.obj: librets_wrap.cpp
 
-librets_wrap.cpp: ../librets.i $(GEN_DIR) 
+librets_wrap.cpp: ../librets.i $(GEN_DIR) $(LIB_DIR)
 	@-erase $(GEN_DIR)\*.java 2> NUL
 	$(SWIG_JAVA)
 
