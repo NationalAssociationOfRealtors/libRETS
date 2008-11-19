@@ -26,6 +26,7 @@
 #include <map>
 
 #include "librets/RetsObject.h"
+#include "librets/http_forward.h"
 
 namespace librets {
 
@@ -73,7 +74,7 @@ class RetsHttpRequest : public virtual RetsObject
     void SetNoLogging();
     
     void SetLogging();
-        
+    
   private:
     void GenerateQueryString() const;
     

@@ -45,7 +45,7 @@ class SearchRequest : public RetsHttpRequest
      */
     SearchRequest(std::string searchType, std::string searchClass,
                   std::string query);
-
+    
     /**
      * This requests the server default limit.  This should be the same as
      * NONE, but some servers do not adhere.

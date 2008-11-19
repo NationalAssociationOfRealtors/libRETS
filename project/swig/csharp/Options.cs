@@ -12,11 +12,13 @@ using librets;
 public class Options
 {
     private string mBroker                  = "";
+    private string mClassTimeStamp;
     private SearchRequest.CountType mCount  = SearchRequest.CountType.RECORD_COUNT_AND_RESULTS;
     private bool mDisableStreaming          = false;
     private bool mEnableCacheing            = false;
     private EncodingType mEncoding          = EncodingType.RETS_XML_DEFAULT_ENCODING;
     private string mHttpLog                 = "";
+    private string mLastModified            = "";
     private int mLimit                      = -1;
     private bool mLogEverything             = false;
     private string mMetadataTimestamp       = "";
@@ -44,6 +46,15 @@ public class Options
     {
         get { return mBroker; }
         set { mBroker = value; }
+    }
+
+    /**
+     * The field containing the class timestamp (RETS 1.7+)
+     */
+    public string classTimeStamp
+    {
+        get { return mClassTimeStamp; }
+        set { mClassTimeStamp = value; }
     }
 
     /**
@@ -149,6 +160,15 @@ public class Options
     {
         get { return mHttpLog; }
         set { mHttpLog = value; }
+    }
+
+    /**
+     * The last modified timestamp.
+     */
+    public string lastModified
+    {
+        get { return mLastModified; }
+        set { mLastModified = value; }
     }
 
     /**
@@ -398,6 +418,9 @@ public class Options
                                 ret_val         = false;
                             }
                             break;
+                case "--last-modified":
+                            lastModified        = value;
+                            break;
                 case "--limit":
                             limit               = int.Parse(value);
                             break;
@@ -433,6 +456,9 @@ public class Options
                             break;
                 case "--select":
                             select              = value;
+                            break;
+                case "--timestamp":
+                            classTimeStamp      = value;
                             break;
                 case "--url":
                             login_url           = value;
@@ -483,6 +509,8 @@ public class Options
         Console.WriteLine("\t--proxy-password\tProxy password");
         Console.WriteLine("\t--enable-streaming\tEnable Streaming mode: \"yes\" or \"no\" (default \"yes\")");
         Console.WriteLine("\t--enable-cache\t\tEnable caching in Streaming mode: \"yes\" or \"no\" (default \"no\")");
+        Console.WriteLine("\t--timestamp\t\tSystemname of the Class TimeSTamp Field");
+        Console.WriteLine("\t--lastmodified\t\tRETS timestamp of the earliest date from which to select.");
     }
 
     /**

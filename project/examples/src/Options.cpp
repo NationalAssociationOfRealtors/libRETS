@@ -39,7 +39,7 @@ Options::Options()
          ->default_value(RetsSession::DEFAULT_USER_AGENT, ""), "User agent")
         ("broker-code,b", po::value<string>(&brokerCode)->default_value("", ""),
          "Broker Code")
-        ("config-file,c", po::value<string>(&mConfigFile),
+        ("config-file,c", po::value<string>(&mConfigFile)->default_value("",""),
          "Use configuration file")
         ("disable-streaming,d", "Disable streaming mode")
         ("encoding", po::value<string>(&mEncoding)->default_value("US-ASCII",""),
@@ -68,7 +68,7 @@ Options::Options()
         ("ua-password", po::value<string>(&userAgentPassword)
          ->default_value(""), "User agent password")
         ;
-        
+    mLogFile="";
 }
 
 bool Options::ParseCommandLine(int argc, char * argv[])

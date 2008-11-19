@@ -52,8 +52,6 @@ class RetsHttpClient
     virtual RetsHttpResponsePtr StartRequest(RetsHttpRequest * request) = 0;
     
     virtual bool ContinueRequest() = 0;
-    
-    virtual int GetResponseCode() = 0;
 
     virtual void SetLogger(RetsHttpLogger * logger) = 0;
 

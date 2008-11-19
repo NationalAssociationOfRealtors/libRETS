@@ -26,6 +26,7 @@
 #include "librets/RetsHttpResponse.h"
 #include "librets/std_forward.h"
 #include "librets/CurlStream.h"
+#include "librets/CurlEasy.h"
 
 namespace librets {
 /**
@@ -52,13 +53,21 @@ class CurlHttpResponse : public RetsHttpResponse
     
     virtual int GetResponseCode() const;
 
+    virtual void SetResponseCode(int responseCode);
+    
     void SetHttpClient(CurlHttpClient* httpClient);
+    
+    void SetHttpRequest(RetsHttpRequest* httpRequest);
+    
+    void SetInProgress(bool inProgress);
 
   private:
     iostreamPtr mStream;
     int mResponseCode;
     StringMap mHeaders;
     CurlHttpClient* mHttpClient;
+    RetsHttpRequest* mHttpRequest;
+    bool mInProgress;
 };
 
 };

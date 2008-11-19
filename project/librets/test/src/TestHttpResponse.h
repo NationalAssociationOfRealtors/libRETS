@@ -35,6 +35,8 @@ class TestHttpResponse : public RetsHttpResponse
     
     virtual int GetResponseCode() const;
     
+    virtual void SetResponseCode(int responseCode);
+    
   private:
     StringMap mHeaders;
     int mResponseCode;

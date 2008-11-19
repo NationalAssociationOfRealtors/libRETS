@@ -1615,6 +1615,11 @@ class RetsSession
                                         RetsReplyException,
                                         RetsException,
                                         std::exception);
+    void SetTimeout(int seconds)
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
 };
 
 
