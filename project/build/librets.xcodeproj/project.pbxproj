@@ -806,7 +806,7 @@
 		F95773300E019C5200836850 /* server-response-property.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "server-response-property.xml"; sourceTree = "<group>"; };
 		F95773350E019D2900836850 /* ServerInfoResponseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ServerInfoResponseTest.cpp; sourceTree = "<group>"; };
 		F9A915FC0E7AE43E0022C4EF /* interleaved.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = interleaved.cpp; sourceTree = "<group>"; };
-		F9A916000E7AE4710022C4EF /* interleaved */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = interleaved; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9A916000E7AE4710022C4EF /* interleaved */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = interleaved; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9A916450E7B38C50022C4EF /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_date_time.a; path = /opt/local/lib/libboost_date_time.a; sourceTree = "<absolute>"; };
 		F9AD5E0E0DFEDF7000775FCC /* get-object-tree.g */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "get-object-tree.g"; path = "../librets/src/get-object-tree.g"; sourceTree = SOURCE_ROOT; };
 		F9AD5E0F0DFEDF7000775FCC /* lookup-columns-tree.g */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "lookup-columns-tree.g"; path = "../librets/src/lookup-columns-tree.g"; sourceTree = SOURCE_ROOT; };

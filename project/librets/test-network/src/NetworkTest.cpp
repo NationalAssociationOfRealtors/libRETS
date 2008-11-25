@@ -27,10 +27,10 @@ using namespace std;
 class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
-    //CPPUNIT_TEST(testStreaming);
-    //CPPUNIT_TEST(testCurlTimeout);
-    //CPPUNIT_TEST(testCache);
-    //CPPUNIT_TEST(testNoStreaming);
+    CPPUNIT_TEST(testStreaming);
+    CPPUNIT_TEST(testCurlTimeout);
+    CPPUNIT_TEST(testCache);
+    CPPUNIT_TEST(testNoStreaming);
     CPPUNIT_TEST(test100Continue);
     CPPUNIT_TEST_SUITE_END();
 
@@ -80,27 +80,34 @@ void CLASS::testCurlTimeout()
      *   On beta, as root, do "ping -f alpha" in another shell.
      *   On alpha, run the test.
      */
-    session->SetTimeout(1);
-    
-    /*
-     * Perform the search and see if 160 records are returned.
-     */
-    SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
-    								"(ListPrice=300000-)");
-    searchRequest->SetSelect("ListingID,ListPrice,Beds,City");
-    searchRequest->SetStandardNames(true);
-    searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
-    searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
-    searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
-    searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
-
-    SearchResultSetAPtr results = session->Search(searchRequest.get());
-
-    while (results->HasNext())
+    try
     {
-        total_records++;
+        session->SetTimeout(1);
+	/*
+	 * Perform the search and see if 160 records are returned.
+	 */
+	SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
+								    "(ListPrice=300000-)");
+	searchRequest->SetSelect("ListingID,ListPrice,Beds,City");
+	searchRequest->SetStandardNames(true);
+	searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
+	searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
+	searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
+	searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
+
+	SearchResultSetAPtr results = session->Search(searchRequest.get());
+
+	while (results->HasNext())
+	{
+	    total_records++;
+	}
+	ASSERT_EQUAL (results->GetCount(), total_records);
     }
-    ASSERT_EQUAL (results->GetCount(), total_records);
+    catch (RetsHttpException & e)
+    {
+        ASSERT_EQUAL (408, e.GetHttpResult());
+    }
+    session->Logout();
 }
 
 void CLASS::testStreaming()
@@ -145,6 +152,7 @@ void CLASS::testStreaming()
         total_records++;
     }
     ASSERT_EQUAL (results->GetCount(), total_records);
+    session->Logout();
 }
 
 void CLASS::testCache()
@@ -189,6 +197,7 @@ void CLASS::testCache()
         total_records++;
     }
     ASSERT_EQUAL (results->GetCount(), total_records);
+    session->Logout();
 }
 
 void CLASS::testNoStreaming()
@@ -233,6 +242,7 @@ void CLASS::testNoStreaming()
         total_records++;
     }
     ASSERT_EQUAL (results->GetCount(), total_records);
+    session->Logout();
 }
 
 void CLASS::test100Continue()
@@ -305,5 +315,6 @@ LN000086,LN000087,LN000088,LN000089,LN000090)";
     }
     ASSERT_EQUAL (results2->GetCount(), total_records);
     ASSERT_EQUAL (results1->GetCount(), results2->GetCount());
+    session->Logout();
 }
 

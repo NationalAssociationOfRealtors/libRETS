@@ -1048,7 +1048,8 @@ enum RetsVersion
 enum EncodingType
 {
     RETS_XML_DEFAULT_ENCODING,
-    RETS_XML_ISO_ENCODING
+    RETS_XML_ISO_ENCODING,
+    RETS_XML_UTF8_ENCODING
 };
 
 enum UserAgentAuthType

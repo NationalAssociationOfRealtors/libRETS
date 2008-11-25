@@ -2,6 +2,11 @@ Version 1.3.0 - xx xxx 2008
   * Converted the http client model to allow for parallel
     search requests. Ticket #73.
 
+Version 1.2.5 - 26 Nov 2008
+
+  * Expose RETS_XML_UTF8_ENCODING to SWIG languages.
+    Ticket #80.
+
   * Expose RetsSession::SetTimeout() to SWIG languages.
     Ticket #82.
 
