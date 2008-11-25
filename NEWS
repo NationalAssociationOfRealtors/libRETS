@@ -1,3 +1,14 @@
+Version 1.2.5 - 25 Nov 2008
+
+  * Expose RETS_XML_UTF8_ENCODING to SWIG languages.
+    Ticket #80.
+
+  * Expose RetsSession::SetTimeout() to SWIG languages.
+    Ticket #82.
+
+  * Added "Y" as a valid value for truth in boolean comparisons in
+    MetadataElements.
+
 Version 1.2.4 - 17 Nov 2008
 
   * Add RetsSession.SetModeFlags to allow caching to be enabled

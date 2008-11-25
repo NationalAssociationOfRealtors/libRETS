@@ -1048,7 +1048,8 @@ enum RetsVersion
 enum EncodingType
 {
     RETS_XML_DEFAULT_ENCODING,
-    RETS_XML_ISO_ENCODING
+    RETS_XML_ISO_ENCODING,
+    RETS_XML_UTF8_ENCODING
 };
 
 enum UserAgentAuthType
@@ -1612,6 +1613,11 @@ class RetsSession
                                         std::exception);
     void SetHttpLogName(std::string filename)
                                   throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
+    void SetTimeout(int seconds)
+                                  throw(RetsHttpException,
                                         RetsReplyException,
                                         RetsException,
                                         std::exception);

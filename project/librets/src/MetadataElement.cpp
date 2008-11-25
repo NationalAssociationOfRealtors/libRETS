@@ -85,7 +85,7 @@ bool CLASS::GetBoolAttribute(string attributeName, bool defaultValue) const
     if (i != mAttributes.end())
     {
         string value = ba::to_lower_copy(i->second);
-        return ((value == "1") || (value == "true"));
+        return ((value == "1") || (value == "true") || (value == "y"));
     }
     else
     {
