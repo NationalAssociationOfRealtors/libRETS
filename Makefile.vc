@@ -91,6 +91,7 @@ _dist-csharp:
 
 _dist-java:
 	cp -u project/swig/java/bin/*.dll $(DISTDIR)/java
+	cp -u project/swig/java/bin/*.jar $(DISTDIR)/java
 
 _dist-ruby:
 	cp -u project/swig/ruby/*.so $(DISTDIR)/ruby

@@ -30,7 +30,11 @@ DEBUG_RUNTIME =
 LIB_DEBUG_RUNTIME = 
 !else if "$(BUILD)" == "debug"
 OPTIMIZE_FLAG = /Od
+!if DEFINED(VS71COMNTOOLS)
 RTC_FLAG = /GZ
+!else if DEFINED(VS80COMNTOOLS)
+RTC_FLAG = /RTC1
+!endif
 OBJDIR_BUILD = debug
 LINK_DEBUG_FLAG = /DEBUG
 
@@ -57,14 +61,34 @@ DIROBJ = $(BUILD_DIR)\$(OBJDIR_BUILD)$(OBJDIR_TYPE)$(OBJDIR_RUNTIME)
 
 CC = cl.exe
 CXX = cl.exe
+!if DEFINED(VS71COMNTOOLS)
 CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAG) /Gm /Zi \
 	$(RTC_FLAG) /I. \
 	/W3 /GX /YX /GR /c
 
 LINK_LIB = link.exe $(LINK_LIB_FLAG) /nologo
 LINK_EXE = link.exe /nologo
+VC_VERSION = vc71
+!else if DEFINED(VS80COMNTOOLS)
+CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAG) /Gm /Zi \
+	$(RTC_FLAG) /I. \
+	/W3 /EHsc /GR /c
+
+!if "$(RUNTIME_FLAGS)" == "/MD$(DEBUG_RUNTIME)" 
+LINK_LIB = link.exe $(LINK_LIB_FLAG) /nologo /nod:LIBCMT$(DEBUG_RUNTIME)
+LINK_EXE = link.exe /nologo /nod:LIBCMT$(DEBUG_RUNTIME)
+!else if "$(RUNTIME_FLAGS)" == "/MT$(DEBUG_RUNTIME)"
+LINK_LIB = link.exe $(LINK_LIB_FLAG) /nologo /nod:MSVCRT$(DEBUG_RUNTIME)
+LINK_EXE = link.exe /nologo /nod:MSVCRT$(DEBUG_RUNTIME)
+!endif
+LINK_LIB = link.exe $(LINK_LIB_FLAG) /nologo 
+LINK_EXE = link.exe /nologo 
+VC_VERSION = vc80
+!endif
 
 CSC = csc.exe /nologo
+
+WINLIBS = wsock32.lib winmm.lib wldap32.lib bufferoverflowu.lib user32.lib gdi32.lib advapi32.lib
 
 ########################################################################
 #
@@ -96,8 +120,9 @@ BOOST_PREFIX =
 
 BOOST_RUNTIME = $(BOOST_RUNTIME_PREFIX)$(BOOST_STATIC)$(BOOST_DEBUG)
 
-BOOST_FILESYSTEM_LIB = $(BOOST_PREFIX)boost_filesystem-vc71-mt$(BOOST_RUNTIME).lib
-BOOST_PROGRAM_OPTIONS_LIB = $(BOOST_PREFIX)boost_program_options-vc71-mt-$(BOOST_RUNTIME).lib
+BOOST_FILESYSTEM_LIB = $(BOOST_PREFIX)boost_filesystem-$(VC_VERSION)-mt$(BOOST_RUNTIME).lib
+BOOST_PROGRAM_OPTIONS_LIB = $(BOOST_PREFIX)boost_program_options-$(VC_VERSION)-mt-$(BOOST_RUNTIME).lib
+BOOST_SYSTEM_LIB = $(BOOST_PREFIX)boost_system-$(VC_VERSION)-mt$(BOOST_RUNTIME).lib
 
 BOOST_CFLAGS = /I "$(BOOST_PATH)" /DBOOST_DISABLE_ASSERTS
 #BOOST_CFLAGS = /I "$(BOOST_PATH)"
@@ -109,7 +134,8 @@ BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib"
 
 OPENSSL_PATH = $(BASE_PATH)/openssl
 
-OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib gdi32.lib advapi32.lib user32.lib
+# OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib gdi32.lib advapi32.lib user32.lib
+OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib 
 
 ########################################################################
 #
@@ -145,13 +171,13 @@ EXPAT_PATH = $(BASE_PATH)/expat
 !if "$(RUNTIME_LIBS)" == "dynamic"
 EXPAT_RUNTIME =
 !else
-EXPAT_RUNTIME = mt
+EXPAT_RUNTIME = MT
 !endif
 
 !if "$(BUILD)" == "release"
-EXPAT_DEBUG_RUNTIME =
+EXPAT_BIN_PREFIX = release
 !else
-EXPAT_DEBUG_RUNTIME = d
+EXPAT_BIN_PREFIX = debug
 !endif
 
 !if "$(THIRD_PARTY_LIBS)" == "static"
@@ -163,8 +189,8 @@ EXPAT_LIB_PREFIX =
 !endif
 
 EXPAT_CFLAGS = /I "$(EXPAT_PATH)/lib" $(EXPAT_XML_STATIC)
-EXPAT_LDFLAGS = "/LIBPATH:$(EXPAT_PATH)/lib/lib" \
-	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME)$(EXPAT_DEBUG_RUNTIME).lib
+EXPAT_LDFLAGS = "/LIBPATH:$(EXPAT_PATH)/win32/bin/$(EXPAT_BIN_PREFIX)" \
+	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME).lib
 
 ########################################################################
 #

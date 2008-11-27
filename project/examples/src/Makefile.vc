@@ -7,7 +7,7 @@ LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LI
 
 XML_EXE = $(DIROBJ)\xml.exe
 HTTP_EXE = $(DIROBJ)\http.exe
-RAW_RETS_EXE = $(DIROEJB)\raw_rets.exe
+RAW_RETS_EXE = $(DIROBJ)\raw_rets.exe
 LOGIN_EXE = $(DIROBJ)\login.exe
 METADATA_EXE = $(DIROBJ)\metadata.exe
 SEARCH_EXE = $(DIROBJ)\search.exe
@@ -26,6 +26,8 @@ CFLAGS  = $(CFLAGS_STD) /I../../librets/include $(BOOST_CFLAGS)
 LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS)
 
 LINK = $(LINK_EXE) $(LDFLAGS)
+
+WINLIBS = wsock32.lib winmm.lib wldap32.lib bufferoverflowu.lib user32.lib gdi32.lib advapi32.lib
 
 ########################################################################
 #
@@ -62,32 +64,32 @@ $(XML_EXE): $(XML_OBJS)
 	$(LINK) /out:$(XML_EXE) $(XML_OBJS)
 
 $(HTTP_EXE): $(HTTP_OBJS)
-	$(LINK) /out:$(HTTP_EXE) $(HTTP_OBJS) wsock32.lib winmm.lib
+	$(LINK) /out:$(HTTP_EXE) $(HTTP_OBJS) $(WINLIBS)
 
 $(RAW_RETS_EXE): $(RAW_RETS_OBJS)
-	$(LINK) /out:$(RAW_RETS_EXE) $(RAW_RETS_OBJS) wsock32.lib winmm.lib
+	$(LINK) /out:$(RAW_RETS_EXE) $(RAW_RETS_OBJS) $(WINLIBS)
 
 $(LOGIN_EXE): $(LOGIN_OBJS)
 	$(LINK) /out:$(LOGIN_EXE) $(LOGIN_OBJS) \
-	wsock32.lib winmm.lib
+	$(WINLIBS)
 
 $(METADATA_EXE): $(METADATA_OBJS)
 	$(LINK) /out:$(METADATA_EXE) $(METADATA_OBJS) \
-	wsock32.lib winmm.lib
+	$(WINLIBS)
 
 $(SEARCH_EXE): $(SEARCH_OBJS)
 	$(LINK) /out:$(SEARCH_EXE) $(SEARCH_OBJS) \
-	wsock32.lib winmm.lib
+	$(WINLIBS)
 
 !if "$(USE_SQL_COMPILER)" == "true"
 $(SQL2DMQL_EXE): $(SQL2DMQL_OBJS)
 	$(LINK) /out:$(SQL2DMQL_EXE) $(SQL2DMQL_OBJS) \
-	wsock32.lib winmm.lib
+	$(WINLIBS)
 !endif
 
 $(GET_OBJECT_EXE): $(GET_OBJECT_OBJS)
 	$(LINK) /out:$(GET_OBJECT_EXE) $(GET_OBJECT_OBJS) \
-	wsock32.lib winmm.lib
+	$(WINLIBS)
 
 $(X_OBJS): $(DIROBJ) $(LIBRETS_LIB)
 
