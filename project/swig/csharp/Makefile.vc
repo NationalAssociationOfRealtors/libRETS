@@ -73,6 +73,7 @@ clean:
 	@-erase /q librets.* 2> NUL
 	@-erase /q *.obj 2> NUL
 	@-erase librets_wrap.cpp 2> NUL
+	@-erase librets_wrap.h 2> NUL
 
 distclean: clean
 	$(RM) $(GENERATED_SRC) librets_wrap*

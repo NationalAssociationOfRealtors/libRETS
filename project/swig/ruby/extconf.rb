@@ -21,7 +21,7 @@ if PLATFORM =~ /darwin/ || PLATFORM =~ /linux/ || PLATFORM =~ /freebsd/
   end
   swig_dir=with_config("swig-dir", "../../../swig")
 elsif PLATFORM =~ /win32/
-  $CFLAGS += ' $(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include'
+  $CFLAGS += ' $(CFLAGS_STD) $(BOOST_CFLAGS) -I.. -I../../librets/include'
   $libs += ' $(LIBRETS_LIB) winmm.lib wldap32.lib gdi32.lib'
   makefile_prefix = %{
 !include <../../build/Makefile.vc>
