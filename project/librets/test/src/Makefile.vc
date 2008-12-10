@@ -13,7 +13,7 @@ CFLAGS  = $(CFLAGS_STD) $(LIBRETS_CFLAGS) $(BOOST_CFLAGS) $(EXPAT_CFLAGS)\
 	 $(CPPUNIT_CFLAGS)
 LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(CPPUNIT_LDFLAGS)
 
-LINK    = $(LINK_EXE) $(LDFLAGS)
+LINK    = $(LINK_EXE) $(LDFLAGS) 
 
 ########################################################################
 #
@@ -27,7 +27,7 @@ win_files:
 !include <objects.vc>
 
 $(TARGET): $(X_OBJS) $(LIBRETS_LIB)
-	$(LINK) /out:$(TARGET) $(X_OBJS) wsock32.lib winmm.lib
+	$(LINK) /out:$(TARGET) $(X_OBJS) $(WINLIBS)
 
 $(X_OBJS): $(DIROBJ)
 

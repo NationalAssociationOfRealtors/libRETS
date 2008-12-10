@@ -24,8 +24,11 @@ clean:
 	@-rmdir /q  /s dist 2>NUL
 
 test:
+	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic _test
+
+_test:
 	cd project\librets\test\src
-	$(NMAKE) /f Makefile.vc
+	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
 	cd ..\..\..\..
 	project\librets\test\src\$(DIROBJ)\test.exe
 

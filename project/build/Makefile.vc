@@ -248,6 +248,10 @@ CPPUNIT_LIB = cppunit$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).lib
 CPPUNIT_CFLAGS = /I "$(CPPUNIT_PATH)/include"
 CPPUNIT_LDFLAGS = "/LIBPATH:$(CPPUNIT_PATH)/lib" $(CPPUNIT_LIB)
 
+!if "$(VS_VERSION)" == "vs2008"
+CPPUNIT_CFLAGS = /I "$(BASE_PATH)/include"
+CPPUNIT_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib" $(CPPUNIT_LIB)
+!endif
 
 ########################################################################
 #

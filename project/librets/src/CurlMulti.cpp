@@ -159,7 +159,7 @@ void CLASS::Perform()
     /*
      * See if one of the curl handles need service.
      */
-    if (maxfd)
+    if (maxfd > -1)
         rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
 
     if (rc < 0)
