@@ -50,8 +50,8 @@ Options::Options()
         ("http-log,l", po::value<string>(&mLogFile), "HTTP log file - won't log GetObject calls")
         ("password,p", po::value<string>(&password)
          ->default_value("Schmoe", ""), "Password")
-		("proxy-password,P", po::value<string>(&proxyPassword)->default_value("",""),
-		 "Proxy Password")
+        ("proxy-password,P", po::value<string>(&proxyPassword)->default_value("",""),
+         "Proxy Password")
         ("metadata-timestamp,t", po::value<string>(&savedMetadataTimestamp)->default_value("", ""),
          "Saved Metadata Timestamp (RETS 1.7+)")
         ("url,u", po::value<string>(&loginUrl)
@@ -63,10 +63,11 @@ Options::Options()
          ->default_value("1.5", ""), "RETS Version")
         ("enable-caching", "Enable caching when in streaming mode")
         ("http-log-everything", po::value<string>(&mLogFile), "HTTP log file - log GetObject calls")
-		("proxy-url", po::value<string>(&proxyUrl)->default_value("",""),
-		 "Proxy URL")
+        ("proxy-url", po::value<string>(&proxyUrl)->default_value("",""),
+         "Proxy URL")
         ("ua-password", po::value<string>(&userAgentPassword)
          ->default_value(""), "User agent password")
+        ("no-sslverify", "Do not verify ssl certificate")
         ;
     mLogFile="";
 }
@@ -139,12 +140,16 @@ RetsSessionPtr Options::RetsLogin()
     {
         flags |= RetsSession::MODE_CACHE;
     }
+    if (options.count("no-sslverify"))
+    {
+        flags |= RetsSession::MODE_NO_SSL_VERIFY;
+    }
     session->SetModeFlags(flags);
     
-	if (!proxyUrl.empty())
-	{
-		session->SetProxy(proxyUrl,proxyPassword);
-	}
+    if (!proxyUrl.empty())
+    {
+        session->SetProxy(proxyUrl,proxyPassword);
+    }
 
     string encoding = ba::to_lower_copy(mEncoding);
     if (encoding == "iso")
