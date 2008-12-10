@@ -8,7 +8,6 @@ WRAP = 	librets_wrap.cpp
 CFLAGS  = $(CFLAGS_STD) /I ../../librets/include $(BOOST_CFLAGS) $(CURL_CFLAGS)
 LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS)
 LINK = $(LINK_EXE) $(LDFLAGS)
-SYSLIBS = wsock32.lib winmm.lib
 
 BIN_DIR = bin
 LIBRETS_UNMANAGED_OBJ = librets_wrap.obj librets_sharp.obj
@@ -46,7 +45,7 @@ $(LIBRETS_MANAGED_DLL): $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_MANAGED_SRC) $(BIN_DI
 	$(CSC) -target:library -out:$(LIBRETS_MANAGED_DLL) $(LIBRETS_MANAGED_SRC)
 
 $(LIBRETS_UNMANAGED_DLL): $(LIBRETS_UNMANAGED_OBJ) $(BIN_DIR)
-	$(LINK) /dll /out:$(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_OBJ) $(LIBRETS_LIB) $(SYSLIBS)
+	$(LINK) /dll /out:$(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_OBJ) $(LIBRETS_LIB) $(WINLIBS)
 
 $(BIN_DIR):
 	@if not exist "$(BIN_DIR)" mkdir $(BIN_DIR)
@@ -74,6 +73,7 @@ clean:
 	@-erase /q librets.* 2> NUL
 	@-erase /q *.obj 2> NUL
 	@-erase librets_wrap.cpp 2> NUL
+	@-erase librets_wrap.h 2> NUL
 
 distclean: clean
 	$(RM) $(GENERATED_SRC) librets_wrap*

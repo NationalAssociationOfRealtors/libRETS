@@ -18,3 +18,8 @@ RUNTIME_LIBS = static
 # Allows a library user to not compile/include the SQL to DMQL compiler
 # if they are not going to use it.
 USE_SQL_COMPILER = true
+
+# Visual Studio version to use.
+# [vs2003, vs2005, vs2008]
+#
+VS_VERSION = vs2008

@@ -19,17 +19,18 @@ if PLATFORM =~ /darwin/ || PLATFORM =~ /linux/ || PLATFORM =~ /freebsd/
   else
     $CFLAGS += ' ' + ENV['CFLAGS'] + ' ' + `#{librets_config} --cflags`.chomp
   end
+  swig_dir=with_config("swig-dir", "../../../swig")
 elsif PLATFORM =~ /win32/
-  $CFLAGS += ' $(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include'
-  $libs += ' $(LIBRETS_LIB) winmm.lib'
+  $CFLAGS += ' $(CFLAGS_STD) $(BOOST_CFLAGS) -I.. -I../../librets/include'
+  $libs += ' $(LIBRETS_LIB) winmm.lib wldap32.lib gdi32.lib'
   makefile_prefix = %{
 !include <../../build/Makefile.vc>
 LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
 }
+  swig_dir=with_config("swig-dir", "..")
 end
 
 $INSTALLFILES = [['librets.rb', "$(RUBYLIBDIR)", "lib"]]
-swig_dir=with_config("swig-dir", "../../../swig")
 
 create_makefile('librets_native')
 

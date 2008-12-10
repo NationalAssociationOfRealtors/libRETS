@@ -30,7 +30,13 @@ DEBUG_RUNTIME =
 LIB_DEBUG_RUNTIME = 
 !else if "$(BUILD)" == "debug"
 OPTIMIZE_FLAG = /Od
+!if "$(VS_VERSION)" == "vs2003"
 RTC_FLAG = /GZ
+!else if "$(VS_VERSION)" == "vs2005"
+RTC_FLAG = /RTC1
+!else if "$(VS_VERSION)" == "vs2008"
+RTC_FLAG = /RTC1
+!endif
 OBJDIR_BUILD = debug
 LINK_DEBUG_FLAG = /DEBUG
 
@@ -57,14 +63,37 @@ DIROBJ = $(BUILD_DIR)\$(OBJDIR_BUILD)$(OBJDIR_TYPE)$(OBJDIR_RUNTIME)
 
 CC = cl.exe
 CXX = cl.exe
+!if "$(VS_VERSION)" == "vs2003"
 CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAG) /Gm /Zi \
 	$(RTC_FLAG) /I. \
 	/W3 /GX /YX /GR /c
 
-LINK_LIB = link.exe $(LINK_LIB_FLAG) /nologo
-LINK_EXE = link.exe /nologo
+VC_VERSION = -vc71
+!else if "$(VS_VERSION)" == "vs2005"
+CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAG) /Gm /Zi \
+	$(RTC_FLAG) /I. \
+	/W3 /EHsc /GR /c
+
+VC_VERSION = -vc80
+!else if "$(VS_VERSION)" == "vs2008"
+CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAG) /Gm /Zi \
+	$(RTC_FLAG) /I. \
+	/W3 /EHsc /GR /c
+
+VC_VERSION = -vc90
+!endif
 
 CSC = csc.exe /nologo
+LINK_LIB = link.exe $(LINK_LIB_FLAG) /nologo 
+LINK_EXE = link.exe /nologo 
+
+!if "$(VS_VERSION)" == "vs2003"
+WINLIBS = wsock32.lib winmm.lib wldap32.lib 
+!else if "$(VS_VERSION)" == "vs2005"
+WINLIBS = wsock32.lib winmm.lib wldap32.lib bufferoverflowu.lib user32.lib gdi32.lib advapi32.lib
+!else if "$(VS_VERSION)" == "vs2008"
+WINLIBS = wsock32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
+!endif
 
 ########################################################################
 #
@@ -96,12 +125,16 @@ BOOST_PREFIX =
 
 BOOST_RUNTIME = $(BOOST_RUNTIME_PREFIX)$(BOOST_STATIC)$(BOOST_DEBUG)
 
-BOOST_FILESYSTEM_LIB = $(BOOST_PREFIX)boost_filesystem-vc71-mt$(BOOST_RUNTIME).lib
-BOOST_PROGRAM_OPTIONS_LIB = $(BOOST_PREFIX)boost_program_options-vc71-mt-$(BOOST_RUNTIME).lib
+BOOST_FILESYSTEM_LIB = $(BOOST_PREFIX)boost_filesystem$(VC_VERSION)-mt$(BOOST_RUNTIME).lib
+BOOST_PROGRAM_OPTIONS_LIB = $(BOOST_PREFIX)boost_program_options$(VC_VERSION)-mt-$(BOOST_RUNTIME).lib
+BOOST_SYSTEM_LIB = $(BOOST_PREFIX)boost_system$(VC_VERSION)-mt$(BOOST_RUNTIME).lib
 
 BOOST_CFLAGS = /I "$(BOOST_PATH)" /DBOOST_DISABLE_ASSERTS
-#BOOST_CFLAGS = /I "$(BOOST_PATH)"
 BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib"
+!if "$(VS_VERSION)" == "vs2008"
+BOOST_CFLAGS = /I "$(BASE_PATH)/include" /DBOOST_DISABLE_ASSERTS
+BOOST_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib"
+!endif
 
 ########################################################################
 #
@@ -109,7 +142,11 @@ BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib"
 
 OPENSSL_PATH = $(BASE_PATH)/openssl
 
-OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib gdi32.lib advapi32.lib user32.lib
+# OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib gdi32.lib advapi32.lib user32.lib
+OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib 
+!if "$(VS_VERSION)" == "vs2008"
+OPENSSL_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib" ssleay32.lib libeay32.lib 
+!endif
 
 ########################################################################
 #
@@ -136,6 +173,11 @@ CURL_LIB = libcurl$(CURL_RUNTIME)$(CURL_DEBUG_RUNTIME).lib
 CURL_CFLAGS = /I "$(CURL_PATH)/include" $(CURL_STATIC)
 CURL_LDFLAGS = "/LIBPATH:$(CURL_PATH)/lib" $(CURL_LIB)
 
+!if "$(VS_VERSION)" == "vs2008"
+CURL_CFLAGS = /I "$(BASE_PATH)/include" $(CURL_STATIC)
+CURL_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib" $(CURL_LIB)
+!endif
+
 #########################################################################
 #
 # Expat Configuration
@@ -145,13 +187,13 @@ EXPAT_PATH = $(BASE_PATH)/expat
 !if "$(RUNTIME_LIBS)" == "dynamic"
 EXPAT_RUNTIME =
 !else
-EXPAT_RUNTIME = mt
+EXPAT_RUNTIME = MT
 !endif
 
 !if "$(BUILD)" == "release"
-EXPAT_DEBUG_RUNTIME =
+EXPAT_BIN_PREFIX = release
 !else
-EXPAT_DEBUG_RUNTIME = d
+EXPAT_BIN_PREFIX = debug
 !endif
 
 !if "$(THIRD_PARTY_LIBS)" == "static"
@@ -163,14 +205,22 @@ EXPAT_LIB_PREFIX =
 !endif
 
 EXPAT_CFLAGS = /I "$(EXPAT_PATH)/lib" $(EXPAT_XML_STATIC)
-EXPAT_LDFLAGS = "/LIBPATH:$(EXPAT_PATH)/lib/lib" \
-	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME)$(EXPAT_DEBUG_RUNTIME).lib
+EXPAT_LDFLAGS = "/LIBPATH:$(EXPAT_PATH)/win32/bin/$(EXPAT_BIN_PREFIX)" \
+	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME).lib
 
+!if "$(VS_VERSION)" == "vs2008"
+EXPAT_CFLAGS = /I "$(BASE_PATH)/include" $(EXPAT_XML_STATIC)
+EXPAT_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib/$(EXPAT_BIN_PREFIX)" \
+	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME).lib
+!endif
 ########################################################################
 #
 # ANTLR Configuration
 
 ANTLR_PATH = $(BASE_PATH)/antlr/install
+!if "$(VS_VERSION)" == "vs2008"
+ANTLR_PATH = $(BASE_PATH)
+!endif
 
 !if "$(RUNTIME_LIBS)" == "dynamic"
 ANTLR_RUNTIME = 
@@ -205,6 +255,9 @@ CPPUNIT_LDFLAGS = "/LIBPATH:$(CPPUNIT_PATH)/lib" $(CPPUNIT_LIB)
 
 !if "$(SWIG_PATH)" == ""
 SWIG_PATH = $(BASE_PATH)\swig
+!endif
+!if "$(VS_VERSION)" == "vs2008"
+SWIG_PATH = $(BASE_PATH)\bin
 !endif
 !if "$(SWIG)" == ""
 SWIG = $(SWIG_PATH)\swig.exe

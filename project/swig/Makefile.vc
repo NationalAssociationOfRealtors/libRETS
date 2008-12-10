@@ -3,10 +3,13 @@
 RUBY = ruby
 RUBY_MAKEFILE = ruby\Makefile
 RUBY_WRAP = ruby\librets_wrap.cpp
+RUBY_WRAP_H = ruby\librets_wrap.h
 
 PYTHON_WRAP = python\librets_wrap.cpp
+PYTHON_WRAP_H = python\librets_wrap.h
 
 PHP5_WRAP = php5\librets_wrap.cpp
+PHP5_WRAP_H = php5\librets_wrap.h
 
 SWIG_FILES = librets.i auto_ptr_release.i shared_ptr_release.i
 
@@ -43,7 +46,7 @@ $(RUBY_MAKEFILE): $(RUBY_WRAP) ruby\extconf.rb
 	cd ..
 
 $(RUBY_WRAP): $(SWIG_FILES)
-	$(SWIG) -c++ -ruby -o $(RUBY_WRAP) -Ilib/ruby -module librets_native librets.i
+	$(SWIG) -c++ -ruby -o $(RUBY_WRAP) -Ilib/ruby -I.. -module librets_native librets.i
 
 $(PYTHON_WRAP): $(SWIG_FILES)
 	$(SWIG) -c++ -python -o $(PYTHON_WRAP) librets.i
@@ -51,10 +54,15 @@ $(PYTHON_WRAP): $(SWIG_FILES)
 $(PHP5_WRAP): $(SWIG_FILES)
 	$(SWIG) -c++ -php5 -o $(PHP5_WRAP) librets.i
 
-clean: clean-csharp clean-ruby clean-python clean-php5
+clean: clean-csharp clean-java clean-ruby clean-python clean-php5
 
 clean-csharp:
 	cd csharp
+	$(NMAKE) /f Makefile.vc clean
+	cd ..
+
+clean-java:
+	cd java
 	$(NMAKE) /f Makefile.vc clean
 	cd ..
 
@@ -63,15 +71,18 @@ clean-ruby:
 	$(NMAKE) clean
 	cd ..
 	@-erase /q $(RUBY_WRAP) 2> NUL
+	@-erase /q $(RUBY_WRAP_H) 2> NUL
 
 clean-python:
 	cd python
 	$(NMAKE) -f Makefile.vc clean
 	cd ..
 	@-erase /q $(PYTHON_WRAP) 2> NUL
+	@-erase /q $(PYTHON_WRAP_H) 2> NUL
 
 clean-php5:
 	cd php5
 	$(NMAKE) -f Makefile.vc clean
 	cd ..
 	@-erase /q $(PHP5_WRAP) 2> NUL
+	@-erase /q $(PHP5_WRAP_H) 2> NUL
