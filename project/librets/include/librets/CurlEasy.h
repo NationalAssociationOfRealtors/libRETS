@@ -161,7 +161,7 @@ class CurlEasy
     void SetPrivateData(void * data);
     
     /**
-     * Provide to cURL a refered to the shared object.
+     * Provide to cURL a reference to the shared object.
      * @param shared A pointer to a CURLSH handle.
      */
     void SetShareHandle(CURLSH * shared);
@@ -172,6 +172,13 @@ class CurlEasy
      * as a timeout.
      */
     void SetTimeout(int seconds);
+    
+    /**
+     * Tell cURL whether or not to verify SSL connections.
+     * @param verify A boolean that if TRUE (default), indicates that the connection
+     * should be verified.
+     */
+    void SetSSLVerify(bool verify);
     
     /**
      * Tell cURL to perform the current request.

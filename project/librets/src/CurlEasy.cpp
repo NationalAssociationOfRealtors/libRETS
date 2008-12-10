@@ -202,6 +202,17 @@ void CurlEasy::SetTimeout(int seconds)
     CurlAssert(curl_easy_setopt(mCurl, CURLOPT_TIMEOUT, seconds), "Set libCURL timeout");
 }
 
+void CurlEasy::SetSSLVerify(bool verify)
+{
+    long verifies   = 0;
+    
+    if (verify)
+        verifies    = 2;
+
+    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_SSL_VERIFYPEER, verify), "Verify SSL Peer");
+    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_SSL_VERIFYHOST, verify), "Verify SSL Host");
+}
+
 void CurlEasy::Perform()
 {
     CurlAssert(curl_easy_perform(mCurl));

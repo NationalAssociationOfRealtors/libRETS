@@ -39,19 +39,21 @@ using std::string;
 
 typedef RetsSession CLASS;
 
-const char * CLASS::DEFAULT_USER_AGENT = "librets/" LIBRETS_VERSION;
+const char * CLASS::DEFAULT_USER_AGENT  = "librets/" LIBRETS_VERSION;
 const RetsVersion CLASS::DEFAULT_RETS_VERSION = RETS_1_5;
-const char * CLASS::HTTP_EXPECT_HEADER = "Expect";
+const char * CLASS::HTTP_EXPECT_HEADER  = "Expect";
 const char * CLASS::RETS_SESSION_ID_HEADER = "RETS-Session-ID";
 const char * CLASS::RETS_VERSION_HEADER = "RETS-Version";
 const char * CLASS::RETS_UA_AUTH_HEADER = "RETS-UA-Authorization";
-const char * CLASS::RETS_1_0_STRING = "RETS/1.0";
-const char * CLASS::RETS_1_5_STRING = "RETS/1.5";
-const char * CLASS::RETS_1_7_STRING = "RETS/1.7";
+const char * CLASS::RETS_1_0_STRING     = "RETS/1.0";
+const char * CLASS::RETS_1_5_STRING     = "RETS/1.5";
+const char * CLASS::RETS_1_7_STRING     = "RETS/1.7";
+const char * CLASS::RETS_1_7_2_STRING   = "RETS/1.7.2";
 
-const int CLASS::MODE_CACHE     = 0x01;
-const int CLASS::MODE_NO_STREAM = 0x02;
-const int CLASS::MODE_NO_EXPECT = 0x04;
+const int CLASS::MODE_CACHE             = 0x01;
+const int CLASS::MODE_NO_STREAM         = 0x02;
+const int CLASS::MODE_NO_EXPECT         = 0x04;
+const int CLASS::MODE_NO_SSL_VERIFY     = 0x08;
 
 CLASS::RetsSession(string login_url)
 {
@@ -666,6 +668,12 @@ void CLASS::SetModeFlags(unsigned int flags)
      */
     if (mFlags & MODE_NO_STREAM)
         mFlags |= MODE_CACHE;
+        
+    /*
+     * If we are disabling SSL verification, tell http client.
+     */
+    if (mFlags & MODE_NO_SSL_VERIFY)
+        mHttpClient->SetModeFlags(MODE_NO_SSL_VERIFY);
 }
 
 

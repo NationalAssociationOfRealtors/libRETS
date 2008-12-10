@@ -24,6 +24,7 @@
 #include "librets/CurlStream.h"
 #include "librets/RetsException.h"
 #include "librets/RetsHttpLogger.h"
+#include "librets/RetsSession.h"
 #include "librets/str_stream.h"
 #include "librets/util.h"
 
@@ -225,6 +226,11 @@ RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
     curlEasy->SetWriteFunction(CurlHttpClient::StaticWriteData);
     curlEasy->SetWriteHeaderData(client);
     curlEasy->SetWriteHeaderFunction(CurlHttpClient::StaticWriteHeader);
+    
+    if (mFlags & RetsSession::MODE_NO_SSL_VERIFY)
+        curlEasy->SetSSLVerify(false);
+    else
+        curlEasy->SetSSLVerify(true);
 
     string url = request->GetUrl();
     mUrl = url;

@@ -8,6 +8,8 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 import java.lang.*;
+import javax.net.ServerSocketFactory;
+import javax.net.ssl.SSLServerSocketFactory;
 
 
 public class httpServer
@@ -19,12 +21,18 @@ public class httpServer
         int port                = options.getPort();
         boolean verbose         = options.getVerbose();
 
+	ServerSocketFactory socketFactory;
         ServerSocket server_socket;
 
         try {
            
+	   if (options.getSSL())
+	   	socketFactory	= SSLServerSocketFactory.getDefault();
+	   else
+	   	socketFactory	= ServerSocketFactory.getDefault();
+
            //print out the port number for user
-            server_socket = new ServerSocket(port);
+            server_socket = socketFactory.createServerSocket(port);;
             System.out.println("httpServer running on port " +
                server_socket.getLocalPort());
            
@@ -330,6 +338,7 @@ class optionsParser
     String mResourcePath = "./resources";
     boolean mDelay = false;
     int mDelayInterval = 100;
+    boolean mSSL = false;
     boolean mVerbose = false;
 
     public optionsParser(String args[]) 
@@ -384,6 +393,11 @@ class optionsParser
                     mProperties = value;
                 }
                 else
+                if (key.equals("--ssl"))
+                {
+                    mSSL = true;
+                }
+                else
                 if (key.equals("--verbose"))
                 {
                     mVerbose = true;
@@ -430,6 +444,11 @@ class optionsParser
         return mPort;
     }
 
+    public boolean getSSL()
+    {
+        return mSSL;
+    }
+
     public boolean getVerbose()
     {
         return mVerbose;
@@ -441,6 +460,7 @@ class optionsParser
         System.out.println("--port=<port>        Port number to listen on. Default 6103.");
         System.out.println("--delay[=<ms>]       Add artificial delay when responding to POST. Default 100ms.");
         System.out.println("--properties=<file>  Filename mapping file. Default files.properties.");
+        System.out.println("--ssl                Set ssl mode.");
         System.out.println("--verbose            Set verbose option.");
     }
 }

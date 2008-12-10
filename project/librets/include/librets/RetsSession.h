@@ -326,7 +326,7 @@ class RetsSession : public MetadataLoader
     /**
      * Set the mode flags for the current session.
      *
-     * @param A logical OR of the flags to be set.
+     * @param flags A logical OR of the flags to be set.
      */
     void SetModeFlags(unsigned int flags);
     
@@ -373,10 +373,12 @@ class RetsSession : public MetadataLoader
      * MODE_CACHE is used in streaming mode to enable the row cache.
      * MODE_NO_STREAM will disable the streaming mode.
      * MODE_NO_EXPECT will disable the Expect: 100-Continue http header.
+     * MODE_NO_SSL_VERIFY will disable verification of the certificate during SSL connections.
      */
     static const int    MODE_CACHE;
     static const int    MODE_NO_STREAM;
     static const int    MODE_NO_EXPECT;
+    static const int    MODE_NO_SSL_VERIFY;
     
 private:
     static const char * HTTP_EXPECT_HEADER;
@@ -386,6 +388,7 @@ private:
     static const char * RETS_1_0_STRING;
     static const char * RETS_1_5_STRING;
     static const char * RETS_1_7_STRING;
+    static const char * RETS_1_7_2_STRING;
     
     void RetrieveAction();
 
