@@ -24,11 +24,26 @@
 #include "testUtil.h"
 
 using namespace librets;
+using std::string;
 
 int main(int argc, char* argv[])
 {
-    if (argc > 1)
-        setResourceRoot(argv[1]);
+    for (int i = 1; i < argc; i++)
+    {
+        string s_value = argv[i];
+
+        if (s_value.substr(0,1) != "-")
+        {
+            setResourceRoot(s_value);
+            continue;
+        }
+        if (s_value == "--url")
+        {
+            s_value = argv[++i];
+            setUrl(s_value);
+            continue;
+        }
+    }
 
     // Create the event manager and test controller
     CPPUNIT_NS::TestResult controller;

@@ -60,7 +60,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
  */
 void CLASS::testCurlTimeout()
 {
-    RetsSessionPtr session(new RetsSession("http://localhost:4444/rets/login"));
+    RetsSessionPtr session(new RetsSession(getUrl()));
     int total_records = 0;
     
     session->UseHttpGet(false);
@@ -83,25 +83,25 @@ void CLASS::testCurlTimeout()
     try
     {
         session->SetTimeout(1);
-	/*
-	 * Perform the search and see if 160 records are returned.
-	 */
-	SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
-								    "(ListPrice=300000-)");
-	searchRequest->SetSelect("ListingID,ListPrice,Beds,City");
-	searchRequest->SetStandardNames(true);
-	searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
-	searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
-	searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
-	searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
+        /*
+         * Perform the search and see if 160 records are returned.
+         */
+        SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
+                                                                    "(ListPrice=300000-)");
+        searchRequest->SetSelect("ListingID,ListPrice,Beds,City");
+        searchRequest->SetStandardNames(true);
+        searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
+        searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
+        searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
+        searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
 
-	SearchResultSetAPtr results = session->Search(searchRequest.get());
+        SearchResultSetAPtr results = session->Search(searchRequest.get());
 
-	while (results->HasNext())
-	{
-	    total_records++;
-	}
-	ASSERT_EQUAL (results->GetCount(), total_records);
+        while (results->HasNext())
+        {
+            total_records++;
+        }
+        ASSERT_EQUAL (results->GetCount(), total_records);
     }
     catch (RetsHttpException & e)
     {
@@ -112,7 +112,7 @@ void CLASS::testCurlTimeout()
 
 void CLASS::testStreaming()
 {
-    RetsSessionPtr session(new RetsSession("http://localhost:4444/rets/login"));
+    RetsSessionPtr session(new RetsSession(getUrl()));
     int total_records = 0;
     
     session->UseHttpGet(false);
@@ -137,7 +137,7 @@ void CLASS::testStreaming()
      * Perform the search and see if 160 records are returned.
      */
     SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
-    								"(ListPrice=300000-)");
+                                                                    "(ListPrice=300000-)");
     searchRequest->SetSelect("ListingID,ListPrice,Beds,City");
     searchRequest->SetStandardNames(true);
     searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
@@ -157,7 +157,7 @@ void CLASS::testStreaming()
 
 void CLASS::testCache()
 {
-    RetsSessionPtr session(new RetsSession("http://localhost:4444/rets/login"));
+    RetsSessionPtr session(new RetsSession(getUrl()));
     int total_records = 0;
     
     session->UseHttpGet(false);
@@ -183,7 +183,7 @@ void CLASS::testCache()
      * Perform the search and see if 160 records are returned.
      */
     SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
-    								"(ListPrice=300000-)");
+                                                                    "(ListPrice=300000-)");
     searchRequest->SetStandardNames(true);
     searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
     searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
@@ -202,7 +202,7 @@ void CLASS::testCache()
 
 void CLASS::testNoStreaming()
 {
-    RetsSessionPtr session(new RetsSession("http://localhost:4444/rets/login"));
+    RetsSessionPtr session(new RetsSession(getUrl()));
     int total_records = 0;
     
     session->UseHttpGet(false);
@@ -228,7 +228,7 @@ void CLASS::testNoStreaming()
      * Perform the search and see if 160 records are returned.
      */
     SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
-    								"(ListPrice=300000-)");
+                                                                    "(ListPrice=300000-)");
     searchRequest->SetStandardNames(true);
     searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
     searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
@@ -289,7 +289,7 @@ LN000086,LN000087,LN000088,LN000089,LN000090)";
      * This is a live test that runs against http://demo.crt.realtors.org:6103/rets/login.
      */
     SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
-    								query);
+                                                                    query);
     searchRequest->SetSelect(select);
     searchRequest->SetStandardNames(true);
     searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);

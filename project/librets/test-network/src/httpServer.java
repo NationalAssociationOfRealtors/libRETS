@@ -10,6 +10,7 @@ import java.util.*;
 import java.lang.*;
 import javax.net.ServerSocketFactory;
 import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLServerSocket;
 
 
 public class httpServer
@@ -32,7 +33,8 @@ public class httpServer
 	   	socketFactory	= ServerSocketFactory.getDefault();
 
            //print out the port number for user
-            server_socket = socketFactory.createServerSocket(port);;
+            server_socket = socketFactory.createServerSocket(port);
+
             System.out.println("httpServer running on port " +
                server_socket.getLocalPort());
            

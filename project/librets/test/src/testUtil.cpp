@@ -43,10 +43,16 @@ void librets::checkStringEquals(string expected, string actual,
 }
 
 static string sResourceRoot(".");
+static string sURL("http://demo.crt.realtors.org:6103/rets/login");
 
 void NS::setResourceRoot(string resourceRoot)
 {
     sResourceRoot = resourceRoot;
+}
+
+void NS::setUrl(string url)
+{
+    sURL = url;
 }
 
 istreamPtr NS::getResource(string resourceName, ios_base::openmode mode)
@@ -59,6 +65,11 @@ istreamPtr NS::getResource(string resourceName, ios_base::openmode mode)
         throw RetsException("Could not open file: " + fileName);
     }
     return inputStream;
+}
+
+string NS::getUrl()
+{
+    return sURL;
 }
 
 void NS::checkVectorEquals(const vector<string> & expected,

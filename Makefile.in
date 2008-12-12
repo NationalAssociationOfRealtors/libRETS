@@ -90,8 +90,26 @@ test:
 test-network:
 	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _test-network
 
+test-ssl:
+	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _test-ssl
+
 run-server:
 	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _run_httpServer
+
+run-ssl-server:
+	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _run_SSLServer
+
+help:
+	@echo Targets are:
+	@echo all
+	@echo clean
+	@echo dist
+	@echo install
+	@echo test
+	@echo test-network
+	@echo test-ssl
+	@echo run-server
+	@echo run-ssl-server
 
 doc: _doc
 doc-api: _doc-api

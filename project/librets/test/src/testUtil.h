@@ -83,8 +83,12 @@ void checkVectorEquals(const std::vector<int> & expected,
 
 void setResourceRoot(std::string resourceRoot);
 
+void setUrl(std::string url);
+
 istreamPtr getResource(std::string resourceName,
-		       std::ios_base::openmode mode = std::ios_base::out);
+                       std::ios_base::openmode mode = std::ios_base::out);
+
+std::string getUrl();
 
 };
 

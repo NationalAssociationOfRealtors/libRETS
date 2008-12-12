@@ -146,9 +146,25 @@ _test-network: cppunit prepare $(LIBRETS_NETTEST_EXE) ${LIBRETS_NETTEST_HTTPSERV
 	echo make run-server && \
 	echo in another shell.)
 
+_test-ssl: cppunit prepare $(LIBRETS_NETTEST_EXE) ${LIBRETS_NETTEST_HTTPSERVER}
+	@./$(LIBRETS_NETTEST_EXE) $(top_srcdir) --url https://localhost:4444/rets/login || \
+	(echo You must enable httpServer. && \
+	echo You can do this by typeing: && \
+	echo make run-ssl-server && \
+	echo in another shell.)
+
 _run_httpServer: ${LIBRETS_NETTEST_HTTPSERVER} 
 	$(JAVAC)  ${LIBRETS_NETTEST_SRC_DIR}/httpServer.java -d ${LIBRETS_NETTEST_BIN_DIR}
 	java -cp ${LIBRETS_NETTEST_BIN_DIR} httpServer --resource=${LIBRETS_NETTEST_SRC_DIR}/resources --port=4444 
+	
+_run_SSLServer: ${LIBRETS_NETTEST_HTTPSERVER} 
+	$(JAVAC)  ${LIBRETS_NETTEST_SRC_DIR}/httpServer.java -d ${LIBRETS_NETTEST_BIN_DIR}
+	@echo $(RM) myKeyStore
+	echo keytool -selfcert -keystore myKeyStore -keypass 123456 -storepass 123456 -genkey \
+		-keyalg RSA -dname "cn=librets, ou=CRT, o=NAR, l=Chicago, st=IL, c=US" -alias mycert
+	java -cp ${LIBRETS_NETTEST_BIN_DIR} -Djavax.net.ssl.keyStore=myKeyStore \
+		-Djavax.net.ssl.keyStorePassword=123456 \
+		httpServer --resource=${LIBRETS_NETTEST_SRC_DIR}/resources --port=4444 --ssl
 	
 _maintainer-clean: _veryclean
 	$(RM) configure
