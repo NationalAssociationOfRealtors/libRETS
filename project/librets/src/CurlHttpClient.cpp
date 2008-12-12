@@ -233,6 +233,11 @@ RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
         curlEasy->SetSSLVerify(true);
 
     string url = request->GetUrl();
+    if (url.empty())
+    {
+        throw RetsException(str_stream() << "Invalid operation: null URL. Check login capability URL list.");
+    }
+    
     mUrl = url;
     string queryString = request->GetQueryString();
     if (mLogging)

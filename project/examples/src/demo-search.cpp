@@ -14,6 +14,15 @@ int main(int argc, char * argv[])
             new RetsSession("http://demo.crt.realtors.org:6103/rets/login"));
         session->Login("Joe", "Schmoe");
         
+        if (session->GetDetectedRetsVersion() != session->GetRetsVersion())
+        {
+            cout << "** Warning, requested RETS version \"" 
+                 << session->RetsVersionToString(session->GetRetsVersion())
+                 << "\", got version \""
+                 << session->RetsVersionToString(session->GetDetectedRetsVersion())
+                 << "\" ** " << endl;
+        }
+
         SearchRequestAPtr searchRequest(
             new SearchRequest("Property", "ResidentialProperty", 
                               "(ListPrice=300000-)"));

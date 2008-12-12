@@ -180,6 +180,16 @@ RetsSessionPtr Options::RetsLogin()
             session.reset();
         }
     }
+
+    if (session.get() && session->GetDetectedRetsVersion() != session->GetRetsVersion())
+    {
+	cout << "** Warning, requested RETS version \"" 
+	     << session->RetsVersionToString(session->GetRetsVersion())
+	     << "\", got version \""
+	     << session->RetsVersionToString(session->GetDetectedRetsVersion())
+	     << "\" ** " << endl;
+    }
+
     return session;
 }
 
