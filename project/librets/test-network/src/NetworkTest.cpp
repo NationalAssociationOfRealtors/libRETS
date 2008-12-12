@@ -65,6 +65,7 @@ void CLASS::testCurlTimeout()
     
     session->UseHttpGet(false);
     session->SetIncrementalMetadata(false);
+    session->SetModeFlags(RetsSession::MODE_NO_SSL_VERIFY);
 
     ASSERT_EQUAL (true, session->Login("Joe", "Blow"));
 
@@ -117,6 +118,7 @@ void CLASS::testStreaming()
     
     session->UseHttpGet(false);
     session->SetIncrementalMetadata(false);
+    session->SetModeFlags(RetsSession::MODE_NO_SSL_VERIFY);
 
     ASSERT_EQUAL (true, session->Login("Joe", "Blow"));
 
@@ -162,7 +164,7 @@ void CLASS::testCache()
     
     session->UseHttpGet(false);
     session->SetIncrementalMetadata(false);
-    session->SetModeFlags(RetsSession::MODE_CACHE);
+    session->SetModeFlags(RetsSession::MODE_CACHE | RetsSession::MODE_NO_SSL_VERIFY);
 
     ASSERT_EQUAL (true, session->Login("Joe", "Blow"));
 
@@ -207,7 +209,7 @@ void CLASS::testNoStreaming()
     
     session->UseHttpGet(false);
     session->SetIncrementalMetadata(false);
-    session->SetModeFlags(RetsSession::MODE_NO_STREAM);
+    session->SetModeFlags(RetsSession::MODE_NO_STREAM | RetsSession::MODE_NO_SSL_VERIFY);
 
     ASSERT_EQUAL (true, session->Login("Joe", "Blow"));
 
@@ -252,6 +254,7 @@ void CLASS::test100Continue()
     
     session->UseHttpGet(false);
     session->SetIncrementalMetadata(false);
+    session->SetModeFlags(RetsSession::MODE_NO_SSL_VERIFY);
 
     ASSERT_EQUAL (true, session->Login("Joe", "Schmoe"));
 
@@ -305,7 +308,7 @@ LN000086,LN000087,LN000088,LN000089,LN000090)";
     }
     ASSERT_EQUAL (results1->GetCount(), total_records);
     
-    session->SetModeFlags(RetsSession::MODE_NO_EXPECT);
+    session->SetModeFlags(RetsSession::MODE_NO_EXPECT | RetsSession::MODE_NO_SSL_VERIFY);
     total_records = 0;
     
     SearchResultSetAPtr results2 = session->Search(searchRequest.get());
