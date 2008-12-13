@@ -315,6 +315,34 @@ class RetsReplyException
 }
 #endif
 
+#ifdef SWIGPHP
+%typemap(throws) RetsException {
+    #if 0
+    // Couldn't make PHP rethrow the appropriate exception, so we have to live with the
+    // generic PHP exception for now. The proper way will probably be modeled after 
+    // the code below, but we may also need to insert helper classes into the PHP that
+    // extend Exception.
+    zend_class_entry **pce;
+
+    if (FAILURE == zend_lookup_class("RetsException",strlen("RetsException"), &pce TSRMLS_CC))
+    {
+        SWIG_PHP_Error(E_ERROR, "Unable to locate class entry for RetsException");
+    }
+    zend_throw_exception(*pce, (char *)$1.GetMessage().c_str(), 0 TSRMLS_CC);
+    #endif
+
+    SWIG_exception(SWIG_ValueError, $1.GetMessage().c_str());
+}
+
+%typemap(throws) RetsReplyException {
+    SWIG_exception(SWIG_ValueError, $1.GetMessage().c_str());
+}
+
+%typemap(throws) RetsHttpException {
+    SWIG_exception(SWIG_ValueError, $1.GetMessage().c_str());
+}
+#endif
+
 class LoginResponse 
 {
   public:

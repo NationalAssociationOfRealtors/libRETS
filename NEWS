@@ -5,6 +5,8 @@ Version 1.3.0 - xx xxx 2008
 
   * Added RETS 1.7 checks to example code. Ticket #58.
 
+  * Propagate Rets Exceptions up to PHP. Ticket #81.
+
   * Throw an exception when trying to dereference a null
     URL. Ticket #84.
 
