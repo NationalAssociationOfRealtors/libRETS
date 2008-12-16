@@ -203,7 +203,36 @@ void CLASS::Perform()
                     if (client && (response = client->GetResponse()))
                     {
                         if (msg->data.result == CURLE_OPERATION_TIMEDOUT)
+                        {
                             response->SetResponseCode(408);
+                            response->SetAdditionalErrorText("cURL reports an operation timeout.");
+                        }
+                        else
+                        if (msg->data.result == CURLE_COULDNT_CONNECT)
+                        {
+                            response->SetResponseCode(404);
+                            response->SetAdditionalErrorText("cURL reports unable to connect.");
+                        }
+                        else
+                        if (msg->data.result == CURLE_COULDNT_RESOLVE_HOST)
+                        {
+                            response->SetResponseCode(404);
+                            response->SetAdditionalErrorText(str_stream() <<
+                                                "cURL reports unable to resolve host: " <<
+                                                (*i)->GetUrl());
+                        }
+                        else
+                        if (msg->data.result == CURLE_COULDNT_RESOLVE_PROXY)
+                        {
+                            response->SetResponseCode(404);
+                            response->SetAdditionalErrorText("cURL reports unable to resolve proxy.");
+                        }
+                        else
+                        if (msg->data.result == CURLE_UNSUPPORTED_PROTOCOL)
+                        {
+                            response->SetResponseCode(503);
+                            response->SetAdditionalErrorText("cURL reports that the protocol is unsupported.");
+                        }
                         else
                             response->SetResponseCode((*i)->GetResponseCode());
                         response->SetInProgress(false);

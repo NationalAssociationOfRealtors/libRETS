@@ -62,6 +62,8 @@ GetObjectResponse::GetObjectResponse()
 {
     mNextObject = mObjects.begin();
     mDefaultsAreValid = false;
+    mResponseCode = -1;
+    mErrorText = "";
 }
 
 GetObjectResponse::~GetObjectResponse()
@@ -75,6 +77,23 @@ void GetObjectResponse::SetDefaultObjectKeyAndId(string defaultObjectKey,
     mDefaultObjectId = defaultObjectId;
     mDefaultsAreValid = true;
 }
+
+int GetObjectResponse::GetHttpResponse()
+{
+    return mResponseCode;
+}
+
+std::string GetObjectResponse::GetErrorText()
+{
+    return mErrorText;
+}
+
+void GetObjectResponse::SetHttpResponse(int responseCode, std::string errorText)
+{
+    mResponseCode = responseCode;
+    mErrorText = errorText;
+}
+
 
 void GetObjectResponse::Parse(RetsHttpResponsePtr httpResponse,
                               bool ignoreMalformedHeaders)

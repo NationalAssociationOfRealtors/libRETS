@@ -136,7 +136,8 @@ void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
     {
         ostringstream message;
         message << "Could not get URL [ " << url << "] - HTTP response code: "
-                << responseCode;
+                << responseCode
+                << " " << response->GetAdditionalErrorText();
         throw RetsHttpException(responseCode, message.str());
     }
 }
@@ -482,6 +483,7 @@ GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)
         response->SetDefaultObjectKeyAndId(request->GetDefaultObjectKey(),
                                            request->GetDefaultObjectId());
     }
+    response->SetHttpResponse(httpResponse->GetResponseCode(), httpResponse->GetAdditionalErrorText());
     response->Parse(httpResponse, request->GetIgnoreMalformedHeaders());
     return response;
 }

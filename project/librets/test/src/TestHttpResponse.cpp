@@ -81,3 +81,12 @@ istreamPtr TestHttpResponse::GetInputStream() const
 {
     return mInputStream;
 }
+
+string TestHttpResponse::GetAdditionalErrorText()
+{
+    return "";
+}
+
+void TestHttpResponse::SetAdditionalErrorText(string errorText)
+{
+}

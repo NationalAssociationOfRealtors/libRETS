@@ -70,6 +70,20 @@ class RetsHttpResponse
      * @param responseCode An integer representing the http response code for this transaction.
      */
     virtual void SetResponseCode(int responseCode) = 0;
+    
+    /**
+     * Return any extended error text.
+     *
+     * @return A string containing additional error information.
+     */
+    virtual std::string GetAdditionalErrorText() = 0;
+    
+    /**
+     * Set any extended error text.
+     *
+     * @param errorText A string with additional error text.
+     */
+    virtual void SetAdditionalErrorText(std::string errorText) = 0;
 };
 
 };

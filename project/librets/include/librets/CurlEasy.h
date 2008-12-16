@@ -220,6 +220,12 @@ class CurlEasy
     void * GetPrivateData();
 
     /**
+     * Get the url.
+     * @return A string containing the url for this connection.
+     */
+    std::string GetUrl();
+    
+    /**
      * Get the current curl library version information.
      * @return A string representing the libCURL verison.
      */

@@ -60,6 +60,10 @@ class CurlHttpResponse : public RetsHttpResponse
     void SetHttpRequest(RetsHttpRequest* httpRequest);
     
     void SetInProgress(bool inProgress);
+    
+    virtual std::string GetAdditionalErrorText();
+    
+    virtual void SetAdditionalErrorText(std::string errorText);
 
   private:
     iostreamPtr mStream;
@@ -68,6 +72,7 @@ class CurlHttpResponse : public RetsHttpResponse
     CurlHttpClient* mHttpClient;
     RetsHttpRequest* mHttpRequest;
     bool mInProgress;
+    std::string mErrorText;
 };
 
 };

@@ -57,6 +57,13 @@ class GetObjectResponse : public RetsObject
                                   int defaultObjectId);
     
     /**
+     * (Internal) Set the http response code.
+     * @param An integer containing the http response code.
+     * @param A string containing option error text.
+     */
+    void SetHttpResponse(int responseCode, std::string errorText);
+    
+    /**
      * (Internal) Parse the response from the server into one or more
      * objects.
      * @param httpResponse A pointer to RetsHttpResponse containing the response
@@ -75,6 +82,20 @@ class GetObjectResponse : public RetsObject
      */
     ObjectDescriptor * NextObject();
     
+    /**
+     * Returns the http response code.
+     *
+     * @return An integer containing the http response code.
+     */
+    int GetHttpResponse();
+    
+    /**
+     * Returns any optional additional error codes for the http transaction.
+     *
+     * @return A string containing any additional error text.
+     */
+    std::string GetErrorText();
+    
   private:
     typedef std::vector<ObjectDescriptorPtr> ObjectList;
     
@@ -90,6 +111,8 @@ class GetObjectResponse : public RetsObject
     int mDefaultObjectId;
     ObjectList mObjects;
     ObjectList::iterator mNextObject;
+    int mResponseCode;
+    std::string mErrorText;
 };
     
 }

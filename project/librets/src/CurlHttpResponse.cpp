@@ -24,6 +24,7 @@ namespace ba = boost::algorithm;
 
 CurlHttpResponse::CurlHttpResponse()
                 : mHttpClient()
+                , mErrorText()
 {
     mResponseCode = -1;
     mInProgress = true;
@@ -108,4 +109,14 @@ void CurlHttpResponse::SetHttpRequest(RetsHttpRequest* httpRequest)
 void CurlHttpResponse::SetInProgress(bool inProgress)
 {
     mInProgress = inProgress;
+}
+
+string CurlHttpResponse::GetAdditionalErrorText()
+{
+    return mErrorText;
+}
+
+void CurlHttpResponse::SetAdditionalErrorText(string errorText)
+{
+    mErrorText = errorText;
 }

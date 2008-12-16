@@ -205,17 +205,19 @@ void CLASS::testSinglePartNoHeadersNoDefaults()
 
 void CLASS::testUnsuccessfulResponse()
 {
+    RetsHttpResponsePtr httpResponse(
+            new TestHttpResponse("invalid-http-response.txt"));
+
     try
     {
         GetObjectResponse response;
-        RetsHttpResponsePtr httpResponse(
-            new TestHttpResponse("invalid-http-response.txt"));
         response.Parse(httpResponse);
         CPPUNIT_FAIL("Should have thrown exception");
     }
     catch (const RetsException &)
     {
         // Expetcted
+        ASSERT_EQUAL(500,httpResponse->GetResponseCode());
     }
 }
 

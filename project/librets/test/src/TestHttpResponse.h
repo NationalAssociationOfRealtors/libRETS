@@ -37,6 +37,10 @@ class TestHttpResponse : public RetsHttpResponse
     
     virtual void SetResponseCode(int responseCode);
     
+    virtual std::string GetAdditionalErrorText();
+    
+    virtual void SetAdditionalErrorText(std::string errorText);
+    
   private:
     StringMap mHeaders;
     int mResponseCode;

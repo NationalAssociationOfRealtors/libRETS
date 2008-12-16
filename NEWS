@@ -10,6 +10,9 @@ Version 1.3.0 - xx xxx 2008
   * Throw an exception when trying to dereference a null
     URL. Ticket #84.
 
+  * Add GetObjectResponse::GetHttpResponse() and GetErrorText().
+    Ticket #86.
+
   * Add RetsSession::MODE_NO_SSL_VERIFY to disable SSL
     verification. Ticket #87.
 

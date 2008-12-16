@@ -44,13 +44,13 @@ int main(int argc, char * argv[])
         options.descriptions.add_options()
             ("resource,r", po::value<string>(&resource)
              ->default_value("Property"), "Object resource")
-            ("type,t", po::value<string>(&type)
+            ("type", po::value<string>(&type)
              ->default_value("Photo"), "Object type")
-            ("output-prefix,P", po::value<string>(&outputPrefix)
+            ("output-prefix", po::value<string>(&outputPrefix)
              ->default_value(""), "Output file prefix")
-            ("resource-set,R", po::value< vector<string> >(&resourceSets),
+            ("resource-set", po::value< vector<string> >(&resourceSets),
              "Resource sets (e.g. 'resource-id' or 'resource-id:#,#'))")
-            ("return-url,U", po::value<bool>(&returnUrl)
+            ("return-url", po::value<bool>(&returnUrl)
              ->default_value(false), "Return the URL to the object (true or false)")
             ;
         if (!options.ParseCommandLine(argc, argv))

@@ -255,6 +255,11 @@ void * CurlEasy::GetPrivateData()
     return data;
 }
 
+string CurlEasy::GetUrl()
+{
+    return mUrl;
+}
+
 string CurlEasy::GetVersion()
 {
     return mCurlVersion;
