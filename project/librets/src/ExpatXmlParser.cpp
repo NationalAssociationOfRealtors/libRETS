@@ -26,6 +26,7 @@
 #include "librets/RetsXmlTextEvent.h"
 #include "librets/RetsXmlEndDocumentEvent.h"
 #include "librets/RetsException.h"
+#include "librets/RetsHttpException.h"
 
 using namespace librets;
 using std::string;
@@ -146,9 +147,24 @@ RetsXmlEventPtr ExpatXmlParser::GetNextEventWithoutCoalescing()
             {
                 unsigned int lineNumber = GetCurrentLineNumber();
                 unsigned int columnNumber = GetCurrentColumnNumber();
-                string errorString =
-                    XML_ErrorString(XML_GetErrorCode(mParser));
+                enum XML_Error errorCode = XML_GetErrorCode(mParser);
+                string errorString = XML_ErrorString(errorCode);
+
                 ostringstream message;
+                if (errorCode == XML_ERROR_NO_ELEMENTS && isLast)
+                {
+                    /*
+                     * We'll see this error if the network connection fails before
+                     * all of the data has been transferred. We'll masquerade as an
+                     * html timeout (408) error.
+                     */
+                    message << "The data stream ended before the XML parser could "
+                            << "parse everything." << std::endl
+                            << "This can happen if the network connection terminates "
+                            << "before all the data has been received.";
+                     throw RetsHttpException(408, message.str());       
+                }
+
                 message << "XML parse error at " << lineNumber << ":"
                         << columnNumber << ": " + errorString;
                 throw RetsException(message.str());
