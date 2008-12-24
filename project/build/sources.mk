@@ -400,13 +400,19 @@ SWIG_LIBRETS_LIBS	= `${SWIG_LIBRETS_CONFIG} --libs`
 SWIG_OBJ_DIR		= build/swig
 SWIG_OSNAME		= $(shell perl -e 'use Config; print $$Config{osname};')
 
+SWIG_BRIDGE_H		= ${SWIG_DIR}/librets_bridge.h
+SWIG_BRIDGE_SRC		= ${SWIG_DIR}/librets_bridge.cpp
+SWIG_BRIDGE_OBJ		= ${SWIG_OBJ_DIR}/librets_bridge.o
+
 ifeq (${SWIG_OSNAME}, darwin)
 SWIG_LINK		= ${CXX} -bundle -undefined suppress -flat_namespace 
 else
 SWIG_LINK		= ${CXX} -shared
 endif
 
-
+${SWIG_BRIDGE_OBJ}: ${SWIG_BRIDGE_SRC} ${SWIG_BRIDGE_H}
+	${CXX}  -I${LIBRETS_INC_DIR}  -I${SWIG_DIR} ${BOOST_CFLAGS} -c $< -o $@
+	
 ###
 # csharp of swig
 #
@@ -459,7 +465,8 @@ CSHARP_SQL2DMQL_EXE	= ${CSHARP_OBJ_DIR}/Sql2DMQL.exe
 CSHARP_SQL2DMQL_SRC	= ${CSHARP_DIR}/Sql2DMQL.cs ${CSHARP_DIR}/SimpleSqlMetadata.cs
 CSHARP_UNMANAGED_DLL	= ${CSHARP_OBJ_DIR}/librets.so
 CSHARP_UNMANAGED_OBJ	= ${CSHARP_OBJ_DIR}/librets_wrap.o 			\
-				${CSHARP_OBJ_DIR}/librets_sharp.o
+				${CSHARP_OBJ_DIR}/librets_sharp.o		\
+				${SWIG_BRIDGE_OBJ}
 CSHARP_WRAP		= ${CSHARP_OBJ_DIR}/librets_wrap.cpp
 
 ${CSHARP_WRAP}: ${SWIG_FILES} 
@@ -467,17 +474,17 @@ ${CSHARP_WRAP}: ${SWIG_FILES}
 	-outdir ${CSHARP_OBJ_DIR} -I${SWIG_DIR}/lib/csharp ${SWIG_DIR}/librets.i
 	make ${CSHARP_MANAGED_DLL}
 
-${CSHARP_UNMANAGED_DLL}: ${CSHARP_UNMANAGED_OBJ}
-	${SWIG_LINK} -o ${CSHARP_UNMANAGED_DLL} ${CSHARP_UNMANAGED_OBJ} ${SWIG_LIBRETS_LIBS}
+${CSHARP_UNMANAGED_DLL}: ${CSHARP_UNMANAGED_OBJ} 
+	${SWIG_LINK} -o ${CSHARP_UNMANAGED_DLL} ${CSHARP_UNMANAGED_OBJ} ${SWIG_LIBRETS_LIBS} 
 
 ${CSHARP_MANAGED_DLL}:	${CSHARP_UNMANAGED_DLL} ${CSHARP_MANAGED_SRC}
 	${MCS} -target:library -out:${CSHARP_MANAGED_DLL} ${CSHARP_MANAGED_SRC}
 
 ${CSHARP_OBJ_DIR}/%.o: ${CSHARP_OBJ_DIR}/%.cpp 
-	${CXX} ${CSHARP_CXX_FLAGS} -I${LIBRETS_INC_DIR} -I${CSHARP_OBJ_DIR} -I${CSHARP_DIR}  -c $< -o $@
+	${CXX} ${CSHARP_CXX_FLAGS} -I${LIBRETS_INC_DIR} -I${CSHARP_OBJ_DIR} -I${CSHARP_DIR} -I${SWIG_DIR} -c $< -o $@
 
 ${CSHARP_OBJ_DIR}/%.o: ${CSHARP_DIR}/%.cpp
-	${CXX} ${CSHARP_CXX_FLAGS} -I${LIBRETS_INC_DIR} -I${CSHARP_OBJ_DIR} -I${CSHARP_DIR}  -c $< -o $@
+	${CXX} ${CSHARP_CXX_FLAGS} -I${LIBRETS_INC_DIR} -I${CSHARP_OBJ_DIR} -I${CSHARP_DIR} -I${SWIG_DIR} -c $< -o $@
 
 ${CSHARP_GETOBJECT_EXE}:	${CSHARP_GETOBJECT_SRC}
 	${MCS} -r:${CSHARP_MANAGED_DLL} -out:${CSHARP_GETOBJECT_EXE} ${CSHARP_GETOBJECT_SRC}
@@ -512,9 +519,12 @@ ifeq (${HAVE_JAVA},1)
 
 JAVA_BUILD		= ${JAVA_DLL} ${JAVA_OBJ_DIR}/${JAVA_JAR} ${JAVA_EXAMPLES_CLASSES}
 
+JAVA_BRIDGE		= ${JAVA_SRC_DIR}/CppInputStream.java
+# delete the next line to enable the streams prototype for Java
+JAVA_BRIDGE		= 
 JAVA_CLASSES		= ${patsubst ${JAVA_OBJ_DIR}/%.java,${JAVA_OBJ_DIR}/librets/%.class,${JAVA_SOURCES}}
 JAVA_CLASSES_UNQUAL	= ${patsubst ${JAVA_OBJ_DIR}/%.java,%.class,${JAVA_SOURCES}}
-JAVA_EXAMPLES		= ${wildcard ${JAVA_SRC_DIR}/*.java}
+JAVA_EXAMPLES		= ${wildcard ${JAVA_SRC_DIR}/[a-z]*.java}
 JAVA_EXAMPLES_CLASSES	= ${patsubst ${JAVA_SRC_DIR}/%.java,${JAVA_OBJ_DIR}/%.class,${JAVA_EXAMPLES}}
 JAVA_JAR		= librets.jar
 JAVA_OBJ_DIR		= ${SWIG_OBJ_DIR}/java
@@ -533,19 +543,20 @@ JAVA_DLL		= ${JAVA_OBJ_DIR}/liblibrets.so
 JAVA_DYNAMICLINK	= ${SWIG_LINK}
 endif
 
-${JAVA_WRAP}: ${SWIG_FILES} 
+${JAVA_WRAP}: ${SWIG_FILES} ${JAVA_BRIDGE}
 	${SWIG} -c++ -java -package librets -o ${JAVA_WRAP} \
 	-outdir ${JAVA_OBJ_DIR} ${SWIG_DIR}/librets.i
+	@echo ${JAVA_BRIDGE} ${JAVA_OBJ_DIR}
 	${MAKE} ${JAVA_OBJ_DIR}/${JAVA_JAR}
 
-${JAVA_DLL}: ${JAVA_WRAP} ${JAVA_OBJ_DIR}/librets_wrap.o
-	${JAVA_DYNAMICLINK} -o ${JAVA_DLL} ${JAVA_OBJ_DIR}/librets_wrap.o ${SWIG_LIBRETS_LIBS}
+${JAVA_DLL}: ${JAVA_WRAP} ${JAVA_OBJ_DIR}/librets_wrap.o ${SWIG_BRIDGE_OBJ}
+	${JAVA_DYNAMICLINK} -o ${JAVA_DLL} ${JAVA_OBJ_DIR}/librets_wrap.o ${SWIG_LIBRETS_LIBS} ${SWIG_BRIDGE_OBJ}
 
 ${JAVA_OBJ_DIR}/librets_wrap.o: ${JAVA_OBJ_DIR}/librets_wrap.cpp
-	${CXX}  -I${LIBRETS_INC_DIR}  ${BOOST_CFLAGS} ${JAVA_INCLUDES} -c $< -o $@
+	${CXX}  -I${LIBRETS_INC_DIR} -I${SWIG_DIR} ${BOOST_CFLAGS} ${JAVA_INCLUDES} -c $< -o $@
 	
 ${JAVA_CLASSES}: ${JAVA_WRAP} ${JAVA_SOURCES}
-	${JAVAC} -d ${JAVA_OBJ_DIR} ${JAVA_SOURCES}
+	${JAVAC} -d ${JAVA_OBJ_DIR} ${JAVA_BRIDGE} ${JAVA_SOURCES} 
 
 ${JAVA_OBJ_DIR}/${JAVA_JAR}: ${JAVA_CLASSES}
 	cd ${JAVA_OBJ_DIR}; ${JAR} -cvf ${JAVA_JAR} librets || \
@@ -575,11 +586,12 @@ ${PHP_WRAP}: ${SWIG_FILES}
 	${SWIG} -c++ -php5 -o ${PHP_WRAP} \
 	-outdir ${PHP_OBJ_DIR} ${SWIG_DIR}/librets.i
 
-${PHP_DLL}: ${PHP_WRAP} ${PHP_OBJ_DIR}/librets_wrap.o
-	${SWIG_LINK} -o ${PHP_DLL} ${PHP_OBJ_DIR}/librets_wrap.o ${SWIG_LIBRETS_LIBS}
+${PHP_DLL}: ${PHP_WRAP} ${PHP_OBJ_DIR}/librets_wrap.o ${SWIG_BRIDGE_OBJ}
+	${SWIG_LINK} -o ${PHP_DLL} ${PHP_OBJ_DIR}/librets_wrap.o ${SWIG_LIBRETS_LIBS} ${SWIG_BRIDGE_OBJ}
 
 ${PHP_OBJ_DIR}/librets_wrap.o: ${PHP_OBJ_DIR}/librets_wrap.cpp
-	${CXX} -g -DLIBRETS_VERSION='"$(VERSION)"' -I${LIBRETS_INC_DIR} -I${PHP_SRC_DIR}  ${BOOST_CFLAGS} ${PHP_INCLUDES} -c $< -o $@
+	${CXX} -g -DLIBRETS_VERSION='"$(VERSION)"' -I${LIBRETS_INC_DIR} -I${PHP_SRC_DIR} -I${SWIG_DIR} \
+			${BOOST_CFLAGS} ${PHP_INCLUDES} -c $< -o $@
 	
 endif
 ###

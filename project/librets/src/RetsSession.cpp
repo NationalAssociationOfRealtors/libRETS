@@ -27,6 +27,7 @@
 #include "librets/ServerInfoResponse.h"
 #include "librets/GetObjectRequest.h"
 #include "librets/GetObjectResponse.h"
+#include "librets/ObjectDescriptor.h"
 #include "librets/str_stream.h"
 #include "librets/ExceptionErrorHandler.h"
 #include "librets/RetsHttpException.h"
@@ -259,6 +260,49 @@ RetsMetadata * CLASS::GetMetadata()
     return mMetadata.get();
 }
 
+void CLASS::GetMetadata(std::ostream & outputStream)
+{
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
+    string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
+    RetsHttpRequest request;
+    request.SetUrl(getMetadataUrl);
+    request.SetMethod(mHttpMethod);
+    request.SetQueryParameter("Type", "METADATA-SYSTEM");
+    request.SetQueryParameter("ID", "*");
+    request.SetQueryParameter("Format", "COMPACT");
+    RetsHttpResponsePtr httpResponse(DoRequest(&request));
+    AssertSuccessfulResponse(httpResponse, getMetadataUrl);
+    readUntilEof(httpResponse->GetInputStream(), outputStream);
+}
+
+BinaryDataAPtr CLASS::GetMetadata_()
+{
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
+    BinaryDataAPtr data(new BinaryData());
+    
+    string getMetadataUrl = mCapabilityUrls->GetGetMetadataUrl();
+    RetsHttpRequest request;
+
+    request.SetUrl(getMetadataUrl);
+    request.SetMethod(mHttpMethod);
+    request.SetQueryParameter("Type", "METADATA-SYSTEM");
+    request.SetQueryParameter("ID", "*");
+    request.SetQueryParameter("Format", "COMPACT");
+    /*
+     * Start the transaction, copy to output stream
+     */
+    RetsHttpResponsePtr httpResponse = DoRequest(&request);
+    AssertSuccessfulResponse(httpResponse, getMetadataUrl);
+
+    data->ReadToEof(httpResponse->GetInputStream());
+    
+    return data;
+}
+
 bool CLASS::IsIncrementalMetadata() const
 {
     return mIncrementalMetadata;
@@ -427,6 +471,56 @@ SearchResultSetAPtr CLASS::Search(SearchRequest * request)
     resultSet->SetInputStream(httpResponse->GetInputStream());
     
     return resultSet;
+}
+
+void CLASS::Search(SearchRequest * request, std::ostream & outputStream)
+{
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
+    string searchUrl = mCapabilityUrls->GetSearchUrl();
+    request->SetUrl(searchUrl);
+    request->SetMethod(mHttpMethod);
+    /*
+     * Start the transaction, copy to output stream
+     */
+    RetsHttpResponsePtr httpResponse = DoRequest(request);
+    readUntilEof(httpResponse->GetInputStream(), outputStream);
+}
+
+BinaryDataAPtr CLASS::Search_(SearchRequest * request)
+{
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
+    BinaryDataAPtr data(new BinaryData());
+    
+    string searchUrl = mCapabilityUrls->GetSearchUrl();
+    request->SetUrl(searchUrl);
+    request->SetMethod(mHttpMethod);
+    /*
+     * Start the transaction, copy to output stream
+     */
+    RetsHttpResponsePtr httpResponse = DoRequest(request);
+    data->ReadToEof(httpResponse->GetInputStream());
+    
+    return data;
+}
+
+istreamPtr CLASS::SearchStream(SearchRequest * request)
+{
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
+    string searchUrl = mCapabilityUrls->GetSearchUrl();
+    request->SetUrl(searchUrl);
+    request->SetMethod(mHttpMethod);
+    /*
+     * Start the transaction, copy to output stream
+     */
+    RetsHttpResponsePtr httpResponse = DoRequest(request);
+    
+    return httpResponse->GetInputStream();
 }
 
 ServerInformationResponseAPtr CLASS::GetServerInformation(std::string resourceName, 

@@ -139,6 +139,8 @@ void GetObjectResponse::ParseSinglePart(RetsHttpResponsePtr httpResponse)
         descriptor->SetObjectKey(objectKey);
 
     string objectId = httpResponse->GetHeader("Object-ID");
+    ba::trim(objectId);
+
     if (objectId.empty() && !mDefaultsAreValid)
     {
         LIBRETS_THROW(RetsException, ("Found empty Object-ID"));

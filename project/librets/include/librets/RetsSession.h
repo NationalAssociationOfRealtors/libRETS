@@ -28,6 +28,7 @@
 #include "librets/http_forward.h"
 #include "librets/RetsVersion.h"
 #include "librets/EncodingType.h"
+#include "librets/ObjectDescriptor.h"
 #include "librets/UserAgentAuthType.h"
 #include "librets/UserAgentAuthCalculator.h"
 #include "librets/error_forward.h"
@@ -137,6 +138,49 @@ class RetsSession : public MetadataLoader
     SearchResultSetAPtr Search(SearchRequest * request);
 
     /**
+     * Performs a search on the server, content is copied to output stream
+     * as the raw unparsed RETS data.
+     *
+     * @param request search request parameters
+     * @param outputStream  the destination stream
+     * @return nothing
+     * @throws RetsException if an error occurs.
+     */
+    void Search(SearchRequest * request, std::ostream & outputStream);
+    
+    /// @cond MAINTAINER
+    /**
+     * Performs a search on the server and return the data as BinaryDataPtr.
+     * This API is primarily used by the SWIG bound languages.
+     *
+     * @param request search request parameters
+     * @return BinaryDataAPtr containing the search results.
+     * @throws RetsException if an error occurs.
+     */
+    BinaryDataAPtr Search_(SearchRequest * request);
+    
+    /**
+     * Performs a search on the server and return the data as a stream.
+     * This API is primarily used by the SWIG bound languages.
+     *
+     * @param request search request parameters
+     * @return BinaryDataAPtr containing the search results.
+     * @throws RetsException if an error occurs.
+     */
+    istreamPtr SearchStream(SearchRequest * request);
+    /// @endcond
+
+#ifdef DOXYGEN
+    /**
+     * Performs a search on the server and returns the raw RETS data into 
+     * a java byte array. This API is for Java only.
+     *
+     * @param request search request parameters
+     * @return a Java byte array containing the search results as raw RETS data.
+     */
+    public byte [] SearchAsArray(SearchRequest request);
+#endif
+    /**
      * Create a new server information request (RETS 1.7).
      *
      * @param  resourceName RETS resource name
@@ -158,7 +202,27 @@ class RetsSession : public MetadataLoader
      * @throws RetsException if an error occurs.
      */
     RetsMetadata * GetMetadata();
-    
+     
+    /**
+     * Copies the metadata for this server to the output stream as 
+     * raw unparsed RETS data.
+     * Only valid after logging in.  
+     * @param outputStream  the destination stream
+     * @return nothing
+     * @throws RetsException if an error occurs.
+     */
+    void GetMetadata(std::ostream & outputStream);
+
+    /// @cond MAINTAINER
+    /**
+     * Copies the metadata on the server and returns the data as BinaryDataPtr.
+     * This API is primarily used by the SWIG bound languages.
+     *
+     * @return BinaryDataAPtr containing the metadata.
+     * @throws RetsException if an error occurs.
+     */
+    BinaryDataAPtr GetMetadata_();
+   
     /**
      * Returns true if metadata is retrieved incrementally.
      *

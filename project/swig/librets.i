@@ -3,10 +3,14 @@
 #ifdef SWIGCSHARP
 %{
 #include "librets_sharp.h"
+#include "librets_bridge.h"
 %}
 #endif
 
 #ifdef SWIGJAVA
+%{
+#include "librets_bridge.h"
+%}
 %include "java/boost_shared_ptr.i"
 %include "java/typemaps.i"
 #endif
@@ -756,6 +760,7 @@ class ObjectDescriptor
 };
 
 
+#ifdef SWIGCSHARP
 
 %typemap(csimports) GetObjectResponse %{
 using System;
@@ -770,6 +775,8 @@ using System.Collections;
         return new ObjectDescriptorEnumerator(this);
     }
 %}
+
+#endif
 
 
 class GetObjectResponse
@@ -1139,66 +1146,6 @@ class RetsHttpLogger
 };
 
 #ifdef SWIGCSHARP
-%typemap(ctype)  RetsHttpLoggerCallback "RetsHttpLoggerCallback"
-%typemap(cstype) RetsHttpLoggerCallback "RetsHttpLogger.NativeDelegate"
-%typemap(csin)   RetsHttpLoggerCallback "$csinput"
-%typemap(imtype) RetsHttpLoggerCallback "RetsHttpLogger.NativeDelegate"
-%typemap(in)     RetsHttpLoggerCallback {$1 = $input;}
-
-typedef void (*RetsHttpLoggerCallback)(RetsHttpLogger::Type type,
-    void * data, int length);
-
-class RetsHttpLoggerBridge : public RetsHttpLogger
-{
-  public:
-    RetsHttpLoggerBridge(RetsHttpLoggerCallback loggerCallback);
-    void logHttpData(Type type, std::string data);
-};
-
-%csmethodmodifiers RetsSession::SetHttpLogger "private";
-
-%typemap(cscode) RetsSession %{
-    private RetsHttpLogger.Delegate mLoggerDelegate = null;
-    private RetsHttpLogger.NativeDelegate mNativeDelegate = null;
-    private RetsHttpLogger mLogger = null;
-
-    public RetsHttpLogger.Delegate LoggerDelegate
-    {
-        get { return mLoggerDelegate; }
-        set
-        {
-            mLoggerDelegate = value;
-
-            if (mLoggerDelegate != null)
-            {
-                // Need to save references to both the delegate and
-                // the logger otherwise they will be garbage collected
-                // while still in use.
-                mNativeDelegate = new RetsHttpLogger.NativeDelegate(
-                    this.LoggerDelegateBridge);
-                mLogger = new RetsHttpLoggerBridge(mNativeDelegate);
-                SetHttpLogger(mLogger);
-            }
-            else
-            {
-                // Disconnect callback prior to making them available
-                // for GC
-                SetHttpLogger(null);
-                mLogger = null;
-                mNativeDelegate = null;
-            }
-        }
-    }
-    
-    private void LoggerDelegateBridge(RetsHttpLogger.Type type, IntPtr data,
-        int length)
-    {
-        byte[] byteData = new byte[length];
-        System.Runtime.InteropServices.Marshal.Copy(data, byteData, 0, length);
-        mLoggerDelegate(type, byteData);
-    }
-%}
-
 // The following few classes were added to see if we can get C# to
 // call out to the translator.  This is commented out as its not ready
 // for release as of yet.  When ready, also uncomment out the director
@@ -1463,6 +1410,169 @@ class SqlToDmqlCompiler
     LookupColumnsQueryPtr GetLookupColumnsQuery() const;
 };
 
+%typemap(ctype)  RetsHttpLoggerCallback "RetsHttpLoggerCallback"
+%typemap(cstype) RetsHttpLoggerCallback "RetsHttpLogger.NativeDelegate"
+%typemap(csin)   RetsHttpLoggerCallback "$csinput"
+%typemap(imtype) RetsHttpLoggerCallback "RetsHttpLogger.NativeDelegate"
+%typemap(in)     RetsHttpLoggerCallback {$1 = $input;}
+
+typedef void (*RetsHttpLoggerCallback)(RetsHttpLogger::Type type,
+    void * data, int length);
+
+class RetsHttpLoggerBridge : public RetsHttpLogger
+{
+  public:
+    RetsHttpLoggerBridge(RetsHttpLoggerCallback loggerCallback);
+    void logHttpData(Type type, std::string data);
+};
+
+%csmethodmodifiers RetsSession::SetHttpLogger "private";
+
+%typemap(cscode) RetsSession %{
+    private RetsHttpLogger.Delegate mLoggerDelegate = null;
+    private RetsHttpLogger.NativeDelegate mNativeDelegate = null;
+    private RetsHttpLogger mLogger = null;
+
+    public RetsHttpLogger.Delegate LoggerDelegate
+    {
+        get { return mLoggerDelegate; }
+        set
+        {
+            mLoggerDelegate = value;
+
+            if (mLoggerDelegate != null)
+            {
+                // Need to save references to both the delegate and
+                // the logger otherwise they will be garbage collected
+                // while still in use.
+                mNativeDelegate = new RetsHttpLogger.NativeDelegate(
+                    this.LoggerDelegateBridge);
+                mLogger = new RetsHttpLoggerBridge(mNativeDelegate);
+                SetHttpLogger(mLogger);
+            }
+            else
+            {
+                // Disconnect callback prior to making them available
+                // for GC
+                SetHttpLogger(null);
+                mLogger = null;
+                mNativeDelegate = null;
+            }
+        }
+    }
+    
+    private void LoggerDelegateBridge(RetsHttpLogger.Type type, IntPtr data,
+        int length)
+    {
+        byte[] byteData = new byte[length];
+        System.Runtime.InteropServices.Marshal.Copy(data, byteData, 0, length);
+        mLoggerDelegate(type, byteData);
+    }
+
+    public byte [] SearchAsArray(SearchRequest request)
+    {
+	BinaryData binaryData = Search_(request);
+	int length = binaryData.Size();
+	byte[] bytes = new byte[length];
+	binaryData.Copy(bytes, length);
+	return bytes;
+    }
+%}
+#endif
+
+#if defined(SWIGJAVA_prototype)
+    // Prototype for returning the data to Java in a stream
+    // Gotta adjust the in and argout typemaps for the StreamBridge.
+    //
+    // Do the input conversion. 
+    // This  will allocate a temporary buffer for the copy.
+    %typemap(in)     unsigned char[] (int _length)
+    {
+        // Determine the length of the data in the buffer
+        _length = JCALL1(GetArrayLength, jenv, $input);
+        // Allocate a local buffer to which the data will be copied.
+        try
+        {
+            $1 = new unsigned char [_length];
+        }
+        catch(std::exception &e)
+        {
+            std::string message = std::string(e.what()) + "\n";
+            SWIG_JavaException(jenv, SWIG_ValueError, message.c_str()); 
+            return -1;
+        }
+        catch(...)
+        {
+            SWIG_JavaException(jenv, SWIG_RuntimeError, "Unknown exception\n"); 
+            return -1;
+        }
+    }
+    // The data has been copied to the temporary buffer. Now write it back to
+    // the Java domain and then release the buffer.
+    %typemap(argout) unsigned char [] 
+    {
+        JCALL4(SetByteArrayRegion, jenv, $input, 0, _length$argnum, (const jbyte *)$1);
+        if ($1)
+        {
+            try
+            {
+                delete $1;
+            }
+            catch(std::exception &e)
+            {
+                std::string message = std::string(e.what()) + "\n";
+                SWIG_JavaException(jenv, SWIG_ValueError, message.c_str()); 
+                return -1;
+            }
+            catch(...)
+            {
+                SWIG_JavaException(jenv, SWIG_RuntimeError, "Unknown exception\n"); 
+                return -1;
+            }
+        }
+    }
+
+    %nodefault InputStreamBridge;
+    class InputStreamBridge
+    {
+      public:
+	InputStreamBridge(istreamPtr inputStream);
+	int readByte() const;
+	int read(unsigned char buffer[], int offset, int length) const; 
+    };
+
+    %typemap(javacode) RetsSession  %{
+	public CppInputStream  SearchAsStream(SearchRequest request)
+	{
+	    SWIGTYPE_p_istreamPtr  inputStream = SearchStream(request);
+
+	    //CppInputStream streamBridge = new IOStreamBridge(inputStream);;
+	    return new CppInputStream(new InputStreamBridge(inputStream));
+	    //return streamBridge;
+	}
+    %}
+#endif // prototype code
+
+#ifdef SWIGJAVA
+    %typemap(javacode) RetsSession  %{
+        public byte [] GetMetadataAsArray()
+        {
+            BinaryData binaryData = GetMetadata_();
+            int length = binaryData.Size();
+            byte[] bytes = new byte[length];
+            binaryData.Copy(bytes, length);
+            return bytes;
+        }
+
+        public byte [] SearchAsArray(SearchRequest request)
+        {
+            BinaryData binaryData = Search_(request);
+            int length = binaryData.Size();
+            byte[] bytes = new byte[length];
+            binaryData.Copy(bytes, length);
+            return bytes;
+        }
+    %}
 #endif
 
 
@@ -1521,6 +1631,29 @@ class RetsSession
                                         RetsException,
                                         std::exception);
     
+    void Search(SearchRequest * request, std::ostream & outputStream) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
+    
+#if defined(SWIGJAVA) || defined(SWIGCSHARP)
+    BinaryDataAPtr  Search_(SearchRequest * request) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
+#endif
+    
+#if defined(SWIGJAVA_prototype)
+    // Prototype for returning the data wrapped in a stream.
+    istreamPtr SearchStream(SearchRequest * request) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
+#endif
+    
     LogoutResponseAPtr Logout() 
                                   throw(RetsHttpException, 
                                         RetsReplyException,
@@ -1532,6 +1665,20 @@ class RetsSession
                                         RetsReplyException,
                                         RetsException,
                                         std::exception);
+    
+    void GetMetadata(std::ostream & outputStream) 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
+    
+#if defined(SWIGJAVA) || defined(SWIGCSHARP)
+    BinaryDataAPtr  GetMetadata_() 
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
+#endif
     
     bool IsIncrementalMetadata() const 
                                   throw(RetsHttpException, 
@@ -1651,7 +1798,6 @@ class RetsSession
                                         RetsException,
                                         std::exception);
 };
-
 
 /* Local Variables: */
 /* mode: c++ */

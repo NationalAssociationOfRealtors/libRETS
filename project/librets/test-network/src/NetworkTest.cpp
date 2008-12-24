@@ -32,6 +32,8 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testCache);
     CPPUNIT_TEST(testNoStreaming);
     CPPUNIT_TEST(test100Continue);
+    CPPUNIT_TEST(testRawSearch);
+    CPPUNIT_TEST(testRawGetMetadata);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -40,12 +42,14 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testCache();
     void testNoStreaming();
     void test100Continue();
+    void testRawSearch();
+    void testRawGetMetadata();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
 
 /*
- * This test is intended to run concurrently with the http playback server httpServer.
+ * These tests are intended to run concurrently with the http playback server httpServer.
  * It expects the server to be running on localhost, on port 4444.
  * The two transactions are the login transaction and getmetadata transaction. Login really
  * does not do a login, but is needed to satisfy RetsSession to make it think it has
@@ -318,6 +322,61 @@ LN000086,LN000087,LN000088,LN000089,LN000090)";
     }
     ASSERT_EQUAL (results2->GetCount(), total_records);
     ASSERT_EQUAL (results1->GetCount(), results2->GetCount());
+    session->Logout();
+}
+
+void CLASS::testRawGetMetadata()
+{
+    RetsSessionPtr session(new RetsSession(getUrl()));
+    
+    istreamPtr inputStream = getResource("raw-metadata");
+    
+    std::stringstream referenceStream;
+    referenceStream << inputStream->rdbuf();
+    
+    session->UseHttpGet(false);
+    session->SetIncrementalMetadata(false);
+    session->SetModeFlags(RetsSession::MODE_NO_SSL_VERIFY);
+
+    ASSERT_EQUAL (true, session->Login("Joe", "Schmoe"));
+
+    std::stringstream testStream;
+    session->GetMetadata(testStream);
+    
+    ASSERT_STRING_EQUAL(referenceStream.str(), testStream.str());
+
+    session->Logout();
+}
+
+void CLASS::testRawSearch()
+{
+    RetsSessionPtr session(new RetsSession(getUrl()));
+    istreamPtr inputStream = getResource("raw-search");
+    
+    std::stringstream referenceStream;
+    referenceStream << inputStream->rdbuf();
+    
+    session->UseHttpGet(false);
+    session->SetIncrementalMetadata(false);
+    session->SetModeFlags(RetsSession::MODE_NO_SSL_VERIFY);
+
+    ASSERT_EQUAL (true, session->Login("Joe", "Schmoe"));
+
+    SearchRequestAPtr searchRequest = session->CreateSearchRequest(
+                                        "Property", "ResidentialProperty",
+                                        "(ListPrice=300000-)");
+    searchRequest->SetSelect("ListingID,ListPrice,Beds,City");
+    searchRequest->SetStandardNames(true);
+    searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
+    searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
+    searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
+    searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
+    
+    std::stringstream testStream;
+    session->Search(searchRequest.get(), testStream);
+
+    ASSERT_STRING_EQUAL(referenceStream.str(), testStream.str());
+
     session->Logout();
 }
 

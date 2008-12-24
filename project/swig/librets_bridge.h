@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 National Association of REALTORS(R)
+ * Copyright (C) 2008 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -15,8 +15,8 @@
  * appear in supporting documentation.
  */
  
-#ifndef LIBRETS_SHARP_H
-#define LIBRETS_SHARP_H
+#ifndef LIBRETS_BRIDGE_H
+#define LIBRETS_BRIDGE_H
 
 /* calling conventions for Windows */
 #ifndef SWIGSTDCALL
@@ -28,22 +28,40 @@
 #endif
 
 #include "librets/std_forward.h"
-#include "librets/RetsHttpLogger.h"
 
 namespace librets {
 
-typedef void (SWIGSTDCALL* RetsHttpLoggerCallback)(RetsHttpLogger::Type type,
-    void * data, int length);
-
-class RetsHttpLoggerBridge : public RetsHttpLogger
+class InputStreamBridge
 {
   public:
-    RetsHttpLoggerBridge(RetsHttpLoggerCallback loggerCallback);
-    virtual void logHttpData(Type type, std::string data);
+    InputStreamBridge(istreamPtr inputStream);
+    
+    int readByte() const;
+    
+    int read(unsigned char buffer[], int offset, int length) const; 
 
   private:
-    RetsHttpLoggerCallback mLoggerCallback;
+    istreamPtr  mInputStream;
 };
+
+typedef std::auto_ptr<InputStreamBridge> InputStreamBridgeAPtr;
+
+class OutputStreamBridge
+{
+  public:
+    OutputStreamBridge(ostreamPtr outputStream);
+    
+    int flush(void) const;
+
+    int writeByte(char theByte) const;
+
+    int write(unsigned char buffer[], int offset, int length) const;
+
+  private:
+    ostreamPtr  mOutputStream;
+};
+
+typedef std::auto_ptr<OutputStreamBridge> OutputStreamBridgeAPtr;
 
 };
 

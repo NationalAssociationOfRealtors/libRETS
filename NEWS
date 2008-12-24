@@ -3,12 +3,19 @@ Version 1.3.0 - xx xxx 2008
   * Converted the http client model to allow for parallel
     search requests. Ticket #73.
 
+  * Report XML parse error "no element found" as an http
+    exception when there is no more data on the stream.
+    Ticket #75.
+
   * Added RETS 1.7 checks to example code. Ticket #58.
 
   * Propagate Rets Exceptions up to PHP. Ticket #81.
 
   * Throw an exception when trying to dereference a null
     URL. Ticket #84.
+
+  * Add API to allow raw RETS data to be returned to a stream.
+    Ticket #85.
 
   * Add GetObjectResponse::GetHttpResponse() and GetErrorText().
     Ticket #86.

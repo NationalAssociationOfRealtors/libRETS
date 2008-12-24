@@ -1,0 +1,86 @@
+The resources in this directory are used with the httpServer. Any data resources for the unit tests should go into ../../../test/src/resources.
+
+In order to run the test drver, you need a shell session open. cd into the base directory 
+(trunk) and do "make run-server". This will build and run the server. By default it is 
+running on port 4444, so you'll need to adjust your url to be http://localhost:4444. 
+
+If you want to change the port, or be more verbose, you can run the server by hand:
+
+java -cp build/librets/test-network/bin httpServer \
+	--resource=./project/librets/test-network/src/resources --port=4444 --verbose
+
+In case you want to add/modify tests, the server is pretty easy (read that "simple minded" 
+... I took the most expedient way to implement it). There is a file called "files.properties" 
+which relates a request to a file that contains the response payload. If you take one of our 
+logs and look at the request and the response payloads, the request (a combination of the 
+url and the parameters) is on the left side of the equals sign, and the name of the file 
+containing the response is on the right. So, for the following (from a log):
+
+POST /getmetadata.xml HTTP/1.1
+Authorization: Basic aWNoZWNrOmljaGVjazA=
+Host: mls.omrebmls.com:6203
+Accept: */*
+Cookie: KxSessionId=0x9E44F58AC0B73C48B05D78BC1A4CCE3C
+RETS-Version: RETS/1.7
+User-Agent: iCheck/2.5
+X-Librets-Version: 1.2.3, libCURL - libcurl/7.18.2 OpenSSL/0.9.8h
+Content-Length: 42
+Content-Type: application/x-www-form-urlencoded
+
+Format=COMPACT&ID=0&Type=METADATA-RESOURCE* HTTP 1.0, assume close after body
+
+<<< Received
+HTTP/1.0 200 OK
+Date: Wed, 03 Dec 2008 03:00:36 GMT
+Server: Kinnexus-INet/3.2.1.299
+Cache-Control: no-cache
+Expires: -1
+Content-Length: 974
+* Replaced cookie KxSessionId="0x9E44F58AC0B73C48B05D78BC1A4CCE3C" for domain mls.omrebmls.com, path /, expire 1228275036
+
+<<< Received
+Set-Cookie: KxSessionId=0x9E44F58AC0B73C48B05D78BC1A4CCE3C; Path=/; Max-Age=1800
+Content-Type: text/xml
+RETS-Version: RETS/1.7
+RETS-Request-ID:
+
+<RETS ReplyCode="0" ReplyText="SUCCESSFUL">
+<METADATA-RESOURCE Version="0.0.367" Date="Mon, 01 Dec 2008 15:04:15 GMT">
+<COLUMNS>ResourceID     StandardName    VisibleName     Description     ClassCount      KeyField        ClassVersion    ClassDate       ObjectVersion   ObjectDate      SearchHelpVersion       SearchHelpDate  EditMaskVersion EditMaskDate    LookupVersion   LookupDate      UpdateHelpVersion       UpdateHelpDate  ValidationExpressionVersion     ValidationExpressionDate        ValidationLookupVersion ValidationLookupDate    ValidationExternalVersion       ValidationExternalDate  </COLUMNS>
+<DATA>Property  Property        Property        Property        1       id      0.0.367 Mon, 01 Dec 2008 15:04:15 GMT   0.0.367 Mon, 01 Dec 2008 15:04:15 GMT</DATA>
+<DATA>Agent     Agent   Agent   Agent   1       id      0.0.364 Fri, 28 Nov 2008 17:33:02 GMT   0.0.364 Fri, 28 Nov 2008 17:33:02 GMT</DATA>
+<DATA>Office    Office  Office  Office  1       id      0.0.364 Fri, 28 Nov 2008 17:33:02 GMT   0.0.364 Fri, 28 Nov 2008 17:33:02 GMT</DATA>
+</METADATA-RESOURCE>
+</RETS>
+* Expire cleared
+* Closing connection #0
+* About to connect() to mls.omrebmls.com port 6203 (#0)
+*   Trying 199.60.252.232... * Connected to mls.omrebmls.com (199.60.252.232) port 6203 (#0)
+* Server auth using Basic with user 'icheck'
+
+
+The request would be (if translated to GET protocol from POST):
+
+/getmetadata.xml?Format=COMPACT&ID=0&Type=METADATA-RESOURCE
+
+That becomes the lhs of the equation. Note that all special characters must be escaped, 
+so the real lhs in the files.properties file would be:
+
+/getmetadata.xml\?Format\=COMPACT\&ID\=0\&Type\=METADATA-RESOURCE.
+
+Next the payload for the response must be placed into its own file. The response to the 
+above request, from the "Set-Cookie" through "</RETS>" is in file z.3 in this example. 
+Be careful because in some cases, logging information/comments could be missing a CR/LF 
+and thereby show up in the payload. The following line maps this request to the proper 
+response in the files.properties file:
+
+/getmetadata.xml\?Format\=COMPACT\&ID\=0\&Type\=METADATA-RESOURCE = z.3
+
+That's all there is to it. The server simply does a straight match of the request against 
+this file, so you couldn't change the order of "ID=" and "Type=" in the mapping file and 
+expect it to work.
+
+Note that I don't really do authentication, so that portion of the transaction gets dropped. 
+There is no way in the current "design" to maintain state, so each "transaction" must stand 
+alone in the current incarnation of the server.
+

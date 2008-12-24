@@ -1,5 +1,6 @@
 import java.lang.*;
 import librets.*;
+import java.io.*;
 
 public class search 
 {
@@ -56,6 +57,36 @@ public class search
             System.out.println();
         }
         
+	try
+	{
+	    File f=new File("rawsearch.log");
+	    FileOutputStream fop=new FileOutputStream(f);
+	    byte [] data = session.SearchAsArray(searchRequest);
+	    fop.write(data);
+	    fop.flush();
+	    fop.close();
+	}
+	catch (IOException e) {}
+
+	/*
+	 * Prototype for returning data in a stream.
+	try
+	{
+	    File f=new File("foobarty");
+	    FileOutputStream fop=new FileOutputStream(f);
+	    CppInputStream data = session.SearchAsStream(searchRequest);
+	    byte [] buf = new byte[30];
+	    int len;
+	    while ((len = data.read(buf, 0, 30)) > 0)
+	    {
+	        fop.write(buf, 0, len);
+	    }
+	    fop.flush();
+	    fop.close();
+	}
+	catch (IOException e) {}
+	 * end prototype */
+
         LogoutResponse logout = session.Logout();
 
         System.out.println("Billing info: " + logout.GetBillingInfo());
