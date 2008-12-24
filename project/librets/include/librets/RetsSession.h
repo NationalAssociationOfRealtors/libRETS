@@ -222,7 +222,18 @@ class RetsSession : public MetadataLoader
      * @throws RetsException if an error occurs.
      */
     BinaryDataAPtr GetMetadata_();
+    /// @endcond
    
+#ifdef DOXYGEN
+    /**
+     * Gets the metadata on the server and returns the raw RETS data into 
+     * a java byte array. This API is for Java only.
+     *
+     * @return a Java byte array containing the search results as raw RETS data.
+     */
+    public byte [] GetMetadataAsArray();
+#endif
+
     /**
      * Returns true if metadata is retrieved incrementally.
      *

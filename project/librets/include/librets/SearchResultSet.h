@@ -113,7 +113,7 @@ class SearchResultSet : public virtual RetsObject
      * Enable or disable caching. Disabling caching only works in
      * streaming mode. It is up to the caller to verify that the
      * operational mode is proper.
-     * @param cache A boolean that if TRUE enables caching.
+     * @param enable  A boolean that if TRUE enables caching.
      */
     void SetCaching(bool enable);
     /// @endcond

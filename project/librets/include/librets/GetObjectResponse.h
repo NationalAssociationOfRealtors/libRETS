@@ -58,8 +58,8 @@ class GetObjectResponse : public RetsObject
     
     /**
      * (Internal) Set the http response code.
-     * @param An integer containing the http response code.
-     * @param A string containing option error text.
+     * @param responseCode An integer containing the http response code.
+     * @param errorText A string containing option error text.
      */
     void SetHttpResponse(int responseCode, std::string errorText);
     

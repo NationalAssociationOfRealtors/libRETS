@@ -1471,11 +1471,11 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
 
     public byte [] SearchAsArray(SearchRequest request)
     {
-	BinaryData binaryData = Search_(request);
-	int length = binaryData.Size();
-	byte[] bytes = new byte[length];
-	binaryData.Copy(bytes, length);
-	return bytes;
+        BinaryData binaryData = Search_(request);
+        int length = binaryData.Size();
+        byte[] bytes = new byte[length];
+        binaryData.Copy(bytes, length);
+        return bytes;
     }
 %}
 #endif
@@ -1536,20 +1536,20 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
     class InputStreamBridge
     {
       public:
-	InputStreamBridge(istreamPtr inputStream);
-	int readByte() const;
-	int read(unsigned char buffer[], int offset, int length) const; 
+        InputStreamBridge(istreamPtr inputStream);
+        int readByte() const;
+        int read(unsigned char buffer[], int offset, int length) const; 
     };
 
     %typemap(javacode) RetsSession  %{
-	public CppInputStream  SearchAsStream(SearchRequest request)
-	{
-	    SWIGTYPE_p_istreamPtr  inputStream = SearchStream(request);
+        public CppInputStream  SearchAsStream(SearchRequest request)
+        {
+            SWIGTYPE_p_istreamPtr  inputStream = SearchStream(request);
 
-	    //CppInputStream streamBridge = new IOStreamBridge(inputStream);;
-	    return new CppInputStream(new InputStreamBridge(inputStream));
-	    //return streamBridge;
-	}
+            //CppInputStream streamBridge = new IOStreamBridge(inputStream);;
+            return new CppInputStream(new InputStreamBridge(inputStream));
+            //return streamBridge;
+        }
     %}
 #endif // prototype code
 

@@ -87,7 +87,7 @@ class CurlHttpClient : public RetsHttpClient
     
     /**
      * Set the mode flags to be used.
-     * @param An unsigned integer containing the mode flags.
+     * @param flags An unsigned integer containing the mode flags.
      */
     virtual void SetModeFlags(unsigned int flags);
     
