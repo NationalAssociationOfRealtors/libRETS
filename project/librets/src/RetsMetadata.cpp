@@ -18,6 +18,7 @@
 #include <sstream>
 #include <algorithm>
 #include "librets/RetsMetadata.h"
+#include "librets/DefaultMetadataCollector.h"
 #include "librets/MetadataFinder.h"
 #include "librets/MetadataSystem.h"
 #include "librets/MetadataResource.h"
@@ -28,6 +29,7 @@
 #include "librets/MetadataObject.h"
 #include "librets/MetadataSearchHelp.h"
 #include "librets/RetsException.h"
+#include "librets/XmlMetadataParser.h"
 
 using namespace librets;
 using std::string;
@@ -82,6 +84,29 @@ RetsMetadata::RetsMetadata(MetadataFinderPtr finder)
 {
     InitSystem();
 }
+
+RetsMetadata * RetsMetadata::CreateAndParse(
+                                istreamPtr inputStream,
+                                EncodingType encoding,
+                                ExceptionErrorHandler * handler)
+{
+    DefaultMetadataCollectorPtr collector(new DefaultMetadataCollector());
+    XmlMetadataParserPtr parser(new XmlMetadataParser(collector, handler));
+    
+    parser->SetEncoding(encoding);
+    parser->Parse(inputStream);
+    return new RetsMetadata(collector);
+}
+
+RetsMetadata * RetsMetadata::CreateAndParse(
+                                BinaryData binaryData,
+                                EncodingType encoding,
+                                ExceptionErrorHandler * handler)
+{
+    istreamPtr inputStream(new std::istringstream(binaryData.AsString()));
+    return CreateAndParse(inputStream, encoding, handler);
+}
+
 
 void RetsMetadata::InitSystem()
 {

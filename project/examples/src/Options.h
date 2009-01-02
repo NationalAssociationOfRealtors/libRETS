@@ -40,8 +40,8 @@ class Options
     bool useFullMetadata;
     std::string brokerCode;
     std::string savedMetadataTimestamp;
-	std::string proxyUrl;
-	std::string proxyPassword;
+    std::string proxyUrl;
+    std::string proxyPassword;
     bool disableStreaming;
     bool enableCaching;
     std::string mEncoding;
@@ -53,6 +53,8 @@ class Options
     librets::RetsSessionPtr RetsLogin();
 
     unsigned count(const char * name) const;
+
+    librets::EncodingType getEncoding() const;
 
   private:
     std::string mLogFile;

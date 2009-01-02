@@ -1,6 +1,7 @@
 # Automatically generated file list.  Edits will be overwritten.
 X_OBJS = \
 	$(DIROBJ)\AndCriterion.obj \
+	$(DIROBJ)\BinaryData.obj \
 	$(DIROBJ)\CapabilityUrls.obj \
 	$(DIROBJ)\CurlEasy.obj \
 	$(DIROBJ)\CurlHttpClient.obj \

@@ -488,6 +488,95 @@ typedef std::auto_ptr<SearchRequest> SearchRequestAPtr;
 %template(SearchRequestAPtr) std::auto_ptr<SearchRequest>;
 #endif
 
+#ifdef SWIGJAVA
+
+    // map java parameter to native declaration in libretsJNI.java
+    %typemap(jtype)  unsigned char[] "byte[]"
+
+    // map java parameter (generated java wrapper)
+
+    %typemap(jstype) unsigned char[] "byte[]"
+
+    // identified parameter in the generated java wrapper
+    %typemap(javain)   unsigned char[] "$javainput"
+    %typemap(jni) unsigned char[] "jbyteArray"
+
+    // Do the input conversion. This will allocate a temporary buffer and
+    // copy the data from the Java byte array into it.
+    %typemap(in)     unsigned char[] (int _length)
+    {
+        // Determine the length of the data 
+        _length = JCALL1(GetArrayLength, jenv, $input);
+        // Allocate a buffer to which the data will be copied 
+        try
+        {
+            $1 = new unsigned char [_length];
+            JCALL4(GetByteArrayRegion, jenv, $input, 0, _length, (jbyte *)$1);
+        }
+        catch(std::exception &e)
+        {
+            std::string message = std::string(e.what()) + "\n";
+            SWIG_JavaException(jenv, SWIG_ValueError, message.c_str()); 
+            return $null;
+        }
+        catch(...)
+        {
+            SWIG_JavaException(jenv, SWIG_RuntimeError, "Unknown exception\n"); 
+            return $null;
+        }
+    }
+
+    %typemap(arginit) unsigned char []
+    {
+        $1 = NULL;
+    }
+
+    // The data has been copied to the temporary buffer. Now write it back to
+    // the Java domain and then release the buffer.
+    %typemap(argout) unsigned char [] 
+    {
+        JCALL4(SetByteArrayRegion, jenv, $input, 0, _length$argnum, (const jbyte *)$1);
+        if ($1)
+        {
+            try
+            {
+                delete $1;
+            }
+            catch(std::exception &e)
+            {
+                std::string message = std::string(e.what()) + "\n";
+                SWIG_JavaException(jenv, SWIG_ValueError, message.c_str()); 
+                return $null;
+            }
+            catch(...)
+            {
+                SWIG_JavaException(jenv, SWIG_RuntimeError, "Unknown exception\n"); 
+                return $null;
+            }
+        }
+    }
+
+    class BinaryData
+    {
+      public:
+            BinaryData(unsigned char buffer[], int length);
+            int Size() const;
+            const char * AsChar() const;
+            void Copy(unsigned char buffer[], int length) const; 
+    };
+
+    typedef std::auto_ptr<BinaryData> BinaryDataAPtr;
+    SWIG_AUTO_PTR_RELEASE(BinaryData);
+
+    %typemap(javacode) SearchResultSet %{
+        public void SetDataAsArray(byte[] bytes)
+        {
+            //BinaryDataAPtr binaryData(new BinaryData(bytes, bytes.length));
+            SetInputData(new BinaryData(bytes, bytes.length));
+        }
+    %}
+#endif
+
 class SearchResultSet
 {
   public:
@@ -510,6 +599,10 @@ class SearchResultSet
     int GetReplyCode();
 
     std::string GetReplyText();
+
+#ifdef SWIGJAVA
+    void SetInputData(BinaryData binaryData);
+#endif
 };
 typedef std::auto_ptr<SearchResultSet> SearchResultSetAPtr;
 #ifndef SWIGPHP
@@ -629,83 +722,6 @@ SWIG_AUTO_PTR_RELEASE(BinaryData);
 #endif
 
 #ifdef SWIGJAVA
-
-    // map java parameter to native declaration in libretsJNI.java
-    %typemap(jtype)  unsigned char[] "byte[]"
-
-    // map java parameter (generated java wrapper)
-
-    %typemap(jstype) unsigned char[] "byte[]"
-
-    // identified parameter in the generated java wrapper
-    %typemap(javain)   unsigned char[] "$javainput"
-    %typemap(jni) unsigned char[] "jbyteArray"
-
-    // Do the input conversion. This will be executed before BinaryData.Copy()
-    // and will allocate a temporary buffer for the copy.
-    %typemap(in)     unsigned char[] (int _length)
-    {
-        // Determine the length of the data in BinaryData
-        _length = JCALL1(GetArrayLength, jenv, $input);
-        // Allocate a buffer to which the data will be copied by BinaryData.Copy()
-        try
-        {
-            $1 = new unsigned char [_length];
-        }
-        catch(std::exception &e)
-        {
-            std::string message = std::string(e.what()) + "\n";
-            SWIG_JavaException(jenv, SWIG_ValueError, message.c_str()); 
-            return;
-        }
-        catch(...)
-        {
-            SWIG_JavaException(jenv, SWIG_RuntimeError, "Unknown exception\n"); 
-            return;
-        }
-    }
-
-    %typemap(arginit) unsigned char []
-    {
-        $1 = NULL;
-    }
-
-    // The data has been copied to the temporary buffer. Now write it back to
-    // the Java domain and then release the buffer.
-    %typemap(argout) unsigned char [] 
-    {
-        JCALL4(SetByteArrayRegion, jenv, $input, 0, _length$argnum, (const jbyte *)$1);
-        if ($1)
-        {
-            try
-            {
-                delete $1;
-            }
-            catch(std::exception &e)
-            {
-                std::string message = std::string(e.what()) + "\n";
-                SWIG_JavaException(jenv, SWIG_ValueError, message.c_str()); 
-                return;
-            }
-            catch(...)
-            {
-                SWIG_JavaException(jenv, SWIG_RuntimeError, "Unknown exception\n"); 
-                return;
-            }
-        }
-    }
-
-    class BinaryData
-    {
-      public:
-            int Size() const;
-            const char * AsChar() const;
-            void Copy(unsigned char buffer[], int length) const; 
-    };
-
-    typedef std::auto_ptr<BinaryData> BinaryDataAPtr;
-    SWIG_AUTO_PTR_RELEASE(BinaryData);
-
     %typemap(javacode) ObjectDescriptor %{
         public byte [] GetDataAsBytes()
         {
@@ -1023,6 +1039,15 @@ class MetadataSearchHelp : public MetadataElement
 
 %nodefault;
 
+#ifdef SWIGJAVA
+    %typemap(javacode) RetsMetadata %{
+        public static RetsMetadata CreateMetadataFromArray(byte[] bytes)
+        {
+            return CreateAndParse(new BinaryData(bytes, bytes.length));
+        }
+    %}
+#endif
+
 class RetsMetadata
 {
   public:
@@ -1065,6 +1090,11 @@ class RetsMetadata
 
     MetadataSearchHelp * GetSearchHelp(std::string resourceName,
                                        std::string searchHelpID) const;
+#ifdef SWIGJAVA
+    static RetsMetadata * CreateAndParse(BinaryData binaryData,
+                                        EncodingType encoding = EncodingType::RETS_XML_DEFAULT_ENCODING,
+                                        ExceptionErrorHandler * handler = ExceptionErrorHandler::GetInstance());
+#endif
 };
 
 %default;
@@ -1484,54 +1514,6 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
     // Prototype for returning the data to Java in a stream
     // Gotta adjust the in and argout typemaps for the StreamBridge.
     //
-    // Do the input conversion. 
-    // This  will allocate a temporary buffer for the copy.
-    %typemap(in)     unsigned char[] (int _length)
-    {
-        // Determine the length of the data in the buffer
-        _length = JCALL1(GetArrayLength, jenv, $input);
-        // Allocate a local buffer to which the data will be copied.
-        try
-        {
-            $1 = new unsigned char [_length];
-        }
-        catch(std::exception &e)
-        {
-            std::string message = std::string(e.what()) + "\n";
-            SWIG_JavaException(jenv, SWIG_ValueError, message.c_str()); 
-            return -1;
-        }
-        catch(...)
-        {
-            SWIG_JavaException(jenv, SWIG_RuntimeError, "Unknown exception\n"); 
-            return -1;
-        }
-    }
-    // The data has been copied to the temporary buffer. Now write it back to
-    // the Java domain and then release the buffer.
-    %typemap(argout) unsigned char [] 
-    {
-        JCALL4(SetByteArrayRegion, jenv, $input, 0, _length$argnum, (const jbyte *)$1);
-        if ($1)
-        {
-            try
-            {
-                delete $1;
-            }
-            catch(std::exception &e)
-            {
-                std::string message = std::string(e.what()) + "\n";
-                SWIG_JavaException(jenv, SWIG_ValueError, message.c_str()); 
-                return -1;
-            }
-            catch(...)
-            {
-                SWIG_JavaException(jenv, SWIG_RuntimeError, "Unknown exception\n"); 
-                return -1;
-            }
-        }
-    }
-
     %nodefault InputStreamBridge;
     class InputStreamBridge
     {

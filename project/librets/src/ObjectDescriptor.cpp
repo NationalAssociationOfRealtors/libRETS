@@ -91,36 +91,3 @@ void ObjectDescriptor::SetDataStream(istreamPtr dataStream)
 {
     mDataStream  = dataStream;
 }
-
-BinaryDataAPtr ObjectDescriptor::GetData()
-{
-    BinaryDataAPtr data(new BinaryData());
-    data->ReadToEof(mDataStream);
-    return data;
-}
-
-int BinaryData::Size() const
-{
-    return mData.size();
-}
-
-string BinaryData::AsString() const
-{
-    return mData;
-}
-
-const char * BinaryData::AsChar() const
-{
-    return mData.data();
-}
-
-void BinaryData::ReadToEof(istreamPtr inputStream)
-{
-    mData.clear();
-    readIntoString(inputStream, mData);
-}
-
-void BinaryData::Copy(unsigned char buffer[], int length) const
-{
-    mData.copy((char *) buffer, length);
-}

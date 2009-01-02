@@ -45,6 +45,7 @@ CurlHttpClient::CurlHttpClient()
 
     mLogger = NullHttpLogger::GetInstance();
     mLogging = false;
+    mTimeout = 0;
 
     SetUserAgent("librets-curl/" LIBRETS_VERSION);
     SetDefaultHeader("X-Librets-Version", LIBRETS_VERSION ", libCURL - " + Curl.GetVersion());

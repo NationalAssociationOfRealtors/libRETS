@@ -348,3 +348,15 @@ void SearchResultSet::SetInputStream(istreamPtr inputStream)
     mCurrentRow.reset();
 }
 
+void SearchResultSet::SetInputData(BinaryData binaryData)
+{
+    int len = binaryData.Size();
+    char buf[len];
+    binaryData.Copy((unsigned char *)buf, len);
+
+    string buffer(buf,len);
+    
+    istreamPtr inputStream(new std::istringstream(buf));
+    SetInputStream(inputStream);
+}
+

@@ -183,11 +183,11 @@ RetsSessionPtr Options::RetsLogin()
 
     if (session.get() && session->GetDetectedRetsVersion() != session->GetRetsVersion())
     {
-	cout << "** Warning, requested RETS version \"" 
-	     << session->RetsVersionToString(session->GetRetsVersion())
-	     << "\", got version \""
-	     << session->RetsVersionToString(session->GetDetectedRetsVersion())
-	     << "\" ** " << endl;
+        cout << "** Warning, requested RETS version \"" 
+             << session->RetsVersionToString(session->GetRetsVersion())
+             << "\", got version \""
+             << session->RetsVersionToString(session->GetDetectedRetsVersion())
+             << "\" ** " << endl;
     }
 
     return session;
@@ -196,4 +196,17 @@ RetsSessionPtr Options::RetsLogin()
 unsigned Options::count(const char * name) const
 {
     return options.count(name);
+}
+
+EncodingType Options::getEncoding() const
+{
+    string encoding = ba::to_lower_copy(mEncoding);
+
+    if (encoding == "iso")
+      return RETS_XML_ISO_ENCODING;
+
+    if (encoding == "utf8")
+      return RETS_XML_UTF8_ENCODING;
+    
+    return RETS_XML_DEFAULT_ENCODING;
 }

@@ -25,6 +25,9 @@
 #include <string>
 #include <vector>
 #include <set>
+#include "librets/BinaryData.h"
+#include "librets/EncodingType.h"
+#include "librets/ExceptionErrorHandler.h"
 #include "librets/metadata_forward.h"
 #include "librets/MetadataElement.h"
 
@@ -68,6 +71,51 @@ class RetsMetadata
     RetsMetadata(MetadataFinderPtr finder);
     /// @endcond
     
+    /**
+     * Create and return a Metadata object that parses the data
+     * from a given input stream.
+     *
+     * @param inputStream A stream from which the data will be injected
+     * into the parser.
+     * @param encoding The data encoding type: 
+     * one of RETS_XML_DEFAULT_ENCODING (default),
+     * RETS_XML_ISO_ENCODING or RETS_XML_UTF8_ENCODING
+     * @param handler The Exception Error Handler
+     * @return The default metadata object.
+     */
+    static RetsMetadata * CreateAndParse(
+                        istreamPtr inputStream, 
+                        EncodingType encoding = RETS_XML_DEFAULT_ENCODING,
+                        ExceptionErrorHandler * handler = ExceptionErrorHandler::GetInstance());
+    /**
+     * Create and return a Metadata object that parses the data
+     * from a BinaryData object.
+     *
+     * @param binaryData A BinaryData object from which the data will be injected
+     * into the parser.
+     * @param encoding The data encoding type: 
+     * one of RETS_XML_DEFAULT_ENCODING (default),
+     * RETS_XML_ISO_ENCODING or RETS_XML_UTF8_ENCODING
+     * @param handler The Exception Error Handler
+     * @return The default metadata object.
+     */
+    static RetsMetadata * CreateAndParse(
+                        BinaryData binaryData,
+                        EncodingType encoding = RETS_XML_DEFAULT_ENCODING,
+                        ExceptionErrorHandler * handler = ExceptionErrorHandler::GetInstance());
+    
+
+#ifdef DOXYGEN
+    /**
+     * Create and return a Metadata object that parses the data
+     * from a java byte array. This API is for Java only.
+     *
+     * @param buffer A Java byte array containing the raw RETS metadta.
+     * @return A RetsMetadata object with data parsed from the array.
+     */
+    public static RetsMetadata CreateMetadataFromArray(byte [] buffer);
+#endif
+
     /**
      * Returns the system metdata element.
      *

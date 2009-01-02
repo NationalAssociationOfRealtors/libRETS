@@ -152,6 +152,14 @@ class SearchResultSet : public virtual RetsObject
      * @param inputStream Input Stream 
      */
     void SetInputStream(istreamPtr inputStream);
+   
+    /**
+     * Sets the raw RETS data contained in the BinaryData object 
+     * as the input to be parsed for the search.
+     * 
+     * @param binaryData A BinaryData object containing the raw RETS data.
+     */
+    void SetInputData(BinaryData binaryData);
     
   private:
     typedef std::vector<StringVectorPtr> RowData;

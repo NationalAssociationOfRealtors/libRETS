@@ -69,6 +69,8 @@
 
 #include "librets/forward.h"
 
+#include "librets/BinaryData.h"
+#include "librets/EncodingType.h"
 #include "librets/RetsSession.h"
 #include "librets/RetsException.h"
 #include "librets/RetsHttpException.h"
