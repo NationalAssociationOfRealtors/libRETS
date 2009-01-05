@@ -17,7 +17,7 @@
 #ifndef LIBRETS_DMQL_CRITERION_H
 #define LIBRETS_DMQL_CRITERION_H
 /** 
- * @file AndCriterion.h
+ * @file DmqlCriterion.h
  * (Internal) Contains the DmqlCriterion parser class.
  */
  /// @cond MAINTAINER

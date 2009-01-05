@@ -1,5 +1,7 @@
 !include <../build/Makefile.vc>
 
+CFLAGS  = $(CFLAGS_STD) /I ../librets/include $(BOOST_CFLAGS) $(CURL_CFLAGS)
+
 RUBY = ruby
 RUBY_MAKEFILE = ruby\Makefile
 RUBY_WRAP = ruby\librets_wrap.cpp
@@ -13,14 +15,17 @@ PHP5_WRAP_H = php5\librets_wrap.h
 
 SWIG_FILES = librets.i auto_ptr_release.i shared_ptr_release.i
 
+SWIG_BRIDGE_SRC = librets_bridge.cpp
+SWIG_BRIDGE_OBJ = librets_bridge.obj
+
 all: csharp_ ruby_ python_ php5_ java_
 
-csharp_:
+csharp_: $(SWIG_BRIDGE_OBJ)
 	cd csharp
 	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
 	cd ..
 
-java_:
+java_: $(SWIG_BRIDGE_OBJ)
 	cd java
 	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
 	cd ..
@@ -40,6 +45,9 @@ php5_ : $(PHP5_WRAP)
 	$(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=static
 	cd ..
 
+$(SWIG_BRIDGE_OBJ): $(SWIG_BRIDGE_SRC)
+	$(CXX) $(CFLAGS) /Fo"$@"  $(SWIG_BRIDGE_SRC)
+
 $(RUBY_MAKEFILE): $(RUBY_WRAP) ruby\extconf.rb
 	cd ruby
 	$(RUBY) extconf.rb --with-swig-dir=../
@@ -55,6 +63,7 @@ $(PHP5_WRAP): $(SWIG_FILES)
 	$(SWIG) -c++ -php5 -o $(PHP5_WRAP) librets.i
 
 clean: clean-csharp clean-java clean-ruby clean-python clean-php5
+	@-erase /q $(SWIG_BRIDGE_OBJ)
 
 clean-csharp:
 	cd csharp
