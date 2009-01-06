@@ -104,8 +104,6 @@ if test -z "$BOOST_FILESYSTEM"; then
   AC_MSG_ERROR("Boost filesystem static library is required to build librets")
 fi
 
-MY_TEST_ANTLR
-
 MY_CHECK_SQL_COMPILER
 
 MY_TEST_CPPUNIT
