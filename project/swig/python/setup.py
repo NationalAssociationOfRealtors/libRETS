@@ -19,7 +19,7 @@ else:
 setup(name = "librets-python",
   version = librets_version,
   py_modules=['librets'],
-  ext_modules = [Extension("_librets", ["librets_wrap.cpp"],
+  ext_modules = [Extension("_librets", ["librets_wrap.cpp" , "../librets_bridge.cpp"],
     extra_compile_args = librets_cflags,
     extra_link_args = librets_libs
     )

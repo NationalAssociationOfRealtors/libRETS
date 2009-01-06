@@ -2,9 +2,10 @@
 
 PYTHON = python
 
-LIBRETS_LIB= ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT) winmm.lib wsock32.lib
+LIBRETS_LIB= ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT) winmm.lib wsock32.lib \
+	user32.lib gdi32.lib advapi32.lib
 #CFLAGS = $(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include
-CFLAGS = /GR $(BOOST_CFLAGS) -I../../librets/include
+CFLAGS = /GR $(BOOST_CFLAGS) $(CURL_CFLAGS) -I../../librets/include
 
 LIBRETS_EXT = build/lib.win32-2.5/_librets.pyd
 

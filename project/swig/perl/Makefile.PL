@@ -1,8 +1,12 @@
 use ExtUtils::MakeMaker;
 use Config;
 
-$cflags = `../../../librets-config-inplace --cflags`;
-$libs = `../../../librets-config-inplace --libs`;
+if ($Config{'osname'} !~ /cygwin/)
+{
+    $cflags = `../../../librets-config-inplace --cflags`;
+    $libs = `../../../librets-config-inplace --libs`;
+}
+
 $cc = $Config{'cc'};
 $ld = $Config{'ld'};
 if ($Config{'osname'} =~ /darwin/)

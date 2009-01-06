@@ -10,7 +10,7 @@ LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS)
 LINK = $(LINK_EXE) $(LDFLAGS)
 
 BIN_DIR = bin
-LIBRETS_UNMANAGED_OBJ = librets_wrap.obj librets_sharp.obj ../librets_bridge.obj
+LIBRETS_UNMANAGED_OBJ = librets_wrap.obj librets_sharp.obj librets_bridge.obj
 LIBRETS_UNMANAGED_DLL_FILE = librets-pinvoke.dll
 LIBRETS_UNMANAGED_DLL = $(BIN_DIR)\$(LIBRETS_UNMANAGED_DLL_FILE)
 LIBRETS_MANAGED_SRC = $(GENERATED_SRC) CppInputStream.cs \
@@ -57,6 +57,9 @@ win_files:
 SWIG_CSHARP = $(SWIG) -c++ -csharp -namespace librets -o librets_wrap.cpp \
 	-outdir lib -I../lib/csharp -dllimport $(LIBRETS_UNMANAGED_DLL_FILE) \
 	../librets.i
+
+librets_bridge.obj: ../librets_bridge.cpp
+	$(CXX) $(CFLAGS) /Fo"$@" ../librets_bridge.cpp 
 
 librets_wrap.obj: librets_wrap.cpp
 
