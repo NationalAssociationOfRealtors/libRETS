@@ -1,4 +1,4 @@
-Version 1.3.0 - xx xxx 2008
+Version 1.3.0b1 - 06 Jan 2009
 
   * Converted the http client model to allow for parallel
     search requests. Ticket #73.
