@@ -3,6 +3,7 @@
 # The idea to this kind of setup info script was stolen from numerous
 # other packages, such as neon, libxml and gnome.
 #
+basedir=@abs_top_builddir@
 builddir=@abs_top_builddir@/build
 includedir=@abs_top_srcdir@/project/librets/include
 librets_cflags="@LIBRETS_CFLAGS@"
@@ -17,6 +18,7 @@ Usage: librets-config [OPTION]
 
 Available values for OPTION include:
 
+  --basedir   project base directory
   --cflags    pre-processor and compiler flags
   --help      display this help and exit
   --libs      library linking information
@@ -66,6 +68,10 @@ while test $# -gt 0; do
 	    usage 0
 	    ;;
 
+	--basedir)
+	    show_basedir="yes"
+	    ;;
+
         --cflags)
 	    show_cflags="yes"
        	    ;;
@@ -89,6 +95,10 @@ while test $# -gt 0; do
     esac
     shift
 done
+
+if test "$show_basedir" = "yes"; then
+    append_to_output ${basedir}
+fi
 
 if test "$show_cflags" = "yes"; then
     append_to_output -I${includedir}

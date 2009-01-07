@@ -10,6 +10,7 @@
 #ifdef SWIGJAVA
 %{
 #include "librets_bridge.h"
+#include "librets/ExceptionErrorHandler.h"
 %}
 %include "java/boost_shared_ptr.i"
 %include "java/typemaps.i"

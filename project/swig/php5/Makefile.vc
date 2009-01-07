@@ -2,7 +2,7 @@
 
 LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
 
-SYS_LIBS = winmm.lib wsock32.lib
+SYS_LIBS = winmm.lib wsock32.lib user32.lib gdi32.lib advapi32.lib
 
 WRAP = librets_wrap.cpp
 OBJWRAP = librets_wrap.obj
@@ -16,8 +16,12 @@ all: $(PHP_EXT)
 
 $(OBJWRAP): $(WRAP)
 
-$(PHP_EXT): $(OBJWRAP)
-	$(LINK) $(LIBRETS_LIB) $(BOOST_LDFLAGS) /out:$(PHP_EXT) $(OBJWRAP) $(SYS_LIBS) $(PHP_LIBS)
+librets_bridge.obj: ../librets_bridge.cpp
+	$(CXX) $(CFLAGS) /Fo"$@" ../librets_bridge.cpp 
+
+
+$(PHP_EXT): $(OBJWRAP) librets_bridge.obj
+	$(LINK) $(LIBRETS_LIB) $(BOOST_LDFLAGS) /out:$(PHP_EXT) $(OBJWRAP) $(SYS_LIBS) $(PHP_LIBS) librets_bridge.obj
 
 {.\}.cpp.obj:
 	$(CXX) $(CFLAGS) /Fo"$@"  $<

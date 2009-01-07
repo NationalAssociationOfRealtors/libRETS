@@ -32,6 +32,8 @@ GENERATED_SRC = \
 	generated\RetsReplyException.java \
 	generated\RetsSession.java \
 	generated\RetsVersion.java \
+	generated\SWIGTYPE_p_ExceptionErrorHandler.java \
+	generated\SWIGTYPE_p_std__ostream.java \
 	generated\SearchRequest.java \
 	generated\SearchRequestAPtr.java \
 	generated\SearchResultSet.java \

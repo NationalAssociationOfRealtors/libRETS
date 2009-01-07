@@ -349,7 +349,7 @@ void SearchResultSet::SetInputStream(istreamPtr inputStream)
 }
 
 
-oid SearchResultSet::SetInputData(BinaryData binaryData)
+void SearchResultSet::SetInputData(BinaryData binaryData)
 {
     int len = binaryData.Size();
     char *buf = 0;

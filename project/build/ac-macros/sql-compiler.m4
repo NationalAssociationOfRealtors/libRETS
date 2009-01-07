@@ -12,6 +12,7 @@ AC_DEFUN([MY_CHECK_SQL_COMPILER], [
     my_use_sql_compiler=no
     USE_SQL_COMPILER=
     if test "$my_enable_sql_compiler"  = "yes"; then
+      MY_TEST_ANTLR
       if test "x$ANTLR_LIBS" != "x"; then
         USE_SQL_COMPILER=1
         my_use_sql_compiler=yes

@@ -88,7 +88,7 @@ LINK_LIB = link.exe $(LINK_LIB_FLAG) /nologo
 LINK_EXE = link.exe /nologo 
 
 !if "$(VS_VERSION)" == "vs2003"
-WINLIBS = wsock32.lib winmm.lib wldap32.lib 
+WINLIBS = wsock32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
 !else if "$(VS_VERSION)" == "vs2005"
 WINLIBS = wsock32.lib winmm.lib wldap32.lib bufferoverflowu.lib user32.lib gdi32.lib advapi32.lib
 !else if "$(VS_VERSION)" == "vs2008"
@@ -128,6 +128,9 @@ BOOST_RUNTIME = $(BOOST_RUNTIME_PREFIX)$(BOOST_STATIC)$(BOOST_DEBUG)
 BOOST_FILESYSTEM_LIB = $(BOOST_PREFIX)boost_filesystem$(VC_VERSION)-mt$(BOOST_RUNTIME).lib
 BOOST_PROGRAM_OPTIONS_LIB = $(BOOST_PREFIX)boost_program_options$(VC_VERSION)-mt-$(BOOST_RUNTIME).lib
 BOOST_SYSTEM_LIB = $(BOOST_PREFIX)boost_system$(VC_VERSION)-mt$(BOOST_RUNTIME).lib
+!if "$(VS_VERSION)" == "vs2003"
+BOOST_SYSTEM_LIB = 
+!endif
 
 BOOST_CFLAGS = /I "$(BOOST_PATH)" /DBOOST_DISABLE_ASSERTS
 BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib"
@@ -204,11 +207,12 @@ EXPAT_XML_STATIC =
 EXPAT_LIB_PREFIX = 
 !endif
 
+!if "$(VS_VERSION)" == "vs2003"
 EXPAT_CFLAGS = /I "$(EXPAT_PATH)/lib" $(EXPAT_XML_STATIC)
-EXPAT_LDFLAGS = "/LIBPATH:$(EXPAT_PATH)/win32/bin/$(EXPAT_BIN_PREFIX)" \
+EXPAT_LDFLAGS = "/LIBPATH:$(EXPAT_PATH)/lib/lib" \
 	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME).lib
 
-!if "$(VS_VERSION)" == "vs2008"
+!else
 EXPAT_CFLAGS = /I "$(BASE_PATH)/include" $(EXPAT_XML_STATIC)
 EXPAT_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib/$(EXPAT_BIN_PREFIX)" \
 	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME).lib

@@ -1,9 +1,16 @@
 !include <../build/Makefile.vc>
 
+CFLAGS  = $(CFLAGS_STD) /I ../librets/include $(BOOST_CFLAGS) $(CURL_CFLAGS)
+
 RUBY = ruby
 RUBY_MAKEFILE = ruby\Makefile
 RUBY_WRAP = ruby\librets_wrap.cpp
 RUBY_WRAP_H = ruby\librets_wrap.h
+
+# Windows Perl port is not yet functional. mfk 2009-01-06
+PERL_MAKEFILE = perl\Makefile
+PERL_WRAP = perl\librets_wrap.cpp
+PERL_WRAP_H = perl\librets_wrap.h
 
 PYTHON_WRAP = python\librets_wrap.cpp
 PYTHON_WRAP_H = python\librets_wrap.h
@@ -13,21 +20,26 @@ PHP5_WRAP_H = php5\librets_wrap.h
 
 SWIG_FILES = librets.i auto_ptr_release.i shared_ptr_release.i
 
-all: csharp_ ruby_ python_ php5_ java_
+all: csharp_ java_ php5_ python_ ruby_ 
 
-csharp_:
+csharp_: 
 	cd csharp
 	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
 	cd ..
 
-java_:
+java_: 
 	cd java
 	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
 	cd ..
 
-ruby_: $(RUBY_WRAP) $(RUBY_MAKEFILE)
-	cd ruby
-	$(NMAKE) BUILD=release RUNTIME_LIBS=dynamic
+perl_:  $(PERL_WRAP) $(PERL_MAKEFILE)
+	cd perl
+	$(NMAKE) BUILD=release RUNTIME_LIBS=static
+	cd ..
+
+php5_ : $(PHP5_WRAP)
+	cd php5
+	$(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=static
 	cd ..
 
 python_: $(PYTHON_WRAP)
@@ -35,15 +47,23 @@ python_: $(PYTHON_WRAP)
 	 $(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic dist
 	 cd ..
 
-php5_ : $(PHP5_WRAP)
-	cd php5
-	$(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=static
+ruby_: $(RUBY_WRAP) $(RUBY_MAKEFILE)
+	cd ruby
+	$(NMAKE) BUILD=release RUNTIME_LIBS=dynamic
+	cd ..
+
+$(PERL_MAKEFILE): $(PERL_WRAP) perl\Makefile.PL
+	cd perl
+	$(PERL) Makefile.PL INC="$(CFLAGS)"
 	cd ..
 
 $(RUBY_MAKEFILE): $(RUBY_WRAP) ruby\extconf.rb
 	cd ruby
 	$(RUBY) extconf.rb --with-swig-dir=../
 	cd ..
+
+$(PERL_WRAP): $(SWIG_FILES)
+	$(SWIG) -c++ -perl -o $(PERL_WRAP) librets.i
 
 $(RUBY_WRAP): $(SWIG_FILES)
 	$(SWIG) -c++ -ruby -o $(RUBY_WRAP) -Ilib/ruby -I.. -module librets_native librets.i

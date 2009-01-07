@@ -91,3 +91,11 @@ void ObjectDescriptor::SetDataStream(istreamPtr dataStream)
 {
     mDataStream  = dataStream;
 }
+
+BinaryDataAPtr ObjectDescriptor::GetData()
+{
+    BinaryDataAPtr data(new BinaryData());
+    data->ReadToEof(mDataStream);
+    return data;
+}
+

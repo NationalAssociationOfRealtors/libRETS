@@ -5,15 +5,16 @@ LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LI
 !include <generated.vc>
 WRAP = 	librets_wrap.cpp
 
-CFLAGS  = $(CFLAGS_STD) /I ../../librets/include $(BOOST_CFLAGS) $(CURL_CFLAGS) /I "$(JAVA_HOME)/include" /I "$(JAVA_HOME)/include/win32"
+CFLAGS  = $(CFLAGS_STD) /I .. /I ../../librets/include $(BOOST_CFLAGS) $(CURL_CFLAGS) \
+		/I "$(JAVA_HOME)/include" /I "$(JAVA_HOME)/include/win32"
 LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS)
 LINK = $(LINK_EXE) $(LDFLAGS)
-SYSLIBS = wsock32.lib winmm.lib
+SYSLIBS = winmm.lib wsock32.lib user32.lib gdi32.lib advapi32.lib
 
 BIN_DIR = bin
 GEN_DIR = generated
 LIB_DIR = librets
-LIBRETS_OBJ = librets_wrap.obj
+LIBRETS_OBJ = librets_wrap.obj librets_bridge.obj
 LIBRETS_DLL_FILE = librets.dll
 LIBRETS_DLL = $(BIN_DIR)\$(LIBRETS_DLL_FILE)
 LIBRETS_JAR_FILE = librets.jar
@@ -47,6 +48,9 @@ $(LIBRETS_JAR): $(GENERATED_SRC)
 	javac -d . $(GENERATED_SRC)
 	jar -cvf $(LIBRETS_JAR) librets
 	
+librets_bridge.obj: ../librets_bridge.cpp
+	$(CXX) $(CFLAGS) /Fo"$@" ../librets_bridge.cpp 
+
 librets_wrap.obj: librets_wrap.cpp
 
 librets_wrap.cpp: ../librets.i $(GEN_DIR) $(LIB_DIR)

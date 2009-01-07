@@ -26,6 +26,8 @@ Version 1.3.0 - xx xxx 2008
   * Add API to allow raw RETS data to be reinjected into the
     parse stream for C++ and Java. Ticket #90.
 
+  * Configure fails if Java not installed. Ticket #91.
+
 Version 1.2.5 - 26 Nov 2008
 
   * Expose RETS_XML_UTF8_ENCODING to SWIG languages.
