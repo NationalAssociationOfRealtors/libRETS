@@ -1711,6 +1711,12 @@ class RetsSession
                                         RetsException,
                                         std::exception);
 
+    std::string RetsVersionToString(RetsVersion retsVersion)
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
+
     void SetHttpLogger(RetsHttpLogger * logger) 
                                   throw(RetsHttpException, 
                                         RetsReplyException,
