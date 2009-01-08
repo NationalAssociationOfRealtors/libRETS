@@ -489,6 +489,15 @@ typedef std::auto_ptr<SearchRequest> SearchRequestAPtr;
 %template(SearchRequestAPtr) std::auto_ptr<SearchRequest>;
 #endif
 
+#ifdef SWIGCSHARP
+    %typemap(cscode) SearchResultSet %{
+        public void SetDataAsArray(byte[] bytes)
+        {
+            SetInputData(new BinaryData(bytes, bytes.Length));
+        }
+    %}
+#endif
+
 #ifdef SWIGJAVA
 
     // map java parameter to native declaration in libretsJNI.java
@@ -601,7 +610,7 @@ class SearchResultSet
 
     std::string GetReplyText();
 
-#ifdef SWIGJAVA
+#if defined(SWIGCSHARP) || defined(SWIGJAVA)
     void SetInputData(BinaryData binaryData);
 #endif
 };
@@ -696,6 +705,7 @@ class InputStreamBridge
 class BinaryData
 {
   public:
+        BinaryData(unsigned char buffer[], int length);
         int Size() const;
         std::string AsString() const;
         const char * AsChar() const;

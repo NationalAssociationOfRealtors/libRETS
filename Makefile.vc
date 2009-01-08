@@ -91,6 +91,7 @@ _dist-cpp:
 _dist-csharp:
 	cp -u project/swig/csharp/bin/*.dll $(DISTDIR)/dotnet
 	cp -u project/swig/csharp/bin/Search.exe $(DISTDIR)/dotnet
+	cp -u project/swig/csharp/bin/RawSearch.exe $(DISTDIR)/dotnet
 
 _dist-java:
 	cp -u project/swig/java/bin/*.jar $(DISTDIR)/java

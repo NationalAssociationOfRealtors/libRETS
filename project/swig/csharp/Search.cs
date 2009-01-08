@@ -11,22 +11,22 @@ public class Search
         Options options  = new Options();
 
         if (!options.Parse(args))
-	    Environment.Exit(1);
+            Environment.Exit(1);
 
         RetsSession session = options.SessionFactory();
 
-	try {
+        try {
 
         if (!session.Login(options.user_name, options.user_password))
         {
             Console.WriteLine("Invalid login");
             Environment.Exit(1);
         }
-	} catch (Exception e)
-	{
-	    Console.WriteLine("RetsException: " + e);
+        } catch (Exception e)
+        {
+            Console.WriteLine("RetsException: " + e);
             Environment.Exit(1);
-	}
+        }
 
         Console.WriteLine("Action: " + session.GetAction());
         RetsVersion version = session.GetDetectedRetsVersion();
@@ -35,7 +35,7 @@ public class Search
             ((version == RetsVersion.RETS_1_7) ? "1.7" : "1.0")));
 
         SearchRequest searchRequest = session.CreateSearchRequest(
-	    options.search_type, options.search_class, options.query);
+            options.search_type, options.search_class, options.query);
 
         searchRequest.SetSelect(options.select);
         searchRequest.SetLimit(options.limit);
