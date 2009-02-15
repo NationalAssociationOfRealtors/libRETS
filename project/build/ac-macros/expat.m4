@@ -12,7 +12,7 @@ AC_DEFUN([MY_TEST_EXPAT], [
     expat_prefixes="$withval",
     expat_prefixes="/usr/local /usr")
 
-  if test x"$with_expat" == "xno"; then
+  if test x"$with_expat" = "xno"; then
      AC_MSG_ERROR([Expat is required to build librets])
   fi
 
@@ -27,7 +27,7 @@ AC_DEFUN([MY_TEST_EXPAT], [
     AC_MSG_ERROR([Could not find expat.h])
   fi
 
-  if test "$my_enable_shared_dependencies" == "yes"; then
+  if test "$my_enable_shared_dependencies" = "yes"; then
      if test x"$withval" != "x"; then
         EXPAT_LDFLAGS="-L$withval/lib"
      fi

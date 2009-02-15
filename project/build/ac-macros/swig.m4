@@ -49,7 +49,7 @@ AC_DEFUN([MY_TEST_SWIG], [
           $ver_minor \= $check_minor \& \
           $ver_release \>\= $check_release `                         
 
-      if test "$ok" == "1"; then
+      if test "$ok" = "1"; then
         my_cv_swig_vers="$ver"
         AC_MSG_RESULT([$my_cv_swig_vers])
 
@@ -59,7 +59,7 @@ AC_DEFUN([MY_TEST_SWIG], [
         dnl
         dnl Check to see if we can build for csharp
         dnl
-        if test "$my_use_mcs" == "yes"; then
+        if test "$my_use_mcs" = "yes"; then
             AC_CHECK_PROG(MCS, mcs, mcs, no)
             if test "$MCS" != "no"; then
                 HAVE_MCS=1
@@ -70,8 +70,8 @@ AC_DEFUN([MY_TEST_SWIG], [
         dnl
         dnl Check to see if we can build for java
         dnl
-        if test "$my_use_java" == "yes"; then
-            if test "$SWIG_OSNAME" == "darwin"; then
+        if test "$my_use_java" = "yes"; then
+            if test "$SWIG_OSNAME" = "darwin"; then
                 JAVA_INCLUDES=-I`javaconfig Headers`
             else
                 JAVA_INCLUDES=
@@ -113,7 +113,7 @@ AC_DEFUN([MY_TEST_SWIG], [
         dnl
         dnl Check to see if we should build for perl
         dnl
-        if test "$my_use_perl" == "yes"; then
+        if test "$my_use_perl" = "yes"; then
             HAVE_PERL=1
             my_have_perl=yes
         fi
@@ -121,7 +121,7 @@ AC_DEFUN([MY_TEST_SWIG], [
         dnl
         dnl Check to see if we can build for php
         dnl
-        if test "$my_use_php" == "yes"; then
+        if test "$my_use_php" = "yes"; then
             AC_CHECK_PROG(PHP, php, php, no)
             if test "$PHP" != "no"; then
                 HAVE_PHP=1
@@ -132,7 +132,7 @@ AC_DEFUN([MY_TEST_SWIG], [
         dnl
         dnl Check to see if we can build for python
         dnl
-        if test "$my_use_python" == "yes"; then
+        if test "$my_use_python" = "yes"; then
             AC_CHECK_PROG(PYTHON, python, python, no)
             if test "$PYTHON" != "no"; then
                 HAVE_PYTHON=1
@@ -143,7 +143,7 @@ AC_DEFUN([MY_TEST_SWIG], [
         dnl
         dnl Check to see if we can build for ruby
         dnl
-        if test "$my_use_ruby" == "yes"; then
+        if test "$my_use_ruby" = "yes"; then
             AC_CHECK_PROG(RUBY, ruby, ruby, no)
             if test "$RUBY" != "no"; then
                 HAVE_RUBY=1

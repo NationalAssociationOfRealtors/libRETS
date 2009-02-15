@@ -12,7 +12,7 @@ AC_DEFUN([MY_TEST_BOOST], [
     boost_prefixes="$withval",
       boost_prefixes="/usr/local /usr")
 
-  if test x"$with_boost" == "xno"; then
+  if test x"$with_boost" = "xno"; then
      AC_MSG_ERROR([Boost is required to build librets])
   fi
 

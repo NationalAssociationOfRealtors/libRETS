@@ -30,7 +30,7 @@ AC_DEFUN([MY_TEST_CPPUNIT], [
           $ver_release \= $check_release \& \
           $ver_release \>= $check_release `                         
 
-      if test "$ok" == "1"; then
+      if test "$ok" = "1"; then
         my_cv_cppunit_vers="$ver"
         AC_MSG_RESULT([$my_cv_cppunit_vers])
 

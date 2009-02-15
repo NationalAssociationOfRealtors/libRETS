@@ -3,11 +3,11 @@ dnl Check for ANTLR
 dnl
 AC_DEFUN([MY_TEST_ANTLR], [
   AC_CHECK_PROG(ANTLR_JAVA, java, java, [])
-  if test x$ANTLR_JAVA == "x"; then
+  if test x$ANTLR_JAVA = "x"; then
     AC_MSG_ERROR([antlr requires java to run])
   fi
   AC_CHECK_PROG(ANTLR, antlr, antlr, [])
-dnl  if test x$ANTLR == "x"; then
+dnl  if test x$ANTLR = "x"; then
 dnl    AC_MSG_ERROR([antlr is required to build the SQL to DMQL compiler])
 dnl  fi
 

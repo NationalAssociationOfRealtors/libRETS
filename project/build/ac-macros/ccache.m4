@@ -15,7 +15,7 @@ AC_DEFUN([MY_PROG_CCACHE], [
 my_use_ccache=no
 if test "$my_enable_ccache" = "yes"; then
   AC_CHECK_PROG(my_have_ccache, ccache, yes, no)
-  if test "$my_have_ccache" == "yes"; then
+  if test "$my_have_ccache" = "yes"; then
      CC="ccache $CC"
      CXX="ccache $CXX"
      my_use_ccache=yes
