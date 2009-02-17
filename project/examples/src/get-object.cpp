@@ -101,9 +101,13 @@ int main(int argc, char * argv[])
     
         StringMap contentTypeSuffixes;
         contentTypeSuffixes["image/jpeg"] = "jpg";
+        contentTypeSuffixes["text/xml"] = "xml";
         ObjectDescriptor * objectDescriptor;
         while ((objectDescriptor = getObjectResponse->NextObject()))
         {
+            int retsReplyCode = objectDescriptor->GetRetsReplyCode();
+            string retsReplyText = objectDescriptor->GetRetsReplyText();
+            
             string objectKey = objectDescriptor->GetObjectKey();
             int objectId = objectDescriptor->GetObjectId();
             string contentType = objectDescriptor->GetContentType();
@@ -112,7 +116,10 @@ int main(int argc, char * argv[])
             if (!description.empty())
                 cout << ", description: " << description;
             cout << endl;
-
+            
+            if (retsReplyCode)
+                cout << "*** " << retsReplyCode << ":" << retsReplyText << endl;
+                
             string suffix = contentTypeSuffixes[contentType];
             string outputFileName = outputPrefix + objectKey + "-" +
                 lexical_cast<string>(objectId) + "." + suffix;

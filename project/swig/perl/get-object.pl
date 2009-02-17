@@ -8,7 +8,8 @@ use Data::Dumper;
 my %extentions =
 (
  'image/jpeg' => "jpg",
- 'image/gif' => "gif"
+ 'image/gif' => "gif",
+ 'text/xml' => "xml"
 );
  
 my $session = new librets::RetsSession(

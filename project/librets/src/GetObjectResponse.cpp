@@ -24,15 +24,21 @@
 #include "librets/ObjectDescriptor.h"
 #include "librets/RetsException.h"
 #include "librets/RetsHttpException.h"
+#include "librets/ExpatXmlParser.h"
+#include "librets/RetsXmlStartElementEvent.h"
+#include "librets/RetsXmlEndElementEvent.h"
+#include "librets/RetsXmlTextEvent.h"
 #include "librets/util.h"
 
 using namespace librets;
 using namespace librets::util;
 using std::string;
+using std::ios;
 using std::istream;
 using std::ostringstream;
 using std::istringstream;
 using boost::lexical_cast;
+namespace b = boost;
 namespace ba = boost::algorithm;
 
 static void getlineCRLF(istream & in, string & line)
@@ -148,8 +154,17 @@ void GetObjectResponse::ParseSinglePart(RetsHttpResponsePtr httpResponse)
     else if (objectId.empty() && mDefaultsAreValid)
         descriptor->SetObjectId(mDefaultObjectId);
     else
-        descriptor->SetObjectId(lexical_cast<int>(objectId));
-
+    {
+        try
+        {
+            descriptor->SetObjectId(lexical_cast<int>(objectId));
+        }
+        catch (std::exception &e)
+        {
+            descriptor->SetObjectId(mDefaultObjectId);
+        }
+    }
+    
     descriptor->SetDescription(httpResponse->GetHeader("Content-Description"));
     descriptor->SetDataStream(httpResponse->GetInputStream());
     descriptor->SetLocationUrl(httpResponse->GetHeader("Location"));
@@ -239,7 +254,14 @@ void GetObjectResponse::ParsePartStream(istreamPtr in,
         }
         else if (name_lower == "object-id")
         {
-            objectDescriptor->SetObjectId(lexical_cast<int>(value));
+            try
+            {
+                objectDescriptor->SetObjectId(lexical_cast<int>(value));
+            }
+            catch (std::exception &e)
+            {
+                objectDescriptor->SetObjectId(mDefaultObjectId);
+            }
         }
         else if (name_lower == "location")
         {
@@ -250,8 +272,59 @@ void GetObjectResponse::ParsePartStream(istreamPtr in,
             objectDescriptor->SetDescription(value);
         }
     }
+
+    // If the content-type is text/xml, we need to parse it for RETS ReplyCode.
+    string value_lower(ba::to_lower_copy(objectDescriptor->GetContentType()));
+    if (value_lower == "text/xml")
+    {
+        ios::pos_type current = in->tellg();
+        ParseXmlResponse(in, objectDescriptor);
+        in->clear();
+        in->seekg(current);
+    }
+
     objectDescriptor->SetDataStream(in);
     mObjects.push_back(objectDescriptor);
+}
+
+void GetObjectResponse::ParseXmlResponse(istreamPtr inputStream, 
+                                            ObjectDescriptorPtr objectDescriptor)
+{
+    ExpatXmlParserPtr XmlParser(new ExpatXmlParser(inputStream, "US-ASCII"));
+    
+    while (XmlParser->HasNext())
+    {
+        RetsXmlEventPtr event = XmlParser->GetNextSkippingEmptyText();
+        RetsXmlStartElementEventPtr startEvent
+            = b::dynamic_pointer_cast<RetsXmlStartElementEvent>(event);
+        if (!startEvent)
+        {
+            continue;
+        }
+        
+        string name = startEvent->GetName();
+        if (name == "RETS")
+        {
+            istringstream replyCodeString(
+                startEvent->GetAttributeValue("ReplyCode"));
+            int replyCode;
+            try
+            {
+                replyCodeString >> replyCode;
+            }
+            catch (std::exception &)
+            {
+                replyCode = 20413; // Miscellaneous Error
+            }
+            
+            if (replyCode != 0)
+            {
+                string meaning = startEvent->GetAttributeValue("ReplyText");
+                objectDescriptor->SetRetsReplyCode(replyCode);
+                objectDescriptor->SetRetsReplyText(meaning);
+            }
+        }
+    }
 }
 
 string GetObjectResponse::FindBoundary(string contentType)

@@ -33,41 +33,43 @@ public class getobject
         objectRequest.AddAllObjects("LN000001");
         GetObjectResponse response = session.GetObject(objectRequest);
         
-	ObjectDescriptor objectDescriptor = response.NextObject();
+        ObjectDescriptor objectDescriptor = response.NextObject();
 
-	while (objectDescriptor != null)
-	{
-	    String object_key 	= objectDescriptor.GetObjectKey();
-	    int object_id 	= objectDescriptor.GetObjectId();
-	    String content_type = objectDescriptor.GetContentType();
-	    String description 	= objectDescriptor.GetDescription();
-	
-	    System.out.print(object_key + " object #" + object_id);
+        while (objectDescriptor != null)
+        {
+            String object_key         = objectDescriptor.GetObjectKey();
+            int object_id         = objectDescriptor.GetObjectId();
+            String content_type = objectDescriptor.GetContentType();
+            String description         = objectDescriptor.GetDescription();
+        
+            System.out.print(object_key + " object #" + object_id);
 
-	    if (description.length() > 0)
-		System.out.print(", description: " + description);
+            if (description.length() > 0)
+                System.out.print(", description: " + description);
 
-	    System.out.println();
+            System.out.println();
 
-	    String suffix = "jpg";
-	    if (content_type.equals("image/gif"))
-		suffix = "gif";
+            String suffix = "jpg";
+            if (content_type.equals("image/gif"))
+                suffix = "gif";
+            if (content_type.equals("text/xml"))
+                suffix = "xml";
 
-	    String file_name = object_key + "-" + object_id + "." + suffix;
+            String file_name = object_key + "-" + object_id + "." + suffix;
 
-	    try
-	    {
-	        FileOutputStream outfile = new FileOutputStream(file_name);
+            try
+            {
+                FileOutputStream outfile = new FileOutputStream(file_name);
 
-		byte [] object_data = objectDescriptor.GetDataAsBytes();
+                byte [] object_data = objectDescriptor.GetDataAsBytes();
 
-	        outfile.write(object_data);
-	        outfile.close();
-	    }
-	    catch (IOException e) {}
+                outfile.write(object_data);
+                outfile.close();
+            }
+            catch (IOException e) {}
 
-	    objectDescriptor = response.NextObject();
-	}
+            objectDescriptor = response.NextObject();
+        }
 
         LogoutResponse logout = session.Logout();
 

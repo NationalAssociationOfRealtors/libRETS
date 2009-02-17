@@ -136,8 +136,15 @@ void GetObjectRequest::UpdateDefaultObjectKeyAndId()
             {
                 mHasDefaultObjectKeyAndId = true;
                 mDefaultObjectKey = i->first;
-                mDefaultObjectId = lexical_cast<int>(objectId);
-                return;
+                try
+                {
+                    mDefaultObjectId = lexical_cast<int>(objectId);
+                    return;
+                }
+                catch (std::exception &e)
+                {
+                    // Fall through and return -1 for the default.
+                }
             }
         }
     }

@@ -758,6 +758,10 @@ class ObjectDescriptor
     
     std::string GetContentType() const;
     
+    int GetRetsReplyCode() const;
+
+    std::string GetRetsReplyText() const;
+
 #if defined(SWIGRUBY) || defined(SWIGPYTHON) || defined(SWIGPHP) || defined(SWIGPERL)
     %extend {
         std::string GetDataAsString()
@@ -1118,7 +1122,8 @@ enum RetsVersion
 {
     RETS_1_0,
     RETS_1_5,
-    RETS_1_7
+    RETS_1_7,
+    RETS_1_7_2
 };
 
 enum EncodingType

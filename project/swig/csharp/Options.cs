@@ -226,7 +226,7 @@ public class Options
     }
 
     /**
-     * The RETS version to use. Valid values are "1.0", "1.5" or "1.7".
+     * The RETS version to use. Valid values are "1.0", "1.5", "1.7" or "1.7.2".
      */
     public string RETS_version
     {
@@ -237,6 +237,7 @@ public class Options
                 case RetsVersion.RETS_1_0:  return "1.0";
                 case RetsVersion.RETS_1_5:  return "1.5";
                 case RetsVersion.RETS_1_7:  return "1.7";
+                case RetsVersion.RETS_1_7_2: return "1.7.2";
             }
             return "1.0"; 
         }
@@ -251,6 +252,9 @@ public class Options
 
             if (value == "1.7")
                 mRetsVersion = RetsVersion.RETS_1_7;
+
+            if (value == "1.7.2")
+                mRetsVersion = RetsVersion.RETS_1_7_2;
         }
     }
 

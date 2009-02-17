@@ -41,7 +41,11 @@ enum RetsVersion
     /**
      * This is a RETS 1.7 server.
      */
-    RETS_1_7
+    RETS_1_7,
+    /**
+     * This is a RETS 1.7.2 server.
+     */
+    RETS_1_7_2
 };
 
 }

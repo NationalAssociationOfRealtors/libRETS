@@ -276,6 +276,8 @@ int main(int argc, char * argv[])
                 int     objectId    = objectDescriptor->GetObjectId();
                 string  contentType = objectDescriptor->GetContentType();
                 string  description = objectDescriptor->GetDescription();
+                int     replyCode   = objectDescriptor->GetRetsReplyCode();
+                string  replyText   = objectDescriptor->GetRetsReplyText();
                 
                 cout << "Object "
                      << objectKey
@@ -285,6 +287,13 @@ int main(int argc, char * argv[])
                     cout << ", description: "
                          << description;
                 cout << endl;
+                
+                if (replyCode != 0)
+                    cout << "***: "
+                         << replyCode
+                         << ": "
+                         << replyText
+                         << endl;
             }
             cout << endl;
         }

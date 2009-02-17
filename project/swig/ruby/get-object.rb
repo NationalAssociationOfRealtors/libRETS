@@ -17,7 +17,7 @@ get_object_request.add_all_objects("LN000001")
 
 get_object_response = session.get_object(get_object_request)
 
-content_type_suffixes = { "image/jpeg" => "jpg"}
+content_type_suffixes = { "image/jpeg" => "jpg", "image/gif" => "gif", "text/xml" => "xml"}
 get_object_response.each_object do |object_descriptor|
   object_key =  object_descriptor.object_key
   object_id = object_descriptor.object_id

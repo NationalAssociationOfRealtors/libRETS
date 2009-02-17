@@ -73,6 +73,7 @@ class GetObjectResponse : public RetsObject
      */
     void Parse(RetsHttpResponsePtr httpResponse,
                bool ignoreMalformedHeaders = false);
+               
     /// @endcond
     
     /**
@@ -105,6 +106,17 @@ class GetObjectResponse : public RetsObject
     
     std::string FindBoundary(std::string contentType);
     void ParsePartStream(istreamPtr in, bool ignoreMalformedHeaders = false);
+
+    /// @cond MAINTAINER
+    /**
+     * (Internal) Parse the text/xml response, looking for the RETS Error Code.
+     *
+     * @param inputStream A pointer to the input stream containing the object.
+     * @param objectDescriptor An ObjectDescriptorPtr to the object being constructed.
+     */
+    void ParseXmlResponse(istreamPtr inputStream, 
+                            ObjectDescriptorPtr objectDescriptor);
+    /// @endcond
     
     bool mDefaultsAreValid;
     std::string mDefaultObjectKey;

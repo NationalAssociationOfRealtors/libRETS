@@ -139,6 +139,35 @@ class ObjectDescriptor : public RetsObject
      */
     BinaryDataAPtr GetData();
     
+    /**
+     * Returns an integer representing the RETS Response Code for this
+     * object.
+     *
+     * @return An integer containing the RETS Response Code.
+     */
+    int GetRetsReplyCode() const;
+    
+    /**
+     * Sets the RETS Response Code for this object.
+     *
+     * @param retsResponse The RETS Response Code.
+     */
+    void SetRetsReplyCode(int retsResponse);
+    
+    /**
+     * Returns a string representing the RETS Reply Text.
+     *
+     * @return A string containing the RETS Reply Text.
+     */
+    std::string GetRetsReplyText() const;
+    
+    /**
+     * Sets the RETS Reply Text.
+     *
+     * @param errorText The RETS Reply Text.
+     */
+    void SetRetsReplyText(std::string replyText);
+    
   private:
     std::string mObjectKey;
     int mObjectId;
@@ -146,6 +175,8 @@ class ObjectDescriptor : public RetsObject
     std::string mLocationUrl;
     std::string mContentType;
     istreamPtr mDataStream;
+    int mRetsReplyCode;
+    std::string mRetsReplyText;
 };
     
 }

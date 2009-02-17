@@ -12,7 +12,7 @@ try:
   request = librets.GetObjectRequest("Property", "Photo")
   request.AddAllObjects("LN000001")
 
-  content_type_suffixes = {'image/jpeg': 'jpg', 'image/gif': 'gif'}
+  content_type_suffixes = {'image/jpeg': 'jpg', 'image/gif': 'gif', 'text/xml' : 'xml'}
   response = session.GetObject(request)
   object_descriptor = response.NextObject()
   while (object_descriptor != None):

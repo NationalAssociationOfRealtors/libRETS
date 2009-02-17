@@ -106,6 +106,8 @@ CLASS::CLASS()
                 VALIDATION_EXPRESSION_ATTRIBUTES);
     AddMappings("METADATA-FOREIGNKEYS", &CLASS::CreateForeignKey,
                 FOREIGN_KEY_ATTRIBUTES);
+    AddMappings("METADATA-FOREIGN_KEYS", &CLASS::CreateForeignKey,
+                FOREIGN_KEY_ATTRIBUTES);
 }
 
 void CLASS::AddMappings(string name, CreatorPointer creator,

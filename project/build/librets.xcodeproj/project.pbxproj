@@ -186,7 +186,6 @@
 		F9747DB60F09869D0051067B /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */; };
 		F9747DB70F0986A20051067B /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
 		F9747DBC0F09884C0051067B /* rawsearch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9747D8C0F0982A50051067B /* rawsearch.cpp */; };
-		F9747DCB0F09A77D0051067B /* rawmetadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9747DCA0F09A77D0051067B /* rawmetadata.cpp */; };
 		F9747DD70F09A7CD0051067B /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109160DF4A81F004DE8BB /* Options.cpp */; };
 		F9747DD80F09A7CD0051067B /* rawmetadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9747DCA0F09A77D0051067B /* rawmetadata.cpp */; };
 		F9747DD90F09A7D90051067B /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
@@ -403,14 +402,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55EE8498093E5AAA00812582 /* librets */;
+			remoteGlobalIDString = 55EE8498093E5AAA00812582;
 			remoteInfo = librets;
 		};
 		F9747DD10F09A7AE0051067B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55EE8498093E5AAA00812582 /* librets */;
+			remoteGlobalIDString = 55EE8498093E5AAA00812582;
 			remoteInfo = librets;
 		};
 		F9A916070E7AE4AC0022C4EF /* PBXContainerItemProxy */ = {
@@ -803,7 +802,7 @@
 		F931094F0DF4C0BA004DE8BB /* http */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = http; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93109540DF4C0CF004DE8BB /* login */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = login; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93109590DF4C0E4004DE8BB /* metadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = metadata; sourceTree = BUILT_PRODUCTS_DIR; };
-		F931095E0DF4C0F5004DE8BB /* raw-rets */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = "raw-rets"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F931095E0DF4C0F5004DE8BB /* raw-rets */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "raw-rets"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93109730DF4C114004DE8BB /* search */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = search; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93109780DF4C12E004DE8BB /* xml */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xml; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = lib/libboost_program_options.a; sourceTree = BOOST; };
@@ -2451,7 +2450,6 @@
 			files = (
 				F931097F0DF4C168004DE8BB /* Options.cpp in Sources */,
 				F9310A5F0DF4D49D004DE8BB /* metadata.cpp in Sources */,
-				F9747DCB0F09A77D0051067B /* rawmetadata.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

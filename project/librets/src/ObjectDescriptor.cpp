@@ -99,3 +99,24 @@ BinaryDataAPtr ObjectDescriptor::GetData()
     return data;
 }
 
+int ObjectDescriptor::GetRetsReplyCode() const
+{
+    return mRetsReplyCode;
+}
+
+void ObjectDescriptor::SetRetsReplyCode(int retsReplyCode)
+{
+    mRetsReplyCode = retsReplyCode;
+}
+    
+std::string ObjectDescriptor::GetRetsReplyText() const
+{
+    return mRetsReplyText;
+}
+  
+void ObjectDescriptor::SetRetsReplyText(std::string replyText)
+{
+    mRetsReplyText = "";
+    if (replyText.length())
+        mRetsReplyText = replyText;
+}

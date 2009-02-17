@@ -37,10 +37,15 @@ public class GetObject
             if (description.Length != 0)
                 Console.Write(", desription: " + description);
             Console.WriteLine();
+
+            if (objectDescriptor.GetRetsReplyCode() != 0)
+              Console.WriteLine ("*** " + objectDescriptor.GetRetsReplyCode() +
+                                      ": " + objectDescriptor.GetRetsReplyText());
             
             Hashtable extensions = new Hashtable();
             extensions["image/jpeg"] = "jpg";
             extensions["image/gif"] = "gif";
+            extensions["text/xml"] = "xml";
             
             string extension = (string) extensions[contentType];
             string outputFileName = objectKey + "-" + objectId + "." +

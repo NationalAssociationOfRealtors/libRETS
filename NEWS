@@ -4,6 +4,18 @@ Version 1.3.0b2 - xx xxx 2009
 
   * Expose Raw RETS enhancement to .NET. Ticket #93.
 
+  * Add RETS/1.7.2 functionality. Ticket #97.
+
+  * Add try/catch blocks around lexical_cast in GetObject 
+    and GetObjectResponse. Ticket #98.
+
+  * Added GetRetsReplyCode() and GetRetsReplyText() to
+    ObjectDescriptor and will parse text/xml files in
+    multipart responses. Ticket #99. 
+
+  * Modify configure scripts for POSIX 1003.2 compliance.
+    Ticket #100.
+
 Version 1.3.0b1 - 06 Jan 2009
 
   * Converted the http client model to allow for parallel

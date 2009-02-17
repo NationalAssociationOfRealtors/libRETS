@@ -681,6 +681,10 @@ string CLASS::RetsVersionToString(RetsVersion retsVersion)
     {
         return RETS_1_7_STRING;
     }
+    else if (retsVersion == RETS_1_7_2)
+    {
+        return RETS_1_7_2_STRING;
+    }
     else
     {
         throw RetsException(str_stream() << "Invalid RetsVersion: "
@@ -701,6 +705,10 @@ RetsVersion CLASS::RetsVersionFromString(string versionString)
     else if (versionString == RETS_1_7_STRING)
     {
         return RETS_1_7;
+    }
+    else if (versionString == RETS_1_7_2_STRING)
+    {
+        return RETS_1_7_2;
     }
     else if (versionString.empty())
     {

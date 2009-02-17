@@ -10,7 +10,8 @@ if (!$session->Login("Joe", "Schmoe"))
 }
 
 $content_type_suffixes = array ("image/jpeg" => "jpg",
-                                "image/gif"  => "gif");
+                                "image/gif"  => "gif",
+                                "text/xml" => "xml");
                                 
 
 $request = new GetObjectRequest("Property", "Photo");
@@ -27,7 +28,7 @@ while ($object_descriptor = $results->NextObject())
 
     print $object_key . " object #" . $object_id;
     if (strlen($description) > 0)
-	print ", description: " . $description;
+        print ", description: " . $description;
     print "\n";
 
     $suffix = $content_type_suffixes[$content_type];
