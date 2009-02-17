@@ -1,0 +1,12 @@
+/build
+/dist
+/scratch
+/configure
+/config.log
+/config.status
+/config.cache
+/Makefile
+/autom4te*.cache
+/.gdb_history
+/librets-config
+/librets-config-inplace

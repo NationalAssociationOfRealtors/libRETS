@@ -1,0 +1,9 @@
+/librets.*
+/vc*
+/librets_wrap.cpp
+/librets_wrap.h
+/*.dll
+/*.obj
+/*.exe
+/*.mdb
+/bin
