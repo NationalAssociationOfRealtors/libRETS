@@ -37,6 +37,11 @@ class ObjectDescriptor : public RetsObject
 {
   public:
     /**
+     * Default constructor.
+     */
+     ObjectDescriptor();
+
+    /**
      * Returns the object key for this object.  It should match
      * one of the resource entities in the request.
      *

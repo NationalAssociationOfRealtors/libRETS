@@ -32,15 +32,18 @@ public class GetObject
             int objectId = objectDescriptor.GetObjectId();
             string contentType = objectDescriptor.GetContentType();
             string description = objectDescriptor.GetDescription();
-            
+            string location = objectDescriptor.GetLocationUrl();
+
             Console.Write(objectKey + " object #" + objectId);
             if (description.Length != 0)
                 Console.Write(", desription: " + description);
+            if (location.Length != 0)
+                Console.Write(", location: " + location);
+            if (objectDescriptor.GetRetsReplyCode() != 0)
+              Console.Write (", ***** " + objectDescriptor.GetRetsReplyCode() +
+                                      ": " + objectDescriptor.GetRetsReplyText());
             Console.WriteLine();
 
-            if (objectDescriptor.GetRetsReplyCode() != 0)
-              Console.WriteLine ("*** " + objectDescriptor.GetRetsReplyCode() +
-                                      ": " + objectDescriptor.GetRetsReplyText());
             
             Hashtable extensions = new Hashtable();
             extensions["image/jpeg"] = "jpg";
@@ -50,27 +53,34 @@ public class GetObject
             string extension = (string) extensions[contentType];
             string outputFileName = objectKey + "-" + objectId + "." +
                 extension;
-            Stream outputStream = File.OpenWrite(outputFileName);
-            if (useStream)
+	    /*
+	     * Only save the object if there was no error and we're not using the
+	     * location=1 option.
+	     */
+            if (objectDescriptor.GetRetsReplyCode() == 0 && location.Length == 0)
             {
-                const int BUFFER_SIZE =  1024;
-                Stream stream = objectDescriptor.GetDataStream();
-                byte[] buffer = new Byte[BUFFER_SIZE];
-                int bytesRead;
-                while ((bytesRead = stream.Read(buffer, 0, BUFFER_SIZE)) > 0)
+                Stream outputStream = File.OpenWrite(outputFileName);
+                if (useStream)
                 {
-                    outputStream.Write(buffer, 0, bytesRead);
+                    const int BUFFER_SIZE =  1024;
+                    Stream stream = objectDescriptor.GetDataStream();
+                    byte[] buffer = new Byte[BUFFER_SIZE];
+                    int bytesRead;
+                    while ((bytesRead = stream.Read(buffer, 0, BUFFER_SIZE)) > 0)
+                    {
+                        outputStream.Write(buffer, 0, bytesRead);
+                    }
                 }
-            }
-            else
-            {
-                byte[] data = objectDescriptor.GetDataAsBytes();
-                BinaryWriter w = new BinaryWriter(outputStream);
-                w.Write(data);
-                w.Close();
-            }
+                else
+                {
+                    byte[] data = objectDescriptor.GetDataAsBytes();
+                    BinaryWriter w = new BinaryWriter(outputStream);
+                    w.Write(data);
+                    w.Close();
+                }
 
-            outputStream.Close();
+                outputStream.Close();
+            }
         }
 
         session.Logout();

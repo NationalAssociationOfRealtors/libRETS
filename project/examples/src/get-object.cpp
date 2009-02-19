@@ -112,20 +112,31 @@ int main(int argc, char * argv[])
             int objectId = objectDescriptor->GetObjectId();
             string contentType = objectDescriptor->GetContentType();
             string description = objectDescriptor->GetDescription();
+            string location = objectDescriptor->GetLocationUrl();
+            
             cout << objectKey << " object #" << objectId;
             if (!description.empty())
                 cout << ", description: " << description;
+            if (!location.empty())
+                cout << ", location: " << location;
+            if (retsReplyCode)
+                cout << ", **** " << retsReplyCode << ": " << retsReplyText;
+                
             cout << endl;
             
-            if (retsReplyCode)
-                cout << "*** " << retsReplyCode << ":" << retsReplyText << endl;
-                
             string suffix = contentTypeSuffixes[contentType];
             string outputFileName = outputPrefix + objectKey + "-" +
                 lexical_cast<string>(objectId) + "." + suffix;
-            ofstream outputStream(outputFileName.c_str());
-            istreamPtr inputStream = objectDescriptor->GetDataStream();
-            readUntilEof(inputStream, outputStream);
+            /*
+             * Only save the object if there was no error and we're not
+             * using the location option.
+             */
+            if (retsReplyCode == 0 && location.empty())
+            {
+                ofstream outputStream(outputFileName.c_str());
+                istreamPtr inputStream = objectDescriptor->GetDataStream();
+                readUntilEof(inputStream, outputStream);
+            }
         }
     
         session->Logout();

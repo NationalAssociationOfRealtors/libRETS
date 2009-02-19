@@ -32,6 +32,15 @@ using namespace librets::util;
 using std::string;
 using std::istream;
 
+ObjectDescriptor::ObjectDescriptor()
+{
+    mObjectId = 0;
+    mDescription = "";
+    mContentType = "";
+    mRetsReplyCode = 0;
+    mRetsReplyText = "";
+}
+
 string ObjectDescriptor::GetObjectKey() const
 {
     return mObjectKey;

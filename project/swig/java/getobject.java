@@ -37,16 +37,22 @@ public class getobject
 
         while (objectDescriptor != null)
         {
-            String object_key         = objectDescriptor.GetObjectKey();
-            int object_id         = objectDescriptor.GetObjectId();
+            String object_key   = objectDescriptor.GetObjectKey();
+            int object_id       = objectDescriptor.GetObjectId();
             String content_type = objectDescriptor.GetContentType();
-            String description         = objectDescriptor.GetDescription();
+            String description  = objectDescriptor.GetDescription();
+	    String location     = objectDescriptor.GetLocationUrl();
+	    int    reply_code   = objectDescriptor.GetRetsReplyCode();
         
             System.out.print(object_key + " object #" + object_id);
 
             if (description.length() > 0)
                 System.out.print(", description: " + description);
-
+	    if (location.length() > 0)
+	        System.out.print(", location: " + location);
+	    if (reply_code != 0)
+	        System.out.print(", ***** " + reply_code + ": " +
+		                 objectDescriptor.GetRetsReplyText());
             System.out.println();
 
             String suffix = "jpg";
@@ -57,6 +63,11 @@ public class getobject
 
             String file_name = object_key + "-" + object_id + "." + suffix;
 
+	    /*
+	     * Only save the object if the reply code is zero and we are not
+	     * using location=1.
+	     */
+	    if (reply_code == 0 && location.length() == 0)
             try
             {
                 FileOutputStream outfile = new FileOutputStream(file_name);
