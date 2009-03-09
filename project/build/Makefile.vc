@@ -145,8 +145,8 @@ BOOST_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib"
 
 OPENSSL_PATH = $(BASE_PATH)/openssl
 
-# OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib gdi32.lib advapi32.lib user32.lib
-OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib 
+OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib gdi32.lib advapi32.lib user32.lib
+#OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib 
 !if "$(VS_VERSION)" == "vs2008"
 OPENSSL_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib" ssleay32.lib libeay32.lib 
 !endif
