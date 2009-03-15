@@ -178,7 +178,7 @@ class SearchResultSet : public virtual RetsObject
     StringVectorPtr mColumns;
     ColumnToIndexMap mColumnToIndex;
     RowData mRows;
-    RowData::iterator mNextRow;
+    long mNextRow;
     StringVectorPtr mCurrentRow;
     EncodingType mEncoding;
     bool mMaxRows;

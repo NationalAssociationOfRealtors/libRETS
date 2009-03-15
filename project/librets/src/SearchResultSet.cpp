@@ -199,7 +199,7 @@ bool SearchResultSet::Parse()
                 {
                     mRows.pop_back();
                 }
-                mNextRow = mRows.begin();
+                mNextRow = 0;
                 mCurrentRow.reset();
             }
             mRows.push_back(data);
@@ -247,19 +247,38 @@ bool SearchResultSet::HasNext()
      * We are in streaming mode. We need to fetch a row until we either successfully
      * get a row, or run out of data to parse.
      */
-    while (mNextRow == mRows.end() && Parse());
-    if (mNextRow == mRows.end())
+    while ((mRows.begin() + mNextRow) == mRows.end() && Parse());
+    if ((mRows.begin() + mNextRow) == mRows.end())
     {
         mCurrentRow.reset();
         return false;
     }
+    if (!mCaching)
+    {
+      /*
+       * Since the parsing returns after parsing a single <DATA/> tag, the current
+       * row will always be the one prior to the end of mRows.
+       */
+      mCurrentRow = *(mRows.end() - 1);
+      mNextRow = mRows.end() - mRows.begin();
+      return true;
+    }
     /*
-     * Since the parsing returns after parsing a single <DATA/> tag, the current
-     * row will always be the one prior to the end of mRows.
+     * Old mode with a record cache. Make sure everything has been fetched and parsed.
      */
-    mCurrentRow = *(mRows.end() - 1);
-    mNextRow = mRows.end();
-    return true;
+    if ((mRows.begin() + mNextRow) <= mRows.end())
+    {
+        Parse();
+        if ((mRows.begin() + mNextRow) <= mRows.end())
+        {
+            RowData::iterator nextRow = mRows.begin() + mNextRow;
+            mCurrentRow = *nextRow;
+            mNextRow++;
+            return true;
+        }
+    }
+    mCurrentRow.reset();
+    return false;
 }
 
 int SearchResultSet::GetCount()
@@ -308,8 +327,14 @@ bool SearchResultSet::HasMaxRows()
      * The <MAX_ROWS/> tag comes at the end of data, so we need to make sure
      * we've fetched and parsed everything.
      */
+    long saveNextRow = mNextRow;
+    StringVectorPtr saveCurrentRow = mCurrentRow;
+    mCaching = true;
     while (Parse());
 
+    mNextRow = saveNextRow;
+    mCurrentRow = saveCurrentRow;
+    
     return mMaxRows;
 }
 
@@ -344,7 +369,7 @@ void SearchResultSet::SetInputStream(istreamPtr inputStream)
      */
     Parse();
     
-    mNextRow = mRows.begin();
+    mNextRow = 0;
     mCurrentRow.reset();
 }
 
