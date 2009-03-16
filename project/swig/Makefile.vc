@@ -2,21 +2,24 @@
 
 CFLAGS  = $(CFLAGS_STD) /I ../librets/include $(BOOST_CFLAGS) $(CURL_CFLAGS)
 
+SWIG_WRAP_SRC = librets_wrap.cpp
+SWIG_WRAP_H = librets_wrap.h
+
 RUBY = ruby
 RUBY_MAKEFILE = ruby\Makefile
-RUBY_WRAP = ruby\librets_wrap.cpp
-RUBY_WRAP_H = ruby\librets_wrap.h
+RUBY_WRAP = ruby\$(SWIG_WRAP_SRC)
+RUBY_WRAP_H = ruby\$(SWIG_WRAP_H)
 
 # Windows Perl port is not yet functional. mfk 2009-01-06
 PERL_MAKEFILE = perl\Makefile
-PERL_WRAP = perl\librets_wrap.cpp
-PERL_WRAP_H = perl\librets_wrap.h
+PERL_WRAP = perl\$(SWIG_WRAP_SRC)
+PERL_WRAP_H = perl\$(SWIG_WRAP_H)
 
-PYTHON_WRAP = python\librets_wrap.cpp
-PYTHON_WRAP_H = python\librets_wrap.h
+PYTHON_WRAP = python\$(SWIG_WRAP_SRC)
+PYTHON_WRAP_H = python\$(SWIG_WRAP_H)
 
-PHP5_WRAP = php5\librets_wrap.cpp
-PHP5_WRAP_H = php5\librets_wrap.h
+PHP5_WRAP = php5\$(SWIG_WRAP_SRC)
+PHP5_WRAP_H = php5\$(SWIG_WRAP_H)
 
 SWIG_FILES = librets.i auto_ptr_release.i shared_ptr_release.i
 
@@ -54,7 +57,12 @@ ruby_: $(RUBY_WRAP) $(RUBY_MAKEFILE)
 
 $(PERL_MAKEFILE): $(PERL_WRAP) perl\Makefile.PL
 	cd perl
-	$(PERL) Makefile.PL INC="$(CFLAGS)"
+	perl Makefile.PL INC="$(CFLAGS)"
+	cd ..
+
+$(PERL_WRAP): $(SWIG_FILES)
+	cd perl
+	$(SWIG) -c++ -perl -I.. -o $(SWIG_WRAP_SRC) librets.i
 	cd ..
 
 $(RUBY_MAKEFILE): $(RUBY_WRAP) ruby\extconf.rb
@@ -62,17 +70,20 @@ $(RUBY_MAKEFILE): $(RUBY_WRAP) ruby\extconf.rb
 	$(RUBY) extconf.rb --with-swig-dir=../
 	cd ..
 
-$(PERL_WRAP): $(SWIG_FILES)
-	$(SWIG) -c++ -perl -o $(PERL_WRAP) librets.i
-
 $(RUBY_WRAP): $(SWIG_FILES)
-	$(SWIG) -c++ -ruby -o $(RUBY_WRAP) -Ilib/ruby -I.. -module librets_native librets.i
+	cd ruby
+	$(SWIG) -c++ -ruby -o $(SWIG_WRAP_SRC) -I../lib/ruby -I.. -module librets_native librets.i
+	cd ..
 
 $(PYTHON_WRAP): $(SWIG_FILES)
-	$(SWIG) -c++ -python -o $(PYTHON_WRAP) librets.i
+	cd python
+	$(SWIG) -c++ -python -o $(SWIG_WRAP_SRC) -I.. librets.i
+	cd ..
 
 $(PHP5_WRAP): $(SWIG_FILES)
-	$(SWIG) -c++ -php5 -o $(PHP5_WRAP) librets.i
+	cd php5
+	$(SWIG) -c++ -php5 -o $(SWIG_WRAP_SRC) -I.. librets.i
+	cd ..
 
 clean: clean-csharp clean-java clean-ruby clean-python clean-php5
 
@@ -106,3 +117,11 @@ clean-php5:
 	cd ..
 	@-erase /q $(PHP5_WRAP) 2> NUL
 	@-erase /q $(PHP5_WRAP_H) 2> NUL
+
+clean-perl:
+	cd perl
+	$(NMAKE) clean
+	cd ..
+	@-erase /q $(PERL_WRAP) 2> NUL
+	@-erase /q $(PERL_WRAP_H) 2> NUL
+

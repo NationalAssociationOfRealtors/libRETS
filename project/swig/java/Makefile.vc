@@ -9,7 +9,6 @@ CFLAGS  = $(CFLAGS_STD) /I .. /I ../../librets/include $(BOOST_CFLAGS) $(CURL_CF
 		/I "$(JAVA_HOME)/include" /I "$(JAVA_HOME)/include/win32"
 LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS)
 LINK = $(LINK_EXE) $(LDFLAGS)
-SYSLIBS = winmm.lib wsock32.lib user32.lib gdi32.lib advapi32.lib
 
 BIN_DIR = bin
 GEN_DIR = generated
@@ -25,7 +24,7 @@ RM = rm -f
 all: $(LIBRETS_DLL)  $(LIBRETS_JAR)
 
 $(LIBRETS_DLL): $(LIBRETS_OBJ) $(BIN_DIR) 
-	$(LINK) /dll /out:$(LIBRETS_DLL) $(LIBRETS_OBJ) $(LIBRETS_LIB) $(SYSLIBS)
+	$(LINK) /dll /out:$(LIBRETS_DLL) $(LIBRETS_OBJ) $(LIBRETS_LIB) $(WINLIBS)
 
 $(BIN_DIR):
 	@if not exist "$(BIN_DIR)" mkdir $(BIN_DIR)

@@ -9,7 +9,7 @@ if ($Config{'osname'} !~ /cygwin/)
 
 $cc = $Config{'cc'};
 $ld = $Config{'ld'};
-if ($Config{'osname'} =~ /darwin/)
+if (($Config{'osname'} =~ /darwin/) &&  ($Config{'osname'} =~ /darwin/))
 {
     $cc =~ s/gcc/cc/;
     $ld =~ s/gcc/cc/;

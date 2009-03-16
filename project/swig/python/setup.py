@@ -4,7 +4,7 @@ import commands
 import re
 import sys
 
-if (sys.platform != 'win32'):
+if (sys.platform != 'win32' and sys.platform != 'cygwin'):
     librets_config = "../../../librets-config-inplace"
 
     librets_version = commands.getoutput(librets_config + " --version").rstrip()
