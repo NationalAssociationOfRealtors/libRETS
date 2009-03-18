@@ -1,0 +1,3 @@
+# Automatically generated file list.  Edits will be overwritten.
+X_OBJS = \
+	$(DIROBJ)\NetworkTest.obj

@@ -1,0 +1,60 @@
+!include <../../../build/Makefile.vc>
+
+LIBRETS_PATH = ../..
+
+LIBRETS_LIB = $(LIBRETS_PATH)/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
+LIBRETS_CFLAGS = /I$(LIBRETS_PATH)/include /I../../test/src
+
+########################################################################
+#
+
+TARGET  = $(DIROBJ)\test-network.exe
+CFLAGS  = $(CFLAGS_STD) $(LIBRETS_CFLAGS) $(BOOST_CFLAGS) $(EXPAT_CFLAGS)\
+	 $(CPPUNIT_CFLAGS)
+LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(CPPUNIT_LDFLAGS)
+
+LINK    = $(LINK_EXE) $(LDFLAGS) 
+
+########################################################################
+#
+
+all: $(TARGET)
+
+# Use this to regenerate objects.vc
+win_files:
+	perl ../../../build/win_files.pl X_OBJS '*.cpp' '(.*)\.cpp$$' '\$$(DIROBJ)\\\$$1.obj' > objects.vc
+
+!include <objects.vc>
+EXTRA_OBJS = $(DIROBJ)\main.obj $(DIROBJ)\testUtil.obj
+
+$(DIROBJ)\main.obj: ..\..\test\src\main.cpp
+	$(CXX) $(CFLAGS) /Fo"$@"  $?
+
+$(DIROBJ)\testUtil.obj: ..\..\test\src\testUtil.cpp
+	$(CXX) $(CFLAGS) /Fo"$@"  $?
+
+
+$(TARGET): $(X_OBJS) $(LIBRETS_LIB) $(EXTRA_OBJS)
+	$(LINK) /out:$(TARGET) $(X_OBJS) $(EXTRA_OBJS) $(WINLIBS)
+
+$(X_OBJS): $(DIROBJ)
+
+$(BUILD_DIR):
+	@if not exist "$(BUILD_DIR)" mkdir $(BUILD_DIR)
+
+$(DIROBJ): $(BUILD_DIR)
+	@if not exist "$(DIROBJ)" mkdir $(DIROBJ)
+
+clean:
+	@-rmdir /q /s $(BUILD_DIR) 2> NUL
+	@-erase /s vc*.pch 2> NUL
+	@-erase /s vc*.idb 2> NUL
+	@-erase /s vc*.pdb 2> NUL
+
+.SUFFIXES: .c .cpp .obj .res
+
+{.\}.c{$(DIROBJ)\}.obj:
+	$(CC) $(CFLAGS) /Fo"$@"  $<
+
+{.\}.cpp{$(DIROBJ)\}.obj:
+	$(CXX) $(CFLAGS) /Fo"$@"  $<
