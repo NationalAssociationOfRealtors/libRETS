@@ -37,9 +37,11 @@ GENERATED_SRC = \
 	lib\MetadataTableList.cs \
 	lib\ObjectDescriptor.cs \
 	lib\RetsException.cs \
+	lib\RetsHttpException.cs \
 	lib\RetsHttpLogger.cs \
 	lib\RetsHttpLoggerBridge.cs \
 	lib\RetsMetadata.cs \
+	lib\RetsReplyException.cs \
 	lib\RetsSession.cs \
 	lib\RetsVersion.cs \
 	lib\SWIGTYPE_p_StringVectorPtr.cs \

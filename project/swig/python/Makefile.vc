@@ -29,4 +29,4 @@ clean:
 	@-rmdir /q /s dist 2> NUL
 
 distclean: clean
-	@-erase librets.py* librets_wrap.cpp 2> NUL
+	@-erase librets.py* librets_wrap.* 2> NUL
