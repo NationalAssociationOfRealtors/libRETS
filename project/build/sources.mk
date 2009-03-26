@@ -635,6 +635,7 @@ ifeq (${HAVE_PERL},1)
 PERL_BUILD		= ${PERL_DLL}
 
 PERL_DLL		= ${PERL_OBJ_DIR}/blib/arch/auto/librets/librets.so
+PERL_INSTALL		= perl_install
 PERL_MAKEFILE		= ${PERL_OBJ_DIR}/Makefile
 PERL_MAKEFILE_PL	= Makefile.PL
 PERL_OBJ_DIR		= ${SWIG_OBJ_DIR}/perl
@@ -652,7 +653,8 @@ ${PERL_MAKEFILE}: ${PERL_WRAP} ${PERL_SRC_DIR}/${PERL_MAKEFILE_PL}
 ${PERL_DLL}: ${PERL_MAKEFILE} ${LIBRETS_LIB}
 	${MAKE} -C ${PERL_OBJ_DIR} || ${MAKE} -C ${PERL_OBJ_DIR}
 	
-
+${PERL_INSTALL}: ${PERL_DLL} ${PERL_MAKEFILE}
+	cd ${PERL_OBJ_DIR}; ${MAKE} install
 endif
 
 ###
