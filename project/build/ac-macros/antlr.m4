@@ -20,7 +20,7 @@ dnl  fi
 class TestAST : public ANTLR_USE_NAMESPACE(antlr)CommonAST {
 };
 
-int main(int, char * argv[])
+int main(int, char **argv)
 {
   TestAST testAST;
   return 0;
