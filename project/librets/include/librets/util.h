@@ -149,7 +149,7 @@ struct Printer< std::vector<X> >
     static void print(const std::vector<X>& v, std::ostream& out)
     {
         out << "Vector [";
-        char * separator = "";
+        const char * separator = "";
         for(typename std::vector<X>::const_iterator
                 i = v.begin(), end = v.end(); i != end; ++i)
         {

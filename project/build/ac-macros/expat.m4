@@ -7,10 +7,10 @@ AC_DEFUN([MY_TEST_EXPAT], [
     AC_HELP_STRING(
       [--with-expat-prefix=PATH],
       [find the Expat header and library in `PATH/include` and  `PATH/lib`.
-       By default, checks in /usr and /usr/local.
+       By default, checks in /usr, /usr/local, /opt and /opt/local.
       ]),
     expat_prefixes="$withval",
-    expat_prefixes="/usr/local /usr")
+    expat_prefixes="/usr/local /usr /opt/local /opt")
 
   if test x"$with_expat" = "xno"; then
      AC_MSG_ERROR([Expat is required to build librets])

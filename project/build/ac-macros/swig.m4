@@ -79,10 +79,10 @@ AC_DEFUN([MY_TEST_SWIG], [
                     AC_HELP_STRING(
                             [--with-java-prefix=PATH],
                             [find the Java headers and libraries in `PATH/include` and  `PATH/lib`.
-                            By default, checks in /usr/include and /usr/local/include.
+                            By default, checks in /usr/include, /usr/local/include, /opt/include and /opt/local/include.
                     ]),
                     java_prefixes="$withval",
-                    java_prefixes="/usr/local/include /usr/include")
+                    java_prefixes="/usr/local/include /usr/include /opt/local/include /opt/local")
                 for java_prefix in $java_prefixes
                 do
                     jni_h="$java_prefix/jni.h"
