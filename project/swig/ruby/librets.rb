@@ -117,6 +117,14 @@ module Librets_native
     # Override Object#object_id
     alias_method :object_id, :GetObjectId
   end
+
+  class RetsException
+    include RubifyHelper
+
+    # Allows ruby to print exceptions to make things easier for the
+    # new user
+    alias_method :to_s, :GetMessage
+  end
 end
 
 module Librets

@@ -174,7 +174,7 @@ class RetsException
 };
 
 %nodefault RetsHttpException;
-class RetsHttpException
+class RetsHttpException : public RetsException
 {
   public:
     RetsHttpException(int httpResult, std::string meaning);
@@ -189,7 +189,7 @@ class RetsHttpException
 };
 
 %nodefault RetsReplyException;
-class RetsReplyException
+class RetsReplyException : public RetsException
 {
   public:
     RetsReplyException(int replyCode, std::string meaning);
