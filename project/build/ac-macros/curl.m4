@@ -47,9 +47,9 @@ AC_DEFUN([MY_TEST_CURL], [
       AC_MSG_RESULT(FAILED)
       AC_MSG_ERROR([curl-config was not found])
     fi
-
-    AC_SUBST(CURL_PREFIX)
-    AC_SUBST(CURL_CFLAGS)
-    AC_SUBST(CURL_LIBS)
   ])
+
+  AC_SUBST(CURL_PREFIX)
+  AC_SUBST(CURL_CFLAGS)
+  AC_SUBST(CURL_LIBS)
 ])

@@ -1,5 +1,7 @@
 Version 1.3.x - xx xxx 2009
 
+  * Clean up autoconf warnings. Enable -fPIC as default.
+    Attempt to detect Java Home. Ticket #83.
   * Add PERL to "make install". Ticket #103.
   * Clean up g++ deprecation warnings. Ticket #104.
 

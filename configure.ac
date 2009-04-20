@@ -112,11 +112,6 @@ MY_CHECK_EXAMPLES
 
 MY_TEST_SWIG
 
-LIBRETS_CFLAGS="$BOOST_CFLAGS"
-LIBRETS_LDFLAGS="$BOOST_LIBS $BOOST_FILESYSTEM $BOOST_SYSTEM $CURL_LIBS $EXPAT_LIBS $ANTLR_LIBS"
-AC_SUBST(LIBRETS_CFLAGS)
-AC_SUBST(LIBRETS_LDFLAGS)
-
 AC_ARG_ENABLE(debug,
               AC_HELP_STRING([--enable-debug],
                              [enable debugging support (default: disabled)]),
@@ -132,16 +127,22 @@ if test -n "$GCC"; then
   fi
 fi
 
+LIBRETS_CFLAGS="$BOOST_CFLAGS $ANTLR_CFLAGS"
+LIBRETS_LDFLAGS="$BOOST_LIBS $BOOST_FILESYSTEM $BOOST_SYSTEM $CURL_LIBS $EXPAT_LIBS $ANTLR_LIBS"
 
 AC_ARG_ENABLE(PIC,
-              AC_HELP_STRING([--enable-PIC],
-                             [use -fPIC when compiling (default: disabled)  Do not enable unless you know what you're doing.]),
-               test "X$enableval" != "Xno" && my_enable_use_pic=yes,
-               my_enable_use_pic=no)
+              AC_HELP_STRING([--disable-PIC],
+                             [Disable the use of -fPIC when compiling (default: enabled).]),
+               test "X$enableval" != "Xyes" && my_use_pic=no,
+               my_use_pic=yes)
 
-if test "$my_enable_use_pic" = "yes"; then
+if test "$my_use_pic" = "yes"; then
    CFLAGS="$CFLAGS -fPIC"
+   LIBRETS_CFLAGS="$LIBRETS_CFLAGS -fPIC"
 fi
+
+AC_SUBST(LIBRETS_CFLAGS)
+AC_SUBST(LIBRETS_LDFLAGS)
 
 AC_CONFIG_FILES([Makefile project/build/Doxyfile])
 AC_CONFIG_FILES([librets-config], [chmod +x librets-config])
@@ -154,7 +155,7 @@ echo Option summary:
 echo
 echo Use ccache .................: $my_use_ccache
 echo Use dependency checking ....: $my_use_depends
-echo Use -fPIC...................: $my_enable_use_pic
+echo Use -fPIC...................: $my_use_pic
 echo Use shared dependencies.....: $my_enable_shared_dependencies
 echo Compile type................: $my_compile_type
 echo Compile examples............: $my_use_examples

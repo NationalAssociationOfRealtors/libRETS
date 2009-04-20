@@ -2,6 +2,16 @@ dnl
 dnl Check for ANTLR
 dnl
 AC_DEFUN([MY_TEST_ANTLR], [
+  AC_ARG_WITH(
+    [antlr-prefix],
+    AC_HELP_STRING(
+      [--with-antlr-prefix=PATH],
+      [find the Antlr headers and libraries in `PATH/include` and `PATH/lib`.
+       By default, checks in /usr, /usr/local, /opt and /opt/local.
+      ]),
+    antlr_prefxes="$withval",
+      antlr_prefixes="/usr/local /usr /opt/local /opt")
+
   AC_CHECK_PROG(ANTLR_JAVA, java, java, [])
   if test x$ANTLR_JAVA = "x"; then
     AC_MSG_ERROR([antlr requires java to run])
@@ -11,31 +21,41 @@ dnl  if test x$ANTLR = "x"; then
 dnl    AC_MSG_ERROR([antlr is required to build the SQL to DMQL compiler])
 dnl  fi
 
-  AC_MSG_CHECKING([whether linking with -lantlr works])
+  save_CFLAGS=$CPPFLAGS
   save_LIBS=$LIBS
-  LIBS="$LIBS -lantlr"
   AC_LANG_PUSH(C++)
-  AC_LINK_IFELSE([
-#include <antlr/CommonAST.hpp>
-class TestAST : public ANTLR_USE_NAMESPACE(antlr)CommonAST {
-};
+  for antlr_prefix in $antlr_prefixes
+  do
+      AC_MSG_CHECKING([whether linking with -lantlr in $antlr_prefix works])
+      CPPFLAGS="$save_CFLAGS -I$antlr_prefix/include"
+      LIBS="$save_LIBS -L$antlr_prefix/lib -lantlr"
+      AC_LINK_IFELSE([
+    #include <antlr/CommonAST.hpp>
+    class TestAST : public ANTLR_USE_NAMESPACE(antlr)CommonAST {
+    };
 
-int main(int, char **argv)
-{
-  TestAST testAST;
-  return 0;
-}
-  ], [
-    AC_MSG_RESULT(yes)
-    ANTLR_LIBS=-lantlr
-  ], [
-    AC_MSG_RESULT(no)
-    dnl AC_MSG_ERROR([Could not link with -lantlr])
-  ]
-  )
+    int main(int, char **argv)
+    {
+      TestAST testAST;
+      return 0;
+    }
+      ], [
+        AC_MSG_RESULT(yes)
+        ANTLR_CFLAGS="-I$antlr_prefix/include"
+        ANTLR_LIBS=--"L$antlr_prefix/lib -lantlr"
+        break
+      ], [
+        AC_MSG_RESULT(no)
+        dnl AC_MSG_ERROR([Could not link with -lantlr])
+      ]
+      )
+  done
+
   AC_LANG_POP()
+  CPPFLAGS=$save_CFLAGS
   LIBS=$save_LIBS
 
   AC_SUBST(ANTLR)
+  AC_SUBST(ANTLR_CFLAGS)
   AC_SUBST(ANTLR_LIBS)
 ])

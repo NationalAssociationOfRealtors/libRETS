@@ -42,9 +42,9 @@ AC_DEFUN([MY_TEST_CPPUNIT], [
         AC_MSG_WARN([$ver is too old. Need version $check or higher.])
       fi
     fi
-
-    AC_SUBST(HAVE_CPPUNIT)
-    AC_SUBST(CPPUNIT_CFLAGS)
-    AC_SUBST(CPPUNIT_LIBS)
   ])
+
+  AC_SUBST(HAVE_CPPUNIT)
+  AC_SUBST(CPPUNIT_CFLAGS)
+  AC_SUBST(CPPUNIT_LIBS)
 ])

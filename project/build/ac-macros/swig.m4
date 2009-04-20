@@ -11,7 +11,7 @@ AC_DEFUN([MY_TEST_SWIG], [
     check_major=$[1]
     check_minor=$[2]
     check_release=$[3]
-    SWIG_OSNAME=`perl -e 'use Config; print $$Config{osname};'`
+    SWIG_OSNAME=`perl -e 'use Config; print $Config{osname};'`
 
     HAVE_JAVA=0
     HAVE_MCS=0
@@ -71,42 +71,57 @@ AC_DEFUN([MY_TEST_SWIG], [
         dnl Check to see if we can build for java
         dnl
         if test "$my_use_java" = "yes"; then
-            if test "$SWIG_OSNAME" = "darwin"; then
-                JAVA_INCLUDES=-I`javaconfig Headers`
-            else
-                JAVA_INCLUDES=
-                AC_ARG_WITH([java-prefix], 
-                    AC_HELP_STRING(
-                            [--with-java-prefix=PATH],
-                            [find the Java headers and libraries in `PATH/include` and  `PATH/lib`.
-                            By default, checks in /usr/include, /usr/local/include, /opt/include and /opt/local/include.
-                    ]),
-                    java_prefixes="$withval",
-                    java_prefixes="/usr/local/include /usr/include /opt/local/include /opt/local")
-                for java_prefix in $java_prefixes
-                do
-                    jni_h="$java_prefix/jni.h"
-                    AC_CHECK_FILE([$jni_h], [my_jni_h=$jni_h])
-                    test -n "$my_jni_h" && break
-                done
-                if test -n "my_jni_h"; then
-                    JAVA_INCLUDES="-I$java_prefix -I`dirname $java_prefix/*/jni_md.h`"
-                fi
-            fi
-
             AC_CHECK_PROG(JAVA, java, java, no)
             if test "$JAVA" != "no"; then
                 AC_CHECK_PROG(JAVAC, javac, javac, no)
                 if test "$JAVAC" != "no"; then
                     AC_CHECK_PROG(JAR, jar, jar, no)
                     if test "$JAR" != "no"; then
+                        rm -f JavaHome.java JavaHome.class
+                        cat > JavaHome.java <<EOF
+public class JavaHome
+{
+    public static void main(String[[]] args)
+    {
+        System.out.println(System.getProperty("java.home"));
+    }
+}
+EOF
+                        if "$JAVAC" JavaHome.java ; then
+                            java_home=`java JavaHome`
+                        fi
+                        rm -f JavaHome.java JavaHome.class
 
-                        if test -n "$JAVA_INCLUDES"; then
-                                HAVE_JAVA=1
-                                my_have_java=yes
+                        if test "$SWIG_OSNAME" = "darwin"; then
+                            JAVA_INCLUDES=-I`javaconfig Headers`
+                        else
+                            JAVA_INCLUDES=
+                            AC_ARG_WITH([java-prefix], 
+                                AC_HELP_STRING(
+                                        [--with-java-prefix=PATH],
+                                        [find the Java headers and libraries in `PATH/include` and  `PATH/lib`.
+                                        By default, checks in /usr/include, /usr/local/include, 
+                                        /opt/include and /opt/local/include.
+                                ]),
+                                java_prefixes="$withval",
+                                java_prefixes="/usr/local/include /usr/include /opt/local/include /opt/local $java_home/include $java_home/../include")
+                            for java_prefix in $java_prefixes
+                            do
+                                jni_h="$java_prefix/jni.h"
+                                AC_CHECK_FILE([$jni_h], [my_jni_h=$jni_h])
+                                test -n "$my_jni_h" && break
+                            done
+                            if test -n "$my_jni_h"; then
+                                JAVA_INCLUDES="-I$java_prefix -I`dirname $java_prefix/*/jni_md.h`"
+                            fi
                         fi
                     fi
                 fi
+            fi
+
+            if test -n "$JAVA_INCLUDES"; then
+                    HAVE_JAVA=1
+                    my_have_java=yes
             fi
         fi
 
@@ -156,22 +171,22 @@ AC_DEFUN([MY_TEST_SWIG], [
         AC_MSG_WARN([$ver is too old. Need version $check or higher.])
       fi
     fi
-
-    AC_SUBST(USE_SWIG_BINDINGS)
-    AC_SUBST(SWIG)
-    AC_SUBST(HAVE_JAVA)
-    AC_SUBST(JAVA)
-    AC_SUBST(JAVAC)
-    AC_SUBST(JAR)
-    AC_SUBST(JAVA_INCLUDES)
-    AC_SUBST(HAVE_MCS)
-    AC_SUBST(MCS)
-    AC_SUBST(HAVE_PERL)
-    AC_SUBST(HAVE_PHP)
-    AC_SUBST(PHP)
-    AC_SUBST(HAVE_PYTHON)
-    AC_SUBST(PYTHON)
-    AC_SUBST(HAVE_RUBY)
-    AC_SUBST(RUBY)
   ])
+
+  AC_SUBST(USE_SWIG_BINDINGS)
+  AC_SUBST(SWIG)
+  AC_SUBST(HAVE_JAVA)
+  AC_SUBST(JAVA)
+  AC_SUBST(JAVAC)
+  AC_SUBST(JAR)
+  AC_SUBST(JAVA_INCLUDES)
+  AC_SUBST(HAVE_MCS)
+  AC_SUBST(MCS)
+  AC_SUBST(HAVE_PERL)
+  AC_SUBST(HAVE_PHP)
+  AC_SUBST(PHP)
+  AC_SUBST(HAVE_PYTHON)
+  AC_SUBST(PYTHON)
+  AC_SUBST(HAVE_RUBY)
+  AC_SUBST(RUBY)
 ])
