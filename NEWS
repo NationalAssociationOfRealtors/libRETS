@@ -7,6 +7,8 @@ Version 1.3.x - xx xxx 2009
   * Check for SWIG dependent language headers before 
     enabling that language. Ticket #88.
 
+  * Ruby exceptions are cryptic. Ticket #96.
+
   * Add PERL to "make install". Ticket #103.
 
   * Clean up g++ deprecation warnings. Ticket #104.
