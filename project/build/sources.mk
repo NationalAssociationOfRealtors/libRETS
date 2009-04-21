@@ -557,6 +557,7 @@ JAVA_BRIDGE		= ${JAVA_SRC_DIR}/CppInputStream.java
 JAVA_BRIDGE		= 
 JAVA_CLASSES		= ${patsubst ${JAVA_OBJ_DIR}/%.java,${JAVA_OBJ_DIR}/librets/%.class,${JAVA_SOURCES}}
 JAVA_CLASSES_UNQUAL	= ${patsubst ${JAVA_OBJ_DIR}/%.java,%.class,${JAVA_SOURCES}}
+JAVA_CXX_FLAGS		= `${SWIG_LIBRETS_CONFIG} --cflags`
 JAVA_EXAMPLES		= ${wildcard ${JAVA_SRC_DIR}/[a-z]*.java}
 JAVA_EXAMPLES_CLASSES	= ${patsubst ${JAVA_SRC_DIR}/%.java,${JAVA_OBJ_DIR}/%.class,${JAVA_EXAMPLES}}
 JAVA_JAR		= librets.jar
@@ -568,7 +569,6 @@ JAVA_WRAP 		= ${JAVA_OBJ_DIR}/librets_wrap.cpp
 ifeq (${SWIG_OSNAME}, darwin)
 JAVA_CLASSPATH		= `javaconfig DefaultClasspath`:${JAVA_OBJ_DIR}/${JAVA_JAR}
 JAVA_DLL		= ${JAVA_OBJ_DIR}/liblibrets.jnilib
-#JAVA_DYNAMICLINK	= ${CXX} -dynamiclib -framework JavaVM
 JAVA_DYNAMICLINK	= ${SWIG_LINK}
 else
 JAVA_CLASSPATH		= ${JAVA_OBJ_DIR}/${JAVA_JAR}
@@ -586,7 +586,7 @@ ${JAVA_DLL}: ${JAVA_WRAP} ${JAVA_OBJ_DIR}/librets_wrap.o ${SWIG_BRIDGE_OBJ} ${LI
 	${JAVA_DYNAMICLINK} -o ${JAVA_DLL} ${JAVA_OBJ_DIR}/librets_wrap.o ${SWIG_LIBRETS_LIBS} ${SWIG_BRIDGE_OBJ}
 
 ${JAVA_OBJ_DIR}/librets_wrap.o: ${JAVA_OBJ_DIR}/librets_wrap.cpp
-	${CXX}  -I${LIBRETS_INC_DIR} -I${SWIG_DIR} ${BOOST_CFLAGS} ${JAVA_INCLUDES} -c $< -o $@
+	${CXX}  ${JAVA_CXX_FLAGS} -I${LIBRETS_INC_DIR} -I${SWIG_DIR} ${BOOST_CFLAGS} ${JAVA_INCLUDES} -c $< -o $@
 	
 ${JAVA_CLASSES}: ${JAVA_WRAP} ${JAVA_SOURCES}
 	${JAVAC} -d ${JAVA_OBJ_DIR} ${JAVA_BRIDGE} ${JAVA_SOURCES} 
@@ -607,6 +607,7 @@ ifeq (${HAVE_PHP},1)
 
 PHP_BUILD		= ${PHP_DLL} 
 
+PHP_CXX_FLAGS		= `${SWIG_LIBRETS_CONFIG} --cflags`
 PHP_DLL			= ${PHP_OBJ_DIR}/librets.so
 PHP_INCLUDES		= `php-config --includes`
 PHP_LDFLAGS		= `php-config --ldflags`
@@ -623,10 +624,10 @@ ${PHP_DLL}: ${PHP_WRAP} ${PHP_OBJ_DIR}/librets_wrap.o ${SWIG_BRIDGE_OBJ} ${LIBRE
 	${SWIG_LINK} -o ${PHP_DLL} ${PHP_OBJ_DIR}/librets_wrap.o ${SWIG_LIBRETS_LIBS} ${SWIG_BRIDGE_OBJ}
 
 ${PHP_OBJ_DIR}/librets_wrap.o: ${PHP_OBJ_DIR}/librets_wrap.cpp
-	${CXX} -g -DLIBRETS_VERSION='"$(VERSION)"' -I${LIBRETS_INC_DIR} -I${PHP_SRC_DIR} -I${SWIG_DIR} \
-			${BOOST_CFLAGS} ${PHP_INCLUDES} -c $< -o $@
-	
+	${CXX} ${PHP_CXX_FLAGS} -g -DLIBRETS_VERSION='"$(VERSION)"' -I${LIBRETS_INC_DIR} -I${PHP_SRC_DIR} \
+			-I${SWIG_DIR} ${BOOST_CFLAGS} ${PHP_INCLUDES} -c $< -o $@
 endif
+
 ###
 # perl of swig - Perl isn't completely implemented and currently won't build, so this section is commented out.
 #

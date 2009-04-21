@@ -4,6 +4,7 @@ dnl
 AC_DEFUN([MY_TEST_SWIG], [
   AC_CACHE_VAL(my_cv_swig_vers, [
     my_cv_swig_vers=NONE
+    default_search_path="/usr/local/include /usr/include /opt/local/include /opt/local"
     dnl check is the plain-text version of the required version
     check="1.3.33"
 
@@ -79,13 +80,13 @@ AC_DEFUN([MY_TEST_SWIG], [
                     if test "$JAR" != "no"; then
                         rm -f JavaHome.java JavaHome.class
                         cat > JavaHome.java <<EOF
-public class JavaHome
-{
-    public static void main(String[[]] args)
-    {
-        System.out.println(System.getProperty("java.home"));
-    }
-}
+                            public class JavaHome
+                            {
+                                public static void main(String[[]] args)
+                                {
+                                    System.out.println(System.getProperty("java.home"));
+                                }
+                            }
 EOF
                         if "$JAVAC" JavaHome.java ; then
                             java_home=`java JavaHome`
@@ -100,11 +101,10 @@ EOF
                                 AC_HELP_STRING(
                                         [--with-java-prefix=PATH],
                                         [find the Java headers and libraries in `PATH/include` and  `PATH/lib`.
-                                        By default, checks in /usr/include, /usr/local/include, 
-                                        /opt/include and /opt/local/include.
+                                        By default, checks in $default_search_path
                                 ]),
                                 java_prefixes="$withval",
-                                java_prefixes="/usr/local/include /usr/include /opt/local/include /opt/local $java_home/include $java_home/../include")
+                                java_prefixes="$default_search_path $java_home/include $java_home/../include")
                             for java_prefix in $java_prefixes
                             do
                                 jni_h="$java_prefix/jni.h"
@@ -129,8 +129,13 @@ EOF
         dnl Check to see if we should build for perl
         dnl
         if test "$my_use_perl" = "yes"; then
-            HAVE_PERL=1
-            my_have_perl=yes
+            perl_h=`perl -e 'use Config; print $Config{archlib};'`
+            perl_h=$perl_h/CORE/perl.h
+            AC_CHECK_FILE([$perl_h], [my_perl_h=$perl_h])
+            if test -n "$my_perl_h"; then
+                HAVE_PERL=1
+                my_have_perl=yes
+            fi
         fi
 
         dnl
@@ -139,8 +144,21 @@ EOF
         if test "$my_use_php" = "yes"; then
             AC_CHECK_PROG(PHP, php, php, no)
             if test "$PHP" != "no"; then
-                HAVE_PHP=1
-                my_have_php=yes
+                for php_prefix in $default_search_path
+                do
+                    php_h="$php_prefix/php/main/php.h"
+                    zend_h="$php_prefix/php/zend/zend.h"
+                    AC_CHECK_FILE([$php_h], [my_php_h=$php_h])
+                    AC_CHECK_FILE([$zend_h], [my_zend_h=$zend_h])
+                    test -n "$my_php_h" && break
+                    test -n "$my_zend_h" && break
+                done
+                if test -n "$my_php_h"; then
+                    if test -n "$my_zend_h"; then
+                        HAVE_PHP=1
+                        my_have_php=yes
+                    fi
+                fi
             fi
         fi
 
@@ -150,8 +168,15 @@ EOF
         if test "$my_use_python" = "yes"; then
             AC_CHECK_PROG(PYTHON, python, python, no)
             if test "$PYTHON" != "no"; then
-                HAVE_PYTHON=1
-                my_have_python=yes
+                python_version=`python -c "import sys; print sys.version[[:3]]"`
+                python_prefix=`python -c "import sys; print sys.prefix"`
+                python_h="$python_prefix/include/python$python_version/Python.h"
+                AC_CHECK_FILE([$python_h], [my_python_h=$python_h])
+
+                if test -n "$my_python_h"; then
+                    HAVE_PYTHON=1
+                    my_have_python=yes
+                fi
             fi
         fi
 
@@ -161,8 +186,14 @@ EOF
         if test "$my_use_ruby" = "yes"; then
             AC_CHECK_PROG(RUBY, ruby, ruby, no)
             if test "$RUBY" != "no"; then
-                HAVE_RUBY=1
-                my_have_ruby=yes
+                ruby_prefix=`ruby -e "require 'rbconfig.rb'; include Config; puts \"#{CONFIG[\"topdir\"]}\""`
+                ruby_h="$ruby_prefix/ruby.h"
+                AC_CHECK_FILE([$ruby_h], [my_ruby_h=$ruby_h])
+
+                if test -n "$my_ruby_h"; then
+                    HAVE_RUBY=1
+                    my_have_ruby=yes
+                fi
             fi
         fi
 
