@@ -69,7 +69,7 @@ CLASS::RetsSession(string login_url)
     mIncrementalMetadata = true;
     mUserAgentAuthType = USER_AGENT_AUTH_RETS_1_7;
     mUserAgentAuthCalculator.SetUserAgentPassword("");
-    SetDefaultEncoding(RETS_XML_DEFAULT_ENCODING);
+    SetDefaultEncoding(RETS_XML_ISO_ENCODING);
     mFlags = 0;
     mLoggedIn = false;
     mTimeout = 0;

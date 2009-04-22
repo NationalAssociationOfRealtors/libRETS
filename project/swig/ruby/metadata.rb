@@ -62,18 +62,22 @@ def dump_all_lookup_types(metadata, lookup)
   end
 end
 
-session = RetsSession.new("http://demo.crt.realtors.org:6103/rets/login")
-if (ARGV.length == 1) && (ARGV[0] == "full")
-  session.incremental_metadata = false
+begin
+    session = RetsSession.new("http://demo.crt.realtors.org:6103/rets/login")
+    if (ARGV.length == 1) && (ARGV[0] == "full")
+      session.incremental_metadata = false
+    end
+
+    if !session.login("Joe", "Schmoe")
+      puts "Invalid login"
+      exit 1
+    end
+
+    metadata = session.metadata
+    dump_system(metadata)
+    dump_all_resources(metadata)
+
+    session.logout()
+rescue RetsException => e
+    puts e
 end
-
-if !session.login("Joe", "Schmoe")
-  puts "Invalid login"
-  exit 1
-end
-
-metadata = session.metadata
-dump_system(metadata)
-dump_all_resources(metadata)
-
-session.logout()
