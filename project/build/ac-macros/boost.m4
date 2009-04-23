@@ -61,14 +61,27 @@ AC_DEFUN([MY_TEST_BOOST], [
       AC_MSG_ERROR([$ver is too old. Need version $check or higher.])
     fi
 
-    dnl See if this library names include "-mt-"
-    if test -f ${boost_prefix}/lib/libboost_filesystem*-mt-${boost_version}.a; then
-      boost_mt="-mt-"
-    fi
+    dnl See if the library names include the version number
+    for i in `ls ${boost_prefix}/lib/libboost_filesystem*${my_cv_boost_vers}.a 2>/dev/null`; do
+      boost_version="-${my_cv_boost_vers}"
+      break
+    done
+
+    dnl See if the library names include "-mt"
+    for i in `ls ${boost_prefix}/lib/libboost_filesystem*-mt${boost_version}.a 2>/dev/null`; do
+      boost_mt="-mt"
+      break
+    done
+
+    dnl See if this library names include "-s" for static libraries
+    for in in `ls ${boost_prefix}/lib/libboost_filesystem*${boost_mt}-s${boost_version}.a 2>/dev/null`; do
+      boost_static="-s"
+      break;
+    done
 
     dnl See if the toolset is included as part of the name
-    for i in `ls ${boost_prefix}/lib/libboost_filesystem*${boost_mt}${boost_version}.a 2>/dev/null`; do
-      toolset=`echo $i | sed "s#${boost_prefix}/lib/libboost_filesystem##" | sed "s/-mt-//" | sed "s/${boost_version}.a//"`
+    for i in `ls ${boost_prefix}/lib/libboost_filesystem*${boost_mt}${boost_static}${boost_version}.a 2>/dev/null`; do
+      toolset=`echo $i | sed "s#${boost_prefix}/lib/libboost_filesystem##" | sed "s/-mt//" | sed "s/-s//" | sed "s/${boost_version}.a//"`
       test -n ${toolset} && break
       toolset=
     done
