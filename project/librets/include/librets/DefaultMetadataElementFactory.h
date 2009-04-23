@@ -66,7 +66,7 @@ class DefaultMetadataElementFactory : public XmlMetadataElementFactory
     typedef MetadataElementPtr
         (DefaultMetadataElementFactory::* CreatorPointer)
         (RetsXmlStartElementEventPtr startElementEvent);
-    typedef std::map<std::string, char **> AttributeMap;
+    typedef std::map<std::string, const char **> AttributeMap;
 
     typedef std::map<std::string, CreatorPointer> CreatorMap;
     typedef std::map<std::string, MetadataElementListPtr> LevelMap;
@@ -75,7 +75,7 @@ class DefaultMetadataElementFactory : public XmlMetadataElementFactory
         TypeMap;
     
     void AddMappings(std::string name, CreatorPointer creator,
-                     char ** attributes);
+                     const char ** attributes);
 
     MetadataElementPtr CreateSystem(
         RetsXmlStartElementEventPtr startElementEvent);
@@ -134,31 +134,31 @@ class DefaultMetadataElementFactory : public XmlMetadataElementFactory
     void AddElement(MetadataElementPtr element, std::string level);
 
     std::string LevelBuilder(RetsXmlStartElementEventPtr startEvent,
-                             char ** attributes);
+                             const char ** attributes);
 
     TypeMap mTypeMap;
     CreatorMap mCreatorMap;
     AttributeMap mAttributeMap;
     RetsErrorHandler * mErrorHandler;
 
-    static char * SYSTEM_ATTRIBUTES[];
-    static char * RESOURCE_ATTRIBUTES[];
-    static char * CLASS_ATTRIBUTES[];
-    static char * TABLE_ATTRIBUTES[];
-    static char * UPDATE_ATTRIBUTES[];
-    static char * UPDATE_TYPE_ATTRIBUTES[];
-    static char * UPDATE_HELP_ATTRIBUTES[];
-    static char * OBJECT_ATTRIBUTES[];
-    static char * SEARCH_HELP_ATTRIBUTES[];
-    static char * EDIT_MASK_ATTRIBUTES[];
-    static char * LOOKUP_ATTRIBUTES[];
-    static char * LOOKUP_TYPE_ATTRIBUTES[];
-    static char * VALIDATION_LOOKUP_ATTRIBUTES[];
-    static char * VALIDATION_LOOKUP_TYPE_ATTRIBUTES[];
-    static char * VALIDATION_EXTERNAL_ATTRIBUTES[];
-    static char * VALIDATION_EXTERNAL_TYPE_ATTRIBUTES[];
-    static char * VALIDATION_EXPRESSION_ATTRIBUTES[];
-    static char * FOREIGN_KEY_ATTRIBUTES[];
+    static const char * SYSTEM_ATTRIBUTES[];
+    static const char * RESOURCE_ATTRIBUTES[];
+    static const char * CLASS_ATTRIBUTES[];
+    static const char * TABLE_ATTRIBUTES[];
+    static const char * UPDATE_ATTRIBUTES[];
+    static const char * UPDATE_TYPE_ATTRIBUTES[];
+    static const char * UPDATE_HELP_ATTRIBUTES[];
+    static const char * OBJECT_ATTRIBUTES[];
+    static const char * SEARCH_HELP_ATTRIBUTES[];
+    static const char * EDIT_MASK_ATTRIBUTES[];
+    static const char * LOOKUP_ATTRIBUTES[];
+    static const char * LOOKUP_TYPE_ATTRIBUTES[];
+    static const char * VALIDATION_LOOKUP_ATTRIBUTES[];
+    static const char * VALIDATION_LOOKUP_TYPE_ATTRIBUTES[];
+    static const char * VALIDATION_EXTERNAL_ATTRIBUTES[];
+    static const char * VALIDATION_EXTERNAL_TYPE_ATTRIBUTES[];
+    static const char * VALIDATION_EXPRESSION_ATTRIBUTES[];
+    static const char * FOREIGN_KEY_ATTRIBUTES[];
 };
 
 };

@@ -47,26 +47,26 @@ using std::ostringstream;
 
 #define CLASS DefaultMetadataElementFactory
 
-char * CLASS::SYSTEM_ATTRIBUTES[] = {0};
-char * CLASS::RESOURCE_ATTRIBUTES[] = {0};
-char * CLASS::CLASS_ATTRIBUTES[] = {"Resource", 0};
-char * CLASS::TABLE_ATTRIBUTES[] = {"Resource", "Class", 0};
-char * CLASS::UPDATE_ATTRIBUTES[] = {"Resource", "Class", 0};
-char * CLASS::UPDATE_TYPE_ATTRIBUTES[] = {"Resource", "Class", "Update", 0};
-char * CLASS::UPDATE_HELP_ATTRIBUTES[] = {"Resource", 0};
-char * CLASS::OBJECT_ATTRIBUTES[] = {"Resource", 0};
-char * CLASS::SEARCH_HELP_ATTRIBUTES[] = {"Resource", 0};
-char * CLASS::EDIT_MASK_ATTRIBUTES[] = {"Resource", 0};
-char * CLASS::LOOKUP_ATTRIBUTES[] = {"Resource", 0};
-char * CLASS::LOOKUP_TYPE_ATTRIBUTES[] = {"Resource", "Lookup", 0};
-char * CLASS::VALIDATION_LOOKUP_ATTRIBUTES[] = {"Resource", 0};
-char * CLASS::VALIDATION_LOOKUP_TYPE_ATTRIBUTES[] =
+const char * CLASS::SYSTEM_ATTRIBUTES[] = {0};
+const char * CLASS::RESOURCE_ATTRIBUTES[] = {0};
+const char * CLASS::CLASS_ATTRIBUTES[] = {"Resource", 0};
+const char * CLASS::TABLE_ATTRIBUTES[] = {"Resource", "Class", 0};
+const char * CLASS::UPDATE_ATTRIBUTES[] = {"Resource", "Class", 0};
+const char * CLASS::UPDATE_TYPE_ATTRIBUTES[] = {"Resource", "Class", "Update", 0};
+const char * CLASS::UPDATE_HELP_ATTRIBUTES[] = {"Resource", 0};
+const char * CLASS::OBJECT_ATTRIBUTES[] = {"Resource", 0};
+const char * CLASS::SEARCH_HELP_ATTRIBUTES[] = {"Resource", 0};
+const char * CLASS::EDIT_MASK_ATTRIBUTES[] = {"Resource", 0};
+const char * CLASS::LOOKUP_ATTRIBUTES[] = {"Resource", 0};
+const char * CLASS::LOOKUP_TYPE_ATTRIBUTES[] = {"Resource", "Lookup", 0};
+const char * CLASS::VALIDATION_LOOKUP_ATTRIBUTES[] = {"Resource", 0};
+const char * CLASS::VALIDATION_LOOKUP_TYPE_ATTRIBUTES[] =
     {"Resource", "ValidationLookup", 0};
-char * CLASS::VALIDATION_EXTERNAL_ATTRIBUTES[] = {"Resource", 0};
-char * CLASS::VALIDATION_EXTERNAL_TYPE_ATTRIBUTES[] =
+const char * CLASS::VALIDATION_EXTERNAL_ATTRIBUTES[] = {"Resource", 0};
+const char * CLASS::VALIDATION_EXTERNAL_TYPE_ATTRIBUTES[] =
     {"Resource", "ValidationExternal", 0};
-char * CLASS::VALIDATION_EXPRESSION_ATTRIBUTES[] = {"Resource", 0};
-char * CLASS::FOREIGN_KEY_ATTRIBUTES[] = {0};
+const char * CLASS::VALIDATION_EXPRESSION_ATTRIBUTES[] = {"Resource", 0};
+const char * CLASS::FOREIGN_KEY_ATTRIBUTES[] = {0};
 
 CLASS::CLASS()
     : mTypeMap(), mCreatorMap(), mAttributeMap()
@@ -111,7 +111,7 @@ CLASS::CLASS()
 }
 
 void CLASS::AddMappings(string name, CreatorPointer creator,
-                        char ** attributes)
+                        const char ** attributes)
 {
     mCreatorMap[name] = creator;
     mAttributeMap[name] = attributes;
@@ -127,11 +127,11 @@ void CLASS::SetErrorHandler(RetsErrorHandler * errorHandler)
 }
 
 string CLASS::LevelBuilder(RetsXmlStartElementEventPtr startEvent,
-                           char ** attributes)
+                           const char ** attributes)
 {
     ostringstream level;
     string separator = "";
-    char ** attribute;
+    const char ** attribute;
     for (attribute = attributes; *attribute != 0; attribute++)
     {
         level << separator << startEvent->GetAttributeValue(*attribute);
