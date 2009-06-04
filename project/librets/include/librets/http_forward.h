@@ -23,6 +23,7 @@
 /// @cond MAINTAINER
 
 #include <boost/shared_ptr.hpp>
+#include <vector>
 
 namespace librets {
 
@@ -45,6 +46,14 @@ typedef boost::shared_ptr<RetsHttpLogger> RetsHttpLoggerPtr;
 class NullHttpLogger;
 
 class StreamHttpLogger;
+
+class CurlEasy;
+/** Smart pointer to CurlEasy. */
+typedef boost::shared_ptr<CurlEasy> CurlEasyPtr;
+/** A vector of CurlEasy objects. */
+typedef std::vector<CurlEasyPtr> CurlEasyVector;
+/** Smart pointer to CurlEasyVector. */
+typedef boost::shared_ptr<CurlEasyVector> CurlEasyVectorPtr;
 
 class CurlHttpClient;
 /** Smart pointer to CurlHttpClient. */

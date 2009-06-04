@@ -43,19 +43,19 @@ namespace std {
 
 %typemap(out) std::auto_ptr<TYPE>
     "ST(argvi) = sv_newmortal();
-     SWIG_MakePtr(ST(argvi++), (void *) $1.release(), $descriptor(TYPE *), $shadow|$owner);";
+     SWIG_MakePtr(ST(argvi++), (void *) $1.release(), $descriptor(TYPE *), $shadow|SWIG_POINTER_OWN);";
 
 #elif defined(SWIGPYTHON) || defined(SWIGRUBY)
 
 %typemap(out) std::auto_ptr<TYPE>
-    "$result = SWIG_NewPointerObj((void *) $1.release(), $descriptor(TYPE *), $owner);"
+    "$result = SWIG_NewPointerObj((void *) $1.release(), $descriptor(TYPE *), SWIG_POINTER_OWN);"
 
 #elif defined(SWIGPHP)
 
 %typemap(out) std::auto_ptr<TYPE>
 {
    // Release the auto_ptr and create a Zend resource.
-   SWIG_SetPointerZval($result, (void *) $1.release(), $descriptor(TYPE *), $owner);
+   SWIG_SetPointerZval($result, (void *) $1.release(), $descriptor(TYPE *), SWIG_POINTER_OWN);
    // Now create the PHP object to contain the class to which the auto_ptr
    // was referencing.
    zval *obj, *_cPtr;

@@ -47,19 +47,19 @@ class CurlMulti
      * Add a libcurl "easy" handle to the multi handle and place it on the in use vector.
      * @param curlEasy A pointer to a CurlEasy object.
      */
-    void AddEasy(CurlEasy * curlEasy);
+    void AddEasy(CurlEasyPtr curlEasy);
 
     /**
      * Returns a pointer to a CurlEasy object that can be used for an http request.
      * @return Pointer to CurlEasy object.
      */
-    CurlEasy * EasyFactory();
+    CurlEasyPtr EasyFactory();
     
     /**
      * Add the "easy" handle back to the available queue.
      * @param curlEasy A pointer to a CurlEasy object.
      */
-    void FreeEasy(CurlEasy * curlEasy);
+    void FreeEasy(CurlEasyPtr curlEasy);
     
     /**
      * Returns the curl cookie slist.
@@ -96,7 +96,7 @@ class CurlMulti
      * Remove the provided libcurl "easy" handle from this class and libcurl.
      * @param curlEasy A reference to the CurlEasy object to remove.
      */
-    void RemoveEasy(CurlEasy & curlEasy);
+    void RemoveEasy(CurlEasyPtr curlEasy);
     
     /**
      * Determine whether or not the current http request is still in progress with libcurl.
@@ -112,9 +112,6 @@ private:
     CURLM * mMultiHandle;
     
     CURLSH * mShareHandle;
-    
-    typedef std::vector<CurlEasy *> CurlEasyVector;
-    typedef boost::shared_ptr<CurlEasyVector> CurlEasyVectorPtr;
     
     CurlEasyVector mCurlEasyInUse;
     CurlEasyVector mCurlEasyAvailable;

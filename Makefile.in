@@ -105,6 +105,8 @@ help:
 	@echo all
 	@echo clean
 	@echo dist
+	@echo doc
+	@echo doc-api
 	@echo install
 	@echo test
 	@echo test-network

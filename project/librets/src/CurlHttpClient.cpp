@@ -53,13 +53,19 @@ CurlHttpClient::CurlHttpClient()
 
 CurlHttpClient::~CurlHttpClient()
 {
+    /*
+     * Some cURL cleanup won't happen until until final exit. But since the calling
+     * program may be long lived, let's get cURL to cleanup as much of the transient 
+     * stuff allocated for this transaction.
+     */
+    curl_global_cleanup();
 }
 
 string CurlHttpClient::GetCookie(const char * name)
 {
     string cookie(name);
     
-    CurlEasy *curlEasy  = mCurlMulti.EasyFactory();
+    CurlEasyPtr curlEasy  = mCurlMulti.EasyFactory();
 
     /*
      * We probably do not need the easy handle fully populated since all
@@ -200,7 +206,7 @@ bool CurlHttpClient::ContinueRequest()
 
 RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
 {
-    CurlEasy            *curlEasy  = mCurlMulti.EasyFactory();
+    CurlEasyPtr         curlEasy  = mCurlMulti.EasyFactory();
     CurlHttpResponsePtr response(new CurlHttpResponse());
     CurlHttpClientPrivate  *client = new CurlHttpClientPrivate(request, response, this);
     

@@ -63,19 +63,30 @@ CLASS::CLASS()
 
 CLASS::~CLASS()
 {
+    /*
+     * Destroy the contents of the CurlEasy cache. We need to manually do this
+     * instead of letting the automatic destruction happen in this case because
+     * the CurlEasy objects must no longer be referenced before we call
+     * curl_share_cleanup().
+     */
+    for (CurlEasyVector::iterator i = mCurlEasyAvailable.begin(); 
+         i != mCurlEasyAvailable.end(); i++)
+    {
+        i->reset();
+    }
     curl_multi_cleanup(mMultiHandle);
     curl_share_cleanup(mShareHandle);
 }
 
-void CLASS::AddEasy(CurlEasy * curlEasy)
+void CLASS::AddEasy(CurlEasyPtr curlEasy)
 {
     CurlAssert(curl_multi_add_handle(mMultiHandle, curlEasy->GetEasyHandle()));
     mCurlEasyInUse.push_back(curlEasy);
 }
 
-CurlEasy * CLASS::EasyFactory()
+CurlEasyPtr CLASS::EasyFactory()
 {
-    CurlEasy * curlEasy;
+    CurlEasyPtr curlEasy;
     /*
      * See if the cache is empty. If so, create a new one, otherwise use the
      * last one. We intentionally try to use the last one in the queue in order
@@ -89,21 +100,21 @@ CurlEasy * CLASS::EasyFactory()
     }
     else
     {
-        curlEasy = new CurlEasy();
+        curlEasy.reset(new CurlEasy());
         curlEasy->SetShareHandle(mShareHandle);
     }
 
     return curlEasy;
 }
 
-void CLASS::FreeEasy(CurlEasy * curlEasy)
+void CLASS::FreeEasy(CurlEasyPtr curlEasy)
 {
     mCurlEasyAvailable.push_back(curlEasy);
 }
 
-void CLASS::RemoveEasy(CurlEasy & curlEasy)
+void CLASS::RemoveEasy(CurlEasyPtr curlEasy)
 {
-    CurlAssert(curl_multi_remove_handle(mMultiHandle, curlEasy.GetEasyHandle()));            
+    CurlAssert(curl_multi_remove_handle(mMultiHandle, curlEasy->GetEasyHandle()));            
 }
 
 CURLM * CLASS::GetMultiHandle()
