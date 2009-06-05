@@ -1,4 +1,4 @@
-Version 1.3.x - xx xxx 2009
+Version 1.3.2 - 05 Jun 2009
 
   * Clean up autoconf warnings. Enable -fPIC as default.
 
@@ -17,6 +17,8 @@ Version 1.3.x - xx xxx 2009
 
   * Properly detect boost versioned libraries on OS X. 
     Ticket #106
+
+  * Clean up memory leaks. Ticket #107.
 
 Version 1.3.1 - 18 Mar 2009
 
