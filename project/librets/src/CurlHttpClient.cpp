@@ -43,6 +43,7 @@ CurlHttpClient::CurlHttpClient()
      */
     curl_global_init(CURL_GLOBAL_ALL);
 
+    mFlags = 0;
     mLogger = NullHttpLogger::GetInstance();
     mLogging = false;
     mTimeout = 0;
