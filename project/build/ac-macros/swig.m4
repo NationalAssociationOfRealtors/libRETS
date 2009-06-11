@@ -62,6 +62,19 @@ AC_DEFUN([MY_TEST_SWIG], [
         dnl
         if test "$my_use_mcs" = "yes"; then
             AC_CHECK_PROG(MCS, mcs, mcs, no)
+            AC_CHECK_PROG(GMCS, gmcs, gmcs, no)
+            generics=`expr \
+                $ver_major \> 1 \| \
+                $ver_major \= 1 \& \
+                $ver_minor \> 3 \| \
+                $ver_minor \= 3 \& \
+                $ver_release \>\= 39 `                         
+
+            if test "$generics" = "1"; then
+                if test "$GMCS" != "no"; then
+                    MCS=GMCS
+                fi
+            fi
             if test "$MCS" != "no"; then
                 HAVE_MCS=1
                 my_have_mcs=yes

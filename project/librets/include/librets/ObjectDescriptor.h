@@ -169,7 +169,7 @@ class ObjectDescriptor : public RetsObject
     /**
      * Sets the RETS Reply Text.
      *
-     * @param errorText The RETS Reply Text.
+     * @param replyText The RETS Reply Text.
      */
     void SetRetsReplyText(std::string replyText);
     
