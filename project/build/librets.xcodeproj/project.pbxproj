@@ -2124,6 +2124,7 @@
 		554A9EA607F9F27F00402C35 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 55C70BC2093D1BDD00D34681 /* Build configuration list for PBXProject "librets" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 0;
 			mainGroup = 554A9EA207F9F27F00402C35;
 			productRefGroup = 554A9EB307F9F2B300402C35 /* Products */;

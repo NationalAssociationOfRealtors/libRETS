@@ -1629,11 +1629,13 @@ class RetsSession
                                         RetsException,
                                         std::exception);
     
+#if !defined(SWIGPHP)
     void Search(SearchRequest * request, std::ostream & outputStream) 
                                   throw(RetsHttpException, 
                                         RetsReplyException,
                                         RetsException,
                                         std::exception);
+#endif
     
 #if defined(SWIGJAVA) || defined(SWIGCSHARP)
     BinaryDataAPtr  Search_(SearchRequest * request) 
@@ -1663,12 +1665,13 @@ class RetsSession
                                         RetsReplyException,
                                         RetsException,
                                         std::exception);
-    
+#if !defined(SWIGPHP)
     void GetMetadata(std::ostream & outputStream) 
                                   throw(RetsHttpException, 
                                         RetsReplyException,
                                         RetsException,
                                         std::exception);
+#endif
     
 #if defined(SWIGJAVA) || defined(SWIGCSHARP)
     BinaryDataAPtr  GetMetadata_() 
