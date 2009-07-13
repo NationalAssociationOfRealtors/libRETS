@@ -60,7 +60,7 @@ int main(int argc, char * argv[])
         
         if (resourceSets.size() == 0)
         {
-            resourceSets.push_back("LN000001");
+            resourceSets.push_back("1");
         }
 
         RetsSessionPtr session = options.RetsLogin();

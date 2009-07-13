@@ -3,6 +3,9 @@ Version 1.3.3 - xx xxx 2009
   * SWIG 1.3.39 uses feature Generics for C# and Mono MCS
     doesn't handle that. Ticket #109.
 
+  * Update demo programs to reflect new demo server defaults.
+    Ticket #110.
+
   * SWIG fails to properly compile polymorphic GetMetadata and
     Search for PHP. Disable those APIs. Ticket #111.
 

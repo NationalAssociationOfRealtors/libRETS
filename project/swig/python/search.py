@@ -15,7 +15,7 @@ try:
     version = "1.5"
   print "RETS Version: " + version
 
-  request = session.CreateSearchRequest("Property", "ResidentialProperty",
+  request = session.CreateSearchRequest("Property", "RES",
     "(ListPrice=300000-)")
     
   request.SetStandardNames(True)

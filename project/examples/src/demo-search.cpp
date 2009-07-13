@@ -24,7 +24,7 @@ int main(int argc, char * argv[])
         }
 
         SearchRequestAPtr searchRequest(
-            new SearchRequest("Property", "ResidentialProperty", 
+            new SearchRequest("Property", "RES", 
                               "(ListPrice=300000-)"));
         
         SearchResultSetAPtr results = session->Search(searchRequest.get());
@@ -32,7 +32,7 @@ int main(int argc, char * argv[])
         {
             cout << "ListingID: " << results->GetString("ListingID") << endl;
             cout << "ListPrice: " << results->GetString("ListPrice") << endl;
-            cout << " Bedrooms: " << results->GetString("Beds") << endl;
+            cout << " Bedrooms: " << results->GetString("Bedrooms") << endl;
             cout << "     City: " << results->GetString("City") << endl;
             cout << endl;
         }

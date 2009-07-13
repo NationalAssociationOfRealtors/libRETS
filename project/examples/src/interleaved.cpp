@@ -65,7 +65,7 @@ int main(int argc, char * argv[])
             ("resource,r", po::value<string>(&resource)
              ->default_value("Property"), "Search resource")
             ("class,C", po::value<string>(&searchClass)
-             ->default_value("ResidentialProperty"), "Search class")
+             ->default_value("RES"), "Search class")
             ("timestamp,T", po::value<string>(&classTimeStamp)
              ->default_value(""), "Systemname of the Class TimeStamp field")
              ("lastmodified,L", po::value<string>(&lastModified)
@@ -298,6 +298,8 @@ int main(int argc, char * argv[])
             cout << endl;
         }
         cout << "Total Listings Retrieved: " << totalListings << endl;
+        cout << "Listing IDs:" << endl;
+        
         for (vector<string>::iterator i = listingIds.begin(); i != listingIds.end(); i++)
             cout << *i << endl;
         

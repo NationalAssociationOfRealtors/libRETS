@@ -17,7 +17,7 @@ begin
     version = "1.5" if (session.detected_rets_version == RETS_1_5)
     puts "RETS Version: " + version
 
-    request = session.create_search_request("Property", "ResidentialProperty",
+    request = session.create_search_request("Property", "RES",
                                             "(ListPrice=300000-)")
     request.standard_names = true
     request.select = "ListingID,ListPrice,Beds,City"

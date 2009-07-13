@@ -615,7 +615,7 @@
 		554AA1D107FA14A300402C35 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MyController.h; path = ../iRets/MyController.h; sourceTree = "<group>"; };
 		554AA1D207FA14A300402C35 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; name = MyController.mm; path = ../iRets/MyController.mm; sourceTree = "<group>"; };
 		554AA1DF07FA14D700402C35 /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		554AA1E207FA150900402C35 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
+		554AA1E207FA150900402C35 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		554AA1E507FA158F00402C35 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		554AA1E807FA15A500402C35 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		554AA20B07FA174200402C35 /* librets_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = librets_Prefix.pch; sourceTree = "<group>"; };

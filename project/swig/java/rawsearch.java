@@ -35,7 +35,7 @@ public class rawsearch
             ((version == RetsVersion.RETS_1_5) ? "1.5" : "1.0"));
 
         SearchRequest searchRequest= session.CreateSearchRequest(
-            "Property", "ResidentialProperty", "(ListPrice=300000-)");
+            "Property", "RES", "(ListPrice=300000-)");
 
         searchRequest.SetSelect("ListingID,ListPrice,Beds,City");
         searchRequest.SetLimit(SearchRequest.LIMIT_DEFAULT);

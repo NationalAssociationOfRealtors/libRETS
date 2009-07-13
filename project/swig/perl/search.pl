@@ -18,7 +18,7 @@ my $version = "1.0";
 $version = "1.5" if ($rets->GetDetectedRetsVersion() == $librets::RETS_1_5);
 print "RETS Version: $version\n";
 
-my $request = $rets->CreateSearchRequest("Property", "ResidentialProperty",
+my $request = $rets->CreateSearchRequest("Property", "RES",
 					 "(ListPrice=300000-)");
 $request->SetSelect("ListingID,ListPrice,Beds,City");
 $request->SetLimit($librets::SearchRequest::LIMIT_DEFAULT);

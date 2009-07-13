@@ -17,7 +17,7 @@ if ($session->GetDetectedRetsVersion() == RETS_1_5)
 }
 print "RETS Version: " . $version . "\n";
 
-$request = $session->CreateSearchRequest("Property", "ResidentialProperty",
+$request = $session->CreateSearchRequest("Property", "RES",
                                         "(ListPrice=300000-)");
 $request->SetSelect("ListingID,ListPrice,Beds,City");
 $request->SetLimit(SearchRequest_LIMIT_DEFAULT);

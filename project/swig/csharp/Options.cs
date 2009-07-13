@@ -31,7 +31,7 @@ public class Options
     private RetsVersion mRetsVersion        = RetsVersion.RETS_1_5;
     private string mSearchType              = "Property";
     private string mSelect                  = "ListingID,ListPrice,Beds,City";
-    private string mSearchClass             = "ResidentialProperty";
+    private string mSearchClass             = "RES";
     private bool mStandardNames             = true;
     private string mUA                      = "librets/" + RetsSession.GetLibraryVersion();
     private UserAgentAuthType mUAAuth       = UserAgentAuthType.USER_AGENT_AUTH_RETS_1_7;
