@@ -113,6 +113,8 @@ void CLASS::HandleSystemMetadata(RetsXmlStartElementEventPtr metadataEvent)
                 element->SetAttribute("SystemID", value);
                 value = startEvent->GetAttributeValue("SystemDescription");
                 element->SetAttribute("SystemDescription", value);
+                value = startEvent->GetAttributeValue("TimeZoneOffset");
+                element->SetAttribute("TimeZoneOffset", value);
                 mXmlParser->AssertNextIsEndEvent("SYSTEM: ");
             }
             else if (startEvent->GetName() == "COMMENTS")

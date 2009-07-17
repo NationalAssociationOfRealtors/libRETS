@@ -42,3 +42,8 @@ string MetadataSystem::GetComments() const
 {
     return GetStringAttribute("COMMENTS");
 }
+
+string MetadataSystem::GetTimeZoneOffset() const
+{
+    return GetStringAttribute("TimeZoneOffset", "");
+}

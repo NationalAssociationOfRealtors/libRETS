@@ -107,6 +107,14 @@
 		F918214B0E6F5B2800BE23EF /* NetworkTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F91821020E6F55AA00BE23EF /* NetworkTest.cpp */; };
 		F918214C0E6F5B3500BE23EF /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD578B07FDAAFD00526D69 /* main.cpp */; };
 		F918214D0E6F5B3B00BE23EF /* testUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55BD57A007FDAAFD00526D69 /* testUtil.cpp */; };
+		F9189E0C100F92CB00B13634 /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109160DF4A81F004DE8BB /* Options.cpp */; };
+		F9189E0D100F92E300B13634 /* metadata2ddl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9189DFC100F91BE00B13634 /* metadata2ddl.cpp */; };
+		F9189E0E100F938600B13634 /* librets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8499093E5AAA00812582 /* librets.a */; };
+		F9189E0F100F939600B13634 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565707FC3BA100526D69 /* libcurl.a */; };
+		F9189E12100F93A800B13634 /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD565907FC3BBE00526D69 /* libexpat.a */; };
+		F9189E14100F93B400B13634 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B7EAE3080EC4A900245DFA /* libboost_filesystem.a */; };
+		F9189E15100F93BE00B13634 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F93109FB0DF4CE20004DE8BB /* libboost_program_options.a */; };
+		F9189E16100F93CA00B13634 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F90624A40E19705A002AFBA0 /* libboost_system.a */; };
 		F93109170DF4A81F004DE8BB /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109160DF4A81F004DE8BB /* Options.cpp */; };
 		F931097A0DF4C14B004DE8BB /* demo-search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109340DF4BE75004DE8BB /* demo-search.cpp */; };
 		F931097B0DF4C162004DE8BB /* Options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93109160DF4A81F004DE8BB /* Options.cpp */; };
@@ -340,6 +348,13 @@
 			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 55EE8498093E5AAA00812582;
+			remoteInfo = librets;
+		};
+		F9189E0A100F927A00B13634 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 554A9EA607F9F27F00402C35 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55EE8498093E5AAA00812582 /* librets */;
 			remoteInfo = librets;
 		};
 		F931098B0DF4C1DE004DE8BB /* PBXContainerItemProxy */ = {
@@ -795,6 +810,8 @@
 		F91822720E7853F200BE23EF /* metadata-table.9 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = "metadata-table.9"; path = "../librets/test-network/src/resources/metadata-table.9"; sourceTree = SOURCE_ROOT; };
 		F91822730E7853F200BE23EF /* photo.1 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.man; name = photo.1; path = "../librets/test-network/src/resources/photo.1"; sourceTree = SOURCE_ROOT; };
 		F91822740E7853F200BE23EF /* search.1 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.man; name = search.1; path = "../librets/test-network/src/resources/search.1"; sourceTree = SOURCE_ROOT; };
+		F9189DFC100F91BE00B13634 /* metadata2ddl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metadata2ddl.cpp; sourceTree = "<group>"; };
+		F9189E04100F91E300B13634 /* metadata2ddl */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = metadata2ddl; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93109160DF4A81F004DE8BB /* Options.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Options.cpp; sourceTree = "<group>"; };
 		F93109330DF4BE5C004DE8BB /* Options.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
 		F93109340DF4BE75004DE8BB /* demo-search.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = "demo-search.cpp"; sourceTree = "<group>"; };
@@ -935,6 +952,19 @@
 				F91821480E6F5AC300BE23EF /* libboost_program_options.a in Frameworks */,
 				F91821490E6F5ADA00BE23EF /* libboost_system.a in Frameworks */,
 				F918214A0E6F5B1000BE23EF /* libcppunit.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9189E02100F91E300B13634 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9189E0E100F938600B13634 /* librets.a in Frameworks */,
+				F9189E0F100F939600B13634 /* libcurl.a in Frameworks */,
+				F9189E12100F93A800B13634 /* libexpat.a in Frameworks */,
+				F9189E14100F93B400B13634 /* libboost_filesystem.a in Frameworks */,
+				F9189E15100F93BE00B13634 /* libboost_program_options.a in Frameworks */,
+				F9189E16100F93CA00B13634 /* libboost_system.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1119,6 +1149,7 @@
 				F9A916000E7AE4710022C4EF /* interleaved */,
 				F9747D950F0983220051067B /* rawsearch */,
 				F9747DCF0F09A79D0051067B /* rawmetadata */,
+				F9189E04100F91E300B13634 /* metadata2ddl */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1191,6 +1222,7 @@
 		554AA16207FA0E9C00402C35 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				F9189DFC100F91BE00B13634 /* metadata2ddl.cpp */,
 				F93109340DF4BE75004DE8BB /* demo-search.cpp */,
 				5552AB1108047438002288F1 /* get-object.cpp */,
 				554AA16307FA0ECD00402C35 /* http.cpp */,
@@ -1948,6 +1980,23 @@
 			productReference = F91821370E6F584500BE23EF /* test-network */;
 			productType = "com.apple.product-type.tool";
 		};
+		F9189E03100F91E300B13634 /* metadata2ddl */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F9189E09100F920300B13634 /* Build configuration list for PBXNativeTarget "metadata2ddl" */;
+			buildPhases = (
+				F9189E01100F91E300B13634 /* Sources */,
+				F9189E02100F91E300B13634 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F9189E0B100F927A00B13634 /* PBXTargetDependency */,
+			);
+			name = metadata2ddl;
+			productName = metadata2ddl;
+			productReference = F9189E04100F91E300B13634 /* metadata2ddl */;
+			productType = "com.apple.product-type.tool";
+		};
 		F93109450DF4C083004DE8BB /* demo-search */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F93109480DF4C0A2004DE8BB /* Build configuration list for PBXNativeTarget "demo-search" */;
@@ -2148,6 +2197,7 @@
 				F9A915FF0E7AE4710022C4EF /* interleaved */,
 				F9747D940F0983220051067B /* rawsearch */,
 				F9747DCE0F09A79D0051067B /* rawmetadata */,
+				F9189E03100F91E300B13634 /* metadata2ddl */,
 			);
 		};
 /* End PBXProject section */
@@ -2418,6 +2468,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F9189E01100F91E300B13634 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9189E0C100F92CB00B13634 /* Options.cpp in Sources */,
+				F9189E0D100F92E300B13634 /* metadata2ddl.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F93109430DF4C083004DE8BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2530,6 +2589,11 @@
 			isa = PBXTargetDependency;
 			target = 55EE8498093E5AAA00812582 /* librets */;
 			targetProxy = F918213D0E6F59ED00BE23EF /* PBXContainerItemProxy */;
+		};
+		F9189E0B100F927A00B13634 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55EE8498093E5AAA00812582 /* librets */;
+			targetProxy = F9189E0A100F927A00B13634 /* PBXContainerItemProxy */;
 		};
 		F931098C0DF4C1DE004DE8BB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3197,6 +3261,67 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = "test-network";
 				ZERO_LINK = YES;
+			};
+			name = Default;
+		};
+		F9189E06100F91E500B13634 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"${BOOST}/include",
+					../librets/include,
+				);
+				INSTALL_PATH = /Users/mkelin/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"$(EXPAT)/lib",
+					"$(CURL)/lib",
+					"$(BOOST)/lib",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = metadata2ddl;
+				SKIP_INSTALL = YES;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		F9189E07100F91E500B13634 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = metadata2ddl;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		F9189E08100F91E500B13634 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = metadata2ddl;
 			};
 			name = Default;
 		};
@@ -3876,6 +4001,16 @@
 				F918213A0E6F586300BE23EF /* Development */,
 				F918213B0E6F586300BE23EF /* Deployment */,
 				F918213C0E6F586300BE23EF /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		F9189E09100F920300B13634 /* Build configuration list for PBXNativeTarget "metadata2ddl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F9189E06100F91E500B13634 /* Development */,
+				F9189E07100F91E500B13634 /* Deployment */,
+				F9189E08100F91E500B13634 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;

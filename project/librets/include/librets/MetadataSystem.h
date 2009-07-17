@@ -65,6 +65,13 @@ class MetadataSystem : public MetadataElement
      * @return The comments
      */
     std::string GetComments() const;
+    
+    /**
+     * Returns the TimeZoneOffset for RETS 1.7 and later.
+     *
+     * @return A String containing the TimeZoneOffset.
+     */
+    std::string GetTimeZoneOffset() const;
 
     /**
      * Returns all the child foreign keys.
