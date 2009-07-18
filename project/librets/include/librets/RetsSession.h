@@ -364,9 +364,9 @@ class RetsSession : public MetadataLoader
     /// @endcond
     
     /**
-     * Sets the User-Agent authorzation type.  Currently, only 
-     * Interealty is supported.  Setting to any other value
-     * will raise an exception.
+     * Sets the User-Agent authorzation type.  
+     *
+     * @param type Either USER_AGENT_AUTH_RETS_1_7 or USER_AGENT_AUTH_INTEREALTY
      */
     void SetUserAgentAuthType(UserAgentAuthType type);
 

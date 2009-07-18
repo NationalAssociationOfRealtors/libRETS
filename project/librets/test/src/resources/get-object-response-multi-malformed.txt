@@ -1,0 +1,27 @@
+200
+Content-Type: multipart/parallel; boundary="59a068f72f533f61eead9a5d886690495ab039a0"
+
+--59a068f72f533f61eead9a5d886690495ab039a0
+Content-ID: abc123
+Object-ID: 1
+Content-Type: application/octet-stream
+Location: http://www.example.com/images/abc123/1
+Content-Description: Front view.
+
+
+--59a068f72f533f61eead9a5d886690495ab039a0
+Content-ID: abc123
+Object-ID: 2
+Content-type: application/octet-stream
+Location: http://www.example.com/images/abc123/2
+Content-Description: Rear view.
+
+
+--59a068f72f533f61eead9a5d886690495ab039a0
+Content-ID: abc123
+Object-ID: 3
+Content-Type: application/octet-stream
+Location: http://www.example.com/images/abc123/3
+
+
+--59a068f72f533f61eead9a5d886690495ab039a0--

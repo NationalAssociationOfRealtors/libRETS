@@ -39,6 +39,7 @@ int main(int argc, char * argv[])
         string outputPrefix;
         bool returnUrl;
         vector<string> resourceSets;
+        bool ignoreMalformedHeaders;
         
         Options options;
         options.descriptions.add_options()
@@ -52,6 +53,8 @@ int main(int argc, char * argv[])
              "Resource sets (e.g. 'resource-id' or 'resource-id:#,#'))")
             ("return-url", po::value<bool>(&returnUrl)
              ->default_value(false), "Return the URL to the object (true or false)")
+            ("ignore-malformed-headers", po::value<bool>(&ignoreMalformedHeaders)
+             ->default_value(false), "Ignore malformed headers (true or false)")
             ;
         if (!options.ParseCommandLine(argc, argv))
         {
@@ -95,6 +98,7 @@ int main(int argc, char * argv[])
             }
         }
         getObjectRequest.SetLocation(returnUrl);
+        getObjectRequest.SetIgnoreMalformedHeaders(ignoreMalformedHeaders);
     
         GetObjectResponseAPtr getObjectResponse =
             session->GetObject(&getObjectRequest);

@@ -188,6 +188,20 @@ void GetObjectResponse::ParseMultiPart(RetsHttpResponsePtr httpResponse,
     string::size_type partStart;
     string::size_type partEnd;
     
+    /*
+     * libCURL appears to have a problem when handling a chunked encoded multi-part
+     * response where the chunk length follows the CRLF that delineates the message
+     * text from the message headers. That CRLF according to the RFCs is supposed to
+     * be considered as part of the boundary, but in this case, libCURL fails to
+     * include it in the data. So, we need to check to see if our content starts
+     * with a boundary missing that leading CRLF.
+     */
+    if (ignoreMalformedHeaders && !(content.substr(0,2) == "\r\n"))
+    {
+        
+        content = "\r\n" + content;
+    }
+
     partStart = content.find(delimiter);
     if (partStart == string::npos)
     {

@@ -42,6 +42,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testNoObjectFound);
     CPPUNIT_TEST(testNoObjectFoundFromVariman);
     CPPUNIT_TEST(testMultiPartLocation);
+    CPPUNIT_TEST(testMultiPartMalformed);
     CPPUNIT_TEST(testNormls);
     CPPUNIT_TEST(testCris);
     CPPUNIT_TEST(testRapattoni);
@@ -58,6 +59,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testNoObjectFound();
     void testNoObjectFoundFromVariman();
     void testMultiPartLocation();
+    void testMultiPartMalformed();
     void testNormls();
     void testCris();
     void testRapattoni();
@@ -250,6 +252,68 @@ void CLASS::testMultiPartLocation()
         "get-object-response-multi-location.txt"));
     response.SetDefaultObjectKeyAndId("foo", 5);
     response.Parse(httpResponse);
+    
+    ObjectDescriptor * objectDescriptor;
+    string data;
+    istreamPtr dataStream;
+
+    
+    objectDescriptor = response.NextObject();
+    CPPUNIT_ASSERT(objectDescriptor);
+    ASSERT_STRING_EQUAL("application/octet-stream",
+                        objectDescriptor->GetContentType());
+    ASSERT_STRING_EQUAL("abc123", objectDescriptor->GetObjectKey());
+    ASSERT_EQUAL(1, objectDescriptor->GetObjectId());
+    ASSERT_STRING_EQUAL("Front view.", objectDescriptor->GetDescription());
+    ASSERT_STRING_EQUAL("http://www.example.com/images/abc123/1",
+                        objectDescriptor->GetLocationUrl());
+    
+    dataStream = objectDescriptor->GetDataStream();
+    CPPUNIT_ASSERT(dataStream);
+    data = readIntoString(dataStream);
+    ASSERT_STRING_EQUAL("", data);
+    
+    objectDescriptor = response.NextObject();
+    CPPUNIT_ASSERT(objectDescriptor);
+    ASSERT_STRING_EQUAL("application/octet-stream",
+                        objectDescriptor->GetContentType());
+    ASSERT_STRING_EQUAL("abc123", objectDescriptor->GetObjectKey());
+    ASSERT_EQUAL(2, objectDescriptor->GetObjectId());
+    ASSERT_STRING_EQUAL("Rear view.", objectDescriptor->GetDescription());
+    ASSERT_STRING_EQUAL("http://www.example.com/images/abc123/2",
+                        objectDescriptor->GetLocationUrl());
+    
+    dataStream = objectDescriptor->GetDataStream();
+    CPPUNIT_ASSERT(dataStream);
+    data = readIntoString(dataStream);
+    ASSERT_STRING_EQUAL("", data);
+    
+    objectDescriptor = response.NextObject();
+    CPPUNIT_ASSERT(objectDescriptor);
+    ASSERT_STRING_EQUAL("application/octet-stream",
+                        objectDescriptor->GetContentType());
+    ASSERT_STRING_EQUAL("abc123", objectDescriptor->GetObjectKey());
+    ASSERT_EQUAL(3, objectDescriptor->GetObjectId());
+    ASSERT_STRING_EQUAL("", objectDescriptor->GetDescription());
+    ASSERT_STRING_EQUAL("http://www.example.com/images/abc123/3",
+                        objectDescriptor->GetLocationUrl());
+    
+    dataStream = objectDescriptor->GetDataStream();
+    CPPUNIT_ASSERT(dataStream);
+    data = readIntoString(dataStream);
+    ASSERT_STRING_EQUAL("", data);
+    
+    objectDescriptor = response.NextObject();
+    CPPUNIT_ASSERT(!objectDescriptor);
+}
+
+void CLASS::testMultiPartMalformed()
+{
+    GetObjectResponse response;
+    RetsHttpResponsePtr httpResponse(new TestHttpResponse(
+        "get-object-response-multi-malformed.txt"));
+    response.SetDefaultObjectKeyAndId("foo", 5);
+    response.Parse(httpResponse,true);
     
     ObjectDescriptor * objectDescriptor;
     string data;
