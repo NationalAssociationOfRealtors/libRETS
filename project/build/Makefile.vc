@@ -87,12 +87,16 @@ CSC = csc.exe /nologo
 LINK_LIB = link.exe $(LINK_LIB_FLAG) /nologo 
 LINK_EXE = link.exe /nologo 
 
+EXTRA_DLL =
 !if "$(VS_VERSION)" == "vs2003"
 WINLIBS = wsock32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
+MSVCP_DLL="$(VCTOOLS)\crt\src\build\intel\msvcp71.dll"
 !else if "$(VS_VERSION)" == "vs2005"
 WINLIBS = wsock32.lib winmm.lib wldap32.lib bufferoverflowu.lib user32.lib gdi32.lib advapi32.lib
+MSVCP_DLL="$(VCTOOLS)\redist\x86\Microsoft.VC80.CRT\msvcp80.dll"
 !else if "$(VS_VERSION)" == "vs2008"
 WINLIBS = wsock32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
+MSVCP_DLL="$(VCTOOLS)\redist\x86\Microsoft.VC90.CRT\msvcp90.dll"
 !endif
 
 ########################################################################

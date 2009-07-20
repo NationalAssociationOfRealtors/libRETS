@@ -50,6 +50,13 @@ prepare:
 	@$(MKDIR_P) $(DISTDIR)/ruby
 	@$(MKDIR_P) $(DISTDIR)/python
 	@$(MKDIR_P) $(DISTDIR)/php5
+	@if not exist $(MSVCP_DLL) echo $(MSVCP_DLL) can not be found. 
+	@if not exist $(MSVCP_DLL) echo Make sure the $$VCTOOLS variable is set.
+	@if not exist $(MSVCP_DLL) echo If you are running VS2003, you must manual build the
+	@if not exist $(MSVCP_DLL) echo MSVCP71.DLL for redistribution. (Rename sample_p.dll to
+	@if not exist $(MSVCP_DLL) echo MSVCP71.DLL). See: 
+	@if not exist $(MSVCP_DLL) echo http://msdn.microsoft.com/en-us/library/k0a8ehy3(VS.71).aspx
+	@if not exist $(MSVCP_DLL) exit 1
 
 docs: prepare
 	rm -rf build/doc/api
@@ -101,6 +108,7 @@ _dist-java:
 _dist-ruby:
 	cp -u project/swig/ruby/*.so $(DISTDIR)/ruby
 	cp -u project/swig/ruby/librets.rb $(DISTDIR)/ruby
+	cp -u $(MSVCP_DLL) $(DISTDIR)/ruby/
 
 _dist-python:
 	cp -u project/swig/python/dist/*.exe $(DISTDIR)/python
