@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2009 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -28,6 +28,18 @@ CLASS::CLASS(MetadataElementCollector * collector)
     system.reset(new MetadataSystem());
     system->SetLevel("");
     collector->AddElement(system);
+    
+    foreignKeyOne.reset(new MetadataForeignKey());
+    foreignKeyOne->SetLevel("");
+    foreignKeyOne->SetAttribute("ForeignKeyID", "Key1");
+    collector->AddElement(foreignKeyOne);
+    foreignKeys.push_back(foreignKeyOne.get());
+    
+    foreignKeyTwo.reset(new MetadataForeignKey());
+    foreignKeyTwo->SetLevel("");
+    foreignKeyTwo->SetAttribute("ForeignKeyID", "Key2");
+    collector->AddElement(foreignKeyTwo);
+    foreignKeys.push_back(foreignKeyTwo.get());
     
     propertyResource.reset(new MetadataResource());
     propertyResource->SetAttribute("ResourceID", "Property");

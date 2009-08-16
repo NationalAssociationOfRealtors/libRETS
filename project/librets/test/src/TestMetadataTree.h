@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2009 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -22,6 +22,7 @@
 #include "librets/RetsMetadata.h"
 #include "librets/MetadataElementCollector.h"
 #include "librets/MetadataElement.h"
+#include "librets/MetadataForeignKey.h"
 #include "librets/MetadataSystem.h"
 #include "librets/MetadataResource.h"
 #include "librets/MetadataClass.h"
@@ -38,6 +39,7 @@ class TestMetadataTree
   public:
     TestMetadataTree(MetadataElementCollector * collector);
     
+    MetadataForeignKeyList foreignKeys;
     MetadataResourceList resources;
     MetadataClassList classes;
     MetadataClassList propertyClasses;
@@ -47,6 +49,9 @@ class TestMetadataTree
     MetadataLookupTypeList propertyAreaLookupTypes;
     
     MetadataSystemPtr system;
+    
+    MetadataForeignKeyPtr foreignKeyOne;
+    MetadataForeignKeyPtr foreignKeyTwo;
 
     MetadataResourcePtr agentResource;
     MetadataResourcePtr propertyResource;

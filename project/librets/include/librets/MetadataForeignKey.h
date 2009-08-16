@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2009 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -21,6 +21,7 @@
  * Contains the MetadataForeighKey class declaration.
  */
 
+#include <string>
 #include "librets/MetadataElement.h"
 
 namespace librets {
@@ -32,12 +33,84 @@ namespace librets {
 class MetadataForeignKey : public MetadataElement
 {
   public:
+    virtual ~MetadataForeignKey();
+    
     /**
      * Always returns FOREIGN_KEY.
      *
      * @return FOREIGN_KEY
      */
-    MetadataType GetType() const;
+    virtual MetadataType GetType() const;
+    
+    /**
+     * Return the Foreign Key ID.
+     *
+     * @return a string containing the Foreign Key ID.
+     */
+    std::string GetID() const;
+     
+    /**
+     * Return the Foreign Key ID.
+     *
+     * @return a string containing the Foreign Key ID.
+     */
+    std::string GetForeignKeyID() const;
+
+    /**
+     * Return the Parent Resource ID.
+     *
+     * @return a string containing the Parent Resource ID.
+     */
+    std::string GetParentResourceID() const;
+      
+    /**
+     * Return the Parent Class ID.
+     *
+     * @return a string containing the Parent Class ID.
+     */
+    std::string GetParentClassID() const;
+      
+    /**
+     * Return the Parent System Name.
+     *
+     * @return a string containing the Parent System Name.
+     */
+    std::string GetParentSystemName() const;
+     
+    /**
+     * Return the Child Resource ID.
+     *
+     * @return a string containing the Child Resource ID.
+     */
+    std::string GetChildResourceID() const;
+     
+    /**
+     * Return the Child Class ID.
+     * 
+     * @return a string containing the Child Class ID.
+     */
+    std::string GetChildClassID() const;
+     
+    /**
+     * Return the Child System Name.
+     *
+     * @return a string containing the Child System Name.
+     */
+    std::string GetChildSystemName() const;
+    
+    /**
+     * Return the Conditional Parent Field (RETS 1.7 and later)
+     *
+     * @return a string containing the Conditional Parent Field.
+     */
+    std::string GetConditionalParentField() const;
+    
+    /**
+     * Return the Conditional Parent Value (RETS 1.7 and later)
+     *
+     * @return a string containing the Conditional Parent Value.
+     */
+    std::string GetConditionalParentValue() const;
 };
 
 };

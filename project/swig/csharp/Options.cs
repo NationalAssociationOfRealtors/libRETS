@@ -17,6 +17,7 @@ public class Options
     private bool mDisableStreaming          = false;
     private bool mEnableCacheing            = false;
     private EncodingType mEncoding          = EncodingType.RETS_XML_DEFAULT_ENCODING;
+    private bool mFullMetadata              = false;
     private string mHttpLog                 = "";
     private string mLastModified            = "";
     private int mLimit                      = -1;
@@ -83,6 +84,16 @@ public class Options
         get { return mEnableCacheing; }
         set { mEnableCacheing = value; }
     }
+
+    /**
+     * Fetch metadata incrementally or at one time.
+     */
+    public bool full_metadata
+    {
+        get { return mFullMetadata; }
+        set { mFullMetadata = value; }
+    }
+
     /**
      * The default encoding for the XML parser.
      */
@@ -396,6 +407,12 @@ public class Options
                 case "--default-encoding":
                             encoding_string     = value;
                             break;
+                case "--full-metadata":
+                            if (value.ToLower() == "yes")
+                                full_metadata  = true;
+                            if (value.ToLower() == "no")
+                                full_metadata  = false;
+                            break;
                 case "--http-log":
                             try
                             {
@@ -515,6 +532,7 @@ public class Options
         Console.WriteLine("\t--enable-cache\t\tEnable caching in Streaming mode: \"yes\" or \"no\" (default \"no\")");
         Console.WriteLine("\t--timestamp\t\tSystemname of the Class TimeSTamp Field");
         Console.WriteLine("\t--lastmodified\t\tRETS timestamp of the earliest date from which to select.");
+        Console.WriteLine("\t--full-metadata\t\tFetch all metadata at one time: \"yes\" or \"no\" (default \"no\")");
     }
 
     /**

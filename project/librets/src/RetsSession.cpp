@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2009 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -357,7 +357,7 @@ std::string CLASS::MetadataTypeToString(MetadataElement::Type type)
         case MetadataElement::VALIDATION_EXPRESSION:
             return "METADATA-VALIDATION_EXPRESSION";
         case MetadataElement::FOREIGN_KEY:
-            return "METADATA-FOREIGN_KEY";
+            return "METADATA-FOREIGN_KEYS";
         default:
             throw RetsException(str_stream() << "Invalid metadata type: "
                                 << type);

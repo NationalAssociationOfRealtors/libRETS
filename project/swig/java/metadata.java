@@ -41,6 +41,7 @@ public class metadata
 
         RetsMetadata metadata = session.GetMetadata();
         dumpSystem(metadata);
+        dumpAllForeignKeys(metadata);
         dumpAllResources(metadata);
         
         LogoutResponse logout = session.Logout();
@@ -48,6 +49,22 @@ public class metadata
         System.out.println("Billing info: " + logout.GetBillingInfo());
         System.out.println("Logout Message:  " + logout.GetLogoutMessage());
         System.out.println("Connect time: " + logout.GetConnectTime());
+    }
+
+    static void dumpAllForeignKeys(RetsMetadata metadata)
+    {
+        MetadataForeignKeyList foreignKeys = metadata.GetAllForeignKeys();
+        for (int i = 0; i < foreignKeys.size(); i++)
+        {
+            MetadataForeignKey foreignKey = foreignKeys.get(i);
+            System.out.println ("Foreign Key ID: " + foreignKey.GetForeignKeyID());
+            System.out.print  ("  Parent Resource: " + foreignKey.GetParentResourceID());
+            System.out.print  (", Class: " + foreignKey.GetParentClassID());
+            System.out.println (", Name: " + foreignKey.GetParentSystemName());
+            System.out.print  ("  Child Resource: " + foreignKey.GetChildResourceID());
+            System.out.print  (", Class: " + foreignKey.GetChildClassID());
+            System.out.println (", Name: " + foreignKey.GetChildSystemName());
+        }
     }
 
     static void dumpAllClasses(RetsMetadata metadata, MetadataResource resource)

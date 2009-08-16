@@ -2,25 +2,36 @@ using System;
 using System.Collections;
 using librets;
 
-public class Search
+public class Metadata
 {
     static void Main(string[] args)
     {
-        RetsSession session = new RetsSession(
-            "http://demo.crt.realtors.org:6103/rets/login");
-        if ((args.Length == 1) && args[0].Equals("full"))
-        {
-            session.SetIncrementalMetadata(false);
-        }
+        Options options  = new Options();
+
+        if (!options.Parse(args))
+            Environment.Exit(1);
+
+        RetsSession session = options.SessionFactory();
+
+        session.SetIncrementalMetadata(options.full_metadata ? false : true);
         
-        if (!session.Login("Joe", "Schmoe"))
+        try 
         {
-            Console.WriteLine("Invalid login");
+            if (!session.Login(options.user_name, options.user_password))
+            {
+                Console.WriteLine("Invalid login");
+                Environment.Exit(1);
+            }
+        } 
+        catch (Exception e)
+        {
+            Console.WriteLine("RetsException: " + e);
             Environment.Exit(1);
         }
 
         RetsMetadata metadata = session.GetMetadata();
         dumpSystem(metadata);
+        dumpForeignKeys(metadata);
         dumpAllResources(metadata);
 
         session.Logout();
@@ -34,6 +45,22 @@ public class Search
         Console.WriteLine("Comment: " + system.GetComments());
     }
     
+    static void dumpForeignKeys(RetsMetadata metadata)
+    {
+        Console.WriteLine();
+        IEnumerable foreignKeys = metadata.GetAllForeignKeys();
+        foreach (MetadataForeignKey foreignKey in foreignKeys)
+        {
+            Console.WriteLine("Foreign Key ID: " + foreignKey.GetForeignKeyID());
+            Console.Write     ("  Parent Resource: " + foreignKey.GetParentResourceID());
+            Console.Write     (", Class: " + foreignKey.GetParentClassID());
+            Console.WriteLine (", Name: " + foreignKey.GetParentSystemName());
+            Console.Write     ("  Child Resource: " + foreignKey.GetChildResourceID());
+            Console.Write     (", Class: " + foreignKey.GetChildClassID());
+            Console.WriteLine (", Name: " + foreignKey.GetChildSystemName());
+        }
+    }
+
     static void dumpAllResources(RetsMetadata metadata)
     {
         Console.WriteLine();

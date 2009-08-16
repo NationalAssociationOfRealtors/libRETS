@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2009 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -56,6 +56,11 @@ typedef std::vector<MetadataLookupType *> MetadataLookupTypeList;
 
 /** A vector of MetadataObject objects. */
 typedef std::vector<MetadataObject *> MetadataObjectList;
+
+/** A vector of MetadataForeignKeys objects */
+typedef std::vector<MetadataForeignKey *> MetadataForeignKeyList;
+/** A smart pointer to MetadataForeignKeyList. */
+typedef boost::shared_ptr<MetadataForeignKeyList> MetadataForeignKeyListPtr;
 
 /**
  * RetsMetadata contains the API that is the main interface to
@@ -124,9 +129,16 @@ class RetsMetadata
     MetadataSystem * GetSystem() const;
 
     /**
+     * Retusn the foreign key metadata elements.
+     *
+     * @return All the foreign key metadata elements
+     */
+    MetadataForeignKeyList GetAllForeignKeys() const;
+    
+    /**
      * Returns all the resource metadata elements.
      *
-     * @return All the resource metadata elemens
+     * @return All the resource metadata elements
      */
     MetadataResourceList GetAllResources() const;
 

@@ -469,14 +469,16 @@ CSHARP_DEMO_EXE		= ${CSHARP_GETOBJECT_EXE}				\
 				${CSHARP_LOGGING_EXE}				\
 				${CSHARP_LOGIN_EXE}				\
 				${CSHARP_RAWSEARCH_EXE}				\
-				${CSHARP_SEARCH_EXE}
+				${CSHARP_SEARCH_EXE}                            \
+                                ${CSHARP_SQL2DMQL_EXE}
 CSHARP_DEMO_SRC		= ${CSHARP_GETOBJECT_SRC}				\
 				${CSHARP_INTERLEAVED_SRC}			\
 				${CSHARP_METADATA_SRC}				\
 				${CSHARP_LOGGING_SRC}				\
 				${CSHARP_LOGIN_SRC}				\
 				${CSHARP_RAWSEARCH_SRC}				\
-				${CSHARP_SEARCH_SRC}				
+				${CSHARP_SEARCH_SRC}				\
+                                ${CSHARP_SQL2DMQL_SRC}
 CSHARP_DIR		= ${SWIG_DIR}/csharp
 CSHARP_GENERATED_SRC	= ${wildcard ${CSHARP_OBJ_DIR}/*.cs}
 CSHARP_GETOBJECT_EXE	= ${CSHARP_OBJ_DIR}/GetObject.exe
@@ -498,7 +500,7 @@ CSHARP_MANAGED_SRC	= ${CSHARP_GENERATED_SRC}		 		\
 				${CSHARP_DIR}/RetsHttpExceptionNative.cs
 
 CSHARP_METADATA_EXE	= ${CSHARP_OBJ_DIR}/Metadata.exe
-CSHARP_METADATA_SRC	= ${CSHARP_DIR}/Metadata.cs
+CSHARP_METADATA_SRC	= ${CSHARP_DIR}/Metadata.cs ${CSHARP_DIR}/Options.cs
 CSHARP_OBJ_DIR		= ${SWIG_OBJ_DIR}/csharp
 CSHARP_RAWSEARCH_EXE	= ${CSHARP_OBJ_DIR}/RawSearch.exe
 CSHARP_RAWSEARCH_SRC	= ${CSHARP_DIR}/RawSearch.cs ${CSHARP_DIR}/Options.cs

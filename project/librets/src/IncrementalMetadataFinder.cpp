@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2009 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -17,6 +17,7 @@
 
 #include "librets/IncrementalMetadataFinder.h"
 #include "librets/DefaultMetadataCollector.h"
+#include "librets/str_stream.h"
 
 using namespace librets;
 using std::string;
@@ -31,9 +32,7 @@ CLASS::CLASS(MetadataLoader * loader)
 
 string CLASS::KeyForCache(MetadataElement::Type type, string level) const
 {
-    string key;
-    key += type + " " + level;
-    return key;
+    return str_stream() << type << " " << level;
 }
 
 void CLASS::EnsureLevelIsLoaded(MetadataElement::Type type, string level) const

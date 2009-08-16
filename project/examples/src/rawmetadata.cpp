@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2009 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -28,6 +28,7 @@ using std::exception;
 namespace po = boost::program_options;
 
 void dumpSystem(RetsMetadata * metadata);
+void dumpAllForeignKeys(RetsMetadata * metadata);
 void dumpAllResources(RetsMetadata * metadata);
 void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource);
 void dumpAllTables(RetsMetadata * metadata, MetadataClass * aClass);
@@ -80,6 +81,7 @@ int main(int argc, char * argv[])
         RetsMetadata * metadata = RetsMetadata::CreateAndParse(inputStream, options.getEncoding());
         
         dumpSystem(metadata);
+        dumpAllForeignKeys(metadata);
         dumpAllResources(metadata);
 
     }
@@ -102,6 +104,25 @@ void dumpSystem(RetsMetadata * metadata)
     cout << "System ID: " << system->GetSystemID() << endl;
     cout << "System Description: " << system->GetSystemDescription() << endl;
     cout << "Comments: " << system->GetComments() << endl;
+}
+
+void dumpAllForeignKeys(RetsMetadata * metadata)
+{
+    MetadataForeignKeyList foreign_keys = metadata->GetAllForeignKeys();
+    MetadataForeignKeyList::iterator i;
+    cout << endl;
+    for (i = foreign_keys.begin(); i != foreign_keys.end(); i++)
+    {
+        MetadataForeignKey * foreign_key = *i;
+        
+        cout << "Foreign Key ID:" << foreign_key->GetForeignKeyID() << endl;
+        cout << "  Parent Resource: " << foreign_key->GetParentResourceID();
+        cout << ", Class: " << foreign_key->GetParentClassID();
+        cout << ", Name: " << foreign_key->GetParentSystemName() << endl;
+        cout << "  Child Resource: " << foreign_key->GetChildResourceID();
+        cout << ", Class: " << foreign_key->GetChildClassID();
+        cout << ", Name: " << foreign_key->GetChildSystemName() << endl;
+    }
 }
 
 void dumpAllResources(RetsMetadata * metadata)

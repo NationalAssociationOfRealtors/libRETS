@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2009 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -61,6 +61,15 @@ void CLASS::testFindByLevel()
     ASSERT_EQUAL(size_t(1), elements->size());
     element = elements->at(0);
     ASSERT_EQUAL(MetadataElement::SYSTEM, element->GetType());
+
+    elements = mCollector->FindByLevel(MetadataElement::FOREIGN_KEY, "");
+    ASSERT_EQUAL(size_t(2), elements->size());
+    element = elements->at(0);
+    ASSERT_EQUAL(MetadataElement::FOREIGN_KEY, element->GetType());
+    ASSERT_STRING_EQUAL ("Key1", element->GetStringAttribute("ForeignKeyID"));
+    element = elements->at(1);
+    ASSERT_EQUAL(MetadataElement::FOREIGN_KEY, element->GetType());
+    ASSERT_STRING_EQUAL ("Key2", element->GetStringAttribute("ForeignKeyID"));
 
     elements = mCollector->FindByLevel(MetadataElement::TABLE, "Property:RES");
     ASSERT_EQUAL(size_t(2), elements->size());

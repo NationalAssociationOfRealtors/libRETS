@@ -897,6 +897,24 @@ class MetadataSystem : public MetadataElement
     MetadataType GetType() const;
 };
 
+class MetadataForeignKey : public MetadataElement
+{
+  public:
+    std::string GetId() const;
+    std::string GetForeignKeyID() const;
+    std::string GetParentResourceID() const;
+    std::string GetParentClassID() const;
+    std::string GetParentSystemName() const;
+    std::string GetChildResourceID() const;
+    std::string GetChildClassID() const;
+    std::string GetChildSystemName() const;
+    std::string GetConditionalParentField() const;
+    std::string GetConditionalParentValue() const;
+};
+
+typedef std::vector<MetadataForeignKey *> MetadataForeignKeyList;
+%template(MetadataForeignKeyList) std::vector<MetadataForeignKey *>;
+
 class MetadataResource : public MetadataElement
 {
   public:
@@ -1067,6 +1085,8 @@ class RetsMetadata
 {
   public:
     MetadataSystem * GetSystem() const;
+
+    MetadataForeignKeyList GetAllForeignKeys() const;
 
     MetadataResourceList GetAllResources() const;
     MetadataResource * GetResource(std::string resourceName) const;

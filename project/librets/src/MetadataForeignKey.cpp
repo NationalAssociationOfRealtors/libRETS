@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2009 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -22,7 +22,62 @@ using std::string;
 
 #define CLASS MetadataForeignKey
 
+MetadataForeignKey::~MetadataForeignKey()
+{
+}
+
 MetadataElement::MetadataType CLASS::GetType() const
 {
     return FOREIGN_KEY;
 }
+
+string CLASS::GetID() const
+{
+    return GetForeignKeyID();
+}
+
+string CLASS::GetForeignKeyID() const
+{
+    return GetStringAttribute("ForeignKeyID");
+}
+
+string CLASS::GetParentResourceID() const
+{
+    return GetStringAttribute("ParentResourceID");
+}
+
+string CLASS::GetParentClassID() const
+{
+    return GetStringAttribute("ParentClassID");
+}
+
+string CLASS::GetParentSystemName() const
+{
+    return GetStringAttribute("ParentSystemName");
+}
+
+string CLASS::GetChildResourceID() const
+{
+    return GetStringAttribute("ChildResourceID");
+}
+
+string CLASS::GetChildClassID() const
+{
+    return GetStringAttribute("ChildClassID");
+}
+
+string CLASS::GetChildSystemName() const
+{
+    return GetStringAttribute("ChildSystemName");
+}
+
+string CLASS::GetConditionalParentField() const
+{
+    return GetStringAttribute("ConditionalParentField");
+}
+
+string CLASS::GetConditionalParentValue() const
+{
+    return GetStringAttribute("ConditionalParentValue");
+}
+

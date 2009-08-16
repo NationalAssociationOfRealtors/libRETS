@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2009 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -25,11 +25,6 @@
 #include "librets/MetadataElement.h"
 
 namespace librets {
-
-/** A vector of MetadataForeignKey objects. */
-typedef std::vector<MetadataForeignKeyPtr> MetadataForeignKeyList;
-/** A smart pointer to MetadataForeignKeyList. */
-typedef boost::shared_ptr<MetadataForeignKeyList> MetadataForeignKeyListPtr;
 
 /**
  * MetadataSystem is an implementation of MetadataElement that
@@ -72,13 +67,6 @@ class MetadataSystem : public MetadataElement
      * @return A String containing the TimeZoneOffset.
      */
     std::string GetTimeZoneOffset() const;
-
-    /**
-     * Returns all the child foreign keys.
-     *
-     * @return All the child foreign keys
-     */
-    MetadataForeignKeyListPtr GetForeignKeys() const;
 };
 
 };

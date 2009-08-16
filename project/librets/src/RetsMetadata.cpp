@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2009 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -20,6 +20,7 @@
 #include "librets/RetsMetadata.h"
 #include "librets/DefaultMetadataCollector.h"
 #include "librets/MetadataFinder.h"
+#include "librets/MetadataForeignKey.h"
 #include "librets/MetadataSystem.h"
 #include "librets/MetadataResource.h"
 #include "librets/MetadataClass.h"
@@ -128,6 +129,12 @@ MetadataSystem * RetsMetadata::GetSystem() const
     return mSystem;
 }
 
+MetadataForeignKeyList RetsMetadata::GetAllForeignKeys() const
+{
+   FinderHelper<MetadataForeignKey> helper(mFinder);
+   return *helper.FindByLevel(MetadataElement::FOREIGN_KEY, "");
+}
+    
 MetadataResourceList RetsMetadata::GetAllResources() const
 {
     FinderHelper<MetadataResource> helper(mFinder);
