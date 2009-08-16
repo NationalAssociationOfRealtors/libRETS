@@ -900,7 +900,7 @@ class MetadataSystem : public MetadataElement
 class MetadataForeignKey : public MetadataElement
 {
   public:
-    std::string GetId() const;
+    std::string GetID() const;
     std::string GetForeignKeyID() const;
     std::string GetParentResourceID() const;
     std::string GetParentClassID() const;
@@ -910,6 +910,7 @@ class MetadataForeignKey : public MetadataElement
     std::string GetChildSystemName() const;
     std::string GetConditionalParentField() const;
     std::string GetConditionalParentValue() const;
+    MetadataType GetType() const;
 };
 
 typedef std::vector<MetadataForeignKey *> MetadataForeignKeyList;

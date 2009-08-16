@@ -10,6 +10,24 @@ function dump_system($metadata)
 
 }
 
+function dump_foreign_keys($metadata)
+{
+  $foreign_keys = $metadata->GetAllForeignKeys();
+
+  for ($i = 0; $i < $foreign_keys->size(); $i++)
+  {
+    $foreign_key = $foreign_keys->get($i);
+
+    print "Foreign Key ID: " . $foreign_key->GetForeignKeyID() . "\n";
+    print "  Parent Resource: " . $foreign_key->GetParentResourceID();
+    print ", Class: " . $foreign_key->GetParentClassID();
+    print ", Name: " . $foreign_key->GetParentSystemName() . "\n";
+    print "  Child Resource: " . $foreign_key->GetChildResourceID();
+    print ", Class: " . $foreign_key->GetChildClassID();
+    print ", Name: " . $foreign_key->GetChildSystemName() . "\n";
+  }
+}
+
 function dump_all_tables($metadata, $class)
 {
   $tables = $metadata->GetAllTables($class);
@@ -94,6 +112,8 @@ $session->SetRetsVersion(RETS_1_5);
 $metadata = $session->GetMetaData();
 
 dump_system($metadata);
+
+dump_foreign_keys($metadata);
 
 dump_all_resources($metadata);
 
