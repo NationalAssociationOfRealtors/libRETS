@@ -160,7 +160,7 @@ EOF
                 for php_prefix in $default_search_path
                 do
                     php_h="$php_prefix/php/main/php.h"
-                    zend_h="$php_prefix/php/zend/zend.h"
+                    zend_h="$php_prefix/php/Zend/zend.h"
                     AC_CHECK_FILE([$php_h], [my_php_h=$php_h])
                     AC_CHECK_FILE([$zend_h], [my_zend_h=$zend_h])
                     test -n "$my_php_h" && break
