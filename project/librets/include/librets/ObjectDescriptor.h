@@ -173,6 +173,20 @@ class ObjectDescriptor : public RetsObject
      */
     void SetRetsReplyText(std::string replyText);
     
+    /**
+     * Returns a boolean indicating whether or not the original
+     * object ID was an asterisk.
+     */
+    bool GetWildIndicator() const;
+    
+    /**
+     * Indicates that the Object ID was originally "*";
+     *
+     * @return A boolean indicating whether the original object
+     * id was an asterisk.
+     */
+    void SetWildIndicator(bool wild);
+    
   private:
     std::string mObjectKey;
     int mObjectId;
@@ -182,6 +196,7 @@ class ObjectDescriptor : public RetsObject
     istreamPtr mDataStream;
     int mRetsReplyCode;
     std::string mRetsReplyText;
+    bool mWildIndicator;
 };
     
 }

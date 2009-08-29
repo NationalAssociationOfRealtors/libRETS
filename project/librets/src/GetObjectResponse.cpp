@@ -155,13 +155,17 @@ void GetObjectResponse::ParseSinglePart(RetsHttpResponsePtr httpResponse)
         descriptor->SetObjectId(mDefaultObjectId);
     else
     {
+        descriptor->SetWildIndicator(objectId == "*");
         try
         {
             descriptor->SetObjectId(lexical_cast<int>(objectId));
         }
         catch (std::exception &e)
         {
-            descriptor->SetObjectId(mDefaultObjectId);
+            if (mDefaultsAreValid)
+                descriptor->SetObjectId(mDefaultObjectId);
+            else
+                descriptor->SetObjectId(0);
         }
     }
     
@@ -268,13 +272,17 @@ void GetObjectResponse::ParsePartStream(istreamPtr in,
         }
         else if (name_lower == "object-id")
         {
+            objectDescriptor->SetWildIndicator(value == "*");
             try
             {
                 objectDescriptor->SetObjectId(lexical_cast<int>(value));
             }
             catch (std::exception &e)
             {
-                objectDescriptor->SetObjectId(mDefaultObjectId);
+                if (mDefaultsAreValid)
+                    objectDescriptor->SetObjectId(mDefaultObjectId);
+                else
+                    objectDescriptor->SetObjectId(0);
             }
         }
         else if (name_lower == "location")

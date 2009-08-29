@@ -39,6 +39,7 @@ ObjectDescriptor::ObjectDescriptor()
     mContentType = "";
     mRetsReplyCode = 0;
     mRetsReplyText = "";
+    mWildIndicator = false;
 }
 
 string ObjectDescriptor::GetObjectKey() const
@@ -128,4 +129,14 @@ void ObjectDescriptor::SetRetsReplyText(std::string replyText)
     mRetsReplyText = "";
     if (replyText.length())
         mRetsReplyText = replyText;
+}
+
+bool ObjectDescriptor::GetWildIndicator() const
+{
+    return mWildIndicator;
+}
+
+void ObjectDescriptor::SetWildIndicator(bool wild)
+{
+    mWildIndicator = wild;
 }

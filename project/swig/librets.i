@@ -762,6 +762,8 @@ class ObjectDescriptor
 
     std::string GetRetsReplyText() const;
 
+    bool GetWildIndicator() const;
+
 #if defined(SWIGRUBY) || defined(SWIGPYTHON) || defined(SWIGPHP) || defined(SWIGPERL)
     %extend {
         std::string GetDataAsString()

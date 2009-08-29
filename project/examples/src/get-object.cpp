@@ -118,7 +118,10 @@ int main(int argc, char * argv[])
             string description = objectDescriptor->GetDescription();
             string location = objectDescriptor->GetLocationUrl();
             
-            cout << objectKey << " object #" << objectId;
+            if (objectDescriptor->GetWildIndicator())
+                cout << objectKey << " object #: *";
+            else
+                cout << objectKey << " object #" << objectId;
             if (!description.empty())
                 cout << ", description: " << description;
             if (!location.empty())
