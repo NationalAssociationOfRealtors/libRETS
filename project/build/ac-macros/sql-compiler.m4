@@ -13,9 +13,14 @@ AC_DEFUN([MY_CHECK_SQL_COMPILER], [
     USE_SQL_COMPILER=
     if test "$my_enable_sql_compiler"  = "yes"; then
       MY_TEST_ANTLR
-      if test "x$ANTLR_LIBS" != "x"; then
-        USE_SQL_COMPILER=1
-        my_use_sql_compiler=yes
+      if test "x$ANTLR" != "x"; then
+        if test "x$ANTLR_LIBS" != "x"; then
+          USE_SQL_COMPILER=1
+          my_use_sql_compiler=yes
+        else
+          AC_MSG_WARN([*** Optional SQL compiler requires ANTLR ***])
+          AC_MSG_WARN([***  Not compiling SQL compiler ***])
+        fi
       else
         AC_MSG_WARN([*** Optional SQL compiler requires ANTLR ***])
         AC_MSG_WARN([***  Not compiling SQL compiler ***])
