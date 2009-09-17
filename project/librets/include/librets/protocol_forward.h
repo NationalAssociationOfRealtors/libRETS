@@ -81,6 +81,17 @@ class ServerInformationResponse;
 typedef boost::shared_ptr<ServerInformationResponse> ServerInformationResponsePtr;
 typedef std::auto_ptr<ServerInformationResponse> ServerInformationResponseAPtr;
 
+class UpdateRequest;
+/** Smart pointer to UpdateRequest. */
+typedef boost::shared_ptr<UpdateRequest> UpdateRequestPtr;
+typedef std::auto_ptr<UpdateRequest> UpdateRequestAPtr;
+
+class UpdateResponse;
+/** Smart pointer to UpdateResponse. */
+typedef boost::shared_ptr<UpdateResponse> UpdateResponsePtr;
+typedef std::auto_ptr<UpdateResponse> UpdateResponseAPtr;
+
+
 };
 /// @endcond
 #endif

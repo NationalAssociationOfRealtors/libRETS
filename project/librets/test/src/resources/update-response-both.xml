@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<RETS ReplyCode="0" ReplyText="Operation Successful">
+<DELIMITER value="09"/>
+<COLUMNS>	ListingID	ListPrice	City	ListDate	</COLUMNS>
+<DATA>	LN000005	250000	Chicago	2004-07-04	</DATA>
+<ERRORBLOCK>
+<ERRORDATA>	ListPrice	10101	0	Are you kidding me?	</ERRORDATA>
+<ERRORDATA>	City	10102	1	Well, maybe.	</ERRORDATA>
+</ERRORBLOCK>
+<WARNINGBLOCK>
+<WARNINGDATA>	ListPrice	202020	0	Raise it.	2	</WARNINGDATA>
+<WARNINGDATA>	ListDate	405060	6	Change date.	0	</WARNINGDATA>
+</WARNINGBLOCK>
+</RETS>

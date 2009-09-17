@@ -87,6 +87,8 @@
 #include "librets/GetObjectRequest.h"
 #include "librets/GetObjectResponse.h"
 #include "librets/ObjectDescriptor.h"
+#include "librets/UpdateRequest.h"
+#include "librets/UpdateResponse.h"
 
 #include "librets/RetsMetadata.h"
 #include "librets/MetadataElement.h"

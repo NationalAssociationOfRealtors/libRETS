@@ -619,6 +619,105 @@ typedef std::auto_ptr<SearchResultSet> SearchResultSetAPtr;
 %template(SearchResultSetAPtr) std::auto_ptr<SearchResultSet>;
 #endif
 
+SWIG_AUTO_PTR_RELEASE(SearchRequest);
+SWIG_AUTO_PTR_RELEASE(SearchResultSet);
+
+class UpdateRequest 
+{
+  public:
+    UpdateRequest(std::string resourceName, std::string className);
+    
+    std::string GetDelimiter();
+    
+    void SetDelimiter(std::string delimiter);
+    
+    StringVector GetAllFields();
+    
+    std::string GetField(std::string key);
+    
+    void SetField(std::string key, std::string value);
+    
+    static const int UPDATE_OK = 0;
+    static const int AUTO_POPULATE = 1;
+    static const int VALIDATE_ONLY = 2;
+
+    std::string GetUpdateType();
+    
+    void SetUpdateType(std::string updateType);
+    
+    int GetValidateFlag();
+    
+    void SetValidateFlag(int flag);
+    
+    const StringVector GetAllWarnings();
+    
+    std::string GetWarningResponse(int warningNumber);
+
+    std::string GetWarningResponse(std::string warningNumber);
+    
+    void SetWarningResponse(int warningNumber, std::string userResponse);
+    
+    void SetWarningResponse(std::string warningNumber, std::string userResponse);
+};
+typedef std::auto_ptr<UpdateRequest> UpdateRequestAPtr;
+#ifndef SWIGPHP
+%template(UpdateRequestAPtr) std::auto_ptr<UpdateRequest>;
+#endif
+
+class UpdateResponse 
+{
+  public:
+    UpdateResponse();
+
+    virtual ~UpdateResponse();
+
+    StringVector GetColumns();
+  
+    EncodingType GetEncoding();
+    
+    std::string GetErrorFieldName();
+    
+    int GetErrorNumber();
+    
+    int GetErrorOffset();
+    
+    std::string GetErrorText();
+    
+    int GetReplyCode();
+    
+    std::string GetReplyText();
+        
+    std::string GetString(int columnIndex);
+
+    std::string GetString(std::string columnName);
+
+    std::string GetWarningFieldName();
+    
+    int GetWarningNumber();
+    
+    int GetWarningOffset();
+    
+    int GetWarningResponseRequired();
+    
+    std::string GetWarningText();
+    
+    bool HasNext();
+    
+    bool HasNextError();
+
+    bool HasNextWarning();
+    
+    void SetEncoding(EncodingType encoding);
+};
+
+typedef std::auto_ptr<UpdateResponse> UpdateResponseAPtr;
+#ifndef SWIGPHP
+%template(UpdateResponseAPtr) std::auto_ptr<UpdateResponse>;
+#endif
+
+SWIG_AUTO_PTR_RELEASE(UpdateRequest);
+SWIG_AUTO_PTR_RELEASE(UpdateResponse);
+
 class LogoutResponse
 {
   public:
@@ -631,8 +730,6 @@ typedef std::auto_ptr<LogoutResponse> LogoutResponseAPtr;
 %template(LogoutResponseAPtr) std::auto_ptr<LogoutResponse>;
 #endif
 
-SWIG_AUTO_PTR_RELEASE(SearchRequest);
-SWIG_AUTO_PTR_RELEASE(SearchResultSet);
 SWIG_AUTO_PTR_RELEASE(LogoutResponse);
 
 /****************************************************************************
@@ -1827,6 +1924,20 @@ class RetsSession
                                         RetsReplyException,
                                         RetsException,
                                         std::exception);
+
+    UpdateRequestAPtr CreateUpdateRequest(std::string resourceName, 
+                                          std::string className)
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
+    
+    UpdateResponseAPtr Update(UpdateRequest * request)
+                                  throw(RetsHttpException, 
+                                        RetsReplyException,
+                                        RetsException,
+                                        std::exception);
+
 };
 
 /* Local Variables: */

@@ -104,10 +104,15 @@ CLASS::CLASS()
     AddMappings("METADATA-VALIDATION_EXPRESSION",
                 &CLASS::CreateValidationExpression,
                 VALIDATION_EXPRESSION_ATTRIBUTES);
+    // Score one for the differences between DTDs and the Specs.
     AddMappings("METADATA-FOREIGNKEYS", &CLASS::CreateForeignKey,
                 FOREIGN_KEY_ATTRIBUTES);
     AddMappings("METADATA-FOREIGN_KEYS", &CLASS::CreateForeignKey,
                 FOREIGN_KEY_ATTRIBUTES);
+    AddMappings("METADATA-FOREIGNKEY", &CLASS::CreateForeignKey,
+                FOREIGN_KEY_ATTRIBUTES);
+    AddMappings("METADATA-FOREIGN_KEY", &CLASS::CreateForeignKey,
+                FOREIGN_KEY_ATTRIBUTES);    
 }
 
 void CLASS::AddMappings(string name, CreatorPointer creator,

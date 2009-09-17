@@ -44,10 +44,27 @@ string CLASS::GetVisibleName() const
 
 string CLASS::GetVersion() const
 {
-    return GetStringAttribute("Version");
+    /*
+     * RETS 1.7.2 DTD shows "LookupTypeVersion", but the spec
+     * shows "Version". Check for both. This will also handle
+     * backwards compatibility with 1.5 servers.
+     */
+    string version = GetStringAttribute("LookupTypeVersion");
+    if (version.length() == 0)
+        version = GetStringAttribute("Version");
+    
+    return version;
 }
 
 string CLASS::GetDate() const
 {
-    return GetStringAttribute("Date");
+    /*
+     * RETS 1.7.2 DTD shows "LookupTypeDate", but the spec
+     * shows "Date". Check for both.
+     */    
+    string date = GetStringAttribute("LookupTypeDate");
+    if (date.length() == 0)
+        date = GetStringAttribute("Date");
+    
+    return date;
 }

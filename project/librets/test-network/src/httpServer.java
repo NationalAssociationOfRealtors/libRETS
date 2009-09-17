@@ -22,15 +22,30 @@ public class httpServer
         int port                = options.getPort();
         boolean verbose         = options.getVerbose();
 
-	ServerSocketFactory socketFactory;
-        ServerSocket server_socket;
+        ServerSocketFactory     socketFactory;
+        ServerSocket            server_socket;
+
+        if (verbose)
+        {
+            try
+            {
+                FileInputStream fis = new FileInputStream(options.getResourcePath() + "/" + options.getProperties());
+                Properties properties = new Properties();
+                properties.load(fis);
+                System.out.println("Properties:");
+                for (Enumeration e = properties.propertyNames(); e.hasMoreElements() ;) 
+                    System.out.println(e.nextElement()); 
+                System.out.println();
+             }
+             catch (Exception e) {};
+        }
 
         try {
            
-	   if (options.getSSL())
-	   	socketFactory	= SSLServerSocketFactory.getDefault();
-	   else
-	   	socketFactory	= ServerSocketFactory.getDefault();
+            if (options.getSSL())
+                socketFactory    = SSLServerSocketFactory.getDefault();
+            else
+                socketFactory    = ServerSocketFactory.getDefault();
 
            //print out the port number for user
             server_socket = socketFactory.createServerSocket(port);
@@ -208,17 +223,20 @@ class httpRequestHandler implements Runnable
                         else
                         {
                             String statusLine = "HTTP/1.0 404 Not Found" + CRLF ;
-                            String contentTypeLine = "text/html" ;
-                            String entityBody = "<HTML>" +
-                                    "<HEAD><TITLE>404 Not Found</TITLE></HEAD>" +
-                                    "<BODY>404 Not Found"
-                                    + "<br>usage:http://localhost:6103/"
-                                    + fileName + "</BODY></HTML>" ;
+                            String contentTypeLine = "Content-Type: text/xml" + CRLF;
+                            String entityBody = "<RETS ReplyCode=\"10000\" " +
+                                        "ReplyText=\"" +
+                                        "Unable to locate playback file for: " +
+                                        URLEncoder.encode(theLine, "UTF-8") +
+                                        "\"/>" + CRLF;
+                            String sContentLength = "Content-Length: " + entityBody.length() + CRLF;
                             // Send the status line.
                             output.write(statusLine.getBytes());
 
                             // Send the content type line.
                             output.write(contentTypeLine.getBytes());
+
+                            output.write(sContentLength.getBytes());
 
                             // Send a blank line to indicate the end of the header lines.
                             output.write(CRLF.getBytes());

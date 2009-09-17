@@ -88,6 +88,32 @@ module Librets_native
       end
     end
   end
+
+  class UpdateRequest
+    include RubifyHelper
+  end
+
+  class UpdateResponse
+    include RubifyHelper
+
+    def each
+      while self.HasNext()
+        yield self
+      end
+    end
+
+    def each_error
+      while self.HasNextError()
+        yield self
+      end
+    end
+
+    def each_warning
+      while self.HasNextWarning()
+        yield self
+      end
+    end
+  end
   
   class RetsMetadata
     include RubifyHelper

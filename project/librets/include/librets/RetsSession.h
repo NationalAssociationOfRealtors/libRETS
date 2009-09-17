@@ -444,6 +444,24 @@ class RetsSession : public MetadataLoader
     static std::string GetLibraryVersion();
     
     /**
+     * Create a new update equest.
+     *
+     * @param resourceName RETS resource name
+     * @param className RETS class name
+     */
+    UpdateRequestAPtr CreateUpdateRequest(std::string resourceName, 
+                                          std::string className);
+    
+    /**
+     * Performs an update on the server.
+     *
+     * @param request search request parameters
+     * @return Search result set
+     * @throws RetsException if an error occurs.
+     */
+    UpdateResponseAPtr Update(UpdateRequest * request);
+
+    /**
      * Mode flags for the current session.
      * MODE_CACHE is used in streaming mode to enable the row cache.
      * MODE_NO_STREAM will disable the streaming mode.

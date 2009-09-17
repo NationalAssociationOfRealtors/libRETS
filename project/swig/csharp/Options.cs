@@ -37,8 +37,11 @@ public class Options
     private string mUA                      = "librets/" + RetsSession.GetLibraryVersion();
     private UserAgentAuthType mUAAuth       = UserAgentAuthType.USER_AGENT_AUTH_RETS_1_7;
     private string mUAPass                  = "";
+    private string mUpdateRecord            = "CloseDate=2009-08-20T00:00:00,ListingID=LN000005";
+    private string mUpdateType              = "Change";
     private string mUrl                     = "http://demo.crt.realtors.org:6103/rets/login";
     private string mUser                    = "Joe";
+    private int mValidationCode             = 2;
 
     /**
      * The broker code.
@@ -228,6 +231,24 @@ public class Options
     }
 
     /**
+     * The proxy Url.
+     */
+    public string proxy_url
+    {
+        get { return mProxyUrl; }
+        set { mProxyUrl = value; }
+    }
+
+    /**
+     * The proxy password.
+     */
+    public string proxy_password
+    {
+        get { return mProxyPassword; }
+        set { mProxyPassword = value; }
+    }
+
+    /**
      * The search QUERY string.
      */
     public string query
@@ -316,6 +337,42 @@ public class Options
     }
 
     /**
+     * The update CLASS.
+     */
+    public string update_class
+    {
+        get {return mSearchClass; }
+        set {mSearchClass = value; }
+    }
+
+    /**
+     * The update record.
+     */
+    public string update_record
+    {
+        get {return mUpdateRecord; }
+        set {mUpdateRecord = value; }
+    }
+
+    /**
+     * The update RESOURCE.
+     */
+    public string update_resource
+    {
+        get {return mSearchType; }
+        set {mSearchType = value; }
+    }
+
+    /**
+     * The update type for the UPDATE transaction.
+     */
+    public string update_type
+    {
+        get { return mUpdateType; }
+        set { mUpdateType = value; }
+    }
+
+    /**
      * The User-Agent.
      */
     public string user_agent
@@ -343,22 +400,13 @@ public class Options
     }
 
     /**
-     * The proxy Url.
+     * The validation code.
      */
-    public string proxy_url
-    {
-        get { return mProxyUrl; }
-        set { mProxyUrl = value; }
-    }
-
-    /**
-     * The proxy password.
-     */
-    public string proxy_password
-    {
-        get { return mProxyPassword; }
-        set { mProxyPassword = value; }
-    }
+     public int validation_code
+     {
+         get { return mValidationCode; }
+         set { mValidationCode = value; }
+     }
 
     /**
      * A very simple parsing method to pull apart the arguments.
@@ -463,6 +511,9 @@ public class Options
                 case "--query":
                             query               = value;
                             break;
+                case "--record":
+                            update_record       = value;
+                            break;
                 case "--resource":
                             search_type         = value;
                             break;
@@ -481,6 +532,9 @@ public class Options
                 case "--timestamp":
                             classTimeStamp      = value;
                             break;
+                case "--update-type":
+                            update_type         = value;
+                            break;
                 case "--url":
                             login_url           = value;
                             break;
@@ -492,6 +546,13 @@ public class Options
                             break;
                 case "--ua-password":
                             ua_password         = value;
+                            break;
+                case "--validation_code":
+                            {
+                                int result = int.Parse(value);
+                                if (result == 0 || result == 1 || result == 2)
+                                    validation_code = result;
+                            }
                             break;
                 default:
                             ret_val             = false;
@@ -517,8 +578,8 @@ public class Options
         Console.WriteLine("\t--rets_version\t\tRETS Version");
         Console.WriteLine("\t--broker-code\t\tBroker Code");
         Console.WriteLine("\t--metadata-timestamp\tMetadata Timestamp");
-        Console.WriteLine("\t--resource\t\tSearch resource");
-        Console.WriteLine("\t--class\t\t\tSearch class");
+        Console.WriteLine("\t--resource\t\tSearch or Update resource");
+        Console.WriteLine("\t--class\t\t\tSearch or Update class");
         Console.WriteLine("\t--select\t\tSearch select");
         Console.WriteLine("\t--query\t\t\tSearch query");
         Console.WriteLine("\t--standard-names\tUse standard-names: \"yes\" or \"no\" (default \"no\")");
@@ -533,6 +594,9 @@ public class Options
         Console.WriteLine("\t--timestamp\t\tSystemname of the Class TimeSTamp Field");
         Console.WriteLine("\t--lastmodified\t\tRETS timestamp of the earliest date from which to select.");
         Console.WriteLine("\t--full-metadata\t\tFetch all metadata at one time: \"yes\" or \"no\" (default \"no\")");
+        Console.WriteLine("\t--record\t\tRecord for Update Transaction");
+        Console.WriteLine("\t--update-type\tThe Update Type");
+        Console.WriteLine("\t--validation-codee\tThe Update Validation Code (0,1,2), default: 2");
     }
 
     /**

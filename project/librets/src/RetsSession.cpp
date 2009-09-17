@@ -796,3 +796,36 @@ string CLASS::GetLibraryVersion()
 {
     return LIBRETS_VERSION;
 }
+
+UpdateRequestAPtr CLASS::CreateUpdateRequest(string resourceName,
+                                             string className)
+{
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
+    std::auto_ptr<UpdateRequest> updateRequest(
+        new UpdateRequest(resourceName, className));
+    return updateRequest;
+}
+
+UpdateResponseAPtr CLASS::Update(UpdateRequest * request)
+{
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+        
+    string updateUrl = mCapabilityUrls->GetUpdateUrl();
+    request->SetUrl(updateUrl);
+    request->SetMethod(RetsHttpRequest::POST);
+    request->ConstructRequest();
+    /*
+     * Start the transaction.
+     */
+    RetsHttpResponsePtr httpResponse = DoRequest(request);
+
+    UpdateResponseAPtr result(new UpdateResponse());
+    result->SetEncoding(mEncoding);
+    result->SetInputStream(httpResponse->GetInputStream());
+    
+    return result;
+}
+
