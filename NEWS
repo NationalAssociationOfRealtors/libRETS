@@ -8,6 +8,8 @@ Version 1.3.4 - xx xxx 2009
   * Correct case on Zend/zend.h in configure. Ticket #116.
   * Add SetWildIndicator and GetWildIndicator to ObjectDescriptor.
     Ticket #118.
+  * Expose ObjectDescriptor::GetRetsReplyCode and GetRetsReplyText
+    to SWIG languages. Ticket #119.
   * Detect antlr libraries only if the antlr program eixsts.
     Ticket #120.
 

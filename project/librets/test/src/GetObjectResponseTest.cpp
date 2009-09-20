@@ -231,7 +231,8 @@ void CLASS::testNoObjectFound()
     response.SetDefaultObjectKeyAndId("foo", 5);
     response.Parse(httpResponse);
     ObjectDescriptor * objectDescriptor = response.NextObject();
-    CPPUNIT_ASSERT(!objectDescriptor);
+    CPPUNIT_ASSERT(objectDescriptor);
+    ASSERT_EQUAL(20403, objectDescriptor->GetRetsReplyCode());
 }
 
 void CLASS::testNoObjectFoundFromVariman()
@@ -242,7 +243,8 @@ void CLASS::testNoObjectFoundFromVariman()
     response.SetDefaultObjectKeyAndId("foo", 5);
     response.Parse(httpResponse);
     ObjectDescriptor * objectDescriptor = response.NextObject();
-    CPPUNIT_ASSERT(!objectDescriptor);
+    CPPUNIT_ASSERT(objectDescriptor);
+    ASSERT_EQUAL(20403, objectDescriptor->GetRetsReplyCode());
 }
 
 void CLASS::testMultiPartLocation()

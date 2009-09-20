@@ -111,11 +111,25 @@ void GetObjectResponse::Parse(RetsHttpResponsePtr httpResponse,
         message << httpResponse->GetResponseCode();
         LIBRETS_THROW(RetsHttpException, (httpResponse->GetResponseCode(), message.str()));
     }
-    string contentType = httpResponse->GetContentType();
+
+    string contentType(ba::to_lower_copy(httpResponse->GetContentType()));
+
     if (ba::starts_with(contentType, "text/xml"))
     {
         // Assume no object found, so do nothing.
         // Todo: check RETS reply code.
+        ObjectDescriptorPtr objectDescriptor(new ObjectDescriptor());
+        istreamPtr in = httpResponse->GetInputStream();
+        ios::pos_type current = in->tellg();
+        ParseXmlResponse(in, objectDescriptor);
+        in->clear();
+        in->seekg(current);        
+        
+        objectDescriptor->SetContentType(httpResponse->GetContentType());
+        objectDescriptor->SetDescription(httpResponse->GetHeader("Content-Description"));
+        objectDescriptor->SetLocationUrl(httpResponse->GetHeader("Location"));
+        objectDescriptor->SetDataStream(in);
+        mObjects.push_back(objectDescriptor);
     }
     else if (ba::starts_with(contentType, "multipart/parallel"))
     {
