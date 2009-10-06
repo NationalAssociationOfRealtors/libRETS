@@ -483,6 +483,8 @@ class SearchRequest
     // child of that language, so this should work.  Until we need to,
     // we won't expose RetsHttpRequest
     std::string GetQueryString() const;
+
+    void SetRestrictedIndicator(std::string restrictedIndicator);
 };
 typedef std::auto_ptr<SearchRequest> SearchRequestAPtr;
 #ifndef SWIGPHP

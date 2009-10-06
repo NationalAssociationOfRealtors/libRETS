@@ -121,6 +121,7 @@ int main(int argc, char * argv[])
         searchRequest->SetOffset(offset);
         searchRequest->SetCountType(count);
         searchRequest->SetFormatType(format);
+        searchRequest->SetRestrictedIndicator("####");
         
         SearchResultSetAPtr results = session->Search(searchRequest.get());
         if (printCount)

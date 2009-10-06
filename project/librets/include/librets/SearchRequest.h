@@ -170,6 +170,13 @@ class SearchRequest : public RetsHttpRequest
      */
     void SetFormatType(FormatType formatType);
     
+    /**
+      * Sets the restricted indicator.
+     *
+     * @param restrictedIndicator A string containing the restricted indicator.
+     */
+    void SetRestrictedIndicator(std::string restrictedIndicator);
+    
   private:
     static const char * FORMAT_PARAMETER;
     static const char * STANDARD_NAMES_PARAMETER;
@@ -181,6 +188,7 @@ class SearchRequest : public RetsHttpRequest
     static const char * SELECT_PARAMETER;
     static const char * LIMIT_PARAMETER;
     static const char * OFFSET_PARAMETER;
+    static const char * RESTRICTED_PARAMETER;
 };
 
 };

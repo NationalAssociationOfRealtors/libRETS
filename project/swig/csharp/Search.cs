@@ -42,6 +42,7 @@ public class Search
         searchRequest.SetOffset(options.offset);
         searchRequest.SetCountType(options.count);
         searchRequest.SetStandardNames(options.standard_names);
+        searchRequest.SetRestrictedIndicator("XXXX");
         SearchResultSet results = session.Search(searchRequest);
         
         Console.WriteLine("Record count: " + results.GetCount());

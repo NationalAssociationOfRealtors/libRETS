@@ -29,6 +29,7 @@ const char * SearchRequest::SELECT_PARAMETER = "Select";
 const char * SearchRequest::COUNT_PARAMETER = "Count";
 const char * SearchRequest::LIMIT_PARAMETER = "Limit";
 const char * SearchRequest::OFFSET_PARAMETER = "Offset";
+const char * SearchRequest::RESTRICTED_PARAMETER = "RestrictedIndicator";
 
 SearchRequest::SearchRequest(string searchType, string searchClass,
                              string query)
@@ -127,3 +128,9 @@ void SearchRequest::SetFormatType(FormatType formatType)
             break;
     }
 }
+
+void SearchRequest::SetRestrictedIndicator(std::string restrictedIndicator)
+{
+    SetQueryParameter(RESTRICTED_PARAMETER, restrictedIndicator);
+}
+
