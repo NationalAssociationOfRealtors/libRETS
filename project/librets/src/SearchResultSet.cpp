@@ -61,7 +61,7 @@ void SearchResultSet::FixCompactArray(StringVector & compactArray,
     if (compactArray.size() < 2)
     {
         ostringstream message;
-        message << "Unknown compact format: " << context << ": "
+        message << "Unknown COMPACT format: " << context << ": "
                 << Output(compactArray);
         throw RetsException(message.str());
     }
@@ -69,7 +69,7 @@ void SearchResultSet::FixCompactArray(StringVector & compactArray,
     if (!compactArray.front().empty())
     {
         ostringstream message;
-        message << "First element should be empty: " << context << ": "
+        message << "Invalid COMPACT format, missing initial tab:  " << context << ": "
                 << Output(compactArray);
         throw RetsException(message.str());
     }
@@ -79,7 +79,7 @@ void SearchResultSet::FixCompactArray(StringVector & compactArray,
     if (!compactArray.back().empty())
     {
         ostringstream message;
-        message << "Last element should be empty: " << context << ": "
+        message << "Invalid COMPACT format, missing final tab:  " << context << ": "
                 << Output(compactArray);
         throw RetsException(message.str());
     }

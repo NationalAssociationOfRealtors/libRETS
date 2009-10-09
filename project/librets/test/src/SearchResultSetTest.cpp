@@ -41,6 +41,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testMaxRows);
     CPPUNIT_TEST(testRetsStatus);
     CPPUNIT_TEST(testUTF8Response);
+    CPPUNIT_TEST(testInvalidCompactFormat);
     CPPUNIT_TEST_SUITE_END();
 
   protected:
@@ -56,6 +57,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testMaxRows();
     void testRetsStatus();
     void testUTF8Response();
+    void testInvalidCompactFormat();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -406,4 +408,48 @@ void CLASS::testUTF8Response()
     CPPUNIT_ASSERT(!resultSet.HasNext());
 }
 
+void CLASS::testInvalidCompactFormat()
+{
+    /*
+     * Test a response where the tab is missing after the first tag and
+     * before the data.
+     */
+    try
+    {
+        SearchResultSet resultSet;
+        resultSet.SetEncoding (RETS_XML_DEFAULT_ENCODING);
+        istreamPtr inputStream = getResource("search-response-no-leading-tab.xml");
+        resultSet.Parse(inputStream);
+
+        StringVector columns = resultSet.GetColumns();
+        CPPUNIT_FAIL("Expected exception in testInvalidCompactFormat, missing initial tab.");
+    }
+    catch (RetsException &e)
+    {
+        // This text must match what is thrown by FixCompactArray.
+        string errorText = "Invalid COMPACT format, missing initial tab";
+        ASSERT_STRING_EQUAL(errorText, e.GetMessage().substr(0,errorText.length()));
+    }
+    
+    /*
+     * Create a response where the tab is missing beforer the last tag.
+     */
+    try
+    {
+        SearchResultSet resultSet;
+        resultSet.SetEncoding (RETS_XML_DEFAULT_ENCODING);
+        istreamPtr inputStream = getResource("search-response-no-final-tab.xml");
+        resultSet.Parse(inputStream);
+
+        StringVector columns = resultSet.GetColumns();
+        CPPUNIT_FAIL("Expected exception in testInvalidCompactFormat, missing final tab.");
+    }
+    catch (RetsException &e)
+    {
+        // This text must match what is thrown by FixCompactArray.
+        string errorText = "Invalid COMPACT format, missing final tab";
+        ASSERT_STRING_EQUAL(errorText, e.GetMessage().substr(0,errorText.length()));
+    }
+    
+}
 

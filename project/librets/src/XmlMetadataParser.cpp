@@ -29,6 +29,7 @@
 #include "librets/MetadataElement.h"
 #include "librets/RetsException.h"
 #include "librets/RetsUnknownMetadataException.h"
+#include "librets/str_stream.h"
 #include "librets/util.h"
 
 using namespace librets;
@@ -173,6 +174,15 @@ void CLASS::HandleColumns()
     mXmlParser->AssertNextIsTextEvent("COLUMNS: ");
     string text = textEvent->GetText();
     ba::split(mColumns, text, ba::is_any_of("\t"));
+    // The first character should be the delimiter as well as the last.
+    if (text[0] != '\t')
+    {
+        throw RetsException(str_stream() << "Invalid COMPACT format, missing initial tab");
+    }
+    if (text[text.length() - 1]  != '\t')
+    {
+        throw RetsException(str_stream() << "Invalid COMPACT format, missing final tab");
+    }
     if (mColumns.size() < 2)
     {
         ostringstream message;
@@ -195,6 +205,16 @@ void CLASS::HandleData(RetsXmlStartElementEventPtr metadataEvent)
     RetsXmlTextEventPtr textEvent = mXmlParser->AssertTextEvent(event,
                                                                 "DATA: ");
     string text = textEvent->GetText();
+    // The first character should be the delimiter as well as the last.
+    if (text[0] != '\t')
+    {
+        throw RetsException(str_stream() << "Invalid COMPACT format, missing initial tab");
+    }
+    if (text[text.length() - 1]  != '\t')
+    {
+        throw RetsException(str_stream() << "Invalid COMPACT format, missing final tab");
+    }
+    
     StringVector data;
     ba::split(data, text, ba::is_any_of("\t"));
     if (mColumns.empty())

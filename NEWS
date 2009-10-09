@@ -2,6 +2,8 @@ Version 1.4.0 - xx xxx 2009
 
   * Bundle MSVCPxx.DLL with the Windows Ruby build.
   * Support the UPDATE transaction. Ticket #55.
+  * Throw exceptoin if missing leading or trailing tab
+    in COMPACT format. Ticket #89.
   * Handle malformed multi-part response if enabled.
     Ticket #112.
   * Add GetForeignKeys() to RetsMetadata. Ticket #115.
