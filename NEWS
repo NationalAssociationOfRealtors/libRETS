@@ -1,4 +1,4 @@
-Version 1.4.0 - xx xxx 2009
+Version 1.4.0 - 12 Oct 2009
 
   * Bundle MSVCPxx.DLL with the Windows Ruby build.
   * Support the UPDATE transaction. Ticket #55.
