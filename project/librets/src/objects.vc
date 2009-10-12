@@ -83,6 +83,8 @@ X_OBJS = \
 	$(DIROBJ)\ServerInfoRequest.obj \
 	$(DIROBJ)\ServerInfoResponse.obj \
 	$(DIROBJ)\StreamHttpLogger.obj \
+	$(DIROBJ)\UpdateRequest.obj \
+	$(DIROBJ)\UpdateResponse.obj \
 	$(DIROBJ)\Uri.obj \
 	$(DIROBJ)\UserAgentAuthCalculator.obj \
 	$(DIROBJ)\XmlMetadataElementFactory.obj \

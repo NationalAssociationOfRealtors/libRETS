@@ -23,6 +23,8 @@ GENERATED_SRC = \
 	lib\MetadataClass.cs \
 	lib\MetadataClassList.cs \
 	lib\MetadataElement.cs \
+	lib\MetadataForeignKey.cs \
+	lib\MetadataForeignKeyList.cs \
 	lib\MetadataLookup.cs \
 	lib\MetadataLookupList.cs \
 	lib\MetadataLookupType.cs \
@@ -55,6 +57,10 @@ GENERATED_SRC = \
 	lib\SqlToDmqlCompiler.cs \
 	lib\SqlToDmqlCompilerPtr.cs \
 	lib\StringVector.cs \
+	lib\UpdateRequest.cs \
+	lib\UpdateRequestAPtr.cs \
+	lib\UpdateResponse.cs \
+	lib\UpdateResponseAPtr.cs \
 	lib\UserAgentAuthType.cs \
 	lib\librets.cs \
 	lib\libretsPINVOKE.cs
