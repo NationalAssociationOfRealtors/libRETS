@@ -12,6 +12,8 @@ GENERATED_SRC = \
 	generated\MetadataClass.java \
 	generated\MetadataClassList.java \
 	generated\MetadataElement.java \
+	generated\MetadataForeignKey.java \
+	generated\MetadataForeignKeyList.java \
 	generated\MetadataLookup.java \
 	generated\MetadataLookupList.java \
 	generated\MetadataLookupType.java \
@@ -39,6 +41,10 @@ GENERATED_SRC = \
 	generated\SearchResultSet.java \
 	generated\SearchResultSetAPtr.java \
 	generated\StringVector.java \
+	generated\UpdateRequest.java \
+	generated\UpdateRequestAPtr.java \
+	generated\UpdateResponse.java \
+	generated\UpdateResponseAPtr.java \
 	generated\UserAgentAuthType.java \
 	generated\librets.java \
 	generated\libretsJNI.java
