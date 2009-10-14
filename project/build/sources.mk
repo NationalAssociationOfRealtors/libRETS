@@ -89,10 +89,12 @@ endif
 
 #####
 
+LIBRETS_A       = librets.a
 LIBRETS_SRC_DIR = $(top_srcdir)/project/librets/src
 LIBRETS_INC_DIR = $(top_srcdir)/project/librets/include
+LIBRETS_H       = librets.h
 LIBRETS_OBJ_DIR = build/librets/objects
-LIBRETS_LIB    = build/librets/lib/librets.a
+LIBRETS_LIB    = build/librets/lib/$(LIBRETS_A)
 LIBRETS_SRC_FILES := $(wildcard ${LIBRETS_SRC_DIR}/*.cpp)
 LIBRETS_OBJECTS := $(patsubst $(LIBRETS_SRC_DIR)/%.cpp, \
 	$(LIBRETS_OBJ_DIR)/%.o, $(LIBRETS_SRC_FILES))
@@ -110,7 +112,7 @@ endif
 
 #######
 
-LIBRETS_INC_FILE := ${LIBRETS_INC_DIR}/librets.h
+LIBRETS_INC_FILE := ${LIBRETS_INC_DIR}/$(LIBRETS_H)
 LIBRETS_INC_FILES := $(wildcard ${LIBRETS_INC_DIR}/librets/*.h)
 
 $(filter $(LIBRETS_OBJ_DIR)/%.o, $(LIBRETS_OBJECTS)): \

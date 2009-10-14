@@ -126,6 +126,12 @@ _install: _build ${SWIG_INSTALL}
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(bindir)"
 	$(INSTALL_PROGRAM) $(top_srcdir)/librets-config "$(DESTDIR)$(bindir)"
 
+_uninstall: 
+	$(RM) $(DESTDIR)$(libdir)/$(LIBRETS_A)
+	$(RM) $(DESTDIR)$(includedir)/$(LIBRETS_H)
+	$(RM) -r $(DESTDIR)$(includedir)/librets
+	$(RM) $(DESTDIR)$(bindir)/librets-config
+
 _clean:
 	$(RM) -r build dist
 

@@ -1,5 +1,7 @@
 Version 1.4.1 - xx xxx 2009
 
+  * Add "make uninstall" feature. Ticket #121.
+
 Version 1.4.0 - 12 Oct 2009
 
   * Bundle MSVCPxx.DLL with the Windows Ruby build.

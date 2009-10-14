@@ -85,6 +85,8 @@ build:
 	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _build
 install:
 	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _install
+uninstall:
+	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _uninstall
 test:
 	@$(MAKE) USE_DEPENDS=$(USE_DEPENDS_IN) _test
 
@@ -108,6 +110,7 @@ help:
 	@echo doc
 	@echo doc-api
 	@echo install
+	@echo uninstall
 	@echo test
 	@echo test-network
 	@echo test-ssl
