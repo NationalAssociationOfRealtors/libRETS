@@ -43,6 +43,7 @@ int main(int argc, char * argv[])
         SearchRequest::CountType count;
         string countString;
         bool printCount;
+        string restrictedIndicator;
 
         // GCC on FC3 for season does not like using
         // SearchRequest::LIMIT_DEFAULT in the default_value calls below.
@@ -70,6 +71,9 @@ int main(int argc, char * argv[])
             ("count,n", po::value<string>(&countString)
              ->default_value("yes"),
              "Set the count type: no, yes or count-only)")
+            ("restricted-indicator",po::value<string>(&restrictedIndicator)
+             ->default_value("xxxx"),
+             "Set the restricted indicator")
             ;
         if (!options.ParseCommandLine(argc, argv))
         {
@@ -121,7 +125,7 @@ int main(int argc, char * argv[])
         searchRequest->SetOffset(offset);
         searchRequest->SetCountType(count);
         searchRequest->SetFormatType(format);
-        searchRequest->SetRestrictedIndicator("####");
+        searchRequest->SetRestrictedIndicator(restrictedIndicator);
         
         SearchResultSetAPtr results = session->Search(searchRequest.get());
         if (printCount)

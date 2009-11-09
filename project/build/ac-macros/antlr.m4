@@ -40,7 +40,7 @@ AC_DEFUN([MY_TEST_ANTLR], [
         ], [
           AC_MSG_RESULT(yes)
           ANTLR_CFLAGS="-I$antlr_prefix/include"
-          ANTLR_LIBS=--"L$antlr_prefix/lib -lantlr"
+          ANTLR_LIBS="-L$antlr_prefix/lib -lantlr"
           break
         ], [
           AC_MSG_RESULT(no)
