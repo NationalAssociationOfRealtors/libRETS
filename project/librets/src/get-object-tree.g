@@ -131,6 +131,7 @@ criteria [GetObjectQueryPtr q]
     | #(AND criteria[q] criteria[q])
     | #(NOT criteria[q])
     | #(QUERY_ELEMENT n=field_name query_element[q, n])
+    | #(IN n=field_name in_list[q, n])
     ;
 
 query_element [GetObjectQueryPtr q, RefRetsAST n]
@@ -151,4 +152,10 @@ field_value returns [RefRetsAST value]
     | int1:INT  { value = int1; }
     | s:STRING  { value = s; }
     | q:QMARK   { value = q; }
+    ;
+
+in_list [GetObjectQueryPtr q, RefRetsAST n]
+    { RefRetsAST v; }
+    : v=field_value { handleEquals(q, n, v); }
+        (v=field_value { handleEquals(q, n, v); })*
     ;

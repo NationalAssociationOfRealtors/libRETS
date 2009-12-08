@@ -42,6 +42,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testCountWithObject);
     CPPUNIT_TEST(testNoWhere);
     CPPUNIT_TEST(testQuestionMark);
+    CPPUNIT_TEST(testObjectKeyIn);
     CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -57,6 +58,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testCountWithObject();
     void testNoWhere();
     void testQuestionMark();
+    void testObjectKeyIn();
     
     GetObjectQueryPtr sqlToGetObject(string sql);
     void assertInvalidSql(string sql,
@@ -225,5 +227,23 @@ void CLASS::testQuestionMark()
 
     StringVector objectKeys;
     objectKeys.push_back("?");
+    ASSERT_VECTOR_EQUAL(objectKeys, *query->GetObjectKeys());
+}
+
+void CLASS::testObjectKeyIn()
+{
+    GetObjectQueryPtr query = 
+    sqlToGetObject("select * "
+                   "  from object:location:Property "
+                   " where type = 'Photo' and object_key IN "
+                   "       ('LN1:1', 'LN1:2', 'LN2:1')");
+    ASSERT_STRING_EQUAL("Property", query->GetResource());
+    ASSERT_STRING_EQUAL("Photo", query->GetType());
+    ASSERT_EQUAL(true, query->GetUseLocation());
+
+    StringVector objectKeys;
+    objectKeys.push_back("LN1:1");
+    objectKeys.push_back("LN1:2");
+    objectKeys.push_back("LN2:1");
     ASSERT_VECTOR_EQUAL(objectKeys, *query->GetObjectKeys());
 }
