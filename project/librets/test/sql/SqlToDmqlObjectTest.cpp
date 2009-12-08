@@ -110,10 +110,11 @@ void CLASS::testGetAllObjects()
                        "       and object_key = 'LN1'");
     ASSERT_STRING_EQUAL("Property", query->GetResource());
     ASSERT_STRING_EQUAL("Photo", query->GetType());
-    ASSERT_STRING_EQUAL("LN1", query->GetObjectKey());
     ASSERT_EQUAL(true, query->GetUseLocation());
-    IntVector objectIds;
-    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
+
+    StringVector objectKeys;
+    objectKeys.push_back("LN1");
+    ASSERT_VECTOR_EQUAL(objectKeys, *query->GetObjectKeys());
 }
 
 void CLASS::testGetOneObject()
@@ -121,15 +122,14 @@ void CLASS::testGetOneObject()
     GetObjectQueryPtr query = 
     sqlToGetObject("select * "
                    "  from object:location:Property "
-                   " where type = 'Photo' and object_key = 'LN1'"
-                   "       and object_id = 1");
+                   " where type = 'Photo' and object_key = 'LN1:1'");
     ASSERT_STRING_EQUAL("Property", query->GetResource());
     ASSERT_STRING_EQUAL("Photo", query->GetType());
-    ASSERT_STRING_EQUAL("LN1", query->GetObjectKey());
     ASSERT_EQUAL(true, query->GetUseLocation());
-    IntVector objectIds;
-    objectIds.push_back(1);
-    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
+
+    StringVector objectKeys;
+    objectKeys.push_back("LN1:1");
+    ASSERT_VECTOR_EQUAL(objectKeys, *query->GetObjectKeys());
 }
 
 void CLASS::testGetTwoObjects()
@@ -137,16 +137,16 @@ void CLASS::testGetTwoObjects()
     GetObjectQueryPtr query = 
     sqlToGetObject("select * "
                    "  from object:location:Property "
-                   " where type = 'Photo' and object_key = 'LN1'"
-                   "       and object_id = 1 or object_id = 2");
+                   " where type = 'Photo' and object_key = 'LN1:1' or"
+                   "              object_key = 'LN1:2'");
     ASSERT_STRING_EQUAL("Property", query->GetResource());
     ASSERT_STRING_EQUAL("Photo", query->GetType());
-    ASSERT_STRING_EQUAL("LN1", query->GetObjectKey());
     ASSERT_EQUAL(true, query->GetUseLocation());
-    IntVector objectIds;
-    objectIds.push_back(1);
-    objectIds.push_back(2);
-    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
+
+    StringVector objectKeys;
+    objectKeys.push_back("LN1:1");
+    objectKeys.push_back("LN1:2");
+    ASSERT_VECTOR_EQUAL(objectKeys, *query->GetObjectKeys());
 }
 
 void CLASS::testGetUsingLocation()
@@ -158,10 +158,11 @@ void CLASS::testGetUsingLocation()
                        "       and object_key = 'LN1'");
     ASSERT_STRING_EQUAL("Property", query->GetResource());
     ASSERT_STRING_EQUAL("Photo", query->GetType());
-    ASSERT_STRING_EQUAL("LN1", query->GetObjectKey());
     ASSERT_EQUAL(true, query->GetUseLocation());
-    IntVector objectIds;
-    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
+
+    StringVector objectKeys;
+    objectKeys.push_back("LN1");
+    ASSERT_VECTOR_EQUAL(objectKeys, *query->GetObjectKeys());
 }    
 
 void CLASS::testGetUsingBinary()
@@ -173,10 +174,11 @@ void CLASS::testGetUsingBinary()
                        "       and object_key = 'LN1'");
     ASSERT_STRING_EQUAL("Property", query->GetResource());
     ASSERT_STRING_EQUAL("Photo", query->GetType());
-    ASSERT_STRING_EQUAL("LN1", query->GetObjectKey());
     ASSERT_EQUAL(false, query->GetUseLocation());
-    IntVector objectIds;
-    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
+
+    StringVector objectKeys;
+    objectKeys.push_back("LN1");
+    ASSERT_VECTOR_EQUAL(objectKeys, *query->GetObjectKeys());
 }
 
 void CLASS::testBadObjectTable()
@@ -205,10 +207,10 @@ void CLASS::testNoWhere()
 
     ASSERT_STRING_EQUAL("Property", query->GetResource());
     ASSERT_STRING_EQUAL("", query->GetType());
-    ASSERT_STRING_EQUAL("", query->GetObjectKey());
     ASSERT_EQUAL(false, query->GetUseLocation());
-    IntVector objectIds;
-    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
+
+    StringVector objectKeys;
+    ASSERT_VECTOR_EQUAL(objectKeys, *query->GetObjectKeys());
 }
 
 void CLASS::testQuestionMark()
@@ -216,18 +218,12 @@ void CLASS::testQuestionMark()
     GetObjectQueryPtr query = 
     sqlToGetObject("select * "
                    "  from object:location:Property "
-                   " where type = 'Photo' and object_key = ?"
-                   "       and object_id = ?");
+                   " where type = 'Photo' and object_key = ?");
     ASSERT_STRING_EQUAL("Property", query->GetResource());
     ASSERT_STRING_EQUAL("Photo", query->GetType());
-    ASSERT_STRING_EQUAL("?", query->GetObjectKey());
     ASSERT_EQUAL(true, query->GetUseLocation());
 
-    // For some reason doing the push_back directly on the value from
-    // GetObjectQuery is causing an issue.  Until I know why, I'll
-    // work around.
-    int value = GetObjectQuery::SUBSTITUTE_VALUE;
-    IntVector objectIds;
-    objectIds.push_back(value);
-    ASSERT_VECTOR_EQUAL(objectIds, *query->GetObjectIds());
+    StringVector objectKeys;
+    objectKeys.push_back("?");
+    ASSERT_VECTOR_EQUAL(objectKeys, *query->GetObjectKeys());
 }

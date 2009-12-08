@@ -74,15 +74,7 @@ void GetObjectTreeParser::handleEquals(
         query->SetType(value);
     }
     else if (name == "object_key") {
-        query->SetObjectKey(value);
-    }
-    else if (name == "object_id") {
-        if (value == "?") {
-            query->AddObjectId(GetObjectQuery::SUBSTITUTE_VALUE);
-        }
-        else {
-            query->AddObjectId(lexical_cast<int>(value));
-        }
+        query->AddObjectKey(value);
     }
     else {
         throwSemanticException("Invalid field: " + name, nameAst);

@@ -25,7 +25,7 @@ using std::ostream;
 
 GetObjectQuery::GetObjectQuery() : mUseLocation(true)
 {
-    mObjectIds.reset(new IntVector());
+    mObjectKeys.reset(new StringVector());
 }
 
 string GetObjectQuery::GetResource() const
@@ -48,29 +48,19 @@ void GetObjectQuery::SetType(string type)
     mType = type;
 }
 
-string GetObjectQuery::GetObjectKey() const
+StringVectorPtr GetObjectQuery::GetObjectKeys() const
 {
-    return mObjectKey;
+    return mObjectKeys;
 }
 
-void GetObjectQuery::SetObjectKey(string objectKey)
+StringVector * GetObjectQuery::GetObjectKeysPtr() const
 {
-    mObjectKey = objectKey;
+    return mObjectKeys.get();
 }
 
-IntVectorPtr GetObjectQuery::GetObjectIds() const
+void GetObjectQuery::AddObjectKey(string objectKey)
 {
-    return mObjectIds;
-}
-
-IntVector * GetObjectQuery::GetObjectIdsPtr() const
-{
-    return mObjectIds.get();
-}
-
-void GetObjectQuery::AddObjectId(int objectId)
-{
-    mObjectIds->push_back(objectId);
+    mObjectKeys->push_back(objectKey);
 }
 
 bool GetObjectQuery::GetUseLocation() const
@@ -86,5 +76,5 @@ void GetObjectQuery::SetUseLocation(bool useLocation)
 ostream & GetObjectQuery::Print(ostream & outputStream) const
 {
     return outputStream
-        << "Type <" << mType << ">, Object key <" << mObjectKey << ">";
+        << "Type <" << mType << ">, Object key <" << mObjectKeys << ">";
 }
