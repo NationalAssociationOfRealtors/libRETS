@@ -41,20 +41,16 @@ class GetObjectQuery : public RetsObject
     
     void SetType(std::string type);
     
-    std::string GetObjectKey() const;
+    StringVectorPtr GetObjectKeys() const;
     
-    void SetObjectKey(std::string objectKey);
+    void AddObjectKey(std::string objectKey);
     
-    IntVectorPtr GetObjectIds() const;
-
     /**
-     * Returns a pointer to the IntVector.  GetObjectQuery is
-     * responsiblity for cleaning up the object.
+     * Returns a pointer to the StringVector.  GetObjectQuery is
+     * responsible for cleaning up the object.
      */
-    IntVector * GetObjectIdsPtr() const;
+    StringVector * GetObjectKeysPtr() const;
     
-    void AddObjectId(int objectId);
-
     bool GetUseLocation() const;
 
     void SetUseLocation(bool useLocation);
@@ -69,9 +65,9 @@ class GetObjectQuery : public RetsObject
     
   private:
     IntVectorPtr mObjectIds;
+    StringVectorPtr mObjectKeys;
     std::string mResource;
     std::string mType;
-    std::string mObjectKey;
     bool mUseLocation;
 };
 
