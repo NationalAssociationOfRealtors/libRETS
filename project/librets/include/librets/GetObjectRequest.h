@@ -154,12 +154,14 @@ class GetObjectRequest : public RetsObject
      */
     void SetIgnoreMalformedHeaders(bool ignore);
 
+    /// @cond MAINTAINER
     /**
      * Returns if the GetObject parsing should ignore malformed headers.
      *
      * @return <code>true</code> if malformed headers will be ignored.
      */
     bool GetIgnoreMalformedHeaders() const;
+    /// @endcond
     
   private:
     typedef std::map<std::string, StringVectorPtr> ObjectList;

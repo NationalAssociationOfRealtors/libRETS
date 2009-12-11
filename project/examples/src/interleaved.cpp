@@ -202,7 +202,7 @@ int main(int argc, char * argv[])
                                                     << lastModified
                                                     << "+)");
 
-        //searchRequest->SetSelect(keyField);
+        searchRequest->SetSelect(keyField);
         /*
          * Must use system names for this search.
          */

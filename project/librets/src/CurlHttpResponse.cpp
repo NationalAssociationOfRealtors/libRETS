@@ -55,7 +55,7 @@ int CurlHttpResponse::GetResponseCode() const
      * Here we assume that if someone wants status, they want the request completed, so
      * complete it.
      */
-    while (mInProgress && mHttpClient->ContinueRequest());
+    while (mInProgress && mHttpClient->ContinueRequest() && (mResponseCode <= 0));
     
     /*
      * If the response code is still zero, the socket may have been closed or there is some error.
