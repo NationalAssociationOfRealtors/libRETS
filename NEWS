@@ -3,7 +3,9 @@ Version 1.4.1 - xx xxx 2009
   * Add "make uninstall" feature. Ticket #121.
   * Configure is using --L with ANTLR lib. Ticket #122.
   * Add configurable RestrictedIndicator with example
-    Search program. Ticket #133.
+    Search program. Ticket #123.
+  * Move GetObjectRequest::GetIgnoreMalformedHeaders
+    documentation to Maintainer mode. Ticket #126.
 
 Version 1.4.0 - 12 Oct 2009
 

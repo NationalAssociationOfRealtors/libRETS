@@ -237,9 +237,10 @@ void GetObjectResponse::ParseMultiPart(RetsHttpResponsePtr httpResponse,
             partEnd = content.find(closeDelimiter, partStart);
             if (partEnd == string::npos)
             {
-                LIBRETS_THROW(
-                    RetsException,
-                    ("Cound not find another delimiter: " + boundary));
+                if (!ignoreMalformedHeaders)
+                    LIBRETS_THROW(
+                        RetsException,
+                        ("Cound not find another delimiter: " + boundary));
             }
             done = true;
         }
