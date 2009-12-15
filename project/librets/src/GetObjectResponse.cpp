@@ -241,6 +241,14 @@ void GetObjectResponse::ParseMultiPart(RetsHttpResponsePtr httpResponse,
                     LIBRETS_THROW(
                         RetsException,
                         ("Cound not find another delimiter: " + boundary));
+                /*
+                 * See if we can find some semblance of a trailing boundary. If so
+                 * exclude it from the data. Otherwise, include everything up to the
+                 * end of the data stream.
+                 */
+                closeDelimiter = "--";
+                closeDelimiter.append(boundary);
+                partEnd = content.find(closeDelimiter, partStart);
             }
             done = true;
         }

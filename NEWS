@@ -6,6 +6,8 @@ Version 1.4.1 - xx xxx 2009
     Search program. Ticket #123.
   * Move GetObjectRequest::GetIgnoreMalformedHeaders
     documentation to Maintainer mode. Ticket #126.
+  * Add IgnoreMalformedHeaders processing to trailing
+    boundary handling as well. Ticket #127.
 
 Version 1.4.0 - 12 Oct 2009
 
