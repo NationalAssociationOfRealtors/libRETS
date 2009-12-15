@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
-AC_INIT([libRETS], [1.0], [librets@crt.realtors.org])
+AC_INIT([libRETS], [1.4], [librets@crt.realtors.org])
 
 dnl AC_LANG([C++])
 AC_CONFIG_SRCDIR([project/librets/include/librets.h])
@@ -141,6 +141,20 @@ if test "$my_use_pic" = "yes"; then
    LIBRETS_CFLAGS="$LIBRETS_CFLAGS -fPIC"
 fi
 
+OSNAME=`perl -e 'use Config; print $Config{osname};'`
+if test "$OSNAME" = "darwin"; then
+    AC_ARG_ENABLE(universal,
+              AC_HELP_STRING([--enable-universal],
+                             [Enable Universal objects (on OS X only)]),
+              test "X$enableval" == "Xyes" && my_enable_universal=yes,
+              my_enable_universal=no)
+
+    if test "$my_enable_universal" = "yes"; then
+        CFLAGS="$CFLAGS -arch i386 -arch x86_64 -arch ppc"
+        LIBREGS_CFLAGS="$LIBRETS_CFLAGS -arch i386 -arch x86_64 -arch ppc"
+    fi
+fi
+
 AC_SUBST(LIBRETS_CFLAGS)
 AC_SUBST(LIBRETS_LDFLAGS)
 
@@ -168,6 +182,7 @@ echo Compile SWIG bindings.......: $my_use_swig_bindings
   echo "  With Python...............: $my_have_python"
   echo "  With Ruby.................: $my_have_ruby"
 echo Enable Maintainer Docs......: $my_enable_maintainer_documentation
-
-
+if test "$OSNAME" = "darwin"; then
+  echo Enable Universal Objects....: $my_enable_universal 
+fi
 echo
