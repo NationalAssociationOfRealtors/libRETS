@@ -1,4 +1,5 @@
 sinclude(project/build/ac-macros/ccache.m4)
+sinclude(project/build/ac-macros/darwin.m4)
 sinclude(project/build/ac-macros/depends.m4)
 sinclude(project/build/ac-macros/expat.m4)
 sinclude(project/build/ac-macros/boost.m4)

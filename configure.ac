@@ -142,21 +142,14 @@ if test "$my_use_pic" = "yes"; then
 fi
 
 OSNAME=`perl -e 'use Config; print $Config{osname};'`
+ARCH_FLAGS=
 if test "$OSNAME" = "darwin"; then
-    AC_ARG_ENABLE(universal,
-              AC_HELP_STRING([--enable-universal],
-                             [Enable Universal objects (on OS X only)]),
-              test "X$enableval" == "Xyes" && my_enable_universal=yes,
-              my_enable_universal=no)
-
-    if test "$my_enable_universal" = "yes"; then
-        CFLAGS="$CFLAGS -arch i386 -arch x86_64 -arch ppc"
-        LIBREGS_CFLAGS="$LIBRETS_CFLAGS -arch i386 -arch x86_64 -arch ppc"
-    fi
+    MY_TEST_DARWIN
 fi
 
 AC_SUBST(LIBRETS_CFLAGS)
 AC_SUBST(LIBRETS_LDFLAGS)
+AC_SUBST(ARCH_FLAGS)
 
 AC_CONFIG_FILES([Makefile project/build/Doxyfile])
 AC_CONFIG_FILES([librets-config], [chmod +x librets-config])
