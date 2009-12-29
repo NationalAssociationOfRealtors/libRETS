@@ -165,8 +165,8 @@ _run_httpServer: ${LIBRETS_NETTEST_HTTPSERVER}
 	
 _run_SSLServer: ${LIBRETS_NETTEST_HTTPSERVER} 
 	$(JAVAC)  ${LIBRETS_NETTEST_SRC_DIR}/httpServer.java -d ${LIBRETS_NETTEST_BIN_DIR}
-	@echo $(RM) myKeyStore
-	echo keytool -selfcert -keystore myKeyStore -keypass 123456 -storepass 123456 -genkey \
+	$(RM) myKeyStore
+	keytool -selfcert -keystore myKeyStore -keypass 123456 -storepass 123456 -genkey \
 		-keyalg RSA -dname "cn=librets, ou=CRT, o=NAR, l=Chicago, st=IL, c=US" -alias mycert
 	java -cp ${LIBRETS_NETTEST_BIN_DIR} -Djavax.net.ssl.keyStore=myKeyStore \
 		-Djavax.net.ssl.keyStorePassword=123456 \

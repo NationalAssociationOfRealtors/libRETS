@@ -91,7 +91,7 @@ void CLASS::testCurlTimeout()
         /*
          * Perform the search and see if 160 records are returned.
          */
-        SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
+        SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","RES",
                                                                     "(ListPrice=300000-)");
         searchRequest->SetSelect("ListingID,ListPrice,Beds,City");
         searchRequest->SetStandardNames(true);
@@ -99,6 +99,7 @@ void CLASS::testCurlTimeout()
         searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
         searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
         searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
+        searchRequest->SetRestrictedIndicator("xxxx");
 
         SearchResultSetAPtr results = session->Search(searchRequest.get());
 
@@ -142,7 +143,7 @@ void CLASS::testStreaming()
     /*
      * Perform the search and see if 160 records are returned.
      */
-    SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
+    SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","RES",
                                                                     "(ListPrice=300000-)");
     searchRequest->SetSelect("ListingID,ListPrice,Beds,City");
     searchRequest->SetStandardNames(true);
@@ -150,6 +151,7 @@ void CLASS::testStreaming()
     searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
     searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
     searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
+    searchRequest->SetRestrictedIndicator("xxxx");
 
     SearchResultSetAPtr results = session->Search(searchRequest.get());
 
@@ -188,13 +190,14 @@ void CLASS::testCache()
     /*
      * Perform the search and see if 160 records are returned.
      */
-    SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
+    SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","RES",
                                                                     "(ListPrice=300000-)");
     searchRequest->SetStandardNames(true);
     searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
     searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
     searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
     searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
+    searchRequest->SetRestrictedIndicator("xxxx");
 
     SearchResultSetAPtr results = session->Search(searchRequest.get());
 
@@ -233,13 +236,14 @@ void CLASS::testNoStreaming()
     /*
      * Perform the search and see if 160 records are returned.
      */
-    SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
+    SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","RES",
                                                                     "(ListPrice=300000-)");
     searchRequest->SetStandardNames(true);
     searchRequest->SetLimit(SearchRequest::LIMIT_DEFAULT);
     searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
     searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
     searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
+    searchRequest->SetRestrictedIndicator("xxxx");
 
     SearchResultSetAPtr results = session->Search(searchRequest.get());
 
@@ -262,25 +266,39 @@ void CLASS::test100Continue()
 
     ASSERT_EQUAL (true, session->Login("Joe", "Schmoe"));
 
-    string query = "(ListingID=\
-LN000001,LN000002,LN000003,LN000004,LN000005,\
-LN000006,LN000007,LN000008,LN000009,LN000010,\
-LN000011,LN000012,LN000013,LN000014,LN000015,\
-LN000016,LN000017,LN000018,LN000019,LN000020,\
-LN000021,LN000022,LN000023,LN000024,LN000025,\
-LN000026,LN000027,LN000028,LN000029,LN000030,\
-LN000031,LN000032,LN000033,LN000034,LN000035,\
-LN000036,LN000037,LN000038,LN000039,LN000040,\
-LN000041,LN000042,LN000043,LN000044,LN000045,\
-LN000046,LN000047,LN000048,LN000049,LN000050,\
-LN000051,LN000052,LN000053,LN000054,LN000055,\
-LN000056,LN000057,LN000058,LN000059,LN000060,\
-LN000061,LN000062,LN000063,LN000064,LN000065,\
-LN000066,LN000067,LN000068,LN000069,LN000070,\
-LN000071,LN000072,LN000073,LN000074,LN000075,\
-LN000076,LN000077,LN000078,LN000079,LN000080,\
-LN000081,LN000082,LN000083,LN000084,LN000085,\
-LN000086,LN000087,LN000088,LN000089,LN000090)";
+    string query = "(StateOrProvince=\
+AL,AK,AS,AZ,AR,CA,CO,CT,\
+DE,DC,FM,FL,GA,GU,HI,ID,\
+IL,IN,IA,KS,KY,LA,ME,MH,\
+MD,MA,MI,MN,MS,MO,MT,NE,\
+NV,NH,NJ,NM,NY,NC,ND,MP,\
+OH,OK,OR,PW,PA,PR,RI,SC,\
+SD,TN,TX,UT,VT,VI,VA,WA,\
+WV,WI,WY,\
+AL,AK,AS,AZ,AR,CA,CO,CT,\
+DE,DC,FM,FL,GA,GU,HI,ID,\
+IL,IN,IA,KS,KY,LA,ME,MH,\
+MD,MA,MI,MN,MS,MO,MT,NE,\
+NV,NH,NJ,NM,NY,NC,ND,MP,\
+OH,OK,OR,PW,PA,PR,RI,SC,\
+SD,TN,TX,UT,VT,VI,VA,WA,\
+WV,WI,WY,\
+AL,AK,AS,AZ,AR,CA,CO,CT,\
+DE,DC,FM,FL,GA,GU,HI,ID,\
+IL,IN,IA,KS,KY,LA,ME,MH,\
+MD,MA,MI,MN,MS,MO,MT,NE,\
+NV,NH,NJ,NM,NY,NC,ND,MP,\
+OH,OK,OR,PW,PA,PR,RI,SC,\
+SD,TN,TX,UT,VT,VI,VA,WA,\
+WV,WI,WY,\
+AL,AK,AS,AZ,AR,CA,CO,CT,\
+DE,DC,FM,FL,GA,GU,HI,ID,\
+IL,IN,IA,KS,KY,LA,ME,MH,\
+MD,MA,MI,MN,MS,MO,MT,NE,\
+NV,NH,NJ,NM,NY,NC,ND,MP,\
+OH,OK,OR,PW,PA,PR,RI,SC,\
+SD,TN,TX,UT,VT,VI,VA,WA,\
+WV,WI,WY)";
 
     string select = "AgentID,Baths,Beds,City,County,ListingID,ListPrice,ListingStatus,StateOrProvince,StreetName,StreetNumber";
     /*
@@ -295,7 +313,7 @@ LN000086,LN000087,LN000088,LN000089,LN000090)";
      *
      * This is a live test that runs against http://demo.crt.realtors.org:6103/rets/login.
      */
-    SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","ResidentialProperty",
+    SearchRequestAPtr searchRequest = session->CreateSearchRequest("Property","RES",
                                                                     query);
     searchRequest->SetSelect(select);
     searchRequest->SetStandardNames(true);
@@ -303,6 +321,7 @@ LN000086,LN000087,LN000088,LN000089,LN000090)";
     searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
     searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
     searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
+    searchRequest->SetRestrictedIndicator("xxxx");
 
     SearchResultSetAPtr results1 = session->Search(searchRequest.get());
 
@@ -363,7 +382,7 @@ void CLASS::testRawSearch()
     ASSERT_EQUAL (true, session->Login("Joe", "Schmoe"));
 
     SearchRequestAPtr searchRequest = session->CreateSearchRequest(
-                                        "Property", "ResidentialProperty",
+                                        "Property", "RES",
                                         "(ListPrice=300000-)");
     searchRequest->SetSelect("ListingID,ListPrice,Beds,City");
     searchRequest->SetStandardNames(true);
@@ -371,6 +390,7 @@ void CLASS::testRawSearch()
     searchRequest->SetOffset(SearchRequest::OFFSET_NONE);
     searchRequest->SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS);
     searchRequest->SetFormatType(SearchRequest::COMPACT_DECODED);
+    searchRequest->SetRestrictedIndicator("xxxx");
     
     std::stringstream testStream;
     session->Search(searchRequest.get(), testStream);

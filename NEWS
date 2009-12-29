@@ -9,6 +9,8 @@ Version 1.4.1 - xx xxx 2009
     documentation to Maintainer mode. Ticket #126.
   * Add IgnoreMalformedHeaders processing to trailing
     boundary handling as well. Ticket #127.
+  * Correct Test100Continue network test failure. 
+    Ticket #129.
 
 Version 1.4.0 - 12 Oct 2009
 
