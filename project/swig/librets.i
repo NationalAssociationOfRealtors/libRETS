@@ -1,4 +1,8 @@
+#ifndef SWIGPHP
 %module(directors="1") librets
+#else
+%module librets
+#endif
 
 #ifdef SWIGCSHARP
 %{
@@ -47,17 +51,29 @@
 
 #ifdef SWIGPERL
 %{
+#ifdef WIN32
+#include <cstdio>
+#endif
 #undef Copy
+#undef GetClassName
+#undef GetMessage
+#undef GetObject
 %}
 #endif
 
 %{
 #include "librets.h"
-#include <iostream>
-#include <sstream>
 
 using namespace librets;
 using namespace librets::util;
+
+#include <iostream>
+#include <sstream>
+#include <algorithm>
+#include <stdexcept>
+#include <fstream>
+#include <string>
+
 using std::vector;
 using std::string;
 %}
@@ -70,10 +86,10 @@ using std::string;
 %include <std_common.i>
 %{
 #include <vector>
-#include <algorithm>
-#include <stdexcept>
-#include <fstream>
 %}
+
+%rename(GetMsg) RetsException::GetMessage() const throw();
+%rename(GetMsg) RetsHttpException::GetMessage() const throw();
 
 namespace std {
 
@@ -115,12 +131,6 @@ namespace std {
 
 #endif
 #endif
-
-%{
-#include <algorithm>
-#include <stdexcept>
-#include <fstream>
-%}
 
 %include "exception.i"
 %include "auto_ptr_release.i"
@@ -183,7 +193,7 @@ class RetsHttpException : public RetsException
     
     int GetHttpResult() const throw();
     
-    std::string GetMessage() const throw();
+    virtual std::string GetMessage() const throw();
     
     virtual std::string GetName() const throw();
 };

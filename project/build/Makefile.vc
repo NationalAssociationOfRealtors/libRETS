@@ -95,7 +95,7 @@ MSVCP_DLL="$(VCTOOLS)\crt\src\build\intel\msvcp71.dll"
 WINLIBS = wsock32.lib winmm.lib wldap32.lib bufferoverflowu.lib user32.lib gdi32.lib advapi32.lib
 MSVCP_DLL="$(VCTOOLS)\redist\x86\Microsoft.VC80.CRT\msvcp80.dll"
 !else if "$(VS_VERSION)" == "vs2008"
-WINLIBS = wsock32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
+WINLIBS = ws2_32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
 MSVCP_DLL="$(VCTOOLS)\redist\x86\Microsoft.VC90.CRT\msvcp90.dll"
 !endif
 
@@ -103,7 +103,7 @@ MSVCP_DLL="$(VCTOOLS)\redist\x86\Microsoft.VC90.CRT\msvcp90.dll"
 #
 # Boost Configuration
 
-BOOST_PATH = $(BASE_PATH)/boost
+BOOST_PATH = $(BASE_PATH)/$(BOOST_VERSION)/boost
 
 BOOST_RUNTIME_PREFIX = 
 
@@ -139,7 +139,7 @@ BOOST_SYSTEM_LIB =
 BOOST_CFLAGS = /I "$(BOOST_PATH)" /DBOOST_DISABLE_ASSERTS
 BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib"
 !if "$(VS_VERSION)" == "vs2008"
-BOOST_CFLAGS = /I "$(BASE_PATH)/include" /DBOOST_DISABLE_ASSERTS
+BOOST_CFLAGS = /I "$(BASE_PATH)/include/$(BOOST_VERSION)" /DBOOST_DISABLE_ASSERTS
 BOOST_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib"
 !endif
 
@@ -272,18 +272,25 @@ SWIG_PATH = $(BASE_PATH)\swig
 SWIG_PATH = $(BASE_PATH)\bin
 !endif
 !if "$(SWIG)" == ""
-SWIG = $(SWIG_PATH)\swig.exe
+SWIG = $(SWIG_PATH)\swig.exe -v 
 !endif
 
 ########################################################################
 #
 # PHP Configuration
 
+!if "$(VS_VERSION)" == "vs2008"
+PHP_PATH = $(BASE_PATH)/include/php
+PHP_CFLAGS = /I$(PHP_PATH) /I$(PHP_PATH)/TSRM /I$(PHP_PATH)/Zend /I$(PHP_PATH)/main \
+	/DPHP_WIN32 /DWIN32 /DZEND_WIN32 /DZTS=0 /DZEND_DEBUG=0 /D_USE_32BIT_TIME_T
+PHP_LIBS = $(BASE_PATH)/lib/php5ts.lib
+!endif
 !if "$(PHP_PATH)" == ""
 PHP_PATH = $(BASE_PATH)/php
 !endif
 !if "$(PHP_CFLAGS)" == ""
-PHP_CFLAGS = /I$(PHP_PATH) /I$(PHP_PATH)/TSRM /I$(PHP_PATH)/Zend /I$(PHP_PATH)/main /DPHP_WIN32 /DWIN32 /DZEND_WIN32 /DZTS=1 /DZEND_DEBUG=0 
+PHP_CFLAGS = /I$(PHP_PATH) /I$(PHP_PATH)/TSRM /I$(PHP_PATH)/Zend /I$(PHP_PATH)/main \
+	/DPHP_WIN32 /DWIN32 /DZEND_WIN32 /DZTS=1 /DZEND_DEBUG=0 
 !endif
 !if "$(PHPWIN_PATH)" == ""
 PHPWIN_PATH = $(BASE_PATH)/phpwin
@@ -292,3 +299,23 @@ PHPWIN_PATH = $(BASE_PATH)/phpwin
 PHP_LIBS = $(PHPWIN_PATH)/dev/php5ts.lib
 !endif
 
+########################################################################
+#
+# Perl Configuration
+
+!if "$(VS_VERSION)" != "vs2008"
+!error "Perl is only implemented for VS2008"
+!endif
+
+PERL_PATH = $(BASE_PATH)/perl
+PERL_CFLAGS = /DWIN32 /D_CONSOLE /DNO_STRICT /I../../librets/include $(CFLAGS_STD) \
+        $(BOOST_CFLAGS) 
+PERL_LIB_EXT = $(LIB_EXT)
+PERL_LIBS = $(WINLIBS) libcpmt.lib
+
+# Another kludge for Perl.
+!if "$(TYPE)" == "static"
+PERL_LIB_EXT = lib
+!else if "$(TYPE)" == "dynamic"
+PERL_LIB_EXT = dll
+!endif

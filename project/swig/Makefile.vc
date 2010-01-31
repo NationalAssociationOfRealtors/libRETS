@@ -10,34 +10,36 @@ RUBY_MAKEFILE = ruby\Makefile
 RUBY_WRAP = ruby\$(SWIG_WRAP_SRC)
 RUBY_WRAP_H = ruby\$(SWIG_WRAP_H)
 
-# Windows Perl port is not yet functional. mfk 2009-01-06
+PERL_DLL = blib\arch\auto\librets\librets.so
 PERL_MAKEFILE = perl\Makefile
+PERL_MAKEFILE_PL = Makefile.PL
 PERL_WRAP = perl\$(SWIG_WRAP_SRC)
 PERL_WRAP_H = perl\$(SWIG_WRAP_H)
 
 PYTHON_WRAP = python\$(SWIG_WRAP_SRC)
 PYTHON_WRAP_H = python\$(SWIG_WRAP_H)
 
+PHP5_DLL  = php5\php_librets.dll
 PHP5_WRAP = php5\$(SWIG_WRAP_SRC)
 PHP5_WRAP_H = php5\$(SWIG_WRAP_H)
 
 SWIG_FILES = librets.i auto_ptr_release.i shared_ptr_release.i
 
-all: csharp_ java_ php5_ python_ ruby_ 
+all: csharp_ java_ perl_ php5_ python_ ruby_ 
 
 csharp_: 
 	cd csharp
-	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
+	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=static
 	cd ..
 
 java_: 
 	cd java
-	$(NMAKE) /f Makefile.vc BUILD=debug RUNTIME_LIBS=static
+	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=static
 	cd ..
 
 perl_:  $(PERL_WRAP) $(PERL_MAKEFILE)
 	cd perl
-	$(NMAKE) BUILD=release RUNTIME_LIBS=static
+	$(NMAKE) BUILD=release RUNTIME_LIBS=dynamic 
 	cd ..
 
 php5_ : $(PHP5_WRAP)
@@ -55,72 +57,95 @@ ruby_: $(RUBY_WRAP) $(RUBY_MAKEFILE)
 	$(NMAKE) BUILD=release RUNTIME_LIBS=dynamic
 	cd ..
 
-$(PERL_MAKEFILE): $(PERL_WRAP) perl\Makefile.PL
+$(PERL_MAKEFILE): $(PERL_WRAP) perl/$(PERL_MAKEFILE_PL)
+        $(MAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=static make_perl_makefile
+
+make_perl_makefile::
 	cd perl
-	perl Makefile.PL INC="$(CFLAGS)"
+	perl Makefile.PL \
+               INC="/I ../../librets/include" \
+               OPTIMIZE="-DWIN32" \
+               CCFLAGS="$(CFLAGS) /DWIN32 /D_CONSOLE /DNO_STRICT $(RTC_FLAG)" \
+               LIBS="../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT) \
+                        $(PERL_LIBS)"
 	cd ..
+
 
 $(PERL_WRAP): $(SWIG_FILES)
 	cd perl
-	$(SWIG) -c++ -perl -I.. -o $(SWIG_WRAP_SRC) librets.i
+	$(SWIG) -c++ -perl -I.. -o $(SWIG_WRAP_SRC) ../librets.i
 	cd ..
 
-$(RUBY_MAKEFILE): $(RUBY_WRAP) ruby\extconf.rb
+make_ruby_makefile: 
 	cd ruby
 	$(RUBY) extconf.rb --with-swig-dir=../
 	cd ..
 
+$(RUBY_MAKEFILE): $(RUBY_WRAP) ruby/extconf.rb
+        $(MAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic make_ruby_makefile
+
 $(RUBY_WRAP): $(SWIG_FILES)
 	cd ruby
-	$(SWIG) -c++ -ruby -o $(SWIG_WRAP_SRC) -I../lib/ruby -I.. -module librets_native librets.i
+	$(SWIG) -c++ -ruby -o $(SWIG_WRAP_SRC) \
+		-I$(SWIG_LIBRARY)/ruby -I$(SWIG_LIBRARY) \
+		-I../lib/ruby -I.. -module librets_native ../librets.i
 	cd ..
 
 $(PYTHON_WRAP): $(SWIG_FILES)
 	cd python
-	$(SWIG) -c++ -python -o $(SWIG_WRAP_SRC) -I.. librets.i
+	$(SWIG) -c++ -python -o $(SWIG_WRAP_SRC) \
+		-I$(SWIG_LIBRARY)/python -I$(SWIG_LIBRARY) \
+		 -I.. ../librets.i
 	cd ..
 
 $(PHP5_WRAP): $(SWIG_FILES)
 	cd php5
-	$(SWIG) -c++ -php5 -o $(SWIG_WRAP_SRC) -I.. librets.i
+	$(SWIG) -c++ -php5 -o $(SWIG_WRAP_SRC) \
+		-I.. ../librets.i
 	cd ..
 
-clean: clean-csharp clean-java clean-ruby clean-python clean-php5
+clean: clean-csharp clean-java clean-ruby clean-python clean-php5 clean-perl
 
 clean-csharp:
 	cd csharp
-	$(NMAKE) /f Makefile.vc clean
+	-$(NMAKE) /f Makefile.vc clean
 	cd ..
 
 clean-java:
 	cd java
-	$(NMAKE) /f Makefile.vc clean
+	-$(NMAKE) /f Makefile.vc clean
 	cd ..
 
 clean-ruby:
 	cd ruby
-	$(NMAKE) clean
+	@-if exist Makefile $(NMAKE) clean
+        @-erase /q librets_native* 2> NUL
+        @-erase /q *.idb 2> NUL
 	cd ..
 	@-erase /q $(RUBY_WRAP) 2> NUL
 	@-erase /q $(RUBY_WRAP_H) 2> NUL
 
 clean-python:
 	cd python
-	$(NMAKE) -f Makefile.vc clean
+	-$(NMAKE) -f Makefile.vc clean
+        @-erase /q librets.py* 2> NUL
 	cd ..
 	@-erase /q $(PYTHON_WRAP) 2> NUL
 	@-erase /q $(PYTHON_WRAP_H) 2> NUL
 
 clean-php5:
 	cd php5
-	$(NMAKE) -f Makefile.vc clean
+	-$(NMAKE) -f Makefile.vc clean
 	cd ..
 	@-erase /q $(PHP5_WRAP) 2> NUL
 	@-erase /q $(PHP5_WRAP_H) 2> NUL
+        @-erase /q $(PHP_DLL) 2> NUL
 
 clean-perl:
 	cd perl
-	$(NMAKE) clean
+	-if exist Makefile $(NMAKE) clean
+        @-erase /q Makefile.old 2> NUL
+        @-erase /q *.idb 2> NUL
 	cd ..
 	@-erase /q $(PERL_WRAP) 2> NUL
 	@-erase /q $(PERL_WRAP_H) 2> NUL

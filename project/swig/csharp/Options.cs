@@ -23,6 +23,7 @@ public class Options
     private int mLimit                      = -1;
     private bool mLogEverything             = false;
     private string mMetadataTimestamp       = "";
+    private bool mNoSSLVerify               = false;
     private int mOffset                     = 0;
     private string mPass                    = "Schmoe";
     private string mProxyUrl                = "";
@@ -219,6 +220,15 @@ public class Options
     {
         get {return mMetadataTimestamp; }
         set { mMetadataTimestamp = value; }
+    }
+
+    /**
+     * Do not verify CA for SSL connections.
+     */
+    public bool no_ssl_verify
+    {
+        get { return mNoSSLVerify; }
+        set { mNoSSLVerify = value; }
     }
 
     /**
@@ -496,6 +506,9 @@ public class Options
                 case "--metadata-timestamp":
                             metadata_timestamp  = value;
                             break;
+                case "--no-sslverify":
+                            mNoSSLVerify        = true;
+                            break;
                 case "--offset":
                             offset              = int.Parse(value);
                             break;
@@ -593,6 +606,7 @@ public class Options
         Console.WriteLine("\t--enable-cache\t\tEnable caching in Streaming mode: \"yes\" or \"no\" (default \"no\")");
         Console.WriteLine("\t--timestamp\t\tSystemname of the Class TimeSTamp Field");
         Console.WriteLine("\t--lastmodified\t\tRETS timestamp of the earliest date from which to select.");
+        Console.WriteLine("\t--no-sslverify\t\tDo not verify CA on SSL connections.");
         Console.WriteLine("\t--full-metadata\t\tFetch all metadata at one time: \"yes\" or \"no\" (default \"no\")");
         Console.WriteLine("\t--record\t\tRecord for Update Transaction");
         Console.WriteLine("\t--update-type\tThe Update Type");
@@ -625,6 +639,9 @@ public class Options
 
         if (mEnableCacheing)
           flags |= RetsSession.MODE_CACHE;
+
+        if (mNoSSLVerify)
+          flags |= RetsSession.MODE_NO_SSL_VERIFY;
 
         if (mDisableStreaming)
         {

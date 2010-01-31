@@ -1,8 +1,6 @@
 use ExtUtils::MakeMaker;
 use Config;
 
-print $Config{'osname'};
-
 if (($Config{'osname'} !~ /cygwin/) && ($Config{'osname'} !~ /MSWin32/))
 {
     $cflags = `../../../librets-config-inplace --cflags`;

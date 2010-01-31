@@ -40,6 +40,7 @@ win_files:
 	perl ../../build/win_files.pl GENERATED_SRC '$(GEN_DIR)\*.java' > generated.vc
 
 SWIG_JAVA = $(SWIG) -c++ -java -package librets -o librets_wrap.cpp \
+	-I$(SWIG_LIBRARY)/java -I$(SWIG_LIBRARY) \
 	-outdir $(GEN_DIR) \
 	../librets.i
 
@@ -65,7 +66,7 @@ clean:
 	@-erase /q vc*.pdb 2> NUL
 	@-erase /q librets.* 2> NUL
 	@-erase /q *.obj 2> NUL
-	@-erase librets_wrap.cpp 2> NUL
+	@-erase librets_wrap.* 2> NUL
 
 distclean: clean
 	$(RM) $(GENERATED_SRC) librets_wrap*

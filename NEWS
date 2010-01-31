@@ -1,6 +1,8 @@
 Version 1.4.1 - xx xxx 2009
 
   * Add --enable-universal to configure. Ticket #44.
+  * Add PHP to VS2008 build libraries. Ticket #94.
+  * Add PERL to VS2008 build libraries. Ticket #95.
   * Add "make uninstall" feature. Ticket #121.
   * Configure is using --L with ANTLR lib. Ticket #122.
   * Add configurable RestrictedIndicator with example
@@ -9,8 +11,10 @@ Version 1.4.1 - xx xxx 2009
     documentation to Maintainer mode. Ticket #126.
   * Add IgnoreMalformedHeaders processing to trailing
     boundary handling as well. Ticket #127.
+  * Refresh VendorSrc. Ticket #128.
   * Correct Test100Continue network test failure. 
     Ticket #129.
+  * SWIG 1.3.40 doesn't build PHP bindings. Ticket #132.
 
 Version 1.4.0 - 12 Oct 2009
 

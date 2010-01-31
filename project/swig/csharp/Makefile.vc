@@ -7,7 +7,7 @@ WRAP = 	librets_wrap.cpp
 
 CFLAGS  = $(CFLAGS_STD) /I .. /I ../../librets/include $(BOOST_CFLAGS) $(CURL_CFLAGS)
 LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS)
-LINK = $(LINK_EXE) $(LDFLAGS)
+LINK = $(LINK_EXE)
 
 BIN_DIR = bin
 LIBRETS_UNMANAGED_OBJ = librets_wrap.obj librets_sharp.obj librets_bridge.obj
@@ -53,7 +53,7 @@ $(LIBRETS_MANAGED_DLL): $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_MANAGED_SRC) $(BIN_DI
 	$(CSC) -target:library -out:$(LIBRETS_MANAGED_DLL) $(LIBRETS_MANAGED_SRC)
 
 $(LIBRETS_UNMANAGED_DLL): $(LIBRETS_UNMANAGED_OBJ) $(BIN_DIR)
-	$(LINK) /dll /out:$(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_OBJ) $(LIBRETS_LIB) $(WINLIBS)
+	$(LINK) /dll /out:$(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_OBJ) $(LDFLAGS) $(WINLIBS) /FORCE:MULTIPLE
 
 $(BIN_DIR):
 	@if not exist "$(BIN_DIR)" mkdir $(BIN_DIR)
@@ -63,6 +63,7 @@ win_files:
 	perl ../../build/win_files.pl GENERATED_SRC 'lib\*.cs' > generated.vc
 
 SWIG_CSHARP = $(SWIG) -c++ -csharp -namespace librets -o librets_wrap.cpp \
+	-I$(SWIG_LIBRARY)/csharp -I$(SWIG_LIBRARY) \
 	-outdir lib -I../lib/csharp -dllimport $(LIBRETS_UNMANAGED_DLL_FILE) \
 	../librets.i
 

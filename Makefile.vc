@@ -18,7 +18,7 @@ clean:
 	$(NMAKE) /f Makefile.vc clean
 	cd ..\..\..\..
 	cd project\swig
-	$(NMAKE) /f Makefile.vc clean
+	-$(NMAKE) /f Makefile.vc clean
 	cd ..\..
 	@-rmdir /q  /s build 2>NUL
 	@-rmdir /q  /s dist 2>NUL
@@ -35,7 +35,7 @@ _test:
 DIST_BASE = librets-$(VERSION)
 DISTDIR = build/$(DIST_BASE)
 DIST_ZIP = dist/librets-win32-$(VERSION).zip
-DOXYGEN = "C:\Program Files\doxygen\bin\doxygen.exe"
+DOXYGEN = "C:\Program Files (x86)\doxygen\bin\doxygen.exe"
 MKDIR_P = c:\cygwin\bin\mkdir.exe -p
 RSYNC = rsync -a --exclude-from project/build/dist-win-exclude
 
@@ -50,6 +50,7 @@ prepare:
 	@$(MKDIR_P) $(DISTDIR)/ruby
 	@$(MKDIR_P) $(DISTDIR)/python
 	@$(MKDIR_P) $(DISTDIR)/php5
+	@$(MKDIR_P) $(DISTDIR)/perl
 	@if not exist $(MSVCP_DLL) echo $(MSVCP_DLL) can not be found. 
 	@if not exist $(MSVCP_DLL) echo Make sure the $$VCTOOLS variable is set.
 	@if not exist $(MSVCP_DLL) echo If you are running VS2003, you must manual build the
@@ -82,7 +83,7 @@ lib-all-variants:
 
 dist: docs lib-all-variants _dist
 
-_dist: _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-ruby _dist-python _dist-php5
+_dist: _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-ruby _dist-python _dist-php5 _dist-perl
 	rm -f $(DIST_ZIP)
 	cd build
 	zip -rq ../$(DIST_ZIP) $(DIST_BASE)
@@ -118,3 +119,10 @@ _dist-python:
 _dist-php5:
 	cp -u project/swig/php5/librets.php $(DISTDIR)/php5
 	cp -u project/swig/php5/php_librets.dll $(DISTDIR)/php5
+
+_dist-perl:
+        cp -u project/swig/perl/librets.pm $(DISTDIR)/perl
+        $(RSYNC) project/swig/perl/blib/arch/auto/librets/ $(DISTDIR)/perl
+        @echo Place librets.pm into your site/lib directory > $(DISTDIR)/perl/README
+        @echo Create the directory site/lib/auto/librets >> $(DISTDIR)/perl/README
+        @echo and place the other files there. >> $(DISTDIR)/perl/README

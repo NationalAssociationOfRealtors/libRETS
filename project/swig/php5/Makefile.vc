@@ -2,27 +2,53 @@
 
 LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
 
-WRAP = librets_wrap.cpp
-OBJWRAP = librets_wrap.obj
+SWIG_WRAP_SRC = librets_wrap.cpp
+SWIG_WRAP_H = librets_wrap.h
 
-CFLAGS  = $(CFLAGS_STD) /DLIBRETS_VERSION=\"$(VERSION)\" /I../../librets/include $(PHP_CFLAGS) $(BOOST_CFLAGS) $(CURL_CFLAGS)
-LINK = $(LINK_EXE) /FORCE:MULTIPLE /dll
+CFLAGS  = $(CFLAGS_STD) /DLIBRETS_VERSION=\"$(VERSION)\" \
+		/I../../librets/include $(PHP_CFLAGS) $(BOOST_CFLAGS) $(CURL_CFLAGS)
 
-PHP_EXT = php_librets.dll
+LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS) /FORCE:MULTIPLE
+LINK = $(LINK_EXE) $(LDFLAGS)
 
-all: $(PHP_EXT)
+LIBRETS_BRIDGE_OBJ = librets_bridge.obj
+LIBRETS_WRAP_OBJ = librets_wrap.obj
+LIBRETS_OBJ = $(LIBRETS_BRIDGE_OBJ) $(LIBRETS_WRAP_OBJ)
+LIBRETS_DLL = librets.dll
 
-$(OBJWRAP): $(WRAP)
-
-librets_bridge.obj: ../librets_bridge.cpp
-	$(CXX) $(CFLAGS) /Fo"$@" ../librets_bridge.cpp 
+all: $(LIBRETS_DLL) 
 
 
-$(PHP_EXT): $(OBJWRAP) librets_bridge.obj
-	$(LINK) $(LIBRETS_LIB) $(BOOST_LDFLAGS) /out:$(PHP_EXT) $(OBJWRAP) $(WINLIBS) $(PHP_LIBS) librets_bridge.obj
+$(LIBRETS_DLL): $(LIBRETS_OBJ) 
+	$(LINK) /dll /out:$(LIBRETS_DLL) $(LIBRETS_OBJ) $(LIBRETS_LIB) $(PHP_LIBS) $(WINLIBS)
+
+SWIG_PHP = $(SWIG) -c++ -php -o $(SWIG_WRAP_SRC) \
+		-I$(SWIG_LIBRARY)/php -I$(SWIG_LIBRARY) \
+		-I.. ../librets.i
+
+$(LIBRETS_BRIDGE_OBJ): ../librets_bridge.cpp
+	$(CXX) $(CFLAGS) /Fo"$@" ../librets_bridge.cpp
+
+librets_wrap.obj: librets_wrap.cpp
+
+librets_wrap.cpp: ../librets.i
+	$(SWIG_PHP)
+
+librets.php: ../librets.i
+	$(SWIG_PHP)
+
+clean:
+	@-erase /q vc70.* vc90.* \
+		php_librets.exp \
+		php_librets.lib \
+		$(LIBRETS_DLL) \
+		$(LIBRETS_OBJ) \
+		librets_wrap.cpp \
+		librets_wrap.h \
+		librets.exp \
+		librets.lib \
+		librets.php \
+		php_librets.h 2> NUL
 
 {.\}.cpp.obj:
 	$(CXX) $(CFLAGS) /Fo"$@"  $<
-
-clean:
-	@-erase /q vc70.* php_librets.exp php_librets.lib $(PHP_EXT) $(WRAP) $(OBJWRAP) librets.php php_librets.h 2> NUL
