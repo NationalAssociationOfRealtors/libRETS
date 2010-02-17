@@ -35,7 +35,7 @@ function dump_all_tables($metadata, $class)
   {
     $table = $tables->get($i);
     print "    Table Name: " . $table->GetSystemName() . " [" .
-	  $table->GetStandardName() . "]\n";
+	  $table->GetStandardName() . "], DataType: " . enum_datatype($table->GetDataType()) ."\n";
   }
 }
 
@@ -96,6 +96,24 @@ function dump_all_resources($metadata)
     $r = $resource->get($i);
     dump_all_lookups($metadata, $r);
   }
+}
+
+function enum_datatype($datatype)
+{
+    switch ($datatype)
+    {
+      case MetadataTable::BOOLEAN:      return "Boolean";
+      case MetadataTable::CHARACTER:    return "Character";
+      case MetadataTable::DATE:         return "Date";
+      case MetadataTable::DATE_TIME:    return "DateTime";
+      case MetadataTable::TIME:         return "Time";
+      case MetadataTable::TINY:         return "Tiny";
+      case MetadataTable::SMALL:        return "Small";
+      case MetadataTable::INT:          return "Int";
+      case MetadataTable::LONG:         return "Long";
+      case MetadataTable::DECIMAL:      return "Decimal";
+      default: return "Unknown";
+    }
 }
 
 $session = new RetsSession("http://demo.crt.realtors.org:6103/rets/login");
