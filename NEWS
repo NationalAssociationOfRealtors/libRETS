@@ -15,6 +15,11 @@ Version 1.4.1 - xx xxx 2009
   * Correct Test100Continue network test failure. 
     Ticket #129.
   * SWIG 1.3.40 doesn't build PHP bindings. Ticket #132.
+  * SQL2DMQL compiler changed behaviour of GetObject queries to
+    allow for multiple ids per query by removing object_id. (In
+    implementation if one wants to specify an object_id, they should
+    combine it with object_key, but this happens outside of the scope
+    of the compiler.)
 
 Version 1.4.0 - 12 Oct 2009
 
