@@ -1,53 +1,51 @@
 !include <../../build/Makefile.vc>
 
-LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
+LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIBRETS_LIB_NAME)
 
 SWIG_WRAP_SRC = librets_wrap.cpp
 SWIG_WRAP_H = librets_wrap.h
 
-CFLAGS  = $(CFLAGS_STD) /DLIBRETS_VERSION=\"$(VERSION)\" \
+CFLAGS  = $(CFLAGS_STD) /DLIBRETS_VERSION=\"$(VERSION)\" /I$(BUILD_DIR) \
 		/I../../librets/include $(PHP_CFLAGS) $(BOOST_CFLAGS) $(CURL_CFLAGS)
 
 LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS) /FORCE:MULTIPLE
 LINK = $(LINK_EXE) $(LDFLAGS)
 
-LIBRETS_BRIDGE_OBJ = librets_bridge.obj
-LIBRETS_WRAP_OBJ = librets_wrap.obj
+LIBRETS_BRIDGE_OBJ = $(BUILD_DIR)/librets_bridge.obj
+LIBRETS_WRAP_OBJ = $(BUILD_DIR)/librets_wrap.obj
 LIBRETS_OBJ = $(LIBRETS_BRIDGE_OBJ) $(LIBRETS_WRAP_OBJ)
-LIBRETS_DLL = librets.dll
+LIBRETS_DLL = $(BUILD_DIR)/librets.dll
 
-all: $(LIBRETS_DLL) 
+SWIG_PHP = $(SWIG) -c++ -php -o $(SWIG_WRAP_SRC) \
+                -outdir $(BUILD_DIR) \
+		-I$(SWIG_LIBRARY)/php -I$(SWIG_LIBRARY) \
+		-I.. ../librets.i
 
+all: $(BUILD_DIR) $(LIBRETS_DLL)
+
+$(BUILD_DIR):
+        @if not exist "$(BUILD_DIR)" mkdir $(BUILD_DIR)
 
 $(LIBRETS_DLL): $(LIBRETS_OBJ) 
 	$(LINK) /dll /out:$(LIBRETS_DLL) $(LIBRETS_OBJ) $(LIBRETS_LIB) $(PHP_LIBS) $(WINLIBS)
 
-SWIG_PHP = $(SWIG) -c++ -php -o $(SWIG_WRAP_SRC) \
-		-I$(SWIG_LIBRARY)/php -I$(SWIG_LIBRARY) \
-		-I.. ../librets.i
-
 $(LIBRETS_BRIDGE_OBJ): ../librets_bridge.cpp
 	$(CXX) $(CFLAGS) /Fo"$@" ../librets_bridge.cpp
 
-librets_wrap.obj: librets_wrap.cpp
+$(LIBRETS_WRAP_OBJ): librets_wrap.cpp
 
-librets_wrap.cpp: ../librets.i
+$(SWIG_WRAP_SRC): ../librets.i $(BUILD_DIR)
 	$(SWIG_PHP)
 
 librets.php: ../librets.i
 	$(SWIG_PHP)
 
 clean:
-	@-erase /q vc70.* vc90.* \
-		php_librets.exp \
-		php_librets.lib \
-		$(LIBRETS_DLL) \
-		$(LIBRETS_OBJ) \
-		librets_wrap.cpp \
-		librets_wrap.h \
-		librets.exp \
-		librets.lib \
-		librets.php \
+	@-rmdir /q /s $(BUILD_DIR) 2> NUL
+	@-erase /q vc*.pch vc*.idb vc*.pdb \
+		$(SWIG_WRAP_SRC) \
+		$(SWIG_WRAP_H) \
+                librets.php \
 		php_librets.h 2> NUL
 
 {.\}.cpp.obj:

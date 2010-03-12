@@ -1,4 +1,7 @@
-#ifndef SWIGPHP
+#if defined(SWIGCSHARP) || \
+    defined(SWIGJAVA)   || \
+    defined(SWIGPYTHON) || \
+    defined (SWIGRUBY)
 %module(directors="1") librets
 #else
 %module librets

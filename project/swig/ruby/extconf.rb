@@ -3,14 +3,16 @@ ruby extconf.rb --with-librets-config=../../../librets-config-inplace
 =end
 require 'mkmf'
 
-if PLATFORM =~ /darwin/
+puts "Platform: " + RUBY_PLATFORM.to_s
+
+if RUBY_PLATFORM =~ /darwin/
   CONFIG['LDSHARED'].sub!(/^cc/, "c++")
-elsif PLATFORM =~ /linux/ || PLATFORM =~ /freebsd/
+elsif RUBY_PLATFORM =~ /linux/ || RUBY_PLATFORM =~ /freebsd/
   CONFIG['LDSHARED'].sub!(/\$\(CC\)/, "$(CXX)")
 end
 
 makefile_prefix = ""
-if PLATFORM =~ /darwin/ || PLATFORM =~ /linux/ || PLATFORM =~ /freebsd/
+if RUBY_PLATFORM =~ /darwin/ || RUBY_PLATFORM =~ /linux/ || RUBY_PLATFORM =~ /freebsd/
   librets_config = with_config("librets-config",
     "../../../librets-config-inplace")
   $libs += ' ' + `#{librets_config} --libs`.chomp
@@ -20,12 +22,16 @@ if PLATFORM =~ /darwin/ || PLATFORM =~ /linux/ || PLATFORM =~ /freebsd/
     $CFLAGS += ' ' + ENV['CFLAGS'] + ' ' + `#{librets_config} --cflags`.chomp
   end
   swig_dir=with_config("swig-dir", "../../../swig")
-elsif PLATFORM =~ /win32/
+elsif RUBY_PLATFORM =~ /i386-mingw32/ 
+  $CFLAGS += ' -I/c/librets/mingw-x64/include -I/c/librets/mingw-x64/include/boost-1_41  -I.. -I../../librets/include -I/c/librets/vs2008-x64/include -I/c/librets/vs2008-x64 '
+  $libs += ' ../../librets/src/build-x64/liblibrets-vs2008-1.4.1trunk.lib '
+  swig_dir=with_config("swig-dir", "..")
+elsif RUBY_PLATFORM =~ /win32/ 
   $CFLAGS += ' $(CFLAGS_STD) $(BOOST_CFLAGS) -I.. -I../../librets/include'
   $libs += ' $(LIBRETS_LIB) winmm.lib wldap32.lib gdi32.lib'
   makefile_prefix = %{
 !include <../../build/Makefile.vc>
-LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
+LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIBRETS_LIB_NAME)
 }
   swig_dir=with_config("swig-dir", "..")
 end

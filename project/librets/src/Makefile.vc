@@ -3,6 +3,7 @@
 ##############################################################
 
 LIB_NAME = $(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
+LIB_NAME = $(LIBRETS_LIB_NAME)
 
 ANTLR_DIR = $(DIROBJ)\antlr
 
@@ -72,6 +73,9 @@ X_OBJS = $(X_OBJS)
 
 $(TARGET): $(X_OBJS)
 	$(LINK_LIB) /out:$(TARGET) $(LINK_STD) $(LDFLAGS) $(X_OBJS)
+	@-erase /s vc*.pch 2> NUL
+	@-erase /s vc*.idb 2> NUL
+	@-erase /s vc*.pdb 2> NUL
 
 $(X_OBJS): $(DIROBJ)
 

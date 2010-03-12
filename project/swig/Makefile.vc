@@ -6,6 +6,12 @@ SWIG_WRAP_SRC = librets_wrap.cpp
 SWIG_WRAP_H = librets_wrap.h
 
 RUBY = ruby
+RUBY_BUILD =
+RUBY_CLEAN =
+!if "X$(MINGW_SUPPORT)" != "X"
+RUBY_BUILD = ruby_
+RUBY_CLEAN = clean-ruby
+!endif
 RUBY_MAKEFILE = ruby\Makefile
 RUBY_WRAP = ruby\$(SWIG_WRAP_SRC)
 RUBY_WRAP_H = ruby\$(SWIG_WRAP_H)
@@ -25,11 +31,11 @@ PHP5_WRAP_H = php5\$(SWIG_WRAP_H)
 
 SWIG_FILES = librets.i auto_ptr_release.i shared_ptr_release.i
 
-all: csharp_ java_ perl_ php5_ python_ ruby_ 
+all: csharp_ java_ perl_ php5_ python_ $(RUBY_BUILD)
 
 csharp_: 
 	cd csharp
-	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=static
+	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
 	cd ..
 
 java_: 
@@ -49,7 +55,7 @@ php5_ : $(PHP5_WRAP)
 
 python_: $(PYTHON_WRAP)
 	 cd python
-	 $(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic dist
+	 $(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic LIBPATH=$(PYTHON_LIBPATH) dist
 	 cd ..
 
 ruby_: $(RUBY_WRAP) $(RUBY_MAKEFILE)
@@ -66,7 +72,7 @@ make_perl_makefile::
                INC="/I ../../librets/include" \
                OPTIMIZE="-DWIN32" \
                CCFLAGS="$(CFLAGS) /DWIN32 /D_CONSOLE /DNO_STRICT $(RTC_FLAG)" \
-               LIBS="../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT) \
+               LIBS="../../librets/src/$(BUILD_DIR)/$(LIBRETS_LIB_NAME) \
                         $(PERL_LIBS)"
 	cd ..
 
@@ -104,7 +110,7 @@ $(PHP5_WRAP): $(SWIG_FILES)
 		-I.. ../librets.i
 	cd ..
 
-clean: clean-csharp clean-java clean-ruby clean-python clean-php5 clean-perl
+clean: clean-csharp clean-java clean-python clean-php5 clean-perl $(RUBY_CLEAN)
 
 clean-csharp:
 	cd csharp

@@ -2,7 +2,7 @@
 
 LIBRETS_PATH = ../..
 
-LIBRETS_LIB = $(LIBRETS_PATH)/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
+LIBRETS_LIB = $(LIBRETS_PATH)/src/$(BUILD_DIR)/$(LIBRETS_LIB_NAME)
 LIBRETS_CFLAGS = /I$(LIBRETS_PATH)/include /I../../test/src
 
 ########################################################################

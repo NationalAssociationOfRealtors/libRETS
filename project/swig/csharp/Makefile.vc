@@ -1,6 +1,6 @@
 !include <../../build/Makefile.vc>
 
-LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIB_PREFIX)rets$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).$(LIB_EXT)
+LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIBRETS_LIB_NAME)
 
 !include <generated.vc>
 WRAP = 	librets_wrap.cpp
@@ -10,53 +10,57 @@ LDFLAGS = $(LDFLAGS_STD) $(LIBRETS_LIB) $(BOOST_LDFLAGS)
 LINK = $(LINK_EXE)
 
 BIN_DIR = bin
-LIBRETS_UNMANAGED_OBJ = librets_wrap.obj librets_sharp.obj librets_bridge.obj
+LIBRETS_UNMANAGED_OBJ = $(BUILD_DIR)/librets_wrap.obj $(BUILD_DIR)/librets_sharp.obj $(BUILD_DIR)/librets_bridge.obj
 LIBRETS_UNMANAGED_DLL_FILE = librets-pinvoke.dll
-LIBRETS_UNMANAGED_DLL = $(BIN_DIR)\$(LIBRETS_UNMANAGED_DLL_FILE)
+LIBRETS_UNMANAGED_DLL = $(BUILD_DIR)\$(BIN_DIR)\$(LIBRETS_UNMANAGED_DLL_FILE)
 LIBRETS_MANAGED_SRC = $(GENERATED_SRC) CppInputStream.cs \
 	ObjectDescriptorEnumerator.cs TextWriterLogger.cs \
 	RetsExceptionNative.cs RetsReplyExceptionNative.cs \
 	RetsHttpExceptionNative.cs
-LIBRETS_MANAGED_DLL = $(BIN_DIR)\librets-dotnet.dll
+LIBRETS_MANAGED_DLL = $(BUILD_DIR)\$(BIN_DIR)\librets-dotnet.dll
 RM = rm -f
 
-LOGIN_EXE = $(BIN_DIR)\Login.exe
-SEARCH_EXE = $(BIN_DIR)\Search.exe
-RAWSEARCH_EXE = $(BIN_DIR)\RawSearch.exe
-METADATA_EXE = $(BIN_DIR)\Metadata.exe
-GET_OBJECT_EXE = $(BIN_DIR)\GetObject.exe
-UPDATE_EXE = $(BIN_DIR)\Update.exe
+LOGIN_EXE = $(BUILD_DIR)\$(BIN_DIR)\Login.exe
+SEARCH_EXE = $(BUILD_DIR)\$(BIN_DIR)\Search.exe
+RAWSEARCH_EXE = $(BUILD_DIR)\$(BIN_DIR)\RawSearch.exe
+METADATA_EXE = $(BUILD_DIR)\$(BIN_DIR)\Metadata.exe
+GET_OBJECT_EXE = $(BUILD_DIR)\$(BIN_DIR)\GetObject.exe
+UPDATE_EXE = $(BUILD_DIR)\$(BIN_DIR)\Update.exe
 
 SAMPLE_EXE = $(LOGIN_EXE) $(SEARCH_EXE) $(RAWSEARCH_EXE) $(METADATA_EXE) $(GET_OBJECT_EXE) $(UPDATE_EXE)
 
 all: $(LIBRETS_UNMANAGED_DLL) $(SAMPLE_EXE)
 
 $(LOGIN_EXE): Login.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	$(CSC) -debug -out:$(LOGIN_EXE) -r:$(LIBRETS_MANAGED_DLL) Login.cs
+	$(CSC) -platform:$(TARGET_CPU) -debug -out:$(LOGIN_EXE) -r:$(LIBRETS_MANAGED_DLL) Login.cs
 
 $(SEARCH_EXE): Search.cs Options.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	$(CSC) -out:$(SEARCH_EXE) -r:$(LIBRETS_MANAGED_DLL) Search.cs Options.cs
+	$(CSC) -platform:$(TARGET_CPU) -out:$(SEARCH_EXE) -r:$(LIBRETS_MANAGED_DLL) Search.cs Options.cs
 
 $(RAWSEARCH_EXE): RawSearch.cs Options.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	$(CSC) -out:$(RAWSEARCH_EXE) -r:$(LIBRETS_MANAGED_DLL) RawSearch.cs Options.cs
+	$(CSC) -platform:$(TARGET_CPU) -out:$(RAWSEARCH_EXE) -r:$(LIBRETS_MANAGED_DLL) RawSearch.cs Options.cs
 
 $(METADATA_EXE): Metadata.cs Options.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	$(CSC) -out:$(METADATA_EXE) -r:$(LIBRETS_MANAGED_DLL) Metadata.cs Options.cs
+	$(CSC) -platform:$(TARGET_CPU) -out:$(METADATA_EXE) -r:$(LIBRETS_MANAGED_DLL) Metadata.cs Options.cs
 
 $(GET_OBJECT_EXE): GetObject.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	$(CSC) -out:$(GET_OBJECT_EXE) -r:$(LIBRETS_MANAGED_DLL) GetObject.cs
+	$(CSC) -platform:$(TARGET_CPU) -out:$(GET_OBJECT_EXE) -r:$(LIBRETS_MANAGED_DLL) GetObject.cs
 
 $(UPDATE_EXE): Update.cs Options.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	$(CSC) -out:$(UPDATE_EXE) -r:$(LIBRETS_MANAGED_DLL) Update.cs Options.cs
+	$(CSC) -platform:$(TARGET_CPU) -out:$(UPDATE_EXE) -r:$(LIBRETS_MANAGED_DLL) Update.cs Options.cs
 
-$(LIBRETS_MANAGED_DLL): $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_MANAGED_SRC) $(BIN_DIR)
-	$(CSC) -target:library -out:$(LIBRETS_MANAGED_DLL) $(LIBRETS_MANAGED_SRC)
+$(LIBRETS_MANAGED_DLL): $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_MANAGED_SRC) $(BUILD_DIR)/$(BIN_DIR)
+	$(CSC) -target:library -platform:$(TARGET_CPU) -out:$(LIBRETS_MANAGED_DLL) $(LIBRETS_MANAGED_SRC)
 
-$(LIBRETS_UNMANAGED_DLL): $(LIBRETS_UNMANAGED_OBJ) $(BIN_DIR)
-	$(LINK) /dll /out:$(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_OBJ) $(LDFLAGS) $(WINLIBS) /FORCE:MULTIPLE
+$(LIBRETS_UNMANAGED_DLL): $(LIBRETS_UNMANAGED_OBJ) $(BUILD_DIR)/$(BIN_DIR)
+	$(LINK) /dll /out:$(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_OBJ) $(LDFLAGS) $(WINLIBS)
+        if exist $@.manifest mt -manifest $@.manifest -outputresource:$@;2
 
-$(BIN_DIR):
-	@if not exist "$(BIN_DIR)" mkdir $(BIN_DIR)
+$(BUILD_DIR):
+	@if not exist "$(BUILD_DIR)" mkdir $(BUILD_DIR)
+
+$(BUILD_DIR)/$(BIN_DIR): $(BUILD_DIR)
+	@if not exist "$(BUILD_DIR)\$(BIN_DIR)" mkdir "$(BUILD_DIR)\$(BIN_DIR)"
 
 # Use to generate generated.vc
 win_files:
@@ -67,23 +71,17 @@ SWIG_CSHARP = $(SWIG) -c++ -csharp -namespace librets -o librets_wrap.cpp \
 	-outdir lib -I../lib/csharp -dllimport $(LIBRETS_UNMANAGED_DLL_FILE) \
 	../librets.i
 
-librets_bridge.obj: ../librets_bridge.cpp
+$(BUILD_DIR)/librets_bridge.obj: ../librets_bridge.cpp
 	$(CXX) $(CFLAGS) /Fo"$@" ../librets_bridge.cpp 
 
-librets_wrap.obj: librets_wrap.cpp
+$(BUILD_DIR)/librets_wrap.obj: librets_wrap.cpp
 
-librets_wrap.cpp: ../librets.i
+librets_wrap.cpp: ../librets.i $(BUILD_DIR)/$(BIN_DIR)
 	@-erase lib\*.cs 2> NUL
 	$(SWIG_CSHARP)
 
 clean:
-	@-rmdir /q /s $(BIN_DIR) 2> NUL
-	@-erase /q lib\*.cs 2> NUL
-	@-erase /q vc*.pch 2> NUL
-	@-erase /q vc*.idb 2> NUL
-	@-erase /q vc*.pdb 2> NUL
-	@-erase /q librets.* 2> NUL
-	@-erase /q *.obj 2> NUL
+	@-rmdir /q /s $(BUILD_DIR) 2> NUL
 	@-erase librets_wrap.cpp 2> NUL
 	@-erase librets_wrap.h 2> NUL
 

@@ -2,25 +2,16 @@
 !include version.mk
 
 NMAKE = nmake /nologo
+GMAKE = make
 
-TYPE = static
 THIRD_PARTY_LIBS = static
 
-!if "$(TYPE)" == "static"
-LINK_LIB_FLAG = /lib
-LIB_PREFIX = lib
-LIB_EXT = lib
-OBJDIR_TYPE = -static
-!else if "$(TYPE)" == "dynamic"
-LINK_LIB_FLAG = /dll
-LIB_PREFIX = 
-LIB_EXT = dll
-OBJDIR_TYPE = -shared
-!else
-!error "Unknown TYPE: $(TYPE)"
-!endif
-
+########################################################################
+#
+# Release configuration
+#
 !if "$(BUILD)" == "release"
+
 OPTIMIZE_FLAG = /O2
 RTC_FLAG =
 OBJDIR_BUILD = release
@@ -28,76 +19,144 @@ LINK_DEBUG_FLAG =
 
 DEBUG_RUNTIME = 
 LIB_DEBUG_RUNTIME = 
+
 !else if "$(BUILD)" == "debug"
+
 OPTIMIZE_FLAG = /Od
+RTC_FLAG = /RTC1
+
 !if "$(VS_VERSION)" == "vs2003"
+
 RTC_FLAG = /GZ
-!else if "$(VS_VERSION)" == "vs2005"
-RTC_FLAG = /RTC1
-!else if "$(VS_VERSION)" == "vs2008"
-RTC_FLAG = /RTC1
+
 !endif
+
 OBJDIR_BUILD = debug
 LINK_DEBUG_FLAG = /DEBUG
 
 DEBUG_RUNTIME = d
 LIB_DEBUG_RUNTIME = d
+
 !else
 !error "Unknown BUILD: $(BUILD)"
 !endif
 
+########################################################################
+#
+# Runtime Configuration
+#
 !if "$(RUNTIME_LIBS)" == "dynamic"
-RUNTIME_FLAGS = /MD$(DEBUG_RUNTIME)
-OBJDIR_RUNTIME = 
+
 LIB_RUNTIME = 
+LIB_RUNTIME = dynamic
+LINK_LIB_FLAG = /lib
+LIB_PREFIX = lib
+LIB_EXT = lib
+LINK_STD = $(WINLIBS)
+OBJDIR_RUNTIME = 
+OBJDIR_TYPE = -dynamic
+RUNTIME_FLAGS = /MD$(DEBUG_RUNTIME)
+
 !else if "$(RUNTIME_LIBS)" == "static"
+
+LIB_RUNTIME = static
+LINK_LIB_FLAG = /lib
+LIB_PREFIX = lib
+LIB_EXT = lib
+OBJDIR_RUNTIME = -static
+OBJDIR_TYPE = -static
 RUNTIME_FLAGS = /MT$(DEBUG_RUNTIME)
-OBJDIR_RUNTIME = -mt
-LIB_RUNTIME = mt
+
+!else if "$(RUNTIME_LIBS)" == "dll"
+# This is not yet functional
+
+OBJDIR_RUNTIME = -dll
+LIB_RUNTIME = dynamic
+LINK_LIB_FLAG = /dll
+LIB_PREFIX = 
+LIB_EXT = dll
+OBJDIR_TYPE = -dll
+RUNTIME_FLAGS = /LD$(DEBUG_RUNTIME) /MD$(DEBUG_RUNTIME)
+
 !else
 !error "Unknown RUNTIME_LIBS: $(RUNTIME_LIBS)"
 !endif
 
-BUILD_DIR = build
-DIROBJ = $(BUILD_DIR)\$(OBJDIR_BUILD)$(OBJDIR_TYPE)$(OBJDIR_RUNTIME)
 
 CC = cl.exe
 CXX = cl.exe
+
 !if "$(VS_VERSION)" == "vs2003"
+
 CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAG) /Gm /Zi \
 	$(RTC_FLAG) /I. \
 	/W3 /GX /YX /GR /c
 
+MSVCP_DLL="$(VCTOOLS)\crt\src\build\intel\msvcp71.dll"
 VC_VERSION = -vc71
+WINLIBS = wsock32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
+
 !else if "$(VS_VERSION)" == "vs2005"
+
 CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAG) /Gm /Zi \
 	$(RTC_FLAG) /I. \
 	/W3 /EHsc /GR /c
 
+MSVCP_DLL="$(VCTOOLS)\redist\x86\Microsoft.VC80.CRT\msvcp80.dll"
 VC_VERSION = -vc80
+WINLIBS = wsock32.lib winmm.lib wldap32.lib bufferoverflowu.lib user32.lib gdi32.lib advapi32.lib
+
 !else if "$(VS_VERSION)" == "vs2008"
+
 CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAG) /Gm /Zi \
 	$(RTC_FLAG) /I. \
 	/W3 /EHsc /GR /c
+
+!if "$(TARGET_CPU)" == "x64"
+MSVCP_DLL="$(VCTOOLS)\redist\amd64\Microsoft.VC90.CRT\msvcp90.dll"
+MSVCR_DLL="$(VCTOOLS)\redist\amd64\Microsoft.VC90.CRT\msvcr90.dll"
+!else
+MSVCP_DLL="$(VCTOOLS)\redist\x86\Microsoft.VC90.CRT\msvcp90.dll"
+MSVCR_DLL="$(VCTOOLS)\redist\x86\Microsoft.VC90.CRT\msvcr90.dll"
+!endif
 
 VC_VERSION = -vc90
+WINLIBS = ws2_32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
+
 !endif
 
 CSC = csc.exe /nologo
-LINK_LIB = link.exe $(LINK_LIB_FLAG) /nologo 
-LINK_EXE = link.exe /nologo 
+LINK_LIB = link.exe $(LINK_LIB_FLAG) /nologo
+LINK_EXE = link.exe /nologo
 
 EXTRA_DLL =
-!if "$(VS_VERSION)" == "vs2003"
-WINLIBS = wsock32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
-MSVCP_DLL="$(VCTOOLS)\crt\src\build\intel\msvcp71.dll"
-!else if "$(VS_VERSION)" == "vs2005"
-WINLIBS = wsock32.lib winmm.lib wldap32.lib bufferoverflowu.lib user32.lib gdi32.lib advapi32.lib
-MSVCP_DLL="$(VCTOOLS)\redist\x86\Microsoft.VC80.CRT\msvcp80.dll"
-!else if "$(VS_VERSION)" == "vs2008"
-WINLIBS = ws2_32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
-MSVCP_DLL="$(VCTOOLS)\redist\x86\Microsoft.VC90.CRT\msvcp90.dll"
+
+
+########################################################################
+#
+# libRETS specific configuration
+#
+
+BUILD_DIR = build-$(TARGET_CPU)
+DIROBJ = $(BUILD_DIR)\$(BUILD)-$(RUNTIME_LIBS)
+
+LIBRETS_DEBUG  = 
+LIBRETS_RUNTIME_PREFIX = 
+LIBRETS_STATIC = 
+
+!if "$(BUILD)" == "debug"
+
+LIBRETS_DEBUG = d
+LIBRETS_RUNTIME_PREFIX = -
+
 !endif
+
+!if "$(RUNTIME_LIBS)" == "static"
+LIBRETS_STATIC = s
+LIBRETS_RUNTIME_PREFIX = -
+!endif
+
+LIBRETS_LIB_NAME = $(LIB_PREFIX)librets-$(VS_VERSION)$(LIBRETS_RUNTIME_PREFIX)$(LIBRETS_STATIC)$(LIBRETS_DEBUG)-$(VERSION).$(LIB_EXT)
 
 ########################################################################
 #
@@ -191,16 +250,16 @@ CURL_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib" $(CURL_LIB)
 
 EXPAT_PATH = $(BASE_PATH)/expat
 
-!if "$(RUNTIME_LIBS)" == "dynamic"
-EXPAT_RUNTIME =
-!else
-EXPAT_RUNTIME = MT
-!endif
-
 !if "$(BUILD)" == "release"
 EXPAT_BIN_PREFIX = release
 !else
 EXPAT_BIN_PREFIX = debug
+!endif
+
+!if "$(RUNTIME_LIBS)" == "dynamic"
+EXPAT_RUNTIME =
+!else
+EXPAT_RUNTIME = MT
 !endif
 
 !if "$(THIRD_PARTY_LIBS)" == "static"
@@ -208,7 +267,7 @@ EXPAT_XML_STATIC = /DXML_STATIC
 EXPAT_LIB_PREFIX = lib
 !else if "$(THIRD_PARTY_LIBS)" == "dynamic"
 EXPAT_XML_STATIC =
-EXPAT_LIB_PREFIX = 
+EXPAT_LIB_PREFIX = lib
 !endif
 
 !if "$(VS_VERSION)" == "vs2003"
@@ -218,7 +277,8 @@ EXPAT_LDFLAGS = "/LIBPATH:$(EXPAT_PATH)/lib/lib" \
 
 !else
 EXPAT_CFLAGS = /I "$(BASE_PATH)/include" $(EXPAT_XML_STATIC)
-EXPAT_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib/$(EXPAT_BIN_PREFIX)" \
+# EXPAT_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib/$(EXPAT_BIN_PREFIX)" 
+EXPAT_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib" \
 	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME).lib
 !endif
 ########################################################################
@@ -252,7 +312,7 @@ ANTLR_LDFLAGS = "/LIBPATH:$(ANTLR_PATH)/lib" \
 # CppUnit Configuration
 
 CPPUNIT_PATH = $(BASE_PATH)/cppunit
-CPPUNIT_LIB = cppunit$(LIB_RUNTIME)$(LIB_DEBUG_RUNTIME).lib
+CPPUNIT_LIB = cppunit.lib
 CPPUNIT_CFLAGS = /I "$(CPPUNIT_PATH)/include"
 CPPUNIT_LDFLAGS = "/LIBPATH:$(CPPUNIT_PATH)/lib" $(CPPUNIT_LIB)
 
@@ -272,7 +332,7 @@ SWIG_PATH = $(BASE_PATH)\swig
 SWIG_PATH = $(BASE_PATH)\bin
 !endif
 !if "$(SWIG)" == ""
-SWIG = $(SWIG_PATH)\swig.exe -v 
+SWIG = $(SWIG_PATH)\swig.exe 
 !endif
 
 ########################################################################
@@ -281,8 +341,13 @@ SWIG = $(SWIG_PATH)\swig.exe -v
 
 !if "$(VS_VERSION)" == "vs2008"
 PHP_PATH = $(BASE_PATH)/include/php
+!if "$(TARGET_CPU)" == "x86"
+PHP_TIME_T=/D_USE_32BIT_TIME_T
+!elseif "$(TARGET_CPU)" == "x64"
+PHP_TIME_T=
+!endif
 PHP_CFLAGS = /I$(PHP_PATH) /I$(PHP_PATH)/TSRM /I$(PHP_PATH)/Zend /I$(PHP_PATH)/main \
-	/DPHP_WIN32 /DWIN32 /DZEND_WIN32 /DZTS=0 /DZEND_DEBUG=0 /D_USE_32BIT_TIME_T
+	/DPHP_WIN32 /DWIN32 /DZEND_WIN32 /DZTS=0 /DZEND_DEBUG=0 $(PHP_TIME_T)
 PHP_LIBS = $(BASE_PATH)/lib/php5ts.lib
 !endif
 !if "$(PHP_PATH)" == ""
@@ -318,4 +383,13 @@ PERL_LIBS = $(WINLIBS) libcpmt.lib
 PERL_LIB_EXT = lib
 !else if "$(TYPE)" == "dynamic"
 PERL_LIB_EXT = dll
+!endif
+
+########################################################################
+#
+# Python Configuration
+!ifndef LIBPATH
+PYTHON_LIBPATH = $(BASE_PATH)/lib
+!else
+PYTHON_LIBPATH = $(LIBPATH)
 !endif
