@@ -119,7 +119,7 @@ class GetObjectRequest : public RetsObject
     /**
      * Returns <code>true</code> if a default object key and ID are
      * available.  A default object key and ID are availalbe if
-     * and only if a single ojbect has been added.  With more than
+     * and only if a single object has been added.  With more than
      * one object added, there is no way to determine which is the default.
      *
      * @return <code>true</code> if a default object key and ID are available.

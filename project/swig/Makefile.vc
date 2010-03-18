@@ -16,6 +16,12 @@ RUBY_MAKEFILE = ruby\Makefile
 RUBY_WRAP = ruby\$(SWIG_WRAP_SRC)
 RUBY_WRAP_H = ruby\$(SWIG_WRAP_H)
 
+PERL_BUILD =
+PERL_CLEAN =
+!if "$(VS_VERSION)" == "vs2008"
+PERL_BUILD = perl_
+PERL_CLEAN = clean-perl
+!endif
 PERL_DLL = blib\arch\auto\librets\librets.so
 PERL_MAKEFILE = perl\Makefile
 PERL_MAKEFILE_PL = Makefile.PL
@@ -31,7 +37,7 @@ PHP5_WRAP_H = php5\$(SWIG_WRAP_H)
 
 SWIG_FILES = librets.i auto_ptr_release.i shared_ptr_release.i
 
-all: csharp_ java_ perl_ php5_ python_ $(RUBY_BUILD)
+all: csharp_ java_ $(PERL_BUILD) php5_ python_ $(RUBY_BUILD)
 
 csharp_: 
 	cd csharp
@@ -110,7 +116,7 @@ $(PHP5_WRAP): $(SWIG_FILES)
 		-I.. ../librets.i
 	cd ..
 
-clean: clean-csharp clean-java clean-python clean-php5 clean-perl $(RUBY_CLEAN)
+clean: clean-csharp clean-java clean-python clean-php5 $(PERL_CLEAN)  $(RUBY_CLEAN)
 
 clean-csharp:
 	cd csharp

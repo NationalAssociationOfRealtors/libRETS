@@ -39,6 +39,10 @@ RUBY_DIST =
 !if "X$(MINGW_SUPPORT)" != "X"
 RUBY_DIST = _dist_ruby
 !endif
+PERL_DIST =
+!if "$(VS_VERSION)" == "vs2008"
+PERL_DIST = _dist_perl
+!endif
 RSYNC = rsync -a --exclude-from project/build/dist-win-exclude
 
 prepare:
@@ -102,7 +106,7 @@ lib-release-static:
 
 dist: docs lib-all-variants _dist
 
-_dist: _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-python _dist-php5 _dist-perl $(RUBY_DIST)
+_dist: _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-python _dist-php5 $(PERL_DIST)  $(RUBY_DIST)
 	rm -f $(DIST_ZIP)
 	cd build
 	zip -rq ../$(DIST_ZIP) $(DIST_BASE)

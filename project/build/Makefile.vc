@@ -368,9 +368,7 @@ PHP_LIBS = $(PHPWIN_PATH)/dev/php5ts.lib
 #
 # Perl Configuration
 
-!if "$(VS_VERSION)" != "vs2008"
-!error "Perl is only implemented for VS2008"
-!endif
+!if "$(VS_VERSION)" == "vs2008"
 
 PERL_PATH = $(BASE_PATH)/perl
 PERL_CFLAGS = /DWIN32 /D_CONSOLE /DNO_STRICT /I../../librets/include $(CFLAGS_STD) \
@@ -383,6 +381,7 @@ PERL_LIBS = $(WINLIBS) libcpmt.lib
 PERL_LIB_EXT = lib
 !else if "$(TYPE)" == "dynamic"
 PERL_LIB_EXT = dll
+!endif
 !endif
 
 ########################################################################
