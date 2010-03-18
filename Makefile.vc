@@ -38,6 +38,10 @@ DIST_ZIP = dist/librets-win32-$(VERSION).zip
 DOXYGEN = "C:\Program Files (x86)\doxygen\bin\doxygen.exe"
 MKDIR_P = c:\cygwin\bin\mkdir.exe -p
 RSYNC = rsync -a --exclude-from project/build/dist-win-exclude
+PERL_DIST =
+!if "$(VS_VERSION)" == "vs2008"
+PERL_DIST = _dist-perl
+!endif
 
 prepare:
 	@if not exist build\doc\api mkdir build\doc\api
@@ -83,7 +87,7 @@ lib-all-variants:
 
 dist: docs lib-all-variants _dist
 
-_dist: _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-ruby _dist-python _dist-php5 _dist-perl
+_dist: _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-ruby _dist-python _dist-php5 $(PERL_DIST)
 	rm -f $(DIST_ZIP)
 	cd build
 	zip -rq ../$(DIST_ZIP) $(DIST_BASE)
@@ -118,7 +122,7 @@ _dist-python:
 
 _dist-php5:
 	cp -u project/swig/php5/librets.php $(DISTDIR)/php5
-	cp -u project/swig/php5/php_librets.dll $(DISTDIR)/php5
+	cp -u project/swig/php5/librets.dll $(DISTDIR)/php5
 
 _dist-perl:
         cp -u project/swig/perl/librets.pm $(DISTDIR)/perl
