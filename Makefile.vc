@@ -41,7 +41,7 @@ RUBY_DIST = _dist_ruby
 !endif
 PERL_DIST =
 !if "$(VS_VERSION)" == "vs2008"
-PERL_DIST = _dist_perl
+PERL_DIST = _dist-perl
 !endif
 RSYNC = rsync -a --exclude-from project/build/dist-win-exclude
 

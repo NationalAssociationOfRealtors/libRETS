@@ -1,6 +1,16 @@
-Version 1.5.0b1 - xx xxx 2010
+Version 1.5.0b1 - 22 Mar 2010
 
   * Support 64 bit Windows. Ticket #125.
+    Note that library names for native development have changed
+    on Windows. The archive library now follows the convention:
+    liblibrets-<vsversion>-<flags>-<version>.lib where:
+        <vsversion> is the compiler version;
+        <flags> is "s" to indicate statically linked and
+                "d" indicates that the library has debug code;
+        <version> is the libRETS version number.
+    For example:
+        liblibrets-vs2008-sd-1.5.0b1.lib
+        liblibrets-vs2008-1.5.0b1.lib
 
 Version 1.4.1 - 12 Mar 2010
 
