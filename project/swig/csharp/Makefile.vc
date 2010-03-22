@@ -18,6 +18,10 @@ LIBRETS_MANAGED_SRC = $(GENERATED_SRC) CppInputStream.cs \
 	RetsExceptionNative.cs RetsReplyExceptionNative.cs \
 	RetsHttpExceptionNative.cs
 LIBRETS_MANAGED_DLL = $(BUILD_DIR)\$(BIN_DIR)\librets-dotnet.dll
+PLATFORM =
+!if "$(VS_VERSION)" == "vs2008"
+PLATFORM = -platform:$(TARGET_CPU)
+!endif
 RM = rm -f
 
 LOGIN_EXE = $(BUILD_DIR)\$(BIN_DIR)\Login.exe
@@ -32,25 +36,25 @@ SAMPLE_EXE = $(LOGIN_EXE) $(SEARCH_EXE) $(RAWSEARCH_EXE) $(METADATA_EXE) $(GET_O
 all: $(LIBRETS_UNMANAGED_DLL) $(SAMPLE_EXE)
 
 $(LOGIN_EXE): Login.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	$(CSC) -platform:$(TARGET_CPU) -debug -out:$(LOGIN_EXE) -r:$(LIBRETS_MANAGED_DLL) Login.cs
+	$(CSC) $(PLATFORM) -debug -out:$(LOGIN_EXE) -r:$(LIBRETS_MANAGED_DLL) Login.cs
 
 $(SEARCH_EXE): Search.cs Options.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	$(CSC) -platform:$(TARGET_CPU) -out:$(SEARCH_EXE) -r:$(LIBRETS_MANAGED_DLL) Search.cs Options.cs
+	$(CSC) $(PLATFORM) -out:$(SEARCH_EXE) -r:$(LIBRETS_MANAGED_DLL) Search.cs Options.cs
 
 $(RAWSEARCH_EXE): RawSearch.cs Options.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	$(CSC) -platform:$(TARGET_CPU) -out:$(RAWSEARCH_EXE) -r:$(LIBRETS_MANAGED_DLL) RawSearch.cs Options.cs
+	$(CSC) $(PLATFORM) -out:$(RAWSEARCH_EXE) -r:$(LIBRETS_MANAGED_DLL) RawSearch.cs Options.cs
 
 $(METADATA_EXE): Metadata.cs Options.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	$(CSC) -platform:$(TARGET_CPU) -out:$(METADATA_EXE) -r:$(LIBRETS_MANAGED_DLL) Metadata.cs Options.cs
+	$(CSC) $(PLATFORM) -out:$(METADATA_EXE) -r:$(LIBRETS_MANAGED_DLL) Metadata.cs Options.cs
 
 $(GET_OBJECT_EXE): GetObject.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	$(CSC) -platform:$(TARGET_CPU) -out:$(GET_OBJECT_EXE) -r:$(LIBRETS_MANAGED_DLL) GetObject.cs
+	$(CSC) $(PLATFORM) -out:$(GET_OBJECT_EXE) -r:$(LIBRETS_MANAGED_DLL) GetObject.cs
 
 $(UPDATE_EXE): Update.cs Options.cs $(LIBRETS_MANAGED_DLL) $(LIBRETS_UNMANAGED_DLL)
-	$(CSC) -platform:$(TARGET_CPU) -out:$(UPDATE_EXE) -r:$(LIBRETS_MANAGED_DLL) Update.cs Options.cs
+	$(CSC) $(PLATFORM) -out:$(UPDATE_EXE) -r:$(LIBRETS_MANAGED_DLL) Update.cs Options.cs
 
 $(LIBRETS_MANAGED_DLL): $(LIBRETS_UNMANAGED_DLL) $(LIBRETS_MANAGED_SRC) $(BUILD_DIR)/$(BIN_DIR)
-	$(CSC) -target:library -platform:$(TARGET_CPU) -out:$(LIBRETS_MANAGED_DLL) $(LIBRETS_MANAGED_SRC)
+	$(CSC) -target:library $(PLATFORM) -out:$(LIBRETS_MANAGED_DLL) $(LIBRETS_MANAGED_SRC)
 
 $(LIBRETS_UNMANAGED_DLL): $(LIBRETS_UNMANAGED_OBJ) $(BUILD_DIR)/$(BIN_DIR)
 	$(LINK) /dll /out:$(LIBRETS_UNMANAGED_DLL) $(LIBRETS_UNMANAGED_OBJ) $(LDFLAGS) $(WINLIBS)
