@@ -64,6 +64,7 @@ prepare:
 	@if not exist $(MSVCP_DLL) echo MSVCP71.DLL). See: 
 	@if not exist $(MSVCP_DLL) echo http://msdn.microsoft.com/en-us/library/k0a8ehy3(VS.71).aspx
 	@if not exist $(MSVCP_DLL) exit 1
+        @$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic _librets-config
 
 docs: prepare
 	rm -rf build/doc/api
@@ -150,3 +151,11 @@ _dist-perl:
         @echo Place librets.pm into your site/lib directory > $(DISTDIR)/perl/README
         @echo Create the directory site/lib/auto/librets >> $(DISTDIR)/perl/README
         @echo and place the other files there. >> $(DISTDIR)/perl/README
+
+_librets-config:
+        @cat librets-config.in | sed \
+                -e "s,@LIBRETS_CFLAGS@,$(CFLAGS_STD)," \
+                -e "s,@libdir@,$(LIBRETS_LIB_NAME)," \
+                -e "s,@VERSION@,$(VERSION)," \
+                -e "s,@HEX_VERSION@, $(HEX_VERSION)," \
+                > librets-config-win
