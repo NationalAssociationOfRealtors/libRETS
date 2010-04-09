@@ -29,6 +29,7 @@ using namespace std;
 class CLASS : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(CLASS);
+    CPPUNIT_TEST(testInvalidLogin);
     CPPUNIT_TEST(testValid15Response);
     CPPUNIT_TEST(testValid10Response);
     CPPUNIT_TEST(testShortResponse);
@@ -36,6 +37,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
   protected:
+    void testInvalidLogin();
     void testValid15Response();
     void testValid10Response();
     void testShortResponse();
@@ -44,12 +46,22 @@ class CLASS : public CPPUNIT_NS::TestFixture
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
 
+void CLASS::testInvalidLogin()
+{
+    istreamPtr inputStream = getResource("login-invalid.xml");
+    LoginResponse response;
+    response.Parse(inputStream, RETS_1_5);
+
+    ASSERT_EQUAL(20036, response.GetRetsReplyCode());
+    ASSERT_STRING_EQUAL("Miscellaneous Server Error", response.GetRetsReplyText());
+}
+
 void CLASS::testValid15Response()
 {
     istreamPtr inputStream = getResource("login-valid15.xml");
     LoginResponse response;
     response.Parse(inputStream, RETS_1_5);
-
+    
     ASSERT_STRING_EQUAL("Joe Schmoe", response.GetValue("MemberName"));
     ASSERT_STRING_EQUAL("Joe Schmoe", response.GetValue("membername"));
     ASSERT_STRING_EQUAL("", response.GetValue("none"));
@@ -68,7 +80,7 @@ void CLASS::testValid15Response()
     ASSERT_STRING_EQUAL("01 Jan 2000 01:03:00 GMT, 5",
                         response.GetPasswordExpire());
     ASSERT_STRING_EQUAL("chi", response.GetOfficeList());
-
+    
     ASSERT_STRING_EQUAL("action",
                         response.GetActionUrl());
     ASSERT_STRING_EQUAL("http://example.com:6103/rets/changePassword",
@@ -89,11 +101,11 @@ void CLASS::testValid15Response()
                         response.GetServerInformationUrl());
     ASSERT_STRING_EQUAL("http://example.com:6103/rets/update",
                         response.GetUpdateUrl());
-
+    
     CapabilityUrls expected("http://example.com:6103/");
     expected.SetActionUrl("http://example.com:6103/rets/action");
     expected.SetChangePasswordUrl(
-        "http://example.com:6103/rets/changePassword");
+                                  "http://example.com:6103/rets/changePassword");
     expected.SetGetObjectUrl("http://example.com:6103/rets/getObject");
     expected.SetLoginUrl("http://example.com:6103/rets/login");
     expected.SetLoginCompleteUrl("http://example.com:6103/rets/loginComplete");
@@ -101,11 +113,11 @@ void CLASS::testValid15Response()
     expected.SetSearchUrl("http://example.com:6103/rets/search");
     expected.SetGetMetadataUrl("http://example.com:6103/rets/getMetadata");
     expected.SetServerInformationUrl(
-        "http://example.com:6103/rets/serverInfo");
+                                     "http://example.com:6103/rets/serverInfo");
     expected.SetUpdateUrl("http://example.com:6103/rets/update");
-
+    
     CapabilityUrlsAPtr actual =
-        response.CreateCapabilityUrls("http://example.com:6103/rets/login");
+    response.CreateCapabilityUrls("http://example.com:6103/rets/login");
     CPPUNIT_ASSERT_EQUAL(expected, *actual);
 }
 

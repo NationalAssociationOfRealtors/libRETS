@@ -63,6 +63,21 @@ class KeyValueResponse : public RetsObject
      */
     std::string GetValue(std::string key) const;
 
+    /**
+     * Returns an integer representing the RETS Response Code for this
+     * object.
+     *
+     * @return An integer containing the RETS Response Code.
+     */
+    int GetRetsReplyCode() const;
+    
+    /**
+     * Returns a string representing the RETS Reply Text.
+     *
+     * @return A string containing the RETS Reply Text.
+     */
+    std::string GetRetsReplyText() const;
+    
   protected:
     virtual RetsXmlTextEventPtr GetBodyEvent(RetsXmlEventListPtr eventList,
                                              RetsVersion retsVersion) = 0;
@@ -85,11 +100,19 @@ class KeyValueResponse : public RetsObject
     
     static void AssertEventListSize(int expected,
                                     RetsXmlEventListPtr eventList);
+    
+    static void AssertNotEquals(const std::string & expected,
+                                const std::string & actual);
+        
 
   private:
     void ParseBody(std::string body);
+    void ParseRetsReply(RetsXmlEventListPtr eventList);
     
     StringMap mValues;
+    
+    int mRetsReplyCode;
+    std::string mRetsReplyText;
 };
 
 };

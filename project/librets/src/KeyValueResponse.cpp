@@ -28,6 +28,7 @@
 using namespace librets;
 using namespace librets::util;
 using std::string;
+using std::istringstream;
 using std::ostringstream;
 namespace b = boost;
 namespace ba = boost::algorithm;
@@ -73,6 +74,17 @@ void CLASS::AssertEventListSize(int expected,
     }
 }
 
+void CLASS::AssertNotEquals(const string & expected, const string & actual)
+{
+    if (expected == actual)
+    {
+        ostringstream message;
+        message << "Not equals, expected: <" << expected << ">, actual: <"
+        << actual << ">";
+        throw RetsException(message.str());
+    }
+}
+
 void CLASS::Parse(istreamPtr inputStream, RetsVersion retsVersion)
 {
     Parse(inputStream, retsVersion, RETS_XML_DEFAULT_ENCODING);
@@ -93,6 +105,7 @@ void CLASS::Parse(istreamPtr inputStream, RetsVersion retsVersion, EncodingType 
     {
         ParseBody(bodyEvent->GetText());
     }
+    ParseRetsReply(eventList);
     ParsingFinished();
 }
 
@@ -131,6 +144,15 @@ RetsXmlTextEventPtr CLASS::GetBodyEventFromStandardResponse(
         AssertEquals("RETS", endEvent->GetName());
         RetsXmlParser::AssertEndDocumentEvent(eventList->at(4));
     }
+    else if (eventList->size() == 3)
+    {
+        startEvent = RetsXmlParser::AssertStartEvent(eventList->at(0));
+        AssertEquals("RETS", startEvent->GetName());
+        AssertNotEquals("0", startEvent->GetAttributeValue("ReplyCode"));
+        endEvent = RetsXmlParser::AssertEndEvent(eventList->at(1));
+        AssertEquals("RETS", endEvent->GetName());
+        RetsXmlParser::AssertEndDocumentEvent(eventList->at(2));
+    }    
     else
     {
         ostringstream message;
@@ -203,6 +225,45 @@ void CLASS::ParseBody(string body)
         ba::trim(value);
         mValues[key] = value;
     }
+}
+
+void CLASS::ParseRetsReply(RetsXmlEventListPtr eventList)
+{
+    RetsXmlStartElementEventPtr startEvent;
+
+    startEvent = RetsXmlParser::AssertStartEvent(eventList->at(0));
+    string name = startEvent->GetName();
+
+    if (name == "RETS")
+    {
+        istringstream replyCodeString(
+                                      startEvent->GetAttributeValue("ReplyCode"));
+        int replyCode;
+        try
+        {
+            replyCodeString >> replyCode;
+        }
+        catch (std::exception &)
+        {
+            replyCode = 20036; // Miscellaneous Error
+        }
+        
+        if (replyCode != 0)
+        {
+            mRetsReplyText = startEvent->GetAttributeValue("ReplyText");
+            mRetsReplyCode = replyCode;
+        }
+    }    
+}
+
+int CLASS::GetRetsReplyCode() const
+{
+    return mRetsReplyCode;
+}
+
+string CLASS::GetRetsReplyText() const
+{
+    return mRetsReplyText;
 }
 
 string CLASS::GetValue(string key) const

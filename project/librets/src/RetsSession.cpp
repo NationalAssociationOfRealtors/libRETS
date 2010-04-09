@@ -190,6 +190,9 @@ bool CLASS::Login(string user_name,
     
     mLoginResponse.reset(new LoginResponse);
     mLoginResponse->Parse(httpResponse->GetInputStream(), mDetectedRetsVersion, mEncoding);
+    if (mLoginResponse->GetRetsReplyCode() != 0)
+        return false;
+    
     mCapabilityUrls.reset(
         mLoginResponse->CreateCapabilityUrls(mLoginUrl).release());
 
