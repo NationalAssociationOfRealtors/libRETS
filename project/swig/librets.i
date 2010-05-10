@@ -1130,6 +1130,7 @@ class MetadataTable : public MetadataElement
     std::string GetSearchHelpId() const;
     MetadataType GetType() const;
     bool IsUnique() const;
+    bool InKeyIndex() const;
 };
 
 typedef std::vector<MetadataTable *> MetadataTableList;

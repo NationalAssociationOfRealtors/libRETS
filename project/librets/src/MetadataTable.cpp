@@ -273,3 +273,8 @@ bool MetadataTable::IsUnique() const
 {
     return GetBoolAttribute("Unique");
 }
+
+bool MetadataTable::InKeyIndex() const
+{
+    return GetBoolAttribute("InKeyIndex");
+}

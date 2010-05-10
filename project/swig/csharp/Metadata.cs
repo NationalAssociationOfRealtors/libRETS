@@ -101,6 +101,8 @@ public class Metadata
             Console.WriteLine("\tTable datatype: " + table.GetDataType());
             Console.WriteLine("\tUnique: " + table.IsUnique());
             Console.WriteLine("\tMax Length: " + table.GetMaximumLength());
+            if (table.InKeyIndex())
+                Console.WriteLine("\tInKeyIndex");
         }
     }
 

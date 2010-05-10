@@ -189,6 +189,10 @@ void dumpAllTables(RetsMetadata * metadata, MetadataClass * aClass)
         {
             cout << " MetadataEntryID: " << table->GetMetadataEntryID();
         }
+        if (table->InKeyIndex())
+        {
+            cout << " InKeyIndex";
+        }
         cout << endl;
     }
 }

@@ -301,6 +301,7 @@ class MetadataTable : public MetadataElement
     std::string GetForeignField() const;
     
     /**
+     * @deprecated
      * Returns <code>true</code> when this field may be included in a query that
      * uses the <code>Key</code> optional argument.
      *
@@ -309,12 +310,21 @@ class MetadataTable : public MetadataElement
     bool GetKeyRetrievalQuery() const;
     
     /**
+     * @deprecated
      * Returns <code>true</code> when this field may be included in the <code>Select</code>
      * list of a query that uses the option <code>Key</code> argument.
      *
      * @return <code>true</code> when may be used in <code>Select</code> list.
      */
     bool GetKeyRetrievalSelect() const;
+
+    /**
+     * Returns <code>true</code> when this field may be included in the <code>Select</code>
+     * list of a query in order to suppress normal <code>Limit</code> behavior.
+     *
+     * @return <code>true</code> when may be used in <code>Select</code> list.
+     */
+    bool InKeyIndex() const;
 };
 
 };

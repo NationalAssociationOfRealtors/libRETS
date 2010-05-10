@@ -35,6 +35,12 @@ namespace ba = boost::algorithm;
 
 #define CLASS KeyValueResponse
 
+CLASS::CLASS()
+{
+    mRetsReplyCode = 0;
+    mRetsReplyText = "";
+}
+
 CLASS::~CLASS()
 {
 }

@@ -38,6 +38,11 @@ namespace librets {
 class KeyValueResponse : public RetsObject
 {
   public:
+    /**
+     * Default constructor.
+     */
+    KeyValueResponse();
+    
     virtual ~KeyValueResponse();
 
     /**
@@ -65,7 +70,9 @@ class KeyValueResponse : public RetsObject
 
     /**
      * Returns an integer representing the RETS Response Code for this
-     * object.
+     * object. This is really only used internally to indicate login failures 
+     * on those servers that don't return a 401 Unauthorized response but
+     * do return the RETS Response Code.
      *
      * @return An integer containing the RETS Response Code.
      */

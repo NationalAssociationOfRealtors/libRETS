@@ -145,6 +145,8 @@ public class metadata
             System.out.println("\tTable datatype: " + table.GetDataType());
             System.out.println("\tUnique: " + table.IsUnique());
             System.out.println("\tMax Length: " + table.GetMaximumLength());
+            if (table.InKeyIndex())
+                System.out.println("\tInKeyIndex");
         }
     }
 
