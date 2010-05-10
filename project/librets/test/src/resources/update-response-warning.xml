@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<RETS ReplyCode="0" ReplyText="Operation Successful">
+<RETS ReplyCode="20312" ReplyText="WarningResponse was given for a warning that contained a response-required value of 0.">
 <DELIMITER value="09"/>
 <COLUMNS>	ListingID	ListPrice	City	ListDate	</COLUMNS>
 <DATA>	LN000005	250000	Chicago	2004-07-04	</DATA>

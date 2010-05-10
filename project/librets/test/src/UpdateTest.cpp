@@ -193,6 +193,9 @@ void CLASS::testWarningOnly()
     UpdateResponse result;
     istreamPtr inputStream = getResource("update-response-warning.xml");
     result.Parse(inputStream);
+    
+    ASSERT_EQUAL(20312, result.GetReplyCode());
+    
     StringVector columns = result.GetColumns();
     ASSERT_EQUAL(StringVector::size_type(4), columns.size());
     ASSERT_STRING_EQUAL("ListingID", columns.at(0));

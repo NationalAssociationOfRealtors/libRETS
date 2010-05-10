@@ -280,40 +280,23 @@ bool UpdateResponse::Parse()
         string name = startEvent->GetName();
         if (name == "RETS")
         {
-            istringstream replyCodeString(
-                                          startEvent->GetAttributeValue("ReplyCode"));
-            int replyCode;
-            replyCodeString >> replyCode;
-            if (replyCode != 0)
-            {
-                string meaning = startEvent->GetAttributeValue("ReplyText");
-                string extendedMeaning;
-                /*
-                 * There can be an optional text event as the next event, so we
-                 * try this in a try/catch block.
-                 */
-                try
-                {
-                    RetsXmlTextEventPtr textEvent =
-                    mXmlParser->AssertNextIsTextEvent();
-                    extendedMeaning = textEvent->GetText();
-                }
-                catch (RetsException e)
-                {
-                    throw RetsReplyException(replyCode, meaning);
-                }
-                /*
-                 * If we're here, we have an extended message. It could contain one
-                 * or more newlines, so remove them.
-                 */
-                ba::erase_all(extendedMeaning, "\n");
-                throw RetsReplyException(replyCode, meaning, extendedMeaning);
-            }
             /*
              * Beginning a transaction. Clear mReplyCode and mReplyText.
              */
             mReplyCode = 0;
             mReplyText.clear();
+
+            istringstream replyCodeString(
+                                          startEvent->GetAttributeValue("ReplyCode"));
+            int replyCode;
+            replyCodeString >> replyCode;
+            
+            if (replyCode != 0)
+            {
+                string meaning  = startEvent->GetAttributeValue("ReplyText");
+                mReplyCode      = replyCode;
+                mReplyText      = meaning;
+            }
         }
         else if (name == "COLUMNS")
         {

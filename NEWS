@@ -4,6 +4,7 @@ Version 1.5.1 - xx xxx 2010
   * Properly parse failed login RETS Reply. Ticket #139.
   * User Agent Authentication fails for non-Interealty servers.
     Ticket #140.
+  * UpdateResponse.Parse() throws execption. Ticket #155.
   * Add InKeyIndex() to MetadataTable and expose to SWIG.
     Ticket #157.
 
