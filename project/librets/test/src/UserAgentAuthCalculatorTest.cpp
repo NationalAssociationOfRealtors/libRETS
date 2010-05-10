@@ -45,6 +45,7 @@ void CLASS::testAuthorizationValue()
 {
     UserAgentAuthCalculator authCalc;
     authCalc.SetUserAgent("VieleRETS/1.1.0");
+    authCalc.SetUserAgentAuthType(USER_AGENT_AUTH_INTEREALTY);
     authCalc.SetUserAgentPassword("NWA");
     authCalc.SetRequestId("");
     authCalc.SetSessionId("");
@@ -59,13 +60,14 @@ void CLASS::testAuthorizationValue1_7()
 {
     UserAgentAuthCalculator authCalc;
     authCalc.SetUserAgent("MyAgent/1.2.3");
+    authCalc.SetUserAgentAuthType(USER_AGENT_AUTH_RETS_1_7);
     authCalc.SetUserAgentPassword("secret");
-    authCalc.SetRequestId("");
+    authCalc.SetRequestId("98765");
     authCalc.SetSessionId("1234567");
     authCalc.SetVersionInfo("RETS/1.7");
     
     CPPUNIT_ASSERT(authCalc.HasAuthorizationValue());
-    ASSERT_STRING_EQUAL("8367a86c3d5549265d43995cd91b76fc",
+    ASSERT_STRING_EQUAL("71c39e723a334222bc7a1025b9c363e2",
                         authCalc.AuthorizationValue());
 }
 

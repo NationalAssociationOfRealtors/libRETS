@@ -43,6 +43,7 @@ typedef RetsSession CLASS;
 const char * CLASS::DEFAULT_USER_AGENT  = "librets/" LIBRETS_VERSION;
 const RetsVersion CLASS::DEFAULT_RETS_VERSION = RETS_1_5;
 const char * CLASS::HTTP_EXPECT_HEADER  = "Expect";
+const char * CLASS::RETS_REQUEST_ID_HEADER = "RETS-Request-ID";
 const char * CLASS::RETS_SESSION_ID_HEADER = "RETS-Session-ID";
 const char * CLASS::RETS_VERSION_HEADER = "RETS-Version";
 const char * CLASS::RETS_UA_AUTH_HEADER = "RETS-UA-Authorization";
@@ -67,8 +68,8 @@ CLASS::RetsSession(string login_url)
     mRetsVersion = DEFAULT_RETS_VERSION;
     mErrorHandler = ExceptionErrorHandler::GetInstance();
     mIncrementalMetadata = true;
-    mUserAgentAuthType = USER_AGENT_AUTH_RETS_1_7;
     mUserAgentAuthCalculator.SetUserAgentPassword("");
+    mUserAgentAuthCalculator.SetUserAgentAuthType(USER_AGENT_AUTH_RETS_1_7);
     SetDefaultEncoding(RETS_XML_ISO_ENCODING);
     mFlags = 0;
     mLoggedIn = false;
@@ -99,10 +100,12 @@ RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
     {
         mUserAgentAuthCalculator.SetRequestId("");
         mUserAgentAuthCalculator.SetSessionId("");
-        if (mUserAgentAuthType == USER_AGENT_AUTH_RETS_1_7)
+        if (mUserAgentAuthCalculator.GetUserAgentAuthType() == USER_AGENT_AUTH_RETS_1_7)
         {
+            string requestId = mHttpClient->GetCookie(RETS_REQUEST_ID_HEADER);
             string sessionId = mHttpClient->GetCookie(RETS_SESSION_ID_HEADER);
-    
+
+            mUserAgentAuthCalculator.SetRequestId(requestId);
             mUserAgentAuthCalculator.SetSessionId(sessionId);
         }
         mUserAgentAuthCalculator.SetVersionInfo(
@@ -738,12 +741,12 @@ void CLASS::SetUserAgentAuthType(UserAgentAuthType type)
                             << type);
     }
     
-    mUserAgentAuthType = type;
+    mUserAgentAuthCalculator.SetUserAgentAuthType(type);
 }
 
 UserAgentAuthType CLASS::GetUserAgentAuthType() const
 {
-    return mUserAgentAuthType;
+    return mUserAgentAuthCalculator.GetUserAgentAuthType();
 }
 
 void CLASS::SetUserAgentPassword(std::string userAgentPassword)

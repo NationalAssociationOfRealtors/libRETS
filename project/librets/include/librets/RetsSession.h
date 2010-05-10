@@ -475,6 +475,7 @@ class RetsSession : public MetadataLoader
     
 private:
     static const char * HTTP_EXPECT_HEADER;
+    static const char * RETS_REQUEST_ID_HEADER;
     static const char * RETS_SESSION_ID_HEADER;
     static const char * RETS_VERSION_HEADER;
     static const char * RETS_UA_AUTH_HEADER;
@@ -522,8 +523,6 @@ private:
 
     RetsErrorHandler * mErrorHandler;
     
-    UserAgentAuthType mUserAgentAuthType;
-
     UserAgentAuthCalculator mUserAgentAuthCalculator;
     
     librets::EncodingType mEncoding;

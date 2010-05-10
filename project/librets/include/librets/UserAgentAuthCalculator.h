@@ -25,6 +25,7 @@
 
 #include <string>
 #include "librets/RetsObject.h"
+#include "librets/UserAgentAuthType.h"
 
 namespace librets {
 
@@ -35,11 +36,26 @@ namespace librets {
 class UserAgentAuthCalculator : public RetsObject
 {
   public:
+    
+    UserAgentAuthCalculator() : mUserAgentAuthType(USER_AGENT_AUTH_RETS_1_7) {};
+    
+    /**
+     * Get the User Agent authorization type currently set.
+     * @return The <code>UserAgentAuthType</code>
+     */
+    UserAgentAuthType GetUserAgentAuthType() const;
+    
     /**
      * Set the User Agent name
      * @param userAgent A string containing the User Agent Name.
      */
     void SetUserAgent(std::string userAgent);
+    
+    /**
+     * Set the User Agent authorization type
+     * @param userAgentAuthType A <code>UserAgentAuthType</code> method.
+     */
+    void SetUserAgentAuthType(UserAgentAuthType userAgentAuthType);
     
     /**
      * Set the Uesr Agent Password
@@ -79,11 +95,12 @@ class UserAgentAuthCalculator : public RetsObject
     std::string AuthorizationValue() const;;
     
   private:
-    std::string mUserAgent;
-    std::string mUserAgentPassword;
-    std::string mRequestId;
-    std::string mSessionId;
-    std::string mVersionInfo;
+    std::string         mUserAgent;
+    UserAgentAuthType   mUserAgentAuthType;
+    std::string         mUserAgentPassword;
+    std::string         mRequestId;
+    std::string         mSessionId;
+    std::string         mVersionInfo;
 };
     
 }

@@ -17,6 +17,7 @@
 
 #include <boostext/md5.hpp>
 #include "librets/UserAgentAuthCalculator.h"
+#include "librets/UserAgentAuthType.h"
 
 using namespace librets;
 using std::string;
@@ -24,9 +25,19 @@ namespace be = boostext;
 
 #define CLASS UserAgentAuthCalculator
 
+UserAgentAuthType CLASS::GetUserAgentAuthType() const
+{
+    return mUserAgentAuthType;
+}
+
 void CLASS::SetUserAgent(string userAgent)
 {
     mUserAgent = userAgent;
+}
+
+void CLASS::SetUserAgentAuthType(UserAgentAuthType userAgentAuthType)
+{
+    mUserAgentAuthType = userAgentAuthType;
 }
 
 void CLASS::SetUserAgentPassword(string userAgentPassword)
@@ -60,10 +71,14 @@ string CLASS::AuthorizationValue() const
         return "";
     
     string product = mUserAgent;
-    string::size_type slashPosition = product.find_first_of('/');
-    if (slashPosition != string::npos)
+    
+    if (mUserAgentAuthType == USER_AGENT_AUTH_INTEREALTY)
     {
-        product.resize(slashPosition);
+        string::size_type slashPosition = product.find_first_of('/');
+        if (slashPosition != string::npos)
+        {
+            product.resize(slashPosition);
+        }
     }
     
     string a1 = product + ":" + mUserAgentPassword;
