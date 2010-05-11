@@ -25,3 +25,43 @@ MetadataElement::MetadataType CLASS::GetType() const
 {
     return UPDATE_TYPE;
 }
+
+std::string CLASS::GetSystemName() const
+{
+    return GetStringAttribute("SystemName");
+}
+
+int CLASS::GetSequence() const
+{
+    return GetIntAttribute("Sequence", 0);
+}
+
+std::string CLASS::GetAttributes() const
+{
+    return GetStringAttribute("Attributes");
+}
+
+std::string CLASS::GetDefault() const
+{
+    return GetStringAttribute("Default");
+}
+
+std::string CLASS::GetValidationExpressionID() const
+{
+    return GetStringAttribute("ValidationExpression");
+}
+
+std::string CLASS::GetValidationLookupName() const
+{
+    return GetStringAttribute("ValidationLookupName");
+}
+
+std::string CLASS::GetValidationExternalName() const
+{
+    return GetStringAttribute("ValidationExternalName");
+}
+
+int CLASS::GetMaxUpdate() const
+{
+    return GetIntAttribute("MaxUpdate", 0);
+}

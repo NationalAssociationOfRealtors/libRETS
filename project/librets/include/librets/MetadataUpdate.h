@@ -46,6 +46,32 @@ class MetadataUpdate : public MetadataElement
      * @return A string representing the nature of this update metadata.
      */
     std::string GetUpdateName() const;
+    
+    /**
+     * Return the description of this update type.
+     * @return A string containing the description.
+     */
+    std::string GetUpdateDescription() const;
+    
+    /**
+     * Return the <code>SystemName</code> of the field used to retrieve
+     * an existing record for this update.
+     * @return a String containing the KeyField.
+     */
+    std::string GetKeyField() const;
+    
+    /**
+     * Return the Update Type Version for this update.
+     * @return A string containing the version.
+     */
+    std::string GetUpdateTypeVersion() const;
+    
+    /**
+     * Return the Update Type Changed Date.
+     * @return A string containing the <code>RETSDATETIME</code> this
+     * Update Type was last changed.
+     */
+    std::string GetUpdateTypeDate() const;
 };
 
 };

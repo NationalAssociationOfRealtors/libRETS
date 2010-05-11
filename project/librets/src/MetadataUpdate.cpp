@@ -35,3 +35,23 @@ string CLASS::GetUpdateName() const
 {
     return GetStringAttribute("UpdateName");
 }
+
+string CLASS::GetUpdateDescription() const
+{
+    return GetStringAttribute("Description");
+}
+
+string CLASS::GetKeyField() const
+{
+    return GetStringAttribute("KeyField");
+}
+
+string CLASS::GetUpdateTypeVersion() const
+{
+    return GetStringAttribute("UpdateTypeVersion");
+}
+
+string CLASS::GetUpdateTypeDate() const
+{
+    return GetStringAttribute("UpdateTypeDate");
+}

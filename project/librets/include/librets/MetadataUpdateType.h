@@ -38,6 +38,54 @@ class MetadataUpdateType : public MetadataElement
      * @return UPDATE_TYPE
      */
     virtual MetadataType GetType() const;
+    
+    /**
+     * Return the <code>SystemName</code> for this Update Type.
+     * @return A string containing the <code>SystemName</code>.
+     */
+    std::string GetSystemName() const;
+    
+    /**
+     * Return the sequence number of this field.
+     * @return An integer representing the sequence number for this field.
+     */
+    int GetSequence() const;
+    
+    /**
+     * Return the <code>Attributes</code> for this field.
+     * @return A string containing a comma separated string of Update Attributes.
+     */
+    std::string GetAttributes() const;
+    
+    /**
+     * Return the default value for this field.
+     * @return A string containing the default value.
+     */
+    std::string GetDefault() const;
+    
+    /**
+     * Return a string containing the <code>ValidationExpressionID</code> for this field.
+     * @return A string containing the <code>ValidationExpressionID</code>.
+     */
+    std::string GetValidationExpressionID() const;
+    
+    /**
+     * Return the <code>ValidationLookupName</code> for this field.
+     * @return A string containing the <code>ValidationLookupName</code>.
+     */
+    std::string GetValidationLookupName() const;
+    
+    /**
+     * Return the <code>ValidationExternalName</code> for this field.
+     * @return A string containing the <code>ValidationExternalName</code>.
+     */
+    std::string GetValidationExternalName() const;
+    
+    /**
+     * Return the maximum number of values that may be specified for the field.
+     * @return An integer containing the maximum number of values.
+     */
+    int GetMaxUpdate() const;
 };
 
 };
