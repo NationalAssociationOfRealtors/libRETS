@@ -76,7 +76,7 @@ SWIG_CSHARP = $(SWIG) -c++ -csharp -namespace librets -o librets_wrap.cpp \
 	../librets.i
 
 $(BUILD_DIR)/librets_bridge.obj: ../librets_bridge.cpp
-	$(CXX) $(CFLAGS) /Fo"$@" ../librets_bridge.cpp 
+	$(CXX) $(CFLAGS) /Fd"$(BUILD_DIR)\\" /Fo"$@" ../librets_bridge.cpp 
 
 $(BUILD_DIR)/librets_wrap.obj: librets_wrap.cpp
 
@@ -93,4 +93,4 @@ distclean: clean
 	$(RM) $(GENERATED_SRC) librets_wrap*
 
 {.\}.cpp.obj:
-	$(CXX) $(CFLAGS) /Fo"$@"  $<
+	$(CXX) $(CFLAGS) /Fd"$(BUILD_DIR)\\" /Fo"$@"  $<

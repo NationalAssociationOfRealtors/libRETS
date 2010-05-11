@@ -30,7 +30,7 @@ $(LIBRETS_DLL): $(LIBRETS_OBJ)
 	$(LINK) /dll /out:$(LIBRETS_DLL) $(LIBRETS_OBJ) $(LIBRETS_LIB) $(PHP_LIBS) $(WINLIBS)
 
 $(LIBRETS_BRIDGE_OBJ): ../librets_bridge.cpp
-	$(CXX) $(CFLAGS) /Fo"$@" ../librets_bridge.cpp
+	$(CXX) $(CFLAGS) /Fd"$(BUILD_DIR)\\" /Fo"$@" ../librets_bridge.cpp
 
 $(LIBRETS_WRAP_OBJ): librets_wrap.cpp
 
@@ -49,4 +49,4 @@ clean:
 		php_librets.h 2> NUL
 
 {.\}.cpp.obj:
-	$(CXX) $(CFLAGS) /Fo"$@"  $<
+	$(CXX) $(CFLAGS) /Fd"$(BUILD_DIR)\\" /Fo"$@"  $<

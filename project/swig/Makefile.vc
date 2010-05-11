@@ -158,6 +158,7 @@ clean-perl:
 	-if exist Makefile $(NMAKE) clean
         @-erase /q Makefile.old 2> NUL
         @-erase /q *.idb 2> NUL
+        @-erase /q $(BUILD_DIR) 2> NUL
 	cd ..
 	@-erase /q $(PERL_WRAP) 2> NUL
 	@-erase /q $(PERL_WRAP_H) 2> NUL

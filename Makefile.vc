@@ -1,7 +1,7 @@
 !include <project/build/Makefile.vc>
 
 all: lib-release-dynamic
-	cd ..\..\examples\src
+	cd project\examples\src
 	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
 	cd ..\..\..
 

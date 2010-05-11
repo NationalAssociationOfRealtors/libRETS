@@ -1,4 +1,4 @@
-Version 1.5.1 - xx xxx 2010
+Version 1.5.1 - 12 May 2010
 
   * Add librets-config-win for Windows. Ticket #138.
   * Properly parse failed login RETS Reply. Ticket #139.

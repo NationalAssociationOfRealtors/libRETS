@@ -114,13 +114,13 @@ clean:
 .SUFFIXES: .c .cpp .obj .res
 
 {.\}.c{$(DIROBJ)\}.obj:
-	$(CC) $(CFLAGS) /Fo"$@"  $<
+	$(CC) $(CFLAGS) /Fd"$(BUILD_DIR)\\" /Fo"$@" $<
 
 {.\}.cpp{$(DIROBJ)\}.obj:
-	$(CXX) $(CFLAGS) /Fo"$@"  $<
+	$(CXX) $(CFLAGS) /Fd"$(BUILD_DIR)\\" /Fo"$@" $<
 
 {$(ANTLR_DIR)\}.cpp{$(DIROBJ)\}.obj:
-	$(CXX) $(CFLAGS) /Fo"$@"  $<
+	$(CXX) $(CFLAGS) /Fd"$(BUILD_DIR)\\" /Fo"$@"  $<
 
 {$(SQL_DIR)\}.cpp{$(DIROBJ)\}.obj:
-	$(CXX) $(CFLAGS) /Fo"$@"  $<
+	$(CXX) $(CFLAGS) /Fd"$(BUILD_DIR)\\" /Fo"$@" $<
