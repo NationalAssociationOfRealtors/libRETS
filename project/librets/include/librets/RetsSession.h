@@ -181,6 +181,7 @@ class RetsSession : public MetadataLoader
     public byte [] SearchAsArray(SearchRequest request);
 #endif
     /**
+     * @deprecated
      * Create a new server information request (RETS 1.7).
      *
      * @param  resourceName RETS resource name

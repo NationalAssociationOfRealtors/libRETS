@@ -28,6 +28,7 @@
 namespace librets {
 
 /**
+ * @deprecated
  * ServerInformationRequest is the API that allows access to the RETS 1.7
  * SERVERINFORMATION transaction.
  */
