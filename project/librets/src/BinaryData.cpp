@@ -38,6 +38,13 @@ BinaryData::BinaryData(unsigned char buffer[], int len)
     mData.append("\0");
 }
 
+BinaryData::BinaryData(const char * buffer, int len)
+{
+    mData.clear();
+    mData.append(buffer, len);
+    mData.append("\0");
+}
+
 int BinaryData::Size() const
 {
     return mData.size();

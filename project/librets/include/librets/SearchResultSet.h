@@ -161,6 +161,24 @@ class SearchResultSet : public virtual RetsObject
      */
     void SetInputData(BinaryData binaryData);
     
+#ifdef DOXYGEN
+    /**
+     * Inject the Raw XML response from a search into the <code>SearchResultSet</code>
+     * as an array. This API is for .NET and Java only.
+     *
+     * @param bytes  A byte array containing the raw search XML.
+     */
+    public void SetDataAsArray(byte [] bytes);
+
+    /**
+     * Inject the Raw XML response from a search into the <code>SearchResultSet</code>
+     * as a string. This API is for PHP only.
+     *
+     * @param bytes  A string containing the raw search XML.
+     */
+    public void SetDataAsString(std::string bytes);
+#endif
+
   private:
     typedef std::vector<StringVectorPtr> RowData;
     typedef std::map<std::string, StringVector::size_type> ColumnToIndexMap;

@@ -602,6 +602,20 @@ typedef std::auto_ptr<SearchRequest> SearchRequestAPtr;
     %}
 #endif
 
+#ifdef SWIGPHP
+    class BinaryData
+    {
+      public:
+            BinaryData(unsigned char *buffer, int length);
+            int Size() const;
+            std::string AsString() const;
+            void Copy(unsigned char *buffer, int length) const; 
+    };
+
+    typedef std::auto_ptr<BinaryData> BinaryDataAPtr;
+    SWIG_AUTO_PTR_RELEASE(BinaryData);
+#endif
+
 class SearchResultSet
 {
   public:
@@ -625,8 +639,18 @@ class SearchResultSet
 
     std::string GetReplyText();
 
-#if defined(SWIGCSHARP) || defined(SWIGJAVA)
+#if defined(SWIGCSHARP) || defined(SWIGJAVA) || defined(SWIGPHP)
     void SetInputData(BinaryData binaryData);
+#endif
+
+#ifdef SWIGPHP
+    %extend {
+        void SetDataAsString(std::string buffer)
+        {
+            BinaryData binaryData(buffer.data(), buffer.length());
+            self->SetInputData(binaryData);
+        }
+    }
 #endif
 };
 typedef std::auto_ptr<SearchResultSet> SearchResultSetAPtr;
@@ -1773,7 +1797,7 @@ class RetsSession
                                         std::exception);
 #endif
     
-#if defined(SWIGJAVA) || defined(SWIGCSHARP)
+#if defined(SWIGJAVA) || defined(SWIGCSHARP) || defined(SWIGPHP)
     BinaryDataAPtr  Search_(SearchRequest * request) 
                                   throw(RetsHttpException, 
                                         RetsReplyException,
@@ -1954,6 +1978,15 @@ class RetsSession
                                         RetsException,
                                         std::exception);
 
+#ifdef SWIGPHP
+    %extend {
+        std::string GetDataAsString(SearchRequest * request)
+        {
+            BinaryDataAPtr binaryData = self->Search_(request);
+            return binaryData->AsString();
+        }
+    }
+#endif
 };
 
 /* Local Variables: */

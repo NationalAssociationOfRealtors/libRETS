@@ -47,6 +47,11 @@ class BinaryData
     BinaryData(unsigned char buffer[], int len);
     
     /**
+     * Construct and initialize from a const char.
+     */
+    BinaryData(const char *, int len);
+    
+    /**
      * Report the size of the media object.
      * @return int representing the size in bytes of the media object.
      */
