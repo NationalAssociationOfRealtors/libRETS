@@ -119,6 +119,15 @@ class RetsMetadata
      * @return A RetsMetadata object with data parsed from the array.
      */
     public static RetsMetadata CreateMetadataFromArray(byte [] buffer);
+
+    /**
+     * Create and return a Metadata object that parses the data
+     * from a PHP string. This API is for PHP only.
+     *
+     * @param buffer A PHP string containing the raw RETS metadta.
+     * @return A RetsMetadata object with data parsed from the string.
+     */
+    public static RetsMetadata CreateMetadataFromString(string buffer);
 #endif
 
     /**

@@ -31,7 +31,7 @@ try
     $fd = fopen($filename, "w");
     
     // Do the search and get all the raw XML.
-    $results = $session->GetDataAsString($request);
+    $results = $session->SearchAsString($request);
 
     fwrite($fd, $results);
 

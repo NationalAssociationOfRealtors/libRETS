@@ -179,6 +179,15 @@ class RetsSession : public MetadataLoader
      * @return a Java byte array containing the search results as raw RETS data.
      */
     public byte [] SearchAsArray(SearchRequest request);
+
+    /**
+     * Performs a search on the server and returns the raw RETS data into 
+     * a PHP string. This API is for PHP only.
+     *
+     * @param request search request parameters
+     * @return a PHP string containing the search results as raw RETS data.
+     */
+    string SearchAsString(SearchRequest request);
 #endif
     /**
      * @deprecated
@@ -233,6 +242,14 @@ class RetsSession : public MetadataLoader
      * @return a Java byte array containing the search results as raw RETS data.
      */
     public byte [] GetMetadataAsArray();
+
+    /**
+     * Gets the metadata on the server and returns the raw RETS data into 
+     * a PHP string. This API is for PHP only.
+     *
+     * @return a PHP string containing the search results as raw RETS data.
+     */
+    string GetMetadataAsString();
 #endif
 
     /**

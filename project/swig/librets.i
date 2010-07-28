@@ -1265,10 +1265,20 @@ class RetsMetadata
 
     MetadataSearchHelp * GetSearchHelp(std::string resourceName,
                                        std::string searchHelpID) const;
-#ifdef SWIGJAVA
+#if defined(SWIGJAVA) || defined(SWIGPHP)
     static RetsMetadata * CreateAndParse(BinaryData binaryData,
                                         EncodingType encoding = EncodingType::RETS_XML_DEFAULT_ENCODING,
                                         ExceptionErrorHandler * handler = ExceptionErrorHandler::GetInstance());
+#if defined(SWIGPHP)
+    %extend {
+        static RetsMetadata * CreateMetadataFromString(std::string bytes)
+        {
+            BinaryData binaryData(bytes.data(), bytes.length());
+            return RetsMetadata::CreateAndParse(binaryData);
+        }
+    }
+#endif
+
 #endif
 };
 
@@ -1980,9 +1990,15 @@ class RetsSession
 
 #ifdef SWIGPHP
     %extend {
-        std::string GetDataAsString(SearchRequest * request)
+        std::string SearchAsString(SearchRequest * request)
         {
             BinaryDataAPtr binaryData = self->Search_(request);
+            return binaryData->AsString();
+        }
+
+        std::string GetMetadataAsString()
+        {
+            BinaryDataAPtr binaryData = self->GetMetadata_();
             return binaryData->AsString();
         }
     }
