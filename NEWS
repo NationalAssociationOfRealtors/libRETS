@@ -2,6 +2,7 @@ Version 1.5.2 - xx xxx 2010
   
   * Fix Ruby GC crash for Ruby 1.8.7 and later. Ticket #158.
   * Expose Raw XML search enhancement to PHP. Ticket #160.
+  * #undef MAP_TYPE and friends in GetObjectRequest.h. Ticket #161.
 
 Version 1.5.1 - 12 May 2010
 

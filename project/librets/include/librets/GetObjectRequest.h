@@ -40,18 +40,25 @@ class GetObjectRequest : public RetsObject
 {
   public:
     /** The image well-known type. */
+#undef PHOTO_TYPE
     static const char * PHOTO_TYPE;
     /** The property boundary well-known type. */
+#undef PLAT_TYPE
     static const char * PLAT_TYPE;
     /** The video well-known type. */
+#undef VIDEO_TYPE
     static const char * VIDEO_TYPE;
     /** The audio well-known type. */
+#undef AUDIO_TYPE
     static const char * AUDIO_TYPE;
     /** The thubmail image well-known type. */
+#undef THUMBNAIL_TYPE
     static const char * THUMBNAIL_TYPE;
     /** The location image well-known type. */
+#undef MAP_TYPE
     static const char * MAP_TYPE;
     /** The muliple-view, interactive well-known type.  */
+#undef VRIMAGE_TYPE
     static const char * VRIMAGE_TYPE;
     
     /**
