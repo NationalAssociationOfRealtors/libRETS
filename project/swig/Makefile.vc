@@ -61,7 +61,7 @@ php5_ : $(PHP5_WRAP)
 
 python_: $(PYTHON_WRAP)
 	 cd python
-	 $(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic LIBPATH=$(PYTHON_LIBPATH) dist
+	 $(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic LIBPATH="$(PYTHON_LIBPATH)" dist
 	 cd ..
 
 ruby_: $(RUBY_WRAP) $(RUBY_MAKEFILE)
@@ -85,7 +85,9 @@ make_perl_makefile::
 
 $(PERL_WRAP): $(SWIG_FILES)
 	cd perl
-	$(SWIG) -c++ -perl -I.. -o $(SWIG_WRAP_SRC) ../librets.i
+	$(SWIG) -c++ -perl -o $(SWIG_WRAP_SRC) \
+		-I$(SWIG_LIBRARY)/perl5 -I$(SWIG_LIBRARY) \
+		-I.. ../librets.i
 	cd ..
 
 make_ruby_makefile: 
@@ -107,12 +109,13 @@ $(PYTHON_WRAP): $(SWIG_FILES)
 	cd python
 	$(SWIG) -c++ -python -o $(SWIG_WRAP_SRC) \
 		-I$(SWIG_LIBRARY)/python -I$(SWIG_LIBRARY) \
-		 -I.. ../librets.i
+	 	-I.. ../librets.i
 	cd ..
 
 $(PHP5_WRAP): $(SWIG_FILES)
 	cd php5
 	$(SWIG) -c++ -php5 -o $(SWIG_WRAP_SRC) \
+		-I$(SWIG_LIBRARY)/php -I$(SWIG_LIBRARY) \
 		-I.. ../librets.i
 	cd ..
 
