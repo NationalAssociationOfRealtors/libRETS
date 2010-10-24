@@ -118,6 +118,8 @@ bool SearchResultSet::Parse()
             {
                 // No records found
                 mCount = 0;
+                mReplyCode = 20201;
+                mReplyText = "No Records Found";
                 continue;
             }
             else if (replyCode != 0)

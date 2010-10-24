@@ -67,6 +67,9 @@ void CLASS::testValidResponse()
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response.xml");
     resultSet.Parse(inputStream);
+    ASSERT_EQUAL(0, resultSet.GetReplyCode());
+    CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
+
     ASSERT_EQUAL(2, resultSet.GetCount());
     StringVector columns = resultSet.GetColumns();
     ASSERT_EQUAL(StringVector::size_type(4), columns.size());
@@ -103,6 +106,9 @@ void CLASS::testValidResponseNoCount()
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response-no-count.xml");
     resultSet.Parse(inputStream);
+    ASSERT_EQUAL(0, resultSet.GetReplyCode());
+    CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
+
     ASSERT_EQUAL(-1, resultSet.GetCount());
     StringVector columns = resultSet.GetColumns();
     ASSERT_EQUAL(StringVector::size_type(4), columns.size());
@@ -143,6 +149,8 @@ void CLASS::testNoRecordsFound()
     StringVector columns = resultSet.GetColumns();
     ASSERT_EQUAL(StringVector::size_type(0), columns.size());
     CPPUNIT_ASSERT(!resultSet.HasNext());
+    ASSERT_EQUAL(20201, resultSet.GetReplyCode());
+    ASSERT_STRING_EQUAL("No Records Found", resultSet.GetReplyText());
 }
 
 void CLASS::testErrorResponse()
@@ -183,6 +191,9 @@ void CLASS::testSingleColumn()
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response-single-column.xml");
     resultSet.Parse(inputStream);
+    ASSERT_EQUAL(0, resultSet.GetReplyCode());
+    CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
+
     ASSERT_EQUAL(3, resultSet.GetCount());
     StringVector columns = resultSet.GetColumns();
     ASSERT_EQUAL(StringVector::size_type(1), columns.size());
@@ -208,6 +219,9 @@ void CLASS::testOutOfBoundsColumnNumber()
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response.xml");
     resultSet.Parse(inputStream);
+    ASSERT_EQUAL(0, resultSet.GetReplyCode());
+    CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
+
     CPPUNIT_ASSERT(resultSet.HasNext());
     try
     {
@@ -225,6 +239,9 @@ void CLASS::testInvalidColumnName()
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response.xml");
     resultSet.Parse(inputStream);
+    ASSERT_EQUAL(0, resultSet.GetReplyCode());
+    CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
+
     CPPUNIT_ASSERT(resultSet.HasNext());
     try
     {
@@ -242,6 +259,9 @@ void CLASS::testPipeDelimiter()
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response-pipe.xml");
     resultSet.Parse(inputStream);
+    ASSERT_EQUAL(0, resultSet.GetReplyCode());
+    CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
+
     StringVector columns = resultSet.GetColumns();
     ASSERT_EQUAL(StringVector::size_type(1), columns.size());
     ASSERT_STRING_EQUAL("CITY", columns.at(0));
@@ -271,14 +291,17 @@ void CLASS::testExtendedCharResponse()
         resultSet.Parse(inputStream);
         CPPUNIT_FAIL("Should have thrown exception");
     }
-    catch (RetsException &)
+    catch (RetsException & e)
     {
         // Expected
+        CPPUNIT_ASSERT(!e.GetMessage().empty());
     }
 
     resultSet.SetEncoding(RETS_XML_ISO_ENCODING);
     istreamPtr inputStream = getResource("search-response-extended-char.xml");
     resultSet.Parse(inputStream);
+    ASSERT_EQUAL(0, resultSet.GetReplyCode());
+    CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
 
     ASSERT_EQUAL(1, resultSet.GetCount());
     StringVector columns = resultSet.GetColumns();
@@ -310,6 +333,8 @@ void CLASS::testMaxRows()
     SearchResultSet resultSet;
     istreamPtr inputStream = getResource("search-response.xml");
     resultSet.Parse(inputStream);
+    ASSERT_EQUAL(0, resultSet.GetReplyCode());
+    CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
 
     // We should see the MAXROWS indication
     CPPUNIT_ASSERT(resultSet.HasMaxRows());
@@ -320,6 +345,9 @@ void CLASS::testMaxRows()
      */
     inputStream = getResource("search-response-no-count.xml");
     resultSet.Parse(inputStream);
+    ASSERT_EQUAL(0, resultSet.GetReplyCode());
+    CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
+
     CPPUNIT_ASSERT(!resultSet.HasMaxRows());
 
 }
@@ -389,6 +417,8 @@ void CLASS::testUTF8Response()
     resultSet.SetEncoding(RETS_XML_UTF8_ENCODING);
     istreamPtr inputStream = getResource("search-response-extended-utf8.xml");
     resultSet.Parse(inputStream);
+    ASSERT_EQUAL(0, resultSet.GetReplyCode());
+    CPPUNIT_ASSERT(resultSet.GetReplyText().empty());
 
     ASSERT_EQUAL(1, resultSet.GetCount());
     StringVector columns = resultSet.GetColumns();
