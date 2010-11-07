@@ -21,6 +21,10 @@ AC_DEFUN([MY_TEST_CURL], [
 
         CURL_PREFIX=`curl-config --prefix`
         CURL_CFLAGS=`curl-config --cflags`
+	case $host_os in
+	    *mingw* | *cygwin*) CURL_CFLAGS="$CURL_CFLAGS -DCURL_STATICLIB" ;;
+	esac
+
         CURL_LIBS=`curl-config --libs`
 
         if test "$my_enable_shared_dependencies" != "yes"; then

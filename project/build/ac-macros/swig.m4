@@ -4,7 +4,6 @@ dnl
 AC_DEFUN([MY_TEST_SWIG], [
   AC_CACHE_VAL(my_cv_swig_vers, [
     my_cv_swig_vers=NONE
-    default_search_path="/usr/local/include /usr/include /opt/local/include /opt/local"
     dnl check is the plain-text version of the required version
     check="1.3.33"
 
@@ -15,7 +14,7 @@ AC_DEFUN([MY_TEST_SWIG], [
     SWIG_OSNAME=`perl -e 'use Config; print $Config{osname};'`
 
     HAVE_JAVA=0
-    HAVE_MCS=0
+    HAVE_DOTNET=0
     HAVE_PERL=0
     HAVE_PHP=0
     HAVE_PYTHON=0
@@ -23,7 +22,7 @@ AC_DEFUN([MY_TEST_SWIG], [
     JAVA_INCLUDES=
     USE_SWIG_BINDINGS=
     my_have_java=no
-    my_have_mcs=no
+    my_have_dotnet=no
     my_have_perl=no
     my_have_php=no
     my_have_python=no
@@ -60,9 +59,10 @@ AC_DEFUN([MY_TEST_SWIG], [
         dnl
         dnl Check to see if we can build for csharp
         dnl
-        if test "$my_use_mcs" = "yes"; then
+        if test "$my_use_dotnet" = "yes"; then
             AC_CHECK_PROG(MCS, mcs, mcs, no)
             AC_CHECK_PROG(GMCS, gmcs, gmcs, no)
+            AC_CHECK_PROG(CSC, csc, csc, no)
             generics=`expr \
                 $ver_major \> 1 \| \
                 $ver_major \= 1 \& \
@@ -76,8 +76,14 @@ AC_DEFUN([MY_TEST_SWIG], [
                 fi
             fi
             if test "$MCS" != "no"; then
-                HAVE_MCS=1
-                my_have_mcs=yes
+                HAVE_DOTNET=1
+                my_have_dotnet=yes
+            else
+                if test "$CSC" != "no"; then
+                    HAVE_DOTNET=1
+                    my_have_dotnet=yes
+                    MCS=$CSC
+                fi
             fi
         fi
 
@@ -183,7 +189,10 @@ EOF
             if test "$PYTHON" != "no"; then
                 python_version=`python -c "import sys; print sys.version[[:3]]"`
                 python_prefix=`python -c "import sys; print sys.prefix"`
-                python_h="$python_prefix/include/python$python_version/Python.h"
+                python_h="$python_prefix/include/python$python_version/Python.h" 
+                case $host_os in
+                    *mingw* | *cygwin*) python_h="$python_prefix/include/Python.h" ;;
+                esac
                 AC_CHECK_FILE([$python_h], [my_python_h=$python_h])
 
                 if test -n "$my_python_h"; then
@@ -199,7 +208,7 @@ EOF
         if test "$my_use_ruby" = "yes"; then
             AC_CHECK_PROG(RUBY, ruby, ruby, no)
             if test "$RUBY" != "no"; then
-                ruby_prefix=`ruby -e "require 'rbconfig.rb'; include Config; puts \"#{CONFIG[\"topdir\"]}\""`
+                ruby_prefix=`ruby -rrbconfig -e 'puts Config::CONFIG[["rubyhdrdir"]] || Config::CONFIG[["archdir"]]'`
                 ruby_h="$ruby_prefix/ruby.h"
                 AC_CHECK_FILE([$ruby_h], [my_ruby_h=$ruby_h])
 
@@ -224,7 +233,8 @@ EOF
   AC_SUBST(JAVAC)
   AC_SUBST(JAR)
   AC_SUBST(JAVA_INCLUDES)
-  AC_SUBST(HAVE_MCS)
+  AC_SUBST(HAVE_DOTNET)
+  AC_SUBST(CSC)
   AC_SUBST(MCS)
   AC_SUBST(HAVE_PERL)
   AC_SUBST(HAVE_PHP)

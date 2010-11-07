@@ -7,10 +7,10 @@ AC_DEFUN([MY_TEST_BOOST], [
     AC_HELP_STRING(
       [--with-boost-prefix=PATH],
       [find the Boost headers and libraries in `PATH/include` and  `PATH/lib`.
-       By default, checks in /usr, /usr/local, /opt and /opt/local.
+       By default, checks in $default_search_path.
       ]),
     boost_prefixes="$withval",
-      boost_prefixes="/usr/local /usr /opt/local /opt")
+      boost_prefixes="$default_search_path")
 
   if test x"$with_boost" = "xno"; then
      AC_MSG_ERROR([Boost is required to build librets])

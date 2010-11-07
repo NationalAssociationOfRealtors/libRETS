@@ -3,6 +3,8 @@ dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.52)
 AC_INIT([libRETS], [1.4], [librets@crt.realtors.org])
 
+AC_CANONICAL_HOST
+
 dnl AC_LANG([C++])
 AC_CONFIG_SRCDIR([project/librets/include/librets.h])
 AC_CONFIG_AUX_DIR([project/build])
@@ -32,6 +34,15 @@ AC_ARG_ENABLE(maintainer-documentation,
               test "X$enableval" != "Xno" && my_enable_maintainer_documentation=yes,
               my_enable_maintainer_documentation=no)
 
+AC_ARG_ENABLE(default-search-path,
+              AC_HELP_STRING(
+                             [--enable-default-search-path=PATH],
+                             [Set PATH as the default search path. If not specified, the default
+                             /usr, /usr/include, /usr/local /usr/local/include, 
+                             /opt, /opt/include, /opt/local, /opt/local/include  is used.]),
+              default_search_path="$enableval",
+              default_search_path="/usr /usr/include /usr/local /usr/local/include /opt /opt/include /opt/local /opt/local/include")
+
 AC_CHECK_PROG(my_have_doxygen, doxygen, yes, no)
 if test x"$my_have_doxygen" = "xyes"; then
   HAVE_DOXYGEN=1
@@ -59,8 +70,8 @@ AC_ARG_ENABLE(shared_dependencies,
 AC_ARG_ENABLE(dotnet,
               AC_HELP_STRING([--disable-dotnet],
                              [If swig is installed, do not build the .NET bindings.]),
-              test "X$enableval" != "Xyes" && my_use_mcs=no,
-              my_use_mcs=yes)
+              test "X$enableval" != "Xyes" && my_use_dotnet=no,
+              my_use_dotnet=yes)
 		
 AC_ARG_ENABLE(java,
               AC_HELP_STRING([--disable-java],
@@ -127,7 +138,7 @@ if test -n "$GCC"; then
   fi
 fi
 
-LIBRETS_CFLAGS="$BOOST_CFLAGS $ANTLR_CFLAGS"
+LIBRETS_CFLAGS="$BOOST_CFLAGS $ANTLR_CFLAGS -I."
 LIBRETS_LDFLAGS="$BOOST_LIBS $BOOST_FILESYSTEM $BOOST_SYSTEM $CURL_LIBS $EXPAT_LIBS $ANTLR_LIBS"
 
 AC_ARG_ENABLE(PIC,
@@ -168,7 +179,7 @@ echo Compile type................: $my_compile_type
 echo Compile examples............: $my_use_examples
 echo Compile SQL compiler........: $my_use_sql_compiler
 echo Compile SWIG bindings.......: $my_use_swig_bindings
-  echo "  With CSharp...............: $my_have_mcs"
+  echo "  With DotNet...............: $my_have_dotnet"
   echo "  With Java.................: $my_have_java"
   echo "  With PERL.................: $my_have_perl"
   echo "  With PHP..................: $my_have_php"

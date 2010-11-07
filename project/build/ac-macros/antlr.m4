@@ -7,10 +7,10 @@ AC_DEFUN([MY_TEST_ANTLR], [
     AC_HELP_STRING(
       [--with-antlr-prefix=PATH],
       [find the Antlr headers and libraries in `PATH/include` and `PATH/lib`.
-       By default, checks in /usr, /usr/local, /opt and /opt/local.
+       By default, checks in $default_search_path.
       ]),
     antlr_prefxes="$withval",
-      antlr_prefixes="/usr/local /usr /opt/local /opt")
+      antlr_prefixes="$default_search_path")
 
   AC_CHECK_PROG(ANTLR_JAVA, java, java, [])
   if test x$ANTLR_JAVA = "x"; then
