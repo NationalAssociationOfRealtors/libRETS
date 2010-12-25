@@ -1,4 +1,5 @@
 top_srcdir=@top_srcdir@
+abs_top_srcdir=@abs_top_srcdir@
 
 SHELL = /bin/sh
 
@@ -16,7 +17,7 @@ includedir=@includedir@
 INSTALL=@INSTALL@
 INSTALL_PROGRAM=@INSTALL_PROGRAM@
 INSTALL_DATA=@INSTALL_DATA@
-MKINSTALLDIRS=$(top_srcdir)/project/build/mkinstalldirs
+MKINSTALLDIRS=$(abs_top_srcdir)/project/build/mkinstalldirs
 
 CC=@CC@
 CXX=@CXX@
@@ -24,6 +25,7 @@ CFLAGS=@CFLAGS@ @DEFS@
 CPPFLAGS=@CPPFLAGS@
 LIBS=@LIBS@
 LDFLAGS=@LDFLAGS@
+ARCH=@ARCH@
 ARCH_FLAGS=@ARCH_FLAGS@
 
 USE_DEPENDS_IN=@USE_DEPENDS@
@@ -127,6 +129,6 @@ clean: _clean
 distclean: _distclean
 maintainer-clean: _maintainer-clean
 
-include $(top_srcdir)/project/build/version.mk
-include $(top_srcdir)/project/build/sources.mk
-include $(top_srcdir)/project/build/rules.mk
+include $(abs_top_srcdir)/project/build/version.mk
+include $(abs_top_srcdir)/project/build/sources.mk
+include $(abs_top_srcdir)/project/build/rules.mk

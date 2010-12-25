@@ -153,13 +153,20 @@ if test "$my_use_pic" = "yes"; then
 fi
 
 OSNAME=`perl -e 'use Config; print $Config{osname};'`
+ARCH=
 ARCH_FLAGS=
+
 if test "$OSNAME" = "darwin"; then
     MY_TEST_DARWIN
 fi
 
+if test "$OSNAME" = "MSWin32"; then
+    MY_TEST_MINGW
+fi
+
 AC_SUBST(LIBRETS_CFLAGS)
 AC_SUBST(LIBRETS_LDFLAGS)
+AC_SUBST(ARCH)
 AC_SUBST(ARCH_FLAGS)
 
 AC_CONFIG_FILES([Makefile project/build/Doxyfile])

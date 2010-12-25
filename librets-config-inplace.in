@@ -3,8 +3,9 @@
 # The idea to this kind of setup info script was stolen from numerous
 # other packages, such as neon, libxml and gnome.
 #
+ARCH=@ARCH@
 basedir=@abs_top_builddir@
-builddir=@abs_top_builddir@/build
+builddir=@abs_top_builddir@/build${ARCH}
 includedir=@abs_top_srcdir@/project/librets/include
 librets_cflags="@LIBRETS_CFLAGS@"
 librets_ldflags="@LIBRETS_LDFLAGS@"

@@ -9,10 +9,12 @@ if RUBY_PLATFORM =~ /darwin/
   CONFIG['LDSHARED'].sub!(/^cc/, "c++")
 elsif RUBY_PLATFORM =~ /linux/ || RUBY_PLATFORM =~ /freebsd/
   CONFIG['LDSHARED'].sub!(/\$\(CC\)/, "$(CXX)")
+elsif RUBY_PLATFORM =~ /i386-mingw32/
+  CONFIG['LDSHARED'].sub!(/\$\(CC\)/, "$(CXX)")
 end
 
 makefile_prefix = ""
-if RUBY_PLATFORM =~ /darwin/ || RUBY_PLATFORM =~ /linux/ || RUBY_PLATFORM =~ /freebsd/
+if RUBY_PLATFORM =~ /darwin/ || RUBY_PLATFORM =~ /linux/ || RUBY_PLATFORM =~ /freebsd/ 
   librets_config = with_config("librets-config",
     "../../../librets-config-inplace")
   $libs += ' ' + `#{librets_config} --libs`.chomp
@@ -22,10 +24,6 @@ if RUBY_PLATFORM =~ /darwin/ || RUBY_PLATFORM =~ /linux/ || RUBY_PLATFORM =~ /fr
     $CFLAGS += ' ' + ENV['CFLAGS'] + ' ' + `#{librets_config} --cflags`.chomp
   end
   swig_dir=with_config("swig-dir", "../../../swig")
-elsif RUBY_PLATFORM =~ /i386-mingw32/ 
-  $CFLAGS += ' -I/c/librets/mingw-x64/include -I/c/librets/mingw-x64/include/boost-1_41  -I.. -I../../librets/include -I/c/librets/vs2008-x64/include -I/c/librets/vs2008-x64 '
-  $libs += ' ../../librets/src/build-x64/liblibrets-vs2008-1.4.1trunk.lib '
-  swig_dir=with_config("swig-dir", "..")
 elsif RUBY_PLATFORM =~ /win32/ 
   $CFLAGS += ' $(CFLAGS_STD) $(BOOST_CFLAGS) -I.. -I../../librets/include'
   $libs += ' $(LIBRETS_LIB) winmm.lib wldap32.lib gdi32.lib'
@@ -34,6 +32,27 @@ elsif RUBY_PLATFORM =~ /win32/
 LIBRETS_LIB = ../../librets/src/$(BUILD_DIR)/$(LIBRETS_LIB_NAME)
 }
   swig_dir=with_config("swig-dir", "..")
+elsif RUBY_PLATFORM =~ /i386-mingw32/
+  librets_cflags = with_config("librets-cflags")
+  if librets_cflags.nil?
+    abort("--with-librets-cflags is required")
+  end
+
+  librets_libs = with_config("librets-libs")
+  if librets_libs.nil?
+    abort("--with-librets-libs is required")
+  end
+
+  $libs += ' ' + librets_libs.chomp
+  if ENV['CFLAGS'].nil?
+    $CFLAGS += ' ' + librets_cflags.chomp
+  else
+    $CFLAGS += ' ' + ENV['CFLAGS'] + ' ' + librets_cflags.chomp
+  end
+  swig_dir=with_config("swig-dir", "../../../project/swig")
+  puts "lib " + $libs
+  puts "cflags '" + $CFLAGS + "'"
+  puts "librets_libs: " + librets_libs
 end
 
 $INSTALLFILES = [['librets.rb', "$(RUBYLIBDIR)", "lib"]]
