@@ -11,25 +11,25 @@ FIXDEP		= perl $(top_srcdir)/project/build/fixdep.pl
 ALL_DEPENDS 	= $(LIBRETS_DEPENDS) $(LIBRETS_TEST_DEPENDS) \
 	$(EXAMPLES_DEPENDS) ${SWIG_DEPENDS}
 ALL_OBJ_DIRS	= \
-	build/librets/antlr \
-	build/librets/objects \
-	build/librets/sql \
-	build/librets/lib \
-	build/librets/test/objects \
-	build/librets/test/sql \
-	build/librets/test/bin \
-	build/librets/test-network/bin \
-	build/librets/test-network/objects \
-	build/examples/objects \
-	build/examples/bin \
-	build/doc/api \
-	build/swig/csharp \
-	build/swig/java \
-	build/swig/java/librets \
-	build/swig/perl \
-	build/swig/php5 \
-	build/swig/python \
-	build/swig/ruby
+	${BUILD}/librets/antlr \
+	${BUILD}/librets/objects \
+	${BUILD}/librets/sql \
+	${BUILD}/librets/lib \
+	${BUILD}/librets/test/objects \
+	${BUILD}/librets/test/sql \
+	${BUILD}/librets/test/bin \
+	${BUILD}/librets/test-network/bin \
+	${BUILD}/librets/test-network/objects \
+	${BUILD}/examples/objects \
+	${BUILD}/examples/bin \
+	${BUILD}/doc/api \
+	${BUILD}/swig/csharp \
+	${BUILD}/swig/java \
+	${BUILD}/swig/java/librets \
+	${BUILD}/swig/perl \
+	${BUILD}/swig/php5 \
+	${BUILD}/swig/python \
+	${BUILD}/swig/ruby
 
 ALL = $(LIBRETS_LIB)
 ifeq ($(USE_EXAMPLES),1)
@@ -96,7 +96,7 @@ _build: prepare $(ALL)
 _doc: prepare $(DOC_FILES_TO_GEN)
 
 _doc-api: doxygen prepare
-	$(RM) -r build/doc/api
+	$(RM) -r build${ARCH}/doc/api
 	$(DOXYGEN) project/build/Doxyfile
 
 # (Ab)use rsync as a recursive copy with exclude.  Yeah, rsync is
@@ -108,7 +108,7 @@ _dist: _doc-api
 	mkdir -p dist/$(DIST_SRC)/doc
 	rsync -a --exclude-from project/build/dist-exclude . \
 	  dist/$(DIST_SRC)
-	rsync -a --cvs-exclude build/doc/api dist/$(DIST_SRC)/doc
+	rsync -a --cvs-exclude build${ARCH}/doc/api dist/$(DIST_SRC)/doc
 	cd dist; zip -r -q $(SRC_ZIP) $(DIST_SRC)
 	cd dist; tar --gzip -cf $(SRC_TGZ) $(DIST_SRC)
 	$(RM) -r dist/$(DIST_SRC)
@@ -133,7 +133,7 @@ _uninstall:
 	$(RM) $(DESTDIR)$(bindir)/librets-config
 
 _clean:
-	$(RM) -r build dist
+	$(RM) -r build${ARCH} dist
 
 _distclean: _clean
 	$(RM) $(DISTCLEAN_FILES)

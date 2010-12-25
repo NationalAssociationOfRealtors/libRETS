@@ -37,7 +37,7 @@ DOTNET_LOGGING_EXE	= ${DOTNET_OBJ_DIR}/Logging.exe
 DOTNET_LOGGING_SRC	= ${DOTNET_DIR}/Logging.cs
 DOTNET_LOGIN_EXE	= ${DOTNET_OBJ_DIR}/Login.exe
 DOTNET_LOGIN_SRC	= ${DOTNET_DIR}/Login.cs
-DOTNET_MANAGED_DLL	= ${DOTNET_OBJ_DIR}/librets-dotnet.${DLL}
+DOTNET_MANAGED_DLL	= ${DOTNET_OBJ_DIR}/librets-dotnet.dll
 DOTNET_MANAGED_SRC	= ${DOTNET_GENERATED_SRC}		 		\
 				${DOTNET_DIR}/CppInputStream.cs 		\
         			${DOTNET_DIR}/ObjectDescriptorEnumerator.cs 	\
@@ -73,7 +73,7 @@ DOTNET_WRAP		= ${DOTNET_OBJ_DIR}/librets_wrap.cpp
 ${DOTNET_WRAP}: ${SWIG_FILES} 
 	${SWIG} -c++ -csharp -namespace librets -o ${DOTNET_WRAP} \
 	-outdir ${DOTNET_OBJ_DIR} -I${SWIG_DIR}/lib/csharp ${SWIG_DIR}/librets.i
-	make ${DOTNET_MANAGED_DLL}
+	${MAKE} ${DOTNET_MANAGED_DLL}
 
 ${DOTNET_UNMANAGED_DLL}: ${DOTNET_UNMANAGED_OBJ} ${LIBRETS_LIB}
 	${SWIG_LINK} -o ${DOTNET_UNMANAGED_DLL} ${DOTNET_UNMANAGED_OBJ} ${SWIG_LIBRETS_LIBS} 
@@ -119,5 +119,74 @@ ${DOTNET_SQL2DMQL_EXE}:		${DOTNET_SQL2DMQL_SRC}
 
 ${DOTNET_UPDATE_EXE}:	        ${DOTNET_UPDATE_SRC}
 	${MCS} -r:${DOTNET_MANAGED_DLL} ${DOTNET_PLATFORM} -out:${DOTNET_UPDATE_EXE}  ${DOTNET_UPDATE_SRC}
+
+else
+########
+#
+# Windows/MinGW
+#
+BACKSLASH	= perl -e 'foreach (<STDIN>) {s/\//\\/g; print}'
+
+${DOTNET_MANAGED_DLL}:	${DOTNET_UNMANAGED_DLL} ${DOTNET_MANAGED_SRC}
+	${CSC} -target:library \
+		-platform:${TARGET_CPU} \
+                -out:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \
+                ${shell echo ${DOTNET_PLATFORM} | ${BACKSLASH}} \
+                ${shell echo ${DOTNET_MANAGED_SRC} | ${BACKSLASH}}
+
+${DOTNET_GETOBJECT_EXE}:	${DOTNET_GETOBJECT_SRC}
+	${CSC} -r:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \
+		-platform:${TARGET_CPU} \
+		-out:${shell echo ${DOTNET_GETOBJECT_EXE} | ${BACKSLASH}} \
+		${shell echo ${DOTNET_GETOBJECT_SRC} | ${BACKSLASH}}
+
+${DOTNET_INTERLEAVED_EXE}:	${DOTNET_INTERLEAVED_SRC}
+	${CSC} -r:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \
+		-platform:${TARGET_CPU} \
+		-out:${shell echo ${DOTNET_INTERLEAVED_EXE} | ${BACKSLASH}} \
+		${shell echo ${DOTNET_INTERLEAVED_SRC} | ${BACKSLASH}}
+
+${DOTNET_METADATA_EXE}:		${DOTNET_METADATA_SRC}
+	${CSC} -r:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \
+		-platform:${TARGET_CPU} \
+		-out:${shell echo ${DOTNET_METADATA_EXE} | ${BACKSLASH}} \
+		${shell echo ${DOTNET_METADATA_SRC} | ${BACKSLASH}}
+
+${DOTNET_LOGGING_EXE}:		${DOTNET_LOGGING_SRC}
+	${CSC} -r:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \
+		-platform:${TARGET_CPU} \
+		-out:${shell echo ${DOTNET_LOGGING_EXE} | ${BACKSLASH}} \
+		${shell echo ${DOTNET_LOGGING_SRC} | ${BACKSLASH}}
+
+${DOTNET_LOGIN_EXE}:		${DOTNET_LOGIN_SRC}
+	${CSC} -r:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \
+		-platform:${TARGET_CPU} \
+		-out:${shell echo ${DOTNET_LOGIN_EXE} | ${BACKSLASH}} \
+		${shell echo ${DOTNET_LOGIN_SRC} | ${BACKSLASH}}
+
+${DOTNET_RAWSEARCH_EXE}:	${DOTNET_RAWSEARCH_SRC}
+	${CSC} -r:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \
+		-platform:${TARGET_CPU} \
+		-out:${shell echo ${DOTNET_RAWSEARCH_EXE} | ${BACKSLASH}} \
+		${shell echo ${DOTNET_RAWSEARCH_SRC} | ${BACKSLASH}}
+
+${DOTNET_SEARCH_EXE}:		${DOTNET_SEARCH_SRC}
+	${CSC} -r:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \
+		-platform:${TARGET_CPU} \
+		-out:${shell echo ${DOTNET_SEARCH_EXE} | ${BACKSLASH}} \
+		${shell echo ${DOTNET_SEARCH_SRC} | ${BACKSLASH}}
+
+${DOTNET_SQL2DMQL_EXE}:		${DOTNET_SQL2DMQL_SRC}
+	${CSC} -r:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \
+		-platform:${TARGET_CPU} \
+		-main:Sql2DMQL ${DOTNET_PLATFORM} \
+		-out:${shell echo ${DOTNET_SQL2DMQL_EXE} | ${BACKSLASH}} \
+		${shell echo ${DOTNET_SQL2DMQL_SRC} | ${BACKSLASH}}
+
+${DOTNET_UPDATE_EXE}:	        ${DOTNET_UPDATE_SRC}
+	${CSC} -r:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \
+		-platform:${TARGET_CPU} \
+		-out:${shell echo ${DOTNET_UPDATE_EXE} | ${BACKSLASH}} \
+		${shell echo ${DOTNET_UPDATE_SRC} | ${BACKSLASH}}
 
 endif

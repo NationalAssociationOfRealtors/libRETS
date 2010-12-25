@@ -10,7 +10,7 @@ SWIG_DIR		= ${top_srcdir}/project/swig
 SWIG_FILES		= ${SWIG_DIR}/librets.i ${SWIG_DIR}/auto_ptr_release.i
 SWIG_LIBRETS_CONFIG	= ${top_srcdir}/librets-config-inplace
 SWIG_LIBRETS_LIBS	= `${SWIG_LIBRETS_CONFIG} --libs`
-SWIG_OBJ_DIR		= build/swig
+SWIG_OBJ_DIR		= ${BUILD}/swig
 SWIG_OSNAME		= $(shell perl -e 'use Config; print $$Config{osname};')
 
 SWIG_BRIDGE_CFLAGS	= `${SWIG_LIBRETS_CONFIG} --cflags` ${CFLAGS}
@@ -49,7 +49,9 @@ endif
 # php 
 #
 ifeq (${HAVE_PHP},1)
+ifneq (${SWIG_OSNAME}, MSWin32)
 include ${top_srcdir}/project/build/php.mk
+endif
 endif
 
 ###
@@ -63,7 +65,9 @@ endif
 # python
 #
 ifeq (${HAVE_PYTHON},1)
+ifneq (${SWIG_OSNAME}, MSWin32)
 include ${top_srcdir}/project/build/python.mk
+endif
 endif
 
 ###
