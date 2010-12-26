@@ -26,7 +26,7 @@ ${RUBY_MAKEFILE}: ${RUBY_WRAP} ${RUBY_SRC_DIR}/extconf.rb
 	--with-swig-dir=${SWIG_DIR}
 
 ${RUBY_DLL}: ${RUBY_MAKEFILE} ${LIBRETS_LIB}
-	${MAKE} -C ${RUBY_OBJ_DIR}
+	${MAKE} CC="${CC}" CXX="${CXX}" LDFLAGS="${LDFLAGS}" -C ${RUBY_OBJ_DIR}
 	
 ${RUBY_INSTALL}: ${RUBY_DLL}
 	${MAKE} -C ${RUBY_OBJ_DIR} install

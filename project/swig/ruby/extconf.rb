@@ -50,9 +50,6 @@ elsif RUBY_PLATFORM =~ /i386-mingw32/
     $CFLAGS += ' ' + ENV['CFLAGS'] + ' ' + librets_cflags.chomp
   end
   swig_dir=with_config("swig-dir", "../../../project/swig")
-  puts "lib " + $libs
-  puts "cflags '" + $CFLAGS + "'"
-  puts "librets_libs: " + librets_libs
 end
 
 $INSTALLFILES = [['librets.rb', "$(RUBYLIBDIR)", "lib"]]

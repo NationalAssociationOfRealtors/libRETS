@@ -6,9 +6,9 @@ ifeq (${USE_SWIG_BINDINGS}, 1)
 
 SWIG_DEFAULT		=
 # SWIG_DEPENDS		= $(shell find ${SWIG_DIR} -name "*.i")
-SWIG_DIR		= ${top_srcdir}/project/swig
+SWIG_DIR		= ${abs_top_srcdir}/project/swig
 SWIG_FILES		= ${SWIG_DIR}/librets.i ${SWIG_DIR}/auto_ptr_release.i
-SWIG_LIBRETS_CONFIG	= ${top_srcdir}/librets-config-inplace
+SWIG_LIBRETS_CONFIG	= ${abs_top_srcdir}/librets-config-inplace
 SWIG_LIBRETS_LIBS	= `${SWIG_LIBRETS_CONFIG} --libs`
 SWIG_OBJ_DIR		= ${BUILD}/swig
 SWIG_OSNAME		= $(shell perl -e 'use Config; print $$Config{osname};')
