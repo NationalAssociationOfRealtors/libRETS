@@ -49,6 +49,9 @@ elsif RUBY_PLATFORM =~ /i386-mingw32/
   else
     $CFLAGS += ' ' + ENV['CFLAGS'] + ' ' + librets_cflags.chomp
   end
+  $CFLAGS += ' -DHAVE_STRUCT_TIMESPEC'
+  $CFLAGS += ' -DHAVE_STRUCT_TIMEZONE'
+
   swig_dir=with_config("swig-dir", "../../../project/swig")
 end
 

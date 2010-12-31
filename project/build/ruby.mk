@@ -17,7 +17,8 @@ ${RUBY_WRAP}: ${SWIG_FILES}
 	-outdir ${RUBY_OBJ_DIR} -I${SWIG_DIR}/lib/ruby ${SWIG_DIR}/librets.i
 
 ${RUBY_MAKEFILE}: ${RUBY_WRAP} ${RUBY_SRC_DIR}/extconf.rb
-	cp ${RUBY_SRC_DIR}/* ${RUBY_OBJ_DIR}
+	cp ${RUBY_SRC_DIR}/*.rb ${RUBY_OBJ_DIR}
+	cp ${RUBY_SRC_DIR}/librets_ruby.h ${RUBY_OBJ_DIR}
 	CC="${CC}" CXX="${CXX}" CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" \
 	${RUBY} -C ${RUBY_OBJ_DIR} ${RUBY_EXTCONF_RB} 		\
 	--with-librets-config=${SWIG_LIBRETS_CONFIG} \
