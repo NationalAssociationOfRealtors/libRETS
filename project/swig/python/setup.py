@@ -4,6 +4,7 @@ import commands
 import re
 import sys
 
+print "sys.platform: " + sys.platform
 if (sys.platform != 'win32' and sys.platform != 'cygwin'):
     librets_config = "../../../librets-config-inplace"
 
@@ -16,7 +17,7 @@ else:
     librets_version = lines[0].rstrip()
     librets_libs = lines[1].rstrip().split()
     librets_cflags = lines[2].rstrip().split()
-    librets_bridge = "../librets_bridge.cpp"
+    librets_bridge = lines[3].rstrip()
 
 setup(name = "librets-python",
   version = librets_version,

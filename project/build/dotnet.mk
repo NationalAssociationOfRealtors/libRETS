@@ -125,7 +125,6 @@ else
 #
 # Windows/MinGW
 #
-BACKSLASH	= perl -e 'foreach (<STDIN>) {s/\//\\/g; print}'
 
 ${DOTNET_MANAGED_DLL}:	${DOTNET_UNMANAGED_DLL} ${DOTNET_MANAGED_SRC}
 	${CSC} -target:library \

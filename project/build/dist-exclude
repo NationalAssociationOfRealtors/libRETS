@@ -1,6 +1,8 @@
 /build
 /build-32
 /build-64
+/build-x86
+/build-x64
 /dist
 /scratch
 

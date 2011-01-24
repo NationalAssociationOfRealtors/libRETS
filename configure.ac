@@ -16,16 +16,19 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_RANLIB
-AC_CHECK_PROG(my_have_perl, perl, yes, no)
-if test x"$my_have_perl" != x"yes"; then
+AC_CHECK_PROG(AR, ar, ar, no)
+AC_SUBST(AR)
+            AC_CHECK_PROG(CSC, csc, csc, no)
+AC_CHECK_PROG(PERL, perl, perl, no)
+if test x"$PERL" == x"no"; then
     AC_MSG_ERROR([perl is required to build librets])
 fi
 
-VERSION=`perl -ane 'print $1 if /^VERSION\s+\=\s+(\S+)/' ${ac_top_builddir}project/build/version.mk`
+VERSION=`${PERL} -ane 'print $1 if /^VERSION\s+\=\s+(\S+)/' ${ac_top_builddir}project/build/version.mk`
 AC_MSG_CHECKING([librets version])
 AC_MSG_RESULT($VERSION)
 AC_SUBST(VERSION)
-HEX_VERSION=`perl -ane 'print $1 if /^HEX_VERSION\s+\=\s+(\S+)/' ${ac_top_builddir}project/build/version.mk`
+HEX_VERSION=`${PERL} -ane 'print $1 if /^HEX_VERSION\s+\=\s+(\S+)/' ${ac_top_builddir}project/build/version.mk`
 AC_SUBST(HEX_VERSION)
 
 AC_ARG_ENABLE(maintainer-documentation,
@@ -152,7 +155,7 @@ if test "$my_use_pic" = "yes"; then
    LIBRETS_CFLAGS="$LIBRETS_CFLAGS -fPIC"
 fi
 
-OSNAME=`perl -e 'use Config; print $Config{osname};'`
+OSNAME=`${PERL} -e 'use Config; print $Config{osname};'`
 ARCH=
 ARCH_FLAGS=
 

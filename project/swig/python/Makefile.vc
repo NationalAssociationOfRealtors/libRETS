@@ -22,6 +22,7 @@ $(LIBRETS_EXT): librets_wrap.cpp
 	echo $(VERSION) > $(SETUP_CONFIG)
 	echo $(LIBRETS_LIB) >> $(SETUP_CONFIG)
 	echo $(CFLAGS) >> $(SETUP_CONFIG)
+	echo ../librets_bridge.cpp >> ${SETUP_CONFIG}
 	python setup.py build --compiler=msvc
 
 install:

@@ -1,3 +1,4 @@
+DIST_BIN	= librets-$(VERSION)${ARCH}
 DIST_SRC	= librets-$(VERSION)
 SRC_TGZ		= librets-$(VERSION).tar.gz
 SRC_ZIP		= librets-$(VERSION).zip
@@ -175,6 +176,59 @@ _run_SSLServer: ${LIBRETS_NETTEST_HTTPSERVER}
 _maintainer-clean: _veryclean
 	$(RM) configure
 
+# Windows cygwin/mingw only
+ifeq ($(shell perl -e 'use Config; print $$Config{osname};'), MSWin32)
+
+COMPILER_VER	= ${shell ${CXX} -dumpversion | ${PERL} -e 'foreach (<STDIN>) {s/([1-9]).([1-9]).*/\1\2/;print}'}
+DISTDIR		= distwin/${DIST_BIN}
+DISTZIP		= librets-${VERSION}${ARCH}.zip
+
+_distwin: _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-perl _dist-ruby
+	cd distwin; zip -rq $(DISTZIP) .
+	cp -f distwin/${DISTZIP} dist
+
+_dist-prepare: _doc-api
+	$(RM) -r ${DISTDIR}
+	mkdir -p ${DISTDIR}
+	mkdir -p ${DISTDIR}/doc
+	mkdir -p ${DISTDIR}/dotnet
+	mkdir -p ${DISTDIR}/java
+	mkdir -p ${DISTDIR}/lib
+	mkdir -p ${DISTDIR}/perl
+	mkdir -p ${DISTDIR}/ruby
+	rsync --recursive --delete ${BUILD}/doc/api/html ${DISTDIR}/doc/api
+	rsync --cvs-exclude --recursive --delete project/librets/include ${DISTDIR}
+
+_dist-cpp:
+	cp -u $(BUILD)/librets/lib/librets.a $(DISTDIR)/lib/librets-mingw${COMPILER_VER}${ARCH}.a
+
+_dist-csharp:
+	-cp -u ${BUILD}/swig/csharp/*.dll $(DISTDIR)/dotnet
+	-cp -u ${BUILD}/swig/csharp/Metadata.exe $(DISTDIR)/dotnet
+	-cp -u ${BUILD}/swig/csharp/Search.exe $(DISTDIR)/dotnet
+	-cp -u ${BUILD}/swig/csharp/RawSearch.exe $(DISTDIR)/dotnet
+	-cp -u ${BUILD}/swig/csharp/Update.exe $(DISTDIR)/dotnet
+
+_dist-java:
+	-cp -u ${BUILD}/swig/java/*.jar $(DISTDIR)/java
+	-cp -u ${BUILD}/swig/java/*.dll $(DISTDIR)/java
+
+_dist-perl:
+	-cp -u ${BUILD}/swig/perl/librets.pm $(DISTDIR)/perl
+	-rsync --recursive --delete ${BUILD}/swig/perl/blib/arch/auto/librets/ $(DISTDIR)/perl
+	@echo Place librets.pm into your site/lib directory > $(DISTDIR)/perl/README
+	@echo Create the directory site/lib/auto/librets >> $(DISTDIR)/perl/README
+	@echo and place the other files there. >> $(DISTDIR)/perl/README
+
+_dist-ruby:
+	-cp -u ${BUILD}/swig/ruby/*.so $(DISTDIR)/ruby
+	-cp -u ${BUILD}/swig/ruby/librets.rb $(DISTDIR)/ruby
+
+else
+_distwin:
+
+endif 
+
 # Cancel built-in rules
 %.o: %.cpp
 %.o: %.c
@@ -187,4 +241,4 @@ endif
 .PHONY: all debug build doc doc-api \
 	install install-bin install-data install-config no-cppunit \
 	_all _debug _build _doc _doc-api _clean _distclean _veryclean \
-	_maintainer-clean test _test test-network _test-network
+	_maintainer-clean test _test test-network _test-network _distwin

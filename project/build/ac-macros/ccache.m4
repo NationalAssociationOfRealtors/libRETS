@@ -16,6 +16,7 @@ my_use_ccache=no
 if test "$my_enable_ccache" = "yes"; then
   AC_CHECK_PROG(my_have_ccache, ccache, yes, no)
   if test "$my_have_ccache" = "yes"; then
+     AR="ccache $AR"
      CC="ccache $CC"
      CXX="ccache $CXX"
      my_use_ccache=yes

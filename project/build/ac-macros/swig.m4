@@ -7,11 +7,11 @@ AC_DEFUN([MY_TEST_SWIG], [
     dnl check is the plain-text version of the required version
     check="1.3.33"
 
-    set `perl -e "@v = split('\\.', '$check'); print \"@v\";"`
+    set `${PERL} -e "@v = split('\\.', '$check'); print \"@v\";"`
     check_major=$[1]
     check_minor=$[2]
     check_release=$[3]
-    SWIG_OSNAME=`perl -e 'use Config; print $Config{osname};'`
+    SWIG_OSNAME=`${PERL} -e 'use Config; print $Config{osname};'`
 
     HAVE_JAVA=0
     HAVE_DOTNET=0
@@ -35,8 +35,8 @@ AC_DEFUN([MY_TEST_SWIG], [
 
       dnl Sorry, I never professed to being a perl programmer
       ver=`$SWIG -version | tr "\n" " "`
-      ver=`perl -e "@v = split(' ', '$ver');  print \"@v[[2]]\";"`
-      set `perl -e "@v = split('\\.' , '$ver'); print \"@v\";"`
+      ver=`${PERL} -e "@v = split(' ', '$ver');  print \"@v[[2]]\";"`
+      set `${PERL} -e "@v = split('\\.' , '$ver'); print \"@v\";"`
 
       ver_major=$[1]
       ver_minor=$[2]
@@ -148,7 +148,7 @@ EOF
         dnl Check to see if we should build for perl
         dnl
         if test "$my_use_perl" = "yes"; then
-            perl_h=`perl -e 'use Config; print $Config{archlib};'`
+            perl_h=`${PERL} -e 'use Config; print $Config{archlib};'`
             perl_h=$perl_h/CORE/perl.h
             AC_CHECK_FILE([$perl_h], [my_perl_h=$perl_h])
             if test -n "$my_perl_h"; then
@@ -187,8 +187,8 @@ EOF
         if test "$my_use_python" = "yes"; then
             AC_CHECK_PROG(PYTHON, python, python, no)
             if test "$PYTHON" != "no"; then
-                python_version=`python -c "import sys; print sys.version[[:3]]"`
-                python_prefix=`python -c "import sys; print sys.prefix"`
+                python_version=`python -c "import sys; print sys.version[[:3]]" | tr -d "\n\r"`
+                python_prefix=`python -c "import sys; print sys.prefix" | tr -d "\n\r"`
                 python_h="$python_prefix/include/python$python_version/Python.h" 
                 case $host_os in
                     *mingw* | *cygwin*) python_h="$python_prefix/include/Python.h" ;;
@@ -208,7 +208,7 @@ EOF
         if test "$my_use_ruby" = "yes"; then
             AC_CHECK_PROG(RUBY, ruby, ruby, no)
             if test "$RUBY" != "no"; then
-                ruby_prefix=`ruby -rrbconfig -e 'puts Config::CONFIG[["rubyhdrdir"]] || Config::CONFIG[["archdir"]]'`
+                ruby_prefix=`ruby -rrbconfig -e 'puts Config::CONFIG[["rubyhdrdir"]] || Config::CONFIG[["archdir"]]' | tr -d "\n\r"`
                 ruby_h="$ruby_prefix/ruby.h"
                 AC_CHECK_FILE([$ruby_h], [my_ruby_h=$ruby_h])
 

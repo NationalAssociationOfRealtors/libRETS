@@ -15,7 +15,7 @@ AC_DEFUN([MY_TEST_DEPENDS], [
   my_use_depends=no
   USE_DEPENDS=0
   if test "$my_enable_depends" = "yes"; then
-    if test "$my_have_perl" = "yes"; then
+    if test "${PERL}" != "no"; then
       USE_DEPENDS=1
       my_use_depends=yes
     else

@@ -43,12 +43,37 @@ ${JAVA_DLL}: ${JAVA_WRAP} ${JAVA_OBJ_DIR}/librets_wrap.o ${SWIG_BRIDGE_OBJ} ${LI
 ${JAVA_OBJ_DIR}/librets_wrap.o: ${JAVA_OBJ_DIR}/librets_wrap.cpp
 	${CXX}  ${JAVA_CXX_FLAGS} -I${LIBRETS_INC_DIR} -I${SWIG_DIR} ${BOOST_CFLAGS} ${JAVA_INCLUDES} -c $< -o $@
 	
+
+ifneq (${SWIG_OSNAME}, MSWin32)
+########
+#
+# Not Windows/MinGW
+#
 ${JAVA_CLASSES}: ${JAVA_WRAP} ${JAVA_SOURCES}
 	${JAVAC} -d ${JAVA_OBJ_DIR} ${JAVA_BRIDGE} ${JAVA_SOURCES} 
+
+${JAVA_EXAMPLES_CLASSES}: ${JAVA_EXAMPLES} ${JAVA_OBJ_DIR}/${JAVA_JAR}
+	${JAVAC} -classpath ${JAVA_CLASSPATH} -d ${JAVA_OBJ_DIR} ${JAVA_EXAMPLES}
 
 ${JAVA_OBJ_DIR}/${JAVA_JAR}: ${JAVA_CLASSES}
 	cd ${JAVA_OBJ_DIR}; ${JAR} -cvf ${JAVA_JAR} librets || \
 					${RM} ${JAVA_OBJ_DIR}/${JAVA_JAR}
+else
+########
+#
+# Windows/MinGW
+#
+${JAVA_CLASSES}: ${JAVA_WRAP} ${JAVA_SOURCES}
+	${JAVAC} -d ${shell echo ${JAVA_OBJ_DIR} | ${BACKSLASH}} \
+                ${shell echo ${JAVA_BRIDGE} | ${BACKSLASH}} \
+                ${shell echo ${JAVA_SOURCES} | ${BACKSLASH}} 
 
 ${JAVA_EXAMPLES_CLASSES}: ${JAVA_EXAMPLES} ${JAVA_OBJ_DIR}/${JAVA_JAR}
-	${JAVAC} -classpath ${JAVA_CLASSPATH} -d ${JAVA_OBJ_DIR} ${JAVA_EXAMPLES}
+	${JAVAC} -classpath ${shell echo ${JAVA_CLASSPATH} | ${BACKSLASH}} \
+		-d ${shell echo ${JAVA_OBJ_DIR} | ${BACKSLASH}} \
+                ${shell echo ${JAVA_EXAMPLES} | ${BACKSLASH}} 
+
+${JAVA_OBJ_DIR}/${JAVA_JAR}: ${JAVA_CLASSES}
+	cd ${JAVA_OBJ_DIR}; ${JAR} -cvf ${shell echo ${JAVA_JAR} | ${BACKSLASH}} librets || \
+					${RM} ${JAVA_OBJ_DIR}/${JAVA_JAR}
+endif

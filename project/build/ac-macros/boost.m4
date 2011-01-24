@@ -19,24 +19,19 @@ AC_DEFUN([MY_TEST_BOOST], [
   boost_include_dir="include"
   for boost_prefix in $boost_prefixes
   do
+    boost_include_dir="include"
     boost_version_h="${boost_prefix}/${boost_include_dir}/boost/version.hpp"
     AC_CHECK_FILE([$boost_version_h], [my_boost_version_h=$boost_version_h])
     test -n "$my_boost_version_h" && break
-  done
-
-  if test -z "$my_boost_version_h"; then
-    for boost_prefix in $boost_prefixes
-    do
-      for i in `ls -d $boost_prefix/include/boost-* 2>/dev/null`; do
-        boost_version=`echo $i | sed "s#$boost_prefix##" | sed "s/\/include\/boost-//"`
-	boost_include_dir="include/boost-${boost_version}"
-	boost_version_h="${boost_prefix}/${boost_include_dir}/boost/version.hpp"
-        AC_CHECK_FILE([$boost_version_h], [my_boost_version_h=$boost_version_h])
-        test -n "$my_boost_version_h" && break
-      done
+    for i in `ls -d $boost_prefix/include/boost-* 2>/dev/null`; do
+      boost_version=`echo $i | sed "s#$boost_prefix##" | sed "s/\/include\/boost-//"`
+      boost_include_dir="include/boost-${boost_version}"
+      boost_version_h="${boost_prefix}/${boost_include_dir}/boost/version.hpp"
+      AC_CHECK_FILE([$boost_version_h], [my_boost_version_h=$boost_version_h])
       test -n "$my_boost_version_h" && break
     done
-  fi
+    test -n "$my_boost_version_h" && break
+  done
 
   if test -z "$my_boost_version_h"; then
     HAVE_BOOST=0
@@ -50,9 +45,9 @@ AC_DEFUN([MY_TEST_BOOST], [
     check_int=103200
     AC_MSG_CHECKING([for boost >= $check])
         
-    ver=`perl -ane "print /\#define\s+BOOST_LIB_VERSION\s+\"(\S+)\"/" ${BOOST_PREFIX}/${boost_include_dir}/boost/version.hpp`
-        int_ver=`perl -ane "print /\#define\s+BOOST_VERSION\s+(\S+)/" ${BOOST_PREFIX}/${boost_include_dir}/boost/version.hpp`
-    ok=`perl -e "print (($int_ver>=$check_int) ? '1' : '0')"`
+    ver=`grep -e "#define.*BOOST_LIB_VERSION" ${BOOST_PREFIX}/${boost_include_dir}/boost/version.hpp | cut -d \" -f 2`
+    int_ver=`grep -e "#define.*BOOST_VERSION " ${BOOST_PREFIX}/${boost_include_dir}/boost/version.hpp | cut -d ' ' -f 3`
+    ok=`${PERL} -e "print (($int_ver>=$check_int) ? '1' : '0')"`
     if test x$ok != x0; then
         my_cv_boost_vers="$ver"
       AC_MSG_RESULT([$my_cv_boost_vers])

@@ -7,7 +7,7 @@ AC_DEFUN([MY_TEST_CPPUNIT], [
     dnl check is the plain-text version of the required version
     check="1.10.2"
 
-    set `perl -e "@v = split('\\.', '$check'); print \"@v\";"`
+    set `${PERL} -e "@v = split('\\.', '$check'); print \"@v\";"`
     check_major=$[1]
     check_minor=$[2]
     check_release=$[3]
@@ -18,7 +18,7 @@ AC_DEFUN([MY_TEST_CPPUNIT], [
       AC_MSG_CHECKING([for cppunit >= $check])
 
       ver=`$CPPUNIT_CONFIG --version`
-      set `perl -e "@v = split('\\.', '$ver'); print \"@v\";"`
+      set `${PERL} -e "@v = split('\\.', '$ver'); print \"@v\";"`
       ver_major=$[1]
       ver_minor=$[2]
       ver_release=$[3]

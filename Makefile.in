@@ -19,6 +19,7 @@ INSTALL_PROGRAM=@INSTALL_PROGRAM@
 INSTALL_DATA=@INSTALL_DATA@
 MKINSTALLDIRS=$(abs_top_srcdir)/project/build/mkinstalldirs
 
+AR=@AR@
 CC=@CC@
 CXX=@CXX@
 CFLAGS=@CFLAGS@ @DEFS@
@@ -124,7 +125,7 @@ help:
 doc: _doc
 doc-api: _doc-api
 
-dist: _dist
+dist: _dist _distwin
 clean: _clean
 distclean: _distclean
 maintainer-clean: _maintainer-clean

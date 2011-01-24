@@ -8,7 +8,6 @@ AC_DEFUN([MY_TEST_MINGW], [
               my_platform="$withval",
 	      my_platform="")
 
-  echo \*\*\*\*\*\*\* my_platform: $my_platform
   if test "$my_platform" != "x86"; then
 
     if test "$my_platform" != "x64"; then
@@ -18,10 +17,13 @@ AC_DEFUN([MY_TEST_MINGW], [
 
   if test "X$my_platform" != "X"; then
       ARCH="-$my_platform"
+      CFLAGS=`echo ${CFLAGS} | sed -e 's/-fPIC//'`
+      LIBRETS_CFLAGS=`echo ${LIBRETS_CFLAGS} | sed -e 's/-fPIC//'`
+      LDFLAGS="${LDFLAGS} -static-libgcc -static-libstdc++"
   fi
 
 
   if test "X$MSYSTEM" != "X"; then
-      LDFLAGS="$LDFLAGS -static-libgcc -Wl,-Bstatic"
+      LDFLAGS="$LDFLAGS -Wl,-Bstatic"
   fi
 ])
