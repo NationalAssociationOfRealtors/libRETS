@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005-2009 National Association of REALTORS(R)
+ * Copyright (C) 2005-2011 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -32,6 +32,9 @@
 #include "librets/ExceptionErrorHandler.h"
 #include "librets/RetsHttpException.h"
 #include "boost/lexical_cast.hpp"
+#ifdef LIBRETS_THREAD_SAFE
+#include <boost/thread/thread.hpp>
+#endif
 
 using namespace librets;
 using namespace librets::util;
@@ -51,6 +54,7 @@ const char * CLASS::RETS_1_0_STRING     = "RETS/1.0";
 const char * CLASS::RETS_1_5_STRING     = "RETS/1.5";
 const char * CLASS::RETS_1_7_STRING     = "RETS/1.7";
 const char * CLASS::RETS_1_7_2_STRING   = "RETS/1.7.2";
+const char * CLASS::RETS_1_8_STRING     = "RETS/1.8";
 
 const int CLASS::MODE_CACHE             = 0x01;
 const int CLASS::MODE_NO_STREAM         = 0x02;
@@ -96,6 +100,10 @@ string CLASS::GetLoginUrl() const
 
 RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
 {
+#ifdef LIBRETS_THREAD_SAFE
+    boost::mutex::scoped_lock   lock(mMutex);
+#endif
+    
     if (mUserAgentAuthCalculator.HasAuthorizationValue())
     {
         mUserAgentAuthCalculator.SetRequestId("");
@@ -715,6 +723,10 @@ RetsVersion CLASS::RetsVersionFromString(string versionString)
     else if (versionString == RETS_1_7_2_STRING)
     {
         return RETS_1_7_2;
+    }
+    else if (versionString == RETS_1_8_STRING)
+    {
+        return RETS_1_8;
     }
     else if (versionString.empty())
     {

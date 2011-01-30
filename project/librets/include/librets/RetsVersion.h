@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2011 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -45,7 +45,11 @@ enum RetsVersion
     /**
      * This is a RETS 1.7.2 server.
      */
-    RETS_1_7_2
+    RETS_1_7_2,
+    /**
+     * This is a RETS 1.8 server.
+     */
+    RETS_1_8
 };
 
 }

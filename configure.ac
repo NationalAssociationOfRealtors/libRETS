@@ -155,6 +155,17 @@ if test "$my_use_pic" = "yes"; then
    LIBRETS_CFLAGS="$LIBRETS_CFLAGS -fPIC"
 fi
 
+AC_ARG_ENABLE(thread-safe,
+              AC_HELP_STRING([--enable-thread-safe],
+                             [enable thread safe support (default: disabled)]),
+               test "X$enableval" != "Xno" && my_enable_thread_safe=yes,
+               my_enable_thread_safe=no)
+
+if test "$my_enable_thread_safe" = "yes"; then
+  CFLAGS="$CFLAGS -DLIBRETS_THREAD_SAFE"
+  LIBRETS_CFLAGS="$LIBRETS_CFLAGS -DLIBRETS_THREAD_SAFE"
+fi
+
 OSNAME=`${PERL} -e 'use Config; print $Config{osname};'`
 ARCH=
 ARCH_FLAGS=

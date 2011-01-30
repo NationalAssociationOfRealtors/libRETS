@@ -1,8 +1,11 @@
 Version 1.5.2 - xx xxx 2010
   
+  * Add --enable-thread-safe switch and make thread-safe.
+    Ticket #124.
+  * Support MinGW. Ticket #134.
+  * Support Ruby-x86 on Windows. Ticket #136.
   * Rolled SWIG to 2.0.x. Ticket #159.
     Created MinGW-X86 and MinGW-x64 tools branches in vendor.
-
   * Make sure reply code 20201 is passed back to user. Ticket #137.
   * Fix Ruby GC crash for Ruby 1.8.7 and later. Ticket #158.
   * Expose Raw XML search enhancement to PHP. Ticket #160.

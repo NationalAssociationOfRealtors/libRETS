@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2011 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -33,6 +33,9 @@
 #include "librets/UserAgentAuthCalculator.h"
 #include "librets/error_forward.h"
 #include "MetadataLoader.h"
+#ifdef LIBRETS_THREAD_SAFE
+#include <boost/thread/thread.hpp>
+#endif
 
 /**
  * The main librets namespace.  See RetsSession.
@@ -501,6 +504,7 @@ private:
     static const char * RETS_1_5_STRING;
     static const char * RETS_1_7_STRING;
     static const char * RETS_1_7_2_STRING;
+    static const char * RETS_1_8_STRING;
     
     void RetrieveAction();
 
@@ -556,6 +560,10 @@ private:
     int mTimeout;
     
     unsigned int mFlags;
+
+#ifdef LIBRETS_THREAD_SAFE
+    boost::mutex mMutex;
+#endif
 };
 
 };

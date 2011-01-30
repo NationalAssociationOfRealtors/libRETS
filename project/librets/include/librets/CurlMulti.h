@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 National Association of REALTORS(R)
+ * Copyright (C) 2008-2011 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -29,6 +29,11 @@
 #include "librets/curl.h"
 #include "librets/CurlEasy.h"
 #include <boost/shared_ptr.hpp>
+
+#ifdef LIBRETS_THREAD_SAFE
+#include <boost/thread/thread.hpp>
+#include <boost/thread/mutex.hpp>
+#endif
 
 namespace librets {
 
@@ -120,6 +125,10 @@ private:
     int mStillRunning;
     
     curl_slist * mCookieList;
+    
+#ifdef LIBRETS_THREAD_SAFE
+    boost::mutex mMutex;
+#endif
 };
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 National Association of REALTORS(R)
+ * Copyright (C) 2008-2011 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -63,6 +63,9 @@ CLASS::CLASS()
 
 CLASS::~CLASS()
 {
+#ifdef LIBRETS_THREAD_SAFE
+    boost::mutex::scoped_lock   lock(mMutex);
+#endif
     /*
      * Destroy the contents of the CurlEasy cache. We need to manually do this
      * instead of letting the automatic destruction happen in this case because
@@ -80,12 +83,19 @@ CLASS::~CLASS()
 
 void CLASS::AddEasy(CurlEasyPtr curlEasy)
 {
+#ifdef LIBRETS_THREAD_SAFE
+    boost::mutex::scoped_lock   lock(mMutex);
+#endif
     CurlAssert(curl_multi_add_handle(mMultiHandle, curlEasy->GetEasyHandle()));
     mCurlEasyInUse.push_back(curlEasy);
 }
 
 CurlEasyPtr CLASS::EasyFactory()
 {
+#ifdef LIBRETS_THREAD_SAFE
+    boost::mutex::scoped_lock   lock(mMutex);
+#endif
+    
     CurlEasyPtr curlEasy;
     /*
      * See if the cache is empty. If so, create a new one, otherwise use the
@@ -109,11 +119,17 @@ CurlEasyPtr CLASS::EasyFactory()
 
 void CLASS::FreeEasy(CurlEasyPtr curlEasy)
 {
+#ifdef LIBRETS_THREAD_SAFE
+    boost::mutex::scoped_lock   lock(mMutex);
+#endif
     mCurlEasyAvailable.push_back(curlEasy);
 }
 
 void CLASS::RemoveEasy(CurlEasyPtr curlEasy)
 {
+#ifdef LIBRETS_THREAD_SAFE
+    boost::mutex::scoped_lock   lock(mMutex);
+#endif
     CurlAssert(curl_multi_remove_handle(mMultiHandle, curlEasy->GetEasyHandle()));            
 }
 
@@ -146,6 +162,10 @@ void CLASS::Perform()
         throw RetsException("No multi handle has been allocated prior to the Perform() call.");
     }
 
+#ifdef LIBRETS_THREAD_SAFE
+    boost::mutex::scoped_lock   lock(mMutex);
+#endif
+    
     /*
      * See how long curl thinks we should wait before continuing.
      */
@@ -249,7 +269,7 @@ void CLASS::Perform()
                         response->SetInProgress(false);
                         delete client;
                     }
-                    FreeEasy(*i);
+                    mCurlEasyAvailable.push_back(*i);
                     curl_multi_remove_handle(mMultiHandle, msg->easy_handle);
                     mCurlEasyInUse.erase(i);
                     break;
@@ -268,6 +288,9 @@ curl_slist * CLASS::GetCookieSlist()
 
 bool CLASS::StillRunning()
 {
+#ifdef LIBRETS_THREAD_SAFE
+    boost::mutex::scoped_lock   lock(mMutex);
+#endif
     return mStillRunning > 0;
 }
 
