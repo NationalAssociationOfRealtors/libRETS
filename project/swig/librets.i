@@ -41,6 +41,7 @@
 #ifdef WIN32
 #include "librets/winundef.h"
 #endif
+#undef MAP_TYPE
 %}
 %copyctor;
 // Yes, this is says php4 in the swig pragma, but it applies to php5
