@@ -161,9 +161,11 @@ AC_ARG_ENABLE(thread-safe,
                test "X$enableval" != "Xno" && my_enable_thread_safe=yes,
                my_enable_thread_safe=no)
 
+LIBRETS_MT=
 if test "$my_enable_thread_safe" = "yes"; then
   CFLAGS="$CFLAGS -DLIBRETS_THREAD_SAFE"
   LIBRETS_CFLAGS="$LIBRETS_CFLAGS -DLIBRETS_THREAD_SAFE"
+  LIBRETS_MT=-mt
 fi
 
 OSNAME=`${PERL} -e 'use Config; print $Config{osname};'`
@@ -182,6 +184,7 @@ AC_SUBST(LIBRETS_CFLAGS)
 AC_SUBST(LIBRETS_LDFLAGS)
 AC_SUBST(ARCH)
 AC_SUBST(ARCH_FLAGS)
+AC_SUBST(LIBRETS_MT)
 
 AC_CONFIG_FILES([Makefile project/build/Doxyfile])
 AC_CONFIG_FILES([librets-config], [chmod +x librets-config])

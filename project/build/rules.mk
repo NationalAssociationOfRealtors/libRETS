@@ -200,7 +200,7 @@ _dist-prepare: _doc-api
 	rsync --cvs-exclude --recursive --delete project/librets/include ${DISTDIR}
 
 _dist-cpp:
-	cp -u $(BUILD)/librets/lib/librets.a $(DISTDIR)/lib/librets-mingw${COMPILER_VER}${ARCH}.a
+	cp -u $(BUILD)/librets/lib/librets.a $(DISTDIR)/lib/librets-mingw${COMPILER_VER}${LIBRETS_MT}${ARCH}.a
 
 _dist-csharp:
 	-cp -u ${BUILD}/swig/csharp/*.dll $(DISTDIR)/dotnet
