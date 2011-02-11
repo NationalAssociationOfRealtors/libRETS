@@ -25,7 +25,8 @@ ifeq (${SWIG_OSNAME}, darwin)
 SWIG_LINK		= ${CXX} -bundle -undefined suppress -flat_namespace 
 else ifeq (${SWIG_OSNAME}, MSWin32)
 DLL			= dll
-SWIG_LINK		= ${CXX} -static -mdll -L/usr/lib/w32api -Wl,--add-stdcall-alias
+SWIG_LINK		= ${CXX} -static -mdll -Wl,--add-stdcall-alias
+# SWIG_LINK		= ${CXX} -static -mdll -L/usr/lib/w32api -Wl,--add-stdcall-alias
 ifeq (${OSTYPE}, msys)
 BACKSLASH	= perl -e 'foreach (<STDIN>) {s/\//\\/g; print}'
 else

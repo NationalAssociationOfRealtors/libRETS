@@ -33,8 +33,10 @@
 #include "librets/UserAgentAuthCalculator.h"
 #include "librets/error_forward.h"
 #include "MetadataLoader.h"
+
 #ifdef LIBRETS_THREAD_SAFE
 #include <boost/thread/thread.hpp>
+#include "librets/winundef.h"
 #endif
 
 /**

@@ -134,12 +134,14 @@ _uninstall:
 	$(RM) $(DESTDIR)$(bindir)/librets-config
 
 _clean:
-	$(RM) -r build${ARCH} dist
+	$(RM) -r build${ARCH} 
 
 _distclean: _clean
 	$(RM) $(DISTCLEAN_FILES)
 	$(RM) -r autom4te.cache
-	$(RM) makefile
+	$(RM) Makefile
+	${RM} -r dist
+	${RM} -r distwin
 
 _veryclean: _distclean
 
@@ -183,21 +185,26 @@ COMPILER_VER	= ${shell ${CXX} -dumpversion | ${PERL} -e 'foreach (<STDIN>) {s/([
 DISTDIR		= distwin/${DIST_BIN}
 DISTZIP		= librets-${VERSION}${ARCH}.zip
 
-_distwin: _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-perl _dist-ruby
+_distwin_stage: _build _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-perl _dist-ruby
+
+_distwin: _distwin_stage _doc-api
+	-rsync --recursive --delete ${BUILD}/doc/api/html ${DISTDIR}/doc/api
+	-rsync --cvs-exclude --recursive --delete project/librets/include ${DISTDIR}
 	cd distwin; zip -rq $(DISTZIP) .
 	cp -f distwin/${DISTZIP} dist
 
-_dist-prepare: _doc-api
-	$(RM) -r ${DISTDIR}
-	mkdir -p ${DISTDIR}
-	mkdir -p ${DISTDIR}/doc
-	mkdir -p ${DISTDIR}/dotnet
-	mkdir -p ${DISTDIR}/java
-	mkdir -p ${DISTDIR}/lib
-	mkdir -p ${DISTDIR}/perl
-	mkdir -p ${DISTDIR}/ruby
-	rsync --recursive --delete ${BUILD}/doc/api/html ${DISTDIR}/doc/api
-	rsync --cvs-exclude --recursive --delete project/librets/include ${DISTDIR}
+_dist-prepare: 
+	-mkdir -p ${DISTDIR}
+	-mkdir -p ${DISTDIR}/doc
+	-mkdir -p ${DISTDIR}/dotnet
+	-mkdir -p ${DISTDIR}/dotnet-mt
+	-mkdir -p ${DISTDIR}/java
+	-mkdir -p ${DISTDIR}/java-mt
+	-mkdir -p ${DISTDIR}/lib
+	-mkdir -p ${DISTDIR}/perl
+	-mkdir -p ${DISTDIR}/perl-mt
+	-mkdir -p ${DISTDIR}/ruby
+	-mkdir -p ${DISTDIR}/ruby-mt
 
 _dist-cpp:
 	cp -u $(BUILD)/librets/lib/librets.a $(DISTDIR)/lib/librets-mingw${COMPILER_VER}${LIBRETS_MT}${ARCH}.a

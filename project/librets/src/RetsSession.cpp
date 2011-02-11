@@ -32,9 +32,6 @@
 #include "librets/ExceptionErrorHandler.h"
 #include "librets/RetsHttpException.h"
 #include "boost/lexical_cast.hpp"
-#ifdef LIBRETS_THREAD_SAFE
-#include <boost/thread/thread.hpp>
-#endif
 
 using namespace librets;
 using namespace librets::util;
@@ -698,6 +695,10 @@ string CLASS::RetsVersionToString(RetsVersion retsVersion)
     else if (retsVersion == RETS_1_7_2)
     {
         return RETS_1_7_2_STRING;
+    }
+    else if (retsVersion == RETS_1_8)
+    {
+        return RETS_1_8_STRING;
     }
     else
     {

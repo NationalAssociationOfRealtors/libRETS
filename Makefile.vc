@@ -70,6 +70,7 @@ docs: prepare
 	rm -rf build/doc/api
 	cp project\build\Doxyfile.in project\build\Doxyfile
 	echo PROJECT_NUMBER=$(VERSION) >> project\build\Doxyfile
+        echo OUTPUT_DIRECTORY=build$(ARCH)/doc/api >> project\build\Doxyfile
 	$(DOXYGEN) project\build\Doxyfile
 
 swig:
@@ -77,7 +78,7 @@ swig:
 	$(NMAKE) /f Makefile.vc
 	cd ..\..
 
-lib-all-variants: lib-debug-dynamic lib-debug-static lib-release-dynamic lib-release-static
+lib-all-variants: lib-debug-dynamic lib-debug-static lib-release-dynamic lib-release-static lib-release-dynamic-ts lib-release-static-ts
 	cd project\librets\src
 #	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dll
         cd ..\..\..
@@ -103,6 +104,16 @@ lib-release-dynamic:
 lib-release-static:
 	cd project\librets\src
 	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=static
+        cd ..\..\..
+
+lib-release-dynamic-ts:
+	cd project\librets\src
+	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic LIBRETS_THREADS=/DLIBRETS_THREAD_SAFE
+        cd ..\..\..
+
+lib-release-static-ts:
+	cd project\librets\src
+	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=static LIBRETS_THREADS=/DLIBRETS_THREAD_SAFE
         cd ..\..\..
 
 dist: docs lib-all-variants _dist

@@ -1,5 +1,5 @@
 dnl
-dnl Configure MinGW builds on Windows
+dnl Configure MinGW builds on Windows. This is very kludgy. But, then again, windows ...
 dnl
 AC_DEFUN([MY_TEST_MINGW], [
   AC_ARG_WITH(platform,
@@ -20,6 +20,10 @@ AC_DEFUN([MY_TEST_MINGW], [
       CFLAGS=`echo ${CFLAGS} | sed -e 's/-fPIC//'`
       LIBRETS_CFLAGS=`echo ${LIBRETS_CFLAGS} | sed -e 's/-fPIC//'`
       LDFLAGS="${LDFLAGS} -static-libgcc -static-libstdc++"
+      if test "$my_platform" == "x64"; then
+          HAVE_RUBY=0
+          my_have_ruby=no
+      fi
   fi
 
 

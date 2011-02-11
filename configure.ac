@@ -162,9 +162,9 @@ AC_ARG_ENABLE(thread-safe,
                my_enable_thread_safe=no)
 
 LIBRETS_MT=
+LIBRETS_THREAD_FLAGS=
 if test "$my_enable_thread_safe" = "yes"; then
-  CFLAGS="$CFLAGS -DLIBRETS_THREAD_SAFE"
-  LIBRETS_CFLAGS="$LIBRETS_CFLAGS -DLIBRETS_THREAD_SAFE"
+  LIBRETS_THREAD_FLAGS="-DLIBRETS_THREAD_SAFE"
   LIBRETS_MT=-mt
 fi
 
@@ -178,6 +178,11 @@ fi
 
 if test "$OSNAME" = "MSWin32"; then
     MY_TEST_MINGW
+    if test "X$LIBRETS_THREAD_FLAGS" != "X"; then
+        if test "$ARCH" == "-x64"; then
+            LIBRETS_THREAD_FLAGS="$LIBRETS_THREAD_FLAGS -DBOOST_USE_WINDOWS_H"
+        fi
+    fi
 fi
 
 AC_SUBST(LIBRETS_CFLAGS)
@@ -185,6 +190,7 @@ AC_SUBST(LIBRETS_LDFLAGS)
 AC_SUBST(ARCH)
 AC_SUBST(ARCH_FLAGS)
 AC_SUBST(LIBRETS_MT)
+AC_SUBST(LIBRETS_THREAD_FLAGS)
 
 AC_CONFIG_FILES([Makefile project/build/Doxyfile])
 AC_CONFIG_FILES([librets-config], [chmod +x librets-config])
