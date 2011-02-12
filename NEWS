@@ -1,4 +1,4 @@
-Version 1.5.2 - xx xxx 2010
+Version 1.5.2 - 11 Feb 2011
   
   * Add --enable-thread-safe switch and make thread-safe.
     Ticket #124.
