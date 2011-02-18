@@ -27,6 +27,9 @@
 #include "librets/std_forward.h"
 #include "librets/metadata_forward.h"
 #include "librets/RetsObject.h"
+#ifdef __WIN32__
+#include "librets/winundef.h"
+#endif
 
 namespace librets {
 

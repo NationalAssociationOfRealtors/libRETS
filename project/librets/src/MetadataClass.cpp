@@ -29,7 +29,7 @@ MetadataElement::MetadataType CLASS_::GetType() const
 
 string CLASS_::GetId() const
 {
-    return GetClassName();
+    return CLASS_::GetClassName();
 }
 
 string CLASS_::GetClassName() const

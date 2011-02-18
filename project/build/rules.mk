@@ -188,9 +188,10 @@ DISTZIP		= librets-${VERSION}${ARCH}.zip
 _distwin_stage: _build _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-perl _dist-ruby
 
 _distwin: _distwin_stage _doc-api
+	-mkdir dist
 	-rsync --recursive --delete ${BUILD}/doc/api/html ${DISTDIR}/doc/api
 	-rsync --cvs-exclude --recursive --delete project/librets/include ${DISTDIR}
-	cd distwin; zip -rq $(DISTZIP) .
+	cd distwin; zip -rq $(DISTZIP) ./librets-${VERSION}${ARCH}
 	cp -f distwin/${DISTZIP} dist
 
 _dist-prepare: 
@@ -210,26 +211,26 @@ _dist-cpp:
 	cp -u $(BUILD)/librets/lib/librets.a $(DISTDIR)/lib/librets-mingw${COMPILER_VER}${LIBRETS_MT}${ARCH}.a
 
 _dist-csharp:
-	-cp -u ${BUILD}/swig/csharp/*.dll $(DISTDIR)/dotnet
-	-cp -u ${BUILD}/swig/csharp/Metadata.exe $(DISTDIR)/dotnet
-	-cp -u ${BUILD}/swig/csharp/Search.exe $(DISTDIR)/dotnet
-	-cp -u ${BUILD}/swig/csharp/RawSearch.exe $(DISTDIR)/dotnet
-	-cp -u ${BUILD}/swig/csharp/Update.exe $(DISTDIR)/dotnet
+	-cp -u ${BUILD}/swig/csharp/*.dll $(DISTDIR)/dotnet${LIBRETS_MT}
+	-cp -u ${BUILD}/swig/csharp/Metadata.exe $(DISTDIR)/dotnet${LIBRETS_MT}
+	-cp -u ${BUILD}/swig/csharp/Search.exe $(DISTDIR)/dotnet${LIBRETS_MT}
+	-cp -u ${BUILD}/swig/csharp/RawSearch.exe $(DISTDIR)/dotnet${LIBRETS_MT}
+	-cp -u ${BUILD}/swig/csharp/Update.exe $(DISTDIR)/dotnet${LIBRETS_MT}
 
 _dist-java:
-	-cp -u ${BUILD}/swig/java/*.jar $(DISTDIR)/java
-	-cp -u ${BUILD}/swig/java/*.dll $(DISTDIR)/java
+	-cp -u ${BUILD}/swig/java/*.jar $(DISTDIR)/java${LIBRETS_MT}
+	-cp -u ${BUILD}/swig/java/*.dll $(DISTDIR)/java${LIBRETS_MT}
 
 _dist-perl:
-	-cp -u ${BUILD}/swig/perl/librets.pm $(DISTDIR)/perl
-	-rsync --recursive --delete ${BUILD}/swig/perl/blib/arch/auto/librets/ $(DISTDIR)/perl
-	@echo Place librets.pm into your site/lib directory > $(DISTDIR)/perl/README
-	@echo Create the directory site/lib/auto/librets >> $(DISTDIR)/perl/README
-	@echo and place the other files there. >> $(DISTDIR)/perl/README
+	-rsync --recursive --delete ${BUILD}/swig/perl/blib/arch/auto/librets/ $(DISTDIR)/perl${LIBRETS_MT}
+	-cp -u ${BUILD}/swig/perl/librets.pm $(DISTDIR)/perl${LIBRETS_MT}
+	@echo Place librets.pm into your site/lib directory > $(DISTDIR)/perl${LIBRETS_MT}/README
+	@echo Create the directory site/lib/auto/librets >> $(DISTDIR)/perl${LIBRETS_MT}/README
+	@echo and place the other files there. >> $(DISTDIR)/perl${LIBRETS_MT}/README
 
 _dist-ruby:
-	-cp -u ${BUILD}/swig/ruby/*.so $(DISTDIR)/ruby
-	-cp -u ${BUILD}/swig/ruby/librets.rb $(DISTDIR)/ruby
+	-cp -u ${BUILD}/swig/ruby/*.so $(DISTDIR)/ruby${LIBRETS_MT}
+	-cp -u ${BUILD}/swig/ruby/librets.rb $(DISTDIR)/ruby${LIBRETS_MT}
 
 else
 _distwin:

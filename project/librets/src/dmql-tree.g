@@ -179,7 +179,7 @@ criteria returns [DmqlCriterionPtr criterion]
     | #(AND c1=criteria c2=criteria)    { criterion = logicAnd(c1, c2); }
     | #(NOT c1=criteria)                { criterion = logicNot(c1); }
     | #(QUERY_ELEMENT n=field_name c1=query_element[n]) { criterion = c1; }
-    | #(IN n=field_name c1=or_list[n]) { criterion = c1; }
+    | #(IN_ n=field_name c1=or_list[n]) { criterion = c1; }
     ;
 
 query_element [std::string n] returns [DmqlCriterionPtr criterion]

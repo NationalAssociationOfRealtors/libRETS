@@ -42,7 +42,7 @@ tokens
 {
     SELECT = "select"; FROM = "from"; WHERE = "where";
     OR = "or"; AND = "and"; NOT = "not"; ORDER = "order"; BY = "by"; AS = "as";
-    IN = "in"; LIMIT = "limit"; OFFSET = "offset"; COUNT = "count";
+    IN_ = "in"; LIMIT = "limit"; OFFSET = "offset"; COUNT = "count";
     COLUMNS; COLUMN; QUERY_ELEMENT; TABLE; NEQ;
 }
 
@@ -138,10 +138,10 @@ query_element
 column_condition [RefRetsAST c]
     :! o:numeric_operator v:field_value
         { #column_condition = #([QUERY_ELEMENT, "QE"], #c, (#o, #v)); }
-    |! IN fvl:field_value_list
-        { #column_condition = #([IN], #c, (#fvl)); }
-    |! NOT IN nfvl:field_value_list
-        { #column_condition = #([NOT], #([IN], #c, (#nfvl))); }
+    |! IN_ fvl:field_value_list
+        { #column_condition = #([IN_], #c, (#fvl)); }
+    |! NOT IN_ nfvl:field_value_list
+        { #column_condition = #([NOT], #([IN_], #c, (#nfvl))); }
     ;
 
 field_value_list
