@@ -300,6 +300,10 @@ string SearchResultSet::GetString(int columnIndex)
 
 string SearchResultSet::GetString(string columnName)
 {
+    if (columnName.length() == 0)
+    {
+        throw invalid_argument("Invalid columnNamme - may not be empty");
+    }
     ColumnToIndexMap::const_iterator i = mColumnToIndex.find(columnName);
     if (i == mColumnToIndex.end())
     {

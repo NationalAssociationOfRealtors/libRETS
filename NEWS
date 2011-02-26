@@ -1,5 +1,11 @@
 Version 1.5.3 - xx xxx 2011
 
+  * Fix examples to use lazy initialization of the Columns to better
+    demonstrate how to address just-in-time data delivery.
+  * Fix Unix perl build.
+  * Make sure that SearchResultSet::GetColumn doesn't attempt to use 
+    an empty string.
+
 Version 1.5.2 - 11 Feb 2011
   
   * Add --enable-thread-safe switch and make thread-safe.
