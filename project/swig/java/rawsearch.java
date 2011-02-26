@@ -83,6 +83,10 @@ public class rawsearch
 
         while (results.HasNext())
         {
+            if (columns == null)
+            {
+                columns = results.GetColumns();
+            }
             for (int i = 0; i < columns.size(); i++)
             {
                 System.out.format("%15s: %s\n", columns.get(i), results.GetString(columns.get(i)));

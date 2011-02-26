@@ -28,10 +28,9 @@ $request->SetCountType($librets::SearchRequest::RECORD_COUNT_AND_RESULTS);
 my $results = $rets->Search($request);
 
 print "Record count: " . $results->GetCount() . "\n\n";
-my $columns = $results->GetColumns();
 while ($results->HasNext())
 {
-    foreach my $column (@$columns)
+    foreach my $column (@$results->GetColumns())
     {
 	    print $column . ": " . $results->GetString($column) . "\n";
     }

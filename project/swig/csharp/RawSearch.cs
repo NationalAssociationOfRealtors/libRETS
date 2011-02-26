@@ -71,10 +71,14 @@ public class RawSearch
 
             Console.WriteLine("Record count: " + results.GetCount());
             Console.WriteLine();
-            IEnumerable columns = results.GetColumns();
+            IEnumerable columns = null;
 
             while (results.HasNext())
             {
+                if (columns == null)
+                {
+                    columns = results.GetColumns();
+                }
                 foreach (string column in columns)
                 {
                     Console.WriteLine(column + ": " + results.GetString(column));

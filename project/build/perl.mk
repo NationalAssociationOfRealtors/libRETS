@@ -5,6 +5,7 @@
 PERL_BUILD		= ${PERL_DLL}
 
 PERL_CFLAGS		= `${top_srcdir}/librets-config-inplace --cflags`
+PERL_DLL_DIR		= ${PERL_OBJ_DIR}/blib/arch/auto/librets
 PERL_LIB		= ${shell perl -e 'use Config; print $$Config{libperl};'}
 PERL_INSTALL		= perl_install
 PERL_LDFLAGS		= `${top_srcdir}/librets-config-inplace --libs`
@@ -26,6 +27,8 @@ ${PERL_WRAP}: ${SWIG_FILES}
 #
 
 ifneq (${SWIG_OSNAME}, MSWin32)
+
+PERL_DLL		= ${PERL_DLL_DIR}/librets.so
 
 ${PERL_OBJ_DIR}/${PERL_MAKEFILE_PL}: ${PERL_SRC_DIR}/${PERL_MAKEFILE_PL}
 	cp ${PERL_SRC_DIR}/${PERL_MAKEFILE_PL} ${PERL_OBJ_DIR}/${PERL_MAKEFILE_PL}
@@ -60,7 +63,6 @@ PERL_LIB_DIR		= ${shell perl -e 'use Config; $$libdir = $$Config{archlibexp}; \
                                 $$libdir=~s/\\/\//g;print $$libdir;'}/CORE
 endif
 
-PERL_DLL_DIR		= ${PERL_OBJ_DIR}/blib/arch/auto/librets
 PERL_DLL		= ${PERL_DLL_DIR}/librets.${DLL}
 PERL_INCLUDES		= ${PERL_LIB_DIR}
 PERL_MAKEFILE_PL_MINGW	= Makefile.mingw

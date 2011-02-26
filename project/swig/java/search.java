@@ -47,10 +47,14 @@ public class search
 
         System.out.println("Record count: " + results.GetCount());
 
-        StringVector columns = results.GetColumns();
+        StringVector columns = null;
 
         while (results.HasNext())
         {
+            if (columns == null)
+            {
+                columns = results.GetColumns();
+            }
             for (int i = 0; i < columns.size(); i++)
             {
                 System.out.format("%15s: %s\n", columns.get(i), results.GetString(columns.get(i)));

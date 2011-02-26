@@ -16,8 +16,10 @@
  */
 
 #include "librets.h"
+#include "librets/str_stream.h"
 #include "Options.h"
 #include <iostream>
+#include <map>
 
 using namespace librets;
 using std::string;
@@ -29,6 +31,8 @@ using std::exception;
 void dumpSystem(RetsMetadata * metadata, RetsSessionPtr session);
 void dumpAllResources(RetsMetadata * metadata);
 void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource);
+void dumpGetterSetters(std::map<string, MetadataTable *> table_map, string keyName);
+void dumpTableNames(std::map<string, MetadataTable *> table_map);
 void dumpAllTables(RetsMetadata * metadata, MetadataResource * resource, MetadataClass * aClass);
 void dumpAllLookups(RetsMetadata * metadata, MetadataResource * resource);
 void dumpAllLookupTypes(RetsMetadata * metadata, MetadataResource * resource, MetadataLookup * lookup);
@@ -135,6 +139,8 @@ void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource)
     MetadataSystem * system = metadata->GetSystem();
     string resourceName = resource->GetResourceID();
     
+    string key_name = resource->GetKeyField();
+
     MetadataClassList classes = metadata->GetAllClasses(resourceName);
     MetadataClassList::iterator i;
 
@@ -142,10 +148,131 @@ void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource)
     {
         MetadataClass * aClass = *i;
 
-    cout << "create table " << aClass->GetClassName() << "(" << endl;
-    dumpAllTables(metadata, resource, aClass);
-    cout << ");" << endl;
-    cout << endl;
+	cout << "import java.io.Serializable;" << endl;
+	cout << "import java.util.Date;" << endl << endl;;
+	cout << "import org.apache.commons.lang.builder.CompareToBuilder;" << endl;
+	cout << "import org.apache.commons.lang.builder.EqualsBuilder;" << endl;
+	cout << "import org.apache.commons.lang.builder.HashCodeBuilder;" << endl;
+	cout << "import org.apache.commons.lang.builder.ToStringBuilder;" << endl;
+
+	cout << "/**" << endl;
+	cout << " *  @hibernate.mapping" << endl;
+	cout << " *      package=\"com.dis.am\"" << endl;
+	cout << " *  @hibernate.class" << endl;
+	cout << " *      table=\"" << aClass->GetClassName() << "\"" << endl;
+	cout << " */" << endl;
+
+	cout << "public class " << aClass->GetClassName() << " implements Serializable, Comparable" << endl;
+	cout << "{" << endl;
+
+	std::map<string, MetadataTable *> table_map;
+
+	MetadataTableList tables = metadata->GetAllTables(aClass);
+	MetadataTableList::iterator i;
+
+	for (i = tables.begin(); i != tables.end(); i++)
+	{
+	    MetadataTable * table = *i;
+	    table_map[table->GetSystemName()] = table;
+	}
+
+	dumpTableNames(table_map);
+        dumpGetterSetters(table_map, key_name);
+
+	cout << "}" << endl;
+    }
+}
+
+void dumpTableNames(std::map<string, MetadataTable *> table_map)
+{
+    std::map<string, MetadataTable *>::iterator i;
+
+    for (i = table_map.begin(); i != table_map.end(); i++)
+    {
+        MetadataTable * table = i->second;
+	str_stream itemName;
+
+	itemName  << "    private ";
+
+        switch (table->GetDataType())
+        {
+            case MetadataTable::BOOLEAN:    itemName << "boolean ";    break;
+            case MetadataTable::DATE:       itemName << "Date ";    break;
+            case MetadataTable::DATE_TIME:  itemName << "Timestamp ";    break;
+            case MetadataTable::TIME:       itemName << "Time ";    break;
+            case MetadataTable::TINY:
+            case MetadataTable::SMALL:      itemName << "int ";    break;
+            case MetadataTable::INT:        itemName << "int ";    break;
+            case MetadataTable::LONG:       itemName << "long ";    break;
+            case MetadataTable::DECIMAL:    itemName << "Decimal " <<   
+                                                        " (" << table->GetMaximumLength() << ","
+                                                             << table->GetPrecision() << ") "; break;
+            case MetadataTable::CHARACTER:
+            default:                        itemName << "String ";    break;
+        }
+        
+	string outStr = itemName;
+
+        cout << outStr;
+
+        for (int j = 0; j < 30 - outStr.length(); j++)
+            cout << " ";
+        
+	cout << "m" << table->GetSystemName() << ";" << endl;
+    }
+}
+
+void dumpGetterSetters(std::map<string, MetadataTable *> table_map, string keyName)
+{
+    std::map<string, MetadataTable *>::iterator i;
+
+    for (i = table_map.begin(); i != table_map.end(); i++)
+    {
+        MetadataTable * table = i->second;
+	string  dataType;
+	string itemName = i->first;
+
+        switch (table->GetDataType())
+        {
+            case MetadataTable::BOOLEAN:    dataType = "boolean ";    break;
+            case MetadataTable::DATE:       dataType = "Date ";    break;
+            case MetadataTable::DATE_TIME:  dataType = "Timestamp ";    break;
+            case MetadataTable::TIME:       dataType = "Time ";    break;
+            case MetadataTable::TINY:
+            case MetadataTable::SMALL:      dataType = "int ";    break;
+            case MetadataTable::INT:        dataType = "int ";    break;
+            case MetadataTable::LONG:       dataType = "long ";    break;
+            case MetadataTable::DECIMAL:    dataType = "Decimal "; break;
+            case MetadataTable::CHARACTER:
+            default:                        dataType = "String ";    break;
+        }
+        
+	cout << "    /**" << endl;
+        if (itemName.compare(keyName) == 0)
+	{
+	    cout << "     * @hibernate.id" << endl;
+	    cout << "     *     generator-class=\"assigned\"" << endl;
+	}
+	else
+	{
+	    cout << "     * @hibernate.property" << endl;
+	    if (table->GetRequired())
+		cout << "     *     not_null=\"true\"" << endl;
+	    if (table->IsUnique())
+		cout << "     *     unique=\"true\"" << endl;
+	}
+	cout << "     *     column=\"" << table->GetDBName() << "\"" << endl;
+	cout << "     */" << endl;
+
+	cout << "    protected " << dataType << " get" << itemName << "()" << endl;
+	cout << "    {" << endl;
+	cout << "        return m" << itemName << ";" << endl;
+	cout << "    }" << endl << endl;
+
+	cout << "    protected void set" << itemName << "(" << dataType << " " << itemName << ")" << endl;
+	cout << "    {" << endl;
+	cout << "        m" << itemName << " = " << itemName << ";" << endl;
+	cout << "    }" << endl << endl;
     }
 }
 

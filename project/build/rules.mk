@@ -87,7 +87,8 @@ endif
 _all: _build
 
 _debug:
-	@echo $(USE_DEPENDS)
+	@echo Depends: $(USE_DEPENDS)
+	@echo All: $(ALL)
 
 prepare:
 	@mkdir -p $(ALL_OBJ_DIRS) $(EXE_DIR) $(DOC_DIR)

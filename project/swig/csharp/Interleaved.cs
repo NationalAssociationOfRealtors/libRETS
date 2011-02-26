@@ -134,10 +134,14 @@ public class Interleaved
             listingRequest.SetFormatType(SearchRequest.FormatType.COMPACT);
             
             SearchResultSet listingResult = session.Search(listingRequest);
-            IEnumerable  columns = listingResult.GetColumns();
+            IEnumerable  columns = null;
             
             while (listingResult.HasNext())
             {
+                if (columns == null)
+                {
+                    columns = listingResult.GetColumns();
+                }
                 /*
                  * Show the listing detail.
                  */
