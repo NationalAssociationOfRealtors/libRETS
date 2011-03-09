@@ -72,7 +72,7 @@ AC_DEFUN([MY_TEST_SWIG], [
 
             if test "$generics" = "1"; then
                 if test "$GMCS" != "no"; then
-                    MCS=GMCS
+                    MCS=$GMCS
                 fi
             fi
             if test "$MCS" != "no"; then

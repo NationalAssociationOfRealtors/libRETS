@@ -1,5 +1,6 @@
 Version 1.5.3 - xx xxx 2011
 
+  * Fix detection of gmcs by configure.
   * Fix examples to use lazy initialization of the Columns to better
     demonstrate how to address just-in-time data delivery.
   * Fix Unix perl build.
