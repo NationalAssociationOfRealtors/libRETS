@@ -19,7 +19,7 @@ ifneq (${SWIG_OSNAME}, MSWin32)
 ${PYTHON_DLL}: ${PYTHON_WRAP} ${LIBRETS_LIB}
 	cd ${PYTHON_OBJ_DIR} ; \
 	CC="${CC}" CXX="${CXX}" CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" \
-	${PYTHON} setup.py build --build-lib=. 
+	${PYTHON} setup.py build  
 else
 PYTHON_CXX_FLAGS	= -mcygwin -mdll \
 				`${SWIG_LIBRETS_CONFIG} --cflags`

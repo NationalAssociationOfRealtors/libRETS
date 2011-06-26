@@ -10,6 +10,7 @@ JAVA_BRIDGE		=
 JAVA_CLASSES		= ${patsubst ${JAVA_OBJ_DIR}/%.java,${JAVA_OBJ_DIR}/librets/%.class,${JAVA_SOURCES}}
 JAVA_CLASSES_UNQUAL	= ${patsubst ${JAVA_OBJ_DIR}/%.java,%.class,${JAVA_SOURCES}}
 JAVA_CXX_FLAGS		= `${SWIG_LIBRETS_CONFIG} --cflags`
+JAVA_DLL		= ${JAVA_OBJ_DIR}/librets.${DLL}
 JAVA_EXAMPLES		= ${wildcard ${JAVA_SRC_DIR}/[a-z]*.java}
 JAVA_EXAMPLES_CLASSES	= ${patsubst ${JAVA_SRC_DIR}/%.java,${JAVA_OBJ_DIR}/%.class,${JAVA_EXAMPLES}}
 JAVA_JAR		= librets.jar
@@ -24,7 +25,9 @@ JAVA_DLL		= ${JAVA_OBJ_DIR}/liblibrets.jnilib
 JAVA_DYNAMICLINK	= ${SWIG_LINK}
 else
 JAVA_CLASSPATH		= ${JAVA_OBJ_DIR}/${JAVA_JAR}
+ifeq (${SWIG_OSNAME}, freebsd)
 JAVA_DLL		= ${JAVA_OBJ_DIR}/liblibrets.${DLL}
+endif
 ifeq (${SWIG_OSNAME}, MSWin32)
 JAVA_DLL		= ${JAVA_OBJ_DIR}/librets.${DLL}
 endif

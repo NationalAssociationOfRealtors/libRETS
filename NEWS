@@ -6,6 +6,7 @@ Version 1.5.3 - xx xxx 2011
   * Fix Unix perl build.
   * Make sure that SearchResultSet::GetColumn doesn't attempt to use 
     an empty string.
+  * Apply patches provided by Matthew Schultz.
 
 Version 1.5.2 - 11 Feb 2011
   
