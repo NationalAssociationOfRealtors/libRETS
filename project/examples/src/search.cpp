@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2011 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -128,10 +128,15 @@ int main(int argc, char * argv[])
         searchRequest->SetRestrictedIndicator(restrictedIndicator);
         
         SearchResultSetAPtr results = session->Search(searchRequest.get());
-        if (printCount)
+        if (results->GetReplyCode() != 0)
+        {
+            cout << results->GetReplyCode() << ": " << results->GetReplyText() << endl;
+        }
+        else if (printCount)
         {
             cout << "Matching record count: " << results->GetCount() << endl;
         }
+
         StringVector columns = results->GetColumns();
         while (results->HasNext())
         {

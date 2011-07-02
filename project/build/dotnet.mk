@@ -6,7 +6,11 @@ DOTNET_ALL		= ${DOTNET_MANAGED_DLL}					\
 				${DOTNET_UNMANAGED_DLL}				\
 				${DOTNET_DEMO_EXE}
 
-DOTNET_BUILD		= ${DOTNET_WRAP}  ${DOTNET_ALL}
+ifeq (${SWIG_OSNAME}, linux)
+DOTNET_BUILD           = ${DOTNET_WRAP}
+else
+DOTNET_BUILD           = ${DOTNET_WRAP}  ${DOTNET_ALL}
+endif
 DOTNET_CXX_FLAGS	= -fPIC `${SWIG_LIBRETS_CONFIG} --cflags`
 DOTNET_DEMO_EXE		= ${DOTNET_GETOBJECT_EXE}				\
 				${DOTNET_INTERLEAVED_EXE}			\
@@ -90,8 +94,14 @@ ifneq (${SWIG_OSNAME}, MSWin32)
 # Not Windows/MinGW
 #
 
+
+ifeq (${strip ${SNK_FILE}},)
 ${DOTNET_MANAGED_DLL}:	${DOTNET_UNMANAGED_DLL} ${DOTNET_MANAGED_SRC}
 	${MCS} -target:library -out:${DOTNET_MANAGED_DLL} ${DOTNET_PLATFORM} ${DOTNET_MANAGED_SRC}
+else
+${DOTNET_MANAGED_DLL}:	${DOTNET_UNMANAGED_DLL} ${DOTNET_MANAGED_SRC}
+	${MCS} -target:library -keyfile:${SNK_FILE} -out:${DOTNET_MANAGED_DLL} ${DOTNET_PLATFORM} ${DOTNET_MANAGED_SRC}
+endif
 
 ${DOTNET_GETOBJECT_EXE}:	${DOTNET_GETOBJECT_SRC}
 	${MCS} -r:${DOTNET_MANAGED_DLL} ${DOTNET_PLATFORM} -out:${DOTNET_GETOBJECT_EXE} ${DOTNET_GETOBJECT_SRC}
@@ -126,12 +136,21 @@ else
 # Windows/MinGW
 #
 
+ifeq (${strip ${SNK_FILE}},)
 ${DOTNET_MANAGED_DLL}:	${DOTNET_UNMANAGED_DLL} ${DOTNET_MANAGED_SRC}
 	${CSC} -target:library \
 		-platform:${TARGET_CPU} \
                 -out:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \
                 ${shell echo ${DOTNET_PLATFORM} | ${BACKSLASH}} \
                 ${shell echo ${DOTNET_MANAGED_SRC} | ${BACKSLASH}}
+else
+${DOTNET_MANAGED_DLL}:  ${DOTNET_UNMANAGED_DLL} ${DOTNET_MANAGED_SRC}
+	${CSC} -target:library -keyfile:${SNK_FILE} \
+		-platform:${TARGET_CPU} \
+                -out:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \
+                ${shell echo ${DOTNET_PLATFORM} | ${BACKSLASH}} \
+                ${shell echo ${DOTNET_MANAGED_SRC} | ${BACKSLASH}}
+endif
 
 ${DOTNET_GETOBJECT_EXE}:	${DOTNET_GETOBJECT_SRC}
 	${CSC} -r:${shell echo ${DOTNET_MANAGED_DLL} | ${BACKSLASH}} \

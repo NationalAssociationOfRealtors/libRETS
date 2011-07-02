@@ -21,6 +21,7 @@ AC_DEFUN([MY_TEST_SWIG], [
     HAVE_RUBY=0
     JAVA_INCLUDES=
     USE_SWIG_BINDINGS=
+    SNK_FILE=
     my_have_java=no
     my_have_dotnet=no
     my_have_perl=no
@@ -63,6 +64,14 @@ AC_DEFUN([MY_TEST_SWIG], [
             AC_CHECK_PROG(MCS, mcs, mcs, no)
             AC_CHECK_PROG(GMCS, gmcs, gmcs, no)
             AC_CHECK_PROG(CSC, csc, csc, no)
+            AC_ARG_WITH([snk-file], 
+                AC_HELP_STRING(
+                    [--with-snk-file=PATH],
+                    [strong name key file to sign the .NET dll.
+                ]),
+                SNK_FILE="$withval",
+                SNK_FILE="")
+
             generics=`expr \
                 $ver_major \> 1 \| \
                 $ver_major \= 1 \& \
@@ -236,6 +245,7 @@ EOF
   AC_SUBST(HAVE_DOTNET)
   AC_SUBST(CSC)
   AC_SUBST(MCS)
+  AC_SUBST(SNK_FILE)
   AC_SUBST(HAVE_PERL)
   AC_SUBST(HAVE_PHP)
   AC_SUBST(PHP)
