@@ -98,6 +98,11 @@ AC_DEFUN([MY_TEST_BOOST], [
        	  BOOST_SYSTEM="-lboost_system${toolset}${boost_mt}${boost_version}"
        fi
 
+       # If threadsafe was enabled, make sure to include the boost thread library
+       if test "$my_enable_thread_safe" = "yes"; then
+          BOOST_THREAD="-lboost_thread${toolset}${boost_mt}${boost_version}"
+       fi
+
     else
        my_lib="${BOOST_PREFIX}/lib/libboost_filesystem${toolset}${boost_mt}${boost_version}.a"
        AC_CHECK_FILE([$my_lib], [BOOST_FILESYSTEM=$my_lib])
@@ -105,6 +110,10 @@ AC_DEFUN([MY_TEST_BOOST], [
        AC_CHECK_FILE([$my_lib], [BOOST_PROGRAM_OPTIONS=$my_lib])
        my_lib="${BOOST_PREFIX}/lib/libboost_system${toolset}${boost_mt}${boost_version}.a"
        AC_CHECK_FILE([$my_lib], [BOOST_SYSTEM=$my_lib])
+       if test "$my_enable_thread_safe" = "yes"; then
+           my_lib="${BOOST_PREFIX}/lib/libboost_thread${toolset}${boost_mt}${boost_version}.a"
+           AC_CHECK_FILE([$my_lib], [BOOST_THREAD=$my_lib])
+       fi
     fi
   fi
 
@@ -114,5 +123,6 @@ AC_DEFUN([MY_TEST_BOOST], [
   AC_SUBST(BOOST_LIBS)
   AC_SUBST(BOOST_FILESYSTEM)
   AC_SUBST(BOOST_SYSTEM)
+  AC_SUBST(BOOST_THREAD)
   AC_SUBST(BOOST_PROGRAM_OPTIONS)
 ])

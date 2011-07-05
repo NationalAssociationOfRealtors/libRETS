@@ -106,6 +106,12 @@ AC_ARG_ENABLE(ruby,
               test "X$enableval" != "Xyes" && my_use_ruby=no,
               my_use_ruby=yes)
 		
+AC_ARG_ENABLE(thread-safe,
+              AC_HELP_STRING([--enable-thread-safe],
+                             [enable thread safe support (default: disabled)]),
+               test "X$enableval" != "Xno" && my_enable_thread_safe=yes,
+               my_enable_thread_safe=no)
+
 MY_TEST_DEPENDS
 MY_TEST_CURL
 MY_TEST_EXPAT
@@ -154,12 +160,6 @@ if test "$my_use_pic" = "yes"; then
    CFLAGS="$CFLAGS -fPIC"
    LIBRETS_CFLAGS="$LIBRETS_CFLAGS -fPIC"
 fi
-
-AC_ARG_ENABLE(thread-safe,
-              AC_HELP_STRING([--enable-thread-safe],
-                             [enable thread safe support (default: disabled)]),
-               test "X$enableval" != "Xno" && my_enable_thread_safe=yes,
-               my_enable_thread_safe=no)
 
 LIBRETS_MT=
 LIBRETS_THREAD_FLAGS=
