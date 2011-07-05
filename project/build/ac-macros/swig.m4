@@ -21,7 +21,7 @@ AC_DEFUN([MY_TEST_SWIG], [
     HAVE_RUBY=0
     JAVA_INCLUDES=
     USE_SWIG_BINDINGS=
-    SNK_FILE=
+    SNK_FILE=no
     my_have_java=no
     my_have_dotnet=no
     my_have_perl=no
@@ -70,7 +70,7 @@ AC_DEFUN([MY_TEST_SWIG], [
                     [strong name key file to sign the .NET dll.
                 ]),
                 SNK_FILE="$withval",
-                SNK_FILE="")
+                SNK_FILE="no")
 
             generics=`expr \
                 $ver_major \> 1 \| \

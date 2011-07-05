@@ -95,7 +95,7 @@ ifneq (${SWIG_OSNAME}, MSWin32)
 #
 
 
-ifeq (${strip ${SNK_FILE}},)
+ifeq (${strip ${SNK_FILE}}, no)
 ${DOTNET_MANAGED_DLL}:	${DOTNET_UNMANAGED_DLL} ${DOTNET_MANAGED_SRC}
 	${MCS} -target:library -out:${DOTNET_MANAGED_DLL} ${DOTNET_PLATFORM} ${DOTNET_MANAGED_SRC}
 else
@@ -136,7 +136,7 @@ else
 # Windows/MinGW
 #
 
-ifeq (${strip ${SNK_FILE}},)
+ifeq (${strip ${SNK_FILE}}, no)
 ${DOTNET_MANAGED_DLL}:	${DOTNET_UNMANAGED_DLL} ${DOTNET_MANAGED_SRC}
 	${CSC} -target:library \
 		-platform:${TARGET_CPU} \
