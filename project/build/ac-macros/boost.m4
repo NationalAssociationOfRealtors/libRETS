@@ -41,8 +41,8 @@ AC_DEFUN([MY_TEST_BOOST], [
     BOOST_CFLAGS="-I${BOOST_PREFIX}/${boost_include_dir}"
     BOOST_LIBS=
 
-    check="1_32_0"
-    check_int=103200
+    check="1_44"
+    check_int=104400
     AC_MSG_CHECKING([for boost >= $check])
         
     ver=`grep -e "#define.*BOOST_LIB_VERSION" ${BOOST_PREFIX}/${boost_include_dir}/boost/version.hpp | cut -d \" -f 2`
