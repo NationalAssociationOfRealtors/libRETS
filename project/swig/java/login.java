@@ -17,10 +17,12 @@ public class login
     }
     
 
-    public static void main(String argv[])
+    public static void main(String argv[]) throws Exception
     {
+        System.out.println("Creating Rets Session");
         RetsSession session = new RetsSession("http://demo.crt.realtors.org:6103/rets/login");
 
+        System.out.println("Logging in");
         if (!session.Login("Joe", "Schmoe"))
         {
             System.out.println("Invalid login");

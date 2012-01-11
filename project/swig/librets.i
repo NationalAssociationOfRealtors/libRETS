@@ -157,6 +157,41 @@ typedef std::vector<std::string> StringVector;
     
 }
 
+#ifdef SWIGJAVA
+// %typemap(javabase) RetsException "java.lang.Exception";
+// %typemap(javacode) RetsException %{
+//   public String getMessage() {
+//     return GetMessage();
+//   }
+// %}
+%typemap(throws, throws="RetsException") RetsException {
+    jclass excep = jenv->FindClass("librets/RetsException");
+    if (excep)
+    {
+        jmethodID jmid = jenv->GetMethodID(excep, "<init>", "(Ljava/lang/String;Ljava/lang/String;)V");
+        jthrowable job = (jthrowable) jenv->NewObject(excep, jmid, _e.what(), _e.GetExtendedMessage().c_str());
+        jenv->Throw(job);
+    }
+}
+%typemap(throws, throws="RetsHttpException") RetsHttpException {
+    jclass excep = jenv->FindClass("librets/RetsHttpException");
+    if (excep)
+    {
+        jmethodID jmid = jenv->GetMethodID(excep, "<init>", "(ILjava/lang/String;)V");
+        jthrowable job = (jthrowable) jenv->NewObject(excep, jmid, 1234, "fuck me");
+        jenv->Throw(job);
+    }
+}
+%typemap(throws, throws="RetsReplyException") RetsReplyException {
+    jclass excep = jenv->FindClass("librets/RetsReplyException");
+    if (excep)
+    {
+        jmethodID jmid = jenv->GetMethodID(excep, "<init>", "(ILjava/lang/String;Ljava/lang/String;)V");
+        jthrowable job = (jthrowable) jenv->NewObject(excep, jmid, _e.GetReplyCode(), _e.GetMeaning().c_str(), _e.GetExtendedMeaning().c_str());
+        jenv->Throw(job);
+    }
+}
+#else
 %exception {
     try {
         $action
@@ -219,6 +254,7 @@ class RetsReplyException : public RetsException
     
     std::string GetExtendedMeaning() const throw();
 };
+#endif
 
 #ifdef SWIGCSHARP
 %insert(runtime) %{
@@ -1726,6 +1762,7 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
 #ifdef SWIGJAVA
     %typemap(javacode) RetsSession  %{
         public byte [] GetMetadataAsArray()
+            throws RetsHttpException, RetsReplyException, RetsException
         {
             BinaryData binaryData = GetMetadata_();
             int length = binaryData.Size();
@@ -1735,6 +1772,7 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
         }
 
         public byte [] SearchAsArray(SearchRequest request)
+            throws RetsHttpException, RetsReplyException, RetsException
         {
             BinaryData binaryData = Search_(request);
             int length = binaryData.Size();

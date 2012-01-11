@@ -18,7 +18,7 @@ public class rawsearch
     }
     
 
-    public static void main(String argv[])
+    public static void main(String argv[]) throws Exception
     {
         RetsSession session = new RetsSession("http://demo.crt.realtors.org:6103/rets/login");
 

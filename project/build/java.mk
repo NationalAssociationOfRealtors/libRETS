@@ -4,9 +4,11 @@
 
 JAVA_BUILD		= ${JAVA_DLL} ${JAVA_OBJ_DIR}/${JAVA_JAR} ${JAVA_EXAMPLES_CLASSES}
 
-JAVA_BRIDGE		= ${JAVA_SRC_DIR}/CppInputStream.java
+# Include/combine the follwoing source into the actual JAVA_BRIDGE
+# line to enable the streams prototype for Java
+# JAVA_BRIDGE		= ${JAVA_SRC_DIR}/CppInputStream.java
 # delete the next line to enable the streams prototype for Java
-JAVA_BRIDGE		= 
+JAVA_BRIDGE		= ${JAVA_SRC_DIR}/RetsException.java ${JAVA_SRC_DIR}/RetsHttpException.java ${JAVA_SRC_DIR}/RetsReplyException.java
 JAVA_CLASSES		= ${patsubst ${JAVA_OBJ_DIR}/%.java,${JAVA_OBJ_DIR}/librets/%.class,${JAVA_SOURCES}}
 JAVA_CLASSES_UNQUAL	= ${patsubst ${JAVA_OBJ_DIR}/%.java,%.class,${JAVA_SOURCES}}
 JAVA_CXX_FLAGS		= `${SWIG_LIBRETS_CONFIG} --cflags`
@@ -37,7 +39,7 @@ endif
 ${JAVA_WRAP}: ${SWIG_FILES} ${JAVA_BRIDGE}
 	${SWIG} -c++ -java -package librets -o ${JAVA_WRAP} \
 	-outdir ${JAVA_OBJ_DIR} ${SWIG_DIR}/librets.i
-	@echo ${JAVA_BRIDGE} ${JAVA_OBJ_DIR}
+	echo ${JAVA_BRIDGE} ${JAVA_OBJ_DIR}
 	${MAKE} ${JAVA_OBJ_DIR}/${JAVA_JAR}
 
 ${JAVA_DLL}: ${JAVA_WRAP} ${JAVA_OBJ_DIR}/librets_wrap.o ${SWIG_BRIDGE_OBJ} ${LIBRETS_LIB}
@@ -45,7 +47,7 @@ ${JAVA_DLL}: ${JAVA_WRAP} ${JAVA_OBJ_DIR}/librets_wrap.o ${SWIG_BRIDGE_OBJ} ${LI
 
 ${JAVA_OBJ_DIR}/librets_wrap.o: ${JAVA_OBJ_DIR}/librets_wrap.cpp
 	${CXX}  ${JAVA_CXX_FLAGS} -I${LIBRETS_INC_DIR} -I${SWIG_DIR} ${BOOST_CFLAGS} ${JAVA_INCLUDES} -c $< -o $@
-	
+
 
 ifneq (${SWIG_OSNAME}, MSWin32)
 ########
