@@ -169,7 +169,9 @@ typedef std::vector<std::string> StringVector;
     if (excep)
     {
         jmethodID jmid = jenv->GetMethodID(excep, "<init>", "(Ljava/lang/String;Ljava/lang/String;)V");
-        jthrowable job = (jthrowable) jenv->NewObject(excep, jmid, _e.what(), _e.GetExtendedMessage().c_str());
+        jthrowable job = (jthrowable) jenv->NewObject(
+            excep, jmid,jenv->NewStringUTF(_e.what()),
+            jenv->NewStringUTF(_e.GetExtendedMessage().c_str()));
         jenv->Throw(job);
     }
 }
@@ -178,7 +180,9 @@ typedef std::vector<std::string> StringVector;
     if (excep)
     {
         jmethodID jmid = jenv->GetMethodID(excep, "<init>", "(ILjava/lang/String;)V");
-        jthrowable job = (jthrowable) jenv->NewObject(excep, jmid, 1234, "fuck me");
+        jthrowable job = (jthrowable) jenv->NewObject(
+            excep, jmid, _e.GetHttpResult(),
+            jenv->NewStringUTF(_e.GetMessage().c_str()));
         jenv->Throw(job);
     }
 }
@@ -187,7 +191,10 @@ typedef std::vector<std::string> StringVector;
     if (excep)
     {
         jmethodID jmid = jenv->GetMethodID(excep, "<init>", "(ILjava/lang/String;Ljava/lang/String;)V");
-        jthrowable job = (jthrowable) jenv->NewObject(excep, jmid, _e.GetReplyCode(), _e.GetMeaning().c_str(), _e.GetExtendedMeaning().c_str());
+        jthrowable job = (jthrowable) jenv->NewObject(
+            excep, jmid, _e.GetReplyCode(),
+            jenv->NewStringUTF(_e.GetMeaning().c_str()),
+            jenv->NewStringUTF(_e.GetExtendedMeaning().c_str()));
         jenv->Throw(job);
     }
 }
