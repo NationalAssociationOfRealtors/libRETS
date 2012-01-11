@@ -158,12 +158,6 @@ typedef std::vector<std::string> StringVector;
 }
 
 #ifdef SWIGJAVA
-// %typemap(javabase) RetsException "java.lang.Exception";
-// %typemap(javacode) RetsException %{
-//   public String getMessage() {
-//     return GetMessage();
-//   }
-// %}
 %typemap(throws, throws="RetsException") RetsException {
     jclass excep = jenv->FindClass("librets/RetsException");
     if (excep)
