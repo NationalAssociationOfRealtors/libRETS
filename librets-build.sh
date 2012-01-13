@@ -12,5 +12,6 @@ CPPFLAGS="-L/opt/local/lib -I/opt/local/include"	\
                 --with-expat-prefix=/opt/local  	\
                 --with-boost-prefix=/opt/local		\
 		--with-java-prefix=`javaconfig Headers`	\
+                --with-snk-file=no                      \
 		--prefix=/tmp/librets
 

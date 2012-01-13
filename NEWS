@@ -1,4 +1,4 @@
-Version 1.5.3 - xx xxx 2011
+Version 1.5.3 - xx xxx 2012
 
   * Fix detection of gmcs by configure.
   * Fix examples to use lazy initialization of the Columns to better
@@ -7,7 +7,9 @@ Version 1.5.3 - xx xxx 2011
   * Make sure that SearchResultSet::GetColumn doesn't attempt to use 
     an empty string.
   * Apply patches provided by Matthew Schultz.
-  * Default to BOOST_FILESYSTEM_3 and boost 1.44 or later. Ticke #166.
+  * Default to BOOST_FILESYSTEM_3 and boost 1.44 or later. Ticket #166.
+  * Recognize RETS/1.8.0.
+  * Pass exceptions through to Java.
 
 Version 1.5.2 - 11 Feb 2011
   
