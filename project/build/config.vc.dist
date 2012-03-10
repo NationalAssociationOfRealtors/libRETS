@@ -7,7 +7,7 @@ BASE_PATH = c:\librets\vendor\vs2008-$(TARGET_CPU)
 SWIG_LIBRARY = /cygdrive/c/librets/vendor/vs2008-$(TARGET_CPU)/share/swig/2.0.1
 
 # The BOOST version currently being used.
-BOOST_VERSION=boost-1_41
+BOOST_VERSION=1_47
 
 # [debug, release]
 BUILD = release

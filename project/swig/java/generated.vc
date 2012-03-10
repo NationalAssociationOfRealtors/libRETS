@@ -27,11 +27,11 @@ GENERATED_SRC = \
 	generated\MetadataTable.java \
 	generated\MetadataTableList.java \
 	generated\ObjectDescriptor.java \
-	generated\RetsException.java \
-	generated\RetsHttpException.java \
+	RetsException.java \
+	RetsHttpException.java \
 	generated\RetsHttpLogger.java \
 	generated\RetsMetadata.java \
-	generated\RetsReplyException.java \
+	RetsReplyException.java \
 	generated\RetsSession.java \
 	generated\RetsVersion.java \
 	generated\SWIGTYPE_p_ExceptionErrorHandler.java \

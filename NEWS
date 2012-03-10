@@ -1,4 +1,4 @@
-Version 1.5.3 - xx xxx 2012
+Version 1.5.3 - 10 Mar 2012
 
   * Fix detection of gmcs by configure.
   * Fix examples to use lazy initialization of the Columns to better
