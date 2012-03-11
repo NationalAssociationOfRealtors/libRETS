@@ -60,6 +60,11 @@ $INSTALLFILES = [['librets.rb', "$(RUBYLIBDIR)", "lib"]]
 create_makefile('librets_native')
 
 orig_makefile = IO::read("Makefile")
+if RUBY_PLATFORM =~ /linux/
+  # Make sure the proper version boost libraries are detected first by changing ruby's create_makefile library declaration order
+  orig_makefile.gsub!(/LIBS = \$\(LIBRUBYARG_SHARED\)(.+)/, "LIBS = \\1 \$\(LIBRUBYARG_SHARED\)");
+  orig_makefile.gsub!(/(\$\(LDSHARED\) -o \$@ \$\(OBJS\))( \$\(LIBPATH\) \$\(DLDFLAGS\) \$\(LOCAL_LIBS\))( \$\(LIBS\))/, "\\1\\3\\2")
+end
 File.open("Makefile", "w") do |mfile|
   mfile << makefile_prefix
   mfile << orig_makefile
