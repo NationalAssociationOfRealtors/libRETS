@@ -990,6 +990,9 @@ class GetObjectResponse
 {
   public:
     ObjectDescriptor * NextObject();
+    int GetHttpResponse();
+    std::string GetErrorText();
+    
 };
 typedef std::auto_ptr<GetObjectResponse> GetObjectResponseAPtr;
 

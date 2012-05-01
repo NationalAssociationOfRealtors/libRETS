@@ -1,6 +1,7 @@
 Version 1.5.4 - xx xxx 201x
 
   * Applied Ruby patch submitted by Matthew Schultz
+  * Expose ObjectResponse getters to SWIG languages. Ticket #167.
 
 Version 1.5.3 - 10 Mar 2012
 
