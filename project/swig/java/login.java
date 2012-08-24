@@ -21,6 +21,7 @@ public class login
     {
         RetsSession session = new RetsSession("http://demo.crt.realtors.org:6103/rets/login");
 
+	try {
         if (!session.Login("Joe", "Schmoe"))
         {
             System.out.println("Invalid login");
@@ -46,5 +47,10 @@ public class login
         System.out.println("Billing info: " + logout.GetBillingInfo());
         System.out.println("Logout Message:  " + logout.GetLogoutMessage());
         System.out.println("Connect time: " + logout.GetConnectTime());
+	} 
+	catch (RetsHttpException ex) 
+	{
+	    System.out.println(ex.getMessage());
+	}
     }
 }

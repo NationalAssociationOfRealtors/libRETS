@@ -22,6 +22,7 @@
  */
 /// @cond MAINTAINER
 #include <string>
+#include <boost/filesystem/path.hpp>
 
 namespace librets {
 /**
@@ -36,12 +37,12 @@ class RetsExceptionContext
     
     bool IsValid() const throw();
     
-    std::string GetFileName() const throw();
+    boost::filesystem::path GetFileName() const throw();
     
     int GetLineNumber() const throw();
     
   private:
-        std::string mFileName;
+    boost::filesystem::path mFileName;
     int mLineNumber;
 };
 

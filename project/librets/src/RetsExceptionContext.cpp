@@ -14,14 +14,12 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#define BOOST_FILESYSTEM_VERSION 2
 #include <boost/filesystem/path.hpp>
 #include "librets/RetsExceptionContext.h"
 
 using namespace librets;
 using namespace std;
 
-#undef BOOST_FILESYSTEM_VERSION
 #define BOOST_FILESYSTEM_VERSION 3
 namespace fs = boost::filesystem;
 
@@ -43,7 +41,7 @@ bool RetsExceptionContext::IsValid() const throw()
     return (!mFileName.empty());
 }
 
-string RetsExceptionContext::GetFileName() const throw()
+fs::path RetsExceptionContext::GetFileName() const throw()
 {
     return mFileName;
 }
