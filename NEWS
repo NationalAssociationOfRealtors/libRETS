@@ -1,5 +1,7 @@
 Version 1.5.4 - xx xxx 201x
 
+  * Remove errant BOOST_FILESYSTEM_VERSION declaration.
+  * Correct RetsExceptionContext::GetFileName to fs::path.
   * Applied Ruby patch submitted by Matthew Schultz
   * Expose ObjectResponse getters to SWIG languages. Ticket #167.
 
