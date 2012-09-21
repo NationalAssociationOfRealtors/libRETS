@@ -4,6 +4,8 @@ Version 1.5.4 - xx xxx 201x
   * Correct RetsExceptionContext::GetFileName to fs::path.
   * Applied Ruby patch submitted by Matthew Schultz
   * Expose ObjectResponse getters to SWIG languages. Ticket #167.
+  * Handle optional RETS-STATUS when included in login response.
+    Ticket #168.
 
 Version 1.5.3 - 10 Mar 2012
 

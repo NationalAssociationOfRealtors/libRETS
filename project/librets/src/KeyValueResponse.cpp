@@ -123,7 +123,26 @@ RetsXmlTextEventPtr CLASS::GetBodyEventFromStandardResponse(
     RetsXmlEndElementEventPtr endEvent;
     RetsXmlTextEventPtr textEvent;
     
-    if (eventList->size() == 6)
+    if (eventList->size() == 8)
+    {
+        startEvent = RetsXmlParser::AssertStartEvent(eventList->at(0));
+        AssertEquals("RETS", startEvent->GetName());
+        AssertEquals("0", startEvent->GetAttributeValue("ReplyCode"));
+        startEvent = RetsXmlParser::AssertStartEvent(eventList->at(1));
+        AssertEquals("RETS-RESPONSE", startEvent->GetName());
+        bodyEvent = RetsXmlParser::AssertTextEvent(eventList->at(2));
+        endEvent = RetsXmlParser::AssertEndEvent(eventList->at(3));
+        AssertEquals("RETS-RESPONSE", endEvent->GetName());
+        startEvent = RetsXmlParser::AssertStartEvent(eventList->at(4));
+        AssertEquals("RETS-STATUS", startEvent->GetName());
+        AssertEquals("0", startEvent->GetAttributeValue("ReplyCode"));
+        endEvent = RetsXmlParser::AssertEndEvent(eventList->at(5));
+        AssertEquals("RETS-STATUS", endEvent->GetName());
+        endEvent = RetsXmlParser::AssertEndEvent(eventList->at(6));
+        AssertEquals("RETS", endEvent->GetName());
+        RetsXmlParser::AssertEndDocumentEvent(eventList->at(7));
+    }
+    else if (eventList->size() == 6)
     {
         startEvent = RetsXmlParser::AssertStartEvent(eventList->at(0));
         AssertEquals("RETS", startEvent->GetName());
