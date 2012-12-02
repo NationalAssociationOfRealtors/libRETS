@@ -209,8 +209,8 @@ void CurlEasy::SetSSLVerify(bool verify)
     if (verify)
         verifies    = 2;
 
-    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_SSL_VERIFYPEER, verify), "Verify SSL Peer");
-    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_SSL_VERIFYHOST, verify), "Verify SSL Host");
+    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_SSL_VERIFYPEER, verifies), "Verify SSL Peer");
+    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_SSL_VERIFYHOST, verifies), "Verify SSL Host");
 }
 
 void CurlEasy::Perform()
