@@ -13,13 +13,13 @@ SWIG_LIBRETS_LIBS	= `${SWIG_LIBRETS_CONFIG} --libs`
 SWIG_OBJ_DIR		= ${BUILD}/swig
 SWIG_OSNAME		= $(shell perl -e 'use Config; print $$Config{osname};')
 
-SWIG_BRIDGE_CFLAGS	= `${SWIG_LIBRETS_CONFIG} --cflags` ${CFLAGS}
+SWIG_BRIDGE_CFLAGS	= `${SWIG_LIBRETS_CONFIG} --cflags` ${CXXFLAGS}
 SWIG_BRIDGE_H		= ${SWIG_DIR}/librets_bridge.h
 SWIG_BRIDGE_SRC		= ${SWIG_DIR}/librets_bridge.cpp
 SWIG_BRIDGE_OBJ		= ${SWIG_OBJ_DIR}/librets_bridge.o
 
 DLL			= so
-SWIG_LINK		= ${CXX} -shared
+SWIG_LINK		= ${CXX} ${LDFLAGS} -shared
 
 ifeq (${SWIG_OSNAME}, darwin)
 SWIG_LINK		= ${CXX} -bundle -undefined suppress -flat_namespace 

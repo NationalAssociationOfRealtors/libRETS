@@ -158,6 +158,7 @@ AC_ARG_ENABLE(PIC,
 
 if test "$my_use_pic" = "yes"; then
    CFLAGS="$CFLAGS -fPIC"
+   CXXFLAGS="$CXXFLAGS -fPIC"
    LIBRETS_CFLAGS="$LIBRETS_CFLAGS -fPIC"
 fi
 

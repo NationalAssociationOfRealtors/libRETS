@@ -17,6 +17,8 @@
 
 #include <sstream>
 #include <algorithm>
+#include <boost/algorithm/string.hpp>
+
 #include "librets/RetsMetadata.h"
 #include "librets/DefaultMetadataCollector.h"
 #include "librets/MetadataFinder.h"
@@ -38,6 +40,7 @@ using std::vector;
 using std::ostringstream;
 using std::find_if;
 namespace b = boost;
+namespace ba = boost::algorithm;
 
 #define CLASS_ RetsMetadata
 
@@ -143,8 +146,26 @@ MetadataResourceList RetsMetadata::GetAllResources() const
 
 MetadataResource * RetsMetadata::GetResource(string resourceName) const
 {
+    string level = "";
+    StringVector parameters;
+    string resource = resourceName;
+    
+    ba::split(parameters, resourceName, ba::is_any_of(":"));
+    StringVector::iterator i;
+    for (i = parameters.begin(); i != parameters.end(); i++)
+    {
+        if (i == parameters.begin())
+        {
+            resource = ba::trim_copy(*i);
+        }
+        if (i != parameters.begin())
+        {
+            level = ba::trim_copy(*i);
+        }
+    }
+    
     FinderHelper<MetadataResource> helper(mFinder);
-    return helper.FindByPath(MetadataElement::RESOURCE, "", resourceName);
+    return helper.FindByPath(MetadataElement::RESOURCE, level, resource);
 }
 
 MetadataClass * RetsMetadata::GetClass(string resourceName, string className)
