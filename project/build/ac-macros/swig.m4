@@ -121,27 +121,23 @@ EOF
                         fi
                         rm -f JavaHome.java JavaHome.class
 
-                        if test "$SWIG_OSNAME" = "darwin"; then
-                            JAVA_INCLUDES=-I`javaconfig Headers`
-                        else
-                            JAVA_INCLUDES=
-                            AC_ARG_WITH([java-prefix], 
-                                AC_HELP_STRING(
-                                        [--with-java-prefix=PATH],
-                                        [find the Java headers and libraries in `PATH/include` and  `PATH/lib`.
-                                        By default, checks in $default_search_path
-                                ]),
-                                java_prefixes="$withval",
-                                java_prefixes="$default_search_path $java_home/include $java_home/../include")
-                            for java_prefix in $java_prefixes
-                            do
-                                jni_h="$java_prefix/jni.h"
-                                AC_CHECK_FILE([$jni_h], [my_jni_h=$jni_h])
-                                test -n "$my_jni_h" && break
-                            done
-                            if test -n "$my_jni_h"; then
-                                JAVA_INCLUDES="-I$java_prefix -I`dirname $java_prefix/*/jni_md.h`"
-                            fi
+                        JAVA_INCLUDES=
+                        AC_ARG_WITH([java-prefix], 
+                            AC_HELP_STRING(
+                                    [--with-java-prefix=PATH],
+                                    [find the Java headers and libraries in `PATH/include` and  `PATH/lib`.
+                                    By default, checks in $default_search_path
+                            ]),
+                            java_prefixes="$withval",
+                            java_prefixes="$default_search_path $java_home/include $java_home/../include")
+                        for java_prefix in $java_prefixes
+                        do
+                            jni_h="$java_prefix/jni.h"
+                            AC_CHECK_FILE([$jni_h], [my_jni_h=$jni_h])
+                            test -n "$my_jni_h" && break
+                        done
+                        if test -n "$my_jni_h"; then
+                            JAVA_INCLUDES="-I$java_prefix -I`dirname $java_prefix/*/jni_md.h`"
                         fi
                     fi
                 fi

@@ -10,8 +10,8 @@ CPPFLAGS="-L/opt/local/lib -I/opt/local/include"	\
                 --enable-depends                	\
 		--enable-maintainer-documentation	\
                 --with-expat-prefix=/opt/local  	\
+		--with-java-prefix=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers/ \
                 --with-boost-prefix=/opt/local		\
-		--with-java-prefix=`javaconfig Headers`	\
                 --with-snk-file=no                      \
 		--prefix=/tmp/librets
 

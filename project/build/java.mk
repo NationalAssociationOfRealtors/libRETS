@@ -22,7 +22,7 @@ JAVA_SRC_DIR		= ${SWIG_DIR}/java
 JAVA_WRAP 		= ${JAVA_OBJ_DIR}/librets_wrap.cpp
 
 ifeq (${SWIG_OSNAME}, darwin)
-JAVA_CLASSPATH		= `javaconfig DefaultClasspath`:${JAVA_OBJ_DIR}/${JAVA_JAR}
+JAVA_CLASSPATH		= ${JAVA_OBJ_DIR}/${JAVA_JAR}
 JAVA_DLL		= ${JAVA_OBJ_DIR}/liblibrets.jnilib
 JAVA_DYNAMICLINK	= ${SWIG_LINK}
 else
