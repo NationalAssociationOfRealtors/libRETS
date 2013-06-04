@@ -81,6 +81,8 @@ CLASS::RetsSession(string login_url)
      */
     mLogEverything = false;
     mLogStream.reset(new std::ofstream());
+    mHttpResponseCaching = false;
+    mHttpResponse.reset();
 }
 
 CLASS::~RetsSession()
@@ -126,6 +128,11 @@ RetsHttpResponsePtr CLASS::DoRequest(RetsHttpRequest * request)
     }
 
     RetsHttpResponsePtr httpResponse = mHttpClient->StartRequest(request);
+
+    if (mHttpResponseCaching)
+    {
+        mHttpResponse = httpResponse;
+    }
     
     /*
      * If we are not streaming, complete the request.
@@ -533,6 +540,16 @@ istreamPtr CLASS::SearchStream(SearchRequest * request)
     RetsHttpResponsePtr httpResponse = DoRequest(request);
     
     return httpResponse->GetInputStream();
+}
+
+void CLASS::EnableResponseCaching()
+{
+    mHttpResponseCaching = true;
+}
+
+const RetsHttpResponsePtr& CLASS::GetHttpResponse() const
+{
+    return mHttpResponse;
 }
 
 ServerInformationResponseAPtr CLASS::GetServerInformation(std::string resourceName, 

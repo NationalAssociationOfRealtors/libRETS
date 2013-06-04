@@ -45,6 +45,12 @@ class RetsHttpResponse
      * @throw RetsException
      */
     virtual std::string GetHeader(std::string name) const = 0;
+
+    /**
+     * This provides access to the HTTP response headers.
+     * @return A const reference to the header map.
+     */
+    virtual const StringMap& GetHeaders() const = 0;
     
     std::string GetContentType() const;
 

@@ -42,6 +42,8 @@ class CurlHttpResponse : public RetsHttpResponse
     void SetUrl(std::string url);
 
     virtual std::string GetHeader(std::string name) const;
+
+    virtual const StringMap& GetHeaders() const;
     
     void SetHeader(std::string name, std::string value);
 

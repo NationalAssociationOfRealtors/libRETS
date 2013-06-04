@@ -194,6 +194,20 @@ class RetsSession : public MetadataLoader
      */
     string SearchAsString(SearchRequest request);
 #endif
+
+    /** 
+     * Provides access to the last HTTP response from DoRequest.
+     * @return A reference to the HTTP response
+     */
+    const RetsHttpResponsePtr& GetHttpResponse() const;
+
+    /**
+     * Causes the session to hold a reference to the last HTTPResponse objects
+     * after DoRequest(). This can be useful for debugging error conditions in
+     * the HTTP layer. By default HTTP responses are not cached.
+     */
+    void EnableResponseCaching();
+
     /**
      * @deprecated
      * Create a new server information request (RETS 1.7).
@@ -563,6 +577,10 @@ private:
     int mTimeout;
     
     unsigned int mFlags;
+
+    RetsHttpResponsePtr mHttpResponse;
+
+    bool mHttpResponseCaching;
 
 #ifdef LIBRETS_THREAD_SAFE
     boost::mutex mMutex;

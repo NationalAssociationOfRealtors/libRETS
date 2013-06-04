@@ -6,6 +6,7 @@ Version 1.5.4 - xx xxx 201x
   * Expose ObjectResponse getters to SWIG languages. Ticket #167.
   * Handle optional RETS-STATUS when included in login response.
     Ticket #168.
+  * Applied patch submitted by Mike Owens to add GetHttpResponse().
 
 Version 1.5.3 - 10 Mar 2012
 
