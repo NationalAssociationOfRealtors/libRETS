@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<RETS ReplyCode="0" ReplyText="Operation Successful Reference ID: 8d5d8dd9-a3e1-47b1-81e5-736a2a8a9ce3" >
+<RETSPayloadList Class="foo" Resource="bar" Version="01.02.33333" Date="2013-11-01T20:10:09Z">
+<COLUMNS>	PayloadName	Resource	Class	Description	URI	MetadataEntryID	</COLUMNS>
+<DATA>	DATADICTIONARY:1.0	Property	1	RESO Standard Data Dictionary 1.0 Payload	http://www.reso.org/DataDictionary1.0/Property	Datadictionary10_Property_1	</DATA>
+<DATA>	DATADICTIONARY:1.1	Property	1	RESO Standard Data Dictionary 1.1 Payload	http://www.reso.org/DataDictionary1.1/Property	Datadictionary11_Property_1	</DATA>
+<DATA>	DATADICTIONARY:1.0	Property	12	RESO Standard Data Dictionary 1.0 Payload	http://www.reso.org/DataDictionary1.0/Property	Datadictionary10_Property_12	</DATA>
+<DATA>	DATADICTIONARY:1.1	Property	12	RESO Standard Data Dictionary 1.1 Payload	http://www.reso.org/DataDictionary1.1/Property	Datadictionary11_Property_12	</DATA>
+</RETSPayloadList>
+</RETS>

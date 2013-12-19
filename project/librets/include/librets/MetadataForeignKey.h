@@ -111,6 +111,15 @@ class MetadataForeignKey : public MetadataElement
      * @return a string containing the Conditional Parent Value.
      */
     std::string GetConditionalParentValue() const;
+    
+    /**
+     * RETS 1.8
+     * Return the OneToMany flag
+     *
+     * @return if <code>true</code> indicates that the foreign key
+     * will return multiple rows.
+     */
+    bool GetOneToManyFlag() const;
 };
 
 };

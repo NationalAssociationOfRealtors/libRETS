@@ -177,6 +177,15 @@ class SearchRequest : public RetsHttpRequest
      */
     void SetRestrictedIndicator(std::string restrictedIndicator);
     
+    /**
+     * RETS 1.8
+     * Set the PAYLOAD parameter.
+     * 
+     * @param payload A string containing the RESO schema name that was found in
+     * the GetPayloadList Transaction.
+     */
+    void SetPayload(std::string payload);
+    
   private:
     static const char * FORMAT_PARAMETER;
     static const char * STANDARD_NAMES_PARAMETER;
@@ -189,6 +198,7 @@ class SearchRequest : public RetsHttpRequest
     static const char * LIMIT_PARAMETER;
     static const char * OFFSET_PARAMETER;
     static const char * RESTRICTED_PARAMETER;
+    static const char * PAYLOAD_PARAMETER;
 };
 
 };

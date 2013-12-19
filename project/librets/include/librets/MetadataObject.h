@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2013 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -64,6 +64,45 @@ class MetadataObject : public MetadataElement
      * @return A string containing the Description of the object.
      */
     std::string GetDescription() const;
+    
+    /**
+     * RETS 1.7
+     * Return the SystemName of the field that acts as the TimeStamp
+     * for Objects.
+     * @return A string containing the field name.
+     */
+    std::string GetObjectTimeSTamp() const;
+    
+    /**
+     * RETS 1.7
+     * Return the SystemName of the field that acts as the count
+     * for Objects.
+     * @return A string containing the field name
+     */
+    std::string GetObjectCount() const;
+    
+    /**
+     * RETS 1.8
+     * When <code>true</code> indicates that the server will honor
+     * Location=1 in the rqeust.
+     * @return <code>true<code> the server will support Location=1
+     */
+    bool GetLocationAvailability() const;
+    
+    /**
+     * RETS 1.8
+     * The ResourceID and ClassName which will provide additional
+     * information about Objects.
+     * @return A string containing ResourceID:ClassName
+     */
+    std::string GetObjectData() const;
+    
+    /**
+     * RETS 1.8
+     * Indicates the maximum file size in bytes for Objects.
+     * @return An int containing the maximum file size in bytes.
+     */
+    int GetMaxFileSize() const;
 };
 
 };

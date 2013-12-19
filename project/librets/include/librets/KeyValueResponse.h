@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2013 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -28,6 +28,7 @@
 #include "librets/EncodingType.h"
 #include "librets/RetsObject.h"
 #include "librets/RetsVersion.h"
+#include "librets/SessionInfo.h"
 
 namespace librets {
 
@@ -61,8 +62,16 @@ class KeyValueResponse : public RetsObject
     void Parse(istreamPtr inputStream, RetsVersion retsVersion, EncodingType encoding);
 
     /**
+     * For a given key, return the associated type. If the key is not found
+     * an empty string is returned.
+     * @param key A string representing the key whose value is to be returned.
+     * @return A string containing the value.
+     */
+    std::string GetType(std::string key) const;
+
+    /**
      * For a given key, return the associated value. If the key is not found
-     * and empty string is returned.
+     * an empty string is returned.
      * @param key A string representing the key whose value is to be returned.
      * @return A string containing the value.
      */
@@ -111,6 +120,7 @@ class KeyValueResponse : public RetsObject
     static void AssertNotEquals(const std::string & expected,
                                 const std::string & actual);
         
+    SessionInfo mSessionInfo;
 
   private:
     void ParseBody(std::string body);
@@ -120,6 +130,8 @@ class KeyValueResponse : public RetsObject
     
     int mRetsReplyCode;
     std::string mRetsReplyText;
+    
+    RetsVersion mRetsVersion;
 };
 
 };

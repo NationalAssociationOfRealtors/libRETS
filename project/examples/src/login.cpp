@@ -18,6 +18,7 @@
 #include "librets.h"
 #include "Options.h"
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 
 using namespace librets;
@@ -27,6 +28,7 @@ using std::cerr;
 using std::endl;
 using std::exception;
 using std::ofstream;
+using std::setw;
 
 int main(int argc, char * argv[])
 {
@@ -51,12 +53,49 @@ int main(int argc, char * argv[])
         cout << "Logged in\n";
         
         LoginResponse * login = session->GetLoginResponse();
-        cout << "Member name: " << login->GetMemberName() << endl;
-        
         CapabilityUrls * urls = session->GetCapabilityUrls();
-        cout << "Search URL: " << urls->GetSearchUrl() << endl;
 
+        cout << "Member name: " << login->GetMemberName() << endl;
+        cout << "Search URL: " << urls->GetSearchUrl() << endl;        
         cout << "Action:\n" << session->GetAction() << endl;
+        
+        if (session->GetDetectedRetsVersion() >= RETS_1_8)
+        {
+            try
+            {
+                cout << "User ID:"                          << login->GetUserID() << endl;
+                cout << "User Class: "                      << login->GetUserClass() << endl;
+                cout << "User Level: "                      << login->GetUserLevel() << endl;
+                cout << "Agent Code: "                      << login->GetAgentCode() << endl;
+                if (options.count("verbose"))
+                {
+                    cout << "Broker Code: "                 << login->GetBrokerCode() << endl;
+                    cout << "Broker Branch: "               << login->GetBrokerBranch() << endl;
+                    cout << "Metadata ID: "                 << login->GetMetadataID() << endl;
+                    cout << "Metadata Version: "            << login->GetMetadataVersion() << endl;
+                    cout << "Metadata Timestamp: "          << login->GetMetadataTimestamp() << endl;
+                    cout << "Min Metadata Timestamp: "      << login->GetMinMetadataTimestamp() << endl;
+                    cout << "Balance: "                     << login->GetBalance() << endl;
+                    cout << "Timeout Seconds: "             << login->GetTimeout() << endl;
+                    cout << "Password Expiration: "         << login->GetPasswordExpire() << endl;
+                    cout << "Password Expiration Warn: "    << login->GetWarnPasswordExpirationDays() << endl;
+                    cout << "OfficeList: "                  << login->GetOfficeList() << endl;
+                    cout << "Standard Names Version: "      << login->GetStandardNamesVersion() << endl;
+                    cout << "Vendor Name: "                 << login->GetVendorName() << endl;
+                    cout << "Server Product Name: "         << login->GetServerProductName() << endl;
+                    cout << "Operator Name: "               << login->GetOperatorName() << endl;
+                    cout << "Role Name: "                   << login->GetRoleName() << endl;
+                    cout << "Support Contact Information: " << login->GetSupportContactInformation() << endl;
+                }
+            }
+            catch (RetsException & e)
+            {
+               /*
+                * The ServerInformation Transaction is not supported.
+                * Continue silently.
+                */
+            }
+        }
 
         if (options.count("show-urls"))
         {
@@ -70,6 +109,10 @@ int main(int argc, char * argv[])
             cout << "GetMetadata URL: " << urls->GetGetMetadataUrl() << endl;
             cout << "ServerInformation URL: " << urls->GetServerInformationUrl() << endl;
             cout << "Update URL: " << urls->GetUpdateUrl() << endl;
+            if (session->GetDetectedRetsVersion() >= RETS_1_8)
+            {
+                cout << "Payload List URL: " << urls->GetPayloadListUrl() << endl;
+            }
             cout << endl;
         }
         
@@ -102,6 +145,46 @@ int main(int argc, char * argv[])
             }
         }
 
+        if (session->GetDetectedRetsVersion() >= RETS_1_8)
+        {
+            try
+            {
+                PayloadListResultSetAPtr payloadList = session->GetPayloadList("");
+                    
+                if (options.count("verbose"))
+                {
+                    cout << setw(15) << "Class" << ": "
+                    << setw(0) << payloadList->GetPayloadClass() << endl;
+                    cout << setw(15) << "Resource" << ": "
+                    << setw(0) << payloadList->GetPayloadResource() << endl;
+                    cout << setw(15) << "Date" << ": "
+                    << setw(0) << payloadList->GetPayloadDate() << endl;
+                    cout << setw(15) << "Version" << ": "
+                    << setw(0) << payloadList->GetPayloadVersion() << endl << endl;
+                }
+                
+                while (payloadList->HasNext())
+                {
+                    StringVector columns = payloadList->GetColumns();
+                    StringVector::const_iterator i;
+                    for (i = columns.begin(); i != columns.end(); i++)
+                    {
+                        string column = *i;
+                        cout << setw(15) << column << ": "
+                        << setw(0) << payloadList->GetString(column) << endl;
+                    }
+                    cout << endl;                    
+                }
+            }
+            catch (RetsException & e)
+            {
+                /*
+                 * The GetPayloadList Transaction is not supported.
+                 */
+                cout << e.what() << endl;
+            }
+        }
+        
         LogoutResponseAPtr logout = session->Logout();
         cout << "Logged out\n";
         if (logout.get())

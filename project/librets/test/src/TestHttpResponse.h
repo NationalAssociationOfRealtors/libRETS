@@ -31,6 +31,8 @@ class TestHttpResponse : public RetsHttpResponse
     
     virtual std::string GetHeader(std::string name) const;
     
+    virtual const StringMultiMap& GetHeaders() const;
+    
     virtual istreamPtr GetInputStream() const;
     
     virtual int GetResponseCode() const;
@@ -42,7 +44,7 @@ class TestHttpResponse : public RetsHttpResponse
     virtual void SetAdditionalErrorText(std::string errorText);
     
   private:
-    StringMap mHeaders;
+    StringMultiMap mHeaders;
     int mResponseCode;
     istreamPtr mInputStream;
 

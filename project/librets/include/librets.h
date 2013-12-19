@@ -87,6 +87,7 @@
 #include "librets/GetObjectRequest.h"
 #include "librets/GetObjectResponse.h"
 #include "librets/ObjectDescriptor.h"
+#include "librets/PayloadListResultSet.h"
 #include "librets/UpdateRequest.h"
 #include "librets/UpdateResponse.h"
 

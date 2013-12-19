@@ -91,7 +91,10 @@ class UpdateResponse;
 typedef boost::shared_ptr<UpdateResponse> UpdateResponsePtr;
 typedef std::auto_ptr<UpdateResponse> UpdateResponseAPtr;
 
-
+class PayloadListResultSet;
+/** Smart pointer to PayloadListResultSet */
+typedef boost::shared_ptr<PayloadListResultSet> PayloadListResultSetPtr;
+typedef std::auto_ptr<PayloadListResultSet> PayloadListResultSetAPtr;
 };
 /// @endcond
 #endif

@@ -78,6 +78,7 @@ class MetadataTable : public MetadataElement
         LOOKUP_MULTI,
         LOOKUP_BITSTRING,
         LOOKUP_BITMASK,
+        URI,
         NO_INTERPRETATION
     };
     
@@ -99,6 +100,15 @@ class MetadataTable : public MetadataElement
         ACRES,
         HECTARES,
         NO_UNITS
+    };
+    
+    enum CharacterCase
+    {
+        UPPER,
+        LOWER,
+        EXACT,
+        MIXED,
+        NO_CASE
     };
 
     /**
@@ -325,6 +335,30 @@ class MetadataTable : public MetadataElement
      * @return <code>true</code> when may be used in <code>Select</code> list.
      */
     bool InKeyIndex() const;
+    
+    /**
+     * RETS 1.8
+     * Returns the FilterParentField used to restrict values to a Lookup Filter.
+     *
+     * @return A string containing the Filter Parent Field.
+     */
+    std::string GetFilterParentField() const;
+    
+    /**
+     * RETS 1.8
+     * Returns the order of fields for display in a search screen.
+     *
+     * @return An int containing the order.
+     */
+    int GetDefaultSearchOrder() const;
+    
+    /**
+     * RETS 1.8
+     * Returns the Case of the field when this is a Character field.
+     *
+     * @return A enum containing the case.
+     */
+    CharacterCase GetCase() const;
 };
 
 };

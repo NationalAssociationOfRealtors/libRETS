@@ -26,6 +26,7 @@
 #include "librets/RetsObject.h"
 #include "librets/http_forward.h"
 #include "librets/std_forward.h"
+#include "librets/RetsVersion.h"
 
 namespace librets {
 
@@ -88,7 +89,15 @@ class GetObjectRequest : public RetsObject
      * @param location <code>true</code> if location URLs are requested
      */
     void SetLocation(bool location);
-    
+
+    /**
+     * RETS 1.8
+     * This should contain a comma delimited field of the field names
+     * that should be returned with the Object request.
+     * @param location <code>true</code> if location URLs are requested
+     */
+    void SetObjectData(std::string objectData);
+        
     /**
      * Add a single object for a resource entity to the request.  This
      * should be used, for example, to request a single photo for a
@@ -112,15 +121,17 @@ class GetObjectRequest : public RetsObject
     /**
      * (Internal) Create the Http Request object that will control access
      * to the server to fetch the objects.
+     * @param retsVersion The RETS version for the request.
      */
-    RetsHttpRequestPtr CreateHttpRequest() const;
+    RetsHttpRequestPtr CreateHttpRequest(RetsVersion retsVersion) const;
     
     /**
      * (Internal) Set up the Http Request. This should only be called by
      * CreateHttpRequest.
      * @param httpRequest A pointer to the RetsHttpRequest.
+     * @param retsVersion The RETS version for the request.
      */
-    void PrepareHttpRequest(RetsHttpRequestPtr httpRequest) const;
+    void PrepareHttpRequest(RetsHttpRequestPtr httpRequest, RetsVersion retsVersion) const;
     /// @endcond
     
     /**
@@ -180,6 +191,7 @@ class GetObjectRequest : public RetsObject
     std::string mResource;
     std::string mType;
     bool mLocation;
+    std::string mObjectData;
     ObjectList mObjectList;
     bool mHasDefaultObjectKeyAndId;
     std::string mDefaultObjectKey;

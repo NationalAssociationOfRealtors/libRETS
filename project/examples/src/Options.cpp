@@ -68,6 +68,7 @@ Options::Options()
         ("ua-password", po::value<string>(&userAgentPassword)
          ->default_value(""), "User agent password")
         ("no-sslverify", "Do not verify ssl certificate")
+        ("verbose", "Be Verbose")
         ;
     mLogFile="";
 }
@@ -119,6 +120,14 @@ bool Options::ParseCommandLine(int argc, char * argv[])
     else if (mRetsVersionString == "1.7.2")
     {
         retsVersion = RETS_1_7_2;
+    }
+    else if (mRetsVersionString == "1.8")
+    {
+        retsVersion = RETS_1_8;
+    }
+    else if (mRetsVersionString == "1.8.0")
+    {
+        retsVersion = RETS_1_8_0;
     }
     else
     {

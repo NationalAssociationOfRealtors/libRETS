@@ -45,7 +45,8 @@ TestHttpResponse::TestHttpResponse(string resourceName)
         string value;
         if (splitField(line, ":", name, value))
         {
-            mHeaders[ba::to_lower_copy(name)] = ba::trim_copy(value);
+            mHeaders.insert(std::pair<std::string, std::string>(ba::to_lower_copy(name), 
+                                                           ba::trim_copy(value)));
         }
     }
 }
@@ -75,6 +76,11 @@ string TestHttpResponse::GetHeader(string name) const
     {
         return "";
     }
+}
+
+const StringMultiMap& TestHttpResponse::GetHeaders() const
+{
+    return mHeaders;
 }
 
 istreamPtr TestHttpResponse::GetInputStream() const

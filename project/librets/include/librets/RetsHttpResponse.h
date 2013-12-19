@@ -50,7 +50,7 @@ class RetsHttpResponse
      * This provides access to the HTTP response headers.
      * @return A const reference to the header map.
      */
-    virtual const StringMap& GetHeaders() const = 0;
+    virtual const StringMultiMap& GetHeaders() const = 0;
     
     std::string GetContentType() const;
 

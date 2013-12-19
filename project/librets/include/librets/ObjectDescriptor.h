@@ -25,6 +25,7 @@
 #include <string>
 #include "librets/RetsObject.h"
 #include "librets/BinaryData.h"
+#include "librets/ObjectData.h"
 #include "librets/std_forward.h"
 
 namespace librets {
@@ -145,6 +146,23 @@ class ObjectDescriptor : public RetsObject
     BinaryDataAPtr GetData();
     
     /**
+     * RETS 1.8
+     * Returns a boolean indicating whether or not the object is the
+     * "preferred" object.
+     *
+     * @return A boolean indicating whether the object is preferred.
+     */
+    bool GetPreferred() const;
+    
+    /**
+     * Sets the preferred flag for this object.
+     *
+     * @param preferred A boolean indicating if the object is the preferred
+     * object.
+     */
+    void SetPreferred(bool preferred);
+    
+    /**
      * Returns an integer representing the RETS Response Code for this
      * object.
      *
@@ -174,6 +192,49 @@ class ObjectDescriptor : public RetsObject
     void SetRetsReplyText(std::string replyText);
     
     /**
+     * RETS 1.8
+     * Returns the Object Data structure for the object.
+     * Requires that the user include the Object Data in the
+     * request.
+     *
+     * @return The Object Data for this object.
+     */
+    ObjectData& GetObjectData();
+    
+    /**
+     * RETS 1.8
+     * Returns the sub description of this object.  If no sub 
+     * description was provided by the server, an empty string 
+     * will be returned.
+     *
+     * @return The sub description of this object
+     */
+    std::string GetSubDescription() const;
+    
+    /**
+     * Sets the sub description of this object.
+     *
+     * @param subDescription A sub description
+     */
+    void SetSubDescription(std::string subDescription);
+    
+    /**
+     * RETS 1.8
+     * Returns the UID of this object.  If no UID was
+     * provided by the server, an empty string will be returned.
+     *
+     * @return The UID of this object
+     */
+    std::string GetUID() const;
+    
+    /**
+     * Sets the UID of this object.
+     *
+     * @param UID The UID
+     */
+    void SetUID(std::string UID);
+    
+    /**
      * Returns a boolean indicating whether or not the original
      * object ID was an asterisk.
      */
@@ -194,8 +255,12 @@ class ObjectDescriptor : public RetsObject
     std::string mLocationUrl;
     std::string mContentType;
     istreamPtr mDataStream;
+    ObjectData mObjectData;
+    bool mPreferred;
     int mRetsReplyCode;
     std::string mRetsReplyText;
+    std::string mSubDescription;
+    std::string mUID;
     bool mWildIndicator;
 };
     

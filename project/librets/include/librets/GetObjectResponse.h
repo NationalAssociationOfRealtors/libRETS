@@ -100,9 +100,12 @@ class GetObjectResponse : public RetsObject
   private:
     typedef std::vector<ObjectDescriptorPtr> ObjectList;
     
+    void HandleObjectData(ObjectDescriptorPtr objectDescriptor, 
+                          StringMultiMap headers);
     void ParseSinglePart(RetsHttpResponsePtr httpResponse);
     void ParseMultiPart(RetsHttpResponsePtr httpResponse,
                         bool ignoreMalformedHeaders = false);
+    void ParseObjectData(ObjectDescriptorPtr objectDescriptor, std::string objectData);
     
     std::string FindBoundary(std::string contentType);
     void ParsePartStream(istreamPtr in, bool ignoreMalformedHeaders = false);

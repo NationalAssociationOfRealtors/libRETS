@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RETS ReplyCode="0" ReplyText="Success. Reference ID: 2d5c3f48-326c-4018-be02-cb844d7a28f1">
+  <RETS-RESPONSE>
+    Info=MEMBERNAME;Character;Joe Schmoe
+    Info=USERID;Character;1002284553
+    Info=USERLEVEL;Int;25
+    Info=USERCLASS;Character;RT
+    Info=AGENTCODE;Character;RESOWG
+    Info=BROKERCODE;Character;Test
+    Info=BROKERBRANCH;Character;Test01
+    Info=METADATAID;Character;76_31_31_26_TTFF_DMO
+    Info=METADATAVERSION;Character;1.0.000
+    Info=METADATATIMESTAMP;DateTime;Sat, 01 Jan 2000 01:02:00 GMT
+    Info=MINMETADATATIMESTAMP;DateTime;Sat, 01 Jan 2000 01:01:00 GMT
+    Info=USER;Character;RESOWG
+    Info=Balance;Money;balance 
+    Info=TimeoutSeconds;Character;123
+    Info=PasswordExpiration;DateTime;Sat, 01 Jan 2000 01:03:00 GMT
+    Info=WarnPasswordExpirationDays;Character;42
+    Info=OfficeList;Character;Office List
+    Info=StandardNamesVersion;Character;FirstVersion
+    Info=VendorName;Character;Some Vendor
+    Info=ServerProductName;Character;My Product
+    Info=ServerProductVersion;Character;1.2.3
+    Info=OperatorName;Character;Joe Schmoe
+    Info=RoleName;Character;Chief Cook
+    Info=SupportContactInformation;Character;Do not call me
+    Action = action
+    Login = http://example.com:6103/rets/login
+    LoginComplete = http://example.com:6103/rets/loginComplete
+    Logout = http://example.com:6103/rets/logout
+    Search = /rets/search
+    GetMetadata = http://example.com:6103/rets/getMetadata
+    ChangePassword = http://example.com:6103/rets/changePassword
+    GetObject = http://example.com:6103/rets/getObject
+    ServerInformation = http://example.com:6103/rets/serverInfo
+    Update = http://example.com:6103/rets/update
+    GetPayloadList = http://example.com:6103/rets/getPayloadList
+    X-Field = Value
+</RETS-RESPONSE>
+</RETS>

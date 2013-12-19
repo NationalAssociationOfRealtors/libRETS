@@ -67,6 +67,64 @@ class MetadataSystem : public MetadataElement
      * @return A String containing the TimeZoneOffset.
      */
     std::string GetTimeZoneOffset() const;
+    
+    /**
+     * RETS 1.8
+     * Returns the MetadataID
+     *
+     * @return A String containing the MetadataID
+     */
+    std::string GetMetadataID() const;
+    
+    /**
+     * RETS 1.8
+     * Returns the ResourceVersion
+     *
+     * @return A String containing the ResourceVersion
+     */
+    std::string GetResourceVersion() const;
+        
+    /**
+     * RETS 1.8
+     * Returns the ResourceDate
+     *
+     * @return A String containing the ResourceDate
+     */
+    std::string GetResourceDate() const;
+    
+    /**
+     * RETS 1.8
+     * Returns the ForeignKeyVersion
+     *
+     * @return A String containing the ForeignKeyVersion
+     */
+    std::string GetForeignKeyVersion() const;
+    
+    /**
+     * RETS 1.8
+     * Returns the ForeignKeyDate
+     *
+     * @return A String containing the ForeignKeyDate
+     */
+    std::string GetForeignKeyDate() const;
+    
+    /**
+     * RETS 1.8
+     * Returns the FilterVersion
+     *
+     * @return A String containing the FilterVersion
+     */
+    std::string GetFilterVersion() const;
+    
+    /**
+     * RETS 1.8
+     * Returns the FilterDate
+     *
+     * @return A String containing the FilterDate
+     */
+    std::string GetFilterDate() const;
+    
+    
 };
 
 };

@@ -1,4 +1,4 @@
-/*
+	/*
  * Copyright (C) 2005-2011 National Association of REALTORS(R)
  *
  * All rights reserved.
@@ -28,6 +28,7 @@
 #include "librets/GetObjectRequest.h"
 #include "librets/GetObjectResponse.h"
 #include "librets/ObjectDescriptor.h"
+#include "librets/PayloadListResultSet.h"
 #include "librets/str_stream.h"
 #include "librets/ExceptionErrorHandler.h"
 #include "librets/RetsHttpException.h"
@@ -588,7 +589,7 @@ GetObjectResponseAPtr CLASS::GetObject(GetObjectRequest * request)
     if (!mLoggedIn)
         throw RetsException("You are not logged in");
         
-    RetsHttpRequestPtr httpRequest = request->CreateHttpRequest();
+    RetsHttpRequestPtr httpRequest = request->CreateHttpRequest(mRetsVersion);
     string getObjectUrl = mCapabilityUrls->GetGetObjectUrl();
     httpRequest->SetUrl(getObjectUrl);
     httpRequest->SetMethod(mHttpMethod);
@@ -873,4 +874,32 @@ UpdateResponseAPtr CLASS::Update(UpdateRequest * request)
     
     return result;
 }
+
+PayloadListResultSetAPtr CLASS::GetPayloadList(std::string metadataID)
+{
+    if (!mLoggedIn)
+        throw RetsException("You are not logged in");
+    
+    PayloadListResultSetAPtr payloadListResultSet;
+    string payloadListUrl = mCapabilityUrls->GetPayloadListUrl();
+    if (payloadListUrl == "")
+    {
+        return payloadListResultSet;
+    }
+    
+    RetsHttpRequest request;
+    request.SetUrl(payloadListUrl);
+    if (!metadataID.empty())
+    {
+        request.SetQueryParameter("ID", metadataID);
+    }
+    RetsHttpResponsePtr httpResponse(DoRequest(&request));
+    
+    AssertSuccessfulResponse(httpResponse, payloadListUrl);
+    
+    payloadListResultSet.reset(new PayloadListResultSet());
+    payloadListResultSet->Parse(httpResponse->GetInputStream());
+    return payloadListResultSet;
+}
+
 

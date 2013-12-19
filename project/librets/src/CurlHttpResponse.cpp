@@ -86,14 +86,14 @@ string CurlHttpResponse::GetHeader(string name) const
     }
 }
 
-const StringMap& CurlHttpResponse::GetHeaders() const
+const StringMultiMap& CurlHttpResponse::GetHeaders() const
 {
     return mHeaders;
 }
 
 void CurlHttpResponse::SetHeader(string name, string value)
 {
-    mHeaders[ba::to_lower_copy(name)] = value;
+    mHeaders.insert(std::pair<std::string, std::string>(ba::to_lower_copy(name), value));
 }
 
 istreamPtr CurlHttpResponse::GetInputStream() const

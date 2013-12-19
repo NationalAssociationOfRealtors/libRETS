@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2013 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -86,7 +86,19 @@ class MetadataElement : public RetsObject
         /** Validation expression metadata. */
         VALIDATION_EXPRESSION,
         /** Foreign key metadata. */
-        FOREIGN_KEY
+        FOREIGN_KEY,
+        /** Filter metadata. */
+        FILTER,
+        /** Column Group Set metadata. */
+        COLUMN_GROUP_SET,
+        /** Column Group metadata. */
+        COLUMN_GROUP,
+        /** Column Group Control metadata. */
+        COLUMN_GROUP_CONTROL,
+        /** Column Group Table metadata. */
+        COLUMN_GROUP_TABLE,
+        /** Column Group Normalization metadata */
+        COLUMN_GROUP_NORMALIZATION
     };
     
     typedef MetadataType Type;

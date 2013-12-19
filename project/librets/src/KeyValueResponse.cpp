@@ -105,6 +105,7 @@ void CLASS::Parse(istreamPtr inputStream, RetsVersion retsVersion, EncodingType 
                                 ? "UTF-8"
                                 : "US-ASCII"))));
                            
+    mRetsVersion = retsVersion;
     RetsXmlEventListPtr eventList = xmlParser->GetEventListSkippingEmptyText();
     RetsXmlTextEventPtr bodyEvent = GetBodyEvent(eventList, retsVersion);
     if (bodyEvent)
@@ -235,7 +236,7 @@ void CLASS::ParseBody(string body)
     StringVector::const_iterator line;
     for (line = lines.begin(); line != lines.end(); line++)
     {
-        if (line->empty())
+        if (line->empty() || (*line).empty())
         {
             continue;
         }
@@ -248,7 +249,15 @@ void CLASS::ParseBody(string body)
         ba::trim(key);
         ba::to_upper(key);
         ba::trim(value);
-        mValues[key] = value;
+
+        if (key == "INFO")
+        {
+            mSessionInfo.ParseInfo(value);
+        }
+        else
+        {
+            mValues[key] = value;
+        }
     }
 }
 
@@ -294,12 +303,23 @@ string CLASS::GetRetsReplyText() const
 string CLASS::GetValue(string key) const
 {
     ba::to_upper(key);
-    StringMap::const_iterator value = mValues.find(key);
-    if (value == mValues.end())
+    string value;
+
+    if (mRetsVersion >= RETS_1_8)
     {
-        return "";
+        value = mSessionInfo.GetValue(key);
     }
-    return value->second;
+    
+    if (value.empty())
+    {
+        StringMap::const_iterator iter = mValues.find(key);
+        
+        if (iter != mValues.end())
+        {
+            value = iter->second;
+        }
+    }
+    return value;
 }
 
 void CLASS::ParsingFinished()

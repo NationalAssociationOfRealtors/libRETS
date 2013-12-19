@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2013 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -64,6 +64,23 @@ class MetadataLookup : public MetadataElement
      * @return A string containing the date.
      */
     std::string GetDate() const;
+    
+    /**
+     * RETS 1.8
+     * Return the FilterID for filtering LookupType values.
+     * @return A string containing the FilterID.
+     */
+    std::string GetFilterID() const;
+    
+    /**
+     * RETS 1.8
+     * Return a flag indicating whether or not the server will
+     * automatically show data for this type unless sepcifically
+     * asked for it.
+     * @return A boolean indicating that the data is not shown
+     * by default.
+     */
+    bool GetNotShownByDefault() const;
 };
 
 };

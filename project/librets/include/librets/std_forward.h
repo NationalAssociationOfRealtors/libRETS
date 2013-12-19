@@ -48,6 +48,9 @@ typedef std::auto_ptr<std::iostream> iostreamAPtr;
 
 /** A key/value map using strings. */
 typedef std::map<std::string, std::string> StringMap;
+    
+/** A key/value map with multiple keys. */
+typedef std::multimap<std::string, std::string> StringMultiMap;
 
 /** A vector of strings. */
 typedef std::vector<std::string> StringVector;

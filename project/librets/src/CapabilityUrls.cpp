@@ -144,6 +144,15 @@ string CLASS::GetUpdateUrl() const
     return mUpdateUrl;
 }
 
+void CLASS::SetPayloadListUrl(string payloadListUrl)
+{
+    mPayloadListUrl = ResolveUrl(payloadListUrl);
+}
+
+string CLASS::GetPayloadListUrl() const
+{
+    return mPayloadListUrl;
+}
 
 ostream & CLASS::Print(ostream & outputStream) const
 {
@@ -158,6 +167,7 @@ ostream & CLASS::Print(ostream & outputStream) const
     outputStream << "GetMetadata = " << mGetMetadataUrl << endl;
     outputStream << "ServerInformation = " << mServerInformationUrl << endl;
     outputStream << "Update = " << mUpdateUrl << endl;
+    outputStream << "GetPayloadList = " << mPayloadListUrl << endl;
     return outputStream << "]";
 }
 
@@ -181,5 +191,6 @@ bool CLASS::Equals(const RetsObject * object) const
     equals &= (mGetMetadataUrl == rhs->mGetMetadataUrl);
     equals &= (mServerInformationUrl == rhs->mServerInformationUrl);
     equals &= (mUpdateUrl == rhs->mUpdateUrl);
-    return equals;
+    equals &= (mPayloadListUrl == rhs->mPayloadListUrl);
+return equals;
 }

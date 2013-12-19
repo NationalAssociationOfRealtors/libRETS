@@ -45,6 +45,7 @@ class Options
     bool disableStreaming;
     bool enableCaching;
     std::string mEncoding;
+    bool verbose;
     
     Options();
 

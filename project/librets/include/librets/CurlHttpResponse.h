@@ -43,7 +43,7 @@ class CurlHttpResponse : public RetsHttpResponse
 
     virtual std::string GetHeader(std::string name) const;
 
-    virtual const StringMap& GetHeaders() const;
+    virtual const StringMultiMap& GetHeaders() const;
     
     void SetHeader(std::string name, std::string value);
 
@@ -70,7 +70,7 @@ class CurlHttpResponse : public RetsHttpResponse
   private:
     iostreamPtr mStream;
     int mResponseCode;
-    StringMap mHeaders;
+    StringMultiMap mHeaders;
     CurlHttpClient* mHttpClient;
     RetsHttpRequest* mHttpRequest;
     bool mInProgress;

@@ -497,6 +497,16 @@ class RetsSession : public MetadataLoader
      * @throws RetsException if an error occurs.
      */
     UpdateResponseAPtr Update(UpdateRequest * request);
+    
+    /**
+     * RETS 1.8
+     * Perform the GetPayloadList transaction
+     *
+     * @param metadataID The MetadataID for the payload list
+     * @return PayloadList result set
+     * @throws RetsException if an error occurs.
+     */
+    PayloadListResultSetAPtr GetPayloadList(std::string metadataID);
 
     /**
      * Mode flags for the current session.

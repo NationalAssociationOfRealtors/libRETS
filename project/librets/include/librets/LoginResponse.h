@@ -145,6 +145,7 @@ class LoginResponse : public KeyValueResponse
     std::string GetGetMetadataUrl() const;
 
     /**
+     * @deprecated
      * Get the RETS "SERVER INFORMATION" URL. This is for RETS 1.7 and later
      * and will return an empty string if it is not implemented.
      * @return A string containing the URL for the RETS ServerInformation
@@ -158,7 +159,129 @@ class LoginResponse : public KeyValueResponse
      * It will be an empty string if not supported.
      */
     std::string GetUpdateUrl() const;
-
+    
+    /**
+     * RETS 1.8
+     * Get the "PAYLOADLIST" URL.
+     * @return A string containing the URL for the RETS Update transaction.
+     * It will be an empty string if not supported.
+     */
+    std::string GetPayloadListUrl() const;
+        
+    /**
+     * RETS 1.8
+     * Get the USERID
+     * @return A string containing the USERID
+     */
+    std::string GetUserID() const;
+    
+    /**
+     * RETS 1.8
+     * Get the USERCLASS
+     * @return A string containing the USERCLASS
+     */
+    std::string GetUserClass() const;
+    
+    /**
+     * RETS 1.8
+     * Get the USERLEVEL
+     * @return A string containing the USERLEVEL
+     */
+    std::string GetUserLevel() const;
+    
+    /**
+     * RETS 1.8
+     * Get the AGENTCODE
+     * @return A string containing the AGENTCODE
+     */
+    std::string GetAgentCode() const;
+    
+    /**
+     * RETS 1.8
+     * Get the BROKERCODE
+     * @return A string containing the BROKERCODE
+     */
+    std::string GetBrokerCode() const;
+    
+    /**
+     * RETS 1.8
+     * Get the BROKERBRANCH
+     * @return A string containing the BROKERBRANCH
+     */
+    std::string GetBrokerBranch() const;
+    
+    /**
+     * RETS 1.8
+     * Get the MetadataID
+     * @return A string containing the MetadataID
+     */
+    std::string GetMetadataID() const;
+    
+    /**
+     * RETS 1.8
+     * Get the WarnPasswordExpirationDays
+     * @return A string containing the WarnPasswordExpirationDays
+     */
+    std::string GetWarnPasswordExpirationDays() const;
+    
+    /**
+     * RETS 1.8
+     * Get the StandardNamesVersion
+     * @return A string containing the StandardNamesVersion
+     */
+    std::string GetStandardNamesVersion() const;
+    
+    /**
+     * RETS 1.8
+     * Get the VendorName
+     * @return A string containing the VendorName
+     */
+    std::string GetVendorName() const;
+    
+    /**
+     * RETS 1.8
+     * Get the ServerProductName
+     * @return A string containing the ServerProductName
+     */
+    std::string GetServerProductName() const;
+    
+    /**
+     * RETS 1.8
+     * Get the ServerProductVersion
+     * @return A string containing the ServerProductVersion
+     */
+    std::string GetServerProductVersion() const;
+    
+    /**
+     * RETS 1.8
+     * Get the OperatorName
+     * @return A string containing the OperatorName
+     */
+    std::string GetOperatorName() const;
+    
+    /**
+     * RETS 1.8
+     * Get the RoleName
+     * @return A string containing the RoleName
+     */
+    std::string GetRoleName() const;
+    
+    /**
+     * RETS 1.8
+     * Get the SupportContactInformation
+     * @return A string containing the SupportContactInformation
+     */
+    std::string GetSupportContactInformation() const;
+    
+    /**
+     * RETS 1.8
+     * Get the Session Information Tokens as a single string.
+     * It will be up to the user to parse them.
+     * @return A string containing all the seesion information tokens
+     * in the format "tokenname;tokentype;tokenvalueCRLF...."
+     */
+    std::string GetSessionInformationTokens() const;
+    
     /// @cond MAINTAINER
     /**
      * (Internal) Create the CapabilityUrl object with the URLs enumerated.

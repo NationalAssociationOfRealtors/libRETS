@@ -193,6 +193,21 @@ class CapabilityUrls : public RetsObject
      */
     std::string GetUpdateUrl() const;
 
+    /// @cond MAINTAINER
+    /**
+     * (Internal) Set the RETS "PAYLOADLIST" URL.
+     * @param updateUrl A string containing the URL for the RETS PayloadList transaction.
+     */
+    void SetPayloadListUrl(std::string payloadListUrl);
+    /// @endcond
+    
+    /**
+     * Get the RETS "PAYLOADLIST" URL.
+     * @return A string containing the URL for the RETS PayloadList transaction.
+     * It will be an empty string if not supported.
+     */
+    std::string GetPayloadListUrl() const;
+    
     /**
      * Prints the object in a standard form for debugging
      * and error reporting.
@@ -219,6 +234,7 @@ class CapabilityUrls : public RetsObject
     std::string mGetMetadataUrl;
     std::string mServerInformationUrl;
     std::string mUpdateUrl;
+    std::string mPayloadListUrl;
 };
 
 
