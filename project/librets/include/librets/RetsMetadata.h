@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005-2009 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *
@@ -62,6 +63,41 @@ typedef std::vector<MetadataForeignKey *> MetadataForeignKeyList;
 /** A smart pointer to MetadataForeignKeyList. */
 typedef boost::shared_ptr<MetadataForeignKeyList> MetadataForeignKeyListPtr;
 
+/** A vector of MetadataColumnGroup objects RETS 1.8 */
+typedef std::vector<MetadataColumnGroup *> MetadataColumnGroupList;
+/** A smart pointer to MetadataColumnGroupList. RETS 1.8 */
+typedef boost::shared_ptr<MetadataColumnGroupList> MetadataColumnGroupListPtr;
+    
+/** A vector of MetadataColumnNormalizationGroup objects RETS 1.8 */
+typedef std::vector<MetadataColumnGroupNormalization *> MetadataColumnGroupNormalizationList;
+/** A smart pointer to MetadataColumnGroupNormalizationList. */    
+typedef boost::shared_ptr<MetadataColumnGroupNormalizationList> MetadataColumnGroupNormalizationListPtr;
+
+/** A vector of MetadataColumnGroupTable objects RETS 1.8 */
+typedef std::vector<MetadataColumnGroupTable *> MetadataColumnGroupTableList;
+/** A smart pointer to MetadataColumnGroupTableList. RETS 1.8 */
+typedef boost::shared_ptr<MetadataColumnGroupTableList> MetadataColumnGroupTableListPtr;
+    
+/** A vector of MetadataColumnGroupControl objects RETS 1.8 */
+typedef std::vector<MetadataColumnGroupControl *> MetadataColumnGroupControlList;    
+/** A smart pointer to MetadataColumnGroupControlList. RETS 1.8 */
+typedef boost::shared_ptr<MetadataColumnGroupControlList> MetadataColumnGroupControlListPtr;
+
+/** A vector of MetadataColumnGroupSet objects RETS 1.8 */
+typedef std::vector<MetadataColumnGroupSet *> MetadataColumnGroupSetList;
+/** A smart pointer to MetadataColumnGroupSetList. RETS 1.8 */
+typedef boost::shared_ptr<MetadataColumnGroupSetList> MetadataColumnGroupSetListPtr;
+
+/** A vector of MetadataFilter objects RETS 1.8 */
+typedef std::vector<MetadataFilter *> MetadataFilterList;
+/** A smart pointer to MetadataFilterList. RETS 1.8 */
+typedef boost::shared_ptr<MetadataFilterList>  MetadataFilterListPtr;
+    
+/** A vector of MetadataFilterType objects RETS 1.8 */
+typedef std::vector<MetadataFilterType *> MetadataFilterTypeList;
+/** A smart pointer to MetadataFilterTypeList. RETS 1.8 */
+typedef boost::shared_ptr<MetadataFilterTypeList>  MetadataFilterTypeListPtr;
+    
 /**
  * RetsMetadata contains the API that is the main interface to
  * all of the metadata.
@@ -283,6 +319,122 @@ class RetsMetadata
      */
     MetadataSearchHelp* GetSearchHelp(std::string resourceName,
                                       std::string searchHelpID) const;
+    
+    /**
+     * Returns the list of ColumnGroups from a class.  RETS 1.8
+     *
+     * @param metadataClass A metadata class element
+     * @return All metadata ColumnGroup elements
+     */
+    MetadataColumnGroupList GetAllColumnGroups(MetadataClass * metadataClass) const;
+    
+    /**
+     * Returns all metadata ColumnGroups with a resource and class name. RETS 1.8
+     *
+     * @param resourceName A resource name
+     * @param className A class name
+     * @return A list of matching metadata ColumnGroups
+     */
+    MetadataColumnGroupList GetAllColumnGroups(std::string resourceName,
+                                                std::string className) const;
+        
+    /**
+     * Returns the list of ColumnGroupSet from a class.  RETS 1.8
+     *
+     * @param metadataClass A metadata class element
+     * @return All metadata ColumnGroupSet elements
+     */
+    MetadataColumnGroupSetList GetAllColumnGroupSets(MetadataClass * metadataClass) const;
+    
+    /**
+     * Returns all metadata ColumnGroupSet with a resource and class name. RETS 1.8
+     *
+     * @param resourceName A resource name
+     * @param className A class name
+     * @return A list of matching metadata ColumnGroupSets
+     */
+    MetadataColumnGroupSetList GetAllColumnGroupSets(std::string resourceName,
+                                                     std::string className) const;
+    
+    /**
+     * Returns the list of ColumnGroupControl from a class for a given ColumnGroup.  RETS 1.8
+     *
+     * @param metadataClass A metadata class element
+     * @param columnGroup A ColumnGroup name
+     * @return All metadata ColumnGroupControl elements
+     */
+    MetadataColumnGroupControlList GetAllColumnGroupControls(MetadataClass * metadataClass,
+                                                             std::string columnGroup) const;
+    
+    /**
+     * Returns all metadata ColumnGroupControl with a resource, class and columnGroup names. RETS 1.8
+     *
+     * @param resourceName A resource name
+     * @param className A class name
+     * @param columnGroup A ColumnGroup name
+     * @return A list of matching metadata ColumnGroupControls
+     */
+    MetadataColumnGroupControlList GetAllColumnGroupControls(std::string resourceName,
+                                                             std::string className,
+                                                             std::string columnGroup) const;
+    
+    /**
+     * Returns the list of ColumnGroupTable from a class for a given ColumnGroup.  RETS 1.8
+     *
+     * @param metadataClass A metadata class element
+     * @param columnGroup A ColumnGroup name
+     * @return All metadata ColumnGroupTable elements
+     */
+    MetadataColumnGroupTableList GetAllColumnGroupTables(MetadataClass * metadataClass,
+                                                         std::string columnGroup) const;
+    
+    /**
+     * Returns all metadata ColumnGroupTable with a resource, class and columnGroup names. RETS 1.8
+     *
+     * @param resourceName A resource name
+     * @param className A class name
+     * @param columnGroup A ColumnGroup name
+     * @return A list of matching metadata ColumnGroupTabless
+     */
+    MetadataColumnGroupTableList GetAllColumnGroupTables(std::string resourceName,
+                                                         std::string className,
+                                                         std::string columnGroup) const;
+    /**
+     * Returns the list of ColumnGroupNormalization from a class for a given ColumnGroup.  RETS 1.8
+     *
+     * @param metadataClass A metadata class element
+     * @param columnGroup A ColumnGroup name
+     * @return All metadata ColumnGroupNormalization elements
+     */
+    MetadataColumnGroupNormalizationList GetAllColumnGroupNormalizations(MetadataClass * metadataClass,
+                                                                         std::string columnGroup) const;
+    
+    /**
+     * Returns all metadata ColumnGroupNormalization with a resource, class and columnGroup names. RETS 1.8
+     *
+     * @param resourceName A resource name
+     * @param className A class name
+     * @param columnGroup A ColumnGroup name
+     * @return A list of matching metadata ColumnGroupNormalization
+     */
+    MetadataColumnGroupNormalizationList GetAllColumnGroupNormalizations(std::string resourceName,
+                                                                         std::string className,
+                                                                         std::string columnGroup) const;
+    
+    /**
+     * Returns all metadata Filter entries. RETS 1.8
+     *
+     * @return A list of all MetadataFilter entries
+     */
+    MetadataFilterList GetAllFilters() const;
+    
+    /**
+     * Returns all metadata FilterType entries for a given filter. RETS 1.8
+     *
+     * @param filter The Filter name.
+     * @return A list of qualifying MetadataFilterType entries
+     */
+    MetadataFilterTypeList GetAllFilterTypes(std::string filter) const;
     
   private:
     void InitSystem();

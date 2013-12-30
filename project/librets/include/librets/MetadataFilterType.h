@@ -14,49 +14,62 @@
  * both the above copyright notice(s) and this permission notice
  * appear in supporting documentation.
  */
-#ifndef LIBRETS_METADATA_COLUMN_GROUP_CONTROL_H
-#define LIBRETS_METADATA_COLUMN_GROUP_CONTROL_H
+#ifndef LIBRETS_METADATA_FILTER_TYPE_H
+#define LIBRETS_METADATA_FILTER_TYPE_H
 /** 
- * @file MetadataColumnGroupControl.h
- * Contains the MetadataColumnGroupControl class declaration.
+ * @file MetadataFilter.h
+ * Contains the MetadataFilter class declaration.
  */
 
 #include <string>
-
 #include "librets/MetadataElement.h"
 
 namespace librets {
 
 /**
  * RETS 1.8
- * MetadataColumnGroupControl is an implementation of MetadataElement that
- * represents ColumnGroupSet metadata.
+ * MetadataFilterType is an implementation of MetadataElement that
+ * represents Filter Type information for the metadata
  */
-class MetadataColumnGroupControl : public MetadataElement
+class MetadataFilterType : public MetadataElement
 {
   public:
+    virtual ~MetadataFilterType();
+    
     /**
-     * Always returns COLUMN_GROUP_CONTROL.
+     * Always returns FILTER_TYPE.
      *
-     * @return COLUMN_GROUP_CONTROL
+     * @return FILTER_TYPE
      */
     virtual MetadataType GetType() const;
     
-    virtual std::string GetId() const;
+    /**
+     * Return the Filter Type ID.
+     *
+     * @return a string containing the Filter ID.
+     */
+    std::string GetID() const;
+     
+    /**
+     * Return the Filter ID.
+     *
+     * @return a string containing the Filter ID.
+     */
+    std::string GetFilterTypeID() const;
 
     /**
-     * Returns the minimum value the the ControlSystemName is allowed to have.
+     * Return the Parent Value.
      *
-     * @return The minimum value the the ControlSystemName is allowed to have.
+     * @return a string containing the Parent Value.
      */
-    int GetLowValue() const;
-
+    std::string GetParentValue() const;
+      
     /**
-     * Returns the maximum value the the ControlSystemName is allowed to have.
+     * Return the Child Value.
      *
-     * @return The maximum value the the ControlSystemName is allowed to have.
+     * @return a string containing the Child Value
      */
-    int GetHighValue() const;
+    std::string GetChildValue() const;
 };
 
 };

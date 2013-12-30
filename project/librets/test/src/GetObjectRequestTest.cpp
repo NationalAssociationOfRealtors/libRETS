@@ -31,6 +31,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testAddAllObjects);
     CPPUNIT_TEST(testAddMultipleObjects);
     CPPUNIT_TEST(testAddMultipleResourceEntities);
+    CPPUNIT_TEST(testSetObjectData);
     CPPUNIT_TEST_SUITE_END();
     
   protected:
@@ -38,6 +39,7 @@ class CLASS : public CPPUNIT_NS::TestFixture
     void testAddAllObjects();
     void testAddMultipleObjects();
     void testAddMultipleResourceEntities();
+    void testSetObjectData();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CLASS);
@@ -49,7 +51,7 @@ void CLASS::testAddOneObject()
     CPPUNIT_ASSERT(request.HasDefaultObjectKeyAndId());
     ASSERT_STRING_EQUAL("LN1", request.GetDefaultObjectKey());
     CPPUNIT_ASSERT_EQUAL(1, request.GetDefaultObjectId());
-    RetsHttpRequestPtr httpRequest = request.CreateHttpRequest();
+    RetsHttpRequestPtr httpRequest = request.CreateHttpRequest(RETS_1_7);
     CPPUNIT_ASSERT(httpRequest);
     ASSERT_STRING_EQUAL("ID=LN1:1&Location=0&Resource=Property&Type=Photo",
                         httpRequest->GetQueryString());
@@ -60,7 +62,7 @@ void CLASS::testAddAllObjects()
     GetObjectRequest request("Property", "Photo");
     request.AddAllObjects("LN1");
     CPPUNIT_ASSERT(!request.HasDefaultObjectKeyAndId());
-    RetsHttpRequestPtr httpRequest = request.CreateHttpRequest();
+    RetsHttpRequestPtr httpRequest = request.CreateHttpRequest(RETS_1_7);
     CPPUNIT_ASSERT(httpRequest);
     ASSERT_STRING_EQUAL("ID=LN1:*&Location=0&Resource=Property&Type=Photo",
                         httpRequest->GetQueryString());
@@ -72,7 +74,7 @@ void CLASS::testAddMultipleObjects()
     request.AddObject("LN1", 1);
     request.AddObject("LN1", 2);
     CPPUNIT_ASSERT(!request.HasDefaultObjectKeyAndId());
-    RetsHttpRequestPtr httpRequest = request.CreateHttpRequest();
+    RetsHttpRequestPtr httpRequest = request.CreateHttpRequest(RETS_1_7);
     CPPUNIT_ASSERT(httpRequest);
     ASSERT_STRING_EQUAL("ID=LN1:1:2&Location=0&Resource=Property&Type=Photo",
                         httpRequest->GetQueryString());
@@ -84,8 +86,21 @@ void CLASS::testAddMultipleResourceEntities()
     request.AddObject("LN1", 1);
     request.AddAllObjects("LN2");
     CPPUNIT_ASSERT(!request.HasDefaultObjectKeyAndId());
-    RetsHttpRequestPtr httpRequest = request.CreateHttpRequest();
+    RetsHttpRequestPtr httpRequest = request.CreateHttpRequest(RETS_1_7);
     CPPUNIT_ASSERT(httpRequest);
     ASSERT_STRING_EQUAL("ID=LN1:1,LN2:*&Location=0&Resource=Property&Type=Photo",
+                        httpRequest->GetQueryString());
+}
+
+void CLASS::testSetObjectData()
+{
+    GetObjectRequest request("Property", "Photo");
+    request.AddObject("LN1", 1);
+    request.AddAllObjects("LN2");
+    request.SetObjectData("somedata,moredata");
+    CPPUNIT_ASSERT(!request.HasDefaultObjectKeyAndId());
+    RetsHttpRequestPtr httpRequest = request.CreateHttpRequest(RETS_1_8);
+    CPPUNIT_ASSERT(httpRequest);
+    ASSERT_STRING_EQUAL("Identifier=LN1:1,LN2:*&Location=0&ObjectData=somedata,moredata&Resource=Property&Type=Photo",
                         httpRequest->GetQueryString());
 }

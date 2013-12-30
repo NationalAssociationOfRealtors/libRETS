@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *
@@ -145,6 +146,10 @@ MetadataTable::Interpretation MetadataTable::GetInterpretation() const
     {
         return LOOKUP_BITMASK;
     }
+    else if (interpretation == "URI")
+    {
+        return URI;
+    }
     else
     {
         return NO_INTERPRETATION;
@@ -277,4 +282,40 @@ bool MetadataTable::IsUnique() const
 bool MetadataTable::InKeyIndex() const
 {
     return GetBoolAttribute("InKeyIndex");
+}
+
+std::string MetadataTable::GetFilterParentField() const
+{
+    return GetStringAttribute("FilterParentField");
+}
+
+int MetadataTable::GetDefaultSearchOrder() const
+{
+    return GetIntAttribute("DefaultSearchOrder");
+}
+
+MetadataTable::CharacterCase MetadataTable::GetCase() const
+{
+    string the_case = GetStringAttribute("Case");
+    if (the_case == "UPPER")
+    {
+        return UPPER;
+    }
+    else if (the_case == "LOWER")
+    {
+        return LOWER;
+    }
+    else if (the_case == "EXACT")
+    {
+        return EXACT;
+    }
+    else if (the_case == "MIXED")
+    {
+        return MIXED;
+    }
+    else
+    {
+        return NO_CASE;
+    }
+    
 }

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *
@@ -46,4 +47,38 @@ string MetadataSystem::GetComments() const
 string MetadataSystem::GetTimeZoneOffset() const
 {
     return GetStringAttribute("TimeZoneOffset", "");
+}
+
+string MetadataSystem::GetMetadataID() const
+{
+    return GetStringAttribute("MetadataID", "");
+}
+
+string MetadataSystem::GetResourceVersion() const
+{
+    return GetStringAttribute("ResourceVersion", "");
+}
+
+string MetadataSystem::GetResourceDate() const
+{
+    return GetStringAttribute("ResourceDate", "");
+}
+
+string MetadataSystem::GetForeignKeyVersion() const
+{
+    return GetStringAttribute("ForeignKeyVersion", "");
+}
+
+string MetadataSystem::GetForeignKeyDate() const
+{
+    return GetStringAttribute("ForeignKeyDate", "");
+}
+
+string MetadataSystem::GetFilterVersion() const
+{
+    return GetStringAttribute("FilterVersion", "");
+}
+string MetadataSystem::GetFilterDate() const
+{
+    return GetStringAttribute("FilterDate", "");
 }

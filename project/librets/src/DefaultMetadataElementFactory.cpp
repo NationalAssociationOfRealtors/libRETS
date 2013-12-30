@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *
@@ -37,6 +38,13 @@
 #include "librets/MetadataValidationExternalType.h"
 #include "librets/MetadataValidationExpression.h"
 #include "librets/MetadataForeignKey.h"
+#include "librets/MetadataColumnGroup.h"
+#include "librets/MetadataColumnGroupNormalization.h"
+#include "librets/MetadataColumnGroupTable.h"
+#include "librets/MetadataColumnGroupControl.h"
+#include "librets/MetadataColumnGroupSet.h"
+#include "librets/MetadataFilter.h"
+#include "librets/MetadataFilterType.h"
 #include "librets/RetsErrorHandler.h"
 
 using namespace librets;
@@ -67,6 +75,13 @@ const char * CLASS::VALIDATION_EXTERNAL_TYPE_ATTRIBUTES[] =
     {"Resource", "ValidationExternal", 0};
 const char * CLASS::VALIDATION_EXPRESSION_ATTRIBUTES[] = {"Resource", 0};
 const char * CLASS::FOREIGN_KEY_ATTRIBUTES[] = {0};
+const char * CLASS::COLUMN_GROUP_ATTRIBUTES[] = {"Resource", "Class", 0};
+const char * CLASS::COLUMN_GROUP_SET_ATTRIBUTES[] = {"Resource", "Class", 0};
+const char * CLASS::COLUMN_GROUP_CONTROL_ATTRIBUTES[] = {"Resource", "Class", "ColumnGroup", 0};
+const char * CLASS::COLUMN_GROUP_TABLE_ATTRIBUTES[] = {"Resource", "Class", "ColumnGroup", 0};
+const char * CLASS::COLUMN_GROUP_NORMALIZATION_ATTRIBUTES[] = {"Resource", "Class", "ColumnGroup", 0};
+const char * CLASS::FILTER_ATTRIBUTES[] = {0};
+const char * CLASS::FILTER_TYPE_ATTRIBUTES[] = {"Filter", 0};
 
 CLASS::CLASS()
     : mTypeMap(), mCreatorMap(), mAttributeMap()
@@ -113,6 +128,18 @@ CLASS::CLASS()
                 FOREIGN_KEY_ATTRIBUTES);
     AddMappings("METADATA-FOREIGN_KEY", &CLASS::CreateForeignKey,
                 FOREIGN_KEY_ATTRIBUTES);    
+    AddMappings("METADATA-COLUMN_GROUP", &CLASS::CreateColumnGroup,
+                COLUMN_GROUP_ATTRIBUTES);
+    AddMappings("METADATA-COLUMN_GROUP_SET", &CLASS::CreateColumnGroupSet,
+                COLUMN_GROUP_SET_ATTRIBUTES);
+    AddMappings("METADATA-COLUMN_GROUP_CONTROL", &CLASS::CreateColumnGroupControl,
+                COLUMN_GROUP_CONTROL_ATTRIBUTES);
+    AddMappings("METADATA-COLUMN_GROUP_TABLE", &CLASS::CreateColumnGroupTable,
+                COLUMN_GROUP_TABLE_ATTRIBUTES);
+    AddMappings("METADATA-COLUMN_GROUP_NORMALIZATION", &CLASS::CreateColumnGroupNormalization,
+                COLUMN_GROUP_NORMALIZATION_ATTRIBUTES);
+    AddMappings("METADATA-FILTER", &CLASS::CreateFilter, FILTER_ATTRIBUTES);
+    AddMappings("METADATA-FILTER_TYPE", &CLASS::CreateFilterType, FILTER_TYPE_ATTRIBUTES);
 }
 
 void CLASS::AddMappings(string name, CreatorPointer creator,
@@ -268,6 +295,55 @@ MetadataElementPtr CLASS::CreateForeignKey(
         RetsXmlStartElementEventPtr startEvent)
 {
     MetadataElementPtr element(new MetadataForeignKey());
+    return element;
+}
+
+MetadataElementPtr CLASS::CreateColumnGroup(
+                                           RetsXmlStartElementEventPtr startEvent)
+{
+    MetadataElementPtr element(new MetadataColumnGroup());
+    return element;
+}
+
+MetadataElementPtr CLASS::CreateColumnGroupSet(
+                                           RetsXmlStartElementEventPtr startEvent)
+{
+    MetadataElementPtr element(new MetadataColumnGroupSet());
+    return element;
+}
+
+MetadataElementPtr CLASS::CreateColumnGroupControl(
+                                           RetsXmlStartElementEventPtr startEvent)
+{
+    MetadataElementPtr element(new MetadataColumnGroupControl());
+    return element;
+}
+
+MetadataElementPtr CLASS::CreateColumnGroupTable(
+                                           RetsXmlStartElementEventPtr startEvent)
+{
+    MetadataElementPtr element(new MetadataColumnGroupTable());
+    return element;
+}
+
+MetadataElementPtr CLASS::CreateColumnGroupNormalization(
+                                           RetsXmlStartElementEventPtr startEvent)
+{
+    MetadataElementPtr element(new MetadataColumnGroupNormalization());
+    return element;
+}
+
+MetadataElementPtr CLASS::CreateFilter(
+                                       RetsXmlStartElementEventPtr startEvent)
+{
+    MetadataElementPtr element(new MetadataFilter());
+    return element;
+}
+
+MetadataElementPtr CLASS::CreateFilterType(
+                                           RetsXmlStartElementEventPtr startEvent)
+{
+    MetadataElementPtr element(new MetadataFilterType());
     return element;
 }
 

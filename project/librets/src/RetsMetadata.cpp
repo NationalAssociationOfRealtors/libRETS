@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005-2009 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *
@@ -31,6 +32,13 @@
 #include "librets/MetadataLookupType.h"
 #include "librets/MetadataObject.h"
 #include "librets/MetadataSearchHelp.h"
+#include "librets/MetadataColumnGroup.h"
+#include "librets/MetadataColumnGroupNormalization.h"
+#include "librets/MetadataColumnGroupTable.h"
+#include "librets/MetadataColumnGroupControl.h"
+#include "librets/MetadataColumnGroupSet.h"
+#include "librets/MetadataFilter.h"
+#include "librets/MetadataFilterType.h"
 #include "librets/RetsException.h"
 #include "librets/XmlMetadataParser.h"
 
@@ -262,4 +270,87 @@ MetadataSearchHelp * RetsMetadata::GetSearchHelp(
     FinderHelper<MetadataSearchHelp> helper(mFinder);
     return helper.FindByPath(MetadataElement::SEARCH_HELP, resourceName,
                               searchHelpID);
+}
+
+MetadataColumnGroupList RetsMetadata::GetAllColumnGroups(MetadataClass * metadataClass) const
+{
+    return GetAllColumnGroups(metadataClass->GetLevel(), metadataClass->GetClassName());
+}
+
+MetadataColumnGroupList RetsMetadata::GetAllColumnGroups(std::string resourceName,
+                                           std::string className) const
+{
+    string level = resourceName + ":" + className;
+    FinderHelper<MetadataColumnGroup> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::COLUMN_GROUP, level);    
+}
+
+MetadataColumnGroupSetList RetsMetadata::GetAllColumnGroupSets(MetadataClass * metadataClass) const
+{
+    return GetAllColumnGroupSets(metadataClass->GetLevel(), metadataClass->GetClassName());
+}
+
+MetadataColumnGroupSetList RetsMetadata::GetAllColumnGroupSets(std::string resourceName,
+                                              std::string className) const
+{
+    string level = resourceName + ":" + className;
+    FinderHelper<MetadataColumnGroupSet> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::COLUMN_GROUP_SET, level);    
+}
+
+MetadataColumnGroupControlList RetsMetadata::GetAllColumnGroupControls(MetadataClass * metadataClass,
+                                                         std::string columnGroup) const
+{
+    return GetAllColumnGroupControls(metadataClass->GetLevel(), metadataClass->GetClassName(), columnGroup);
+}
+
+MetadataColumnGroupControlList RetsMetadata::GetAllColumnGroupControls(std::string resourceName,
+                                                         std::string className,
+                                                         std::string columnGroup) const
+{
+    string level = resourceName + ":" + className + ":" + columnGroup;
+    FinderHelper<MetadataColumnGroupControl> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::COLUMN_GROUP_CONTROL, level);    
+}
+
+MetadataColumnGroupTableList RetsMetadata::GetAllColumnGroupTables(MetadataClass * metadataClass,
+                                                     std::string columnGroup) const
+{
+    return GetAllColumnGroupTables(metadataClass->GetLevel(), metadataClass->GetClassName(), columnGroup);
+}
+
+MetadataColumnGroupTableList RetsMetadata::GetAllColumnGroupTables(std::string resourceName,
+                                                     std::string className,
+                                                     std::string columnGroup) const
+{
+    string level = resourceName + ":" + className + ":" + columnGroup;
+    FinderHelper<MetadataColumnGroupTable> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::COLUMN_GROUP_TABLE, level);    
+}
+
+MetadataColumnGroupNormalizationList RetsMetadata::GetAllColumnGroupNormalizations(MetadataClass * metadataClass,
+                                                                    std::string columnGroup) const
+{
+    return GetAllColumnGroupNormalizations(metadataClass->GetLevel(), metadataClass->GetClassName(), columnGroup);
+}
+
+MetadataColumnGroupNormalizationList RetsMetadata::GetAllColumnGroupNormalizations(std::string resourceName,
+                                                                    std::string className,
+                                                                    std::string columnGroup) const
+{
+    string level = resourceName + ":" + className + ":" + columnGroup;
+    FinderHelper<MetadataColumnGroupNormalization> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::COLUMN_GROUP_NORMALIZATION, level);    
+}
+
+MetadataFilterList RetsMetadata::GetAllFilters() const
+{
+    FinderHelper<MetadataFilter> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::FILTER, "");    
+}
+
+MetadataFilterTypeList RetsMetadata::GetAllFilterTypes(std::string filter) const
+{
+    FinderHelper<MetadataFilterType> helper(mFinder);
+    return *helper.FindByLevel(MetadataElement::FILTER_TYPE, filter);    
 }

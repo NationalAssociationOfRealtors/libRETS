@@ -81,3 +81,8 @@ string CLASS::GetConditionalParentValue() const
     return GetStringAttribute("ConditionalParentValue");
 }
 
+bool CLASS::GetOneToManyFlag() const
+{
+    return GetBoolAttribute("OneToManyFlag");
+}
+

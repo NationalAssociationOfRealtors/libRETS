@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005-2007 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *
@@ -100,6 +101,14 @@ void GetObjectResponse::SetHttpResponse(int responseCode, std::string errorText)
     mErrorText = errorText;
 }
 
+void GetObjectResponse::HandleObjectData(ObjectDescriptorPtr objectDescriptor, 
+                                         StringMultiMap headers)
+{
+    for (StringMultiMap::const_iterator i = headers.find("objectdata"); i != headers.end(); i++)
+    {
+        objectDescriptor->GetObjectData().Parse(i->second);
+    }
+}
 
 void GetObjectResponse::Parse(RetsHttpResponsePtr httpResponse,
                               bool ignoreMalformedHeaders)
@@ -128,6 +137,12 @@ void GetObjectResponse::Parse(RetsHttpResponsePtr httpResponse,
         objectDescriptor->SetContentType(httpResponse->GetContentType());
         objectDescriptor->SetDescription(httpResponse->GetHeader("Content-Description"));
         objectDescriptor->SetLocationUrl(httpResponse->GetHeader("Location"));
+        objectDescriptor->SetPreferred(httpResponse->GetHeader("Preferred") == "1");
+        objectDescriptor->SetSubDescription(httpResponse->GetHeader("Content-Sub-Description"));
+        objectDescriptor->SetUID(httpResponse->GetHeader("UID"));
+        
+        HandleObjectData(objectDescriptor, httpResponse->GetHeaders());
+            
         objectDescriptor->SetDataStream(in);
         mObjects.push_back(objectDescriptor);
     }
@@ -186,6 +201,12 @@ void GetObjectResponse::ParseSinglePart(RetsHttpResponsePtr httpResponse)
     descriptor->SetDescription(httpResponse->GetHeader("Content-Description"));
     descriptor->SetDataStream(httpResponse->GetInputStream());
     descriptor->SetLocationUrl(httpResponse->GetHeader("Location"));
+    descriptor->SetPreferred(httpResponse->GetHeader("Preferred") == "1");
+    descriptor->SetSubDescription(httpResponse->GetHeader("Content-Sub-Description"));
+    descriptor->SetUID(httpResponse->GetHeader("UID"));
+    
+    HandleObjectData(descriptor, httpResponse->GetHeaders());
+    
     mObjects.push_back(descriptor);
 }
 
@@ -315,6 +336,22 @@ void GetObjectResponse::ParsePartStream(istreamPtr in,
         else if (name_lower == "content-description")
         {
             objectDescriptor->SetDescription(value);
+        }
+        else if (name_lower == "preferred")
+        {
+            objectDescriptor->SetPreferred(value == "1");
+        }
+        else if (name_lower == "content-sub-description")
+        {
+            objectDescriptor->SetSubDescription(value);
+        }
+        else if (name_lower == "uid")
+        {
+            objectDescriptor->SetUID(value);
+        }
+        else if (name_lower == "objectdata")
+        {
+            objectDescriptor->GetObjectData().Parse(value);
         }
     }
 

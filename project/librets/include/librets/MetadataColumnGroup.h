@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 National Association of REALTORS(R)
+ * Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *

@@ -441,6 +441,38 @@ class LoginResponse
     std::string GetServerInformationUrl() const;
 
     std::string GetUpdateUrl() const;
+
+    std::string GetPayloadListUrl() const;
+
+    std::string GetUserID() const;
+
+    std::string GetUserClass() const;
+
+    std::string GetUserLevel() const;
+
+    std::string GetAgentCode() const;
+
+    std::string GetBrokerCode() const;
+
+    std::string GetBrokerBranch() const;
+
+    std::string GetMetadataID() const;
+
+    std::string GetWarnPasswordExpirationDays() const;
+
+    std::string GetStandardNamesVersion() const;
+
+    std::string GetVendorName() const;
+
+    std::string GetServerProductName() const;
+
+    std::string GetServerProductVersion() const;
+
+    std::string GetOperatorName() const;
+
+    std::string GetRoleName() const;
+
+    std::string GetSupportContactInformation() const;
 };
 
 class CapabilityUrls
@@ -489,6 +521,10 @@ class CapabilityUrls
     void SetUpdateUrl(std::string updateUrl);
 
     std::string GetUpdateUrl() const;
+
+    void SetPayloadListUrl(std::string payloadListUrl);
+
+    std::string GetPayloadListUrl() const;
 };
 
 class SearchRequest
@@ -536,6 +572,7 @@ class SearchRequest
     std::string GetQueryString() const;
 
     void SetRestrictedIndicator(std::string restrictedIndicator);
+    void SetPayload(std::string payload);
 };
 typedef std::auto_ptr<SearchRequest> SearchRequestAPtr;
 #ifndef SWIGPHP
@@ -840,9 +877,53 @@ class GetObjectRequest
     
     void AddAllObjects(std::string resourceEntity);
 
+    void SetObjectData(std::string objectData);
+
     void SetIgnoreMalformedHeaders(bool ignore);
 };
 
+class ObjectData
+{
+  public:
+
+    std::string GetUID() const;
+
+    std::string GetObjectType() const;
+
+    std::string GetResourceName() const;
+
+    std::string GetResourceID() const;
+
+    std::string GetObjectID() const;
+
+    std::string GetMimeType() const;
+
+    bool GetIsDefault() const;
+
+    std::string GetObjectModificationTimestamp() const;
+
+    std::string GetModificationTimestamp() const;
+
+    std::string GetOrderHint() const;
+
+    std::string GetDescription() const;
+
+    std::string GetCaption() const;
+
+    std::string GetFileSize() const;
+
+    std::string GetWidthPix() const;
+
+    std::string GetHeightPix() const;
+
+    std::string GetDuration() const;
+
+    std::string GetWidthInch() const;
+
+    std::string GetHeightInch() const;
+
+    std::string GetValue(std::string key) const;
+};
 
 /*
  * Handling of the binary object data is a bit tricky.  Each language has
@@ -932,11 +1013,19 @@ class ObjectDescriptor
     
     std::string GetContentType() const;
     
+    ObjectData& GetObjectData();
+
+    std::string GetSubDescription() const;
+
+    std::string GetUID() const;
+   
     int GetRetsReplyCode() const;
 
     std::string GetRetsReplyText() const;
 
     bool GetWildIndicator() const;
+
+    bool GetPreferred() const;
 
 #if defined(SWIGRUBY) || defined(SWIGPYTHON) || defined(SWIGPHP) || defined(SWIGPERL)
     %extend {
@@ -1074,6 +1163,14 @@ class MetadataSystem : public MetadataElement
     std::string GetSystemDescription() const;
     std::string GetComments() const;
     MetadataType GetType() const;
+    std::string GetTimeZoneOffset() const;
+    std::string GetMetadataID() const;
+    std::string GetResourceVersion() const;
+    std::string GetResourceDate() const;
+    std::string GetForeignKeyVersion() const;
+    std::string GetForeignKeyDate() const;
+    std::string GetFilterVersion() const;
+    std::string GetFilterDate() const;
 };
 
 class MetadataForeignKey : public MetadataElement
@@ -1090,6 +1187,7 @@ class MetadataForeignKey : public MetadataElement
     std::string GetConditionalParentField() const;
     std::string GetConditionalParentValue() const;
     MetadataType GetType() const;
+    bool GetOneToManyFlag() const;
 };
 
 typedef std::vector<MetadataForeignKey *> MetadataForeignKeyList;
@@ -1169,6 +1267,15 @@ class MetadataTable : public MetadataElement
         NO_UNITS
     };
 
+    enum CharacterCase
+    {
+        UPPER,
+        LOWER,
+        EXACT,
+        MIXED,
+        NO_CASE
+    };
+
     std::string GetSystemName() const;
     std::string GetStandardName() const;
     std::string GetLongName() const;
@@ -1196,6 +1303,9 @@ class MetadataTable : public MetadataElement
     MetadataType GetType() const;
     bool IsUnique() const;
     bool InKeyIndex() const;
+    std::string GetFilterParentField() const;
+    int GetDefaultSearchOrder() const;
+    CharacterCase GetCase() const;
 };
 
 typedef std::vector<MetadataTable *> MetadataTableList;
@@ -1210,6 +1320,8 @@ class MetadataLookup : public MetadataElement
     std::string GetVersion() const;
     std::string GetDate() const;
     MetadataType GetType() const;
+    std::string GetFilterID() const;
+    bool GetNotShownByDefault() const;
 };
 
 typedef std::vector<MetadataLookup *> MetadataLookupList;
@@ -1237,6 +1349,11 @@ class MetadataObject : public MetadataElement
     std::string GetVisibleName() const;
     std::string GetDescription() const;
     MetadataType GetType() const;
+    std::string GetObjectTimeSTamp() const;
+    std::string GetObjectCount() const;
+    bool GetLocationAvailability() const;
+    std::string GetObjectData() const;
+    int GetMaxFileSize() const;
 };
 
 typedef std::vector<MetadataObject *> MetadataObjectList;
@@ -1250,6 +1367,130 @@ class MetadataSearchHelp : public MetadataElement
     std::string GetValue() const;
     MetadataType GetType() const;
 };
+
+typedef std::vector<MetadataSearchHelp *> MetadataSearchHelpList;
+%template(MetadataSearchHelpList) std::vector<MetadataSearchHelp *>;
+
+class MetadataColumnGroup : public MetadataElement
+{
+  public:
+    MetadataType GetType() const;
+    std::string GetId() const;
+    std::string GetColumnGroupName() const;
+    std::string GetControlSystemName() const;
+    std::string GetLongName() const;
+    std::string GetShortName() const;
+    std::string GetDescription() const;
+};
+                                                                                                                                                                               
+typedef std::vector<MetadataColumnGroup *> MetadataColumnGroupList;
+%template(MetadataColumnGroupList) std::vector<MetadataColumnGroup *>;
+
+class MetadataColumnGroupControl : public MetadataElement
+{
+  public:
+    MetadataType GetType() const;
+    std::string GetId() const;
+    int GetLowValue() const;
+    int GetHighValue() const;
+};
+
+typedef std::vector<MetadataColumnGroupControl *> MetadataColumnGroupControlList;
+%template(MetadataColumnGrouptControlList) std::vector<MetadataColumnGroupControl *>;
+
+class MetadataColumnGroupNormalization : public MetadataElement
+{
+  public:
+    MetadataType GetType() const;
+    std::string GetId() const;
+    std::string GetTypeIdentifier() const;
+    int GetSequence() const;
+    std::string GetColumnLabel() const;
+    std::string GetSystemName() const;    
+};
+
+typedef std::vector<MetadataColumnGroupNormalization *> MetadataColumnGroupNormalizationList;
+%template(MetadataColumnGroupNormalizationList) std::vector<MetadataColumnGroupNormalization *>;
+
+class MetadataColumnGroupSet : public MetadataElement
+{
+  public:
+    enum PresentationStyle
+    {
+      EDIT,
+      MATRIX,
+      LIST,
+      EDIT_LIST,
+      GIS_MAP_SEARCH,
+      URL,
+      NO_PRESENTATION
+    };
+    MetadataType GetType() const;
+    std::string GetId() const;
+    std::string GetColumnGroupSetName() const;
+    std::string GetColumnGroupSetParent() const;
+    int GetSequence() const;
+    std::string GetLongName() const;
+    std::string GetShortName() const;
+    std::string GetDescription() const;
+    std::string GetColumnGroupName() const;
+    PresentationStyle GetPresentationStyle() const;
+    std::string GetURL() const;
+    std::string GetForeignKeyID() const;
+};
+
+typedef std::vector<MetadataColumnGroupSet *> MetadataColumnGroupSetList;
+%template(MetadataColumnGroupSetList) std::vector<MetadataColumnGroupSet *>;
+
+class MetadataColumnGroupTable : public MetadataElement
+{
+  public:
+    MetadataType GetType() const;
+    std::string GetId() const;
+    std::string GetSystemName() const;
+    std::string GetColumnGroupSetName() const;
+    int GetSequence() const;
+    std::string GetLongName() const;
+    std::string GetShortName() const;
+    int GetDisplayOrder() const;
+    int GetDisplayLength() const;
+    int GetDisplayHeight() const;
+    bool GetImmediateRefresh() const;
+};
+
+typedef std::vector<MetadataColumnGroupTable *> MetadataColumnGroupTableList;
+%template(MetadataColumnGroupTableList) std::vector<MetadataColumnGroupTable *>;
+
+class MetadataFilter : public MetadataElement
+{
+  public:
+    ~MetadataFilter();
+    MetadataType GetType() const;
+    std::string GetID() const;
+    std::string GetFilterID() const;
+    std::string GetParentResourceID() const;
+    std::string GetParentLookupName() const;
+    std::string GetChildResourceID() const;
+    std::string GetChildLookupName() const;
+    bool GetNotShownByDefault() const;
+};
+
+typedef std::vector<MetadataFilter *> MetadataFilterList;
+%template(MetadataFilterList) std::vector<MetadataFilter *>;
+
+class MetadataFilterType : public MetadataElement
+{
+  public:
+    ~MetadataFilterType();
+    MetadataType GetType() const;
+    std::string GetID() const;
+    std::string GetFilterTypeID() const;
+    std::string GetParentValue() const;
+    std::string GetChildValue() const;
+};
+
+typedef std::vector<MetadataFilterType *> MetadataFilterTypeList;
+%template(MetadataFilterTypeList) std::vector<MetadataFilterType *>;
 
 %nodefault;
 
@@ -1271,52 +1512,86 @@ class RetsMetadata
 
     MetadataResourceList GetAllResources() const;
     MetadataResource * GetResource(std::string resourceName) const;
-    
+
     MetadataClassList GetAllClasses(std::string resourceName) const;
     MetadataClass * GetClass(std::string resourceName,
         std::string className) const;
-        
+
     MetadataTableList GetAllTables(MetadataClass * metadataClass) const;
-    
+
     MetadataTableList GetAllTables(std::string resourceName,
-                                   std::string className) const;
+        std::string className) const;
 
     MetadataTable * GetTable(std::string resourceName, std::string className,
-                             std::string tableName) const;
+        std::string tableName) const;
 
     MetadataLookupList GetAllLookups(std::string resourceName) const;
-    
+
     MetadataLookup * GetLookup(std::string resourceName,
         std::string lookupName) const;
-    
+
     MetadataLookupTypeList GetAllLookupTypes(std::string resrouceName,
-                                             std::string lookupName) const;
-    
+        std::string lookupName) const;
+
     MetadataLookupTypeList GetAllLookupTypes(MetadataLookup * metadataLookup)
-        const;
-    
+      const;
+
     MetadataLookupType * GetLookupType(std::string resourceName,
-                                       std::string lookupName,
-                                       std::string lookupValue) const;
+        std::string lookupName,
+        std::string lookupValue) const;
 
     MetadataObjectList GetAllObjects(std::string resourceName) const;
 
     MetadataObjectList GetAllObjects(MetadataResource * metadataResource)
-        const;
+      const;
 
     MetadataSearchHelp * GetSearchHelp(std::string resourceName,
-                                       std::string searchHelpID) const;
+        std::string searchHelpID) const;
+
+    MetadataColumnGroupList GetAllColumnGroups(std::string resourceName,
+        std::string className) const;
+
+    MetadataColumnGroupSetList GetAllColumnGroupSets(MetadataClass * metadataClass) const;
+
+    MetadataColumnGroupSetList GetAllColumnGroupSets(std::string resourceName,
+        std::string className) const;
+
+    MetadataColumnGroupControlList GetAllColumnGroupControls(MetadataClass * metadataClass,
+        std::string columnGroup) const;
+
+    MetadataColumnGroupControlList GetAllColumnGroupControls(std::string resourceName,
+        std::string className,
+        std::string columnGroup) const;
+
+    MetadataColumnGroupTableList GetAllColumnGroupTables(MetadataClass * metadataClass,
+        std::string columnGroup) const;
+
+    MetadataColumnGroupTableList GetAllColumnGroupTables(std::string resourceName,
+        std::string className,
+        std::string columnGroup) const;
+    MetadataColumnGroupNormalizationList GetAllColumnGroupNormalizations(MetadataClass * metadataClass,
+        std::string columnGroup) const;
+
+    MetadataColumnGroupNormalizationList GetAllColumnGroupNormalizations(std::string resourceName,
+        std::string className,
+        std::string columnGroup) const;
+
+    MetadataFilterList GetAllFilters() const;
+        
+    MetadataFilterTypeList GetAllFilterTypes(std::string filter) const;
+
+
 #if defined(SWIGJAVA) || defined(SWIGPHP)
     static RetsMetadata * CreateAndParse(BinaryData binaryData,
-                                        EncodingType encoding = EncodingType::RETS_XML_DEFAULT_ENCODING,
-                                        ExceptionErrorHandler * handler = ExceptionErrorHandler::GetInstance());
+        EncodingType encoding = EncodingType::RETS_XML_DEFAULT_ENCODING,
+        ExceptionErrorHandler * handler = ExceptionErrorHandler::GetInstance());
 #if defined(SWIGPHP)
     %extend {
-        static RetsMetadata * CreateMetadataFromString(std::string bytes)
-        {
-            BinaryData binaryData(bytes.data(), bytes.length());
-            return RetsMetadata::CreateAndParse(binaryData);
-        }
+      static RetsMetadata * CreateMetadataFromString(std::string bytes)
+      {
+        BinaryData binaryData(bytes.data(), bytes.length());
+        return RetsMetadata::CreateAndParse(binaryData);
+      }
     }
 #endif
 

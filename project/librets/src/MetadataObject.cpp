@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *
@@ -51,3 +52,19 @@ string CLASS::GetDescription() const
 {
     return GetStringAttribute("Description");
 }
+
+bool CLASS::GetLocationAvailability() const
+{
+    return GetBoolAttribute("LocationAvailability");
+}
+
+std::string CLASS::GetObjectData() const
+{
+    return GetStringAttribute("ObjectData");
+}
+
+int CLASS::GetMaxFileSize() const
+{
+    return GetIntAttribute("MaxFileSize");
+}
+

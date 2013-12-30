@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005-2013 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organization
  *
  * All rights reserved.
  *
@@ -89,6 +90,8 @@ class MetadataElement : public RetsObject
         FOREIGN_KEY,
         /** Filter metadata. */
         FILTER,
+        /** Filter Type metadata. */
+        FILTER_TYPE,
         /** Column Group Set metadata. */
         COLUMN_GROUP_SET,
         /** Column Group metadata. */

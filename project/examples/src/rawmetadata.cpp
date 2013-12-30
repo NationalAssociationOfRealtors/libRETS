@@ -140,8 +140,71 @@ void dumpAllResources(RetsMetadata * metadata)
     {
         MetadataResource * resource = *i;
         dumpAllLookups(metadata, resource);
-    }
+    }    
 }
+
+void dumpAllColumnStuff(RetsMetadata * metadata, MetadataClass * aClass) 
+{ 
+    MetadataColumnGroupList group = metadata->GetAllColumnGroups(aClass); 
+    MetadataColumnGroupList::iterator i; 
+    
+    for (i = group.begin(); i != group.end(); i++) 
+    { 
+        MetadataColumnGroup * g = *i;
+        cout << "ColumnGroupName:   " << g->GetColumnGroupName() << endl; 
+        cout << "ControlName:       " << g->GetControlSystemName() << endl; 
+        cout << "LongName:          " << g->GetLongName() << endl; 
+        cout << "ShortName:         " << g->GetShortName() << endl; 
+        cout << "Description:       " << g->GetDescription() << endl; 
+    } 
+    
+    MetadataColumnGroupSetList groupSet = metadata->GetAllColumnGroupSets(aClass); 
+    for (MetadataColumnGroupSetList::iterator j = groupSet.begin(); j != groupSet.end(); j++) 
+    { 
+        MetadataColumnGroupSet * g = *j;
+        cout << "GroupSetName:      " << g->GetColumnGroupSetName() << endl; 
+        cout << "Parent:            " << g->GetColumnGroupSetParent() << endl; 
+        cout << "Sequence:          " << g->GetSequence() << endl; 
+        cout << "LongName:          " << g->GetLongName() << endl; 
+        cout << "ShortName:         " << g->GetShortName() << endl; 
+        cout << "Description:       " << g->GetDescription() << endl; 
+        cout << "GroupName:         " << g->GetColumnGroupName() << endl; 
+        cout << "Presentation:      " << g->GetPresentationStyle() << endl; 
+        cout << "URL:               " << g->GetURL() << endl; 
+
+        MetadataColumnGroupControlList groupControl = metadata->GetAllColumnGroupControls(aClass, g->GetColumnGroupName()); 
+        for (MetadataColumnGroupControlList::iterator k = groupControl.begin(); k != groupControl.end(); k++) 
+        { 
+            MetadataColumnGroupControl * c = *k;
+            cout << "LowValue:          " << c->GetLowValue() << endl; 
+            cout << "HighValue:         " << c->GetHighValue() << endl; 
+        } 
+        
+        MetadataColumnGroupTableList groupTable = metadata->GetAllColumnGroupTables(aClass, g->GetColumnGroupName());
+        for (MetadataColumnGroupTableList::iterator j = groupTable.begin(); j != groupTable.end(); j++) 
+        { 
+            MetadataColumnGroupTable * t = *j;
+            cout << "SystemName:        " << t->GetSystemName() << endl; 
+            cout << "GroupSetName:      " << t->GetColumnGroupSetName() << endl; 
+            cout << "LongName:          " << t->GetLongName() << endl; 
+            cout << "ShortName:         " << t->GetShortName() << endl; 
+            cout << "DisplayOrder:      " << t->GetDisplayOrder() << endl; 
+            cout << "DisplayLength:     " << t->GetDisplayLength() << endl; 
+            cout << "DisplayHeight:     " << t->GetDisplayHeight() << endl; 
+            cout << "ImmediateRefresh:  " << t->GetImmediateRefresh() << endl; 
+        } 
+
+        MetadataColumnGroupNormalizationList groupNormalization = metadata->GetAllColumnGroupNormalizations(aClass, g->GetColumnGroupName());
+        for (MetadataColumnGroupNormalizationList::iterator j = groupNormalization.begin(); j != groupNormalization.end(); j++) 
+        { 
+            MetadataColumnGroupNormalization * n = *j;
+            cout << "TypeIdent:         " << n->GetTypeIdentifier() << endl; 
+            cout << "Sequence:          " << n->GetSequence() << endl; 
+            cout << "ColumnLabel:       " << n->GetColumnLabel() << endl; 
+            cout << "SystemName:        " << n->GetSystemName() << endl; 
+        } 
+    } 
+} 
 
 void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource)
 {
@@ -158,6 +221,7 @@ void dumpAllClasses(RetsMetadata * metadata, MetadataResource * resource)
         cout << "Class name: " << aClass->GetClassName() << " ["
              << aClass->GetStandardName() << "]" << endl;
         dumpAllTables(metadata, aClass);
+        dumpAllColumnStuff(metadata, aClass); 
         cout << endl;
     }
 }

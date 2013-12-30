@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *
@@ -19,6 +20,7 @@
 #include <boost/lexical_cast.hpp>
 #include "librets/GetObjectRequest.h"
 #include "librets/RetsHttpRequest.h"
+#include "librets/RetsVersion.h"
 #include "librets/util.h"
 
 using namespace librets;
@@ -61,6 +63,11 @@ void GetObjectRequest::SetLocation(bool location)
     mLocation = location;
 }
 
+void GetObjectRequest::SetObjectData(string objectData)
+{
+    mObjectData = objectData;
+}
+
 void GetObjectRequest::AddObject(string resourceEntity, int objectId)
 {
     StringVectorPtr objectIds = GetObjectIds(resourceEntity);
@@ -90,14 +97,14 @@ StringVectorPtr GetObjectRequest::GetObjectIds(string resourceEntity)
     }
 }
 
-RetsHttpRequestPtr GetObjectRequest::CreateHttpRequest() const
+RetsHttpRequestPtr GetObjectRequest::CreateHttpRequest(RetsVersion retsVersion) const
 {
     RetsHttpRequestPtr httpRequest(new RetsHttpRequest());
-    PrepareHttpRequest(httpRequest);
+    PrepareHttpRequest(httpRequest, retsVersion);
     return httpRequest;
 }
 
-void GetObjectRequest::PrepareHttpRequest(RetsHttpRequestPtr httpRequest) const
+void GetObjectRequest::PrepareHttpRequest(RetsHttpRequestPtr httpRequest, RetsVersion retsVersion) const
 {
     httpRequest->SetQueryParameter("Resource", mResource);
     httpRequest->SetQueryParameter("Type", mType);
@@ -114,7 +121,18 @@ void GetObjectRequest::PrepareHttpRequest(RetsHttpRequestPtr httpRequest) const
         id.append(join(*objectIds, ":"));
         ids.push_back(id);
     }
-    httpRequest->SetQueryParameter("ID", join(ids, ","));
+    if (retsVersion >= RETS_1_8)
+    {
+        httpRequest->SetQueryParameter("Identifier", join(ids, ","));
+        if (!mObjectData.empty())
+        {
+            httpRequest->SetQueryParameter("ObjectData", mObjectData);
+        }
+    }
+    else
+    {
+        httpRequest->SetQueryParameter("ID", join(ids, ","));
+    }
     /*
      * For Objects, if we are debugging and logging, we want to disable that because
      * most of this data is binary. We may want to make this user controlled at some point

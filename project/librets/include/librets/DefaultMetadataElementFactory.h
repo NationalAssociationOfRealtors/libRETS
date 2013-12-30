@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *
@@ -131,6 +132,27 @@ class DefaultMetadataElementFactory : public XmlMetadataElementFactory
     MetadataElementPtr CreateForeignKey(
         RetsXmlStartElementEventPtr startElementEvent);
     
+    MetadataElementPtr CreateColumnGroup(
+        RetsXmlStartElementEventPtr startElementEvent);
+    
+    MetadataElementPtr CreateColumnGroupSet(
+        RetsXmlStartElementEventPtr startElementEvent);
+    
+    MetadataElementPtr CreateColumnGroupControl(
+        RetsXmlStartElementEventPtr startElementEvent);
+    
+    MetadataElementPtr CreateColumnGroupTable(
+        RetsXmlStartElementEventPtr startElementEvent);
+    
+    MetadataElementPtr CreateColumnGroupNormalization(
+        RetsXmlStartElementEventPtr startElementEvent);
+    
+    MetadataElementPtr CreateFilter(
+        RetsXmlStartElementEventPtr startElementEvent);
+    
+    MetadataElementPtr CreateFilterType(
+        RetsXmlStartElementEventPtr startElementEvent);
+    
     void AddElement(MetadataElementPtr element, std::string level);
 
     std::string LevelBuilder(RetsXmlStartElementEventPtr startEvent,
@@ -159,6 +181,13 @@ class DefaultMetadataElementFactory : public XmlMetadataElementFactory
     static const char * VALIDATION_EXTERNAL_TYPE_ATTRIBUTES[];
     static const char * VALIDATION_EXPRESSION_ATTRIBUTES[];
     static const char * FOREIGN_KEY_ATTRIBUTES[];
+    static const char * COLUMN_GROUP_ATTRIBUTES[];
+    static const char * COLUMN_GROUP_SET_ATTRIBUTES[];
+    static const char * COLUMN_GROUP_CONTROL_ATTRIBUTES[];
+    static const char * COLUMN_GROUP_TABLE_ATTRIBUTES[];
+    static const char * COLUMN_GROUP_NORMALIZATION_ATTRIBUTES[];
+    static const char * FILTER_ATTRIBUTES[];
+    static const char * FILTER_TYPE_ATTRIBUTES[];
 };
 
 };

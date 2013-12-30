@@ -530,4 +530,48 @@
 <DATA>	LISTING_AGENT	SET	AGENT_ID=.AGENT.	100.00.001	Mon, 18 Aug 2003 17:00:00 GMT	</DATA>
 <DATA>	LD_UPDATE_EXPRESSION	ACCEPT	LD &gt; .TODAY. - 3 .AND. LD &lt; .TODAY. +3	100.00.001	Mon, 18 Aug 2003 17:00:00 GMT	</DATA>
 </METADATA-VALIDATION_EXPRESSION>
+<METADATA-COLUMN_GROUP_SET Version="1.00.000" Date= "Sat, 20 Mar 2002 12:03:38 GMT" Resource="Property" Class="ResidentialProperty" >
+<COLUMNS>	MetadataEntryId	ColumnGroupSetName	ColumnGroupSetParent	Sequence	LongName	ShortName	Description	ColumnGroupName	PresentationStyle	PresentationColumns	URL	</COLUMNS>
+<DATA>	10000123456	Residential		1	Residential Listing	Residential	The top node of the Residential Listing Data Entry Hierarchy					</DATA>
+<DATA>	10000123457	WaterFront	Residential	1	WaterFront Information	WaterFront	Details about water front for property	WaterFront	Edit	1		</DATA>
+<DATA>	10000123457	Bedrooms	Residential	2	Bedroom Information	Bedrooms	Details about bedrooms for property	Bedrooms	Matrix			</DATA>
+<DATA>	10000123457	AgentInfo	Residential	3	Agent Information	Agent	Agent Website	 			www.mywebsite.com/agent?Agent=.AGENTCODE.?Listing=.ListingID.	</DATA>
+</METADATA-COLUMN_GROUP_SET>
+<METADATA-COLUMN_GROUP Version="1.00.000" Date= "Sat, 20 Mar 2002 12:03:38 GMT"
+Resource="Property" Class="ResidentialProperty" >
+<COLUMNS>	MetadataEntryId	ColumnGroupName	ControlSystemName	LongName	ShortName	Description	Version	Date	</COLUMNS>
+<DATA>	10001123456	WaterFront	WaterFrontFlag	Water Front Information	Water Front	Listing data that contains water front information for the Listing	1.00.000	Thu, 3 Feb 2005 20:35:15 GMT	</DATA>
+</METADATA-COLUMN_GROUP>
+<METADATA-COLUMN_GROUP_CONTROL Version="1.00.000" Date= "Sat, 20 Mar 2002 12:03:38 GMT" Resource="Property" Class="ResidentialProperty" ColumnGroup="WaterFront" >
+<COLUMNS>	MetadataEntryId	LowValue	HighValue	</COLUMNS>
+<DATA>	10011123456	1	1	</DATA>
+</METADATA-COLUMN_GROUP_CONTROL>
+<METADATA-COLUMN_GROUP_TABLE Version="1.00.000" Date= "Sat, 20 Mar 2002 12:03:38 GMT" Resource="Property" Class="ResidentialProperty" ColumnGroup="WaterFront" >
+<COLUMNS>	MetadataEntryId	SystemName	DisplayOrder	</COLUMNS>
+<DATA>	10111123450	WaterFront	1	</DATA>
+<DATA>	10111123451	WaterAccess	2	</DATA>
+<DATA>	10111123452	WaterFrontage	3	</DATA>
+<DATA>	10111123453	WaterView	4	</DATA>
+</METADATA-COLUMN_GROUP_TABLE>
+<METADATA-COLUMN_GROUP_NORMALIZATION Version="1.00.000" Date= "Sat, 20 Mar 2002 12:03:38 GMT" Resource="Property" Class="ResidentialProperty" ColumnGroup="WaterFront" >
+<COLUMNS>	MetadataEntryId	TypeIdentifier	Sequence	ColumnLabel	SystemName	</COLUMNS>
+<DATA>	10211123450	Bedroom	1	Length	Bedroom1Length	</DATA>
+<DATA>	10211123451	Bedroom	1	Width	Bedroom1Width	</DATA>
+<DATA>	10211123452	Bedroom	1	Area	Bedroom1Area	</DATA>
+<DATA>	10211123453	Bedroom	2	Length	Bedroom2Length	</DATA>
+<DATA>	10211123454	Bedroom	2	Width	Bedroom2Width	</DATA>
+<DATA>	10211123455	Bedroom	2	Area	Bedroom2Area	</DATA>
+<DATA>	10211123456	Bedroom	3	Length	Bedroom3Length	</DATA>
+<DATA>	10211123457	Bedroom	3	Width	Bedroom3Width	</DATA>
+<DATA>	10211123458	Bedroom	3	Area	Bedroom3Area	</DATA>
+<DATA>	10211123459	LivingRoom		Length	LivingRoomLength	</DATA>
+<DATA>	10211123460	LivingRoom		Width	LivingRoomWidth	</DATA>
+<DATA>	10211123461	LivingRoom		Area	LivingRoomArea	</DATA>
+<DATA>	10211123462	DiningRoom		Length	DiningRoomLength	</DATA>
+<DATA>	10211123463	DiningRoom		Width	DiningRoomWidth	</DATA>
+<DATA>	10211123464	DiningRoom		Area	DiningRoomArea	</DATA>
+<DATA>	10211123465	Kitchen		Length	KitchenLength	</DATA>
+<DATA>	10211123466	Kitchen		Width	KitchenWidth	</DATA>
+<DATA>	10211123467	Kitchen		Area	KitchenArea	</DATA>
+</METADATA-COLUMN_GROUP_NORMALIZATION>
 </RETS>

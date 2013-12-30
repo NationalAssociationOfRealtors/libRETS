@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2013 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *
@@ -37,8 +38,11 @@ ObjectDescriptor::ObjectDescriptor()
     mObjectId = 0;
     mDescription = "";
     mContentType = "";
+    mPreferred = false;
     mRetsReplyCode = 0;
     mRetsReplyText = "";
+    mSubDescription ="";
+    mUID = "";
     mWildIndicator = false;
 }
 
@@ -109,6 +113,21 @@ BinaryDataAPtr ObjectDescriptor::GetData()
     return data;
 }
 
+ObjectData& ObjectDescriptor::GetObjectData()
+{
+    return mObjectData;
+}
+
+bool ObjectDescriptor::GetPreferred() const
+{
+    return mPreferred;
+}
+
+void ObjectDescriptor::SetPreferred(bool preferred)
+{
+    mPreferred = preferred;
+}
+
 int ObjectDescriptor::GetRetsReplyCode() const
 {
     return mRetsReplyCode;
@@ -129,6 +148,26 @@ void ObjectDescriptor::SetRetsReplyText(std::string replyText)
     mRetsReplyText = "";
     if (replyText.length())
         mRetsReplyText = replyText;
+}
+
+std::string ObjectDescriptor::GetSubDescription() const
+{
+    return mSubDescription;
+}
+
+void ObjectDescriptor::SetSubDescription(string subDescription)
+{
+    mSubDescription = subDescription;
+}
+
+std::string ObjectDescriptor::GetUID() const
+{
+    return mUID;
+}
+
+void ObjectDescriptor::SetUID(string UID)
+{
+    mUID = UID;
 }
 
 bool ObjectDescriptor::GetWildIndicator() const

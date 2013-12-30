@@ -31,6 +31,13 @@
 #include "librets/MetadataLookupType.h"
 #include "librets/MetadataSearchHelp.h"
 #include "librets/MetadataObject.h"
+#include "librets/MetadataColumnGroup.h"
+#include "librets/MetadataColumnGroupNormalization.h"
+#include "librets/MetadataColumnGroupTable.h"
+#include "librets/MetadataColumnGroupControl.h"
+#include "librets/MetadataColumnGroupSet.h"
+#include "librets/MetadataFilter.h"
+#include "librets/MetadataFilterType.h"
 
 namespace librets {
     
@@ -47,7 +54,13 @@ class TestMetadataTree
     MetadataTableList propertyResTables;
     MetadataLookupList propertyLookups;
     MetadataLookupTypeList propertyAreaLookupTypes;
-    
+    MetadataColumnGroupList                 columnGroups;
+    MetadataColumnGroupSetList              columnGroupSets;
+    MetadataColumnGroupControlList          columnGroupControls;
+    MetadataColumnGroupTableList            columnGroupTables;
+    MetadataColumnGroupNormalizationList    columnGroupNormalizations;
+    MetadataFilterList                      filterList;
+    MetadataFilterTypeList                  filterTypeList;
     MetadataSystemPtr system;
     
     MetadataForeignKeyPtr foreignKeyOne;
@@ -72,6 +85,20 @@ class TestMetadataTree
     MetadataObjectPtr propObject;
 
     MetadataSearchHelpPtr listPriceSearchHelp;
+    
+    MetadataColumnGroupPtr              columnGroup;
+    MetadataColumnGroupNormalizationPtr columnGroupNormalization1;
+    MetadataColumnGroupNormalizationPtr columnGroupNormalization2;
+    MetadataColumnGroupNormalizationPtr columnGroupNormalization3;
+    MetadataColumnGroupTablePtr         columnGroupTable1;
+    MetadataColumnGroupTablePtr         columnGroupTable2;
+    MetadataColumnGroupTablePtr         columnGroupTable3;
+    MetadataColumnGroupControlPtr       columnGroupControl;
+    MetadataColumnGroupSetPtr           columnGroupSet1;
+    MetadataColumnGroupSetPtr           columnGroupSet2;
+    MetadataFilterPtr                   filter;
+    MetadataFilterTypePtr               filterType;
+    
 };
 
 typedef boost::shared_ptr<TestMetadataTree> TestMetadataTreePtr;

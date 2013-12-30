@@ -47,6 +47,13 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testGetAllObjectsByName);
     CPPUNIT_TEST(testGetAllObjectsByObject);
     CPPUNIT_TEST(testGetSearchHelp);
+    CPPUNIT_TEST(testGetAllColumnGroups);
+    CPPUNIT_TEST(testGetAllColumnGroupSets);
+    CPPUNIT_TEST(testGetAllColumnGroupControls);
+    CPPUNIT_TEST(testGetAllColumnGroupTables);
+    CPPUNIT_TEST(testGetAllColumnGroupNormalizations);
+    CPPUNIT_TEST(testFilter);
+    CPPUNIT_TEST(testFilterType);
     CPPUNIT_TEST_SUITE_END();
     
   protected:
@@ -66,6 +73,13 @@ class CLASS_ : public CPPUNIT_NS::TestFixture
     void testGetAllObjectsByName();
     void testGetAllObjectsByObject();
     void testGetSearchHelp();
+    void testGetAllColumnGroups();
+    void testGetAllColumnGroupSets();
+    void testGetAllColumnGroupControls();
+    void testGetAllColumnGroupTables();
+    void testGetAllColumnGroupNormalizations();
+    void testFilter();
+    void testFilterType();
     
   public:
     void setUp();
@@ -209,4 +223,59 @@ void CLASS_::testGetSearchHelp()
                                                              "ListPrice");
     CPPUNIT_ASSERT(actualHelp);
     ASSERT_EQUAL(*mMetadataTree->listPriceSearchHelp, *actualHelp);
+}
+
+void CLASS_::testGetAllColumnGroups()
+{
+    MetadataColumnGroupList actual = metadata->GetAllColumnGroups(
+                                                               "Property",
+                                                               "RES");
+    ASSERT_VECTOR_EQUAL(mMetadataTree->columnGroups, actual);
+}
+
+void CLASS_::testGetAllColumnGroupSets()
+{
+    MetadataColumnGroupSetList actual = metadata->GetAllColumnGroupSets(
+                                                                  "Property",
+                                                                  "RES");
+    ASSERT_VECTOR_EQUAL(mMetadataTree->columnGroupSets, actual);    
+}
+
+void CLASS_::testGetAllColumnGroupControls()
+{
+    MetadataColumnGroupControlList actual = metadata->GetAllColumnGroupControls(
+                                                                  "Property",
+                                                                  "RES",
+                                                                  "WaterFront");
+    ASSERT_VECTOR_EQUAL(mMetadataTree->columnGroupControls, actual);
+}
+
+void CLASS_::testGetAllColumnGroupTables()
+{
+    MetadataColumnGroupTableList actual = metadata->GetAllColumnGroupTables(
+                                                                  "Property",
+                                                                  "RES",
+                                                                  "WaterFront");
+    ASSERT_VECTOR_EQUAL(mMetadataTree->columnGroupTables, actual);    
+}
+
+void CLASS_::testGetAllColumnGroupNormalizations()
+{
+    MetadataColumnGroupNormalizationList actual = metadata->GetAllColumnGroupNormalizations(
+                                                                  "Property",
+                                                                  "RES",
+                                                                  "WaterFront");
+    ASSERT_VECTOR_EQUAL(mMetadataTree->columnGroupNormalizations, actual);    
+}
+
+void CLASS_::testFilter()
+{
+    MetadataFilterList actual = metadata->GetAllFilters();
+    ASSERT_VECTOR_EQUAL(mMetadataTree->filterList, actual);    
+}
+
+void CLASS_::testFilterType()
+{
+    MetadataFilterTypeList actual = metadata->GetAllFilterTypes("foo");
+    ASSERT_VECTOR_EQUAL(mMetadataTree->filterTypeList, actual);    
 }

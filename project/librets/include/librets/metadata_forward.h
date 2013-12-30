@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *
@@ -151,6 +152,41 @@ typedef boost::shared_ptr<DefaultMetadataCollector>
     DefaultMetadataCollectorPtr;
 
 class RetsUnknownMetadataException;
+    
+class MetadataColumnGroup;
+/** Smart pointer to MetadataColumnGroup RETS 1.8 */
+typedef boost::shared_ptr<MetadataColumnGroup> 
+    MetadataColumnGroupPtr;
+    
+class MetadataColumnGroupNormalization;
+/** Smart pointer to MetadataColumnGroupNormalization RETS 1.8 */
+typedef boost::shared_ptr<MetadataColumnGroupNormalization> 
+    MetadataColumnGroupNormalizationPtr;
+    
+class MetadataColumnGroupTable;
+/** Smart pointer to MetadataColumnGroupTable RETS 1.8 */
+typedef boost::shared_ptr<MetadataColumnGroupTable> 
+    MetadataColumnGroupTablePtr;
+    
+class MetadataColumnGroupControl;
+/** Smart pointer to MetadataColumnGroupControl RETS 1.8 */
+typedef boost::shared_ptr<MetadataColumnGroupControl> 
+    MetadataColumnGroupControlPtr;
+    
+class MetadataColumnGroupSet;
+/** Smart pointer to MetadataColumnGroupSet RETS 1.8 */
+typedef boost::shared_ptr<MetadataColumnGroupSet> 
+    MetadataColumnGroupSetPtr;
+    
+class MetadataFilter;
+/** Smart pointer to MetadataFilter RETS 1.8 */
+typedef boost::shared_ptr<MetadataFilter> 
+    MetadataFilterPtr;
+
+class MetadataFilterType;
+/** Smart pointer to MetadataFilter RETS 1.8 */
+typedef boost::shared_ptr<MetadataFilterType> 
+    MetadataFilterTypePtr;
 
 };
 

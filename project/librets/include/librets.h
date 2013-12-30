@@ -111,6 +111,13 @@
 #include "librets/MetadataValidationExternalType.h"
 #include "librets/MetadataValidationExpression.h"
 #include "librets/MetadataForeignKey.h"
+#include "librets/MetadataColumnGroup.h"
+#include "librets/MetadataColumnGroupNormalization.h"
+#include "librets/MetadataColumnGroupTable.h"
+#include "librets/MetadataColumnGroupControl.h"
+#include "librets/MetadataColumnGroupSet.h"
+#include "librets/MetadataFilter.h"
+#include "librets/MetadataFilterType.h"
 #include "librets/RetsUnknownMetadataException.h"
 
 #include "librets/RetsXmlParser.h"
