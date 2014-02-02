@@ -40,7 +40,7 @@ public class Options
     private string mUAPass                  = "";
     private string mUpdateRecord            = "CloseDate=2009-08-20T00:00:00,ListingID=LN000005";
     private string mUpdateType              = "Change";
-    private string mUrl                     = "http://demo.crt.realtors.org:6103/rets/login";
+    private string mUrl                     = "http://www.dis.com:6103/rets/login";
     private string mUser                    = "Joe";
     private int mValidationCode             = 2;
 

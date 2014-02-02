@@ -20,7 +20,7 @@ public class search
 
     public static void main(String argv[]) throws Exception
     {
-        RetsSession session = new RetsSession("http://demo.crt.realtors.org:6103/rets/login");
+        RetsSession session = new RetsSession("http://www.dis.com:6103/rets/login");
 
         if (!session.Login("Joe", "Schmoe"))
         {
@@ -43,6 +43,7 @@ public class search
         searchRequest.SetCountType(SearchRequest.CountType.RECORD_COUNT_AND_RESULTS);
         searchRequest.SetStandardNames(true);
         searchRequest.SetRestrictedIndicator("XXXX");
+        searchRequest.SetFormatType(SearchRequest.FormatType.COMPACT);
         SearchResultSet results = session.Search(searchRequest);
 
         System.out.println("Record count: " + results.GetCount());

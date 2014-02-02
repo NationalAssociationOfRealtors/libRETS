@@ -20,7 +20,6 @@
 using namespace librets;
 using namespace std;
 
-#define BOOST_FILESYSTEM_VERSION 3
 namespace fs = boost::filesystem;
 
 RetsExceptionContext::RetsExceptionContext()
@@ -32,7 +31,11 @@ RetsExceptionContext::RetsExceptionContext(const string & fileName,
                                            int lineNumber)
 {
     fs::path path(fileName);
+#if BOOST_FILESYSTEM_VERSION < 3
     mFileName = path.filename();
+#else
+    mFileName = path.filename().string();
+#endif
     mLineNumber = lineNumber;
 }
 

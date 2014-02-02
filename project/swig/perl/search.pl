@@ -25,14 +25,16 @@ $request->SetLimit($librets::SearchRequest::LIMIT_DEFAULT);
 $request->SetOffset($librets::SearchRequest::OFFSET_NONE);
 $request->SetStandardNames(1);
 $request->SetCountType($librets::SearchRequest::RECORD_COUNT_AND_RESULTS);
+$request->SetFormatType($librets::SearchRequest::COMPACT_DECODED);
 my $results = $rets->Search($request);
 
 print "Record count: " . $results->GetCount() . "\n\n";
 while ($results->HasNext())
 {
-    foreach my $column (@$results->GetColumns())
+    my $columns = $results->GetColumns();
+    foreach my $column (@$columns)
     {
-	    print $column . ": " . $results->GetString($column) . "\n";
+        print $column . ": " . $results->GetString($column) . "\n";
     }
     print "\n";
 }

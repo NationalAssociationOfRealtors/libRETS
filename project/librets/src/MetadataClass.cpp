@@ -46,3 +46,53 @@ string CLASS_::GetDescription() const
 {
     return GetStringAttribute("Description");
 }
+
+std::string CLASS_::GetVisibleName() const
+{
+    return GetStringAttribute("VisibleName");
+}
+
+std::string CLASS_::GetTableVersion() const
+{
+    return GetStringAttribute("TableVersion");
+}
+
+std::string CLASS_::GetTableDate() const
+{
+    return GetStringAttribute("TableDate");
+}
+
+std::string CLASS_::GetUpdateVersion() const
+{
+    return GetStringAttribute("UpdateVersion");
+}
+
+std::string CLASS_::GetUpdateDate() const
+{
+    return GetStringAttribute("UpdateDate");
+}
+
+std::string CLASS_::GetClassTimeStamp() const
+{
+    return GetStringAttribute("ClassTimeStamp");
+}
+
+std::string CLASS_::GetDeletedFlagField() const
+{
+    return GetStringAttribute("DeletedFlagField");
+}
+
+std::string CLASS_::GetDeletedFlagValue() const
+{
+    return GetStringAttribute("DeletedFlagValue");
+}
+
+bool CLASS_::HasKeyIndex() const
+{
+    return GetBoolAttribute("HasKeyIndex");
+}
+
+bool CLASS_::HasOffsetSupport() const
+{
+    return GetBoolAttribute("OffsetSupport");
+}

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ANTLR=${ANTLR_DIR}/bin/antlr
-OUTPUT_DIR=${BUILD_DIR}/${BUILD_STYLE}/antlr
+OUTPUT_DIR=${BUILD_DIR}/${CONFIGURATION}/antlr
 SRCDIR=${SRCROOT}/../librets/src
 
 GRAMMAR=${SRCDIR}/rets-sql.g

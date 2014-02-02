@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005 National Association of REALTORS(R)
+ * Portions Copyright (C) 2014 Real Estate Standards Organziation
  *
  * All rights reserved.
  *
@@ -30,11 +31,11 @@ const char * SearchRequest::COUNT_PARAMETER = "Count";
 const char * SearchRequest::LIMIT_PARAMETER = "Limit";
 const char * SearchRequest::OFFSET_PARAMETER = "Offset";
 const char * SearchRequest::RESTRICTED_PARAMETER = "RestrictedIndicator";
+const char * SearchRequest::PAYLOAD_PARAMETER = "Payload";
 
 SearchRequest::SearchRequest(string searchType, string searchClass,
                              string query)
 {
-    SetFormatType(COMPACT_DECODED);
     SetStandardNames(false);
     SetQueryType(DMQL2);
     SetQueryParameter(SEARCH_TYPE_PARAMETER, searchType);
@@ -134,3 +135,7 @@ void SearchRequest::SetRestrictedIndicator(std::string restrictedIndicator)
     SetQueryParameter(RESTRICTED_PARAMETER, restrictedIndicator);
 }
 
+void SearchRequest::SetPayload(std::string payload)
+{
+    SetQueryParameter(PAYLOAD_PARAMETER, payload);
+}

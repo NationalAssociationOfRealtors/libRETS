@@ -1,7 +1,7 @@
 <?php
 include_once('librets.php');
 
-$session = new RetsSession("http://demo.crt.realtors.org:6103/rets/login");
+$session = new RetsSession("http://www.dis.com:6103/rets/login");
 
 if (!$session->Login("Joe", "Schmoe"))
 {
@@ -23,6 +23,7 @@ $request->SetSelect("ListingID,ListPrice,Beds,City");
 $request->SetLimit(SearchRequest_LIMIT_DEFAULT);
 $request->SetOffset(SearchRequest_OFFSET_NONE);
 $request->SetCountType(SearchRequest_RECORD_COUNT_AND_RESULTS);
+$request->SetFormatType(SearchRequest_COMPACT);
 $request->SetStandardNames(true);
 $results = $session->Search($request);
 

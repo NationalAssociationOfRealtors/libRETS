@@ -4,7 +4,7 @@ import sys
 import librets
 
 try:
-  session = librets.RetsSession("http://demo.crt.realtors.org:6103/rets/login")
+  session = librets.RetsSession("http://www.dis.com:6103/rets/login")
   if (not session.Login("Joe", "Schmoe")):
       print "Invalid login"
       sys.exit(1)
@@ -23,6 +23,7 @@ try:
   request.SetLimit(librets.SearchRequest.LIMIT_DEFAULT)
   request.SetOffset(librets.SearchRequest.OFFSET_NONE)
   request.SetCountType(librets.SearchRequest.RECORD_COUNT_AND_RESULTS)
+  request.SetFormatType(librets.SearchRequest.COMPACT)
   results = session.Search(request)
   
   print "Record count: " + `results.GetCount()`

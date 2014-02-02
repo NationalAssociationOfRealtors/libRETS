@@ -44,6 +44,7 @@ int main(int argc, char * argv[])
         string countString;
         bool printCount;
         string restrictedIndicator;
+        string payload;
 
         // GCC on FC3 for season does not like using
         // SearchRequest::LIMIT_DEFAULT in the default_value calls below.
@@ -73,6 +74,7 @@ int main(int argc, char * argv[])
             ("restricted-indicator",po::value<string>(&restrictedIndicator)
              ->default_value("xxxx"),
              "Set the restricted indicator")
+            ("payload", po::value<string>(&payload), "Specify RETS 1.8 PAYLOAD")
             ;
         if (!options.ParseCommandLine(argc, argv))
         {
@@ -117,13 +119,20 @@ int main(int argc, char * argv[])
 
         SearchRequestAPtr searchRequest = session->CreateSearchRequest(
             resource, searchClass, query);
-        if (select.length() != 0)
-            searchRequest->SetSelect(select);
         searchRequest->SetStandardNames(standardNames);
         searchRequest->SetLimit(limit);
         searchRequest->SetOffset(offset);
         searchRequest->SetCountType(count);
-        searchRequest->SetFormatType(format);
+        if (payload.length() != 0 && session->GetDetectedRetsVersion() >= RETS_1_8)
+        {
+            searchRequest->SetPayload(payload);
+        }
+        else
+        {
+            if (select.length() != 0)
+                searchRequest->SetSelect(select);
+            searchRequest->SetFormatType(format);
+        }
         searchRequest->SetRestrictedIndicator(restrictedIndicator);
         
         SearchResultSetAPtr results = session->Search(searchRequest.get());

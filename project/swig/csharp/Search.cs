@@ -43,6 +43,7 @@ public class Search
         searchRequest.SetCountType(options.count);
         searchRequest.SetStandardNames(options.standard_names);
         searchRequest.SetRestrictedIndicator("XXXX");
+        searchRequest.SetFormatType(SearchRequest.FormatType.COMPACT);
         SearchResultSet results = session.Search(searchRequest);
         
         Console.WriteLine("Record count: " + results.GetCount());

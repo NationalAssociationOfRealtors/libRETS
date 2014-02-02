@@ -65,6 +65,76 @@ class MetadataClass : public MetadataElement
      * @return Description of this class.
      */
     std::string GetDescription() const;
+
+    /**
+     * Returns the user-visible name of the class.
+     *
+     * @return Visible Name
+     */
+    std::string GetVisibleName() const;
+
+    /**
+     * Returns the TableVersion. RETS 1.8
+     *
+     * @return The TableVersion
+     */
+    std::string GetTableVersion() const;
+
+    /**
+     * Returns the TableDate. RETS 1.8
+     *
+     * @return The TableDate
+     */
+    std::string GetTableDate() const;
+
+    /**
+     * Returns the UpdateVersion. RETS 1.8
+     *
+     * @return The UpdateVersion
+     */
+    std::string GetUpdateVersion() const;
+
+    /**
+     * Returns the UpdateDate. RETS 1.8
+     *
+     * @return The UpdateDate.
+     */
+    std::string GetUpdateDate() const;
+
+    /**
+     * Returns the ClassTimeStamp. RETS 1.8
+     *
+     * @return The ClassTimeStamp
+     */
+    std::string GetClassTimeStamp() const;
+
+    /**
+     * Returns the Deleted Flag Field. RETS 1.8
+     *
+     * @return The DeletedFlagField
+     */
+    std::string GetDeletedFlagField() const;
+
+    /**
+     * Returns the Deleted Flag Value. RETS 1.8
+     *
+     * @return The DeletedFlagValue
+     */
+    std::string GetDeletedFlagValue() const;
+
+    /**
+     * Returns the HasKeyIndex Flag. RETS 1.8
+     * 
+     * @return The HasKeyIndex boolean.
+     */
+    bool HasKeyIndex() const;
+
+    /**
+     * Returns the OffsetSupport Flag. RETS 1.8
+     *
+     * @return The OffsetSupport boolean.
+     */
+    bool HasOffsetSupport() const;
 };
 
 };

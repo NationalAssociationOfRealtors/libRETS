@@ -1214,6 +1214,16 @@ class MetadataClass : public MetadataElement
     std::string GetStandardName() const;
     std::string GetDescription() const;
     MetadataType GetType() const;
+    std::string GetVisibleName() const;
+    std::string GetTableVersion() const;
+    std::string GetTableDate() const;
+    std::string GetUpdateVersion() const;
+    std::string GetUpdateDate() const;
+    std::string GetClassTimeStamp() const;
+    std::string GetDeletedFlagField() const;
+    std::string GetDeletedFlagValue() const;
+    bool HasKeyIndex() const;
+    bool HasOffsetSupport() const;
 };
 
 typedef std::vector<MetadataClass *> MetadataClassList;

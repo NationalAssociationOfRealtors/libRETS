@@ -190,6 +190,7 @@ class SearchResultSet : public virtual RetsObject
      * @return Returns TRUE if a row was successfully parsed.
      */
     bool Parse();
+    bool parseRESORecord(std::string level);
 
 
     int mCount;

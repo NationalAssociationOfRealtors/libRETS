@@ -238,9 +238,118 @@ bool SearchResultSet::Parse()
                 mReplyText = startEvent->GetAttributeValue("ReplyText");
             }
         }
+        else
+        {
+            /*
+             * Parse the RESO payload. As of the time of writing, the XSD
+             * is not available. This is sort of a cheat.
+             */
+            StringVectorPtr fullName(new StringVector());
+            ba::split(*fullName, name, ba::is_any_of(":"));
+            
+            if (fullName->size() == 2) name = fullName->at(1);
+            if (name == "Property"   ||
+                name == "Member"     ||
+                name == "Office"     ||
+                name == "Media"      ||
+                name == "History"    ||
+                name == "Contacts"   ||
+                name == "Enumerations")
+            {
+                /*
+                 * Return one record at a time. Each record may have different
+                 * columns so clear out any left over data. The parse method
+                 * won't return until either it is out of data or has a full
+                 * record to return.
+                 */
+                mColumns->clear();
+                mRows.clear();
+                
+                if (parseRESORecord(name))
+                    return true;
+            }
+            else
+            {
+                // cout << "Unknown Event - Name: " << name << endl;
+            }
+        }
     }
     
     return retval;
+}
+
+/**
+ * Parse a RESO data record. This is well formed XML.
+ */
+bool SearchResultSet::parseRESORecord(std::string level)
+{
+    int             columnIndex = 0;
+    StringVectorPtr data(new StringVector());
+    StringVectorPtr fullName(new StringVector());
+    int             nest = 0;
+    string          endName;
+    string          startName;
+    string          text;
+    
+    while (mXmlParser->HasNext())
+    {
+        RetsXmlEventPtr event = mXmlParser->GetNextSkippingEmptyText();
+        RetsXmlEndElementEventPtr endEvent = b::dynamic_pointer_cast<RetsXmlEndElementEvent>(event);
+        RetsXmlStartElementEventPtr startEvent = b::dynamic_pointer_cast<RetsXmlStartElementEvent>(event);
+        RetsXmlTextEventPtr textEvent = b::dynamic_pointer_cast<RetsXmlTextEvent>(event);
+        
+        if (endEvent)
+        {
+            nest--;
+            endName = endEvent->GetName();
+            fullName->clear();
+            ba::split(*fullName, endName, ba::is_any_of(":"));
+            if (fullName->size() >= 2)
+                endName = fullName->at(1);
+            
+            if (endName == level || nest < 0)
+            {
+                /*
+                 * Have a full record. Return it.
+                 */
+                mRows.push_back(data);
+                return true;
+            }
+            if (nest == 0)
+            {
+                /*
+                 * This is the end of an element so add the column name and
+                 * data to our buffer.
+                 */
+                mColumns->push_back(startName);
+                mColumnToIndex[startName] = columnIndex++;
+                data->push_back(text);
+            }
+        }
+        else
+            if (startEvent)
+            {
+                /*
+                 * This is the start of an element. There can be nested
+                 * elements (string_multi in the data dictionary). In that case,
+                 * we want to ingore the element and simply return a comma separated
+                 * string of any data found.
+                 */
+                nest++;
+                if (nest == 1)
+                {
+                    startName = startEvent->GetName();
+                    text = "";
+                }
+            }
+            else if (textEvent)
+            {
+                if (text.length())
+                    text += ",";
+                text += textEvent->GetText();
+            }
+    }
+    return false;
 }
 
 bool SearchResultSet::HasNext()

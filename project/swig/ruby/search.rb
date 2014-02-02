@@ -5,7 +5,7 @@ require 'librets'
 include Librets
 
 begin
-    session = RetsSession.new("http://demo.crt.realtors.org:6103/rets/login")
+    session = RetsSession.new("http://www.dis.com:6103/rets/login")
 
     if !session.login("Joe", "Schmoe")
       puts "Invalid login"
@@ -24,6 +24,7 @@ begin
     request.limit = SearchRequest::LIMIT_DEFAULT
     request.offset = SearchRequest::OFFSET_NONE
     request.count_type = SearchRequest::RECORD_COUNT_AND_RESULTS
+    request.format_type = SearchRequest::COMPACT
     results = session.search(request)
 
     puts "Record count: " + results.count.to_s

@@ -41,6 +41,7 @@ public class rawsearch
         searchRequest.SetLimit(SearchRequest.LIMIT_DEFAULT);
         searchRequest.SetOffset(SearchRequest.OFFSET_NONE);
         searchRequest.SetCountType(SearchRequest.CountType.RECORD_COUNT_AND_RESULTS);
+        searchRequest.SetFormatType(SearchRequest.FormatType.COMPACT);
         searchRequest.SetStandardNames(true);
 
 	try

@@ -7,6 +7,11 @@ Version 1.5.4 - xx xxx 201x
   * Handle optional RETS-STATUS when included in login response.
     Ticket #168.
   * Applied patch submitted by Mike Owens to add GetHttpResponse().
+  * Implement RETS 1.8 enhancements (excluding the UPDATE transaction).
+    Note: there is a breaking change here in that the FORMAT defaulted
+    to COMPACT and was optional. Now users must either explicitly set
+    FORMAT or use the PAYLOAD option.
+    Multiple tickets.
 
 Version 1.5.3 - 10 Mar 2012
 
