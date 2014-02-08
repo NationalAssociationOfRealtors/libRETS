@@ -75,7 +75,7 @@ void CurlHttpResponse::SetResponseCode(int responseCode)
 
 string CurlHttpResponse::GetHeader(string name) const
 {
-    StringMap::const_iterator i = mHeaders.find(ba::to_lower_copy(name));
+    StringMultiMap::const_iterator i = mHeaders.find(ba::to_lower_copy(name));
     if (i != mHeaders.end())
     {
         return i->second;
