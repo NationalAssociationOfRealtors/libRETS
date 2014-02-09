@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005-2013 National Association of REALTORS(R)
+ * Copyright (C) 2005-2014 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -71,7 +71,7 @@ class MetadataObject : public MetadataElement
      * for Objects.
      * @return A string containing the field name.
      */
-    std::string GetObjectTimeSTamp() const;
+    std::string GetObjectTimeStamp() const;
     
     /**
      * RETS 1.7
@@ -85,7 +85,7 @@ class MetadataObject : public MetadataElement
      * RETS 1.8
      * When <code>true</code> indicates that the server will honor
      * Location=1 in the rqeust.
-     * @return <code>true<code> the server will support Location=1
+     * @return <code>true</code> the server will support Location=1
      */
     bool GetLocationAvailability() const;
     

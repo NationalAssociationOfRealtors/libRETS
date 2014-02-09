@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 National Association of REALTORS(R)
+ * Copyright (C) 2008-2014 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -58,7 +58,7 @@ int InputStreamBridge::readByte() const
     }
 }
  
-int InputStreamBridge::read(unsigned char buffer[], int offset, int length) const
+std::size_t InputStreamBridge::read(unsigned char buffer[], std::size_t offset, std::size_t length) const
 {
     char * startOfBuffer = (char *)(buffer + offset);
     bool isCurlStream = (typeid(*mInputStream) == typeid(CurlStream));
@@ -100,7 +100,7 @@ int OutputStreamBridge::writeByte(char theByte) const
     return sizeof(byte);
 }
  
-int OutputStreamBridge::write(unsigned char buffer[], int offset, int length) const
+std::size_t OutputStreamBridge::write(unsigned char buffer[], std::size_t offset, std::streamsize length) const
 {
     char * startOfBuffer = (char *)(buffer + offset);
 

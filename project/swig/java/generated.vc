@@ -11,7 +11,21 @@ GENERATED_SRC = \
 	generated\LogoutResponseAPtr.java \
 	generated\MetadataClass.java \
 	generated\MetadataClassList.java \
+	generated\MetadataColumnGroup.java \
+	generated\MetadataColumnGroupControl.java \
+	generated\MetadataColumnGroupList.java \
+	generated\MetadataColumnGroupNormalization.java \
+	generated\MetadataColumnGroupNormalizationList.java \
+	generated\MetadataColumnGroupSet.java \
+	generated\MetadataColumnGroupSetList.java \
+	generated\MetadataColumnGroupTable.java \
+	generated\MetadataColumnGroupTableList.java \
+	generated\MetadataColumnGrouptControlList.java \
 	generated\MetadataElement.java \
+	generated\MetadataFilter.java \
+	generated\MetadataFilterList.java \
+	generated\MetadataFilterType.java \
+	generated\MetadataFilterTypeList.java \
 	generated\MetadataForeignKey.java \
 	generated\MetadataForeignKeyList.java \
 	generated\MetadataLookup.java \
@@ -23,15 +37,14 @@ GENERATED_SRC = \
 	generated\MetadataResource.java \
 	generated\MetadataResourceList.java \
 	generated\MetadataSearchHelp.java \
+	generated\MetadataSearchHelpList.java \
 	generated\MetadataSystem.java \
 	generated\MetadataTable.java \
 	generated\MetadataTableList.java \
+	generated\ObjectData.java \
 	generated\ObjectDescriptor.java \
-	RetsException.java \
-	RetsHttpException.java \
 	generated\RetsHttpLogger.java \
 	generated\RetsMetadata.java \
-	RetsReplyException.java \
 	generated\RetsSession.java \
 	generated\RetsVersion.java \
 	generated\SWIGTYPE_p_ExceptionErrorHandler.java \
@@ -47,4 +60,7 @@ GENERATED_SRC = \
 	generated\UpdateResponseAPtr.java \
 	generated\UserAgentAuthType.java \
 	generated\librets.java \
-	generated\libretsJNI.java
+	generated\libretsJNI.java \
+	RetsException.java \
+	RetsHttpException.java \
+	RetsReplyException.java 

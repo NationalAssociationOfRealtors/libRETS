@@ -22,7 +22,21 @@ GENERATED_SRC = \
 	lib\LookupQueryPtr.cs \
 	lib\MetadataClass.cs \
 	lib\MetadataClassList.cs \
+	lib\MetadataColumnGroup.cs \
+	lib\MetadataColumnGroupControl.cs \
+	lib\MetadataColumnGroupList.cs \
+	lib\MetadataColumnGroupNormalization.cs \
+	lib\MetadataColumnGroupNormalizationList.cs \
+	lib\MetadataColumnGroupSet.cs \
+	lib\MetadataColumnGroupSetList.cs \
+	lib\MetadataColumnGroupTable.cs \
+	lib\MetadataColumnGroupTableList.cs \
+	lib\MetadataColumnGrouptControlList.cs \
 	lib\MetadataElement.cs \
+	lib\MetadataFilter.cs \
+	lib\MetadataFilterList.cs \
+	lib\MetadataFilterType.cs \
+	lib\MetadataFilterTypeList.cs \
 	lib\MetadataForeignKey.cs \
 	lib\MetadataForeignKeyList.cs \
 	lib\MetadataLookup.cs \
@@ -34,9 +48,11 @@ GENERATED_SRC = \
 	lib\MetadataResource.cs \
 	lib\MetadataResourceList.cs \
 	lib\MetadataSearchHelp.cs \
+	lib\MetadataSearchHelpList.cs \
 	lib\MetadataSystem.cs \
 	lib\MetadataTable.cs \
 	lib\MetadataTableList.cs \
+	lib\ObjectData.cs \
 	lib\ObjectDescriptor.cs \
 	lib\RetsException.cs \
 	lib\RetsHttpException.cs \

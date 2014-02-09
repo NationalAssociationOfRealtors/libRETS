@@ -34,9 +34,16 @@ X_OBJS = \
 	$(DIROBJ)\LookupQuery.obj \
 	$(DIROBJ)\LtCriterion.obj \
 	$(DIROBJ)\MetadataClass.obj \
+	$(DIROBJ)\MetadataColumnGroup.obj \
+	$(DIROBJ)\MetadataColumnGroupControl.obj \
+	$(DIROBJ)\MetadataColumnGroupNormalization.obj \
+	$(DIROBJ)\MetadataColumnGroupSet.obj \
+	$(DIROBJ)\MetadataColumnGroupTable.obj \
 	$(DIROBJ)\MetadataEditMask.obj \
 	$(DIROBJ)\MetadataElement.obj \
 	$(DIROBJ)\MetadataElementCollector.obj \
+	$(DIROBJ)\MetadataFilter.obj \
+	$(DIROBJ)\MetadataFilterType.obj \
 	$(DIROBJ)\MetadataFinder.obj \
 	$(DIROBJ)\MetadataForeignKey.obj \
 	$(DIROBJ)\MetadataLoader.obj \
@@ -56,8 +63,10 @@ X_OBJS = \
 	$(DIROBJ)\MetadataValidationLookup.obj \
 	$(DIROBJ)\MetadataValidationLookupType.obj \
 	$(DIROBJ)\NotCriterion.obj \
+	$(DIROBJ)\ObjectData.obj \
 	$(DIROBJ)\ObjectDescriptor.obj \
 	$(DIROBJ)\OrCriterion.obj \
+	$(DIROBJ)\PayloadListResultSet.obj \
 	$(DIROBJ)\RetsErrorHandler.obj \
 	$(DIROBJ)\RetsException.obj \
 	$(DIROBJ)\RetsExceptionContext.obj \
@@ -82,6 +91,7 @@ X_OBJS = \
 	$(DIROBJ)\SearchResultSet.obj \
 	$(DIROBJ)\ServerInfoRequest.obj \
 	$(DIROBJ)\ServerInfoResponse.obj \
+	$(DIROBJ)\SessionInfo.obj \
 	$(DIROBJ)\StreamHttpLogger.obj \
 	$(DIROBJ)\UpdateRequest.obj \
 	$(DIROBJ)\UpdateResponse.obj \

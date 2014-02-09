@@ -954,7 +954,7 @@ class InputStreamBridge
 {
   public:
     int readByte() const;
-    int read(unsigned char buffer[], int offset, int length) const; 
+    std::size_t read(unsigned char buffer[], std::size_t offset, std::size_t length) const; 
 };
 
 class BinaryData
@@ -1359,7 +1359,7 @@ class MetadataObject : public MetadataElement
     std::string GetVisibleName() const;
     std::string GetDescription() const;
     MetadataType GetType() const;
-    std::string GetObjectTimeSTamp() const;
+    std::string GetObjectTimeStamp() const;
     std::string GetObjectCount() const;
     bool GetLocationAvailability() const;
     std::string GetObjectData() const;
@@ -1459,7 +1459,6 @@ class MetadataColumnGroupTable : public MetadataElement
     std::string GetId() const;
     std::string GetSystemName() const;
     std::string GetColumnGroupSetName() const;
-    int GetSequence() const;
     std::string GetLongName() const;
     std::string GetShortName() const;
     int GetDisplayOrder() const;
@@ -2034,7 +2033,7 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
       public:
         InputStreamBridge(istreamPtr inputStream);
         int readByte() const;
-        int read(unsigned char buffer[], int offset, int length) const; 
+        std::size_t read(unsigned char buffer[], std::size_t offset, std::size_t length) const; 
     };
 
     %typemap(javacode) RetsSession  %{

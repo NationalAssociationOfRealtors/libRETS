@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 National Association of REALTORS(R)
+ * Copyright (C) 2005-2014 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -94,7 +94,7 @@ class GetObjectRequest : public RetsObject
      * RETS 1.8
      * This should contain a comma delimited field of the field names
      * that should be returned with the Object request.
-     * @param location <code>true</code> if location URLs are requested
+     * @param objectData Comma delimited string.
      */
     void SetObjectData(std::string objectData);
         

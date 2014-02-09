@@ -38,7 +38,7 @@ class InputStreamBridge
     
     int readByte() const;
     
-    int read(unsigned char buffer[], int offset, int length) const; 
+    std::size_t read(unsigned char buffer[], std::size_t offset, std::size_t length) const; 
 
   private:
     istreamPtr  mInputStream;
@@ -55,7 +55,7 @@ class OutputStreamBridge
 
     int writeByte(char theByte) const;
 
-    int write(unsigned char buffer[], int offset, int length) const;
+    std::size_t write(unsigned char buffer[], std::size_t offset, std::streamsize length) const;
 
   private:
     ostreamPtr  mOutputStream;

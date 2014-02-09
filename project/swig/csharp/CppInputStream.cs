@@ -64,7 +64,7 @@ public class CppInputStream : Stream
 
     public override int Read([In,Out] byte[] buffer, int offset, int count)
     {
-         return mBridge.read(buffer, offset, count);
+         return (int) mBridge.read(buffer, (uint) offset, (uint) count);
     }
     
     private InputStreamBridge mBridge;

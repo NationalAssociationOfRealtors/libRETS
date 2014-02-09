@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005-2013 National Association of REALTORS(R)
+ * Copyright (C) 2005-2014 National Association of REALTORS(R)
  *
  * All rights reserved.
  *
@@ -17,7 +17,7 @@
 #ifndef LIBRETS_PAYLOAD_LIST_RESULT_SET_H
 #define LIBRETS_PAYLOAD_LIST_RESULT_SET_H
 /**
- * @file PayloadListResultSet
+ * @file PayloadListResultSet.h
  * Contains the PayloadListResultSet class definition.
  */
 
