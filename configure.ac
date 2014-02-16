@@ -99,6 +99,12 @@ AC_ARG_ENABLE(python,
                              [If swig is installed, do not build the python bindings.]),
               test "X$enableval" != "Xyes" && my_use_python=no,
               my_use_python=yes)
+
+AC_ARG_ENABLE(python3,
+              AC_HELP_STRING([--disable-python3],
+                             [If swig is installed, do not build the python3 bindings.]),
+              test "X$enableval" != "Xyes" && my_use_python3=no,
+              my_use_python3=yes)
 		
 AC_ARG_ENABLE(ruby,
               AC_HELP_STRING([--disable-ruby],
@@ -214,7 +220,8 @@ echo Compile SWIG bindings.......: $my_use_swig_bindings
   echo "  With Java.................: $my_have_java"
   echo "  With PERL.................: $my_have_perl"
   echo "  With PHP..................: $my_have_php"
-  echo "  With Python...............: $my_have_python"
+  echo "  With Python 2.............: $my_have_python"
+  echo "  With Python 3.............: $my_have_python3"
   echo "  With Ruby.................: $my_have_ruby"
 echo Enable Maintainer Docs......: $my_enable_maintainer_documentation
 if test "$OSNAME" = "darwin"; then

@@ -17,8 +17,9 @@ AC_DEFUN([MY_TEST_SWIG], [
     HAVE_DOTNET=0
     HAVE_PERL=0
     HAVE_PHP=0
-    HAVE_PYTHON=0
     HAVE_RUBY=0
+    HAVE_PYTHON=0
+    HAVE_PYTHON3=0
     JAVA_INCLUDES=
     USE_SWIG_BINDINGS=
     SNK_FILE=no
@@ -27,6 +28,7 @@ AC_DEFUN([MY_TEST_SWIG], [
     my_have_perl=no
     my_have_php=no
     my_have_python=no
+    my_have_python3=no
     my_have_ruby=no
     my_use_swig_bindings=no
 
@@ -187,6 +189,27 @@ EOF
         fi
 
         dnl
+        dnl Check to see if we can build for python3
+        dnl
+        if test "$my_use_python3" = "yes"; then
+            AC_CHECK_PROG(PYTHON3, python3, python3, no)
+            if test "$PYTHON3" != "no"; then
+                python3_version=`python3 -c "import sys; print(sys.version[[:3]] + (sys.abiflags if hasattr(sys, 'abiflags') else ''))" | tr -d "\n\r"`
+                python3_prefix=`python3 -c "import sys; print(sys.prefix)" | tr -d "\n\r"`
+                python3_h="$python3_prefix/include/python$python3_version/Python.h"
+                case $host_os in
+                    *mingw* | *cygwin*) python3_h="$python3_prefix/include/Python.h" ;;
+                esac
+                AC_CHECK_FILE([$python3_h], [my_python3_h=$python3_h])
+
+                if test -n "$my_python3_h"; then
+                    HAVE_PYTHON3=1
+                    my_have_python3=yes
+                fi
+            fi
+        fi
+
+        dnl
         dnl Check to see if we can build for python
         dnl
         if test "$my_use_python" = "yes"; then
@@ -247,6 +270,8 @@ EOF
   AC_SUBST(PHP)
   AC_SUBST(HAVE_PYTHON)
   AC_SUBST(PYTHON)
+  AC_SUBST(HAVE_PYTHON3)
+  AC_SUBST(PYTHON3)
   AC_SUBST(HAVE_RUBY)
   AC_SUBST(RUBY)
 ])

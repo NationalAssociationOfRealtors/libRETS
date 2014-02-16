@@ -80,6 +80,15 @@ endif
 endif
 
 ###
+# python3
+#
+ifeq (${HAVE_PYTHON3},1)
+ifneq (${SWIG_OSNAME}, MSWin32)
+include ${top_srcdir}/project/build/python3.mk
+endif
+endif
+
+###
 # ruby 
 #
 ifeq (${HAVE_RUBY},1)

@@ -30,6 +30,7 @@ ALL_OBJ_DIRS	= \
 	${BUILD}/swig/perl \
 	${BUILD}/swig/php5 \
 	${BUILD}/swig/python \
+	${BUILD}/swig/python3 \
 	${BUILD}/swig/ruby
 
 ALL = $(LIBRETS_LIB)
@@ -64,6 +65,11 @@ endif
 ifeq (${HAVE_PYTHON},1)
 ALL += ${PYTHON_BUILD}
 SWIG_INSTALL += ${PYTHON_INSTALL}
+endif
+
+ifeq (${HAVE_PYTHON3},1)
+ALL += ${PYTHON3_BUILD}
+SWIG_INSTALL += ${PYTHON3_INSTALL}
 endif
 
 ifeq (${HAVE_RUBY},1)

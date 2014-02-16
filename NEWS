@@ -1,4 +1,4 @@
-Version 1.5.4 - xx xxx 201x
+Version 1.6.0 - xx xxx 2014
 
   * Remove errant BOOST_FILESYSTEM_VERSION declaration.
   * Correct RetsExceptionContext::GetFileName to fs::path.
@@ -12,6 +12,7 @@ Version 1.5.4 - xx xxx 201x
     to COMPACT and was optional. Now users must either explicitly set
     FORMAT or use the PAYLOAD option.
     Multiple tickets.
+  * Incorporate Python3 patch provided by Harvey Falcic.
 
 Version 1.5.3 - 10 Mar 2012
 

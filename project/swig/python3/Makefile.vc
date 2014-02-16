@@ -1,0 +1,39 @@
+!include <../../build/Makefile.vc>
+
+PYTHON = python
+
+LIBRETS_LIB= ../../librets/src/$(BUILD_DIR)/$(LIBRETS_LIB_NAME) \
+                        $(WINLIBS)
+#CFLAGS = $(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include
+CFLAGS = /GR /EHsc $(BOOST_CFLAGS) $(CURL_CFLAGS) -I../../librets/include
+
+LIBRETS_EXT = build/lib.win32-2.5/_librets.pyd
+
+SETUP_CONFIG = setup.ini
+
+all: $(LIBRETS_EXT)
+
+librets_wrap.cpp: ../librets.i
+	$(SWIG) -c++ -python -o librets_wrap.cpp \
+		-I$(SWIG_LIBRARY)/python -I$(SWIG_LIBRARY) \
+		-I.. ../librets.i
+
+$(LIBRETS_EXT): librets_wrap.cpp
+	echo $(VERSION) > $(SETUP_CONFIG)
+	echo $(LIBRETS_LIB) >> $(SETUP_CONFIG)
+	echo $(CFLAGS) >> $(SETUP_CONFIG)
+	echo ../librets_bridge.cpp >> $(SETUP_CONFIG)
+	python setup.py build --compiler=msvc
+
+install:
+	python setup.py install
+
+dist: $(LIBRETS_EXT)
+	python setup.py bdist_wininst
+
+clean:
+	@-rmdir /q /s build 2> NUL
+	@-rmdir /q /s dist 2> NUL
+
+distclean: clean
+	@-erase librets.py* librets_wrap.* 2> NUL

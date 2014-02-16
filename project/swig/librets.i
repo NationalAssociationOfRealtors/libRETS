@@ -1000,6 +1000,13 @@ SWIG_AUTO_PTR_RELEASE(BinaryData);
     %}
 #endif
 
+#ifdef SWIGPYTHON
+    %typemap(out) BinaryDataAPtr (const char* s) %{
+        s = ($1)->AsChar();
+        $result = PyBytes_FromStringAndSize(s, ($1)->Size());
+    %}
+#endif
+
 class ObjectDescriptor
 {
   public:
@@ -1037,7 +1044,7 @@ class ObjectDescriptor
     }
 #endif
 
-#if defined(SWIGJAVA)
+#if defined(SWIGJAVA) || defined(SWIGPYTHON)
     BinaryDataAPtr GetData();
 #endif
     
