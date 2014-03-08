@@ -7,7 +7,7 @@ LIBRETS_LIB= ../../librets/src/$(BUILD_DIR)/$(LIBRETS_LIB_NAME) \
 #CFLAGS = $(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include
 CFLAGS = /GR /EHsc $(BOOST_CFLAGS) $(CURL_CFLAGS) -I../../librets/include
 
-LIBRETS_EXT = build/lib.win32-2.5/_librets.pyd
+LIBRETS_EXT = build/lib.win64-3.3/_librets.pyd
 
 SETUP_CONFIG = setup.ini
 

@@ -1,5 +1,5 @@
 
-Installing the Prequisites
+Installing the Prerequisites
 ==========================
 
 Due to modifications needed to make 3rd party libraries compile
@@ -17,11 +17,11 @@ A good Subversion client for Windows is TortoiseSVN:
 You then need to install Microsoft Visual C++ and a Java JDK.
 
 If you want to get the source to libRETS out of subversion you can
-checkout from the repository using this base url:
+checkout from the repository using this base URL:
 
   https://code.crt.realtors.org/svn/librets/librets
 
-Following common svn practice, under that URL are a tags, branches,
+Following common SVN practice, under that URL are tags, branches,
 and trunk directories.
 
 
@@ -53,7 +53,7 @@ Boost
   Version: 1.32.0 or higher.
   URL: http://www.boost.org/
 
-Boost has it's own build system, bjam.  Read it's instructions for
+Boost has its own build system, bjam.  Read its instructions for
 installation.  You need to compile and install the filesystem and
 program options libraries.
 
@@ -86,8 +86,8 @@ Customizing config.vc
 =====================
 
 Copy the <librets>/project/build/config.vc.dist file to
-<librets>/project/build/config.vc.  Edit BASE_PATH to point to the
-full path of the dependant libries that were checked out from
+<librets>/project/build/config.vc. Edit BASE_PATH to point to the
+full path of the dependant libraries that were checked out from
 Subversion, above.  The following table shows the four possible
 library names:
 
@@ -123,5 +123,5 @@ The header files needed to use librets are in:
 
 You will need Boost to use librets, as well, as librets returns many
 pointers as Boost shared pointers (boost::shared_ptr).  You do not
-need the other libraries when compling against librets.
+need the other libraries when compiling against librets.
 

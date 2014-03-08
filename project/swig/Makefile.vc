@@ -31,13 +31,16 @@ PERL_WRAP_H = perl\$(SWIG_WRAP_H)
 PYTHON_WRAP = python\$(SWIG_WRAP_SRC)
 PYTHON_WRAP_H = python\$(SWIG_WRAP_H)
 
+PYTHON3_WRAP = python3\$(SWIG_WRAP_SRC)
+PYTHON3_WRAP_H = python3\$(SWIG_WRAP_H)
+
 PHP5_DLL  = php5\php_librets.dll
 PHP5_WRAP = php5\$(SWIG_WRAP_SRC)
 PHP5_WRAP_H = php5\$(SWIG_WRAP_H)
 
 SWIG_FILES = librets.i auto_ptr_release.i shared_ptr_release.i
 
-all: csharp_ java_ $(PERL_BUILD) php5_ python_ $(RUBY_BUILD)
+all: csharp_ java_ $(PERL_BUILD) php5_ python_ python3_ $(RUBY_BUILD)
 
 csharp_: 
 	cd csharp
@@ -60,9 +63,14 @@ php5_ : $(PHP5_WRAP)
 	cd ..
 
 python_: $(PYTHON_WRAP)
-	 cd python
-	 $(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic LIBPATH="$(PYTHON_LIBPATH)" dist
-	 cd ..
+	cd python
+	$(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic LIBPATH="$(PYTHON_LIBPATH)" dist
+	cd ..
+
+python3_: $(PYTHON3_WRAP)
+	cd python3
+	$(NMAKE) -f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic LIBPATH="$(PYTHON_LIBPATH)" dist
+	cd ..
 
 ruby_: $(RUBY_WRAP) $(RUBY_MAKEFILE)
 	cd ruby
@@ -112,6 +120,13 @@ $(PYTHON_WRAP): $(SWIG_FILES)
 	 	-I.. ../librets.i
 	cd ..
 
+$(PYTHON3_WRAP): $(SWIG_FILES)
+	cd python3
+	$(SWIG) -c++ -python -py3 -o $(SWIG_WRAP_SRC) \
+		-I$(SWIG_LIBRARY)/python -I$(SWIG_LIBRARY) \
+	 	-I.. ../librets.i
+	cd ..
+
 $(PHP5_WRAP): $(SWIG_FILES)
 	cd php5
 	$(SWIG) -c++ -php5 -o $(SWIG_WRAP_SRC) \
@@ -119,7 +134,7 @@ $(PHP5_WRAP): $(SWIG_FILES)
 		-I.. ../librets.i
 	cd ..
 
-clean: clean-csharp clean-java clean-python clean-php5 $(PERL_CLEAN)  $(RUBY_CLEAN)
+clean: clean-csharp clean-java clean-python clean-python3 clean-php5 $(PERL_CLEAN)  $(RUBY_CLEAN)
 
 clean-csharp:
 	cd csharp
@@ -147,6 +162,14 @@ clean-python:
 	cd ..
 	@-erase /q $(PYTHON_WRAP) 2> NUL
 	@-erase /q $(PYTHON_WRAP_H) 2> NUL
+
+clean-python3:
+	cd python3
+	-$(NMAKE) -f Makefile.vc clean
+        @-erase /q librets.py* 2> NUL
+	cd ..
+	@-erase /q $(PYTHON3_WRAP) 2> NUL
+	@-erase /q $(PYTHON3_WRAP_H) 2> NUL
 
 clean-php5:
 	cd php5

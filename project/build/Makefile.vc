@@ -123,6 +123,23 @@ MSVCR_DLL="$(VCTOOLS)\redist\x86\Microsoft.VC90.CRT\msvcr90.dll"
 VC_VERSION = -vc90
 WINLIBS = ws2_32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
 
+!else if "$(VS_VERSION)" == "vs2010"
+
+CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAG) /Gm /Zi \
+	$(RTC_FLAG) /I. \
+	/W3 /EHsc /GR /c
+
+!if "$(TARGET_CPU)" == "x64"
+MSVCP_DLL="C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\x64\Microsoft.VC120.CRT\msvcp120.dll"
+MSVCR_DLL="C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\x64\Microsoft.VC120.CRT\msvcr120.dll"
+!else
+MSVCP_DLL="C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\x86\Microsoft.VC120.CRT\msvcp120.dll"
+MSVCR_DLL="C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\x86\Microsoft.VC120.CRT\msvcr120.dll"
+!endif
+
+VC_VERSION = -vc100
+WINLIBS = ws2_32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
+
 !endif
 
 CSC = csc.exe /nologo
@@ -202,7 +219,7 @@ BOOST_SYSTEM_LIB =
 
 BOOST_CFLAGS = /I "$(BOOST_PATH)" /DBOOST_DISABLE_ASSERTS
 BOOST_LDFLAGS = "/LIBPATH:$(BOOST_PATH)/stage/lib"
-!if "$(VS_VERSION)" == "vs2008"
+!if "$(VS_VERSION)" == "vs2008" || "$(VS_VERSION)" == "vs2010"
 BOOST_CFLAGS = /I "$(BASE_PATH)/include/boost-$(BOOST_VERSION)" /DBOOST_DISABLE_ASSERTS
 BOOST_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib"
 !endif
@@ -215,7 +232,7 @@ OPENSSL_PATH = $(BASE_PATH)/openssl
 
 OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib gdi32.lib advapi32.lib user32.lib
 #OPENSSL_LDFLAGS = "/LIBPATH:$(OPENSSL_PATH)/out32" ssleay32.lib libeay32.lib 
-!if "$(VS_VERSION)" == "vs2008"
+!if "$(VS_VERSION)" == "vs2008" ||  "$(VS_VERSION)" == "vs2010"
 OPENSSL_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib" ssleay32.lib libeay32.lib 
 !endif
 
@@ -244,7 +261,7 @@ CURL_LIB = libcurl$(CURL_RUNTIME)$(CURL_DEBUG_RUNTIME).lib
 CURL_CFLAGS = /I "$(CURL_PATH)/include" $(CURL_STATIC)
 CURL_LDFLAGS = "/LIBPATH:$(CURL_PATH)/lib" $(CURL_LIB)
 
-!if "$(VS_VERSION)" == "vs2008"
+!if "$(VS_VERSION)" == "vs2008" || "$(VS_VERSION)" == "vs2010"
 CURL_CFLAGS = /I "$(BASE_PATH)/include" $(CURL_STATIC)
 CURL_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib" $(CURL_LIB)
 !endif
@@ -291,7 +308,7 @@ EXPAT_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib" \
 # ANTLR Configuration
 
 ANTLR_PATH = $(BASE_PATH)/antlr/install
-!if "$(VS_VERSION)" == "vs2008"
+!if "$(VS_VERSION)" == "vs2008" || "$(VS_VERSION)" == "vs2010"
 ANTLR_PATH = $(BASE_PATH)
 !endif
 
@@ -321,7 +338,7 @@ CPPUNIT_LIB = cppunit.lib
 CPPUNIT_CFLAGS = /I "$(CPPUNIT_PATH)/include"
 CPPUNIT_LDFLAGS = "/LIBPATH:$(CPPUNIT_PATH)/lib" $(CPPUNIT_LIB)
 
-!if "$(VS_VERSION)" == "vs2008"
+!if "$(VS_VERSION)" == "vs2008" || "$(VS_VERSION)" == "vs2010"
 CPPUNIT_CFLAGS = /I "$(BASE_PATH)/include"
 CPPUNIT_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib" $(CPPUNIT_LIB)
 !endif
@@ -333,7 +350,7 @@ CPPUNIT_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib" $(CPPUNIT_LIB)
 !if "$(SWIG_PATH)" == ""
 SWIG_PATH = $(BASE_PATH)\swig
 !endif
-!if "$(VS_VERSION)" == "vs2008"
+!if "$(VS_VERSION)" == "vs2008" || "$(VS_VERSION)" == "vs2010"
 SWIG_PATH = $(BASE_PATH)\bin
 !endif
 !if "$(SWIG)" == ""
@@ -344,7 +361,7 @@ SWIG = $(SWIG_PATH)\swig.exe
 #
 # PHP Configuration
 
-!if "$(VS_VERSION)" == "vs2008"
+!if "$(VS_VERSION)" == "vs2008" || "$(VS_VERSION)" == "vs2010"
 PHP_PATH = $(BASE_PATH)/include/php
 !if "$(TARGET_CPU)" == "x86"
 PHP_TIME_T=/D_USE_32BIT_TIME_T
@@ -379,7 +396,7 @@ PHP_LIBS = $(PHPWIN_PATH)/dev/php5ts.lib
 #
 # Perl Configuration
 
-!if "$(VS_VERSION)" == "vs2008"
+!if "$(VS_VERSION)" == "vs2008" || "$(VS_VERSION)" == "vs2010"
 
 PERL_PATH = $(BASE_PATH)/perl
 PERL_CFLAGS = /DWIN32 /D_CONSOLE /DNO_STRICT /I../../librets/include $(CFLAGS_STD) \

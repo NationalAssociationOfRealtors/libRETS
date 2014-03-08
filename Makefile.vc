@@ -40,7 +40,7 @@ RUBY_DIST =
 RUBY_DIST = _dist_ruby
 !endif
 PERL_DIST =
-!if "$(VS_VERSION)" == "vs2008"
+!if "$(VS_VERSION)" == "vs2008" || "$(VS_VERSION)" == "vs2010"
 PERL_DIST = _dist-perl
 !endif
 RSYNC = rsync -a --exclude-from project/build/dist-win-exclude
@@ -70,7 +70,7 @@ docs: prepare
 	rm -rf build/doc/api
 	cp project\build\Doxyfile.in project\build\Doxyfile
 	echo PROJECT_NUMBER=$(VERSION) >> project\build\Doxyfile
-        echo OUTPUT_DIRECTORY=build$(ARCH)/doc/api >> project\build\Doxyfile
+        echo OUTPUT_DIRECTORY=build-$(ARCH)/doc/api >> project\build\Doxyfile
 	$(DOXYGEN) project\build\Doxyfile
 
 swig:
@@ -118,7 +118,7 @@ lib-release-static-ts:
 
 dist: docs lib-all-variants _dist
 
-_dist: _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-python _dist-php5 $(PERL_DIST)  $(RUBY_DIST)
+_dist: _dist-prepare _dist-cpp _dist-csharp _dist-java _dist-python _dist-python3 _dist-php5 $(PERL_DIST)  $(RUBY_DIST)
 	rm -f $(DIST_ZIP)
 	cd build
 	zip -rq ../$(DIST_ZIP) $(DIST_BASE)
@@ -151,6 +151,9 @@ _dist-ruby:
 
 _dist-python:
 	cp -u project/swig/python/dist/*.exe $(DISTDIR)/python
+
+_dist-python3:
+	cp -u project/swig/python3/dist/*.exe $(DISTDIR)/python
 
 _dist-php5:
 	cp -u project/swig/php5/$(BUILD_DIR)/librets.php $(DISTDIR)/php5
