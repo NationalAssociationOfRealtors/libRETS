@@ -160,7 +160,6 @@ _dist-php5:
 	cp -u project/swig/php5/$(BUILD_DIR)/librets.dll $(DISTDIR)/php5
 
 _dist-perl:
-
 	cp -u project/swig/perl/librets.pm $(DISTDIR)/perl
 	chmod -R +rwx project/swig/perl/blib
 	$(RSYNC) project/swig/perl/blib/arch/auto/librets/ $(DISTDIR)/perl
