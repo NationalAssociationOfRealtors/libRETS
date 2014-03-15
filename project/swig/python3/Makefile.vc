@@ -3,7 +3,7 @@
 PYTHON = python
 
 LIBRETS_LIB= ../../librets/src/$(BUILD_DIR)/$(LIBRETS_LIB_NAME) \
-                        $(WINLIBS)
+                        $(BOOST_LDFLAGS) $(WINLIBS)
 #CFLAGS = $(CFLAGS_STD) $(BOOST_CFLAGS) -I../../librets/include
 CFLAGS = /GR /EHsc $(BOOST_CFLAGS) $(CURL_CFLAGS) -I../../librets/include
 

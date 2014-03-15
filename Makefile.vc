@@ -70,7 +70,7 @@ docs: prepare
 	rm -rf build/doc/api
 	cp project\build\Doxyfile.in project\build\Doxyfile
 	echo PROJECT_NUMBER=$(VERSION) >> project\build\Doxyfile
-        echo OUTPUT_DIRECTORY=build-$(ARCH)/doc/api >> project\build\Doxyfile
+        echo OUTPUT_DIRECTORY=build/doc/api >> project\build\Doxyfile
 	$(DOXYGEN) project\build\Doxyfile
 
 swig:
@@ -160,11 +160,13 @@ _dist-php5:
 	cp -u project/swig/php5/$(BUILD_DIR)/librets.dll $(DISTDIR)/php5
 
 _dist-perl:
-        cp -u project/swig/perl/librets.pm $(DISTDIR)/perl
-        $(RSYNC) project/swig/perl/blib/arch/auto/librets/ $(DISTDIR)/perl
-        @echo Place librets.pm into your site/lib directory > $(DISTDIR)/perl/README
-        @echo Create the directory site/lib/auto/librets >> $(DISTDIR)/perl/README
-        @echo and place the other files there. >> $(DISTDIR)/perl/README
+
+	cp -u project/swig/perl/librets.pm $(DISTDIR)/perl
+	chmod -R +rwx project/swig/perl/blib
+	$(RSYNC) project/swig/perl/blib/arch/auto/librets/ $(DISTDIR)/perl
+	@echo Place librets.pm into your site/lib directory > $(DISTDIR)/perl/README
+	@echo Create the directory site/lib/auto/librets >> $(DISTDIR)/perl/README
+	@echo and place the other files there. >> $(DISTDIR)/perl/README
 
 _librets-config:
         @cat librets-config.in | sed \
