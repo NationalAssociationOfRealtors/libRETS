@@ -23,6 +23,8 @@ $(LIBRETS_EXT): librets_wrap.cpp
 	echo $(LIBRETS_LIB) >> $(SETUP_CONFIG)
 	echo $(CFLAGS) >> $(SETUP_CONFIG)
 	echo ../librets_bridge.cpp >> $(SETUP_CONFIG)
+	set DISTUTILS_USE_SDK=1
+	set MSSdk=1
 	python setup.py build --compiler=msvc
 
 install:
