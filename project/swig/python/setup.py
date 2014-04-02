@@ -1,6 +1,6 @@
 import distutils
 from distutils.core import setup, Extension
-import subprocess
+import commands
 import re
 import sys
 
@@ -8,10 +8,10 @@ print "sys.platform: " + sys.platform
 if (sys.platform != 'win32' and sys.platform != 'cygwin'):
     librets_config = "../../../librets-config-inplace"
 
-    librets_version = subprocess.check_output([librets_config, "--version"]).strip().decode()
-    librets_cflags = [s.decode().strip() for s in subprocess.check_output([librets_config, "--cflags"]).split()]
-    librets_libs = [s.decode().strip() for s in subprocess.check_output([librets_config, "--libs"]).split()]
-    librets_bridge = subprocess.check_output([librets_config, "--basedir"]).decode().strip() + "/project/swig/librets_bridge.cpp"
+    librets_version = commands.getoutput(librets_config + " --version").rstrip()
+    librets_cflags = commands.getoutput(librets_config + " --cflags").split()
+    librets_libs = commands.getoutput(librets_config + " --libs").split()
+    librets_bridge = commands.getoutput(librets_config + " --basedir") +  "/project/swig/librets_bridge.cpp"
 else:
     with open("setup.ini") as f:
         lines = f.readlines()
