@@ -195,7 +195,7 @@ EOF
             AC_CHECK_PROG(PYTHON3, python3, python3, no)
             if test "$PYTHON3" != "no"; then
                 python3_version=`python3 -c "import sys; print(sys.version[[:3]] + (sys.abiflags if hasattr(sys, 'abiflags') else ''))" | tr -d "\n\r"`
-                python3_prefix=`python3 -c "import sys; print(sys.prefix)" | tr -d "\n\r"`
+                python3_prefix=`python3 -c "import sys; print(sys.base_prefix if hasattr(sys, 'base_prefix') else sys.prefix)" | tr -d "\n\r"`
                 python3_h="$python3_prefix/include/python$python3_version/Python.h"
                 case $host_os in
                     *mingw* | *cygwin*) python3_h="$python3_prefix/include/Python.h" ;;
