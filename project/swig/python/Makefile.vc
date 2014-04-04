@@ -25,13 +25,13 @@ $(LIBRETS_EXT): librets_wrap.cpp
 	echo ../librets_bridge.cpp >> $(SETUP_CONFIG)
 	set DISTUTILS_USE_SDK=1
 	set MSSdk=1
-	python setup.py build --compiler=msvc
+	$(PYTHON) setup.py build --compiler=msvc
 
 install:
-	python setup.py install
+	$(PYTHON) setup.py install
 
 dist: $(LIBRETS_EXT)
-	python setup.py bdist_wininst
+	$(PYTHON) setup.py bdist_wininst
 
 clean:
 	@-rmdir /q /s build 2> NUL
