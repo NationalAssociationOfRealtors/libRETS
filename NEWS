@@ -1,3 +1,8 @@
+Version 1.6.1 -  5 Apr 2014
+  
+  * Correct Windows bundling issues
+  * Migrate to github
+
 Version 1.6.0 - 15 Mar 2014
 
   * Remove errant BOOST_FILESYSTEM_VERSION declaration.
