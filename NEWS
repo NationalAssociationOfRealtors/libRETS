@@ -1,3 +1,7 @@
+Version 1.6.2-SNAPSHOT - xx xxx 2014
+  
+  * Update .gitignore
+
 Version 1.6.1 -  5 Apr 2014
 
   * Correct Linux/Mac OS build problems with Python 2.7 module
