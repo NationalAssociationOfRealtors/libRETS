@@ -4,7 +4,7 @@ import sys
 import librets
 
 try:
-  session = librets.RetsSession("http://demo.crt.realtors.org:6103/rets/login")
+  session = librets.RetsSession("http://www.dis.com:6103/rets/login")
   if (not session.Login("Joe", "Schmoe")):
       print "Invalid login"
       sys.exit(1)

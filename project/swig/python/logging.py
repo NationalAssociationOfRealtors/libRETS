@@ -4,7 +4,7 @@ import sys
 import librets
 
 try:
-  session = librets.RetsSession("http://demo.crt.realtors.org:6103/rets/login")
+  session = librets.RetsSession("http://www.dis.com:6103/rets/login")
 
   log_file = sys.argv[1]
   session.SetHttpLogName(log_file)

@@ -49,7 +49,7 @@ def dump_all_lookup_types(metadata, lookup):
         
     
 try:
-  session = librets.RetsSession("http://demo.crt.realtors.org:6103/rets/login")
+  session = librets.RetsSession("http://www.dis.com:6103/rets/login")
   if ((len(sys.argv) == 2) and (sys.argv[1] == "full")):
       session.SetIncrementalMetadata(False)
   if (not session.Login("Joe", "Schmoe")):
