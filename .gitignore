@@ -10,3 +10,4 @@
 /.gdb_history
 /librets-config
 /librets-config-inplace
+/.gdbinit
