@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys
 
 import librets
@@ -8,17 +9,17 @@ try:
     if not session.Login("Joe", "Schmoe"):
         sys.exit("Invalid login")
 
-    print "Member name: ", session.GetLoginResponse().GetMemberName()
-    print "Search URL: ", session.GetCapabilityUrls().GetSearchUrl()
-    print "Action: ", session.GetAction()
+    print("Member name:", session.GetLoginResponse().GetMemberName())
+    print("Search URL:", session.GetCapabilityUrls().GetSearchUrl())
+    print("Action:", session.GetAction())
     version = "1.0"
     if session.GetDetectedRetsVersion() == librets.RETS_1_5:
         version = "1.5"
-    print "RETS Version: " + version
+    print("RETS Version:", version)
 
     logout = session.Logout()
-    print "Billing info: " + logout.GetBillingInfo()
-    print "Logout message: " + logout.GetLogoutMessage()
-    print "Connect time: " + str(logout.GetConnectTime())
-except librets.RetsException, e:
-    print "Caught: " + e.GetMessage()
+    print("Billing info:", logout.GetBillingInfo())
+    print("Logout message:", logout.GetLogoutMessage())
+    print("Connect time:", logout.GetConnectTime())
+except librets.RetsException as e:
+    print("Caught:", e.GetMessage())

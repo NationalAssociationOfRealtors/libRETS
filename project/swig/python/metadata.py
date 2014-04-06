@@ -1,16 +1,18 @@
 #!/usr/bin/env python
+from __future__ import print_function
+from argparse import ArgumentParser
 import sys
 
 import librets
 
 def dump_system(metadata):
     system = metadata.GetSystem()
-    print "System ID: " + system.GetSystemID()
-    print "Description: " + system.GetSystemDescription()
-    print "Comments: " + system.GetComments()
+    print("System ID: " + system.GetSystemID())
+    print("Description: " + system.GetSystemDescription())
+    print("Comments: " + system.GetComments())
 
 def dump_all_resources(metadata):
-    print
+    print()
     for resource in metadata.GetAllResources():
         dump_all_classes(metadata, resource)
     for resource in metadata.GetAllResources():
@@ -19,38 +21,41 @@ def dump_all_resources(metadata):
 def dump_all_classes(metadata, resource):
     resource_name = resource.GetResourceID()
     for aClass in metadata.GetAllClasses(resource_name):
-        print "Resource name: " + resource_name + " [" + \
-            resource.GetStandardName() + "]"
-        print "Class name: " + aClass.GetClassName() + " ["  + \
-            aClass.GetStandardName() + "]"
+        print('Resource name: {} [{}]'.format(
+            resource_name, resource.GetStandardName()))
+        print('Class name: {} [{}]'.format(
+            aClass.GetClassName(), aClass.GetStandardName()))
         dump_all_tables(metadata, aClass)
-        print
+        print()
 
 def dump_all_tables(metadata, aClass):
     for table in metadata.GetAllTables(aClass):
-        print "Table name: " + table.GetSystemName()  + " [" + \
-            table.GetStandardName() + "]"
+        print('Table name: {} [{}]'.format(
+            table.GetSystemName(), table.GetStandardName()))
 
 def dump_all_lookups(metadata, resource):
     resource_name = resource.GetResourceID()
     for lookup in metadata.GetAllLookups(resource_name):
-        print "Resource name: " + resource_name + " [" + \
-            resource.GetStandardName() + "]"
-        print "Lookup name: " + lookup.GetLookupName() + " ("  + \
-            lookup.GetVisibleName() + ")"
+        print('Resource name: {} [{}]'.format(
+            resource_name, resource.GetStandardName()))
+        print('Lookup name: {} [{}]'.format(
+            lookup.GetLookupName(), lookup.GetVisibleName()))
         dump_all_lookup_types(metadata, lookup)
-        print
+        print()
 
 def dump_all_lookup_types(metadata, lookup):
     for lookup_type in metadata.GetAllLookupTypes(lookup):
-        print "Lookup value: " + lookup_type.GetValue() + " (" + \
-            lookup_type.GetShortValue() + ", " + \
-            lookup_type.GetLongValue() + ")"
-
+        s = 'Lookup value: {} ({}, {})'
+        print(s.format(lookup_type.GetValue(), lookup_type.GetShortValue(),
+            lookup_type.GetLongValue()))
 
 try:
     session = librets.RetsSession("http://www.dis.com:6103/rets/login")
-    if (len(sys.argv) == 2) and (sys.argv[1] == "full"):
+    p = ArgumentParser()
+    p.add_argument('--full', action='store_true')
+    args = p.parse_args()
+
+    if args.full:
         session.SetIncrementalMetadata(False)
     if not session.Login("Joe", "Schmoe"):
         sys.exit("Invalid login")
@@ -60,5 +65,5 @@ try:
     dump_all_resources(metadata)
 
     logout = session.Logout()
-except librets.RetsException, e:
-    print "Caught: " + e.GetMessage()
+except librets.RetsException as e:
+    print("Caught:", e.GetMessage())

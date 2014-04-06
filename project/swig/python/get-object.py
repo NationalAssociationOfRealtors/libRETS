@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys
 
 import librets
@@ -19,16 +20,15 @@ try:
         object_id = object_descriptor.GetObjectId()
         content_type = object_descriptor.GetContentType()
         description = object_descriptor.GetDescription()
-        print object_key + " object #" + str(object_id)
+        print('{} object #{}'.format(object_key, object_id))
 
         suffix = content_type_suffixes[content_type]
-        output_file_name = object_key + "-" + str(object_id) + "." + suffix
-        file = open(output_file_name, 'wb')
-        file.write(object_descriptor.GetDataAsString())
-        file.close()
+        output_file_name = '{}-{}.{}'.format(object_key, object_id, suffix)
+        with open(output_file_name, 'wb') as f:
+            f.write(object_descriptor.GetData())
 
         object_descriptor = response.NextObject()
 
     session.Logout()
-except librets.RetsException, e:
-    print "Caught: " + e.GetMessage()
+except librets.RetsException as e:
+    print("Caught:", e.GetMessage())

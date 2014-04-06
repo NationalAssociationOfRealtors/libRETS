@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys
 
 import librets
@@ -8,14 +9,14 @@ try:
     if not session.Login("Joe", "Schmoe"):
         sys.exit("Invalid login")
 
-    print "Action: ", session.GetAction()
+    print("Action:", session.GetAction())
     version = "1.0"
     if session.GetDetectedRetsVersion() == librets.RETS_1_5:
-    version = "1.5"
-    print "RETS Version: " + version
+        version = "1.5"
+    print("RETS Version:", version)
 
     request = session.CreateSearchRequest("Property", "RES",
-    "(ListPrice=300000-)")
+        "(ListPrice=300000-)")
 
     request.SetStandardNames(True)
     request.SetSelect("ListingID,ListPrice,Beds,City")
@@ -25,17 +26,17 @@ try:
     request.SetFormatType(librets.SearchRequest.COMPACT)
     results = session.Search(request)
 
-    print "Record count: " + repr(results.GetCount())
-    print
+    print("Record count: {!r}".format(results.GetCount()))
+    print()
     columns = results.GetColumns()
     while results.HasNext():
         for column in columns:
-            print column + ": " + results.GetString(column)
-        print
+            print("{}: {}".format(column, results.GetString(column)))
+        print()
 
     logout = session.Logout()
-    print "Billing info: " + logout.GetBillingInfo()
-    print "Logout message: " + logout.GetLogoutMessage()
-    print "Connect time: " + str(logout.GetConnectTime())
-except librets.RetsException, e:
-    print "Caught: " + e.GetMessage()
+    print("Billing info:", logout.GetBillingInfo())
+    print("Logout message:", logout.GetLogoutMessage())
+    print("Connect time:", logout.GetConnectTime())
+except librets.RetsException as e:
+    print("Caught:", e.GetMessage())
