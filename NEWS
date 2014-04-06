@@ -1,6 +1,6 @@
 Version 1.6.1 -  5 Apr 2014
-  
-  * Correct Windows bundling issues
+
+  * Correct Linux/Mac OS build problems with Python 2.7 module
   * Migrate to github
 
 Version 1.6.0 - 15 Mar 2014
