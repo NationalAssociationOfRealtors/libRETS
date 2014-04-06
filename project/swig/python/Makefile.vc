@@ -1,6 +1,6 @@
 !include <../../build/Makefile.vc>
 
-PYTHON = python
+PYTHON2 = python2
 
 LIBRETS_LIB= ../../librets/src/$(BUILD_DIR)/$(LIBRETS_LIB_NAME) \
                         $(BOOST_LDFLAGS) $(WINLIBS)
@@ -25,13 +25,13 @@ $(LIBRETS_EXT): librets_wrap.cpp
 	echo ../librets_bridge.cpp >> $(SETUP_CONFIG)
 	set DISTUTILS_USE_SDK=1
 	set MSSdk=1
-	$(PYTHON) setup.py build --compiler=msvc
+	$(PYTHON2) setup.py build --compiler=msvc
 
 install:
-	$(PYTHON) setup.py install
+	$(PYTHON2) setup.py install
 
 dist: $(LIBRETS_EXT)
-	$(PYTHON) setup.py bdist_wininst
+	$(PYTHON2) setup.py bdist_wininst
 
 clean:
 	@-rmdir /q /s build 2> NUL
