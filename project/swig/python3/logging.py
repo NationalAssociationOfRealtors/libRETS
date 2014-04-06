@@ -10,16 +10,13 @@ try:
     args = p.parse_args()
 
     session = librets.RetsSession("http://www.dis.com:6103/rets/login")
-
     session.SetHttpLogName(args.log_file)
 
     if not session.Login("Joe", "Schmoe"):
-        print("Invalid login")
-        sys.exit(1)
+        sys.exit("Invalid login")
 
     logout = session.Logout()
-
     session.Cleanup()
 
 except librets.RetsException as e:
-    print("Caught: " + e.GetMessage())
+    print("Caught:", e.GetMessage())

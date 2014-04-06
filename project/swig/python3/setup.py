@@ -33,7 +33,7 @@ setup(
             "_librets",
             [
                 "librets_wrap.cpp",
-                librets_bridge
+                librets_bridge,
             ],
             extra_compile_args=librets_cflags,
             extra_link_args=librets_libs,

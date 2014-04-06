@@ -6,14 +6,13 @@ import librets
 try:
     session = librets.RetsSession("http://www.dis.com:6103/rets/login")
     if not session.Login("Joe", "Schmoe"):
-        print("Invalid login")
-        sys.exit(1)
+        sys.exit("Invalid login")
 
-    print("Action: ", session.GetAction())
+    print("Action:", session.GetAction())
     version = "1.0"
     if session.GetDetectedRetsVersion() == librets.RETS_1_5:
         version = "1.5"
-    print("RETS Version: " + version)
+    print("RETS Version:", version)
 
     request = session.CreateSearchRequest("Property", "RES",
         "(ListPrice=300000-)")
@@ -26,7 +25,7 @@ try:
     request.SetFormatType(librets.SearchRequest.COMPACT)
     results = session.Search(request)
 
-    print("Record count: " + repr(results.GetCount()))
+    print("Record count: {!r}".format(results.GetCount()))
     print()
     columns = results.GetColumns()
     while results.HasNext():
@@ -35,8 +34,8 @@ try:
         print()
 
     logout = session.Logout()
-    print("Billing info: " + logout.GetBillingInfo())
-    print("Logout message: " + logout.GetLogoutMessage())
-    print("Connect time: " + str(logout.GetConnectTime()))
+    print("Billing info:", logout.GetBillingInfo())
+    print("Logout message:", logout.GetLogoutMessage())
+    print("Connect time:", logout.GetConnectTime())
 except librets.RetsException as e:
-    print("Caught: " + e.GetMessage())
+    print("Caught:", e.GetMessage())

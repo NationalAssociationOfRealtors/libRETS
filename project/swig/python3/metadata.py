@@ -57,8 +57,7 @@ try:
     if args.full:
         session.SetIncrementalMetadata(False)
     if not session.Login("Joe", "Schmoe"):
-        print("Invalid login")
-        sys.exit(1)
+        sys.exit("Invalid login")
 
     metadata = session.GetMetadata()
     dump_system(metadata)
@@ -66,4 +65,4 @@ try:
 
     logout = session.Logout()
 except librets.RetsException as e:
-    print("Caught: " + e.GetMessage())
+    print("Caught:", e.GetMessage())

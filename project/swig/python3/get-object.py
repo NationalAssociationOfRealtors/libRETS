@@ -6,8 +6,7 @@ import librets
 try:
     session = librets.RetsSession("http://www.dis.com:6103/rets/login")
     if not session.Login("Joe", "Schmoe"):
-        print("Invalid login")
-        sys.exit(1)
+        sys.exit("Invalid login")
 
     request = librets.GetObjectRequest("Property", "Photo")
     request.AddAllObjects("LN000001")
@@ -24,11 +23,11 @@ try:
 
         suffix = content_type_suffixes[content_type]
         output_file_name = '{}-{}.{}'.format(object_key, object_id, suffix)
-        with open(output_file_name, 'wb') as file:
-            file.write(object_descriptor.GetData())
+        with open(output_file_name, 'wb') as f:
+            f.write(object_descriptor.GetData())
 
         object_descriptor = response.NextObject()
 
     session.Logout()
 except librets.RetsException as e:
-    print("Caught: " + e.GetMessage())
+    print("Caught:", e.GetMessage())
