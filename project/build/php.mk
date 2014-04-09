@@ -18,7 +18,7 @@ ${PHP_WRAP}: ${SWIG_FILES}
 	-outdir ${PHP_OBJ_DIR} ${SWIG_DIR}/librets.i
 
 ${PHP_DLL}: ${PHP_WRAP} ${PHP_OBJ_DIR}/librets_wrap.o ${SWIG_BRIDGE_OBJ} ${LIBRETS_LIB}
-	${SWIG_LINK} -o ${PHP_DLL} ${PHP_OBJ_DIR}/librets_wrap.o ${SWIG_LIBRETS_LIBS} ${SWIG_BRIDGE_OBJ}
+	${SWIG_LINK_UNDEFINED} -o ${PHP_DLL} ${PHP_OBJ_DIR}/librets_wrap.o ${SWIG_LIBRETS_LIBS} ${SWIG_BRIDGE_OBJ}
 
 ${PHP_OBJ_DIR}/librets_wrap.o: ${PHP_OBJ_DIR}/librets_wrap.cpp
 	${CXX} ${CXXFLAGS} ${PHP_CXX_FLAGS} -g -DLIBRETS_VERSION='"$(VERSION)"' -I${LIBRETS_INC_DIR} -I${PHP_SRC_DIR} \
