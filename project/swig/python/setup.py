@@ -5,10 +5,22 @@
 # dropping support for those versions as long as they're still
 # supported by SWIG.
 import commands
+import os
 from os.path import join as ospj
 import sys
 
 from distutils.core import setup, Extension
+
+# Work around Python bug 6863: http://bugs.python.org/issue6863
+# distutils malfunctions if $CXX is overridden and contains more than
+# one whitespace-delimited piece. This occurs here when ./configure
+# is passed the --enable-ccache flag. A non-cached build is better
+# than a failing build, so drop 'ccache ' from $CXX if appropriate.
+if 'CXX' in os.environ:
+    pieces = os.environ['CXX'].split()
+    if len(pieces) == 2 and pieces[0] == 'ccache':
+        print('*** Removing "ccache" from CXX environment variable')
+        os.environ['CXX'] = pieces[1]
 
 print "sys.platform: " + sys.platform
 if sys.platform not in ('win32', 'cygwin'):
