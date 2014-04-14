@@ -168,25 +168,21 @@ EOF
         dnl Check to see if we can build for php
         dnl
         if test "$my_use_php" = "yes"; then
-            AC_CHECK_PROG(PHP, php, php, no)
-            if test "$PHP" != "no"; then
-                for php_prefix in $default_search_path
-                do
-                    php_h="$php_prefix/php/main/php.h"
-                    zend_h="$php_prefix/php/Zend/zend.h"
-                    AC_CHECK_FILE([$php_h], [my_php_h=$php_h])
-                    AC_CHECK_FILE([$zend_h], [my_zend_h=$zend_h])
-                    test -n "$my_php_h" && break
-                    test -n "$my_zend_h" && break
-                done
+	    AC_CHECK_PROG(PHPCONFIG, php-config, php-config, no)
+	    if test "$PHPCONFIG" != "no"; then
+	        php_inc=`php-config --include-dir`
+	        php_h="$php_inc/main/php.h"
+		zend_h="$php_inc/Zend/zend.h"
+                AC_CHECK_FILE([$php_h], [my_php_h=$php_h])
+                AC_CHECK_FILE([$zend_h], [my_zend_h=$zend_h])
                 if test -n "$my_php_h"; then
                     if test -n "$my_zend_h"; then
                         HAVE_PHP=1
                         my_have_php=yes
                     fi
-                fi
+		fi
             fi
-        fi
+	fi
 
         dnl
         dnl Check to see if we can build for python3

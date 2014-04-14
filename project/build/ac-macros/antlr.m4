@@ -17,6 +17,9 @@ AC_DEFUN([MY_TEST_ANTLR], [
     AC_MSG_ERROR([antlr requires java to run])
   fi
   AC_CHECK_PROG(ANTLR, antlr, antlr, [])
+  if test x$ANTLR == "x"; then
+     AC_CHECK_PROG(ANTLR, runantlr, runantlr, [])
+  fi
   if test x$ANTLR != "x"; then
 
     save_CFLAGS=$CPPFLAGS
