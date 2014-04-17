@@ -1,0 +1,425 @@
+Version 1.6.1 -  5 Apr 2014
+
+  * Correct Linux/Mac OS build problems with Python 2.7 module
+  * Migrate to github
+  * Integrate Python builds contributed by Harvey Falcic.
+
+Version 1.6.0 - 15 Mar 2014
+
+  * Remove errant BOOST_FILESYSTEM_VERSION declaration.
+  * Correct RetsExceptionContext::GetFileName to fs::path.
+  * Applied Ruby patch submitted by Matthew Schultz
+  * Expose ObjectResponse getters to SWIG languages. Ticket #167.
+  * Handle optional RETS-STATUS when included in login response.
+    Ticket #168.
+  * Applied patch submitted by Mike Owens to add GetHttpResponse().
+  * Implement RETS 1.8 enhancements (excluding the UPDATE transaction).
+    Note: there is a breaking change here in that the FORMAT defaulted
+    to COMPACT and was optional. Now users must either explicitly set
+    FORMAT or use the PAYLOAD option.
+    Multiple tickets.
+  * Incorporate Python3 patch provided by Harvey Falcic.
+
+Version 1.5.3 - 10 Mar 2012
+
+  * Fix detection of gmcs by configure.
+  * Fix examples to use lazy initialization of the Columns to better
+    demonstrate how to address just-in-time data delivery.
+  * Fix Unix perl build.
+  * Make sure that SearchResultSet::GetColumn doesn't attempt to use 
+    an empty string.
+  * Apply patches provided by Matthew Schultz.
+  * Default to BOOST_FILESYSTEM_3 and boost 1.44 or later. Ticket #166.
+  * Recognize RETS/1.8.0.
+  * Pass exceptions through to Java.
+
+Version 1.5.2 - 11 Feb 2011
+  
+  * Add --enable-thread-safe switch and make thread-safe.
+    Ticket #124.
+  * Support MinGW. Ticket #134.
+  * Support Ruby-x86 on Windows. Ticket #136.
+  * Rolled SWIG to 2.0.x. Ticket #159.
+    Created MinGW-X86 and MinGW-x64 tools branches in vendor.
+  * Make sure reply code 20201 is passed back to user. Ticket #137.
+  * Fix Ruby GC crash for Ruby 1.8.7 and later. Ticket #158.
+  * Expose Raw XML search enhancement to PHP. Ticket #160.
+  * #undef MAP_TYPE and friends in GetObjectRequest.h. Ticket #161.
+  * Apply patch to swig Makefile.vc provided by Damian Boune.
+    Ticket #163.
+
+Version 1.5.1 - 12 May 2010
+
+  * Add librets-config-win for Windows. Ticket #138.
+  * Properly parse failed login RETS Reply. Ticket #139.
+  * User Agent Authentication fails for non-Interealty servers.
+    Ticket #140.
+  * UpdateResponse.Parse() throws execption. Ticket #155.
+  * Add InKeyIndex() to MetadataTable and expose to SWIG.
+    Ticket #157.
+
+Version 1.5.0b1 - 22 Mar 2010
+
+  * Support 64 bit Windows. Ticket #125.
+    Note that library names for native development have changed
+    on Windows. The archive library now follows the convention:
+    liblibrets-<vsversion>-<flags>-<version>.lib where:
+        <vsversion> is the compiler version;
+        <flags> is "s" to indicate statically linked and
+                "d" indicates that the library has debug code;
+        <version> is the libRETS version number.
+    For example:
+        liblibrets-vs2008-sd-1.5.0b1.lib
+        liblibrets-vs2008-1.5.0b1.lib
+
+Version 1.4.1 - 12 Mar 2010
+
+  * Add --enable-universal to configure. Ticket #44.
+  * Add PHP to VS2008 build libraries. Ticket #94.
+  * Add PERL to VS2008 build libraries. Ticket #95.
+  * Add "make uninstall" feature. Ticket #121.
+  * Configure is using --L with ANTLR lib. Ticket #122.
+  * Add configurable RestrictedIndicator with example
+    Search program. Ticket #123.
+  * Move GetObjectRequest::GetIgnoreMalformedHeaders
+    documentation to Maintainer mode. Ticket #126.
+  * Add IgnoreMalformedHeaders processing to trailing
+    boundary handling as well. Ticket #127.
+  * Refresh VendorSrc. Ticket #128.
+  * Correct Test100Continue network test failure. 
+    Ticket #129.
+  * SWIG 1.3.40 doesn't build PHP bindings. Ticket #132.
+  * SQL2DMQL compiler changed behaviour of GetObject queries to
+    allow for multiple ids per query by removing object_id. (In
+    implementation if one wants to specify an object_id, they should
+    combine it with object_key, but this happens outside of the scope
+    of the compiler.)
+
+Version 1.4.0 - 12 Oct 2009
+
+  * Bundle MSVCPxx.DLL with the Windows Ruby build.
+  * Support the UPDATE transaction. Ticket #55.
+  * Throw exceptoin if missing leading or trailing tab
+    in COMPACT format. Ticket #89.
+  * Handle malformed multi-part response if enabled.
+    Ticket #112.
+  * Add GetForeignKeys() to RetsMetadata. Ticket #115.
+  * Correct case on Zend/zend.h in configure. Ticket #116.
+  * Add SetRestrictedIndicator to SearchRequest. Ticket #117.
+  * Add SetWildIndicator and GetWildIndicator to ObjectDescriptor.
+    Ticket #118.
+  * Expose ObjectDescriptor::GetRetsReplyCode and GetRetsReplyText
+    to SWIG languages. Ticket #119.
+  * Detect antlr libraries only if the antlr program eixsts.
+    Ticket #120.
+
+Version 1.3.3 - 15 Jul 2009
+  
+  * SWIG 1.3.39 uses feature Generics for C# and Mono MCS
+    doesn't handle that. Ticket #109.
+  * Update demo programs to reflect new demo server defaults.
+    Ticket #110.
+  * SWIG fails to properly compile polymorphic GetMetadata and
+    Search for PHP. Disable those APIs. Ticket #111.
+
+Version 1.3.2 - 05 Jun 2009
+
+  * Clean up autoconf warnings. Enable -fPIC as default.
+  * Attempt to detect Java Home. Ticket #83.
+  * Check for SWIG dependent language headers before 
+    enabling that language. Ticket #88.
+  * Ruby exceptions are cryptic. Ticket #96.
+  * Add PERL to "make install". Ticket #103.
+  * Clean up g++ deprecation warnings. Ticket #104.
+  * Make default encoding ISO. Ticket #105.
+  * Properly detect boost versioned libraries on OS X. 
+    Ticket #106
+  * Clean up memory leaks. Ticket #107.
+
+Version 1.3.1 - 18 Mar 2009
+
+  * Expose RetsVersionToString to SWIG languages. Ticket #92.
+  * Expose Raw RETS enhancement to .NET. Ticket #93.
+  * Add RETS/1.7.2 functionality. Ticket #97.
+  * Add try/catch blocks around lexical_cast in GetObject 
+    and GetObjectResponse. Ticket #98.
+  * Added GetRetsReplyCode() and GetRetsReplyText() to
+    ObjectDescriptor and will parse text/xml files in
+    multipart responses. Ticket #99. 
+  * Modify configure scripts for POSIX 1003.2 compliance.
+    Ticket #100.
+  * Handle Boost versioned libraries. Ticket #101.
+  * Calling HasMaxRows() causes only one row to be returned.
+   Ticket #102.
+
+Version 1.3.0b1 - 06 Jan 2009
+
+  * Converted the http client model to allow for parallel
+    search requests. Ticket #73.
+  * Report XML parse error "no element found" as an http
+    exception when there is no more data on the stream.
+    Ticket #75.
+  * Added RETS 1.7 checks to example code. Ticket #58.
+  * Propagate Rets Exceptions up to PHP. Ticket #81.
+  * Throw an exception when trying to dereference a null
+    URL. Ticket #84.
+  * Add API to allow raw RETS data to be returned to a stream.
+    Ticket #85.
+  * Add GetObjectResponse::GetHttpResponse() and GetErrorText().
+    Ticket #86.
+  * Add RetsSession::MODE_NO_SSL_VERIFY to disable SSL
+    verification. Ticket #87.
+  * Add API to allow raw RETS data to be reinjected into the
+    parse stream for C++ and Java. Ticket #90.
+  * Configure fails if Java not installed. Ticket #91.
+
+Version 1.2.5 - 26 Nov 2008
+
+  * Expose RETS_XML_UTF8_ENCODING to SWIG languages.
+    Ticket #80.
+  * Expose RetsSession::SetTimeout() to SWIG languages.
+    Ticket #82.
+  * Added "Y" as a valid value for truth in boolean comparisons in
+    MetadataElements.
+
+Version 1.2.4 - 17 Nov 2008
+
+  * Add RetsSession.SetModeFlags to allow caching to be enabled
+    in streaming mode (RetsSession::MODE_CACHE), to disable
+    streaming mode (RetsSession::MODE_NO_STREAM), and to disable
+    the "Expect: 100 Continue" header (RetsSession::MODE_NO_EXPECT).
+    Tickets #59, #77 and #79.
+  * Add RetsSession.SetTimeout() to establish a timeout value
+    with libCURL. Ticket #68.
+  * Add UTF-8 as an accetable character encoding.
+    Ticket #80.
+
+Version 1.2.3 - 9 Sep 2008
+
+  * Added test-network target and httpServer to test actual 
+    network activity in the test harness. Tickets #70 and #74.
+  * Expose RetsSession.SetHttpLogName() to all languages. Ticket #71.
+
+Version 1.2.2 - 29 Aug 2008
+
+  * Updated KeyValueResponse parsing to allow for ISO characters.
+    Ticket #40.
+  * Consider http response of "0" to be successful. It is possible
+    with the streaming enhancement to see no status if the http
+    transaction hasn't yet completed. Ticket #62.
+  * Correct regression with logging GetObject calls per Ticket #36.
+    The streaming enhancement caused GetObject calls to always be
+    logged.
+    Ticket #63.
+  * Enhanced .NET Search to include switch configurable options
+    such that it can be included for debugging purposes on the
+    Windows binary builds. Added RetsSession::GetLibraryVersion()
+    to return a string of the current libRETS version.
+    Ticket #64.
+  * Added static GetLibraryVersion to RetsSession.
+    Ticket #65.
+  * Added API documentation and a new switch to "configure" that
+    controls whether user or maintainer documentation is produced.
+  * Added http proxy capability through RetsSession::SetProxy.
+    Ticket #66
+  * Improved exception handling so more detailed error information
+    could be returned to .NET languages. Added RetsHttpException
+    to handle cURL/http exceptions.
+    Modeled on patch supplied by Tony Manhollan.
+    Ticket #67.
+  * Added some additional checking to the http transaction flow in an attempt
+    to masquerade networking issues as 503 (service unavailable) erorrs when
+    libCURL returns a zero status to us.
+    Ticket #69.
+  * Revised http logging methodology for SWIG bound languages and
+    updated developer documentation accordingly. For all SWIG languages,
+    RetsSession::SetHttpLogName("log.name") is all that is needed to 
+    invoke http logging. Legacy usage is still supported.
+  * Revised Librets-Version header to be "X-Librets-Version".
+  * libCURL requirement updated to 7.18.2 to avoid some bugs in curl
+
+Version 1.2.1 - 25 Jun 2008
+
+  * Add Rets 1.7 support.
+    Ticket #39.
+  * Metadata field names and reserved values should be case insensitive.
+    Ticket #57.
+  * Add Perl interface.
+    Ticket #52.
+  * Add PHP interface.  (And added PHP to the windows binary build.)
+    Ticket #51.
+  * Add JAVA interface. On Unixen, you need to include --with-java-prefix and
+    point it to the JDK as in --with-java-prefix=/usr/local/jdk1.6.0.
+    Ticket #53.
+
+Version 1.2.0 - 9 May 2008
+
+  * Add "streaming" enhancement. This enhancement improves performance
+    for larger fetches at expense of risking timeouts with the RETS server.
+    This enhancement moves a significant portion of the search and retrieval
+    logic into the SearchResultSet logic. As a result, when the SearchResultSet
+    is first returned, it may not have retrieved any data from the RETS server.
+    You can only be assured that at least one row has been retrieved by
+    calling SearchResultSet::HasNext().
+    Ticket #41.
+
+Version 1.1.12 - 6 May 2008
+
+  * Extend XML parsing for metadata to include ISO characters if specified.
+    Ticket #54.
+
+Version 1.1.11 - 1 Apr 2008
+
+  * Add SWIG bindings to Autoconf based (unix) build.
+    Ticket #31.
+  * Do not log GetObject requests by default and provide new method 
+    RetsSession::SetLogEverything() to override the new default.
+    Ticket #36.
+  * Expose SqlToDmqlCompiler to C#.
+    Ticket #42.
+  * Handle changes to curl-config in curl 7.17.x and later.
+    Ticket #46.
+  * Add MetadataTable::GetMinimumAsString() and GetMaximumAsString().
+    Ticket #47.
+  * Remove std_string.i and std_vector.i from swig to allow for
+    default versions to be used.
+    Ticket #49.
+  * SqlToDmqlCompiler now accepts a ? as a value in a WHERE clause.
+    Ticket #48  Not complete, as you cannot yet take action on that.
+
+Version 1.1.10 - 21 Dec 2007
+
+  * For a SearchRequest, StandardNames now defaults to false.
+  * SearchResult/RetsHttpRequest.GetQueryString() is now exposed to the
+    swig supported languages.
+  * Added build options of enable-PIC and enable-shared_dependencies to help
+    with ezRETS on x86_64 on Linux.
+  * Fix build bug where --enable-sql-compiler actually disabled it.
+  * Add support for extended error messages to RetsException. Ticket #34.
+  * Throw an exception from various RetsSession methods that can be called
+    without being properly logged in. Ticket #37.
+  * Fix bug where non US-ASCII character in MLS data caused XML parsing to
+    fail. Ticket #40.
+  * Added SearchResultSet::HasMaxRows() in order to determine if MAXROWS
+    was sent by the server. Ticket #43.
+  * RetsMetadata::GetSearchHelp() added.
+  * Ruby bindings now support overloading of RetsHttpLogger and the
+    use of the RetsSession.SetHttpLogger
+
+Version 1.1.9 - 12 June 2007
+
+  * Handle headers in Multipart GetObject responses case insensitively
+  * Added option to ignore malformed headers on a multi-part GetObject
+  * Fix bug where exception was thrown when URL was of the form:
+    http://example.com:6103
+  * Added missing METADATA-OBJECT to RetsSession::MetadataTypeToString
+  * Added optional timestamp to StreamHttpLogger
+
+Version 1.1.8 - 26 March 2007
+
+  * librets-config has additional information of version number as hex
+    and if the sql compiler was included.
+  * Added support for MetadataObject to RetsMetadata
+  * Added methods of GetMIMEType, GetVisibleName, and GetDescription
+    to MetadataObject
+  * For the languages supported by swig: map MetadataObject
+
+Version 1.1.7 - 13 February 2007
+
+  * The SQL to DMQL compiler (and its ANTLR dependency) are now
+    optional.  This should only effect people using C++ and this
+    functionality.
+  * Fix some build problems on OS X/Unix where ANTLR wasn't where we
+    were expecting it.
+  * For the languages supported by swig: map the missing
+    SearchRequest.SetQueryType and SearchRequest.SetFormatType methods.
+
+Version 1.1.6 - 18 December 2006
+
+  * Create the rest of the method mappings for MetadataTable for various
+    swig bindings.
+
+Version 1.1.5 - 20 November 2006
+
+  * Properly quote strings with spaces in SQL to DMQL translator.
+
+Version 1.1.4 - 23 August 2006
+
+  * URL escape more characters.
+  * More robust Logout Respoonse handling.
+  * Make Ruby bindings more Ruby-like
+  * Remove all derived files from source distribution, except ./configure
+
+Version 1.1.3 - 26 July 2006
+
+  * Expose LoginResponse and CapabilityUrls in RetsSession.
+
+Version 1.1.2 - 12 July 2006
+
+  * Add Interealty client (user agent) authorization.
+
+Version 1.1.1 - 11 May 2006
+
+  * Deal with HTTP headers as case insensitive.
+  * Handle GetObject SQL queries that have no WHERE clause.
+
+Version 1.1.0 -  2 May 2006
+
+  * Fix parse error for COMPACT data rows with all empty data.
+  * ./configure checks for the "java" program, since ANTLR requires it.
+
+Version 1.1.0 beta 6 - 28 Apr 2006
+
+  * Lookup and LookupType metadata is now accessible through RetsMetadata.
+  * Add COUNT(*) to SQL compiler.
+  * Location URLs supported in GetObject SQL compiler.
+  * ResultSet count property correctly is zero for a "No Records Found"
+    response.
+  * ResultSet count property is set to -1 if no <count> tag is found.
+  * Fix various build issues.
+
+Version 1.1.0 beta 5 - 1 March 2006
+
+  * Fixed memory management issues causing crashes if using HTTP logging
+    delegates in .Net.
+
+Version 1.1.0 beta 4 - 14 February 2006
+
+  * GetObject support for Python.
+  * Allow emtpy or missing Content-ID and Object-ID headers in the GetObject
+    response under conditions where these can be derived from the GetObject
+    request (ticket #22).
+  * Add support for HTTP logging in .Net via the RetsHttpLogger.Delegate
+    property in RetsSession.
+
+Version 1.1.0 beta 3 - 1 February 2006
+
+  * GetObject support for .Net and Ruby.
+
+Version 1.1.0 beta 2 - 26 January 2006
+
+  * Support for COMPACT format.
+
+Version 1.1.0 beta 1 - 12 January 2006
+
+  * Initial bindings to .Net (C# and VB.Net), Ruby, and Python.
+  * Generic API changes such that shared pointers are never passed back to the
+    user: only regular pointes or auto pointers.
+
+Version 1.0.0 - 20 October 2005
+
+  * Add cleaner fix for 512-byte XML document parsing error.
+  * All metadata objects are returned as normal pointers, not as
+    shared pointers, since the RetsSession object owns them.
+  * Add incremental metadata fetching.  This is now the default.
+
+Version 1.0.0b2 - 13 September 2005
+
+  * Add support for SQL quoted literals.
+  * Add support for SQL table aliaes.
+  * Add support for SQL IN clause.
+  * Fix bug parsing 512-byte XML documents.
+
+Version 1.0.0b1 - 30 August 2005
+
+  * First public release.
