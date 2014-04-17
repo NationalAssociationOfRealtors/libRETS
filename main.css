@@ -1,0 +1,91 @@
+OL,UL,P,BODY,TD,TR,TH,FORM,H1,H2,H3,H4,H5,H6 {
+  font-family: arial, helvetica, verdana, sans-serif;
+}
+
+A:link { 
+  color: #000083;
+}
+
+A:visited {
+  color: #af0000;
+}
+
+A:hover {
+  color: #4f371e;
+}
+
+.header { 
+  background-color: #6b9cff;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  padding: 0.5em;
+}
+
+.hleft {
+  font-size: large;
+  font-weight: bold;
+}
+
+.hright {
+  text-align: right;
+}
+
+.hidden {
+  display: none;
+}
+
+.footer { 
+  background-color: #6b9cff;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  font-size: small;
+  text-align: center;
+  padding: 0.5em;
+}
+
+.nav-border {
+  background-color: #656565;
+}
+
+.nav-logo {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.nav-body {
+  background-color: #ccccff;
+}
+
+.dl-header {
+  font-weight: bold;
+  background-color: #6b9cff;
+}
+
+.dl-group {
+  background-color: #b5b5b5;
+  font-weight: bold;
+}
+
+.demo-param {
+  font-weight: bold;
+  text-align: right;
+}
+
+.demo-value {
+}
+
+.x-nav { 
+  position: relative;
+  float: right;
+  vertical-align: middle;
+}
+
+.content { 
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.logo {
+  padding: 10px;
+  float: right;
+}
