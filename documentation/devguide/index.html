@@ -1,0 +1,1996 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>libRETS Developer's Guide</title><link href="style.css" rel="stylesheet" type="text/css"><meta content="DocBook XSL Stylesheets V1.75.0" name="generator"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article" title="libRETS Developer's Guide"><div class="titlepage"><div><div><h2 class="title"><a name="N10001"></a>libRETS Developer's Guide</h2></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#introduction">1. Introduction</a></span></dt><dt><span class="section"><a href="#connecting">2. Connection to a RETS server</a></span></dt><dd><dl><dt><span class="section"><a href="#connecting-session">2.1. Creating a <code class="literal">RetsSession</code> object</a></span></dt><dt><span class="section"><a href="#connection-ua-auth">2.2. Configuring User-Agent Authentication</a></span></dt><dt><span class="section"><a href="#connection-login">2.3. Logging into a RETS server</a></span></dt></dl></dd><dt><span class="section"><a href="#metadata">3. Working with metadata</a></span></dt><dd><dl><dt><span class="section"><a href="#rets-metadata">3.1. Obtaining the RetsMetadata Class</a></span></dt><dt><span class="section"><a href="#metadata-system">3.2. MetadataSystem</a></span></dt><dt><span class="section"><a href="#metadata-Resource">3.3. MetadataResource</a></span></dt><dt><span class="section"><a href="#metadata-Class">3.4. MetadataClass</a></span></dt><dt><span class="section"><a href="#metadata-Table">3.5. MetadataTable</a></span></dt><dt><span class="section"><a href="#metadata-Lookup">3.6. MetadataLookup</a></span></dt><dt><span class="section"><a href="#metadata-Lookup-Type">3.7. MetadataLookupType</a></span></dt></dl></dd><dt><span class="section"><a href="#search">4. Performing Searches</a></span></dt><dd><dl><dt><span class="section"><a href="#search-request">4.1. Setting up the Search Request</a></span></dt><dt><span class="section"><a href="#processing-search-results">4.2. Processing the Results of the Search</a></span></dt></dl></dd><dt><span class="section"><a href="#getobject">5. Fetching Media</a></span></dt><dd><dl><dt><span class="section"><a href="#getobject-request">5.1. Setting up the GetObject Request</a></span></dt><dt><span class="section"><a href="#getobject-addjobjects">5.2. Identifying the Resources to Return</a></span></dt><dt><span class="section"><a href="#getobject-fetch">5.3. Fetch the Objects</a></span></dt></dl></dd><dt><span class="section"><a href="#update">6. Performing Updates</a></span></dt><dd><dl><dt><span class="section"><a href="#update-request">6.1. Setting up the Update Request</a></span></dt><dt><span class="section"><a href="#processing-update-results">6.2. Processing the Results of the Update</a></span></dt></dl></dd><dt><span class="section"><a href="#disconnecting">7. Disconnecting From The Server</a></span></dt><dt><span class="section"><a href="#logging">8. Adding Http Logging</a></span></dt><dd><dl><dt><span class="section"><a href="#setup-easy">8.1. Setting up simple logging</a></span></dt><dt><span class="section"><a href="#setup-custom">8.2. Setting up logging for a C++ application</a></span></dt><dt><span class="section"><a href="#csharp">8.3. Setting up custom logging for a C# application</a></span></dt><dt><span class="section"><a href="#java">8.4. Setting up custom logging for a Java application</a></span></dt><dt><span class="section"><a href="#python">8.5. Setting up custom logging for Python</a></span></dt><dt><span class="section"><a href="#ruby">8.6. Setting up custom logging for Ruby</a></span></dt></dl></dd><dt><span class="section"><a href="#advanced">9. Advanced libRETS Usage</a></span></dt><dd><dl><dt><span class="section"><a href="#search-request">9.1. Setting up the Search Request</a></span></dt><dt><span class="section"><a href="#getmetadta-request">9.2. Setting up the GetMetadata Request</a></span></dt></dl></dd><dt><span class="bibliography"><a href="#libres-bibliography">Bibliography</a></span></dt></dl></div><div class="section" title="1.&nbsp;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="introduction"></a>1.&nbsp;Introduction</h2></div><div><h3 class="subtitle">Mission Statement: <span class="emphasis"><em>To remove the burden of 
+  handling the transport (html) and protocol (xml) and allow programmers 
+  direct access to the underlying Real Estate data</em></span>
+  </h3></div></div></div><p>This guide is intended to help you get started with libRETS.
+  It will cover the basics of getting connected to a RETS server,
+  getting the metadata, doing a search, and getting an object/photo
+  from the RETS server.</p><p>This guide WILL NOT be a primer on RETS or teach you the ins
+  and outs of RETS.  This guide will also not cover all the functions
+  and methods in libRETS. The API documentation is available at
+    <a class="ulink" href="http://www.crt.realtors.org/projects/rets/librets/documentation/api/" target="_top">
+        http://www.crt.realtors.org/projects/rets/librets/documentation/api/
+    </a>
+  should that be needed.</p><p>This guide will attempt to cover all the languages that
+  libRETS supports as much as possible.  Those languages are C++, Java,
+  Perl, Php5, Python, Ruby, and the .NET languages.</p><p>To get started you'll need a few things:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>An understanding of RETS and/or a copy of the RETS spec.
+      More information on rets can be obtained at <a class="ulink" href="http://rets.org/" target="_top">http://rets.org/</a></p></li><li class="listitem"><p>libRETS for your language choice and an understanding of
+      object oriented programming.  libRETS can be obtained at <a class="ulink" href="http://www.crt.realtors.org/projects/rets/librets" target="_top">
+      http://www.crt.realtors.org/projects/rets/librets</a></p></li><li class="listitem"><p>Access to a RETS server.  If you do not have access to a
+      RETS server, you can use CRT's demo server.  The downside to
+      CRT's demo server is that it doesn't have much data in it.  You
+      can find out more about CRT's demo server at <a class="ulink" href="http://www.crt.realtors.org/projects/rets/variman/demo" target="_top">
+      http://code.crt.realtors.org/projects/rets/variman/demo</a></p></li></ul></div><p>Please note that there are complete examples included in the libRETS 
+  source. These may be browsed online at
+  <a class="ulink" href="https://code.crt.realtors.org/projects/librets/browser/librets/trunk/project/examples/src" target="_top">
+      https://code.crt.realtors.org/projects/librets/browser/librets/trunk/project/examples/src
+  </a>
+  for the C++ versions, or under
+  <a class="ulink" href="https://code.crt.realtors.org/projects/librets/browser/librets/trunk/project/swig" target="_top">
+      https://code.crt.realtors.org/projects/librets/browser/librets/trunk/project/swig
+  </a>
+  for the other languages. Many of the examples in this guide are based on
+  that code and it is worth looking at them in context.
+  </p></div>
+
+
+  0<div class="section" title="2.&nbsp;Connection to a RETS server"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="connecting"></a>2.&nbsp;Connection to a RETS server</h2></div></div></div><p>The first logical task will be to connect up to a RETS server.
+  This includes a number of steps including, setting the LoginURL,
+  username, password, and a few other possible items.</p><div class="section" title="2.1.&nbsp;Creating a RetsSession object"><div class="titlepage"><div><div><h3 class="title"><a name="connecting-session"></a>2.1.&nbsp;Creating a <code class="literal">RetsSession</code> object</h3></div></div></div><p>Everything you will do with libRETS starts with a
+    <code class="literal">RetsSession</code> object.  This is the first class
+    you will create, and the last class you will destroy. The
+    <code class="literal">RetsSession</code> class will also be used to invoke
+    the various RETS commands to the server. It in turn will return additional
+    classes that will be used for the next steps of the RETS transaction.</p><p>You create a new RetsSession by passing it the LoginURL to
+    the RETS server for which you will be connecting:</p><pre class="programlisting">// C++
+include "librets.h"
+#include &lt;iostream&gt;
+
+librets::RetsSession session* = new librets::RetsSession("http://demo.crt.realtors.org:6103/rets/login");</pre><pre class="programlisting">// C#
+using System;
+using System.Collections;
+using librets;
+
+RetsSession session = new RetsSession("http://demo.crt.realtors.org:6103/rets/login");</pre></div><pre class="programlisting">// Java
+import librets.*;
+
+RetsSession session = new RetsSession("http://demo.crt.relators.org:6103/rets/login")</pre><pre class="programlisting"># perl
+use lib "blib/lib", "blib/arch";
+use strict;
+use librets;
+
+my $session = new librets::RetsSession("http://demo.crt.realtors.org:6103/rets/login");</pre><pre class="programlisting">&lt;?php
+include_once('librets.php');
+
+$session = new RetsSession("http://demo.crt.realtors.org:6103/rets/login");</pre><pre class="programlisting"># python
+import sys
+import librets
+
+session = librets.RetsSession("http://demo.crt.realtors.org:6103/rets/login")</pre><pre class="programlisting"># ruby
+require 'librets'
+
+include Librets
+
+session = Librets::RetsSession.new('http://demo.crt.realtors.org:6103/rets/login')</pre><div class="section" title="2.2.&nbsp;Configuring User-Agent Authentication"><div class="titlepage"><div><div><h3 class="title"><a name="connection-ua-auth"></a>2.2.&nbsp;Configuring User-Agent Authentication</h3></div></div></div><p>Some RETS servers require the use of what is known in RETS
+    as User-Agent Authentication.  For those servers you'll need to
+    use the <code class="literal">SetUserAgentAuthType</code> and
+    <code class="literal">SetUserAgentPassword</code> methods of
+    <code class="literal">RetsSession</code> prior to logging in.</p><p>There are currently two forms of User-Agent Authentication: 
+    support by libRETS: the RETS standard and a slightly modified version
+    used by Interealty (now MarketLinx). You set the User-Agent Authentication type using
+    either <code class="literal">USER_AGENT_AUTH_INTEREALTY</code> or
+    <code class="literal">USER_AGENT_AUTH_RETS_1_7</code>:</p><pre class="programlisting">// C++
+session-&gt;SetUserAgentAuthType(librets::USER_AGENT_AUTH_RETS_1_7);
+session-&gt;SetUserAgentPassword("YourPassword");</pre><pre class="programlisting">// C#
+session.SetUserAgentAuthType(USER_AGENT_AUTH_RETS_1_7);
+session.SetUserAgentPassword("YourPassword");</pre><pre class="programlisting">// Java
+session.SetUserAgentAuthType(UserAgentAuthType.USER_AGENT_AUTH_RETS_1_7);
+session.SetUserAgentPassword("YourPassword");</pre><pre class="programlisting"># perl
+$session-&gt;SetUserAgentAuthType($librets::UserAgentAuthType::USER_AGENT_AUTH_RETS_1_7);
+$session-&gt;SetUserAgentPassword("YourPassword");</pre><pre class="programlisting">&lt;?php
+$session-&gt;SetUserAgentAuthType(USER_AGENT_AUTH_RETS_1_7);
+$session-&gt;SetUserAgentPassword("YourPassword");</pre><pre class="programlisting"># python
+session.SetUserAgentAuthType(librets.USER_AGENT_AUTH_RETS_1_7)
+session.SetUserAgentPassword("YourPassword")</pre><pre class="programlisting"># ruby
+session.set_user_agent_auth_type(Librets::USER_AGENT_AUTH_RETS_1_7)
+session.set_user_agent_password('YourPassword')</pre></div><div class="section" title="2.3.&nbsp;Logging into a RETS server"><div class="titlepage"><div><div><h3 class="title"><a name="connection-login"></a>2.3.&nbsp;Logging into a RETS server</h3></div></div></div><p>Logging into a RETS server is as simple as calling the Login
+    method with the username and password.  You'll want to check the
+    returned bool to see whether or not the login succeeded.</p><pre class="programlisting">// C++
+if (!session-&gt;Login("Joe", "Schmoe"))
+{
+    std::cout &lt;&lt; "Error logging in" &lt;&lt; std::endl;
+    exit(1);
+}</pre><pre class="programlisting">// C#
+if (!session.Login("Joe", "Schmoe"))
+{
+    Console.WriteLine("Error logging in");
+    Environment.Exit(1);
+}</pre><pre class="programlisting">// Java
+if (!session.Login("Joe", "Schmoe"))
+{
+    System.out.println("Invalid login");
+    System.exit(2);
+}</pre><pre class="programlisting"># perl
+if (!$session-&gt;Login("Joe", "Schmoe"))
+{
+    print "Invalid login\n";
+    exit 1;
+}</pre><pre class="programlisting"># php
+if (!$session-&gt;Login("Joe", "Schmoe"))
+{
+    print "Invalid Login\n";
+    exit(1);
+}</pre><pre class="programlisting"># python
+if (not session.Login("Joe", "Schmoe")):
+    print "Error logging in"
+    sys.exit(1)</pre><pre class="programlisting"># ruby
+if !session.login("Joe", "Schmoe")
+    puts "Error logging in"
+    exit 1
+end</pre></div></div><div class="section" title="3.&nbsp;Working with metadata"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="metadata"></a>3.&nbsp;Working with metadata</h2></div></div></div><p>
+        In this section, we'll learn how to fetch the metadata from the
+        server using libRETS.
+    </p><p>
+        There are two main methods supported by libRETS:
+    </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+                Incremental mode (default mode)
+            </p></li><li class="listitem"><p>
+                Full metadata mode
+            </p></li></ul></div><p>
+        In incremental mode, libRETS will fetch the metadata incrementally
+        from the server when it is required by the user. This mode is more
+        efficient when there is some proessing to be done at each level of the
+        metadata, or there is the possibility that not all of the metadata
+        will be needed by the user. The downside with libRETS 1.2 and later
+        is that libRETS is using the "streaming" mode at the transport layer,
+        and it could be possible that an html transaction is in process while
+        the user is processing the metadata. In this case, it could be possible
+        for the server to time out the transaction before the user makes the
+        next call to libRETS.
+    </p><p>
+        In full metadata mode, libRETS will fetch the entire metadata at one
+        time before proceeding. Because of "streaming" mode, this is fairly 
+        efficient, but does require the entire metadata to be retrieved and 
+        cached at the expense of memory usage. Please refer to the API for
+        further details.
+    </p><div class="section" title="3.1.&nbsp;Obtaining the RetsMetadata Class"><div class="titlepage"><div><div><h3 class="title"><a name="rets-metadata"></a>3.1.&nbsp;Obtaining the RetsMetadata Class</h3></div></div></div><p>
+            The first task is to obtain the <code class="literal">RetsMetadata</code> 
+            class that will control access to the metadata. As with all other
+            classes, this is obtained from <code class="literal">RetsSession</code>:
+        </p><pre class="programlisting">// C++
+        RetsMetadata * metadata = session-&gt;GetMetadata();
+</pre><pre class="programlisting">// C#
+        RetsMetadata metadata = session.GetMetadata();
+</pre><pre class="programlisting">// Java
+        RetsMetadata metadata = session.GetMetadata();
+</pre><pre class="programlisting"># perl
+        my $metadata = $session-&gt;GetMetadata();
+</pre><pre class="programlisting">&lt;? php
+        $metadata = $session-&gt;GetMetaData();
+</pre><pre class="programlisting"># python
+        metadata = session.GetMetadata()
+</pre><pre class="programlisting"># ruby
+        metadata = session.metadata
+</pre></div><div class="section" title="3.2.&nbsp;MetadataSystem"><div class="titlepage"><div><div><h3 class="title"><a name="metadata-system"></a>3.2.&nbsp;MetadataSystem</h3></div></div></div><p>
+            There is only one system object for metadata, so accessing is
+            straightforward:
+        </p><pre class="programlisting">// C++
+        MetadataSystem * system = metadata-&gt;GetSystem();
+        
+        cout &lt;&lt; "System ID: " &lt;&lt; system-&gt;GetSystemID() &lt;&lt; endl;
+        cout &lt;&lt; "System Description: " &lt;&lt; system-&gt;GetSystemDescription() &lt;&lt; endl;
+        cout &lt;&lt; "Comments: " &lt;&lt; system-&gt;GetComments() &lt;&lt; endl;
+
+</pre><pre class="programlisting">// C#
+        MetadataSystem system = metadata.GetSystem();
+        
+        Console.WriteLine("System ID: " + system.GetSystemID());
+        Console.WriteLine("Description: " + system.GetSystemDescription());
+        Console.WriteLine("Comment: " + system.GetComments());
+</pre><pre class="programlisting">// Java
+        MetadataSystem system = metadata.GetSystem();
+
+        System.out.println("System ID: " + system.GetSystemID());
+        System.out.println("Description: " + system.GetSystemDescription());
+        System.out.println("Comment: " + system.GetComments());
+</pre><pre class="programlisting"># perl
+        my $system = $metadata-&gt;GetSystem();
+        
+        print "System ID: " . $system-&gt;GetSystemID() . "\n";
+        print "Desription: " . $system-&gt;GetSystemDescription() . "\n";
+        print "Comment : " . $system-&gt;GetComments() . "\n\n";
+</pre><pre class="programlisting">&lt;? php
+        $system = $metadata-&gt;GetSystem();
+        
+        print "System ID: " . $system-&gt;GetSystemID() . "\n";
+        print "Description: " . $system-&gt;GetSystemDescription() . "\n";
+        print "Comments: " . $system-&gt;GetComments() . "\n";
+</pre><pre class="programlisting"># python
+        system = metadata.GetSystem()
+        
+        print "System ID: " + system.GetSystemID()
+        print "Description: " + system.GetSystemDescription()
+        print "Comments: " + system.GetComments()
+</pre><pre class="programlisting"># ruby
+        system = metadata.system
+        
+        puts "System ID: " + system.system_id
+        puts "Description: " + system.system_description
+        puts "Comment: " + system.comments
+</pre></div><div class="section" title="3.3.&nbsp;MetadataResource"><div class="titlepage"><div><div><h3 class="title"><a name="metadata-Resource"></a>3.3.&nbsp;MetadataResource</h3></div></div></div><p>
+            The balance of the metadata is hierarchical, rooted in the
+            resources. There will be more than one resource, so they are
+            handled as a vector. Iterating through the vectors is language
+            dependent. libRETS does not yet support some of the more abstract
+            iteration constructs for some languages, so if iteration doesn't
+            appear to be working, try looping.
+        </p><p>
+            In these examples, we'll demonstrate finding out about the metadata
+            without having any up front knowledge other than the URI for
+            logging into the server and the security credentials that are 
+            needed. For each of these GetAll APIs, there are corresponding APIs 
+            to find out about individual items. So, in the example below, where
+            we would use <code class="literal">RetsMetadata::GetAllResources()</code>
+            to find out about all RETS resources, we could also use
+            <code class="literal">RetsMetadata::GetResource(resourceName)</code> to
+            retrieve the data were we to know the name of the resource.
+        </p><p>
+            In the following example, we demonstrate fetching all resources
+            with <code class="literal">RetsMetadata::GetAllResources()</code> and various
+            supported looping constructs to iterate over the Resources:
+        </p><pre class="programlisting">// C++
+        MetadataResourceList resources = metadata-&gt;GetAllResources();
+        
+        MetadataResourceList::iterator i;
+        for (i = resources.begin(); i != resources.end(); i++)
+        {                   
+            MetadataResource * resource = *i;
+            dumpAllClasses(metadata, resource);
+        }           
+</pre><pre class="programlisting">// C#
+        IEnumerable resources = metadata.GetAllResources();
+        foreach (MetadataResource resource in resources)
+        {
+            dumpAllClasses(metadata, resource);
+        }
+</pre><pre class="programlisting">// Java
+        MetadataResourceList resources = metadata.GetAllResources();
+
+        for (int i = 0; i &lt; resources.size(); i++)
+        {
+            MetadataResource resource = resources.get(i);
+            dumpAllClasses(metadata, resource);
+        }
+
+</pre><pre class="programlisting"># perl
+        my $resources = $metadata-&gt;GetAllResources();
+        foreach my $resource (@$resources)
+        {
+            dumpAllClasses($metadata, $resource);
+        }   
+</pre><pre class="programlisting">&lt;? php
+        $resource = $metadata-&gt;GetAllResources();
+        
+        for ($i = 0; $i &lt; $resource-&gt;size(); $i++)
+        {
+            $r = $resource-&gt;get($i);
+            dump_all_classes($metadata, $r);
+        }
+</pre><pre class="programlisting"># python
+        for resource in metadata.GetAllResources():
+            dump_all_classes(metadata, resource)
+</pre><pre class="programlisting"># ruby
+        metadata.GetAllResources.each do |resource|
+            dump_all_classes(metadata, resource)
+        end
+
+</pre></div><div class="section" title="3.4.&nbsp;MetadataClass"><div class="titlepage"><div><div><h3 class="title"><a name="metadata-Class"></a>3.4.&nbsp;MetadataClass</h3></div></div></div><p>
+            Given a RETS Resource, one may next find all of the classes 
+            associated with that resource. This is done with 
+            <code class="literal">RetsMetadata::GetAllClasses()</code>, specifying the
+            resource for which you want all of the classes:
+        </p><pre class="programlisting">// C++
+        void dumpAllClasses(RetsMetadata * metadata, 
+                            MetadataResource * resource)
+        {
+            string resourceName = resource-&gt;GetResourceID();
+                
+            MetadataClassList classes =
+                metadata-&gt;GetAllClasses(resourceName);
+            MetadataClassList::iterator i;
+            for (i = classes.begin(); i != classes.end(); i++)
+            {
+                MetadataClass * aClass = *i;
+                cout &lt;&lt; "Resource name: " &lt;&lt; resourceName &lt;&lt; " ["
+                     &lt;&lt; resource-&gt;GetStandardName() &lt;&lt; "]" &lt;&lt; endl;
+                cout &lt;&lt; "Class name: " &lt;&lt; aClass-&gt;GetClassName() &lt;&lt; " ["
+                     &lt;&lt; aClass-&gt;GetStandardName() &lt;&lt; "]" &lt;&lt; endl;
+                dumpAllTables(metadata, aClass);
+                cout &lt;&lt; endl;
+            }
+        }
+</pre><pre class="programlisting">// C#
+        static void dumpAllClasses(RetsMetadata metadata,
+                                    MetadataResource resource)
+        {
+            string resourceName = resource.GetResourceID();
+            IEnumerable classes = metadata.GetAllClasses(resourceName);
+            foreach (MetadataClass aClass in classes)
+            {
+                Console.WriteLine("Resource name: " + resourceName + " [" +
+                    resource.GetStandardName() + "]");
+                Console.WriteLine("Class name: " + aClass.GetClassName() + 
+                    " [" + aClass.GetStandardName() + "]");
+                dumpAllTables(metadata, aClass);
+                Console.WriteLine();
+            }
+        }
+</pre><pre class="programlisting">// Java
+        static void dumpAllClasses(RetsMetadata metadata,
+            MetadataResource resource)
+        {
+            string resourceName = resource.GetResourceID();
+            IEnumerable classes = metadata.GetAllClasses(resourceName);
+            foreach (MetadataClass aClass in classes)
+            {
+                Console.WriteLine("Resource name: " + resourceName + " [" +
+                    resource.GetStandardName() + "]");
+                Console.WriteLine("Class name: " + aClass.GetClassName() + 
+                    " [" + aClass.GetStandardName() + "]");
+                dumpAllTables(metadata, aClass);
+                Console.WriteLine();
+            }
+        }
+</pre><pre class="programlisting"># perl
+        sub dumpAllClasses
+        {
+            my $metadata = shift;
+            my $resource = shift;
+        
+            my $classes = $metadata-&gt;GetAllClasses($resource-&gt;GetResourceID());
+            foreach my $class (@$classes)
+            {
+                print "Class name: " . $class-&gt;GetClassName() . " [" .
+                    $class-&gt;GetStandardName() . "]\n";
+                dumpAllTables($metadata, $class);
+            }
+        }
+</pre><pre class="programlisting">&lt;? php
+        function dump_all_classes($metadata, $resource)
+        {
+          $resource_name = $resource-&gt;GetResourceID();
+          $classes = $metadata-&gt;GetAllClasses($resource_name);
+          for ($i = 0; $i &lt; $classes-&gt;size(); $i++)
+          {
+            $class = $classes-&gt;get($i);
+            print "\nResource Name: " . $resource_name . " [" .
+                  $resource-&gt;GetStandardName() . "]\n";
+            print "  Class Name: " . $class-&gt;GetClassName() . " [" .
+                  $class-&gt;GetStandardName() . "]\n";
+            dump_all_tables($metadata, $class);
+          }
+        }
+</pre><pre class="programlisting"># python
+        def dump_all_classes(metadata, resource):
+            resource_name = resource.GetResourceID()
+            for aClass in metadata.GetAllClasses(resource_name):
+                print "Resource name: " + resource_name + " [" + \
+                    resource.GetStandardName() + "]"
+                print "Class name: " + aClass.GetClassName() + " ["  + \
+                    aClass.GetStandardName() + "]"
+                dump_all_tables(metadata, aClass)
+                print
+</pre><pre class="programlisting"># ruby
+        def dump_all_classes(metadata, resource)
+          resource_name = resource.resource_id;
+          metadata.GetAllClasses(resource_name).each do |aClass|
+            puts "Resource name: " +  resource_name + " [" +
+              resource.standard_name + "]"
+            puts "Class name: " + aClass.class_name + " [" +
+              aClass.GetStandardName + "]"
+            dump_all_tables(metadata, aClass)
+            puts
+          end
+        end
+</pre></div><div class="section" title="3.5.&nbsp;MetadataTable"><div class="titlepage"><div><div><h3 class="title"><a name="metadata-Table"></a>3.5.&nbsp;MetadataTable</h3></div></div></div><p>
+            Given a RETS Class, one may next find all of the tables associated
+            with that class. This is done with 
+            <code class="literal">RetsMetadata::GetAllTables()</code>, specifying the
+            class for which you want all of the tables:
+        </p><pre class="programlisting">// C++
+        void dumpAllTables(RetsMetadata * metadata, MetadataClass * aClass)
+        {
+            MetadataTableList tables = metadata-&gt;GetAllTables(aClass);
+            MetadataTableList::iterator i;
+            for (i = tables.begin(); i != tables.end(); i++)
+            {
+                MetadataTable * table = *i;
+                cout &lt;&lt; "Table name: " &lt;&lt; table-&gt;GetSystemName() &lt;&lt; " ["
+                     &lt;&lt; table-&gt;GetStandardName() &lt;&lt; "]" &lt;&lt; " ("
+                     &lt;&lt; table-&gt;GetDataType() &lt;&lt; ")";
+                if (!table-&gt;GetMetadataEntryID().empty())
+                {
+                    cout &lt;&lt; " MetadataEntryID: " &lt;&lt; table-&gt;GetMetadataEntryID();
+                }
+                cout &lt;&lt; endl;
+            }
+        }
+</pre><pre class="programlisting">// C#
+        static void dumpAllTables(RetsMetadata metadata, MetadataClass aClass)
+        {
+            IEnumerable tables = metadata.GetAllTables(aClass);
+            foreach (MetadataTable table in tables)
+            {
+                Console.WriteLine("Table name: " + table.GetSystemName() + " [" +
+                    table.GetStandardName() + "]");
+                Console.WriteLine("\tTable datatype: " + table.GetDataType());
+                Console.WriteLine("\tUnique: " + table.IsUnique());
+                Console.WriteLine("\tMax Length: " + table.GetMaximumLength());
+            }
+        }
+</pre><pre class="programlisting">// Java
+        static void dumpAllTables(RetsMetadata metadata, MetadataClass aClass)
+        {
+            MetadataTableList tables = metadata.GetAllTables(aClass);
+            for (int i = 0; i &lt; tables.size(); i++)
+            {
+                MetadataTable table = tables.get(i);
+                System.out.println("Table name: " + table.GetSystemName() + " [" +
+                        table.GetStandardName() + "]");
+                System.out.println("\tTable datatype: " + table.GetDataType());
+                System.out.println("\tUnique: " + table.IsUnique());
+                System.out.println("\tMax Length: " + table.GetMaximumLength());
+            }
+        }
+</pre><pre class="programlisting"># perl
+        sub dumpAllTables
+        {
+            my $metadata = shift;
+            my $class = shift;
+        
+            my $tables = $metadata-&gt;GetAllTables($class);
+            foreach my $table (@$tables)
+            {
+                print "Table name: " . $table-&gt;GetSystemName() . " [" .
+                    $table-&gt;GetStandardName() . "]\n";
+                print "\tType: " . $table-&gt;GetDataType() . "\n";
+                print "\tUnique: " . $table-&gt;IsUnique() . "\n";
+                print "\tMax Length: " . $table-&gt;GetMaximumLength() . "\n";
+            }
+        }
+</pre><pre class="programlisting">&lt;? php
+        function dump_all_tables($metadata, $class)
+        {
+          $tables = $metadata-&gt;GetAllTables($class);
+          for ($i = 0; $i &lt; $tables-&gt;size(); $i++)
+          {
+            $table = $tables-&gt;get($i);
+            print "    Table Name: " . $table-&gt;GetSystemName() . " [" .
+                  $table-&gt;GetStandardName() . "]\n";
+          }
+        }
+</pre><pre class="programlisting"># python
+        def dump_all_tables(metadata, aClass):
+            for table in metadata.GetAllTables(aClass):
+                print "Table name: " + table.GetSystemName()  + " [" + \
+                    table.GetStandardName() + "]"
+</pre><pre class="programlisting"># ruby
+        def dump_all_tables(metadata, aClass)
+          metadata.all_tables(aClass).each do |table|
+            puts "Table name: " + table.system_name + " [" + table.standard_name +
+              "]"
+            puts "\tType: " + table.get_data_type.to_s
+            puts "\tUnique: " + table.is_unique.to_s
+            puts "\tMax Length: " + table.get_maximum_length.to_s
+          end
+        end
+</pre></div><div class="section" title="3.6.&nbsp;MetadataLookup"><div class="titlepage"><div><div><h3 class="title"><a name="metadata-Lookup"></a>3.6.&nbsp;MetadataLookup</h3></div></div></div><p>
+            Certain RETS Tables will refer to RETS Lookups. These are at the
+            same hierarchical level as classes, and require the RETS Resource
+            in order to locate. This is done with 
+            <code class="literal">RetsMetadata::GetAllLookups()</code>, specifying the
+            resource for which you want all of the lookups:
+        </p><pre class="programlisting">// C++
+        void dumpAllLookups(RetsMetadata * metadata, 
+                            MetadataResource * resource)
+        {
+            string resourceName = resource-&gt;GetResourceID();
+        
+            MetadataLookupList classes =
+                metadata-&gt;GetAllLookups(resourceName);
+            MetadataLookupList::iterator i;
+            for (i = classes.begin(); i != classes.end(); i++)
+            {
+                MetadataLookup * lookup = *i;
+                cout &lt;&lt; "Resource name: " &lt;&lt; resourceName &lt;&lt; " ["
+                     &lt;&lt; resource-&gt;GetStandardName() &lt;&lt; "]" &lt;&lt; endl;
+                cout &lt;&lt; "Lookup name: " &lt;&lt; lookup-&gt;GetLookupName() &lt;&lt; " ("
+                     &lt;&lt; lookup-&gt;GetVisibleName() &lt;&lt; ")";
+        
+                if (!lookup-&gt;GetMetadataEntryID().empty())
+                {
+                    cout &lt;&lt; " MetadataEntryID: " &lt;&lt; lookup-&gt;GetMetadataEntryID();
+                }
+        
+                cout &lt;&lt; endl;
+                dumpAllLookupTypes(metadata, lookup);
+                cout &lt;&lt; endl;
+            }
+        }
+</pre><pre class="programlisting">// C#
+        static void dumpAllLookups(RetsMetadata metadata,
+            MetadataResource resource)
+        {
+            string resourceName = resource.GetResourceID();
+            IEnumerable lookups = metadata.GetAllLookups(resourceName);
+            foreach (MetadataLookup lookup in lookups)
+            {
+                Console.WriteLine("Resource name: " + resourceName + " [" +
+                    resource.GetStandardName() + "]");
+                Console.WriteLine("Lokup name: " + lookup.GetLookupName() + 
+                    " (" + lookup.GetVisibleName() + ")");
+                dumpAllLookupTypes(metadata, lookup);
+                Console.WriteLine();
+            }
+        }
+</pre><pre class="programlisting">// Java
+        static void dumpAllLookups(RetsMetadata metadata, 
+                            MetadataResource resource)
+        {
+            String resourceName = resource.GetResourceID();
+            MetadataLookupList lookups = metadata.GetAllLookups(resourceName);
+            for (int i = 0; i &lt; lookups.size(); i++)
+            {
+                MetadataLookup lookup = lookups.get(i);
+                System.out.println("Resource name: " + resourceName + " [" +
+                    resource.GetStandardName() + "]");
+                System.out.println("Lokup name: " + lookup.GetLookupName() + 
+                    " (" + lookup.GetVisibleName() + ")");
+                dumpAllLookupTypes(metadata, lookup);
+                System.out.println();
+            }
+        }
+</pre><pre class="programlisting"># perl
+        sub dumpAllLookups
+        {
+            my $metadata = shift;
+            my $resource = shift;
+        
+            my $lookups = $metadata-&gt;GetAllLookups($resource-&gt;GetResourceID());
+            foreach my $lookup (@$lookups)
+            {
+                print "Lookup name: " . $lookup-&gt;GetLookupName() . " (" .
+                    $lookup-&gt;GetVisibleName() . ")\n";
+                dumpAllLookupTypes($metadata, $lookup);
+                print "\n";
+            }
+        }
+</pre><pre class="programlisting">&lt;? php
+        function dump_all_lookups($metadata, $resource)
+        {
+          $resource_name = $resource-&gt;GetResourceID();
+          $lookups = $metadata-&gt;GetAllLookups($resource_name);
+          for ($i = 0; $i &lt; $lookups-&gt;size(); $i++)
+          {
+            $lookup = $lookups-&gt;get($i);
+            print "\nResource Name: " . $resource_name . " [" .
+                  $resource-&gt;GetStandardName() . "]\n";
+            print "  Lookup Name: " . $lookup-&gt;GetLookupName() . " (" .
+                  $lookup-&gt;GetVisibleName() . ")\n";
+            dump_all_lookup_types($metadata, $lookup);
+          }
+        }
+</pre><pre class="programlisting"># python
+        def dump_all_lookups(metadata, resource):
+            resource_name = resource.GetResourceID()
+            for lookup in metadata.GetAllLookups(resource_name):
+                print "Resource name: " + resource_name + " [" + \
+                    resource.GetStandardName() + "]"
+                print "Lookup name: " + lookup.GetLookupName() + " ("  + \
+                    lookup.GetVisibleName() + ")"
+                dump_all_lookup_types(metadata, lookup)
+                print
+</pre><pre class="programlisting"># ruby
+        def dump_all_lookups(metadata, resource)
+          resource_name = resource.resource_id();
+          metadata.all_lookups(resource_name).each do |lookup|
+            puts "Resource name: " +  resource_name + " [" +
+              resource.standard_name + "]"
+            puts "Lookup name: " + lookup.lookup_name + " (" +
+              lookup.visible_name + ")"
+            dump_all_lookup_types(metadata, lookup)
+            puts
+          end
+        end
+
+</pre></div><div class="section" title="3.7.&nbsp;MetadataLookupType"><div class="titlepage"><div><div><h3 class="title"><a name="metadata-Lookup-Type"></a>3.7.&nbsp;MetadataLookupType</h3></div></div></div><p>
+            The last example for metadata will demonstrate fetching the
+            Metadata Lookup Type for a given lookup. This is done with
+            <code class="literal">RetsMetadata::GetAllLookupTypes()</code>, specifying the
+            lookup for which you want all of the lookup types:
+        </p><pre class="programlisting">// C++
+        void dumpAllLookupTypes(RetsMetadata * metadata, MetadataLookup * lookup)
+        {
+            MetadataLookupTypeList lookupTypes = metadata-&gt;GetAllLookupTypes(lookup);
+            MetadataLookupTypeList::const_iterator i ;
+            for (i = lookupTypes.begin(); i != lookupTypes.end(); i++)
+            {
+                MetadataLookupType * lookupType = *i;
+                cout &lt;&lt; "Lookup value: " &lt;&lt; lookupType-&gt;GetValue() &lt;&lt; " ("
+                     &lt;&lt; lookupType-&gt;GetShortValue() &lt;&lt; ", "
+                     &lt;&lt; lookupType-&gt;GetLongValue() &lt;&lt; ")";
+        
+                if (!lookupType-&gt;GetMetadataEntryID().empty())
+                {
+                    cout &lt;&lt; " MetadataEntryID: " &lt;&lt; lookupType-&gt;GetMetadataEntryID();
+                }
+        
+                cout &lt;&lt; endl;
+            }
+        }
+</pre><pre class="programlisting">// C#
+        static void dumpAllLookupTypes(RetsMetadata metadata,
+            MetadataLookup lookup)
+        {
+            IEnumerable lookupTypes = metadata.GetAllLookupTypes(lookup);
+            foreach (MetadataLookupType lookupType in lookupTypes)
+            {
+                Console.WriteLine("Lookup value: " + lookupType.GetValue() +
+                    " (" + lookupType.GetShortValue() + ", " +
+                    lookupType.GetLongValue() + ")");
+            }
+        }
+</pre><pre class="programlisting">// Java
+        static void dumpAllLookupTypes(RetsMetadata metadata, 
+                                        MetadataLookup lookup)
+        {
+            MetadataLookupTypeList lookupTypes = metadata.GetAllLookupTypes(lookup);
+    
+            for (int i = 0; i &lt; lookupTypes.size(); i++)
+            {
+                MetadataLookupType lookupType = lookupTypes.get(i);
+                System.out.println("Lookup value: " + lookupType.GetValue() +
+                            " (" + lookupType.GetShortValue() + ", " +
+                            lookupType.GetLongValue() + ")");
+            }
+        }
+</pre><pre class="programlisting"># perl
+        sub dumpAllLookupTypes
+        {
+            my $metadata = shift;
+            my $lookup = shift;
+        
+            my $lookupTypes = $metadata-&gt;GetAllLookupTypes($lookup);
+            foreach my $lt (@$lookupTypes)
+            {
+                print "Lookup value: " . $lt-&gt;GetValue() . " (" .
+                    $lt-&gt;GetShortValue() . ", " . $lt-&gt;GetLongValue() . ")\n";
+            }
+        }
+</pre><pre class="programlisting">&lt;? php
+        function dump_all_lookup_types($metadata, $lookup)
+        {
+          $lookup_types = $metadata-&gt;GetAllLookupTypes($lookup);
+          for ($i = 0; $i &lt; $lookup_types-&gt;size(); $i++)
+          {
+            $lookup_type = $lookup_types-&gt;get($i);
+            print "    Lookup Type: " . $lookup_type-&gt;GetValue() . " (" .
+                  $lookup_type-&gt;GetShortValue() . ", " .
+                  $lookup_type-&gt;GetLongValue() . ")\n";
+          }
+        }
+</pre><pre class="programlisting"># python
+        def dump_all_lookup_types(metadata, lookup):
+            for lookup_type in metadata.GetAllLookupTypes(lookup):
+                print "Lookup value: " + lookup_type.GetValue() + " (" + \
+                    lookup_type.GetShortValue() + ", " + \
+                    lookup_type.GetLongValue() + ")"
+</pre><pre class="programlisting"># ruby
+        def dump_all_lookup_types(metadata, lookup)
+          metadata.all_lookup_types(lookup).each do |lookup_type|
+            puts "Lookup value: " + lookup_type.value + " (" +
+              lookup_type.short_value + ", " +
+              lookup_type.long_value + ")"
+          end
+        end
+</pre></div></div><div class="section" title="4.&nbsp;Performing Searches"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="search"></a>4.&nbsp;Performing Searches</h2></div></div></div><div class="section" title="4.1.&nbsp;Setting up the Search Request"><div class="titlepage"><div><div><h3 class="title"><a name="search-request"></a>4.1.&nbsp;Setting up the Search Request</h3></div></div></div><p>The first step in performing a search is to obtain a 
+    <code class="literal">SearchRequest</code> object from
+    <code class="literal">RetsSession</code>. This class can then be used
+    to tailor the search request. It is then submitted to the
+    <code class="literal">Search</code> of 
+    <code class="literal">RetsSession</code>, which will format a proper
+    RETS request and pass it on to the server.</p><p>The request must be instantiated around the
+    RETS Resource and Class (from the metadata) appropriate for that
+    request. The Query should also be provided as well:</p><pre class="programlisting">// C++
+SearchRequestAPtr searchRequest = session-&gt;CreateSearchRequest(
+                                                    "Property", 
+                                                    "RES", 
+                                                    "(ListPrice=300000-)");
+    </pre><pre class="programlisting">// C#
+SearchRequest searchRequest = session.CreateSearchRequest(
+                                                    "Property", 
+                                                    "RES", 
+                                                    "(ListPrice=300000-)");
+</pre><pre class="programlisting">// Java
+SearchRequest searchRequest = session.CreateSearchRequest(
+                                                    "Property", 
+                                                    "RES", 
+                                                    "(ListPrice=300000-)");
+</pre><pre class="programlisting"># perl
+my $request = $session-&gt;CreateSearchRequest(
+                                "Property", 
+                                "RES", 
+                                "(ListPrice=300000-)");
+</pre><pre class="programlisting">&lt;? php
+$request = $session-&gt;CreateSearchRequest(
+                                "Property", 
+                                "RES", 
+                                "(ListPrice=300000-)");
+</pre><pre class="programlisting"># python
+request = session.CreateSearchRequest(
+                                "Property", 
+                                "RES", 
+                                "(ListPrice=300000-)");
+</pre><pre class="programlisting"># ruby
+request = session.create_search_request(
+                                "Property",     
+                                "RES", 
+                                "(ListPrice=300000-)");
+</pre><div class="section" title="4.1.1.&nbsp;Customizing the Search Request"><div class="titlepage"><div><div><h4 class="title"><a name="search-request-customizing"></a>4.1.1.&nbsp;Customizing the Search Request</h4></div></div></div><p>Now that we have a search request, we can customize it by setting
+    various options such as what columns we would like returned for each
+    row of the data; would we like just a row count returned; are there any
+    limits on the number of rows to be returned; do we want to start the 
+    search at the first row, etc.</p><p>Refer to the API documentation at
+        <a class="ulink" href="http://www.crt.realtors.org/projects/rets/librets/documentation/api/" target="_top">
+        http://www.crt.realtors.org/projects/rets/librets/documentation/api/
+        </a>
+        for details.
+    </p><p>For versions of libRETS prior to 1.1.10, the first thing we want to do 
+    is to tell the server to use System Names and not Standard Names. For versions
+    1.1.10 and later, the default is System Names. In 90% or more of real life usage
+    of RETS, Standard Names are unusable, so it is best to always disable them.
+    Please refer to your metadata.
+    </p><p>For the following example, let's assume we need to set the
+    request such that we fetch the <code class="literal">ListingID, ListPrice, Beds
+    and City</code> for each listing matching the search. Please note that in
+    this case, these are Standard Names and we need to tell the server that we
+    want to use Standard Names and not System Names. Furthermore,
+    we will accept the default limits on the amount of data returned; 
+    we want to begin
+    with the first element found; and we want both the record count and the
+    results returned to us.</p><pre class="programlisting">// C++
+        searchRequest-&gt;SetStandardNames(true);
+        searchRequest-&gt;SetSelect("ListingID,ListPrice,Beds,City");
+        searchRequest-&gt;SetLimit(SearchRequest::LIMIT_DEFAULT);
+        searchRequest-&gt;SetOffset(SearchRequest::OFFSET_NONE);
+        searchRequest-&gt;SetCountType(SearchRequest::RECORD_COUNT_AND_RESULTS); 
+        searchRequest-&gt;SetFormatType(SearchRequest::COMPACT);
+</pre><pre class="programlisting">// C#
+        searchRequest.SetStandardNames(true);
+        searchRequest.SetSelect("ListingID,ListPrice,Beds,City");
+        searchRequest.SetLimit(SearchRequest.LIMIT_DEFAULT);
+        searchRequest.SetOffset(SearchRequest.OFFSET_NONE);
+        searchRequest.SetCountType(SearchRequest.CountType.RECORD_COUNT_AND_RESULTS);
+</pre><pre class="programlisting">// Java
+        searchRequest.SetStandardNames(true);
+        searchRequest.SetSelect("ListingID,ListPrice,Beds,City");
+        searchRequest.SetLimit(SearchRequest.LIMIT_DEFAULT);
+        searchRequest.SetOffset(SearchRequest.OFFSET_NONE);
+        searchRequest.SetCountType(SearchRequest.CountType.RECORD_COUNT_AND_RESULTS);
+</pre><pre class="programlisting"># perl
+        $request-&gt;SetStandardNames(1);
+        $request-&gt;SetSelect("ListingID,ListPrice,Beds,City");
+        $request-&gt;SetLimit($librets::SearchRequest::LIMIT_DEFAULT);
+        $request-&gt;SetOffset($librets::SearchRequest::OFFSET_NONE);
+        $request-&gt;SetCountType($librets::SearchRequest::RECORD_COUNT_AND_RESULTS);
+</pre><pre class="programlisting">&lt;? php
+        $request-&gt;SetStandardNames(true);
+        $request-&gt;SetSelect("ListingID,ListPrice,Beds,City");
+        $request-&gt;SetLimit(SearchRequest_LIMIT_DEFAULT);
+        $request-&gt;SetOffset(SearchRequest_OFFSET_NONE);
+        $request-&gt;SetCountType(SearchRequest_RECORD_COUNT_AND_RESULTS);
+</pre><pre class="programlisting"># python
+        request.SetStandardNames(True)
+        request.SetSelect("ListingID,ListPrice,Beds,City")
+        request.SetLimit(librets.SearchRequest.LIMIT_DEFAULT)
+        request.SetOffset(librets.SearchRequest.OFFSET_NONE)
+        request.SetCountType(librets.SearchRequest.RECORD_COUNT_AND_RESULTS)
+</pre><pre class="programlisting"># ruby
+        request.standard_names = true
+        request.select = "ListingID,ListPrice,Beds,City"
+        request.limit = SearchRequest::LIMIT_DEFAULT
+        request.offset = SearchRequest::OFFSET_NONE
+        request.count_type = SearchRequest::RECORD_COUNT_AND_RESULTS
+</pre></div><div class="section" title="4.1.2.&nbsp;Invoke the Search"><div class="titlepage"><div><div><h4 class="title"><a name="performing-the-search"></a>4.1.2.&nbsp;Invoke the Search</h4></div></div></div><p>Once the request has been customized, the search can be started.
+        It is important to note that as of libRETS 1.2 (and later releases),
+        libRETS uses a "streaming" technology. That is, once the request has
+        been started, libRETS immediately returns to the caller, who then must perform a
+        processing loop around the <code class="literal">SearchResultSet::HasNext()</code>
+        API and a timely fashion. In other words, do not wait too long between
+        <code class="literal">HasNext()</code> invocations or you will run the risk of
+        having the transaction aborted by the server because of failure to 
+        satisfy it in a timely fashion. Please see the next section.</p><p>In the example below, we will perform the search:</p><pre class="programlisting">// C++
+        SearchResultSetAPtr results = session-&gt;Search(searchRequest.get());
+
+</pre><pre class="programlisting">// C#
+        SearchResultSet results = session.Search(searchRequest);
+</pre><pre class="programlisting">// Java
+        SearchResultSet results = session.Search(searchRequest);
+</pre><pre class="programlisting"># perl
+        my $results = $session-&gt;Search($request);
+</pre><pre class="programlisting">&lt;? php
+        $results = $session-&gt;Search($request);
+</pre><pre class="programlisting"># python
+        results = session.Search(request)
+</pre><pre class="programlisting"># ruby
+        results = session.search(request)
+</pre></div></div><div class="section" title="4.2.&nbsp;Processing the Results of the Search"><div class="titlepage"><div><div><h3 class="title"><a name="processing-search-results"></a>4.2.&nbsp;Processing the Results of the Search</h3></div></div></div><p>As discussed above, once the request has
+        been started, libRETS returns to the caller, who then must perform a
+        processing loop around the <code class="literal">SearchResultSet::HasNext()</code>
+        API and a timely fashion. In other words, do not wait too long between
+        <code class="literal">HasNext()</code> invocations or you will run the risk of
+        having the transaction aborted by the server because of failure to 
+        satisfy it in a timely fashion.</p><p>There is also a situation with many servers
+        (that is non-standard) whereby they have non-ASCII data being returned.
+        If this is the case, you must also set the encoding to be used with
+        the <code class="literal">RetsSession::SetEncoding()</code> API, if you want it
+        global, or with the <code class="literal">SearchResultSet::SetEncoding()</code>
+        if you want it just for the current response. Note that if you use
+        the latter API, you must do that before your first call to
+        <code class="literal">SearchResultSet::HasNext()</code>.</p><p>In the example below, we will perform the loop
+        through the results, printing the columns returned for each 
+        listing.</p><pre class="programlisting">// C++
+        cout &lt;&lt; "Matching record count: " &lt;&lt; results-&gt;GetCount() &lt;&lt; endl;
+
+        StringVector columns = results-&gt;GetColumns();
+        while (results-&gt;HasNext())
+        {
+            StringVector::iterator i;
+            for (i = columns.begin(); i != columns.end(); i++)
+            {
+                string column = *i;
+                cout &lt;&lt; setw(15) &lt;&lt; column &lt;&lt; ": "
+                     &lt;&lt; setw(0) &lt;&lt; results-&gt;GetString(column) &lt;&lt; endl;
+            }
+            cout &lt;&lt; endl;
+        }
+</pre><pre class="programlisting">// C#
+        Console.WriteLine("Record count: " + results.GetCount());
+        Console.WriteLine();
+        IEnumerable columns = results.GetColumns();
+        while (results.HasNext())
+        {
+            foreach (string column in columns)
+            {
+                Console.WriteLine(column + ": " + results.GetString(column));
+            }
+            Console.WriteLine();
+        }
+
+</pre><pre class="programlisting">// Java
+        System.out.println("Record count: " + results.GetCount());
+
+        StringVector columns = results.GetColumns();
+
+        while (results.HasNext())
+        {
+            for (int i = 0; i &lt; columns.size(); i++)
+            {
+                System.out.format("%15s: %s\n", 
+                                    columns.get(i), 
+                                    results.GetString(columns.get(i)));
+            }
+            System.out.println();
+        }
+
+</pre><pre class="programlisting"># perl
+        print "Record count: " . $results-&gt;GetCount() . "\n\n";
+        my $columns = $results-&gt;GetColumns();
+        while ($results-&gt;HasNext())
+        {   
+            foreach my $column (@$columns)
+            {       
+                    print $column . ": " . $results-&gt;GetString($column) . "\n";
+            }
+            print "\n";
+        }
+</pre><pre class="programlisting">&lt;? php
+        print "Record Count: " . $results-&gt;GetCount() . "\n\n";
+        
+        $columns = $results-&gt;GetColumns();
+        
+        while ($results-&gt;HasNext())
+        {   
+            for ($i = 0; $i &lt; $columns-&gt;size(); $i++)
+            {   
+                print $columns-&gt;get($i) . ": " . $results-&gt;GetString($i) . "\n";
+            }
+            print "\n";
+        }
+</pre><pre class="programlisting"># python
+        print "Record count: " + `results.GetCount()`
+        print
+        columns = results.GetColumns()
+        while results.HasNext():
+        for column in columns:
+          print column + ": " + results.GetString(column)
+        print
+</pre><pre class="programlisting"># ruby
+        puts "Record count: " + results.count.to_s
+        puts
+        columns = results.columns
+        results.each do |result|
+          columns.each do |column|
+            puts column + ": " + result.string(column)
+          end
+          puts
+        end
+</pre></div></div><div class="section" title="5.&nbsp;Fetching Media"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="getobject"></a>5.&nbsp;Fetching Media</h2></div></div></div><p>
+	Below is a brief description of the general algorithm for fetching media
+	with the RETS <code class="literal">GetObject</code> transaction:
+  </p><p>
+  	It is important to note that the key field used for fetching the media object may or 
+	not be the same as the key field for fetching searches (e.g. listing number). You must 
+	determine the proper key field from the metadata. That said, the general algorithm 
+	(given that the keys have already been determined), is to create a 
+	<code class="literal">GetObjectRequest</code>
+	object, and identify the resource keys to it with either <code class="literal">AddAllObjects</code>
+	or <code class="literal">AddObject</code>.
+  </p><p>
+  	Once all resources have been identified, the request is triggered by calling
+	<code class="literal">RetsSession::GetObject</code>. This will return a
+	<code class="literal">GetObjectResponse</code> object, which is then used to obtain the various
+	media resources from the RETS server.
+  </p><div class="section" title="5.1.&nbsp;Setting up the GetObject Request"><div class="titlepage"><div><div><h3 class="title"><a name="getobject-request"></a>5.1.&nbsp;Setting up the GetObject Request</h3></div></div></div><p>
+	In contrast to the process used with Searches, the <code class="literal">GetObjectRequest</code>
+	stands alone (e.g. it is not obtained from <code class="literal">RetsSession</code>). 
+	This class can then be used to tailor the request by resource ID. It is then submitted 
+	to the <code class="literal">GetObject</code> of 
+	<code class="literal">RetsSession</code>, which will format a proper
+	RETS request and pass it on to the server.
+    </p><p>
+	The request must be instantiated around the
+	RETS Resource and media Type (from the metadata) appropriate for that
+	request:
+    </p><pre class="programlisting">// C++
+ 	GetObjectRequest getObjectRequest("Property", "Photo");
+    </pre><pre class="programlisting">// C#
+	GetObjectRequest request = new GetObjectRequest("Property", "Photo");
+</pre><pre class="programlisting">// Java
+	GetObjectRequest objectRequest = new GetObjectRequest("Property", "Photo");
+</pre><pre class="programlisting"># perl
+	my $request = new librets::GetObjectRequest("Property", "Photo");
+</pre><pre class="programlisting">&lt;? php
+	$request = new GetObjectRequest("Property", "Photo");
+</pre><pre class="programlisting"># python
+	request = librets.GetObjectRequest("Property", "Photo")
+</pre><pre class="programlisting"># ruby
+	get_object_request = GetObjectRequest.new("Property", "Photo")
+</pre></div><div class="section" title="5.2.&nbsp;Identifying the Resources to Return"><div class="titlepage"><div><div><h3 class="title"><a name="getobject-addjobjects"></a>5.2.&nbsp;Identifying the Resources to Return</h3></div></div></div><p>
+	There are two ways to specify the resources to return: 
+    </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+	        Use the <code class="literal">AddAllObjects</code> API to cause all objects for
+		this resource ID to be returned.
+	    </p></li><li class="listitem"><p>
+	        Use the <code class="literal">AddObject</code> API and specify individual objects for
+		this resource ID that should be returned.
+	    </p></li></ul></div><p>
+        The C++ example below will use the <code class="literal">AddObject</code> API to fetch individual
+	photos for the listing <code class="literal">LN000001</code>. The <code class="literal">AddAllObjects</code>
+	API will be used for the remaining languages.
+    </p><pre class="programlisting">// C++
+	vector&lt;string&gt; ids;
+	string listing = "LN000001";
+	string resources = "1,3,4";
+	boost::algorithm::split(ids, resources, boost::algorithm::is_any_of(","));
+	vector&lt;string&gt;::const_iterator idString;
+	for (idString = ids.begin(); idString != ids.end();
+	     idString++)
+	{
+	    int id  = lexical_cast&lt;int&gt;(*idString);
+	    getObjectRequest.AddObject(listing, id);
+	}
+    </pre><pre class="programlisting">// C#
+        request.AddAllObjects("LN000001");
+</pre><pre class="programlisting">// Java
+        objectRequest.AddAllObjects("LN000001");
+</pre><pre class="programlisting"># perl
+	$request-&gt;AddAllObjects("LN000001");
+</pre><pre class="programlisting">&lt;? php
+	$request-&gt;AddAllObjects("LN000001");
+</pre><pre class="programlisting"># python
+	request.AddAllObjects("LN000001")
+</pre><pre class="programlisting"># ruby
+	get_object_request.add_all_objects("LN000001")
+</pre></div><div class="section" title="5.3.&nbsp;Fetch the Objects"><div class="titlepage"><div><div><h3 class="title"><a name="getobject-fetch"></a>5.3.&nbsp;Fetch the Objects</h3></div></div></div><p>
+	Once the resources have been identified, the fetch can be started.
+	It is important to note that as of libRETS 1.2 (and later releases),
+	libRETS uses a "streaming" technology. That is, once the request has
+	been started, libRETS immediately returns to the caller, who then must perform a
+	processing loop around the <code class="literal">GetObjectResponse::HasNext()</code>
+	API and a timely fashion. In other words, do not wait too long between
+	<code class="literal">HasNext()</code> invocations or you will run the risk of
+	having the transaction aborted by the server because of failure to 
+	satisfy it in a timely fashion.
+    </p><p>
+        In the examples below, will will assume that the server provides the actual
+	media to us and not a link to the media. We further assume that the media
+	can only be JPegs. We will accept the object and store it on disk.
+    </p><p>
+        Since libRETS is written in C++, we have the ability to directly access some of
+	the elements such as iostreams in order to fetch the actual data. In the example
+	below, we will obtain the open stream from libRETS and use it to fetch the data:
+    </p><pre class="programlisting">// C++
+        GetObjectResponseAPtr getObjectResponse =
+            session-&gt;GetObject(&amp;getObjectRequest);
+
+        StringMap contentTypeSuffixes;
+        contentTypeSuffixes["image/jpeg"] = "jpg";
+        ObjectDescriptor * objectDescriptor;
+        while ((objectDescriptor = getObjectResponse-&gt;NextObject()))
+        {
+            string objectKey = objectDescriptor-&gt;GetObjectKey();
+            int objectId = objectDescriptor-&gt;GetObjectId();
+            string contentType = objectDescriptor-&gt;GetContentType();
+            string description = objectDescriptor-&gt;GetDescription();
+            cout &lt;&lt; objectKey &lt;&lt; " object #" &lt;&lt; objectId;
+            if (!description.empty())
+                cout &lt;&lt; ", description: " &lt;&lt; description;
+            cout &lt;&lt; endl;
+
+            string suffix = contentTypeSuffixes[contentType];
+            string outputFileName = objectKey + "-" +
+                lexical_cast&lt;string&gt;(objectId) + ".jpg" ;
+            ofstream outputStream(outputFileName.c_str());
+            istreamPtr inputStream = objectDescriptor-&gt;GetDataStream();
+            readUntilEof(inputStream, outputStream);
+        }
+    </pre><p>
+        In C#, we will demonstrate two ways to fetch the data:
+    </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+	    Using the C++ iostream;
+	</li><li class="listitem">
+	    Fetch the data as a series of bytes and using a helper class called 
+	    <code class="literal">BinaryWriter</code> to write the data.
+	</li></ul></div><pre class="programlisting">// C#
+        GetObjectResponse response = session.GetObject(request);
+
+        foreach(ObjectDescriptor objectDescriptor in response)
+        {
+            string objectKey = objectDescriptor.GetObjectKey();
+            int objectId = objectDescriptor.GetObjectId();
+            string contentType = objectDescriptor.GetContentType();
+            string description = objectDescriptor.GetDescription();
+
+            Console.Write(objectKey + " object #" + objectId);
+            if (description.Length != 0)
+                Console.Write(", desription: " + description);
+            Console.WriteLine();
+
+            string outputFileName = objectKey + "-" + objectId + ".jpg";
+
+            Stream outputStream = File.OpenWrite(outputFileName);
+            if (useStream)
+            {
+                const int BUFFER_SIZE =  1024;
+                Stream stream = objectDescriptor.GetDataStream();
+                byte[] buffer = new Byte[BUFFER_SIZE];
+                int bytesRead;
+                while ((bytesRead = stream.Read(buffer, 0, BUFFER_SIZE)) &gt; 0)
+                {
+                    outputStream.Write(buffer, 0, bytesRead);
+                }
+            }
+            else
+            {
+                byte[] data = objectDescriptor.GetDataAsBytes();
+                BinaryWriter w = new BinaryWriter(outputStream);
+                w.Write(data);
+                w.Close();
+            }
+
+            outputStream.Close();
+        }
+</pre><p>
+        For Java, we also need to fetch the data using the <code class="literal">GetDataAsBytes</code> API.
+    </p><pre class="programlisting">// Java
+        GetObjectResponse response = session.GetObject(objectRequest);
+
+        ObjectDescriptor objectDescriptor = response.NextObject();
+
+        while (objectDescriptor != null)
+        {
+            String object_key   = objectDescriptor.GetObjectKey();
+            int object_id       = objectDescriptor.GetObjectId();
+            String content_type = objectDescriptor.GetContentType();
+            String description  = objectDescriptor.GetDescription();
+
+            System.out.print(object_key + " object #" + object_id);
+
+            if (description.length() &gt; 0)
+                System.out.print(", description: " + description);
+
+            System.out.println();
+
+            String file_name = object_key + "-" + object_id + ".jpg";
+
+            try
+            {
+                FileOutputStream outfile = new FileOutputStream(file_name);
+
+                byte [] object_data = objectDescriptor.GetDataAsBytes();
+
+                outfile.write(object_data);
+                outfile.close();
+            }
+            catch (IOException e) {}
+
+            objectDescriptor = response.NextObject();
+        }
+
+</pre><p>
+        For the Perl, PHP, and Python, we need to fetch the data as a string using
+	<code class="literal">GetDataAsString</code>.
+    </p><pre class="programlisting"># perl
+	my $response = $session-&gt;GetObject($request);
+
+	my $objectDescriptor = $response-&gt;NextObject();
+
+	while ($objectDescriptor)
+	{
+	    my $objectKey = $objectDescriptor-&gt;GetObjectKey();
+	    my $objectId = $objectDescriptor-&gt;GetObjectId();
+	    my $contentType = $objectDescriptor-&gt;GetContentType();
+	    my $description = $objectDescriptor-&gt;GetDescription();
+
+	    print $objectKey . " object #" . $objectId;
+	    if ($description ne "")
+	    {
+		print ", description: " . $description;
+	    }
+	    print "\n";
+
+	    print Dumper($contentType);
+	    my $outputFilename = $objectKey . "-" . $objectId . ".jpg";
+
+	    open(OUT, "&gt;", $outputFilename) || die ("Couldn't open output file");
+	    binmode(OUT);
+
+	    my $resultdata = $objectDescriptor-&gt;GetDataAsString();
+	    print Dumper($resultdata);
+	    print length($resultdata) . "\n";
+	    syswrite(OUT, $resultdata);
+
+	    close(OUT);
+
+	    $objectDescriptor = $response-&gt;NextObject();
+	}
+</pre><pre class="programlisting">&lt;? php
+	$results = $session-&gt;GetObject($request);
+
+	while ($object_descriptor = $results-&gt;NextObject())
+	{
+	    $object_key = $object_descriptor-&gt;GetObjectKey();
+	    $object_id = $object_descriptor-&gt;GetObjectId();
+	    $content_type = $object_descriptor-&gt;GetContentType();
+	    $description = $object_descriptor-&gt;GetDescription();
+
+	    print $object_key . " object #" . $object_id;
+	    if (strlen($description) &gt; 0)
+		print ", description: " . $description;
+	    print "\n";
+
+	    $file_name = $object_key . "-" . $object_id . ".jpg";
+
+	    $file = fopen ($file_name, "wb") or die ("Unable to create file " . $file_name);
+	    fwrite ($file, $object_descriptor-&gt;GetDataAsString());
+	    fclose ($file);
+	}
+</pre><pre class="programlisting"># python
+	response = session.GetObject(request)
+	object_descriptor = response.NextObject()
+	while (object_descriptor != None):
+	  object_key = object_descriptor.GetObjectKey()
+	  object_id = object_descriptor.GetObjectId()
+	  content_type = object_descriptor.GetContentType()
+	  description = object_descriptor.GetDescription()
+	  print object_key + " object #" + str(object_id)
+
+	  output_file_name = object_key + "-" + str(object_id) + ".jpg"
+	  file = open(output_file_name, 'wb')
+	  file.write(object_descriptor.GetDataAsString())
+	  file.close()
+
+	  object_descriptor = response.NextObject()
+</pre><p>
+        And lastly, for Ruby, we also need to fetch the data as a string, but in this case,
+	we must use <code class="literal">data_as_string</code>.
+    </p><pre class="programlisting"># ruby
+	get_object_response = session.get_object(get_object_request)
+
+	get_object_response.each_object do |object_descriptor|
+	  object_key =  object_descriptor.object_key
+	  object_id = object_descriptor.object_id
+	  content_type = object_descriptor.content_type
+	  description = object_descriptor.description
+	  print "#{object_key} object \##{object_id}"
+	  print ", description: #{description}" if !description.empty?
+	  puts
+
+	  output_file_name = object_key + "-" + object_id.to_s + ".jpg"
+	  File.open(output_file_name, "wb") do |f|
+	    f &lt;&lt; object_descriptor.data_as_string
+	  end
+	end
+</pre></div></div><div class="section" title="6.&nbsp;Performing Updates"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="update"></a>6.&nbsp;Performing Updates</h2></div></div></div><div class="section" title="6.1.&nbsp;Setting up the Update Request"><div class="titlepage"><div><div><h3 class="title"><a name="update-request"></a>6.1.&nbsp;Setting up the Update Request</h3></div></div></div><p>The first step in performing an update is to obtain an
+    <code class="literal">UpdateRequest</code> object from
+    <code class="literal">RetsSession</code>. This object can then be used
+    to tailor the update request. It is then submitted to the
+    <code class="literal">Update</code> method of 
+    <code class="literal">RetsSession</code>, which will format a proper
+    RETS request and pass it on to the server.</p><p>The request must be instantiated around the
+    RETS Resource and Class (from the metadata) appropriate for that
+    request:</p><pre class="programlisting">// C++
+UpdateRequestAPtr updateRequest = session-&gt;CreateUpdateRequest(
+                                                    "Property", 
+                                                    "RES");
+    </pre><pre class="programlisting">// C#
+UpdateRequest updateRequest = session.CreateUpdateRequest(
+                                                    "Property", 
+                                                    "RES"); 
+</pre><pre class="programlisting">// Java
+UpdateRequest updateRequest = session.CreateUpdateRequest(
+                                                    "Property", 
+                                                    "RES"); 
+</pre><pre class="programlisting"># perl
+my $request = $session-&gt;CreateUpdateRequest(
+                                "Property", 
+                                "RES");
+</pre><pre class="programlisting">&lt;? php
+$request = $session-&gt;CreateUpdateRequest(
+                                "Property", 
+                                "RES");
+</pre><pre class="programlisting"># python
+request = session.CreateUpdateRequest(
+                                "Property", 
+                                "RES");
+</pre><pre class="programlisting"># ruby
+request = session.create_update_request(
+                                "Property",     
+                                "RES");
+</pre><div class="section" title="6.1.1.&nbsp;Customizing the Update Request"><div class="titlepage"><div><div><h4 class="title"><a name="update-request-customizing"></a>6.1.1.&nbsp;Customizing the Update Request</h4></div></div></div><p>Now that we have an update request, we can customize it by setting
+    various options such as what columns we would like to update; the key
+    field that identifies the record to be updated; what we will use as the
+    delimiter; what we want for the Validation flag; and what we would like
+    the Update Type to be.</p><p>Refer to the API documentation at
+        <a class="ulink" href="http://www.crt.realtors.org/projects/rets/librets/documentation/api/" target="_top">
+        http://www.crt.realtors.org/projects/rets/librets/documentation/api/
+        </a>
+        for details.
+    </p><p>For the following example, let's assume we need to update  the
+    closing date for the listing <code class="literal">LN000005</code>.</p><pre class="programlisting">// C++
+        updateRequest-&gt;SetDelimiter("|");
+        updateRequest-&gt;SetField("ListingID", "LN000005");
+        updateRequest-&gt;SetField("CloseDate", "2009-08-20T00:00:00");
+        updateRequest-&gt;SetUpdateType("Change");
+        updateRequest-&gt;SetValidateFlag(UpdateRequest::VALIDATE_ONLY);
+</pre><pre class="programlisting">// C#
+        updateRequest.SetDelimiter("|");
+        updateRequest.SetField("ListingID", "LN000005");
+        updateRequest.SetField("CloseDate", "2009-08-20T00:00:00");
+        updateRequest.SetUpdateType("Change");
+        updateRequest.SetValidateFlag(UpdateRequest.VALIDATE_ONLY);
+</pre><pre class="programlisting">// Java
+        updateRequest.SetDelimiter("|");
+        updateRequest.SetField("ListingID", "LN000005");
+        updateRequest.SetField("CloseDate", "2009-08-20T00:00:00");
+        updateRequest.SetUpdateType("Change");
+        updateRequest.SetValidateFlag(UpdateRequest.VALIDATE_ONLY);
+</pre><pre class="programlisting"># perl
+        $request-&gt;SetDelimiter("|");
+        $request-&gt;SetField("ListingID", "LN000005");
+        $request-&gt;SetField("CloseDate", "2009-08-20T00:00:00");
+        $request-&gt;SetUpdateType("Change");
+        $request-&gt;SetValidateFlag($librets::UpdateRequest::VALIDATE_ONLY);
+</pre><pre class="programlisting">&lt;? php
+        $request-&gt;SetDelimiter("|");
+        $request-&gt;SetField("ListingID", "LN000005");
+        $request-&gt;SetField("CloseDate", "2009-08-20T00:00:00");
+        $request-&gt;SetUpdateType("Change");
+        $request-&gt;SetValidateFlag(UpdateRequest_VALIDATE_ONLY);
+</pre><pre class="programlisting"># python
+        $request.SetDelimiter("|");
+        $request.SetField("ListingID", "LN000005");
+        $request.SetField("CloseDate", "2009-08-20T00:00:00");
+        $request.SetUpdateType("Change");
+        $request.SetValidateFlag(librets.UpdateRequest.VALIDATE_ONLY);
+</pre><pre class="programlisting"># ruby
+        request.delimiter = "|"
+        request.SetField("ListingID", "LN000005")
+        request.SetField("CloseDate", "2009-08-20T00:00:00")
+        request.update_type = "Change"
+        request.validate_flag = UpdateRequest::VALIDATE_ONLY
+</pre></div><div class="section" title="6.1.2.&nbsp;Invoke the Update"><div class="titlepage"><div><div><h4 class="title"><a name="performing-the-update"></a>6.1.2.&nbsp;Invoke the Update</h4></div></div></div><p>Once the request has been customized, the update can be started.
+        It is important to note that as of libRETS 1.2 (and later releases),
+        libRETS uses a "streaming" technology. That is, once the request has
+        been started, libRETS immediately returns to the caller, who then must perform a
+        processing loop around the <code class="literal">UpdateResult::HasNext()</code>
+        API and a timely fashion. In other words, do not wait too long between
+        <code class="literal">HasNext()</code> invocations or you will run the risk of
+        having the transaction aborted by the server because of failure to 
+        satisfy it in a timely fashion. Please see the next section.</p><p>In the example below, we will perform the update:</p><pre class="programlisting">// C++
+        UpdateResultAPtr results = session-&gt;Update(updateRequest.get());
+
+</pre><pre class="programlisting">// C#
+        UpdateResult results = session.Update(updateRequest);
+</pre><pre class="programlisting">// Java
+        UpdateResult results = session.Update(updateRequest);
+</pre><pre class="programlisting"># perl
+        my $results = $session-&gt;Update($request);
+</pre><pre class="programlisting">&lt;? php
+        $results = $session-&gt;Update($request);
+</pre><pre class="programlisting"># python
+        results = session.Update(request)
+</pre><pre class="programlisting"># ruby
+        results = session.Update(request)
+</pre></div></div><div class="section" title="6.2.&nbsp;Processing the Results of the Update"><div class="titlepage"><div><div><h3 class="title"><a name="processing-update-results"></a>6.2.&nbsp;Processing the Results of the Update</h3></div></div></div><p>As discussed above, once the request has
+        been started, libRETS returns to the caller, who then must perform a
+        processing loop around the <code class="literal">UpdateResult::HasNext()</code>
+        API and a timely fashion. In other words, do not wait too long between
+        <code class="literal">HasNext()</code> invocations or you will run the risk of
+        having the transaction aborted by the server because of failure to 
+        satisfy it in a timely fashion.</p><p>In the example below, we will perform the loop
+        through the results, printing the columns returned for each 
+        listing.</p><pre class="programlisting">// C++
+        StringVector columns = results-&gt;GetColumns();
+        while (results-&gt;HasNext())
+        {
+            StringVector::iterator i;
+            for (i = columns.begin(); i != columns.end(); i++)
+            {
+                string column = *i;
+                cout &lt;&lt; setw(15) &lt;&lt; column &lt;&lt; ": "
+                     &lt;&lt; setw(0) &lt;&lt; results-&gt;GetString(column) &lt;&lt; endl;
+            }
+            cout &lt;&lt; endl;
+        }
+</pre><pre class="programlisting">// C#
+        IEnumerable columns = results.GetColumns();
+        while (results.HasNext())
+        {
+            foreach (string column in columns)
+            {
+                Console.WriteLine(column + ": " + results.GetString(column));
+            }
+            Console.WriteLine();
+        }
+
+</pre><pre class="programlisting">// Java
+        StringVector columns = results.GetColumns();
+        while (results.HasNext())
+        {
+            for (int i = 0; i &lt; columns.size(); i++)
+            {
+                System.out.format("%15s: %s\n", 
+                                    columns.get(i), 
+                                    results.GetString(columns.get(i)));
+            }
+            System.out.println();
+        }
+
+</pre><pre class="programlisting"># perl
+        my $columns = $results-&gt;GetColumns();
+        while ($results-&gt;HasNext())
+        {   
+            foreach my $column (@$columns)
+            {       
+                    print $column . ": " . $results-&gt;GetString($column) . "\n";
+            }
+            print "\n";
+        }
+</pre><pre class="programlisting">&lt;? php
+        $columns = $results-&gt;GetColumns();
+        while ($results-&gt;HasNext())
+        {   
+            for ($i = 0; $i &lt; $columns-&gt;size(); $i++)
+            {   
+                print $columns-&gt;get($i) . ": " . $results-&gt;GetString($i) . "\n";
+            }
+            print "\n";
+        }
+</pre><pre class="programlisting"># python
+        columns = results.GetColumns()
+        while results.HasNext():
+        for column in columns:
+          print column + ": " + results.GetString(column)
+        print
+</pre><pre class="programlisting"># ruby
+        columns = results.columns
+        results.each do |result|
+          columns.each do |column|
+            puts column + ": " + result.string(column)
+          end
+          puts
+        end
+</pre><p>The Update transaction has two additional sets of information 
+        that can be returned: a set of errors; and a set of warnings. These
+        must also be processed the same way as with retrieving the data -
+        through a <code class="literal">HasNext()</code> type of loop:</p><pre class="programlisting">// C++
+        while (results-&gt;HasNextError())
+        {
+            cout &lt;&lt; setw(15) &lt;&lt; results-&gt;GetErrorFieldName() 
+                 &lt;&lt; ", Error: "
+                 &lt;&lt; results-&gt;GetErrorNumber()
+                 &lt;&lt; " at offset "
+                 &lt;&lt; results-&gt;GetErrorOffset()
+                 &lt;&lt; ", Message: "
+                 &lt;&lt; results-&gt;GetErrorText()
+                 &lt;&lt; endl;
+        }
+
+        while (results-&gt;HasNextWarning())
+        {
+            cout &lt;&lt; setw(15) &lt;&lt; results-&gt;GetWarningFieldName() 
+                 &lt;&lt; ", Warning: "
+                 &lt;&lt; results-&gt;GetWarningNumber()
+                 &lt;&lt; " at offset "
+                 &lt;&lt; results-&gt;GetWarningorOffset()
+                 &lt;&lt; ", Message: "
+                 &lt;&lt; results-&gt;GetWarningText()
+                 &lt;&lt; ", Response Required: "
+                 &lt;&lt; results-&gt;GetWarningResponseRequired()
+                 &lt;&lt; endl;
+        }
+</pre><pre class="programlisting">// C#
+        while (results-&gt;HasNextError())
+        {
+            Console.WriteLine (results-&gt;GetErrorFieldName()
+                 + ", Error: "
+                 + results-&gt;GetErrorNumber()
+                 + " at offset "
+                 + results-&gt;GetErrorOffset()
+                 + ", Message: "
+                 + results-&gt;GetErrorText());
+        }
+
+        while (results-&gt;HasNextWarning())
+        {
+            Console.WriteLine (results-&gt;GetWarningFieldName() 
+                 + ", Warning: "
+                 + results-&gt;GetWarningNumber()
+                 + " at offset "
+                 + results-&gt;GetWarningorOffset()
+                 + ", Message: "
+                 + results-&gt;GetWarningText()
+                 + ", Response Required: "
+                 + results-&gt;GetWarningResponseRequired());
+        }
+</pre><pre class="programlisting">// Java
+        while (results.HasNextError())
+        {
+            System.out.format("%15s: %s\n", 
+                results-&gt;GetErrorFieldName(),
+                ", Error: "
+                 + results-&gt;GetErrorNumber()
+                 + " at offset "
+                 + results-&gt;GetErrorOffset()
+                 + ", Message: "
+                 + results-&gt;GetErrorText());
+        }
+
+        while (results.HasNextWarning())
+        {
+            System.out.format("%15s: %s\n", 
+                results-&gt;GetWarningFieldName() 
+                ", Warning: "
+                 + results-&gt;GetWarningNumber()
+                 + " at offset "
+                 + results-&gt;GetWarningorOffset()
+                 + ", Message: "
+                 + results-&gt;GetWarningText()
+                 + ", Response Required: "
+                 + results-&gt;GetWarningResponseRequired());
+        }
+</pre><pre class="programlisting"># perl
+        while ($results-&gt;HasNextError())
+        {
+            print $results-&gt;GetErrorFieldName()
+                 . ", Error: "
+                 . $results-&gt;GetErrorNumber()
+                 . " at offset "
+                 . $results-&gt;GetErrorOffset()
+                 . ", Message: "
+                 . $results-&gt;GetErrorText()
+                 . "\n";
+        }
+
+        while ($results-&gt;HasNextWarning())
+        {
+            print $results-&gt;GetWarningFieldName() 
+                 . ", Warning: "
+                 . $results-&gt;GetWarningNumber()
+                 . " at offset "
+                 . $results-&gt;GetWarningorOffset()
+                 . ", Message: "
+                 . $results-&gt;GetWarningText()
+                 . ", Response Required: "
+                 . $results-&gt;GetWarningResponseRequired()
+                 . "\n";
+        }
+</pre><pre class="programlisting">&lt;? php
+        while ($results-&gt;HasNextError())
+        {
+            print $results-&gt;GetErrorFieldName()
+                 . ", Error: "
+                 . $results-&gt;GetErrorNumber()
+                 . " at offset "
+                 . $results-&gt;GetErrorOffset()
+                 . ", Message: "
+                 . $results-&gt;GetErrorText()
+                 . "\n";
+        }
+
+        while ($results-&gt;HasNextWarning())
+        {
+            print $results-&gt;GetWarningFieldName() 
+                 . ", Warning: "
+                 . $results-&gt;GetWarningNumber()
+                 . " at offset "
+                 . $results-&gt;GetWarningorOffset()
+                 . ", Message: "
+                 . $results-&gt;GetWarningText()
+                 . ", Response Required: "
+                 . $results-&gt;GetWarningResponseRequired()
+                 . "\n";
+</pre><pre class="programlisting"># python
+        while results.HasNextError():
+            print results.GetErrorFieldName()
+                 + ", Error: "
+                 + results.GetErrorNumber()
+                 + " at offset "
+                 + results.GetErrorOffset()
+                 + ", Message: "
+                 + results.GetErrorText()
+        print
+
+        while results.HasNextWarning():
+            print results.GetWarningFieldName() 
+                 + ", Warning: "
+                 + results.GetWarningNumber()
+                 + " at offset "
+                 + results.GetWarningorOffset()
+                 + ", Message: "
+                 + results.GetWarningText()
+                 + ", Response Required: "
+                 + results.GetWarningResponseRequired()
+        print
+</pre><pre class="programlisting"># ruby
+        results.each_error do |result|
+            puts result.error_field_name    \
+                 + ", Error: "              \
+                 + result.error_number.to_s \
+                 + " at offset "            \
+                 + result.error_offset.to_s \
+                 + ", Message: "            \
+                 + result.error_text        \
+        end 
+      
+        results.each_warning do |result|
+            puts result.warning_field_name          \
+                 + ", Error: "                      \
+                 + result.warning_number.to_s       \
+                 + " at offset "                    \
+                 + result.warning_offset.to_s       \
+                 + ", Message: "                    \
+                 + result.warning_text              \
+                 + ", Response Required: "          \
+                 + result.warning_response_required
+        end
+</pre></div></div><div class="section" title="7.&nbsp;Disconnecting From The Server"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="disconnecting"></a>7.&nbsp;Disconnecting From The Server</h2></div></div></div><p>The last task will be to disconnect from the RETS server.
+  This can produce accounting and billing information that may need
+  to be processed.</p><pre class="programlisting">// C++
+    LogoutResponseAPtr logout = session-&gt;Logout();
+
+    if (logout.get())
+    {
+        cout &lt;&lt; "Billing information: " &lt;&lt; logout-&gt;GetBillingInfo()
+             &lt;&lt; endl;
+        cout &lt;&lt; "Connect time: " &lt;&lt; logout-&gt;GetConnectTime() &lt;&lt; endl;
+        cout &lt;&lt; "Message: " &lt;&lt; logout-&gt;GetLogoutMessage() &lt;&lt; endl;
+    }
+</pre><pre class="programlisting">// C#
+    LogoutResponse logout = session.Logout();
+
+    Console.WriteLine("Billing info: " + logout.GetBillingInfo());
+    Console.WriteLine("Logout message: " + logout.GetLogoutMessage());
+    Console.WriteLine("Connect time: " + logout.GetConnectTime());
+</pre><pre class="programlisting">// Java
+    LogoutResponse logout = session.Logout();
+
+    System.out.println("Billing info: " + logout.GetBillingInfo());
+    System.out.println("Logout Message:  " + logout.GetLogoutMessage());
+    System.out.println("Connect time: " + logout.GetConnectTime());
+</pre><pre class="programlisting"># perl
+    my $logout =  $session-&gt;Logout();
+    
+    print "Billing info: " . $logout-&gt;GetBillingInfo() . "\n";
+    print "Logout message: " . $logout-&gt;GetLogoutMessage() . "\n";
+    print "Connect time: " . $logout-&gt;GetConnectTime() . "\n";
+</pre><pre class="programlisting">&lt;? php
+    $logout = $session-&gt;Logout();
+    
+    print "Billing info: " . $logout-&gt;GetBillingInfo() . "\n";
+    print "Logout message: " . $logout-&gt;GetLogoutMessage() . "\n";
+    print "Connect time: " . $logout-&gt;GetConnectTime() . "\n";
+    
+    ?&gt;
+</pre><pre class="programlisting"># python
+    logout = session.Logout();
+
+    print "Billing info: " + logout.GetBillingInfo()
+    print "Logout message: " + logout.GetLogoutMessage()
+    print "Connect time: " + str(logout.GetConnectTime())
+</pre><pre class="programlisting"># ruby
+    logout = session.logout
+    
+    puts "Billing info: " + logout.billing_info
+    puts "Logout message: " + logout.logout_message
+    puts "Connect time: " + logout.connect_time.to_s
+</pre></div><div class="section" title="8.&nbsp;Adding Http Logging"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="logging"></a>8.&nbsp;Adding Http Logging</h2></div></div></div><p>libRETS has a logging feature built in that works with
+    libCURL to log the http transactions for debugging purposes.
+    This section shows how to add 1ogging to the application.</p><p>There are two methods available for logging. The first
+    method takes advantage of the logging already built into libRETS
+    and simply requires the user provide the name to the logfile as
+    a string. This works for all SWIG bound languages.</p><p>The second method is a bit more involved, but will allow
+    the user to write custom logging classes if so desired. This works
+    for C++ (and is the only means for logging from C++),
+    C#, Java, Python and Ruby only. Both methods
+    will be demonstrated below.</p><div class="section" title="8.1.&nbsp;Setting up simple logging"><div class="titlepage"><div><div><h3 class="title"><a name="setup-easy"></a>8.1.&nbsp;Setting up simple logging</h3></div></div></div><p>For the first method, logging can be enabled by simply specifying the
+    name of the target log file to the RetsSession::SetHttpLogName class.</p><pre class="programlisting">// C#
+if (args.Length &gt; 0)
+    session.SetHttpLogName(args[0]);
+</pre><pre class="programlisting">// Java
+if (args.length &gt; 0)
+    session.SetHttpLogName(args[0]);
+</pre><pre class="programlisting"># perl
+my $numArgs = $#ARGV + 1;
+
+if ($numArgs)
+{
+    $rets-&gt;SetHttpLogName($ARGV[0]);
+}
+</pre><pre class="programlisting">&lt;? php
+$session-&gt;SetHttpLogName("log.out");
+</pre><pre class="programlisting"># python
+log_file = sys.argv[1]
+session.SetHttpLogName(log_file);
+</pre><pre class="programlisting"># ruby
+log_file = ARGV[0]
+session.SetHttpLogName(log_file)
+</pre></div><div class="section" title="8.2.&nbsp;Setting up logging for a C++ application"><div class="titlepage"><div><div><h3 class="title"><a name="setup-custom"></a>8.2.&nbsp;Setting up logging for a C++ application</h3></div></div></div><p>C++ applications can take advantage of the <code class="literal">StreamHttpLogger</code>
+      class, wrapped around a <code class="literal">std::ofstream</code>.</p><pre class="programlisting">// C++
+#include &lt;fstream&gt;
+std::ofstream mLogStream;
+librets::RetsHttpLoggerPtr mLogger;
+
+mLogStream.open("log.out");
+mLogger.reset(new StreamHttpLogger(&amp;mLogStream));
+session-&gt;SetHttpLogger(mLogger.get());
+if (log_getobject_calls)
+    session-&gt;SetLogEverything(true);
+    </pre></div><div class="section" title="8.3.&nbsp;Setting up custom logging for a C# application"><div class="titlepage"><div><div><h3 class="title"><a name="csharp"></a>8.3.&nbsp;Setting up custom logging for a C# application</h3></div></div></div><p>For C#, libRETS contains a <code class="literal">TextWriterLogger</code>
+      delegate that can be used to invoke logging.</p><pre class="programlisting">// C#
+TextWriter logWriter;
+
+if (logging)
+    logWriter = new StreamWriter("log.out");
+else
+    logWriter = TextWriter.Null;
+
+session.LoggerDelegate = TextWriterLogger.CreateDelegate(logWriter);
+</pre></div><div class="section" title="8.4.&nbsp;Setting up custom logging for a Java application"><div class="titlepage"><div><div><h3 class="title"><a name="java"></a>8.4.&nbsp;Setting up custom logging for a Java application</h3></div></div></div><p>For java, you must create a static class that extends RetsHttpLogger.
+      It must contain a separate method called logHttpData with two parameters that will 
+      log the data:</p><pre class="programlisting">// Java
+    public static class TestLogger extends RetsHttpLogger
+    {
+        Type last_type = Type.INFORMATIONAL;
+        PrintWriter logfile = null;
+
+        public TestLogger(String filename)
+        {
+            try
+            {
+                logfile = new PrintWriter(new FileWriter(filename));
+            }
+            catch (Exception e)
+            {
+              System.err.println("Catch!");
+            }
+        }
+
+        protected void finalize() 
+        {
+            System.out.println("Closing logfile");
+            if (logfile != null)
+            {
+              logfile.flush();
+              logfile.close();
+            }
+            super.finalize();
+        }
+
+        public void logHttpData(Type type, String data)
+        {
+            logfile.println();
+            if (type == Type.RECEIVED &amp;&amp; last_type != Type.RECEIVED)
+            {
+                logfile.println("&lt;&lt;&lt; Received");
+            }
+            else
+            if (type == Type.SENT &amp;&amp; last_type != Type.SENT)
+            {
+                logfile.println("&gt;&gt;&gt; Sent");
+            }
+            else
+            if (type == Type.INFORMATIONAL)
+            {
+                logfile.print("* ");
+            }
+            logfile.print(data);
+            last_type = type;
+        }
+    }
+</pre><p>And the logging can be invoked with:</p><pre class="programlisting">// Java
+TestLogger logger = null;
+
+if (logging)
+    logger = new TestLogger("log.out");
+
+session.SetHttpLogger(logger);
+</pre></div><div class="section" title="8.5.&nbsp;Setting up custom logging for Python"><div class="titlepage"><div><div><h3 class="title"><a name="python"></a>8.5.&nbsp;Setting up custom logging for Python</h3></div></div></div><p>Python is similar to Java, you must create a class with an initialize method and
+      a separate method called logHttpData with two parameters that will 
+      log the data:</p><pre class="programlisting"># python
+# To be able to provide a logger to libRETS, you must have an
+# initialize method that calls super and implement a method named
+# logHttpData that takes two arguements.
+class TestLogger(librets.RetsHttpLogger):
+  def __init__(self, filename = None):
+    librets.RetsHttpLogger.__init__(self)
+    if filename:
+      self.file = open(filename, 'wa')
+    else:
+      self.file = sys.stdout
+
+    self.last_type = self.INFORMATIONAL
+
+  # This example logHttpData mirrors the funtionality of the
+  # StreamHttpLogger C++ class that ship with the C++ parts of
+  # libRETS.
+  def logHttpData(self, type, data):
+    if type == self.RECEIVED and self.last_type != self.RECEIVED:
+      print &gt;&gt; self.file, "\n&lt;&lt;&lt; Received"
+    elif type == self.SENT and self.last_type != self.SENT:
+      print &gt;&gt; self.file, "\n&gt;&gt;&gt; Sent"
+    elif type == self.INFORMATIONAL:
+      print &gt;&gt; self.file, "*",
+
+    print &gt;&gt; self.file, data,
+    self.last_type = type
+
+try:
+  session = librets.RetsSession("http://demo.crt.realtors.org:6103/rets/login")
+
+  log_file = sys.argv[1]
+  logger = TestLogger(log_file)
+  session.SetHttpLogger(logger)
+
+</pre></div><div class="section" title="8.6.&nbsp;Setting up custom logging for Ruby"><div class="titlepage"><div><div><h3 class="title"><a name="ruby"></a>8.6.&nbsp;Setting up custom logging for Ruby</h3></div></div></div><p>Logging for Ruby is similar to that in Java and Python: you must create a logging
+      class with an initialize method and a method calls logHttpData with two
+      arguments that will log the data:</p><pre class="programlisting"># ruby
+# To be able to provide a logger to libRETS, you must have an
+# initialize method that calls super and implement a method named
+# logHttpData that takes two arguements.
+
+class TestLogger &lt; Librets::RetsHttpLogger
+
+  def initialize(filename = nil)
+    super()
+    if (filename.nil?)
+      @file = $stdout
+    else
+      @file = File.open(filename, 'a')
+    end
+    @last_type = INFORMATIONAL
+  end
+
+  # This example logHttpData mirrors the functionality of the
+  # StreamHttpLogger C++ class that ships with the C++ parts of
+  # libRETS.
+  def logHttpData(type, data)
+    if type == RECEIVED &amp;&amp; @last_type != RECEIVED
+      @file &lt;&lt; "\n&lt;&lt;&lt; Received\n"
+    elsif type == SENT &amp;&amp; @last_type != SENT
+      @file &lt;&lt; "\n&gt;&gt;&gt; Sent\n"
+    elsif type == INFORMATIONAL
+      @file &lt;&lt; "* "
+    end
+    @file &lt;&lt; data
+    @last_type = type
+  end
+end
+
+session.SetHttpLogger(TestLogger.new("log.out"))
+</pre></div></div><div class="section" title="9.&nbsp;Advanced libRETS Usage"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="advanced"></a>9.&nbsp;Advanced libRETS Usage</h2></div></div></div><p>
+    This next section applies to C++ and Java only. There is a feature in libRETS
+    allowing one to capture the raw RETS return for the GetMetadata and Search transactions.
+    This output can be staged anywhere for later processing. For C++, the output will be
+    a stream. For Java, the output will be to a byte []. The data can be reinjected into
+    the libRETS parsing stream for parsing at a later time if so desired. Note that a session 
+    will only be active during the data capture phase. During the parsing phase, no session
+    will be active. 
+  </p><div class="section" title="9.1.&nbsp;Setting up the Search Request"><div class="titlepage"><div><div><h3 class="title"><a name="search-request"></a>9.1.&nbsp;Setting up the Search Request</h3></div></div></div><p>The setup for the search request is exactly as shown earlier in
+    this document. For C++, the output will be to a stream. Once the data
+    has been retrieved, there is no further need for the session. In this
+    example, we'll close it:</p><pre class="programlisting">// C++
+    /*
+     * Perform the search, returning the results to the output file.
+     */
+    std::ofstream outputStream(outputFilename.c_str());
+    session-&gt;Search(searchRequest.get(), outputStream);
+    outputStream.close();
+    
+    /*
+     * We're done with the session so we can log out.
+     */
+    session-&gt;Logout();
+    </pre><p>The second part of the process (which, by this design, can be done at
+    a later time), is to reinject the raw data into the libRETS parse stream. This
+    is handled by manually creating a SearchResultSetAPtr, setting the data encoding,
+    and setting the stream to be used for inputting the data. The process is the 
+    same as documented earlier.</p><pre class="programlisting">// C++
+    /*
+     * Reopen the file for input.
+     */
+    istreamPtr inputStream(new std::ifstream(outputFilename.c_str()));
+
+    /*
+     * Create the SearchResultSet to handle the parsing of the data.
+     */
+    SearchResultSetAPtr results(new SearchResultSet());
+    results-&gt;SetEncoding(options.getEncoding());
+    results-&gt;SetInputStream(inputStream);
+    
+    if (printCount)
+    {
+	cout &lt;&lt; "Matching record count: " &lt;&lt; results-&gt;GetCount() &lt;&lt; endl;
+    }
+    StringVector columns = results-&gt;GetColumns();
+    while (results-&gt;HasNext())
+    {
+	StringVector::iterator i;
+	for (i = columns.begin(); i != columns.end(); i++)
+	{
+	    string column = *i;
+	    cout &lt;&lt; setw(15) &lt;&lt; column &lt;&lt; ": "
+		 &lt;&lt; setw(0) &lt;&lt; results-&gt;GetString(column) &lt;&lt; endl;
+	}
+	cout &lt;&lt; endl;
+    }
+    </pre><p>Java streams are different animals than C++ streams, so for Java, the
+    data will be output to a Java byte array. This byte array can be used to
+    copy the data to any API that will accept a <code class="literal">byte []</code>. In
+    this example, we will also copy the data to a file. Do note that for Java,
+    the name of the search API is <code class="literal">SearchAsArray</code> and the
+    API to reinject the data into the parse stream is <code class="literal">SetDataAsArray</code>
+    :</p><pre class="programlisting">// Java
+      try
+      {
+	  File f=new File("rawsearch.log");
+	  FileOutputStream fop=new FileOutputStream(f);
+	  byte [] data = session.SearchAsArray(searchRequest);
+	  fop.write(data);
+	  fop.flush();
+	  fop.close();
+      }
+      catch (IOException e) {}
+
+      SearchResultSet results = new SearchResultSet();
+
+      // Reopen the file now for input
+      try
+      {
+	  File f = new File("rawsearch.xml");
+	  byte [] buffer = new byte[(int)f.length()];
+
+	  FileInputStream fip=new FileInputStream(f);
+
+	  int offset = 0;
+	  int numRead = 0;
+
+	  while (offset &lt; buffer.length &amp;&amp; (numRead=fip.read(buffer, offset, buffer.length - offset)) &gt;= 0)
+	      offset += numRead;
+
+	  results.SetEncoding(EncodingType.RETS_XML_DEFAULT_ENCODING);
+	  results.SetDataAsArray(buffer);
+      }
+      catch (IOException e) {}
+    </pre></div><div class="section" title="9.2.&nbsp;Setting up the GetMetadata Request"><div class="titlepage"><div><div><h3 class="title"><a name="getmetadta-request"></a>9.2.&nbsp;Setting up the GetMetadata Request</h3></div></div></div><p>The setup for the metadata request is exactly as shown earlier in
+    this document. For C++, the output will be to a stream. Once the data
+    has been retrieved, there is no further need for the session. In this
+    example, we'll close it:</p><pre class="programlisting">// C++
+    /*
+     * Perform the getmetadata transaction, returning the results to the output file.
+     */
+    std::ofstream outputStream(outputFilename.c_str());
+    session-&gt;GetMetadata(outputStream);
+    outputStream.close();
+    
+    /*
+     * We're done with the session so we can log out.
+     */
+    session-&gt;Logout();
+    </pre><p>The second part of the process (which, by this design, can be done at
+    a later time), is to reinject the raw data into the libRETS parse stream. This
+    is handled by manually creating a RetsMetadata object using the CreateAndParse()
+    method, setting the data encoding,
+    and setting the stream to be used for inputting the data. The process is the 
+    same as documented earlier.</p><pre class="programlisting">// C++
+    /*
+     * Reopen the file for input.
+     */
+    istreamPtr inputStream(new std::ifstream(outputFilename.c_str()));
+
+    /*
+     * Create the RetsMetadata object pointer to handle the parsing of the data.
+     */
+    RetsMetadata * metadata = RetsMetadata::CreateAndParse(inputStream, options.getEncoding());
+    
+    /*
+     * Now process the metadata.
+     */
+    dumpSystem(metadata);
+    dumpAllResource(metadata);
+    </pre><p>For Java, the data will again be output to a Java byte array.
+    This byte array can be used to
+    copy the data to any API that will accept a <code class="literal">byte []</code>. In
+    this example, we will also copy the data to a file. Do note that for Java,
+    the name of the APIs are <code class="literal">RetsMetadata.GetMetadataAsArray</code>
+    and <code class="literal">RetsMetadata.CreateMetadataFromArray</code>:</p><pre class="programlisting">// Java
+      try
+      {
+	  File f=new File("rawmetadata.xml");
+	  FileOutputStream fop=new FileOutputStream(f);
+	  byte [] data = session.GetMetadataAsArray();
+	  fop.write(data);
+	  fop.flush();
+	  fop.close();
+      }
+      catch (IOException e) {}
+
+      LogoutResponse logout = session.Logout();
+
+      System.out.println("Billing info: " + logout.GetBillingInfo());
+      System.out.println("Logout Message:  " + logout.GetLogoutMessage());
+      System.out.println("Connect time: " + logout.GetConnectTime());
+
+      // Reopen the file now for input
+      try
+      {
+	  File f = new File("rawmetadata.xml");
+	  byte [] buffer = new byte[(int)f.length()];
+
+	  FileInputStream fip=new FileInputStream(f);
+
+	  int offset = 0;
+	  int numRead = 0;
+
+	  while (offset &lt; buffer.length &amp;&amp; (numRead=fip.read(buffer, offset, buffer.length - offset)) &gt;= 0)
+	      offset += numRead;
+
+	  RetsMetadata metadata = RetsMetadata.CreateMetadataFromArray(buffer);
+	  dumpSystem(metadata);
+	  dumpAllResources(metadata);
+      }
+      catch (IOException e) {}
+    </pre></div></div><div class="bibliography" title="Bibliography"><div class="titlepage"><div><div><h2 class="title"><a name="libres-bibliography"></a>Bibliography</h2></div></div></div><div class="biblioentry" title="RETS specification 1.7 section 3.4"><a name="bib-rets-1.7-3.4"></a><p>[bib-rets-1.7-3.4] <span class="title"><i>RETS specification 1.7 section 3.4</i>. </span><span class="releaseinfo">
+        <a class="ulink" href="http://rets.org" target="_top">http://rets.org</a>
+      . </span></p></div></div></div></body></html>

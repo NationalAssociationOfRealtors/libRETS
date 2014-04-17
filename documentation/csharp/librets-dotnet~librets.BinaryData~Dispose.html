@@ -1,0 +1,164 @@
+﻿<html xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<head>
+    <!--DXMETADATA start type="MetaCharset" --><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"><!--DXMETADATA end-->
+    <meta content="history" name="save">
+    <meta name="GENERATOR" content="Innovasys Document! X (http://www.innovasys.com)">
+    <!--DXMETADATA start type="PageItemTitle" format="<title>%%PageItemTitle%%</title>" --><title>Dispose Method</title><!--DXMETADATA end-->
+    <link rel="stylesheet" type="text/css" href="stylesheets/dotnet2005.css">
+    <!--DXMETADATA start type="Literal" condition="helpversion:value=2" value="<link rel=""stylesheet"" type=""text/css"" href=""stylesheets/help2.css"">" --><!--DXMETADATA end -->
+    <script src="script/dotnet2005.js"></script>
+    <!--DXMETADATA start type="Scrap" name="_XML_ISLAND" --><xml>
+<MSHelp:Keyword Index="F" Term="librets.BinaryData.Dispose" />
+<MSHelp:Attr Name="DevLang" Value="CSharp" />
+<MSHelp:Attr Name="DevLang" Value="VB" />
+<MSHelp:Attr Name="DevLang" Value="JScript" />
+<MSHelp:Attr Name="TopicType" Value="kbSyntax"/>
+<MSHelp:Attr Name="LinkGroup" Value="Help"/>
+<MSHelp:Attr Name="Locale" Value="kbEnglish"/>
+<MSHelp:Attr Name="HelpPriority" Value="1"/>
+</xml><!--DXMETADATA end -->
+    <!--DXMETADATA start type="Variable" name="BannerColor" format="<style type=text/css>div#pagetop,div#pagetop span,table#pagetoptable1 a,table#pagetoptable2 a {background-color: %%Variable%%; color: %%Variable:Name=BannerTextColor%%}</style>" blankformat="" --><!--DXMETADATA end -->
+</head>
+<body id="dxBody" topmargin="0">
+    <input type="hidden" id="userDataCache" class="userDataStyle" NAME="userDataCache">
+    </input>
+    <input type="hidden" id="hiddenScrollOffset" NAME="hiddenScrollOffset">
+    </input>
+    <img id="collapseImage" style="display:none; height:0; width:0;" src="dotnetimages/collapse.gif">
+    <img id="expandImage" style="display:none; height:0; width:0;" src="dotnetimages/expand.gif"/>
+    <img id="collapseAllImage" style="display:none; height:0; width:0;" src="dotnetimages/collapse.gif"/>
+    <img id="expandAllImage" style="display:none; height:0; width:0;" src="dotnetimages/expand.gif"/>
+    <img id="dropDownImage" style="display:none; height:0; width:0;" src="dotnetimages/drpdown.gif"/>
+    <img id="dropDownHoverImage" style="display:none; height:0; width:0;" src="dotnetimages/drpdown_orange.gif"/>
+    <img id="copyImage" style="display:none; height:0; width:0;" src="dotnetimages/copycode.gif"/>
+    <img id="copyHoverImage" style="display:none; height:0; width:0;" src="dotnetimages/copycodeHighlight.gif">
+    <!--DXMETADATA start type="FilteredItemList" scrap="GENERICARGUMENT_BUBBLES" namespace="generic argument" source="Item" --><!--DXMETADATA end -->
+    <div id="pagetop">
+        <!--DXMETADATA start type="DesignBanner" --><!--DXMETADATA end -->
+        <table width="100%" id="pagetoptable1">
+            <tr id="pagetoptable1row1">
+                <td align="left">
+                    <span id="projecttitle">
+                        <!--DXMETADATA start type="ProjectTitle" -->librets-dotnet<!--DXMETADATA end-->
+                    </span>
+                </td>
+                <td align="right">
+                    <span id="feedbacklink">
+                        <!--DXMETADATA start type="Variable" name="FeedbackLink" format="" --><a href="mailto:kgarner@crt.realtor.org?subject=Documentation Feedback: librets-dotnet~librets.BinaryData~Dispose.html">Send comments</a> on this topic.<!--DXMETADATA end --></td>
+                    </span>
+                </td>
+            </tr>
+            <tr id="pagetoptable1row2">
+                <td align="left" colspan="2">
+                    <span id="pagetitle">
+                        <!--DXMETADATA start type="PageItemTitle" -->Dispose Method<!--DXMETADATA end-->
+                    </span>
+                </td>
+            </tr>
+            <tr id="pagetoptable1row3">
+                <td colspan="2">
+                    <a href="#seealsobookmark" onclick="javascript:openSectionById('seeAlsoSectionHeader');"><!--DXMETADATA start type="Phrase" name="SEE_ALSO" -->See Also<!--DXMETADATA end--></a>&nbsp;
+                    <!--DXMETADATA start type="Literal" condition="childitems:itemtype=example,filter=""type=inline""" value="<a href="#ExampleBookmark" onclick="javascript:openSectionById('exampleSectionHeader');">$$Example$$</a>" --><!--DXMETADATA end -->
+                </td>
+            </tr>
+        </table>
+        <table width="100%" id="pagetoptable2" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <span id="toggleExpandedAll">
+                        <img ID="toggleExpandedAllImage" class="toggleAll" src="dotnetimages/collapse.gif"/>
+                        <label id="collapseAllLabel" for="toggleExpandedAllImage" style="display: none;"><!--DXMETADATA start type="Phrase" name="COLLAPSE_ALL" -->Collapse All<!--DXMETADATA end--></label>
+                        <label id="expandAllLabel" for="toggleExpandedAllImage" style="display: none;"><!--DXMETADATA start type="Phrase" name="EXPAND_ALL" -->Expand All<!--DXMETADATA end--></label>
+                    </span>
+                    <span id="languageFilterToolTip" style="cursor:default;" onclick="showBox('dxlanguagemenu',event,document.getElementById('languageFilterImage'))" onmouseover='document.getElementById("languageFilterImage").src=document.getElementById("dropDownHoverImage").src;' onfocusin='document.getElementById("languageFilterImage").src=document.getElementById("dropDownHoverImage").src;' onmouseout='document.getElementById("languageFilterImage").src=document.getElementById("dropDownImage").src;' onfocusout='document.getElementById("languageFilterImage").src=document.getElementById("dropDownImage").src;'>
+                        <img id="languageFilterImage" src="dotnetimages/drpdown.gif"/>
+                        <label id="showAllLabel" for="languageFilterImage" style="display: none;">
+                            <!--DXMETADATA start type="Phrase" name="Language_Filter_All" -->Language Filter: All<!--DXMETADATA end -->
+                        </label>
+                        <label id="multipleLabel" for="languageFilterImage" style="display: none;">
+                            <!--DXMETADATA start type="Phrase" name="Language_Filter_Multiple" -->Language Filter: Multiple<!--DXMETADATA end -->
+                        </label>
+                        <!--DXMETADATA start type="FilteredItemList" scrap="LANGUAGE_LABEL_LIST" namespace="language" filter="type=all" source="Item" format="" -->
+<label id="VBLabel" for="languageFilterImage" style="display: none;">Language Filter: Visual Basic (Declaration)</label>
+<label id="VBUsageLabel" for="languageFilterImage" style="display: none;">Language Filter: Visual Basic (Usage)</label>
+<label id="CSLabel" for="languageFilterImage" style="display: none;">Language Filter: C#</label>
+<label id="CPPLabel" for="languageFilterImage" style="display: none;">Language Filter: Managed Extensions for C++</label>
+<label id="CPP2005Label" for="languageFilterImage" style="display: none;">Language Filter: C++/CLI</label>
+<!--DXMETADATA end -->
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <!--DXMETADATA start type="Breadcrumbs" scrap="_BREADCRUMBS" --><table width="100%" id="pagetopbreadcrumbs" cellspacing="0" cellpadding="0"><tr><td>
+<a href="librets-dotnet~librets_namespace.html">librets Namespace</a>
+ > <a href="librets-dotnet~librets.BinaryData.html">BinaryData Class</a>
+ : Dispose Method</td></tr></table><!--DXMETADATA end -->
+        <div class="dxpopupbubble" id="dxlanguagemenu">
+            <!--DXMETADATA start type="FilteredItemList" scrap="LANGUAGE_CHECKBOX_LIST" namespace="language" filter="type=all" source="Item" format="" -->
+<input id="VBCheckbox" type="checkbox" name="languageFilter" onClick="setLanguage(this)" />
+<label class="languageFilter" for="VBCheckbox">
+Visual Basic (Declaration)
+</label>
+<br /><input id="VBUsageCheckbox" type="checkbox" name="languageFilter" onClick="setLanguage(this)" />
+<label class="languageFilter" for="VBUsageCheckbox">
+Visual Basic (Usage)
+</label>
+<br /><input id="CSCheckbox" type="checkbox" name="languageFilter" onClick="setLanguage(this)" />
+<label class="languageFilter" for="CSCheckbox">
+C#
+</label>
+<br /><input id="CPPCheckbox" type="checkbox" name="languageFilter" onClick="setLanguage(this)" />
+<label class="languageFilter" for="CPPCheckbox">
+Managed Extensions for C++
+</label>
+<br /><input id="CPP2005Checkbox" type="checkbox" name="languageFilter" onClick="setLanguage(this)" />
+<label class="languageFilter" for="CPP2005Checkbox">
+C++/CLI
+</label>
+<!--DXMETADATA end -->
+        </div>
+        <!--DXMETADATA start type="FilteredItemList" scrap="PARAMETERS_BUBBLES" namespace="parameter" source="Item" --><!--DXMETADATA end -->
+    </div>
+
+    <div id="pagebody" valign="bottom">
+        <a name="topBookmark"></a>
+        <div id="mainbody">
+            <div id="allHistory" class="saveHistory" onsave="saveAll()" onload="loadAll()">
+            </div>
+            <!--DXMETADATA start type="IsNew" format="<script>document.getElementById('pagebody').className = 'newTopic'</script>" --><!--DXMETADATA end-->
+            <!--DXMETADATA start type="Description" source="Item" format="%%description%%" --><!--DXMETADATA end -->
+            <!--DXMETADATA start type="TaggedComment" source="Item" id="##OVERLOADS" format="%%comment%%" --><!--DXMETADATA end -->
+            <!--DXMETADATA start type="FilteredItemList" scrap="OVERLOAD_LIST" namespace="method" source="Item" filter="" format="%%scrap:name=_COLLAPSIBLE_HEADER,idprefix=overloadlist,caption=$$OverloadList$$%%%%filtereditemlist%%</div>" --><!--DXMETADATA end -->
+            <!--DXMETADATA start type="FilteredItemList" scrap="SYNTAX" namespace="language" filter="type=all" NoHeader="True" NoFooter="True" format="%%scrap:name=_COLLAPSIBLE_HEADER,idprefix=syntax,caption=$$Syntax$$%%%%FilteredItemList%%" --><h1 class="heading"><span class="expandcollapse" tabindex="0"><img id="syntaxToggle" class="toggle" name="toggleSwitch" src="dotnetimages/collapse.gif"></img>Syntax</span></h1><div id="syntaxSection" class="section" name="collapseableSection"><DIV class=LanguageSpecific id=Syntax_VB><table class="syntaxtable" width="100%" cellpadding="0" cellspacing="0"><tr><th>Visual Basic (Declaration)</th><th>&nbsp;</th></tr><tr><td colspan="2"><pre>Public Overridable Sub Dispose() </pre></tr></table></div>
+<DIV class=LanguageSpecific id=Syntax_VBUsage><table class="syntaxtable" width="100%" cellpadding="0" cellspacing="0"><tr><th>Visual Basic (Usage)</th><th><span class="copyCode" onclick="copyCode(this)" onkeypress="CopyCode_CheckKey(this)" onmouseover="changeCopyCodeIcon(this,true)" onfocusin="changeCopyCodeIcon(this,true)" onmouseout="changeCopyCodeIcon(this,false)" onfocusout="changeCopyCodeIcon(this,false)" tabindex="0"><img class="copyCodeImage" name="ccImage" align="absmiddle" src="dotnetimages/copycode.gif">Copy Code</span></th></tr><tr><td colspan="2"><pre><CODE>Dim instance As <a href="librets-dotnet~librets.BinaryData.html">BinaryData</a>
+&nbsp;
+instance.Dispose()</CODE></pre></tr></table></div>
+<DIV class=LanguageSpecific id=Syntax_CS><table class="syntaxtable" width="100%" cellpadding="0" cellspacing="0"><tr><th>C#</th><th>&nbsp;</th></tr><tr><td colspan="2"><pre>public virtual void Dispose()</pre></tr></table></div>
+<DIV class=LanguageSpecific id=Syntax_CPP><table class="syntaxtable" width="100%" cellpadding="0" cellspacing="0"><tr><th>Managed Extensions for C++</th><th>&nbsp;</th></tr><tr><td colspan="2"><pre>public: virtual void Dispose(); </pre></tr></table></div>
+<DIV class=LanguageSpecific id=Syntax_CPP2005><table class="syntaxtable" width="100%" cellpadding="0" cellspacing="0"><tr><th>C++/CLI</th><th>&nbsp;</th></tr><tr><td colspan="2"><pre>public:
+virtual void Dispose(); </pre></tr></table></div>
+<!--DXMETADATA end -->
+            <!--DXMETADATA start type="FilteredItemList" scrap="PARAMETERS_LIST" namespace="parameter" source="Item" filter="" NoCr="True" format="<h4 class=dxh4>$$ParameterList$$</h4>%%filtereditemlist%%" --><!--DXMETADATA end -->
+            <!--DXMETADATA start type="FilteredItemList" scrap="GENERICARGUMENT_LIST" namespace="generic argument" source="Item" filter="" format="<h4 class=dxh4>$$GenericArguments$$</h4>%%filtereditemlist%%" --><!--DXMETADATA end -->
+            <!--DXMETADATA start type="TaggedComment" source="Item" id="##RETURNS" format="<h4 class=dxh4>$$Return_Type$$</h4>%%comment%%</div>" blankformat="</div>" --></div><!--DXMETADATA end -->
+            <!--DXMETADATA start type="FilteredItemList" scrap="EXCEPTION_LIST" namespace="exception" source="Item" filter="" designtime="true" format="%%replaceinquotes:value=false%%%%scrap:name=_COLLAPSIBLE_HEADER,idprefix=exceptions,caption=""$$Exceptions$$%%designlist:tagidentifier=##EXCEPTION,itemtype=Exception%%""%%%%filtereditemlist%%</div>" --><!--DXMETADATA end -->
+            <!--DXMETADATA start type="FilteredItemList" scrap="PERMISSION_LIST" namespace="permission" source="Item" filter="" designtime="true" format="%%replaceinquotes:value=false%%%%scrap:name=_COLLAPSIBLE_HEADER,idprefix=permissions,caption=""$$Permissions$$%%designlist:tagidentifier=##PERMISSION,itemtype=Permission%%""%%%%filtereditemlist%%</div>" --><!--DXMETADATA end -->
+            <a name="exampleBookmark"></a>
+            <!--DXMETADATA start type="TaggedComment" source="Item" id="##EXAMPLEINTRO" format="%%replaceinquotes:value=false%%%%scrap:name=_COLLAPSIBLE_HEADER,idprefix=example,caption=""$$Example$$%%designlist:tagidentifier=##EXAMPLECODE,itemtype=Example%%""%%%%comment%%" --><!--DXMETADATA end -->
+            <!--DXMETADATA start type="FilteredItemList" scrap="INLINE_EXAMPLE" namespace="Example" source="Item" filter="type=inline" NoHeader="True" NoFooter="True" format="%%replaceinquotes:value=false%%%%taggedcomment:source=item,id=##EXAMPLEINTRO,blankformat=""%%scrap:name=_COLLAPSIBLE_HEADER,idprefix=example,caption=$$Example$$%%"",format= %%%%filtereditemlist%%</div>" blankformat="%%taggedcomment:source=item,id=##EXAMPLEINTRO,format=</div>%%" --><!--DXMETADATA end -->
+            <!--DXMETADATA start type="FilteredItemList" scrap="MENU_LINK" namespace="example" source="Item" filter="" NoHeader="True" NoFooter="True" format="%%scrap:name=_COLLAPSIBLE_HEADER,idprefix=example,caption=$$Example$$%%%%filtereditemlist%%</div>" --><!--DXMETADATA end -->
+            <!--DXMETADATA start type="TaggedComment" source="Item" id="##REMARKS" format="%%scrap:name=_COLLAPSIBLE_HEADER,idprefix=remarks,caption=$$Remarks$$%%%%comment%%</div>" --><!--DXMETADATA end -->
+            <!--DXMETADATA start type="TaggedComment" source="Item" id="##REQUIREMENTS" format="%%scrap:name=_COLLAPSIBLE_HEADER,idprefix=requirements,caption=$$Requirements$$%%%%comment%%</div>" blankformat="%%variable:name=defaultmemberrequirements%%" --><h4 class=dxh4>Requirements</h4><p><b>Platforms:</b> Windows 98, Windows NT 4.0, Windows Millennium Edition, Windows 2000, Windows XP Home Edition, Windows XP Professional, Windows Server 2003 family</p><!--DXMETADATA end -->
+            <a name="seealsobookmark"></a>
+            <!--DXMETADATA start type="FilteredItemList" scrap="CATEGORIZED_LINKS" namespace="linkcategory" source="Item" filter="" NoHeader="True" NoFooter="True" format="%%replaceinquotes:value=false%%%%scrap:name=_COLLAPSIBLE_HEADER,idprefix=seealso,caption=""$$See_Also$$%%designlist:tagidentifier=##SEEALSO,itemtype=See Also%%""%%%%filtereditemlist%%</div>"--><h1 class="heading"><span class="expandcollapse" tabindex="0"><img id="seealsoToggle" class="toggle" name="toggleSwitch" src="dotnetimages/collapse.gif"></img>See Also</span></h1><div id="seealsoSection" class="section" name="collapseableSection"><h4 class="dxh4">Reference</h4><a href="librets-dotnet~librets.BinaryData.html">BinaryData Class</a>
+<br/><a href="librets-dotnet~librets.BinaryData_members.html">BinaryData Members</a>
+</p>
+</div><!--DXMETADATA end-->
+        </div>
+        <div id="pagefooter">
+            <!--DXMETADATA start type="Variable" name="CopyrightNotice" format="<p>&nbsp;</p><p>&nbsp;</p><hr size=1><p>%%variable%%</p>" --><p>&nbsp;</p><p>&nbsp;</p><hr size=1><p>&copy; Center for Realtor&reg; Technology. All Rights Reserved.</p><!--DXMETADATA end -->
+        </div>
+    </div>
+    <!--DXMETADATA start type="Variable" name="NonScrollingPageFooter" format="<div id=nonscrollingpagefooter>%%variable%%</div>" --><!--DXMETADATA end -->
+</body>
+</html>

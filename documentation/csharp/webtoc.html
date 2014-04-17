@@ -1,0 +1,2316 @@
+﻿<html>
+<head>
+    	<!--DXMETADATA start type="MetaCharset" --><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"><!--DXMETADATA end-->
+        <meta content="history" name="save">
+        <meta name="GENERATOR" content="Innovasys Document! X (http://www.innovasys.com)">
+        <BASE TARGET="body">
+        <script lang="javascript">
+        <!--
+
+        function documentElement(id){
+                return document.getElementById(id);
+        }
+
+        // Initiailizes the document by processing the top level UL tag
+        function makeExpandable() {
+
+                // Check we have DOM support
+                if (!document.createElement) return;
+
+                // Set up the root node
+                processUL(documentElement("tocroot"));
+
+                // Show the TOC, hide the load progress
+                documentElement("tocdiv").style.display = "block";
+                documentElement("progressdiv").style.display = "none";
+
+        }
+
+        // Processes all the LI tags below a UL tag to give them
+        //  an appropriate class name / icon
+        function processUL(ul) {
+
+                if (!ul.childNodes || ul.childNodes.length == 0) return;
+                for (var itemi=0;itemi<ul.childNodes.length;itemi++) {
+                        var item = ul.childNodes[itemi];
+                        if (item.nodeName == "LI") {
+
+                                var a;
+                                var subul;
+                                subul = "";
+
+                                // Look in each LI child node for A or UL tags
+                                for (var sitemi=0;sitemi<item.childNodes.length;sitemi++) {
+                                        var sitem = item.childNodes[sitemi];
+                                        switch (sitem.nodeName) {
+                                                case "A":
+                                                        a = sitem;
+                                                        break;
+                                                // Found a UL - this is a book node
+                                                case "UL":
+                                                        if (sitem.childNodes.length > 0)
+                                                        {
+                                                                if (trimString(sitem.innerHTML).length > 0) {
+                                                                        subul = sitem;
+                                                                        break;
+                                                                }
+                                                        }
+                                        }
+                                }
+
+                                // This is a book node
+                                if (subul)
+                                        ConfigureBook(a,ul);
+                                // A page node
+                                else
+                                        ConfigureNode(a);
+
+                        }
+                }
+
+        }
+
+        function trimString(text) {
+          text = text.replace( /^\s+/g,"");
+          return text.replace( /\s+$/g,"");
+        }
+
+		// Standard book node click handler. Toggles the icon / class name
+		function clickHandler(e) {
+
+			var LI;
+			var A;
+
+			if (window.event)
+			{
+				e = window.event;
+			}
+
+			A = this;
+			LI = this.parentNode;
+
+			if (LI.className == 'tbo')
+			{
+				if (LI.getAttribute("icon") <= 0)
+					A.childNodes[0].src = "webimages/1.gif";
+				else
+					A.childNodes[0].src = "webimages/" + LI.getAttribute("icon") + ".gif";
+				LI.className = 'tbc';
+			}
+			else
+			{
+				if (LI.getAttribute("icon") <= 0)
+					A.childNodes[0].src = "webimages/0.gif";
+				else
+					A.childNodes[0].src = "webimages/" + LI.getAttribute("icon") + ".gif";
+				LI.className = 'tbo';
+			}
+			A.className = LI.className
+
+			// Find the UL tag and synch the class
+			for (var sitemi=0;sitemi<LI.childNodes.length;sitemi++) {
+				var sitem = LI.childNodes[sitemi];
+				switch (sitem.nodeName) {
+					// Found a UL - this is a book node
+					case "UL":
+						if (trimString(sitem.innerHTML).length > 0)
+						{
+							sitem.className = LI.className
+							break;
+						}
+				}
+			}
+
+			if (e)
+			{
+				cancelEvent(e);
+				if (A.href.substring(A.href.length-1,A.href.length) != "#")
+				{
+					parent.frames["body"].location.href = A.href;
+				}
+			}
+
+		}
+
+		// Event handler for the first click on a book node
+		// Sets up all the child items, adds the standard click handler
+		//  and then re-processes the click
+		function firstBookClick(e) {
+
+			var LI;
+
+			if (window.event)
+			{
+				e = window.event;
+			}
+
+			LI = this.parentNode;
+
+			// Find the UL tag and process it
+			for (var elementi=0;elementi<LI.childNodes.length;elementi++) {
+				var element = LI.childNodes[elementi];
+				switch (element.nodeName) {
+					// Found a UL - this is a book node
+					case "UL":
+						processUL(element);
+						// Re-assign onclick to the routine onclick handler
+						this.onclick = clickHandler;
+						this.onclick(e)
+						break;
+				}
+			}
+
+		}
+
+        // Configure a page with the appropriate icon and class name
+        function ConfigureNode(a) {
+                // Set the className to tp so that the plus / minus symbols aren't rendered
+                a.parentNode.className = "tp";
+                a.className = "tp"
+                if (a.parentNode.getAttribute("icon") <= 0)
+                        a.childNodes[0].src = "webimages/9.gif";
+                else
+                        a.childNodes[0].src = "webimages/" + a.parentNode.getAttribute("icon") + ".gif";
+        }
+
+        // Configure a book node with an appropriate icon and class name
+        function ConfigureBook(a) {
+                a.parentNode.className = "tbc"
+                a.className = "tbc"
+                // If the icon attribute is set to the default, set it to the default icon for a book
+                if (a.parentNode.getAttribute("icon") <= 0)
+                {
+                        a.childNodes[0].src = "webimages/1.gif";
+                }
+                // Custom icon
+                else
+                {
+                        a.childNodes[0].src = "webimages/" + a.parentNode.getAttribute("icon") + ".gif";
+                }
+                a.onclick = firstBookClick;
+        }
+
+		/* Cancels an event, preventing further bubbling and returning false to cancel default behavior */
+		function cancelEvent(e)
+		{
+			e.returnValue = false;
+			e.cancelBubble = true;
+
+			if (e.stopPropagation)
+			{
+				e.stopPropagation();
+				e.preventDefault();
+			}
+		}
+        -->
+        </script>
+        <style>
+        <!--
+		body
+		{
+			margin: 0;
+			font-family: 	Verdana, Arial, Helvetica, sans-serif;
+		}
+		td
+		{
+			font-size: 	70%;
+		}
+        A:link
+        {
+                COLOR : black
+        }
+        A:active
+        {
+                COLOR : black
+        }
+        A:visited
+        {
+                COLOR : black
+        }
+        A:hover
+        {
+                COLOR : black
+        }
+
+        /* Padding to 3px to maximize use of screen space */
+        ul
+        {
+                margin-top: 3px;
+                margin-bottom: 3px;
+                margin-left: 8px;
+                padding-left: 8px;
+        }
+
+        ul#tocroot
+        {
+                margin-left: 5px;
+                padding-left: 5px;
+        }
+
+        /* Padding to 3px to maximize use of screen space */
+        /* List style to none as the plus/minus is generated */
+        /*  by the background style below */
+        li
+        {
+                list-style: none;
+                margin-top: 3px;
+                margin-bottom: 3px;
+        }
+
+        /* Padding so that the hierarchy is indented to appear below the node above */
+        a {
+                padding-left: 14px;
+                color: black;
+                text-decoration: none;
+        }
+
+        /* Plus and minus graphics */
+        a.tbo {
+                background: url(webimages/minus.gif) center left no-repeat;
+        }
+        a.tbc {
+                background: url(webimages/plus.gif) center left no-repeat;
+        }
+
+        /* Show & hide the UL tags under open & closed items */
+        ul.tbo { display: block; }
+        ul.tbc { display: none; }
+
+        /* No border for the images */
+        img {
+                border: 0;
+                margin-bottom: -3px;
+        }
+
+        /* Spacing between the node icon and text */
+        span.nodetext {
+                margin-left: 3px;
+        }
+        -->
+        </style>
+
+</head>
+
+<body topmargin="0" leftmargin="0" target="body" onload="makeExpandable()">
+	<div id="progressdiv" width="98%" height="98%">
+		<table border=0 height="100%" width="100%">
+			<tr><td align="center" valign="middle">Loading Table of Contents...</td></tr>
+		</table>
+	</div>
+	<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td nowrap>
+				<div id="tocdiv" class="toc" style="display: none">
+					<UL id="tocroot" class="toc">
+					<!--DXMETADATA start type="TableOfContents" bookprefix="<ul class='tbc'>" booksuffix="</ul>" nodescrap="_WEB_TOCNODE"--><li class="tbc" icon="-1"><a href="#" target="lbottom"><img class="icon"/><span class="nodetext">librets-dotnet Assembly</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet_introduction.html"><img class="icon"/><span class="nodetext">Introduction</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet_gettingstarted.html"><img class="icon"/><span class="nodetext">Getting Started</span></a>
+<li class="tbc" icon="-1"><a href="#" target="lbottom"><img class="icon"/><span class="nodetext">Namespaces</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="#" target="lbottom"><img class="icon"/><span class="nodetext">librets Namespace</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets_namespace.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="#" target="lbottom"><img class="icon"/><span class="nodetext">Classes</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData.html"><img class="icon"/><span class="nodetext">BinaryData</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData~_ctor.html"><img class="icon"/><span class="nodetext">BinaryData Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData~AsChar.html"><img class="icon"/><span class="nodetext">AsChar Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData~AsString.html"><img class="icon"/><span class="nodetext">AsString Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData~Copy.html"><img class="icon"/><span class="nodetext">Copy Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData~Size.html"><img class="icon"/><span class="nodetext">Size Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.BinaryData~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector.html"><img class="icon"/><span class="nodetext">ByteVector</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~_ctor.html"><img class="icon"/><span class="nodetext">ByteVector Constructor</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~_ctor().html"><img class="icon"/><span class="nodetext">ByteVector Constructor()</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~_ctor(ICollection).html"><img class="icon"/><span class="nodetext">ByteVector Constructor(ICollection)</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~_ctor(Int32).html"><img class="icon"/><span class="nodetext">ByteVector Constructor(Int32)</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Add.html"><img class="icon"/><span class="nodetext">Add Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~AddRange.html"><img class="icon"/><span class="nodetext">AddRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Clear.html"><img class="icon"/><span class="nodetext">Clear Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Contains.html"><img class="icon"/><span class="nodetext">Contains Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~CopyTo.html"><img class="icon"/><span class="nodetext">CopyTo Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~CopyTo(Array).html"><img class="icon"/><span class="nodetext">CopyTo(Array) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~CopyTo(Array,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Array,Int32) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~CopyTo(Int32,Array,Int32,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Int32,Array,Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~GetEnumerator.html"><img class="icon"/><span class="nodetext">GetEnumerator Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~GetRange.html"><img class="icon"/><span class="nodetext">GetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~IndexOf.html"><img class="icon"/><span class="nodetext">IndexOf Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Insert.html"><img class="icon"/><span class="nodetext">Insert Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~InsertRange.html"><img class="icon"/><span class="nodetext">InsertRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~LastIndexOf.html"><img class="icon"/><span class="nodetext">LastIndexOf Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Remove.html"><img class="icon"/><span class="nodetext">Remove Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~RemoveAt.html"><img class="icon"/><span class="nodetext">RemoveAt Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~RemoveRange.html"><img class="icon"/><span class="nodetext">RemoveRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Repeat.html"><img class="icon"/><span class="nodetext">Repeat Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Reverse.html"><img class="icon"/><span class="nodetext">Reverse Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Reverse().html"><img class="icon"/><span class="nodetext">Reverse() Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Reverse(Int32,Int32).html"><img class="icon"/><span class="nodetext">Reverse(Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~SetRange.html"><img class="icon"/><span class="nodetext">SetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Capacity.html"><img class="icon"/><span class="nodetext">Capacity Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Count.html"><img class="icon"/><span class="nodetext">Count Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~IsFixedSize.html"><img class="icon"/><span class="nodetext">IsFixedSize Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~IsReadOnly.html"><img class="icon"/><span class="nodetext">IsReadOnly Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~IsSynchronized.html"><img class="icon"/><span class="nodetext">IsSynchronized Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~Item.html"><img class="icon"/><span class="nodetext">Item Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector+ByteVectorEnumerator.html"><img class="icon"/><span class="nodetext">ByteVector.ByteVectorEnumerator</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector+ByteVectorEnumerator.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector+ByteVectorEnumerator_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector+ByteVectorEnumerator~_ctor.html"><img class="icon"/><span class="nodetext">ByteVector.ByteVectorEnumerator Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector+ByteVectorEnumerator_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector+ByteVectorEnumerator~MoveNext.html"><img class="icon"/><span class="nodetext">MoveNext Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector+ByteVectorEnumerator~Reset.html"><img class="icon"/><span class="nodetext">Reset Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector+ByteVectorEnumerator_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ByteVector+ByteVectorEnumerator~Current.html"><img class="icon"/><span class="nodetext">Current Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls.html"><img class="icon"/><span class="nodetext">CapabilityUrls</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~_ctor.html"><img class="icon"/><span class="nodetext">CapabilityUrls Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~GetActionUrl.html"><img class="icon"/><span class="nodetext">GetActionUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~GetChangePasswordUrl.html"><img class="icon"/><span class="nodetext">GetChangePasswordUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~GetGetMetadataUrl.html"><img class="icon"/><span class="nodetext">GetGetMetadataUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~GetGetObjectUrl.html"><img class="icon"/><span class="nodetext">GetGetObjectUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~GetLoginCompleteUrl.html"><img class="icon"/><span class="nodetext">GetLoginCompleteUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~GetLoginUrl.html"><img class="icon"/><span class="nodetext">GetLoginUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~GetLogoutUrl.html"><img class="icon"/><span class="nodetext">GetLogoutUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~GetSearchUrl.html"><img class="icon"/><span class="nodetext">GetSearchUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~GetServerInformationUrl.html"><img class="icon"/><span class="nodetext">GetServerInformationUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~GetUpdateUrl.html"><img class="icon"/><span class="nodetext">GetUpdateUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~SetActionUrl.html"><img class="icon"/><span class="nodetext">SetActionUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~SetChangePasswordUrl.html"><img class="icon"/><span class="nodetext">SetChangePasswordUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~SetGetMetadataUrl.html"><img class="icon"/><span class="nodetext">SetGetMetadataUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~SetGetObjectUrl.html"><img class="icon"/><span class="nodetext">SetGetObjectUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~SetLoginCompleteUrl.html"><img class="icon"/><span class="nodetext">SetLoginCompleteUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~SetLoginUrl.html"><img class="icon"/><span class="nodetext">SetLoginUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~SetLogoutUrl.html"><img class="icon"/><span class="nodetext">SetLogoutUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~SetSearchUrl.html"><img class="icon"/><span class="nodetext">SetSearchUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~SetServerInformationUrl.html"><img class="icon"/><span class="nodetext">SetServerInformationUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~SetUpdateUrl.html"><img class="icon"/><span class="nodetext">SetUpdateUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CapabilityUrls~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream.html"><img class="icon"/><span class="nodetext">CppInputStream</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream~_ctor.html"><img class="icon"/><span class="nodetext">CppInputStream Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream~Flush.html"><img class="icon"/><span class="nodetext">Flush Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream~Read.html"><img class="icon"/><span class="nodetext">Read Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream~ReadByte.html"><img class="icon"/><span class="nodetext">ReadByte Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream~Seek.html"><img class="icon"/><span class="nodetext">Seek Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream~SetLength.html"><img class="icon"/><span class="nodetext">SetLength Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream~Write.html"><img class="icon"/><span class="nodetext">Write Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream~CanRead.html"><img class="icon"/><span class="nodetext">CanRead Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream~CanSeek.html"><img class="icon"/><span class="nodetext">CanSeek Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream~CanWrite.html"><img class="icon"/><span class="nodetext">CanWrite Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream~Length.html"><img class="icon"/><span class="nodetext">Length Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.CppInputStream~Position.html"><img class="icon"/><span class="nodetext">Position Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest.html"><img class="icon"/><span class="nodetext">GetObjectRequest</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~_ctor.html"><img class="icon"/><span class="nodetext">GetObjectRequest Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~AddAllObjects.html"><img class="icon"/><span class="nodetext">AddAllObjects Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~AddObject.html"><img class="icon"/><span class="nodetext">AddObject Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~GetLocation.html"><img class="icon"/><span class="nodetext">GetLocation Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~SetLocation.html"><img class="icon"/><span class="nodetext">SetLocation Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~AUDIO_TYPE.html"><img class="icon"/><span class="nodetext">AUDIO_TYPE Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~MAP_TYPE.html"><img class="icon"/><span class="nodetext">MAP_TYPE Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~PHOTO_TYPE.html"><img class="icon"/><span class="nodetext">PHOTO_TYPE Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~PLAT_TYPE.html"><img class="icon"/><span class="nodetext">PLAT_TYPE Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~THUMBNAIL_TYPE.html"><img class="icon"/><span class="nodetext">THUMBNAIL_TYPE Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~VIDEO_TYPE.html"><img class="icon"/><span class="nodetext">VIDEO_TYPE Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~VRIMAGE_TYPE.html"><img class="icon"/><span class="nodetext">VRIMAGE_TYPE Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectRequest~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectResponse.html"><img class="icon"/><span class="nodetext">GetObjectResponse</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectResponse.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectResponse_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectResponse~_ctor.html"><img class="icon"/><span class="nodetext">GetObjectResponse Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectResponse_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectResponse~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectResponse~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectResponse~GetEnumerator.html"><img class="icon"/><span class="nodetext">GetEnumerator Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectResponse~NextObject.html"><img class="icon"/><span class="nodetext">NextObject Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectResponse_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.GetObjectResponse~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.InputStreamBridge.html"><img class="icon"/><span class="nodetext">InputStreamBridge</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.InputStreamBridge.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.InputStreamBridge_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.InputStreamBridge_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.InputStreamBridge~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.InputStreamBridge~read.html"><img class="icon"/><span class="nodetext">read Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.InputStreamBridge~readByte.html"><img class="icon"/><span class="nodetext">readByte Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.InputStreamBridge_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.InputStreamBridge~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.librets.html"><img class="icon"/><span class="nodetext">librets</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.librets.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.librets_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.librets~_ctor.html"><img class="icon"/><span class="nodetext">librets Constructor</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse.html"><img class="icon"/><span class="nodetext">LoginResponse</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~_ctor.html"><img class="icon"/><span class="nodetext">LoginResponse Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetActionUrl.html"><img class="icon"/><span class="nodetext">GetActionUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetBalance.html"><img class="icon"/><span class="nodetext">GetBalance Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetBroker.html"><img class="icon"/><span class="nodetext">GetBroker Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetChangePasswordUrl.html"><img class="icon"/><span class="nodetext">GetChangePasswordUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetGetMetadataUrl.html"><img class="icon"/><span class="nodetext">GetGetMetadataUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetGetObjectUrl.html"><img class="icon"/><span class="nodetext">GetGetObjectUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetLoginCompleteUrl.html"><img class="icon"/><span class="nodetext">GetLoginCompleteUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetLoginUrl.html"><img class="icon"/><span class="nodetext">GetLoginUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetLogoutUrl.html"><img class="icon"/><span class="nodetext">GetLogoutUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetMemberName.html"><img class="icon"/><span class="nodetext">GetMemberName Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetMetadataTimestamp.html"><img class="icon"/><span class="nodetext">GetMetadataTimestamp Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetMetadataVersion.html"><img class="icon"/><span class="nodetext">GetMetadataVersion Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetMinMetadataTimestamp.html"><img class="icon"/><span class="nodetext">GetMinMetadataTimestamp Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetOfficeList.html"><img class="icon"/><span class="nodetext">GetOfficeList Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetPasswordExpire.html"><img class="icon"/><span class="nodetext">GetPasswordExpire Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetSearchUrl.html"><img class="icon"/><span class="nodetext">GetSearchUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetServerInformationUrl.html"><img class="icon"/><span class="nodetext">GetServerInformationUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetTimeout.html"><img class="icon"/><span class="nodetext">GetTimeout Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetUpdateUrl.html"><img class="icon"/><span class="nodetext">GetUpdateUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~GetUserInfo.html"><img class="icon"/><span class="nodetext">GetUserInfo Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LoginResponse~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LogoutResponse.html"><img class="icon"/><span class="nodetext">LogoutResponse</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LogoutResponse.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LogoutResponse_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LogoutResponse~_ctor.html"><img class="icon"/><span class="nodetext">LogoutResponse Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LogoutResponse_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LogoutResponse~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LogoutResponse~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LogoutResponse~GetBillingInfo.html"><img class="icon"/><span class="nodetext">GetBillingInfo Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LogoutResponse~GetConnectTime.html"><img class="icon"/><span class="nodetext">GetConnectTime Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LogoutResponse~GetLogoutMessage.html"><img class="icon"/><span class="nodetext">GetLogoutMessage Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LogoutResponse_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.LogoutResponse~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClass.html"><img class="icon"/><span class="nodetext">MetadataClass</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClass.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClass_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClass_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClass~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClass~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClass~GetClassName.html"><img class="icon"/><span class="nodetext">GetClassName Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClass~GetDescription.html"><img class="icon"/><span class="nodetext">GetDescription Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClass~GetId.html"><img class="icon"/><span class="nodetext">GetId Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClass~GetStandardName.html"><img class="icon"/><span class="nodetext">GetStandardName Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList.html"><img class="icon"/><span class="nodetext">MetadataClassList</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~_ctor.html"><img class="icon"/><span class="nodetext">MetadataClassList Constructor</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~_ctor().html"><img class="icon"/><span class="nodetext">MetadataClassList Constructor()</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~_ctor(ICollection).html"><img class="icon"/><span class="nodetext">MetadataClassList Constructor(ICollection)</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~_ctor(Int32).html"><img class="icon"/><span class="nodetext">MetadataClassList Constructor(Int32)</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~Add.html"><img class="icon"/><span class="nodetext">Add Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~AddRange.html"><img class="icon"/><span class="nodetext">AddRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~Clear.html"><img class="icon"/><span class="nodetext">Clear Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~CopyTo.html"><img class="icon"/><span class="nodetext">CopyTo Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~CopyTo(Array).html"><img class="icon"/><span class="nodetext">CopyTo(Array) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~CopyTo(Array,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Array,Int32) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~CopyTo(Int32,Array,Int32,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Int32,Array,Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~GetEnumerator.html"><img class="icon"/><span class="nodetext">GetEnumerator Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~GetRange.html"><img class="icon"/><span class="nodetext">GetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~Insert.html"><img class="icon"/><span class="nodetext">Insert Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~InsertRange.html"><img class="icon"/><span class="nodetext">InsertRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~RemoveAt.html"><img class="icon"/><span class="nodetext">RemoveAt Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~RemoveRange.html"><img class="icon"/><span class="nodetext">RemoveRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~Repeat.html"><img class="icon"/><span class="nodetext">Repeat Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~Reverse.html"><img class="icon"/><span class="nodetext">Reverse Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~Reverse().html"><img class="icon"/><span class="nodetext">Reverse() Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~Reverse(Int32,Int32).html"><img class="icon"/><span class="nodetext">Reverse(Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~SetRange.html"><img class="icon"/><span class="nodetext">SetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~Capacity.html"><img class="icon"/><span class="nodetext">Capacity Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~Count.html"><img class="icon"/><span class="nodetext">Count Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~IsFixedSize.html"><img class="icon"/><span class="nodetext">IsFixedSize Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~IsReadOnly.html"><img class="icon"/><span class="nodetext">IsReadOnly Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~IsSynchronized.html"><img class="icon"/><span class="nodetext">IsSynchronized Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~Item.html"><img class="icon"/><span class="nodetext">Item Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList+MetadataClassListEnumerator.html"><img class="icon"/><span class="nodetext">MetadataClassList.MetadataClassListEnumerator</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList+MetadataClassListEnumerator.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList+MetadataClassListEnumerator_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList+MetadataClassListEnumerator~_ctor.html"><img class="icon"/><span class="nodetext">MetadataClassList.MetadataClassListEnumerator Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList+MetadataClassListEnumerator_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList+MetadataClassListEnumerator~MoveNext.html"><img class="icon"/><span class="nodetext">MoveNext Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList+MetadataClassListEnumerator~Reset.html"><img class="icon"/><span class="nodetext">Reset Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList+MetadataClassListEnumerator_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataClassList+MetadataClassListEnumerator~Current.html"><img class="icon"/><span class="nodetext">Current Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement.html"><img class="icon"/><span class="nodetext">MetadataElement</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetAttributeNames.html"><img class="icon"/><span class="nodetext">GetAttributeNames Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetBoolAttribute.html"><img class="icon"/><span class="nodetext">GetBoolAttribute Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetBoolAttribute(String,Boolean).html"><img class="icon"/><span class="nodetext">GetBoolAttribute(String,Boolean) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetBoolAttribute(String).html"><img class="icon"/><span class="nodetext">GetBoolAttribute(String) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetId.html"><img class="icon"/><span class="nodetext">GetId Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetIntAttribute.html"><img class="icon"/><span class="nodetext">GetIntAttribute Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetIntAttribute(String,Int32).html"><img class="icon"/><span class="nodetext">GetIntAttribute(String,Int32) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetIntAttribute(String).html"><img class="icon"/><span class="nodetext">GetIntAttribute(String) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetLevel.html"><img class="icon"/><span class="nodetext">GetLevel Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetMetadataType.html"><img class="icon"/><span class="nodetext">GetMetadataType Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetPath.html"><img class="icon"/><span class="nodetext">GetPath Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetStringAttribute.html"><img class="icon"/><span class="nodetext">GetStringAttribute Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetStringAttribute(String,String).html"><img class="icon"/><span class="nodetext">GetStringAttribute(String,String) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~GetStringAttribute(String).html"><img class="icon"/><span class="nodetext">GetStringAttribute(String) Method</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookup.html"><img class="icon"/><span class="nodetext">MetadataLookup</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookup.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookup_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookup_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookup~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookup~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookup~GetDate.html"><img class="icon"/><span class="nodetext">GetDate Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookup~GetId.html"><img class="icon"/><span class="nodetext">GetId Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookup~GetLookupName.html"><img class="icon"/><span class="nodetext">GetLookupName Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookup~GetVersion.html"><img class="icon"/><span class="nodetext">GetVersion Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookup~GetVisibleName.html"><img class="icon"/><span class="nodetext">GetVisibleName Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList.html"><img class="icon"/><span class="nodetext">MetadataLookupList</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~_ctor.html"><img class="icon"/><span class="nodetext">MetadataLookupList Constructor</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~_ctor().html"><img class="icon"/><span class="nodetext">MetadataLookupList Constructor()</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~_ctor(ICollection).html"><img class="icon"/><span class="nodetext">MetadataLookupList Constructor(ICollection)</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~_ctor(Int32).html"><img class="icon"/><span class="nodetext">MetadataLookupList Constructor(Int32)</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~Add.html"><img class="icon"/><span class="nodetext">Add Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~AddRange.html"><img class="icon"/><span class="nodetext">AddRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~Clear.html"><img class="icon"/><span class="nodetext">Clear Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~CopyTo.html"><img class="icon"/><span class="nodetext">CopyTo Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~CopyTo(Array).html"><img class="icon"/><span class="nodetext">CopyTo(Array) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~CopyTo(Array,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Array,Int32) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~CopyTo(Int32,Array,Int32,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Int32,Array,Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~GetEnumerator.html"><img class="icon"/><span class="nodetext">GetEnumerator Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~GetRange.html"><img class="icon"/><span class="nodetext">GetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~Insert.html"><img class="icon"/><span class="nodetext">Insert Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~InsertRange.html"><img class="icon"/><span class="nodetext">InsertRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~RemoveAt.html"><img class="icon"/><span class="nodetext">RemoveAt Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~RemoveRange.html"><img class="icon"/><span class="nodetext">RemoveRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~Repeat.html"><img class="icon"/><span class="nodetext">Repeat Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~Reverse.html"><img class="icon"/><span class="nodetext">Reverse Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~Reverse().html"><img class="icon"/><span class="nodetext">Reverse() Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~Reverse(Int32,Int32).html"><img class="icon"/><span class="nodetext">Reverse(Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~SetRange.html"><img class="icon"/><span class="nodetext">SetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~Capacity.html"><img class="icon"/><span class="nodetext">Capacity Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~Count.html"><img class="icon"/><span class="nodetext">Count Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~IsFixedSize.html"><img class="icon"/><span class="nodetext">IsFixedSize Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~IsReadOnly.html"><img class="icon"/><span class="nodetext">IsReadOnly Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~IsSynchronized.html"><img class="icon"/><span class="nodetext">IsSynchronized Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~Item.html"><img class="icon"/><span class="nodetext">Item Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList+MetadataLookupListEnumerator.html"><img class="icon"/><span class="nodetext">MetadataLookupList.MetadataLookupListEnumerator</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList+MetadataLookupListEnumerator.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList+MetadataLookupListEnumerator_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList+MetadataLookupListEnumerator~_ctor.html"><img class="icon"/><span class="nodetext">MetadataLookupList.MetadataLookupListEnumerator Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList+MetadataLookupListEnumerator_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList+MetadataLookupListEnumerator~MoveNext.html"><img class="icon"/><span class="nodetext">MoveNext Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList+MetadataLookupListEnumerator~Reset.html"><img class="icon"/><span class="nodetext">Reset Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList+MetadataLookupListEnumerator_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupList+MetadataLookupListEnumerator~Current.html"><img class="icon"/><span class="nodetext">Current Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupType.html"><img class="icon"/><span class="nodetext">MetadataLookupType</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupType.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupType_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupType_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupType~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupType~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupType~GetId.html"><img class="icon"/><span class="nodetext">GetId Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupType~GetLongValue.html"><img class="icon"/><span class="nodetext">GetLongValue Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupType~GetShortValue.html"><img class="icon"/><span class="nodetext">GetShortValue Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupType~GetValue.html"><img class="icon"/><span class="nodetext">GetValue Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList.html"><img class="icon"/><span class="nodetext">MetadataLookupTypeList</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~_ctor.html"><img class="icon"/><span class="nodetext">MetadataLookupTypeList Constructor</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~_ctor().html"><img class="icon"/><span class="nodetext">MetadataLookupTypeList Constructor()</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~_ctor(ICollection).html"><img class="icon"/><span class="nodetext">MetadataLookupTypeList Constructor(ICollection)</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~_ctor(Int32).html"><img class="icon"/><span class="nodetext">MetadataLookupTypeList Constructor(Int32)</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~Add.html"><img class="icon"/><span class="nodetext">Add Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~AddRange.html"><img class="icon"/><span class="nodetext">AddRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~Clear.html"><img class="icon"/><span class="nodetext">Clear Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~CopyTo.html"><img class="icon"/><span class="nodetext">CopyTo Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~CopyTo(Array).html"><img class="icon"/><span class="nodetext">CopyTo(Array) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~CopyTo(Array,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Array,Int32) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~CopyTo(Int32,Array,Int32,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Int32,Array,Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~GetEnumerator.html"><img class="icon"/><span class="nodetext">GetEnumerator Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~GetRange.html"><img class="icon"/><span class="nodetext">GetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~Insert.html"><img class="icon"/><span class="nodetext">Insert Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~InsertRange.html"><img class="icon"/><span class="nodetext">InsertRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~RemoveAt.html"><img class="icon"/><span class="nodetext">RemoveAt Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~RemoveRange.html"><img class="icon"/><span class="nodetext">RemoveRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~Repeat.html"><img class="icon"/><span class="nodetext">Repeat Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~Reverse.html"><img class="icon"/><span class="nodetext">Reverse Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~Reverse().html"><img class="icon"/><span class="nodetext">Reverse() Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~Reverse(Int32,Int32).html"><img class="icon"/><span class="nodetext">Reverse(Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~SetRange.html"><img class="icon"/><span class="nodetext">SetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~Capacity.html"><img class="icon"/><span class="nodetext">Capacity Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~Count.html"><img class="icon"/><span class="nodetext">Count Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~IsFixedSize.html"><img class="icon"/><span class="nodetext">IsFixedSize Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~IsReadOnly.html"><img class="icon"/><span class="nodetext">IsReadOnly Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~IsSynchronized.html"><img class="icon"/><span class="nodetext">IsSynchronized Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~Item.html"><img class="icon"/><span class="nodetext">Item Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList+MetadataLookupTypeListEnumerator.html"><img class="icon"/><span class="nodetext">MetadataLookupTypeList.MetadataLookupTypeListEnumerator</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList+MetadataLookupTypeListEnumerator.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList+MetadataLookupTypeListEnumerator_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList+MetadataLookupTypeListEnumerator~_ctor.html"><img class="icon"/><span class="nodetext">MetadataLookupTypeList.MetadataLookupTypeListEnumerator Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList+MetadataLookupTypeListEnumerator_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList+MetadataLookupTypeListEnumerator~MoveNext.html"><img class="icon"/><span class="nodetext">MoveNext Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList+MetadataLookupTypeListEnumerator~Reset.html"><img class="icon"/><span class="nodetext">Reset Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList+MetadataLookupTypeListEnumerator_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataLookupTypeList+MetadataLookupTypeListEnumerator~Current.html"><img class="icon"/><span class="nodetext">Current Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObject.html"><img class="icon"/><span class="nodetext">MetadataObject</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObject.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObject_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObject_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObject~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObject~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObject~GetDescription.html"><img class="icon"/><span class="nodetext">GetDescription Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObject~GetId.html"><img class="icon"/><span class="nodetext">GetId Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObject~GetMIMEType.html"><img class="icon"/><span class="nodetext">GetMIMEType Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObject~GetObjectType.html"><img class="icon"/><span class="nodetext">GetObjectType Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObject~GetVisibleName.html"><img class="icon"/><span class="nodetext">GetVisibleName Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList.html"><img class="icon"/><span class="nodetext">MetadataObjectList</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~_ctor.html"><img class="icon"/><span class="nodetext">MetadataObjectList Constructor</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~_ctor().html"><img class="icon"/><span class="nodetext">MetadataObjectList Constructor()</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~_ctor(ICollection).html"><img class="icon"/><span class="nodetext">MetadataObjectList Constructor(ICollection)</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~_ctor(Int32).html"><img class="icon"/><span class="nodetext">MetadataObjectList Constructor(Int32)</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~Add.html"><img class="icon"/><span class="nodetext">Add Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~AddRange.html"><img class="icon"/><span class="nodetext">AddRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~Clear.html"><img class="icon"/><span class="nodetext">Clear Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~CopyTo.html"><img class="icon"/><span class="nodetext">CopyTo Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~CopyTo(Array).html"><img class="icon"/><span class="nodetext">CopyTo(Array) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~CopyTo(Array,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Array,Int32) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~CopyTo(Int32,Array,Int32,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Int32,Array,Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~GetEnumerator.html"><img class="icon"/><span class="nodetext">GetEnumerator Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~GetRange.html"><img class="icon"/><span class="nodetext">GetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~Insert.html"><img class="icon"/><span class="nodetext">Insert Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~InsertRange.html"><img class="icon"/><span class="nodetext">InsertRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~RemoveAt.html"><img class="icon"/><span class="nodetext">RemoveAt Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~RemoveRange.html"><img class="icon"/><span class="nodetext">RemoveRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~Repeat.html"><img class="icon"/><span class="nodetext">Repeat Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~Reverse.html"><img class="icon"/><span class="nodetext">Reverse Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~Reverse().html"><img class="icon"/><span class="nodetext">Reverse() Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~Reverse(Int32,Int32).html"><img class="icon"/><span class="nodetext">Reverse(Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~SetRange.html"><img class="icon"/><span class="nodetext">SetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~Capacity.html"><img class="icon"/><span class="nodetext">Capacity Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~Count.html"><img class="icon"/><span class="nodetext">Count Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~IsFixedSize.html"><img class="icon"/><span class="nodetext">IsFixedSize Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~IsReadOnly.html"><img class="icon"/><span class="nodetext">IsReadOnly Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~IsSynchronized.html"><img class="icon"/><span class="nodetext">IsSynchronized Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~Item.html"><img class="icon"/><span class="nodetext">Item Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList+MetadataObjectListEnumerator.html"><img class="icon"/><span class="nodetext">MetadataObjectList.MetadataObjectListEnumerator</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList+MetadataObjectListEnumerator.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList+MetadataObjectListEnumerator_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList+MetadataObjectListEnumerator~_ctor.html"><img class="icon"/><span class="nodetext">MetadataObjectList.MetadataObjectListEnumerator Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList+MetadataObjectListEnumerator_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList+MetadataObjectListEnumerator~MoveNext.html"><img class="icon"/><span class="nodetext">MoveNext Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList+MetadataObjectListEnumerator~Reset.html"><img class="icon"/><span class="nodetext">Reset Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList+MetadataObjectListEnumerator_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataObjectList+MetadataObjectListEnumerator~Current.html"><img class="icon"/><span class="nodetext">Current Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResource.html"><img class="icon"/><span class="nodetext">MetadataResource</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResource.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResource_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResource_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResource~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResource~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResource~GetId.html"><img class="icon"/><span class="nodetext">GetId Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResource~GetKeyField.html"><img class="icon"/><span class="nodetext">GetKeyField Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResource~GetResourceID.html"><img class="icon"/><span class="nodetext">GetResourceID Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResource~GetStandardName.html"><img class="icon"/><span class="nodetext">GetStandardName Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList.html"><img class="icon"/><span class="nodetext">MetadataResourceList</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~_ctor.html"><img class="icon"/><span class="nodetext">MetadataResourceList Constructor</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~_ctor().html"><img class="icon"/><span class="nodetext">MetadataResourceList Constructor()</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~_ctor(ICollection).html"><img class="icon"/><span class="nodetext">MetadataResourceList Constructor(ICollection)</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~_ctor(Int32).html"><img class="icon"/><span class="nodetext">MetadataResourceList Constructor(Int32)</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~Add.html"><img class="icon"/><span class="nodetext">Add Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~AddRange.html"><img class="icon"/><span class="nodetext">AddRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~Clear.html"><img class="icon"/><span class="nodetext">Clear Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~CopyTo.html"><img class="icon"/><span class="nodetext">CopyTo Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~CopyTo(Array).html"><img class="icon"/><span class="nodetext">CopyTo(Array) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~CopyTo(Array,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Array,Int32) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~CopyTo(Int32,Array,Int32,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Int32,Array,Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~GetEnumerator.html"><img class="icon"/><span class="nodetext">GetEnumerator Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~GetRange.html"><img class="icon"/><span class="nodetext">GetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~Insert.html"><img class="icon"/><span class="nodetext">Insert Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~InsertRange.html"><img class="icon"/><span class="nodetext">InsertRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~RemoveAt.html"><img class="icon"/><span class="nodetext">RemoveAt Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~RemoveRange.html"><img class="icon"/><span class="nodetext">RemoveRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~Repeat.html"><img class="icon"/><span class="nodetext">Repeat Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~Reverse.html"><img class="icon"/><span class="nodetext">Reverse Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~Reverse().html"><img class="icon"/><span class="nodetext">Reverse() Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~Reverse(Int32,Int32).html"><img class="icon"/><span class="nodetext">Reverse(Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~SetRange.html"><img class="icon"/><span class="nodetext">SetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~Capacity.html"><img class="icon"/><span class="nodetext">Capacity Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~Count.html"><img class="icon"/><span class="nodetext">Count Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~IsFixedSize.html"><img class="icon"/><span class="nodetext">IsFixedSize Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~IsReadOnly.html"><img class="icon"/><span class="nodetext">IsReadOnly Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~IsSynchronized.html"><img class="icon"/><span class="nodetext">IsSynchronized Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~Item.html"><img class="icon"/><span class="nodetext">Item Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList+MetadataResourceListEnumerator.html"><img class="icon"/><span class="nodetext">MetadataResourceList.MetadataResourceListEnumerator</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList+MetadataResourceListEnumerator.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList+MetadataResourceListEnumerator_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList+MetadataResourceListEnumerator~_ctor.html"><img class="icon"/><span class="nodetext">MetadataResourceList.MetadataResourceListEnumerator Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList+MetadataResourceListEnumerator_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList+MetadataResourceListEnumerator~MoveNext.html"><img class="icon"/><span class="nodetext">MoveNext Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList+MetadataResourceListEnumerator~Reset.html"><img class="icon"/><span class="nodetext">Reset Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList+MetadataResourceListEnumerator_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataResourceList+MetadataResourceListEnumerator~Current.html"><img class="icon"/><span class="nodetext">Current Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataSystem.html"><img class="icon"/><span class="nodetext">MetadataSystem</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataSystem.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataSystem_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataSystem_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataSystem~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataSystem~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataSystem~GetComments.html"><img class="icon"/><span class="nodetext">GetComments Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataSystem~GetSystemDescription.html"><img class="icon"/><span class="nodetext">GetSystemDescription Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataSystem~GetSystemID.html"><img class="icon"/><span class="nodetext">GetSystemID Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable.html"><img class="icon"/><span class="nodetext">MetadataTable</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetAlignment.html"><img class="icon"/><span class="nodetext">GetAlignment Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetDataType.html"><img class="icon"/><span class="nodetext">GetDataType Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetDBName.html"><img class="icon"/><span class="nodetext">GetDBName Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetDefault.html"><img class="icon"/><span class="nodetext">GetDefault Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetEditMaskId.html"><img class="icon"/><span class="nodetext">GetEditMaskId Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetIndex.html"><img class="icon"/><span class="nodetext">GetIndex Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetInterpretation.html"><img class="icon"/><span class="nodetext">GetInterpretation Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetLongName.html"><img class="icon"/><span class="nodetext">GetLongName Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetLookupName.html"><img class="icon"/><span class="nodetext">GetLookupName Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetMaximum.html"><img class="icon"/><span class="nodetext">GetMaximum Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetMaximumLength.html"><img class="icon"/><span class="nodetext">GetMaximumLength Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetMaxSelect.html"><img class="icon"/><span class="nodetext">GetMaxSelect Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetMinimum.html"><img class="icon"/><span class="nodetext">GetMinimum Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetPrecision.html"><img class="icon"/><span class="nodetext">GetPrecision Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetRequired.html"><img class="icon"/><span class="nodetext">GetRequired Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetSearchHelpId.html"><img class="icon"/><span class="nodetext">GetSearchHelpId Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetShortName.html"><img class="icon"/><span class="nodetext">GetShortName Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetStandardName.html"><img class="icon"/><span class="nodetext">GetStandardName Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetSystemName.html"><img class="icon"/><span class="nodetext">GetSystemName Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~GetUnits.html"><img class="icon"/><span class="nodetext">GetUnits Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~IsSearchable.html"><img class="icon"/><span class="nodetext">IsSearchable Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~IsUnique.html"><img class="icon"/><span class="nodetext">IsUnique Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable~UseSeparator.html"><img class="icon"/><span class="nodetext">UseSeparator Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList.html"><img class="icon"/><span class="nodetext">MetadataTableList</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~_ctor.html"><img class="icon"/><span class="nodetext">MetadataTableList Constructor</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~_ctor().html"><img class="icon"/><span class="nodetext">MetadataTableList Constructor()</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~_ctor(ICollection).html"><img class="icon"/><span class="nodetext">MetadataTableList Constructor(ICollection)</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~_ctor(Int32).html"><img class="icon"/><span class="nodetext">MetadataTableList Constructor(Int32)</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~Add.html"><img class="icon"/><span class="nodetext">Add Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~AddRange.html"><img class="icon"/><span class="nodetext">AddRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~Clear.html"><img class="icon"/><span class="nodetext">Clear Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~CopyTo.html"><img class="icon"/><span class="nodetext">CopyTo Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~CopyTo(Array).html"><img class="icon"/><span class="nodetext">CopyTo(Array) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~CopyTo(Array,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Array,Int32) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~CopyTo(Int32,Array,Int32,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Int32,Array,Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~GetEnumerator.html"><img class="icon"/><span class="nodetext">GetEnumerator Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~GetRange.html"><img class="icon"/><span class="nodetext">GetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~Insert.html"><img class="icon"/><span class="nodetext">Insert Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~InsertRange.html"><img class="icon"/><span class="nodetext">InsertRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~RemoveAt.html"><img class="icon"/><span class="nodetext">RemoveAt Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~RemoveRange.html"><img class="icon"/><span class="nodetext">RemoveRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~Repeat.html"><img class="icon"/><span class="nodetext">Repeat Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~Reverse.html"><img class="icon"/><span class="nodetext">Reverse Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~Reverse().html"><img class="icon"/><span class="nodetext">Reverse() Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~Reverse(Int32,Int32).html"><img class="icon"/><span class="nodetext">Reverse(Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~SetRange.html"><img class="icon"/><span class="nodetext">SetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~Capacity.html"><img class="icon"/><span class="nodetext">Capacity Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~Count.html"><img class="icon"/><span class="nodetext">Count Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~IsFixedSize.html"><img class="icon"/><span class="nodetext">IsFixedSize Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~IsReadOnly.html"><img class="icon"/><span class="nodetext">IsReadOnly Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~IsSynchronized.html"><img class="icon"/><span class="nodetext">IsSynchronized Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~Item.html"><img class="icon"/><span class="nodetext">Item Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList+MetadataTableListEnumerator.html"><img class="icon"/><span class="nodetext">MetadataTableList.MetadataTableListEnumerator</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList+MetadataTableListEnumerator.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList+MetadataTableListEnumerator_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList+MetadataTableListEnumerator~_ctor.html"><img class="icon"/><span class="nodetext">MetadataTableList.MetadataTableListEnumerator Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList+MetadataTableListEnumerator_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList+MetadataTableListEnumerator~MoveNext.html"><img class="icon"/><span class="nodetext">MoveNext Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList+MetadataTableListEnumerator~Reset.html"><img class="icon"/><span class="nodetext">Reset Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList+MetadataTableListEnumerator_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTableList+MetadataTableListEnumerator~Current.html"><img class="icon"/><span class="nodetext">Current Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor.html"><img class="icon"/><span class="nodetext">ObjectDescriptor</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~_ctor.html"><img class="icon"/><span class="nodetext">ObjectDescriptor Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~GetContentType.html"><img class="icon"/><span class="nodetext">GetContentType Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~GetData.html"><img class="icon"/><span class="nodetext">GetData Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~GetDataAsBytes.html"><img class="icon"/><span class="nodetext">GetDataAsBytes Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~GetDataStream.html"><img class="icon"/><span class="nodetext">GetDataStream Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~GetDataStreamBridge.html"><img class="icon"/><span class="nodetext">GetDataStreamBridge Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~GetDescription.html"><img class="icon"/><span class="nodetext">GetDescription Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~GetLocationUrl.html"><img class="icon"/><span class="nodetext">GetLocationUrl Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~GetObjectId.html"><img class="icon"/><span class="nodetext">GetObjectId Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~GetObjectKey.html"><img class="icon"/><span class="nodetext">GetObjectKey Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptor~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptorEnumerator.html"><img class="icon"/><span class="nodetext">ObjectDescriptorEnumerator</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptorEnumerator.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptorEnumerator_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptorEnumerator~_ctor.html"><img class="icon"/><span class="nodetext">ObjectDescriptorEnumerator Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptorEnumerator_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptorEnumerator~MoveNext.html"><img class="icon"/><span class="nodetext">MoveNext Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptorEnumerator~Reset.html"><img class="icon"/><span class="nodetext">Reset Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptorEnumerator_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.ObjectDescriptorEnumerator~Current.html"><img class="icon"/><span class="nodetext">Current Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsException.html"><img class="icon"/><span class="nodetext">RetsException</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsException.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsException_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsException_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsException~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsException~GetMessage.html"><img class="icon"/><span class="nodetext">GetMessage Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsException_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsException~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLogger.html"><img class="icon"/><span class="nodetext">RetsHttpLogger</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLogger.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLogger_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLogger_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLogger~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLogger~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLogger~logHttpData.html"><img class="icon"/><span class="nodetext">logHttpData Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLogger_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLogger~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLoggerBridge.html"><img class="icon"/><span class="nodetext">RetsHttpLoggerBridge</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLoggerBridge.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLoggerBridge_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLoggerBridge~_ctor.html"><img class="icon"/><span class="nodetext">RetsHttpLoggerBridge Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLoggerBridge_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLoggerBridge~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLoggerBridge~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLoggerBridge~logHttpData.html"><img class="icon"/><span class="nodetext">logHttpData Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata.html"><img class="icon"/><span class="nodetext">RetsMetadata</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetAllClasses.html"><img class="icon"/><span class="nodetext">GetAllClasses Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetAllLookups.html"><img class="icon"/><span class="nodetext">GetAllLookups Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetAllLookupTypes.html"><img class="icon"/><span class="nodetext">GetAllLookupTypes Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetAllLookupTypes(String,String).html"><img class="icon"/><span class="nodetext">GetAllLookupTypes(String,String) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetAllLookupTypes(MetadataLookup).html"><img class="icon"/><span class="nodetext">GetAllLookupTypes(MetadataLookup) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetAllObjects.html"><img class="icon"/><span class="nodetext">GetAllObjects Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetAllObjects(String).html"><img class="icon"/><span class="nodetext">GetAllObjects(String) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetAllObjects(MetadataResource).html"><img class="icon"/><span class="nodetext">GetAllObjects(MetadataResource) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetAllResources.html"><img class="icon"/><span class="nodetext">GetAllResources Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetAllTables.html"><img class="icon"/><span class="nodetext">GetAllTables Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetAllTables(MetadataClass).html"><img class="icon"/><span class="nodetext">GetAllTables(MetadataClass) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetAllTables(String,String).html"><img class="icon"/><span class="nodetext">GetAllTables(String,String) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetClass.html"><img class="icon"/><span class="nodetext">GetClass Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetLookup.html"><img class="icon"/><span class="nodetext">GetLookup Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetLookupType.html"><img class="icon"/><span class="nodetext">GetLookupType Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetResource.html"><img class="icon"/><span class="nodetext">GetResource Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetSystem.html"><img class="icon"/><span class="nodetext">GetSystem Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~GetTable.html"><img class="icon"/><span class="nodetext">GetTable Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsMetadata~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession.html"><img class="icon"/><span class="nodetext">RetsSession</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~_ctor.html"><img class="icon"/><span class="nodetext">RetsSession Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~CreateSearchRequest.html"><img class="icon"/><span class="nodetext">CreateSearchRequest Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~GetAction.html"><img class="icon"/><span class="nodetext">GetAction Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~GetCapabilityUrls.html"><img class="icon"/><span class="nodetext">GetCapabilityUrls Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~GetDetectedRetsVersion.html"><img class="icon"/><span class="nodetext">GetDetectedRetsVersion Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~GetLoginResponse.html"><img class="icon"/><span class="nodetext">GetLoginResponse Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~GetMetadata.html"><img class="icon"/><span class="nodetext">GetMetadata Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~GetObject.html"><img class="icon"/><span class="nodetext">GetObject Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~GetRetsVersion.html"><img class="icon"/><span class="nodetext">GetRetsVersion Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~GetUserAgentAuthType.html"><img class="icon"/><span class="nodetext">GetUserAgentAuthType Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~IsIncrementalMetadata.html"><img class="icon"/><span class="nodetext">IsIncrementalMetadata Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~Login.html"><img class="icon"/><span class="nodetext">Login Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~Logout.html"><img class="icon"/><span class="nodetext">Logout Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~Search.html"><img class="icon"/><span class="nodetext">Search Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~SetIncrementalMetadata.html"><img class="icon"/><span class="nodetext">SetIncrementalMetadata Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~SetRetsVersion.html"><img class="icon"/><span class="nodetext">SetRetsVersion Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~SetUserAgent.html"><img class="icon"/><span class="nodetext">SetUserAgent Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~SetUserAgentAuthType.html"><img class="icon"/><span class="nodetext">SetUserAgentAuthType Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~SetUserAgentPassword.html"><img class="icon"/><span class="nodetext">SetUserAgentPassword Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~UseHttpGet.html"><img class="icon"/><span class="nodetext">UseHttpGet Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~LoggerDelegate.html"><img class="icon"/><span class="nodetext">LoggerDelegate Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsSession~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest.html"><img class="icon"/><span class="nodetext">SearchRequest</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~_ctor.html"><img class="icon"/><span class="nodetext">SearchRequest Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~SetCountType.html"><img class="icon"/><span class="nodetext">SetCountType Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~SetFormatType.html"><img class="icon"/><span class="nodetext">SetFormatType Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~SetLimit.html"><img class="icon"/><span class="nodetext">SetLimit Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~SetOffset.html"><img class="icon"/><span class="nodetext">SetOffset Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~SetQueryType.html"><img class="icon"/><span class="nodetext">SetQueryType Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~SetSelect.html"><img class="icon"/><span class="nodetext">SetSelect Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~SetStandardNames.html"><img class="icon"/><span class="nodetext">SetStandardNames Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~LIMIT_DEFAULT.html"><img class="icon"/><span class="nodetext">LIMIT_DEFAULT Field</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~LIMIT_NONE.html"><img class="icon"/><span class="nodetext">LIMIT_NONE Field</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~OFFSET_NONE.html"><img class="icon"/><span class="nodetext">OFFSET_NONE Field</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet.html"><img class="icon"/><span class="nodetext">SearchResultSet</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet~_ctor.html"><img class="icon"/><span class="nodetext">SearchResultSet Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet~GetColumns.html"><img class="icon"/><span class="nodetext">GetColumns Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet~GetCount.html"><img class="icon"/><span class="nodetext">GetCount Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet~GetString.html"><img class="icon"/><span class="nodetext">GetString Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet~GetString(Int32).html"><img class="icon"/><span class="nodetext">GetString(Int32) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet~GetString(String).html"><img class="icon"/><span class="nodetext">GetString(String) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet~HasNext.html"><img class="icon"/><span class="nodetext">HasNext Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchResultSet~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector.html"><img class="icon"/><span class="nodetext">StringVector</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~_ctor.html"><img class="icon"/><span class="nodetext">StringVector Constructor</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~_ctor().html"><img class="icon"/><span class="nodetext">StringVector Constructor()</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~_ctor(ICollection).html"><img class="icon"/><span class="nodetext">StringVector Constructor(ICollection)</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~_ctor(Int32).html"><img class="icon"/><span class="nodetext">StringVector Constructor(Int32)</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Add.html"><img class="icon"/><span class="nodetext">Add Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~AddRange.html"><img class="icon"/><span class="nodetext">AddRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Clear.html"><img class="icon"/><span class="nodetext">Clear Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Contains.html"><img class="icon"/><span class="nodetext">Contains Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~CopyTo.html"><img class="icon"/><span class="nodetext">CopyTo Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~CopyTo(Array).html"><img class="icon"/><span class="nodetext">CopyTo(Array) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~CopyTo(Array,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Array,Int32) Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~CopyTo(Int32,Array,Int32,Int32).html"><img class="icon"/><span class="nodetext">CopyTo(Int32,Array,Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Dispose.html"><img class="icon"/><span class="nodetext">Dispose Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Finalize.html"><img class="icon"/><span class="nodetext">Finalize Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~GetEnumerator.html"><img class="icon"/><span class="nodetext">GetEnumerator Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~GetRange.html"><img class="icon"/><span class="nodetext">GetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~IndexOf.html"><img class="icon"/><span class="nodetext">IndexOf Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Insert.html"><img class="icon"/><span class="nodetext">Insert Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~InsertRange.html"><img class="icon"/><span class="nodetext">InsertRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~LastIndexOf.html"><img class="icon"/><span class="nodetext">LastIndexOf Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Remove.html"><img class="icon"/><span class="nodetext">Remove Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~RemoveAt.html"><img class="icon"/><span class="nodetext">RemoveAt Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~RemoveRange.html"><img class="icon"/><span class="nodetext">RemoveRange Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Repeat.html"><img class="icon"/><span class="nodetext">Repeat Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Reverse.html"><img class="icon"/><span class="nodetext">Reverse Method</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Reverse().html"><img class="icon"/><span class="nodetext">Reverse() Method</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Reverse(Int32,Int32).html"><img class="icon"/><span class="nodetext">Reverse(Int32,Int32) Method</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~SetRange.html"><img class="icon"/><span class="nodetext">SetRange Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Capacity.html"><img class="icon"/><span class="nodetext">Capacity Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Count.html"><img class="icon"/><span class="nodetext">Count Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~IsFixedSize.html"><img class="icon"/><span class="nodetext">IsFixedSize Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~IsReadOnly.html"><img class="icon"/><span class="nodetext">IsReadOnly Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~IsSynchronized.html"><img class="icon"/><span class="nodetext">IsSynchronized Property</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~Item.html"><img class="icon"/><span class="nodetext">Item Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector_fields.html"><img class="icon"/><span class="nodetext">Fields</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector~swigCMemOwn.html"><img class="icon"/><span class="nodetext">swigCMemOwn Field</span></a>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector+StringVectorEnumerator.html"><img class="icon"/><span class="nodetext">StringVector.StringVectorEnumerator</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector+StringVectorEnumerator.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector+StringVectorEnumerator_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector+StringVectorEnumerator~_ctor.html"><img class="icon"/><span class="nodetext">StringVector.StringVectorEnumerator Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector+StringVectorEnumerator_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector+StringVectorEnumerator~MoveNext.html"><img class="icon"/><span class="nodetext">MoveNext Method</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector+StringVectorEnumerator~Reset.html"><img class="icon"/><span class="nodetext">Reset Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector+StringVectorEnumerator_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.StringVector+StringVectorEnumerator~Current.html"><img class="icon"/><span class="nodetext">Current Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.TextWriterLogger.html"><img class="icon"/><span class="nodetext">TextWriterLogger</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.TextWriterLogger.html"><img class="icon"/><span class="nodetext">Overview</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.TextWriterLogger_members.html"><img class="icon"/><span class="nodetext">Members</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.TextWriterLogger~_ctor.html"><img class="icon"/><span class="nodetext">TextWriterLogger Constructor</span></a>
+<ul class='tbc'>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.TextWriterLogger_methods.html"><img class="icon"/><span class="nodetext">Methods</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.TextWriterLogger~CreateDelegate.html"><img class="icon"/><span class="nodetext">CreateDelegate Method</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.TextWriterLogger_properties.html"><img class="icon"/><span class="nodetext">Properties</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.TextWriterLogger~LoggerDelegate.html"><img class="icon"/><span class="nodetext">LoggerDelegate Property</span></a>
+<ul class='tbc'>
+</ul>
+</ul>
+</ul>
+</ul>
+<li class="tbc" icon="-1"><a href="#" target="lbottom"><img class="icon"/><span class="nodetext">Enumerations</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataElement+MetadataType.html"><img class="icon"/><span class="nodetext">MetadataElement.MetadataType</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable+Alignment.html"><img class="icon"/><span class="nodetext">MetadataTable.Alignment</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable+DataType.html"><img class="icon"/><span class="nodetext">MetadataTable.DataType</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable+Interpretation.html"><img class="icon"/><span class="nodetext">MetadataTable.Interpretation</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.MetadataTable+Units.html"><img class="icon"/><span class="nodetext">MetadataTable.Units</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLogger+Type.html"><img class="icon"/><span class="nodetext">RetsHttpLogger.Type</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsVersion.html"><img class="icon"/><span class="nodetext">RetsVersion</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest+CountType.html"><img class="icon"/><span class="nodetext">SearchRequest.CountType</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest+FormatType.html"><img class="icon"/><span class="nodetext">SearchRequest.FormatType</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.SearchRequest+QueryType.html"><img class="icon"/><span class="nodetext">SearchRequest.QueryType</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.UserAgentAuthType.html"><img class="icon"/><span class="nodetext">UserAgentAuthType</span></a>
+</ul>
+<li class="tbc" icon="-1"><a href="#" target="lbottom"><img class="icon"/><span class="nodetext">Delegates</span></a>
+<ul class='tbc'>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLogger+Delegate.html"><img class="icon"/><span class="nodetext">RetsHttpLogger.Delegate</span></a>
+<li class="tbc" icon="-1"><a href="librets-dotnet~librets.RetsHttpLogger+NativeDelegate.html"><img class="icon"/><span class="nodetext">RetsHttpLogger.NativeDelegate</span></a>
+</ul>
+</ul>
+</ul>
+</ul>
+
+<!--DXMETADATA end-->
+
+					</UL>
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
+

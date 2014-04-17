@@ -1,0 +1,127 @@
+﻿<html>
+<head>
+	<!--DXMETADATA start type="MetaCharset" --><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"><!--DXMETADATA end-->
+	<meta content="history" name="save">
+	<meta name="GENERATOR" content="Innovasys Document! X (http://www.innovasys.com)">
+</head>
+<body onclick="changeTabs(event)">
+    <script lang="javascript" type="text/javascript">
+    <!--
+
+    var currentTab;
+    var currentTabBase;
+    var firstFlag = true;
+
+    function TOCTab(){
+        return documentElement("TOCTab");
+    }
+
+    function TOCTabBase(){
+        return documentElement("TOCTabBase");
+    }
+
+    function sourceElement(e){
+        if (window.event)
+                e = window.event;
+        return e.srcElement? e.srcElement : e.target;
+    }
+
+    function documentElement(id){
+        return document.getElementById(id);
+    }
+
+    function changeTabs(e){
+
+        if(firstFlag == true){
+                currentTab = TOCTab();
+                currentTabBase = TOCTabBase();
+                firstFlag = false;
+        }
+
+        var srcElem = sourceElement(e);
+
+        if (srcElem.className != "tab") {
+              while(srcElem.parentNode && srcElem.className != "tab"){
+                      srcElem = srcElem.parentNode;
+              }
+        }
+
+        if(srcElem.className == "tab"){
+
+                // Reset the last clicked tab
+                currentTab.className = "tab";
+                currentTabBase.style.backgroundColor = "white";
+
+                // Store a reference to the clicked tab
+                        currentTab = srcElem;
+                currentTab.className = "selTab";
+                currentTabBase = documentElement(currentTab.id + "Base");
+                currentTabBase.style.backgroundColor = "#ECE9D8";
+
+                switch(currentTab.id) {
+                        case "TOCTab" :
+                                window.parent.frames["lbottom"].location.href = "webtoc.html";
+                                break;
+                        case "IndexTab" :
+                                window.parent.frames["lbottom"].location.href = "webindex.html";
+                                break;
+                        case "SearchTab" :
+                                window.parent.frames["lbottom"].location.href = "websearch.html";
+                                break;
+                }
+
+        }
+    }
+    -->
+    </script>
+    <style type="text/css">
+    <!--
+	body
+	{
+		margin: 		0;
+		font-family: 	Verdana, Arial, Helvetica, sans-serif;
+	}
+	td
+	{
+		font-size: 		70%;
+	}
+    .tab
+    {
+    	cursor: 		default;
+		border-top:		solid 1px #E0E0E0;
+		border-right:	solid 1px gray;
+		border-left:	solid 1px #E0E0E0;
+		font-weight:	normal;
+		background-color: #ECE9D8;
+	}
+
+    .selTab
+    {
+    	cursor: 		default;
+    	border-left:	solid 1px white;
+    	border-top:		solid 1px white;
+    	border-right:	solid 1px black;
+    	font-weight:	bold;
+    	background-color: #ECE9D8;
+    }
+    -->
+    </style>
+	<TABLE STYLE="width:100%; height:20; margin-top: 5px" CELLPADDING=0 CELLSPACING=0>
+		<TR>
+			<TD ID=LeadIn>&nbsp;</TD>
+			<TD NOWRAP ID=TOCTab CLASS=selTab HEIGHT=20>&nbsp;&nbsp;Table of Contents&nbsp;&nbsp;</TD>
+			<TD NOWRAP ID=IndexTab CLASS=tab>&nbsp;&nbsp;Index&nbsp;&nbsp;</TD>
+			<TD ID=LeadOut WIDTH=98%>&nbsp;</TD>
+		</TR>
+		<TR>
+			<TD ID=LeadIn STYLE="height:1; width=5;"></TD>
+			<TD ID=TOCTabBase STYLE="height:1; border-left:solid 1px white; background-color: #ECE9D8"></TD>
+			<TD ID=IndexTabBase STYLE="height:1; background-color:white"></TD>
+			<TD ID=LeadOut STYLE="height:1; background-color:white"></TD>
+		</TR>
+		<TR>
+			<TD COLSPAN=4 STYLE="height:5;background-color: #ECE9D8;"></td>
+		</TR>
+	</TABLE>
+</body>
+</html>

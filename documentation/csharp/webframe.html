@@ -1,0 +1,43 @@
+﻿<html>
+<head>
+    <!--DXMETADATA start type="MetaCharset" --><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"><!--DXMETADATA end-->
+    <meta content="Innovasys Document! X (www.innovasys.com)" name="GENERATOR">
+    <!--DXMETADATA start type="ProjectGroupTitle" format="<title>%%ProjectGroupTitle%%</title>" --><title>libRETS .NET Documentation</title><!--DXMETADATA end-->
+    <!--DXMETADATA start type="DefaultTopic" format="<script lang=""javascript"">var defaultTopic=""%%DefaultTopic%%"";</script>"--><script lang="javascript">var defaultTopic="librets-dotnet.html";</script><!--DXMETADATA end-->
+    <script lang="javascript">
+
+        function documentElement(id){
+            return document.getElementById(id);
+        }
+
+        function setDefaultPages(){
+
+            var qs=window.location.search;
+
+            if (qs.length==0) {
+                documentElement("body").src = defaultTopic;
+                documentElement("lbottom").src = "webtoc.html";
+            } else {
+                documentElement("body").src = qs.substring(1);
+                documentElement("lbottom").src = "webtoc.html?" + qs.substring(1);
+            }
+
+        }
+
+    </script>
+</head>
+
+<frameset cols="300,*" framespacing="1" border="1" frameborder="1" onload="setDefaultPages()">
+    <frameset rows="30,*" framespacing="1" border="0" frameborder="0">
+        <frame id="ltop" name="ltop" target="lbottom" scrolling="no" src="webnav.html">
+        <frame id="lbottom" name="lbottom" src="webblank.html" target="body">
+    </frameset>
+    <frame id="body" name="body" target="body" src="webblank.html">
+    <noframes>
+        <body>
+            <p>This page uses frames, but your browser doesn't support them.</p>
+        </body>
+    </noframes>
+</frameset>
+
+</html>
