@@ -3268,7 +3268,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 553844F80A349A5F00415742 /* librets.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1)",
@@ -3278,7 +3278,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				SDKROOT = macosx10.8;
 				SYMROOT = "$(PROJECT_DIR)/../../build/xcode";
-				ZERO_LINK = "";
 			};
 			name = Development;
 		};
