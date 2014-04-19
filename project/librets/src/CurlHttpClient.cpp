@@ -209,7 +209,8 @@ RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
 {
     CurlEasyPtr         curlEasy  = mCurlMulti.EasyFactory();
     CurlHttpResponsePtr response(new CurlHttpResponse());
-    CurlHttpClientPrivate  *client = new CurlHttpClientPrivate(request, response, this);
+    CurlHttpClientPrivate  *client =
+        new CurlHttpClientPrivate(request, response, this, curlEasy);
     
     if (curlEasy == NULL)
     {
@@ -323,6 +324,9 @@ size_t CurlHttpClient::StaticWriteData(char * buffer, size_t size, size_t nmemb,
                                        void * userData)
 {
     CurlHttpClientPrivate * client = (CurlHttpClientPrivate *) userData;
+    client->GetResponse()->SetResponseCode(
+        client->GetCurlEasy()->GetResponseCode()
+    );
     size_t bytes = size * nmemb;
     client->GetResponse()->WriteData(buffer, bytes);
     return bytes;

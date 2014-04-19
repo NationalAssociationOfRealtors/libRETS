@@ -48,12 +48,16 @@ void CurlHttpResponse::SetUrl(string url)
 {
 }
 
+void CurlHttpResponse::FinishResponse() const
+{
+    while (mHttpClient->ContinueRequest());
+}
+
 int CurlHttpResponse::GetResponseCode() const
 {
     /*
-     * With the multi interface, we won't get status until the transaction is done.
-     * Here we assume that if someone wants status, they want the request completed, so
-     * complete it.
+     * We may have to wait until CURL has gotten headers before we can get the response
+     * code.
      */
     while (mInProgress && mHttpClient->ContinueRequest() && (mResponseCode <= 0));
     

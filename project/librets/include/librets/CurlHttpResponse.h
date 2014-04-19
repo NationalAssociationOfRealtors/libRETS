@@ -52,7 +52,9 @@ class CurlHttpResponse : public RetsHttpResponse
     void SetStream(iostreamPtr inputStream);
     
     void WriteData(const char * data, size_t bytes);
-    
+
+    virtual void FinishResponse() const;
+
     virtual int GetResponseCode() const;
 
     virtual void SetResponseCode(int responseCode);

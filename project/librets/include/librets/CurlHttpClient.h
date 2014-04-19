@@ -160,10 +160,13 @@ class CurlHttpClientPrivate
      * @param response A CurlHttpResponsePtr referencing to where the response will be returned.
      * @param client A pointer to the CurlHttpClient class that controls the transaction.
      */
-    CurlHttpClientPrivate(RetsHttpRequest * request, CurlHttpResponsePtr response, CurlHttpClient * client)
+    CurlHttpClientPrivate(RetsHttpRequest * request,
+                          CurlHttpResponsePtr response,
+                          CurlHttpClient * client, CurlEasyPtr curlEasy)
                     : mRequest(request)
                     , mResponse(response)
                     , mClient(client)
+                    , mCurlEasy(curlEasy)
     {
     };
     
@@ -194,11 +197,21 @@ class CurlHttpClientPrivate
     {
         return mClient;
     };
+
+    /**
+     * Return a pointer to the CurlEasy object associated with this request.
+     * @return A pointer to CurlEasy
+     */
+    CurlEasyPtr GetCurlEasy()
+    {
+        return mCurlEasy;
+    };
     
   private:
     RetsHttpRequest * mRequest;
     CurlHttpResponsePtr mResponse;
     CurlHttpClient * mClient;
+    CurlEasyPtr mCurlEasy;
 };
 
 };

@@ -63,6 +63,11 @@ class RetsHttpResponse
     virtual istreamPtr GetInputStream() const = 0;
 
     /**
+     * Finish reading the entire response.
+     */
+    virtual void FinishResponse() const = 0;
+
+    /**
      * Return the HTTP response code.
      *
      * @return HTTP response code

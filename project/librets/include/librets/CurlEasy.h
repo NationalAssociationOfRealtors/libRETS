@@ -188,10 +188,8 @@ class CurlEasy
     /**
      * Obtain the response code from cURL for the last transaction. Because of the
      * use of the cURL multi-interface, it is possible for the status to be zero until
-     * the entire transaction has been satisfied. It is assumed, therefore, that when
-     * this method is called, the caller desires the transaction to be completed. This
-     * method will therefore continue the request until a non-zero response is returned
-     * by cURL.
+     * the headers have been downloaded. This method will therefore continue the
+     * request until a header has been parsed by cURL.
      * @returns An integer representation of the http response code.
      */
     long GetResponseCode();

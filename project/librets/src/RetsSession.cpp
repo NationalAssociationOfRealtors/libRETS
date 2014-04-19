@@ -192,6 +192,10 @@ bool CLASS::Login(string user_name,
     
     if (httpResponse->GetResponseCode() == 401)
     {
+        /* Just make sure we read the rest of the original response and free
+           up the CurlEasy object before we issue the next request. It will
+           make it possible to re-use the existing connection. */
+        httpResponse->FinishResponse();
         httpResponse = DoRequest(&request);
         if (httpResponse->GetResponseCode() == 401)
         {
@@ -477,6 +481,8 @@ SearchResultSetAPtr CLASS::Search(SearchRequest * request)
      */
     RetsHttpResponsePtr httpResponse = DoRequest(request);
 
+    AssertSuccessfulResponse(httpResponse, searchUrl);
+
     SearchResultSetAPtr resultSet(new SearchResultSet());
     if (mFlags & MODE_CACHE)
     {
@@ -505,6 +511,9 @@ void CLASS::Search(SearchRequest * request, std::ostream & outputStream)
      * Start the transaction, copy to output stream
      */
     RetsHttpResponsePtr httpResponse = DoRequest(request);
+
+    AssertSuccessfulResponse(httpResponse, searchUrl);
+
     readUntilEof(httpResponse->GetInputStream(), outputStream);
 }
 
@@ -522,6 +531,9 @@ BinaryDataAPtr CLASS::Search_(SearchRequest * request)
      * Start the transaction, copy to output stream
      */
     RetsHttpResponsePtr httpResponse = DoRequest(request);
+
+    AssertSuccessfulResponse(httpResponse, searchUrl);
+
     data->ReadToEof(httpResponse->GetInputStream());
     
     return data;
@@ -540,6 +552,8 @@ istreamPtr CLASS::SearchStream(SearchRequest * request)
      */
     RetsHttpResponsePtr httpResponse = DoRequest(request);
     
+    AssertSuccessfulResponse(httpResponse, searchUrl);
+
     return httpResponse->GetInputStream();
 }
 
@@ -867,6 +881,8 @@ UpdateResponseAPtr CLASS::Update(UpdateRequest * request)
      * Start the transaction.
      */
     RetsHttpResponsePtr httpResponse = DoRequest(request);
+
+    AssertSuccessfulResponse(httpResponse, updateUrl);
 
     UpdateResponseAPtr result(new UpdateResponse());
     result->SetEncoding(mEncoding);
