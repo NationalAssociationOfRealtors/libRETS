@@ -65,10 +65,10 @@ MY_PROG_CCACHE
 AC_CACHE_SAVE
 
 AC_ARG_ENABLE(shared_dependencies,
-              AC_HELP_STRING([--enable-shared_dependencies],
-                             [Uses shared libraries for dependencies instead of their static counterparts.  Do not enable unless you know what you're doing.]),
-              test "X$enableval" != "Xno" && my_enable_shared_dependencies=yes,
-              my_enable_shared_dependencies=no)
+              AC_HELP_STRING([--disable-shared_dependencies],
+                             [Uses static libraries for dependencies instead of their shared counterparts.]),
+              test "X$enableval" != "Xyes" && my_enable_shared_dependencies=no,
+              my_enable_shared_dependencies=yes)
 
 AC_ARG_ENABLE(dotnet,
               AC_HELP_STRING([--disable-dotnet],
