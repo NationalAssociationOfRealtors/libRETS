@@ -45,7 +45,7 @@ namespace std {
     "ST(argvi) = sv_newmortal();
      SWIG_MakePtr(ST(argvi++), (void *) $1.release(), $descriptor(TYPE *), $shadow|SWIG_POINTER_OWN);";
 
-#elif defined(SWIGPYTHON) || defined(SWIGRUBY)
+#elif defined(SWIGPYTHON) || defined(SWIGRUBY) || defined(SWIGJAVASCRIPT)
 
 %typemap(out) std::auto_ptr<TYPE>
     "$result = SWIG_NewPointerObj((void *) $1.release(), $descriptor(TYPE *), SWIG_POINTER_OWN);"
