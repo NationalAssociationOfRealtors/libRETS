@@ -5,7 +5,7 @@ AC_DEFUN([MY_TEST_SWIG], [
   AC_CACHE_VAL(my_cv_swig_vers, [
     my_cv_swig_vers=NONE
     dnl check is the plain-text version of the required version
-    check="1.3.33"
+    check="3.0.2"
 
     set `${PERL} -e "@v = split('\\.', '$check'); print \"@v\";"`
     check_major=$[1]
@@ -20,6 +20,7 @@ AC_DEFUN([MY_TEST_SWIG], [
     HAVE_RUBY=0
     HAVE_PYTHON=0
     HAVE_PYTHON3=0
+    HAVE_NODE=0
     JAVA_INCLUDES=
     USE_SWIG_BINDINGS=
     SNK_FILE=no
@@ -31,6 +32,7 @@ AC_DEFUN([MY_TEST_SWIG], [
     my_have_python3=no
     my_have_ruby=no
     my_use_swig_bindings=no
+    my_have_node=no
 
     AC_CHECK_PROG(SWIG, swig, swig, no)
     if test "$SWIG" != "no"; then
@@ -243,6 +245,17 @@ EOF
             fi
         fi
 
+      dnl
+      dnl Check to see if we can build for node.js
+      dnl
+      if test "$my_use_node" = "yes"; then
+          AC_CHECK_PROG(NODEGYP, node-gyp, node-gyp, no)
+	  if test "$NODEGYP" != "no"; then
+	      HAVE_NODE=1
+              my_have_node=yes
+          fi
+      fi
+
       else
         AC_MSG_RESULT(FAILED)
         AC_MSG_WARN([$ver is too old. Need version $check or higher.])
@@ -270,4 +283,5 @@ EOF
   AC_SUBST(PYTHON3)
   AC_SUBST(HAVE_RUBY)
   AC_SUBST(RUBY)
+  AC_SUBST(NODEGYP)
 ])

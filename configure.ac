@@ -111,6 +111,12 @@ AC_ARG_ENABLE(ruby,
                              [If swig is installed, do not build the ruby  bindings.]),
               test "X$enableval" != "Xyes" && my_use_ruby=no,
               my_use_ruby=yes)
+
+AC_ARG_ENABLE(node.js,
+              AC_HELP_STRING([--disable-node.js],
+                             [If swig is installed, do not build the node.js bindings.]),
+              test "X$enableval" != "Xyes" && my_use_node=no,
+              my_use_node=yes)
 		
 AC_ARG_ENABLE(thread-safe,
               AC_HELP_STRING([--enable-thread-safe],
@@ -223,6 +229,7 @@ echo Compile SWIG bindings.......: $my_use_swig_bindings
   echo "  With Python 2.............: $my_have_python"
   echo "  With Python 3.............: $my_have_python3"
   echo "  With Ruby.................: $my_have_ruby"
+  echo "  With Node.js..............: $my_have_node"
 echo Enable Maintainer Docs......: $my_enable_maintainer_documentation
 if test "$OSNAME" = "darwin"; then
   echo Enable Universal Objects....: $my_enable_universal 
