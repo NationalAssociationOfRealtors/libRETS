@@ -40,7 +40,7 @@ endif
 
 ${SWIG_BRIDGE_OBJ}: ${SWIG_BRIDGE_SRC} ${SWIG_BRIDGE_H}
 	${CXX} ${SWIG_BRIDGE_CFLAGS} -I${LIBRETS_INC_DIR}  -I${SWIG_DIR} ${BOOST_CFLAGS} -c $< -o $@
-	
+
 ###
 # dotnet
 #
@@ -94,6 +94,13 @@ endif
 #
 ifeq (${HAVE_RUBY},1)
 include ${top_srcdir}/project/build/ruby.mk
+endif
+
+###
+# node.js
+#
+ifeq (${HAVE_NODE},1)
+include ${top_srcdir}/project/build/node.js.mk
 endif
 
 endif

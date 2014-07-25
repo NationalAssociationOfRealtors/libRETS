@@ -31,7 +31,8 @@ ALL_OBJ_DIRS	= \
 	${BUILD}/swig/php5 \
 	${BUILD}/swig/python \
 	${BUILD}/swig/python3 \
-	${BUILD}/swig/ruby
+	${BUILD}/swig/ruby \
+	${BUILD}/swig/node.js
 
 ALL = $(LIBRETS_LIB)
 ifeq ($(USE_EXAMPLES),1)
@@ -75,6 +76,11 @@ endif
 ifeq (${HAVE_RUBY},1)
 ALL += ${RUBY_BUILD}
 SWIG_INSTALL += ${RUBY_INSTALL}
+endif
+
+ifeq (${HAVE_NODE},1)
+ALL += ${NODE_BUILD}
+SWIG_INSTALL += ${NODE_INSTALL}
 endif
 endif
 
@@ -172,7 +178,7 @@ _test-ssl: cppunit prepare $(LIBRETS_NETTEST_EXE) ${LIBRETS_NETTEST_HTTPSERVER}
 _run_httpServer: ${LIBRETS_NETTEST_HTTPSERVER} 
 	$(JAVAC)  ${LIBRETS_NETTEST_SRC_DIR}/httpServer.java -d ${LIBRETS_NETTEST_BIN_DIR}
 	java -cp ${LIBRETS_NETTEST_BIN_DIR} httpServer --resource=${LIBRETS_NETTEST_SRC_DIR}/resources --port=4444 
-	
+
 _run_SSLServer: ${LIBRETS_NETTEST_HTTPSERVER} 
 	$(JAVAC)  ${LIBRETS_NETTEST_SRC_DIR}/httpServer.java -d ${LIBRETS_NETTEST_BIN_DIR}
 	$(RM) myKeyStore
@@ -181,7 +187,7 @@ _run_SSLServer: ${LIBRETS_NETTEST_HTTPSERVER}
 	java -cp ${LIBRETS_NETTEST_BIN_DIR} -Djavax.net.ssl.keyStore=myKeyStore \
 		-Djavax.net.ssl.keyStorePassword=123456 \
 		httpServer --resource=${LIBRETS_NETTEST_SRC_DIR}/resources --port=4444 --ssl
-	
+
 _maintainer-clean: _veryclean
 	$(RM) configure
 
