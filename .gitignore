@@ -47,3 +47,5 @@ project/swig/csharp/*.obj
 project/swig/csharp/*.exe
 project/swig/csharp/*.mdb
 project/swig/csharp/bin
+
+project/swig/node.js/binding.gyp

@@ -209,6 +209,11 @@ AC_CONFIG_FILES([Makefile project/build/Doxyfile])
 AC_CONFIG_FILES([librets-config], [chmod +x librets-config])
 AC_CONFIG_FILES([librets-config-inplace], [chmod +x librets-config-inplace])
 
+if test $my_have_node = "yes"; then
+   AC_CONFIG_FILES([project/swig/node.js/binding.gyp])
+fi
+
+
 AC_OUTPUT
 
 echo
