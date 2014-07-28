@@ -10,6 +10,11 @@
 project.xcworkspace/
 xcuserdata/
 
+# Windows build files
+vc*.idb
+vc*.pch
+vc*.pdb
+
 /build
 /dist
 /scratch
@@ -23,3 +28,22 @@ xcuserdata/
 /librets-config
 /librets-config-inplace
 /.gdbinit
+
+project/build/config.vc
+project/build/Doxyfile
+
+project/examples/src/build
+
+project/librets/src/config.h
+project/librets/src/build
+
+project/librets/test/src/build
+
+project/swig/csharp/librets.*
+project/swig/csharp/librets_wrap.cpp
+project/swig/csharp/librets_wrap.h
+project/swig/csharp/*.dll
+project/swig/csharp/*.obj
+project/swig/csharp/*.exe
+project/swig/csharp/*.mdb
+project/swig/csharp/bin
