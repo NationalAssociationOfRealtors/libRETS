@@ -15,7 +15,7 @@ try
     var loginResponse = session.GetLoginResponse();
     var urls = session.GetCapabilityUrls();
 
-    console.log("Member name: " + loginResponse.GetMemeberName());
+    console.log("Member name: " + loginResponse.GetMemberName());
     console.log("Search URL: " + urls.GetSearchUrl());
     console.log("Action:")
     console.log(session.GetAction());
