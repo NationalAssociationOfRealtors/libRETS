@@ -38,9 +38,7 @@ AC_DEFUN([MY_TEST_SWIG], [
     if test "$SWIG" != "no"; then
       AC_MSG_CHECKING([for swig >= $check])
 
-      dnl Sorry, I never professed to being a perl programmer
-      ver=`$SWIG -version | tr "\n" " "`
-      ver=`${PERL} -e "@v = split(' ', '$ver');  print \"@v[[2]]\";"`
+      ver=`$SWIG -version | tr "\n" " " | cut -d " " -f 4`
       set `${PERL} -e "@v = split('\\.' , '$ver'); print \"@v\";"`
 
       ver_major=$[1]
@@ -48,10 +46,8 @@ AC_DEFUN([MY_TEST_SWIG], [
       ver_release=$[3]
 
       ok=`expr \
-          $ver_major \> $check_major \| \
-          $ver_major \= $check_major \& \
-          $ver_minor \> $check_minor \| \
-          $ver_minor \= $check_minor \& \
+          $ver_major \>= $check_major \& \
+          $ver_minor \>= $check_minor \& \
           $ver_release \>\= $check_release `                         
 
       if test "$ok" = "1"; then
