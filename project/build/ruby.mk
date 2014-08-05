@@ -34,7 +34,7 @@ ifneq (${SWIG_OSNAME}, MSWin32)
 
 ${RUBY_DLL}: ${RUBY_MAKEFILE} ${LIBRETS_LIB}
 	${MAKE} CC="${CC}" CXX="${CXX}" LDFLAGS="${LDFLAGS}" -C ${RUBY_OBJ_DIR}
-	
+
 ${RUBY_INSTALL}: ${RUBY_DLL}
 	${MAKE} -C ${RUBY_OBJ_DIR} install
 
@@ -79,7 +79,7 @@ ${RUBY_DLL}: ${RUBY_MAKEFILE} ${LIBRETS_LIB} ${RUBY_OBJ_DIR}/librets_wrap.o
 		-L${RUBY_RUBYLIB_DIR}		\
 		-L${RUBY_LIB_DIR}		\
 		-l${RUBY_LIB}
-	
+
 ${RUBY_INSTALL}: ${RUBY_DLL}
 	${MAKE} -C ${RUBY_OBJ_DIR} install
 
