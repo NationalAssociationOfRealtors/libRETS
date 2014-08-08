@@ -45,11 +45,11 @@ AC_DEFUN([MY_TEST_SWIG], [
       ver_minor=$[2]
       ver_release=$[3]
 
-      ok =`expr \
+      ok=`expr \
            \( $ver_major \> $check_major \) \| \
-           \( \( $ver_major == $check_major \) \& \
+           \( \( $ver_major = $check_major \) \& \
               \( \( $ver_minor \> $check_minor \) \| \
-                 \( \( $ver_minor == $check_minor \) \&
+                 \( \( $ver_minor = $check_minor \) \&
                     \( $ver_release \>= $check_release \) \) \) \) `
 
       if test "$ok" = "1"; then
@@ -262,9 +262,9 @@ EOF
               ver_release=$[3]
               ok=`expr \
                   \( $ver_major \> $check_major \) \| \
-                  \( \( $ver_major == $check_major \) \& \
+                  \( \( $ver_major = $check_major \) \& \
                      \( \( $ver_minor \> $check_minor \) \| \
-                        \( \( $ver_minor == $check_minor \) \& \
+                        \( \( $ver_minor = $check_minor \) \& \
                            \( $ver_release \>= $check_release \) \) \) \) `
 
               if test "$ok" = "1"; then
@@ -286,9 +286,9 @@ EOF
                       ver_release=$[3]
                       ok=`expr \
                           \( $ver_major \> $check_major \) \| \
-                          \( \( $ver_major == $check_major \) \& \
+                          \( \( $ver_major = $check_major \) \& \
                              \( \( $ver_minor \> $check_minor \) \| \
-                                \( \( $ver_minor == $check_minor \) \& \
+                                \( \( $ver_minor = $check_minor \) \& \
                                    \( $ver_release \>= $check_release \) \) \) \) `
 
                       if test "$ok" = "1"; then
