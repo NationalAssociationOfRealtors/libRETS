@@ -45,10 +45,12 @@ AC_DEFUN([MY_TEST_SWIG], [
       ver_minor=$[2]
       ver_release=$[3]
 
-      ok=`expr \
-          $ver_major \>= $check_major \& \
-          $ver_minor \>= $check_minor \& \
-          $ver_release \>\= $check_release `                         
+      ok =`expr \
+           \( $ver_major \> $check_major \) \| \
+           \( \( $ver_major == $check_major \) \& \
+              \( \( $ver_minor \> $check_minor \) \| \
+                 \( \( $ver_minor == $check_minor \) \&
+                    \( $ver_release \>= $check_release \) \) \) \) `
 
       if test "$ok" = "1"; then
         my_cv_swig_vers="$ver"
@@ -241,17 +243,64 @@ EOF
             fi
         fi
 
-      dnl
-      dnl Check to see if we can build for node.js
-      dnl
-      if test "$my_use_node" = "yes"; then
-          AC_CHECK_PROG(NODEGYP, node-gyp, node-gyp, no)
-	  if test "$NODEGYP" != "no"; then
-	      HAVE_NODE=1
-              my_have_node=yes
-          fi
-      fi
+        dnl
+        dnl Check to see if we can build for node.js
+        dnl
+        if test "$my_use_node" = "yes"; then
+      	    AC_CHECK_PROGS(NODE, [node nodejs], no)
+	    if test "$NODE" != "no"; then
+	      check="0.10.25"
+	      set `${PERL} -e "@v = split('\\.' , '$check'); print \"@v\";"`
+              check_major=$[1]
+              check_minor=$[2]
+              check_release=$[3]
+              AC_MSG_CHECKING([for $NODE >= $check])
+	      ver=`$NODE -v | cut -c 2-`
+	      set `${PERL} -e "@v = split('\\.' , '$ver'); print \"@v\";"`
+              ver_major=$[1]
+              ver_minor=$[2]
+              ver_release=$[3]
+              ok=`expr \
+                  \( $ver_major \> $check_major \) \| \
+                  \( \( $ver_major == $check_major \) \& \
+                     \( \( $ver_minor \> $check_minor \) \| \
+                        \( \( $ver_minor == $check_minor \) \& \
+                           \( $ver_release \>= $check_release \) \) \) \) `
 
+              if test "$ok" = "1"; then
+	          my_cv_node_vers="$ver"
+	          AC_MSG_RESULT([$my_cv_node_vers])
+	    # code to check version then
+  	          AC_CHECK_PROG(NODEGYP, node-gyp, node-gyp, no)
+	          if test "$NODEGYP" != "no"; then
+  	              check="0.10.10"
+  	              set `${PERL} -e "@v = split('\\.' , '$check'); print \"@v\";"`
+                      check_major=$[1]
+                      check_minor=$[2]
+                      check_release=$[3]
+                      AC_MSG_CHECKING([for $NODEGYP >= $check])
+  	              ver=`$NODEGYP -v | cut -c 2-`
+	              set `${PERL} -e "@v = split('\\.' , '$ver'); print \"@v\";"`
+                      ver_major=$[1]
+                      ver_minor=$[2]
+                      ver_release=$[3]
+                      ok=`expr \
+                          \( $ver_major \> $check_major \) \| \
+                          \( \( $ver_major == $check_major \) \& \
+                             \( \( $ver_minor \> $check_minor \) \| \
+                                \( \( $ver_minor == $check_minor \) \& \
+                                   \( $ver_release \>= $check_release \) \) \) \) `
+
+                      if test "$ok" = "1"; then
+	                  my_cv_nodegyp_vers="$ver"
+	                  AC_MSG_RESULT([$my_cv_nodegyp_vers])
+	                  HAVE_NODE=1
+                          my_have_node=yes
+                      fi
+                  fi
+	      fi
+          fi
+        fi
       else
         AC_MSG_RESULT(FAILED)
         AC_MSG_WARN([$ver is too old. Need version $check or higher.])
