@@ -30,7 +30,7 @@ AC_DEFUN([MY_TEST_ANTLR], [
         AC_MSG_CHECKING([whether linking with -lantlr in $antlr_prefix works])
         CPPFLAGS="$save_CFLAGS -I$antlr_prefix/include"
         LIBS="$save_LIBS -L$antlr_prefix/lib -lantlr"
-        AC_LINK_IFELSE([
+        AC_LINK_IFELSE([AC_LANG_SOURCE([
       #include <antlr/CommonAST.hpp>
       class TestAST : public ANTLR_USE_NAMESPACE(antlr)CommonAST {
       };
@@ -40,7 +40,7 @@ AC_DEFUN([MY_TEST_ANTLR], [
         TestAST testAST;
         return 0;
       }
-        ], [
+        ])], [
           AC_MSG_RESULT(yes)
           ANTLR_CFLAGS="-I$antlr_prefix/include"
           ANTLR_LIBS="-L$antlr_prefix/lib -lantlr"
