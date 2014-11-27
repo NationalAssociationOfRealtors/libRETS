@@ -19,7 +19,7 @@ LIBRETS_MANAGED_SRC = $(GENERATED_SRC) CppInputStream.cs \
 	RetsHttpExceptionNative.cs
 LIBRETS_MANAGED_DLL = $(BUILD_DIR)\$(BIN_DIR)\librets-dotnet.dll
 PLATFORM =
-!if "$(VS_VERSION)" == "vs2008"
+!if "$(VS_VERSION)" == "vs2008" || "$(VS_VERSION)" == "vs2010"
 PLATFORM = -platform:$(TARGET_CPU)
 !endif
 RM = rm -f
