@@ -1,4 +1,6 @@
 #! /bin/sh
+#
+# This builds libRETS on CentOS 7
 
 sudo yum install --assumeyes antlr-tool autoconf boost-devel expat-devel libcurl-devel gcc-c++ swig python-devel
 
@@ -12,6 +14,6 @@ CPPFLAGS="-L/usr/local/lib -I/usr/local/include"	\
  ./configure    --enable-examples               	\
                 --enable-debug                  	\
                 --enable-depends                	\
-		--enable-maintainer-documentation	\
-		--enable-shared-dependencies		
+                --enable-maintainer-documentation	\
+                --enable-shared_dependencies		
 
