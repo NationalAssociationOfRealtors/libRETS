@@ -13,8 +13,8 @@ NODE_EXAMPLES_SRC := $(wildcard ${NODE_SRC_DIR}/*.js)
 NODE_EXAMPLES := $(patsubst $(NODE_SRC_DIR)/%.js, $(NODE_OBJ_DIR)/%.js, $(NODE_EXAMPLES_SRC))
 
 ${NODE_WRAP}: ${SWIG_FILES}
-	${SWIG} -c++ -javascript -node -o ${NODE_WRAP} \
-	-outdir ${NODE_OBJ_DIR} ${SWIG_DIR}/librets.i
+	${SWIG} -c++ -javascript -node -DV8_VERSION=${NODE_V8_VERSION} \
+	-o ${NODE_WRAP} -outdir ${NODE_OBJ_DIR} ${SWIG_DIR}/librets.i
 
 ${NODE_BINDING}: ${NODE_SRC_DIR}/binding.gyp
 	cp ${NODE_SRC_DIR}/binding.gyp ${NODE_OBJ_DIR}

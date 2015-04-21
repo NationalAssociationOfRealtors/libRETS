@@ -49,7 +49,7 @@ AC_DEFUN([MY_TEST_SWIG], [
            \( $ver_major \> $check_major \) \| \
            \( \( $ver_major = $check_major \) \& \
               \( \( $ver_minor \> $check_minor \) \| \
-                 \( \( $ver_minor = $check_minor \) \&
+                 \( \( $ver_minor = $check_minor \) \& \
                     \( $ver_release \>= $check_release \) \) \) \) `
 
       if test "$ok" = "1"; then
@@ -270,6 +270,12 @@ EOF
               if test "$ok" = "1"; then
 	          my_cv_node_vers="$ver"
 	          AC_MSG_RESULT([$my_cv_node_vers])
+
+		  AC_MSG_CHECKING([$NODE v8 version])
+		  ver=`$NODE -e 'console.log(process.versions.v8);'`
+		  ver_hex=`perl -e "printf(\"0x%02d%02d%02d\", split('\\.', '$ver'));"`
+		  NODE_V8_VERSION="$ver_hex"
+		  AC_MSG_RESULT([$ver])
 	    # code to check version then
   	          AC_CHECK_PROG(NODEGYP, node-gyp, node-gyp, no)
 	          if test "$NODEGYP" != "no"; then
@@ -329,5 +335,6 @@ EOF
   AC_SUBST(HAVE_RUBY)
   AC_SUBST(RUBY)
   AC_SUBST(HAVE_NODE)
+  AC_SUBST(NODE_V8_VERSION)
   AC_SUBST(NODEGYP)
 ])
