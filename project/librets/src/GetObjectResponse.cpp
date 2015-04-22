@@ -261,7 +261,7 @@ void GetObjectResponse::ParseMultiPart(RetsHttpResponsePtr httpResponse,
                 if (!ignoreMalformedHeaders)
                     LIBRETS_THROW(
                         RetsException,
-                        ("Cound not find another delimiter: " + boundary));
+                        ("Could not find another delimiter: " + boundary));
                 /*
                  * See if we can find some semblance of a trailing boundary. If so
                  * exclude it from the data. Otherwise, include everything up to the

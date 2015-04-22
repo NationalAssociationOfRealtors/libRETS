@@ -1,8 +1,11 @@
-Version 1.6.2-SNAPSHOT - xx xxx 2014
+Version 1.6.2-SNAPSHOT - xx xxx 2015
   
   * Update .gitignore
   * Added Patch provided by Richard Shaffer to detect HTTP Response
     codes before the end of the transaction.
+  * Change default build from static to shared. Issue: #3.
+  * librets-dotnet.dll is x86 on x64 build. Issue: #12.
+  * Add librets-build-centos.sh
 
 Version 1.6.1 -  5 Apr 2014
 

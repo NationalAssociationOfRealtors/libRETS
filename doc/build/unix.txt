@@ -13,7 +13,7 @@ Earlier versions of gcc do not have good C++ support.
 Boost
 -----
 
-  Version: 1.32.0 or higher.
+  Version: 1.44.0 or higher.
   URL: http://www.boost.org/
 
 Boost has it's own build system, bjam.  Read it's instructions for
@@ -23,7 +23,7 @@ program options libraries.
 libcurl
 -------
 
-  Version: 7.13.2 or higher.
+  Version: 7.18.2 or higher.
   URL: http://curl.haxx.se/libcurl/
 
 Build as per its instructions.  No special steps are needed.
@@ -58,6 +58,7 @@ Building librets
 
 Run the following commands:
 
+  $ ./autogen.sh
   % ./configure 
   % make
   % sudo make install
