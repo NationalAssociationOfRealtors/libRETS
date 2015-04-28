@@ -20,7 +20,7 @@ SWIG_BRIDGE_OBJ		= ${SWIG_OBJ_DIR}/librets_bridge.o
 
 DLL			= so
 SWIG_LINK		= ${CXX} ${LDFLAGS} -shared -Wl,--no-undefined
-SWIG_LINK_UNDEFINED	= ${CXX} ${LDFLAGS} -shared
+SWIG_LINK_ALLOW_UNDEFINED	= ${CXX} ${LDFLAGS} -shared
 
 ifeq (${SWIG_OSNAME}, darwin)
 SWIG_LINK		= ${CXX} -bundle -undefined suppress -flat_namespace 
