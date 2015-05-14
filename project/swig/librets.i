@@ -1007,6 +1007,38 @@ SWIG_AUTO_PTR_RELEASE(BinaryData);
     %}
 #endif
 
+#ifdef SWIGJAVASCRIPT
+    %typemap(out) BinaryDataAPtr (v8::Handle<v8::ArrayBuffer> arrayBuffer,
+                                  v8::ArrayBuffer::Contents contents) %{
+        // Create an empty ArrayBuffer of the right size.
+        arrayBuffer = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(),
+                                           ($1)->Size());
+
+        // By Externalize()ing the Arraybuffer we can copy the binary
+        // data in, but we're creating a memory leak as the C++ layer
+        // then becomes responsible for cleaning up the memory once
+        // externalized. There is no way currently to keep node
+        // managing the memory given the current v8 API, looking at
+        // comments online, this is a VERY common problem.  There are
+        // hacks/tweaks to v8 to solve this, but that isn't a great
+        // idea either to make this easy to consume by others.
+        //
+        // The commented out code tries to use the existing
+        // BinaryData character array so the ArrayBuffer won't need
+        // to be externalized, but its being freed/reaped before
+        // javascript can use it, resulting in javascript getting
+        // random data, so its a bad solution.
+
+        // arrayBuffer = v8::ArrayBuffer::New(
+        //     v8::Isolate::GetCurrent(), (void *) ($1)->AsChar(),
+        //     ($1)->Size());
+        contents = arrayBuffer->Externalize();
+        ($1)->Copy((unsigned char *) contents.Data(), ($1)->Size());
+
+        $result = v8::Uint8Array::New(arrayBuffer, 0, ($1)->Size());
+    %}
+#endif
+
 class ObjectDescriptor
 {
   public:
@@ -1044,7 +1076,7 @@ class ObjectDescriptor
     }
 #endif
 
-#if defined(SWIGJAVA) || defined(SWIGPYTHON)
+#if defined(SWIGJAVA) || defined(SWIGPYTHON) || defined(SWIGJAVASCRIPT)
     BinaryDataAPtr GetData();
 #endif
     
