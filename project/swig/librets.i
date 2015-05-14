@@ -1008,37 +1008,27 @@ SWIG_AUTO_PTR_RELEASE(BinaryData);
 #endif
 
 #ifdef SWIGJAVASCRIPT
-    %typemap(out) BinaryDataAPtr (v8::Handle<v8::ArrayBuffer> arrayBuffer,
-                                  v8::ArrayBuffer::Contents contents) %{
-        // Create an empty ArrayBuffer of the right size.
-        arrayBuffer = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(),
-                                           ($1)->Size());
+    %typemap(out) BinaryDataAPtr (int size,
+                                  const char* s,
+                                  v8::Isolate* isolate,
+                                  v8::Handle<v8::Uint8Array> array) %{
+        s = ($1)->AsChar();
+        size = ($1)->Size();
+        isolate = v8::Isolate::GetCurrent();
 
-        // By Externalize()ing the Arraybuffer we can copy the binary
-        // data in, but we're creating a memory leak as the C++ layer
-        // then becomes responsible for cleaning up the memory once
-        // externalized. There is no way currently to keep node
-        // managing the memory given the current v8 API, looking at
-        // comments online, this is a VERY common problem.  There are
-        // hacks/tweaks to v8 to solve this, but that isn't a great
-        // idea either to make this easy to consume by others.
-        //
-        // Right now the best idea might be to add a dispose method,
-        // but that needs to be thought about.
-        //
-        // The commented out code tries to use the existing
-        // BinaryData character array so the ArrayBuffer won't need
-        // to be externalized, but its being freed/reaped before
-        // javascript can use it, resulting in javascript getting
-        // random data, so its a bad solution.
+        // Create an empty Uint8Array
+        array = v8::Uint8Array::New(v8::ArrayBuffer::New(isolate, size),
+                                    0, size);
 
-        // arrayBuffer = v8::ArrayBuffer::New(
-        //     v8::Isolate::GetCurrent(), (void *) ($1)->AsChar(),
-        //     ($1)->Size());
-        contents = arrayBuffer->Externalize();
-        ($1)->Copy((unsigned char *) contents.Data(), ($1)->Size());
+        // Walk the array and copy the values into the javascript
+        // managed array.  Its not super efficient, but its avoids
+        // memory leaks of other methods.
+        for (int i = 0; i < size; i++)
+        {
+            array->Set(i, v8::Integer::NewFromUnsigned(isolate, s[i]));
+        }
 
-        $result = v8::Uint8Array::New(arrayBuffer, 0, ($1)->Size());
+        $result = array;
     %}
 #endif
 
