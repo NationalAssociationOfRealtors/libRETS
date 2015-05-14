@@ -1023,6 +1023,9 @@ SWIG_AUTO_PTR_RELEASE(BinaryData);
         // hacks/tweaks to v8 to solve this, but that isn't a great
         // idea either to make this easy to consume by others.
         //
+        // Right now the best idea might be to add a dispose method,
+        // but that needs to be thought about.
+        //
         // The commented out code tries to use the existing
         // BinaryData character array so the ArrayBuffer won't need
         // to be externalized, but its being freed/reaped before
