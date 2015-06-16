@@ -35,7 +35,7 @@ AC_DEFUN([MY_TEST_CURL], [
             CURL_LIBS=`curl-config --static-libs`
           fi
 
-          curl_a="${CURL_PREFIX}/lib/libcurl.a"
+	  curl_a="$(curl-config --static-libs | sed -r 's/.*?((\s\S)|(^))(\S+libcurl\.a).*/\2\4/')"
           AC_CHECK_FILE($curl_a, have_curl_a=$curl_a)
           if test -z "$have_curl_a"; then
             AC_MSG_ERROR([libcurl.a required to build librets])
