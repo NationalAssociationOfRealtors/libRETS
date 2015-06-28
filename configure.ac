@@ -67,8 +67,8 @@ AC_CACHE_SAVE
 AC_ARG_ENABLE(shared_dependencies,
               AC_HELP_STRING([--disable-shared_dependencies],
                              [Uses static libraries for dependencies instead of their shared counterparts.]),
-              test "X$enableval" != "Xyes" && my_enable_shared_dependencies=no,
-              my_enable_shared_dependencies=yes)
+              [my_enable_shared_dependencies=${enableval}],
+              [my_enable_shared_dependencies=yes])
 
 AC_ARG_ENABLE(dotnet,
               AC_HELP_STRING([--disable-dotnet],
