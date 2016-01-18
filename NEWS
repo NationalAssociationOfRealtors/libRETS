@@ -1,4 +1,4 @@
-Version 1.6.2-SNAPSHOT - xx xxx 2015
+Version 1.6.2 - 18 Jan 2016
   
   * Update .gitignore
   * Added Patch provided by Richard Shaffer to detect HTTP Response
