@@ -121,18 +121,16 @@ void GetObjectRequest::PrepareHttpRequest(RetsHttpRequestPtr httpRequest, RetsVe
         id.append(join(*objectIds, ":"));
         ids.push_back(id);
     }
+
+    httpRequest->SetQueryParameter("ID", join(ids, ","));
     if (retsVersion >= RETS_1_8)
     {
-        httpRequest->SetQueryParameter("Identifier", join(ids, ","));
         if (!mObjectData.empty())
         {
             httpRequest->SetQueryParameter("ObjectData", mObjectData);
         }
     }
-    else
-    {
-        httpRequest->SetQueryParameter("ID", join(ids, ","));
-    }
+
     /*
      * For Objects, if we are debugging and logging, we want to disable that because
      * most of this data is binary. We may want to make this user controlled at some point
