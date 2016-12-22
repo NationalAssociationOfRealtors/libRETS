@@ -284,6 +284,12 @@ EXPAT_RUNTIME =
 EXPAT_RUNTIME = MT
 !endif
 
+!if "$(BUILD)" == "release"
+EXPAT_DEBUG_RUNTIME =
+!else
+EXPAT_DEBUG_RUNTIME = d
+!endif
+
 !if "$(THIRD_PARTY_LIBS)" == "static"
 EXPAT_XML_STATIC = /DXML_STATIC
 EXPAT_LIB_PREFIX = lib
@@ -295,14 +301,15 @@ EXPAT_LIB_PREFIX = lib
 !if "$(VS_VERSION)" == "vs2003"
 EXPAT_CFLAGS = /I "$(EXPAT_PATH)/lib" $(EXPAT_XML_STATIC)
 EXPAT_LDFLAGS = "/LIBPATH:$(EXPAT_PATH)/lib/lib" \
-	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME).lib
+	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME)$(EXPAT_DEBUG_RUNTIME).lib
 
 !else
 EXPAT_CFLAGS = /I "$(BASE_PATH)/include" $(EXPAT_XML_STATIC)
 # EXPAT_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib/$(EXPAT_BIN_PREFIX)" 
 EXPAT_LDFLAGS = "/LIBPATH:$(BASE_PATH)/lib" \
-	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME).lib
+	$(EXPAT_LIB_PREFIX)expat$(EXPAT_RUNTIME)$(EXPAT_DEBUG_RUNTIME).lib
 !endif
+
 ########################################################################
 #
 # ANTLR Configuration
