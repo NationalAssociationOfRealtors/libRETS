@@ -1,10 +1,10 @@
 # Point to vendor code, checked out from svn.  Must be an absolute
 # path with backslashes.  Do not use forward slashes.
-BASE_PATH = c:\librets\vendor\vs2010-$(TARGET_CPU)
+BASE_PATH = c:\librets\vendor\$(VS_VERSION)-$(TARGET_CPU)
 #
 # The path to the SWIG support files. This depends on the
 # SWIG version.
-SWIG_LIBRARY = c:\librets\vendor\vs2010-$(TARGET_CPU)\share\swig\2.0.12
+SWIG_LIBRARY = $(BASE_PATH)\share\swig\2.0.12
 
 # The BOOST version currently being used.
 BOOST_VERSION=1_55
