@@ -17,6 +17,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <boost/algorithm/string.hpp>
 #include "librets.h"
 #include "librets/CurlHttpClient.h"
 #include "librets/XmlMetadataParser.h"
@@ -38,6 +39,7 @@ using namespace librets;
 using namespace librets::util;
 using std::ostringstream;
 using std::string;
+namespace ba = boost::algorithm;
 
 typedef RetsSession CLASS;
 
@@ -59,6 +61,51 @@ const int CLASS::MODE_CACHE             = 0x01;
 const int CLASS::MODE_NO_STREAM         = 0x02;
 const int CLASS::MODE_NO_EXPECT         = 0x04;
 const int CLASS::MODE_NO_SSL_VERIFY     = 0x08;
+
+static librets::EncodingType
+GetEncoding(RetsHttpResponsePtr httpResponse, librets::EncodingType defaultEncoding)
+{
+    string content_type = httpResponse->GetContentType();
+    if (content_type.empty())
+        return defaultEncoding;
+
+    // parse content type
+    StringVector parameters;
+    ba::split(parameters, content_type, ba::is_any_of(";"));
+    StringVector::iterator i;
+    for (i = parameters.begin(); i != parameters.end(); i++)
+    {
+        string parameter = ba::trim_copy(*i);
+        string name;
+        string value;
+        if (splitField(parameter, "=", name, value) && (name == "charset"))
+        {
+            ba::trim(value);
+
+            // Strip off leading and trailing quote, if it exists
+            string::size_type quotePosition = value.find_first_of("\"");
+            if (quotePosition == string::size_type(0))
+            {
+                value.erase(0, 1);
+            }
+
+            quotePosition = value.find_last_of("\"");
+            if (quotePosition == (value.size() - 1))
+            {
+                value.erase(value.size() - 1, 1);
+            }
+
+            if (value == "utf-8")
+                return RETS_XML_UTF8_ENCODING;
+            else if (value == "iso-8859-1")
+                return RETS_XML_ISO_ENCODING;
+            else
+                return defaultEncoding;
+        }
+    }
+
+    return defaultEncoding;
+}
 
 CLASS::RetsSession(string login_url)
 {
@@ -210,7 +257,8 @@ bool CLASS::Login(string user_name,
                                   RetsVersionToString(mDetectedRetsVersion));
     
     mLoginResponse.reset(new LoginResponse);
-    mLoginResponse->Parse(httpResponse->GetInputStream(), mDetectedRetsVersion, mEncoding);
+    mLoginResponse->Parse(httpResponse->GetInputStream(), mDetectedRetsVersion,
+        GetEncoding(httpResponse, mEncoding));
     if (mLoginResponse->GetRetsReplyCode() != 0)
         return false;
     
@@ -407,7 +455,7 @@ void CLASS::LoadMetadata(MetadataElement::Type type,
     
     XmlMetadataParserPtr parser(new XmlMetadataParser(mLoaderCollector,
                                                       mErrorHandler));
-    parser->SetEncoding(mEncoding);
+    parser->SetEncoding(GetEncoding(httpResponse, mEncoding));
     parser->Parse(httpResponse->GetInputStream());
 }
 
@@ -442,7 +490,7 @@ void CLASS::RetrieveFullMetadata()
     DefaultMetadataCollectorPtr collector(new DefaultMetadataCollector());
     XmlMetadataParserPtr parser(
         new XmlMetadataParser(collector, mErrorHandler));
-    parser->SetEncoding(mEncoding);
+    parser->SetEncoding(GetEncoding(httpResponse, mEncoding));
     parser->Parse(httpResponse->GetInputStream());
 
     mMetadata.reset(new RetsMetadata(collector));
@@ -493,7 +541,7 @@ SearchResultSetAPtr CLASS::Search(SearchRequest * request)
          */
         resultSet->SetCaching(true);
     }
-    resultSet->SetEncoding(mEncoding);
+    resultSet->SetEncoding(GetEncoding(httpResponse, mEncoding));
     resultSet->SetInputStream(httpResponse->GetInputStream());
     
     return resultSet;
@@ -592,7 +640,7 @@ ServerInformationResponseAPtr CLASS::GetServerInformation(std::string resourceNa
 
     ServerInformationResponseAPtr serverInformation(new ServerInformationResponse());
     
-    serverInformation->SetEncoding(mEncoding);
+    serverInformation->SetEncoding(GetEncoding(httpResponse, mEncoding));
     serverInformation->Parse(httpResponse->GetInputStream());
 
     return serverInformation;    
@@ -885,7 +933,7 @@ UpdateResponseAPtr CLASS::Update(UpdateRequest * request)
     AssertSuccessfulResponse(httpResponse, updateUrl);
 
     UpdateResponseAPtr result(new UpdateResponse());
-    result->SetEncoding(mEncoding);
+    result->SetEncoding(GetEncoding(httpResponse, mEncoding));
     result->SetInputStream(httpResponse->GetInputStream());
     
     return result;
@@ -914,6 +962,7 @@ PayloadListResultSetAPtr CLASS::GetPayloadList(std::string metadataID)
     AssertSuccessfulResponse(httpResponse, payloadListUrl);
     
     payloadListResultSet.reset(new PayloadListResultSet());
+    payloadListResultSet->SetEncoding(GetEncoding(httpResponse, mEncoding));
     payloadListResultSet->Parse(httpResponse->GetInputStream());
     return payloadListResultSet;
 }
