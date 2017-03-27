@@ -200,7 +200,7 @@ void CLASS::AssertSuccessfulResponse(RetsHttpResponsePtr response,
     if (responseCode != 200) 
     {
         ostringstream message;
-        message << "Could not get URL [ " << url << "] - HTTP response code: "
+        message << "Could not get URL [" << url << "] - HTTP response code: "
                 << responseCode
                 << " " << response->GetAdditionalErrorText();
         throw RetsHttpException(responseCode, message.str());
