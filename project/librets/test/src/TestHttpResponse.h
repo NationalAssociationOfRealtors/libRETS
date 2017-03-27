@@ -35,6 +35,8 @@ class TestHttpResponse : public RetsHttpResponse
     
     virtual istreamPtr GetInputStream() const;
     
+    virtual void FinishResponse() const;
+
     virtual int GetResponseCode() const;
     
     virtual void SetResponseCode(int responseCode);

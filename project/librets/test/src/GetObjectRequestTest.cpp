@@ -101,6 +101,6 @@ void CLASS::testSetObjectData()
     CPPUNIT_ASSERT(!request.HasDefaultObjectKeyAndId());
     RetsHttpRequestPtr httpRequest = request.CreateHttpRequest(RETS_1_8);
     CPPUNIT_ASSERT(httpRequest);
-    ASSERT_STRING_EQUAL("Identifier=LN1:1,LN2:*&Location=0&ObjectData=somedata,moredata&Resource=Property&Type=Photo",
+    ASSERT_STRING_EQUAL("ID=LN1:1,LN2:*&Location=0&ObjectData=somedata,moredata&Resource=Property&Type=Photo",
                         httpRequest->GetQueryString());
 }
