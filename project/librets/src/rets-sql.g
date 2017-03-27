@@ -221,9 +221,11 @@ ID
 options
 {
     paraphrase = "an identifier";
-	testLiterals = true;
 }
-	:	(ALPHA | '_') (ALPHA | DIGIT | '_' | ':')*
+    : (ALPHA | '_') (ALPHA | DIGIT | '_' | ':')*
+        {
+            $setType(testLiteralsTable(ID));
+        }
     | '\"'! (~'\"')* '\"'!
 	;
 

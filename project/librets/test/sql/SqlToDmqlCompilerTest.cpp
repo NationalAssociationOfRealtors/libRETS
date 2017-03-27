@@ -576,7 +576,7 @@ void CLASS::testEmptyWhere()
 void CLASS::testQuotedLiterals()
 {
     DmqlQueryPtr query =
-        sqlToDmql("select ListingID, \"data:Property:RES\".ListPrice "
+        sqlToDmql("select ListingID, \"data:Property:RES\".ListPrice, \"Order\" "
                   " from \"data:Property:RES\" "
                   " where \"data:Property:RES\".ListPrice >= 300000;");
     ASSERT_STRING_EQUAL("Property", query->GetResource());
@@ -585,6 +585,7 @@ void CLASS::testQuotedLiterals()
     StringVector columns;
     columns.push_back("ListingID");
     columns.push_back("ListPrice");
+    columns.push_back("Order");
     ASSERT_VECTOR_EQUAL(columns, *query->GetFields());
     
     DmqlCriterionPtr criterion = gt("ListPrice", literal("300000"));
