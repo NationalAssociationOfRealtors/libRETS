@@ -115,7 +115,7 @@ public class Metadata
         {
             Console.WriteLine("Resource name: " + resourceName + " [" +
                 resource.GetStandardName() + "]");
-            Console.WriteLine("Lokup name: " + lookup.GetLookupName() + " (" +
+            Console.WriteLine("Lookup name: " + lookup.GetLookupName() + " (" +
                 lookup.GetVisibleName() + ")");
             dumpAllLookupTypes(metadata, lookup);
             Console.WriteLine();

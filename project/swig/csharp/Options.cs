@@ -492,7 +492,7 @@ public class Options
                             }
                             catch
                             {
-                                Console.WriteLine("Expected valid file name for --http-log: " +
+                                Console.WriteLine("Expected valid file name for --http-log-everything: " +
                                         value + " is invalid.");
                                 ret_val         = false;
                             }
@@ -554,7 +554,7 @@ public class Options
                 case "--username":
                             user_name           = value;
                             break;
-                case "--user-agen":
+                case "--user-agent":
                             user_agent          = value;
                             break;
                 case "--ua-password":
@@ -609,8 +609,8 @@ public class Options
         Console.WriteLine("\t--no-sslverify\t\tDo not verify CA on SSL connections.");
         Console.WriteLine("\t--full-metadata\t\tFetch all metadata at one time: \"yes\" or \"no\" (default \"no\")");
         Console.WriteLine("\t--record\t\tRecord for Update Transaction");
-        Console.WriteLine("\t--update-type\tThe Update Type");
-        Console.WriteLine("\t--validation-codee\tThe Update Validation Code (0,1,2), default: 2");
+        Console.WriteLine("\t--update-type\t\tThe Update Type");
+        Console.WriteLine("\t--validation-code\tThe Update Validation Code (0,1,2), default: 2");
     }
 
     /**
