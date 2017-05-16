@@ -82,6 +82,7 @@ $(BUILD_DIR)/librets_wrap.obj: librets_wrap.cpp
 
 librets_wrap.cpp: ../librets.i $(BUILD_DIR)/$(BIN_DIR)
 	@-erase lib\*.cs 2> NUL
+	@-mkdir lib 2> NUL
 	$(SWIG_CSHARP)
 
 clean:
