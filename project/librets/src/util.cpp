@@ -37,7 +37,7 @@ bool NS::isEmpty(string aString)
     string::iterator ch;
     for (ch = aString.begin(); ch != aString.end(); ch++)
     {
-        if (!isspace(*ch))
+        if (!isspace((unsigned char) *ch))
         {
             return false;
         }
