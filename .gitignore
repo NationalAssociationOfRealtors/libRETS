@@ -33,12 +33,16 @@ project/build/config.vc
 project/build/Doxyfile
 
 project/examples/src/build
+project/examples/src/build-*
 
 project/librets/src/config.h
 project/librets/src/build
+project/librets/src/build-*
 
 project/librets/test/src/build
+project/librets/test/src/build-*
 
+project/swig/csharp/build-*
 project/swig/csharp/librets.*
 project/swig/csharp/librets_wrap.cpp
 project/swig/csharp/librets_wrap.h
@@ -47,5 +51,6 @@ project/swig/csharp/*.obj
 project/swig/csharp/*.exe
 project/swig/csharp/*.mdb
 project/swig/csharp/bin
+project/swig/csharp/lib
 
 project/swig/node.js/binding.gyp
