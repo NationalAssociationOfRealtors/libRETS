@@ -1,5 +1,16 @@
 Version 1.6.3-SNAPSHOT - xx xxx xxxx
   * Fix GetObject to comply with released RETS 1.8.0a spec. Issue #26.
+  * Get default encoding from Content-Type response header.
+  * Fix unit tests. Issue #26.
+  * SQL lexer: do not tokenize literals (keywords) inside quoted strings.
+  * Fix triggering ctypes assertion in Windows debug build.
+  * Link with debug expat library in Windows debug build.
+  * Use auto-linking for boost libs.
+  * Add support for VS2015 build.
+  * Fix examples debug linking on Windows.
+  * Fix swig/csharp build.
+  * swig/csharp examples: add support for --rets_version 1.8, 1.8.0.
+  * swig/csharp examples: fix --user-agent option.
 
 Version 1.6.2 - 18 Jan 2016
   
