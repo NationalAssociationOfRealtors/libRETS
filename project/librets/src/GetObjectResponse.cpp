@@ -419,7 +419,7 @@ string GetObjectResponse::FindBoundary(string contentType)
         string parameter = ba::trim_copy(*i);
         string name;
         string boundary;
-        if (splitField(parameter, "=", name, boundary) && (name == "boundary"))
+        if (splitField(parameter, "=", name, boundary) && (ba::to_lower_copy(name) == "boundary"))
         {
             ba::trim(boundary);
             
