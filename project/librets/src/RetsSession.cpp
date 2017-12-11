@@ -78,9 +78,10 @@ GetEncoding(RetsHttpResponsePtr httpResponse, librets::EncodingType defaultEncod
         string parameter = ba::trim_copy(*i);
         string name;
         string value;
-        if (splitField(parameter, "=", name, value) && (name == "charset"))
+        if (splitField(parameter, "=", name, value) && (ba::to_lower_copy(name) == "charset"))
         {
             ba::trim(value);
+            ba::to_lower(value);
 
             // Strip off leading and trailing quote, if it exists
             string::size_type quotePosition = value.find_first_of("\"");
