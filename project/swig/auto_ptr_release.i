@@ -53,7 +53,7 @@ namespace std {
 #elif defined(SWIGPHP)
 
 %typemap(out) std::auto_ptr<TYPE>
-{
+%{
    // Release the auto_ptr and create a Zend resource.
    SWIG_SetPointerZval($result, (void *) $1.release(), $descriptor(TYPE *), SWIG_POINTER_OWN);
    // Now create the PHP object to contain the class to which the auto_ptr
@@ -99,7 +99,7 @@ namespace std {
    add_property_zval(obj, "_cPtr",_cPtr);
    *$result = *obj;
 #endif
-}
+%}
 #else
 #error "Unsupported SWIG language for auto_ptr_release"
 #endif
