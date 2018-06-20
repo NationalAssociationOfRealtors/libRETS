@@ -71,7 +71,7 @@ namespace std {
    ce = zend_lookup_class(class_name);
    zend_string_release(class_name);
 
-   if (FAILURE == ce) {
+   if (!ce) {
        SWIG_PHP_Error(E_ERROR, "Unable to locate class entry for TYPE.");
    }
 
