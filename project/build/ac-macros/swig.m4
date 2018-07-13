@@ -232,7 +232,7 @@ EOF
         if test "$my_use_ruby" = "yes"; then
             AC_CHECK_PROG(RUBY, ruby, ruby, no)
             if test "$RUBY" != "no"; then
-                ruby_prefix=`ruby -rrbconfig -e 'puts Config::CONFIG[["rubyhdrdir"]] || Config::CONFIG[["archdir"]]' | tr -d "\n\r"`
+                ruby_prefix=`ruby -rrbconfig -e 'puts RbConfig::CONFIG[["rubyhdrdir"]] || RbConfig::CONFIG[["archdir"]]' | tr -d "\n\r"`
                 ruby_h="$ruby_prefix/ruby.h"
                 AC_CHECK_FILE([$ruby_h], [my_ruby_h=$ruby_h])
 
