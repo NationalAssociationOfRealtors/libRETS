@@ -53,11 +53,33 @@ namespace std {
 #elif defined(SWIGPHP)
 
 %typemap(out) std::auto_ptr<TYPE>
-{
+%{
    // Release the auto_ptr and create a Zend resource.
    SWIG_SetPointerZval($result, (void *) $1.release(), $descriptor(TYPE *), SWIG_POINTER_OWN);
    // Now create the PHP object to contain the class to which the auto_ptr
    // was referencing.
+
+#if PHP_MAJOR_VERSION >= 7
+   zval obj, _cPtr;
+   _cPtr = *$result;
+   memset(&*$result, 0, sizeof(*$result));
+
+   zend_string *class_name;
+   zend_class_entry *ce;
+
+   class_name = zend_string_init("TYPE", strlen("TYPE"), 0);
+   ce = zend_lookup_class(class_name);
+   zend_string_release(class_name);
+
+   if (!ce) {
+       SWIG_PHP_Error(E_ERROR, "Unable to locate class entry for TYPE.");
+   }
+
+   object_init_ex(&obj, ce);
+   add_property_zval(&obj, "_cPtr", &_cPtr);
+   *$result = obj;
+   
+#else
    zval *obj, *_cPtr;
    MAKE_STD_ZVAL(obj);
    MAKE_STD_ZVAL(_cPtr);
@@ -76,7 +98,8 @@ namespace std {
    object_init_ex(obj, ce);
    add_property_zval(obj, "_cPtr",_cPtr);
    *$result = *obj;
-}
+#endif
+%}
 #else
 #error "Unsupported SWIG language for auto_ptr_release"
 #endif

@@ -3,6 +3,7 @@
 #
 
 PHP_BUILD		= ${PHP_DLL} 
+PHP_VERSION		= `php-config --vernum`
 
 PHP_CXX_FLAGS		= `${SWIG_LIBRETS_CONFIG} --cflags`
 PHP_DLL			= ${PHP_OBJ_DIR}/librets.${DLL}
@@ -14,8 +15,13 @@ PHP_SRC_DIR		= ${SWIG_DIR}/php5
 PHP_WRAP 		= ${PHP_OBJ_DIR}/librets_wrap.cpp
 
 ${PHP_WRAP}: ${SWIG_FILES} 
-	${SWIG} -c++ -php5 -o ${PHP_WRAP} \
-	-outdir ${PHP_OBJ_DIR} ${SWIG_DIR}/librets.i
+	if [ ${PHP_VERSION} -ge 70000 ]; then \
+		${SWIG} -c++ -php7 -o ${PHP_WRAP} \
+		-outdir ${PHP_OBJ_DIR} ${SWIG_DIR}/librets.i; \
+	else \
+		${SWIG} -c++ -php5 -o ${PHP_WRAP} \
+		-outdir ${PHP_OBJ_DIR} ${SWIG_DIR}/librets.i; \
+	fi	
 
 ${PHP_DLL}: ${PHP_WRAP} ${PHP_OBJ_DIR}/librets_wrap.o ${SWIG_BRIDGE_OBJ} ${LIBRETS_LIB}
 	${SWIG_LINK_ALLOW_UNDEFINED} -o ${PHP_DLL} ${PHP_OBJ_DIR}/librets_wrap.o \
