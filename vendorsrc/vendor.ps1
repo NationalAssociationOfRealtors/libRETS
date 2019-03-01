@@ -120,10 +120,10 @@ function Get-Swig {
 $versions = Get-Content "vendorversions" | ConvertFrom-StringData
 
 
-#Get-OpenSSL $versions.OpenSSL
+Get-OpenSSL $versions.OpenSSL
 Get-Curl $versions.Curl
-#Get-Antlr $versions.Antlr
-#Get-Boost $versions.Boost
-#Get-Expat $versions.Expat
-#Get-Pcre $versions.Pcre
-#Get-Swig $versions.Swig
+Get-Antlr $versions.Antlr
+Get-Boost $versions.Boost
+Get-Expat $versions.Expat
+Get-Pcre $versions.Pcre
+Get-Swig $versions.Swig
