@@ -181,6 +181,12 @@ class CurlEasy
     void SetSSLVerify(bool verify);
     
     /**
+     * Tell cURL where to find the PEM file for CERTS
+     * @param file the filename for the pem file
+     */
+    void SetCAInfo(std::string file);
+
+    /**
      * Tell cURL to perform the current request.
      */
     void Perform();
@@ -248,6 +254,7 @@ class CurlEasy
     std::string mUrl;
     std::string mProxyUrl;
     std::string mProxyPassword;
+    std::string mPemFile;
     bool mVerbose;
     
     std::string mCurlVersion;

@@ -213,6 +213,12 @@ void CurlEasy::SetSSLVerify(bool verify)
     CurlAssert(curl_easy_setopt(mCurl, CURLOPT_SSL_VERIFYHOST, verifies), "Verify SSL Host");
 }
 
+void CurlEasy::SetCAInfo(string file)
+{
+    mPemFile = file;
+    CurlAssert(curl_easy_setopt(mCurl, CURLOPT_CAINFO, mPemFile.c_str()), "Set CA File Path");
+}
+
 void CurlEasy::Perform()
 {
     CurlAssert(curl_easy_perform(mCurl));

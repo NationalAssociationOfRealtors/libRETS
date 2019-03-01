@@ -235,6 +235,7 @@ RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
     curlEasy->SetWriteFunction(CurlHttpClient::StaticWriteData);
     curlEasy->SetWriteHeaderData(client);
     curlEasy->SetWriteHeaderFunction(CurlHttpClient::StaticWriteHeader);
+    curlEasy->SetCAInfo("cacert.pem");
     
     if (mFlags & RetsSession::MODE_NO_SSL_VERIFY)
         curlEasy->SetSSLVerify(false);
