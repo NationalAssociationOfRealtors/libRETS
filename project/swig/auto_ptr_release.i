@@ -16,14 +16,14 @@ namespace std {
 #if defined(SWIGCSHARP)
 
 %typemap (ctype) std::auto_ptr<TYPE> "void *"
-%typemap (imtype, out="IntPtr") std::auto_ptr<TYPE> "HandleRef"
+%typemap (imtype, out="System.IntPtr") std::auto_ptr<TYPE> "HandleRef"
 %typemap (cstype) std::auto_ptr<TYPE> "PROXYCLASS"
 %typemap (out) std::auto_ptr<TYPE> %{
   $result = (void *)$1.release();
 %}
 %typemap(csout, excode=SWIGEXCODE) std::auto_ptr<TYPE> {
-    IntPtr cPtr = $imcall;
-    PROXYCLASS ret = (cPtr == IntPtr.Zero) ? null : new PROXYCLASS(cPtr, true);$excode
+    System.IntPtr cPtr = $imcall;
+    PROXYCLASS ret = (cPtr == System.IntPtr.Zero) ? null : new PROXYCLASS(cPtr, true);$excode
     return ret;
   }
 

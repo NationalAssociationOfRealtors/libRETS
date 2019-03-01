@@ -15,14 +15,14 @@ namespace boost {
 #if defined(SWIGCSHARP)
 
 %typemap (ctype) boost::shared_ptr<TYPE> "void *"
-%typemap (imtype, out="IntPtr") boost::shared_ptr<TYPE> "HandleRef"
+%typemap (imtype, out="System.IntPtr") boost::shared_ptr<TYPE> "HandleRef"
 %typemap (cstype) boost::shared_ptr<TYPE> "PROXYCLASS"
 %typemap (out) boost::shared_ptr<TYPE> %{
   $result = (void *)&$1;
 %}
 %typemap(csout, excode=SWIGEXCODE) boost::shared_ptr<TYPE> {
-    IntPtr cPtr = $imcall;
-    PROXYCLASS ret = (cPtr == IntPtr.Zero) ? null : new PROXYCLASS(cPtr, true);$excode
+    System.IntPtr cPtr = $imcall;
+    PROXYCLASS ret = (cPtr == System.IntPtr.Zero) ? null : new PROXYCLASS(cPtr, true);$excode
     return ret;
   }
 

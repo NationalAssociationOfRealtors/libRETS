@@ -302,7 +302,7 @@ class RetsReplyException : public RetsException
     static RetsExceptionDelegate retsExceptionDelegate =
                                    new RetsExceptionDelegate(SetPendingRetsException);
 
-    [DllImport("$dllimport", EntryPoint="RetsExceptionRegisterCallback")]
+    [System.Runtime.InteropServices.DllImport("$dllimport", EntryPoint="RetsExceptionRegisterCallback")]
     public static extern
            void RetsExceptionRegisterCallback(RetsExceptionDelegate retsExceptionCallback);
 
@@ -321,7 +321,7 @@ class RetsReplyException : public RetsException
     static RetsReplyExceptionDelegate retsReplyExceptionDelegate =
                                    new RetsReplyExceptionDelegate(SetPendingRetsException);
 
-    [DllImport("$dllimport", EntryPoint="RetsReplyExceptionRegisterCallback")]
+    [System.Runtime.InteropServices.DllImport("$dllimport", EntryPoint="RetsReplyExceptionRegisterCallback")]
     public static extern
            void RetsReplyExceptionRegisterCallback(RetsReplyExceptionDelegate retsReplyExceptionCallback);
 
@@ -340,7 +340,7 @@ class RetsReplyException : public RetsException
     static RetsHttpExceptionDelegate retsHttpExceptionDelegate =
                                    new RetsHttpExceptionDelegate(SetPendingRetsException);
 
-    [DllImport("$dllimport", EntryPoint="RetsHttpExceptionRegisterCallback")]
+    [System.Runtime.InteropServices.DllImport("$dllimport", EntryPoint="RetsHttpExceptionRegisterCallback")]
     public static extern
            void RetsHttpExceptionRegisterCallback(RetsHttpExceptionDelegate retsHttpExceptionCallback);
 
@@ -1674,7 +1674,7 @@ enum UserAgentAuthType
 // Eventually we'll move this over to using directors.
 %typemap(cscode) RetsHttpLogger %{
     public delegate void Delegate(Type type, byte[] data);
-    public delegate void NativeDelegate(Type type, IntPtr data, int length);
+    public delegate void NativeDelegate(Type type, System.IntPtr data, int length);
 %}
 #endif
 
@@ -1926,7 +1926,7 @@ typedef boost::shared_ptr<SqlToDmqlCompiler> SqlToDmqlCompilerPtr;
        * Since simply adding the reference doesn't appear to be stopping the garbage collector,
        * use brute force.
        */
-      GC.SuppressFinalize(metadata_ptr);
+      global::System.GC.SuppressFinalize(metadata_ptr);
     }
 
     /*
@@ -1939,7 +1939,7 @@ typedef boost::shared_ptr<SqlToDmqlCompiler> SqlToDmqlCompilerPtr;
        * Since simply adding the reference doesn't appear to be stopping the garbage collector,
        * use brute force.
        */
-      GC.SuppressFinalize(metadata);
+      global::System.GC.SuppressFinalize(metadata);
     }
 %}
 %typemap(csfinalize) SqlToDmqlCompiler %{
@@ -2036,7 +2036,7 @@ class RetsHttpLoggerBridge : public RetsHttpLogger
         }
     }
     
-    private void LoggerDelegateBridge(RetsHttpLogger.Type type, IntPtr data,
+    private void LoggerDelegateBridge(RetsHttpLogger.Type type, System.IntPtr data,
         int length)
     {
         byte[] byteData = new byte[length];

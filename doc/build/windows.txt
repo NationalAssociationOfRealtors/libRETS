@@ -1,127 +1,31 @@
+Install These (Required):
+* Perl5 in c:\Perl64
+* NASM in C:\NASM
+* Visual Studio 2017
+* Cygwin in c:\cygwin64
 
-Installing the Prerequisites
-==========================
+Install these packages in cygwin:
+* automake
+* binutils
+* bison
+* flex
+* libtool
+* make
 
-Due to modifications needed to make 3rd party libraries compile
-against librets and to aid people who ONLY want to work on libRETS
-code, binaries of all dependant libraries are stored in Subversion.
-Check out this repository in the parent directory of the main librets
-directory:
+Install These (To make your life easier):
+* 7-Zip
 
-  https://code.crt.realtors.org/svn/librets/vendor/windows/
-
-A good Subversion client for Windows is TortoiseSVN:
-
-  http://tortoisesvn.tigris.org/
-
-You then need to install Microsoft Visual C++ and a Java JDK.
-
-If you want to get the source to libRETS out of subversion you can
-checkout from the repository using this base URL:
-
-  https://code.crt.realtors.org/svn/librets/librets
-
-Following common SVN practice, under that URL are tags, branches,
-and trunk directories.
-
-
-Microsoft Visual C++
---------------------
-
-  Version: 2003.  Earlier version have buggy C++ support.
-  URL: http://msdn.microsoft.com/visualc/
-
-Only building from the command line is supported.  Install Visual C++
-2003 or Visual Studio .NET 2003 and make sure to run vcvars32.bat from
-the command line to setup VC++ environment variables and add the tools
-to the path.
-
-Java SDK
---------
-
-  Version: 1.4.2 or higher.
-  URL: http://java.sun.com/
-
-
-In case anyone needs/wants to build from scratch, here is a list of
-the rest of the dependencies, but these can be found in the windows
-binary tree in subversion listed above.
-
-Boost
------
-
-  Version: 1.32.0 or higher.
-  URL: http://www.boost.org/
-
-Boost has its own build system, bjam.  Read its instructions for
-installation.  You need to compile and install the filesystem and
-program options libraries.
-
-libcurl
--------
-
-  Version: 7.13.2 or higher.
-  URL: http://curl.haxx.se/libcurl/
-
-Build as per its instructions.  No special steps are needed.
-
-Expat
------
-
-  Version: 1.95.8 or higher.
-  URL: http://expat.sourceforge.net/    
-
-Build as per its instructions.  No special steps are needed.
-
-ANTLR
------
-
-  Version: 2.7.5 or higher.
-  URL: http://www.antlr.org/
-
-Build as per its instructions.  No special steps are needed.
-
-
-Customizing config.vc
-=====================
-
-Copy the <librets>/project/build/config.vc.dist file to
-<librets>/project/build/config.vc. Edit BASE_PATH to point to the
-full path of the dependant libraries that were checked out from
-Subversion, above.  The following table shows the four possible
-library names:
-
-  BUILD    | RUNTIME_LIBS | Library Name
-  ---------+--------------+----------------
-  debug    | static       | libretsmtd.lib
-  ---------+--------------+----------------
-  release  | static       | libretsmt.lib
-  ---------+--------------+----------------
-  debug    | dynamic      | libretsd.lib
-  ---------+--------------+---------------
-  release  | dynamic      | librets.lib
-
-
-Building librets
-================
-
-From the command line, run the following command:
-
-  % nmake -f Makefile.vc
-
-This will create the specified library in:
-
-  project/librets/src/build
-
-To build all four library variants, run the following command:
-
-  % make -f Makefile.vc lib-all-variants
-
-The header files needed to use librets are in:
-
-  project/librets/include
-
-You will need Boost to use librets, as well, as librets returns many
-pointers as Boost shared pointers (boost::shared_ptr).  You do not
-need the other libraries when compiling against librets.
-
+Building:
+1. Checkout libRETS to c:\libRETS
+2. From c:\libRETS\vendorsrc, run vendor.ps1 (will not work without 7-zip)
+3. Open the expat solution in c:\libRETS\vendorsrc\expat\current
+  1. Add new solution platform: x64 (copy settings from win32)
+  2. For each project, update the Windows SDK Version to your Windows 10 SDK version
+4. Launch x86 Native Tools Command Prompt for VS 2017 
+  1. In c:\libRETS\vendorsrc, run nmake /f Makefile.vc ARCH=x86 TARGET_CPU=x86 build-all
+  2. In c:\libRETS, run nmake /f Makefile.vc ARCH=x86 TARGET_CPU=x86 all
+  3. In c:\libRETS, run nmake /f Makefile.vc ARCH=x86 TARGET_CPU=x86 swig
+4. Launch x64 Native Tools Command Prompt for VS 2017 
+  1. In c:\libRETS\vendorsrc, run nmake /f Makefile.vc ARCH=x64 TARGET_CPU=x64 build-all
+  2. In c:\libRETS, run nmake /f Makefile.vc ARCH=x64 TARGET_CPU=x64 all
+  3. In c:\libRETS, run nmake /f Makefile.vc ARCH=x64 TARGET_CPU=x64 swig

@@ -1,9 +1,9 @@
 !include <project/build/Makefile.vc>
 
 all: lib-release-dynamic
-	cd project\examples\src
-	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
-	cd ..\..\..
+#cd project\examples\src
+#$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
+#cd ..\..\..
 
 clean:
 	cd project\librets\src
