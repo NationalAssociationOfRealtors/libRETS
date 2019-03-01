@@ -1,0 +1,278 @@
+ARCH                = $(TARGET_CPU)
+BASEDIR             = c:\librets\vendorsrc
+CMD                 = cmd.exe
+CP                  = copy
+CSCRIPT             = cscript
+MSBUILD             = msbuild
+INSTALL_DIR_WIN     = c:\librets\vendor\$(VSVERSION)-$(ARCH)
+INSTALL_DIR         = /cygdrive/c/librets/vendor/$(VSVERSION)-$(ARCH)
+MAKE                = c:\cygwin\bin\make
+MV                  = move
+NMAKE               = nmake /nologo
+OPENSSL_CFLAG_DYN   = /MD /Ox /W3 /Gs0 /GF /Gy /nologo \
+                        -DWIN32_LEAN_AND_MEAN \
+                        -DL_ENDIAN \
+                        -DDSO_WIN32 \
+                        -DOPENSSL_SYSNAME_WIN32 \
+                        -DOPENSSL_SYSNAME_WINNT \
+                        -DUNICODE \
+                        -D_UNICODE \
+                        -D_CRT_SECURE_NO_DEPRECATE \
+                        -D_CRT_NONSTDC_NO_DEPRECATE \
+                        /Fdout32dll \
+                        -DOPENSSL_NO_CAMELLIA \
+                        -DOPENSSL_NO_SEED \
+                        -DOPENSSL_NO_RC5 \
+                        -DOPENSSL_NO_MDC2 \
+                        -DOPENSSL_NO_CMS \
+                        -DOPENSSL_NO_JPAKE \
+                        -DOPENSSL_NO_CAPIENG \
+                        -DOPENSSL_NO_KRB5 \
+                        -DOPENSSL_NO_DYNAMIC_ENGINE
+OPENSSL_PATH        = $(BASEDIR)\openssl\current
+RM                  = rm
+RSYNC               = c:\cygwin\bin\rsync -a 
+SH                  = c:\cygwin64\bin\bash.exe --login
+TAR                 = c:\cygwin\bin\tar
+TOOLSET             = msvc-10
+VSVERSION           = vs2010
+
+!if "$(ARCH)" == "x86"
+ADDRESS_MODEL       = 32
+EXPAT_FLAVOR        = win32
+OPENSSL_FLAVOR      = WIN32
+PERL                = c:\Perl64\bin\perl
+!elseif "$(ARCH)" == "x64"
+ADDRESS_MODEL       = 64
+EXPAT_FLAVOR        = x64
+OPENSSL_FLAVOR      = WIN64A
+PERL                = c:\Perl64\bin\perl
+!else
+!error "Unknown Architecture: $(ARCH)"
+!endif
+
+all::
+        @echo Usage:
+        @echo nmake /f Makefile.vc ARCH=$$(arch) antlr - Build antlr
+        @echo nmake /f Makefile.vc ARCH=$$(arch) boost - Build boost
+        @echo nmake /f Makefile.vc ARCH=$$(arch) cppunit - Build cppunit
+        @echo nmake /f Makefile.vc ARCH=$$(arch) expat - Build expat
+        @echo nmake /f Makefile.vc ARCH=$$(arch) curl - Build libcurl
+        @echo nmake /f Makefile.vc ARCH=$$(arch) openssl - Build openssl
+        @echo nmake /f Makefile.vc ARCH=$$(arch) pcre - Build pcre
+        @echo nmake /f Makefile.vc ARCH=$$(arch) php - Build php
+        @echo nmake /f Makefile.vc ARCH=$$(arch) swig - Build swig
+        @echo
+        @echo nmake /f Makefile.vc ARCH=$$(arch) build-all - Builds everything in the proper order
+        @echo
+        @echo where $$(arch) == """x86""" or """x64"""
+
+help: all
+
+build-all: openssl curl antlr expat boost pcre swig 
+
+build-all-all: build-all cppunit php
+
+openssl: prepare
+		cd $(BASEDIR)\openssl\current
+		$(PERL) Configure VC-$(OPENSSL_FLAVOR) --prefix=$(INSTALL_DIR_WIN) --openssldir=$(INSTALL_DIR_WIN)\SSL no-shared
+		$(NMAKE) /f makefile PERL=$(PERL)
+		$(NMAKE) /f makefile PERL=$(PERL) install
+
+curl: prepare
+        cd $(BASEDIR)\curl\current
+		.\buildconf.bat
+		cd winbuild
+		$(NMAKE) /f Makefile.vc SSL_PATH=$(INSTALL_DIR_WIN) WITH_SSL=static mode=static
+		cd ..\builds\libcurl-vc-$(ARCH)-release-static-ssl-static-ipv6-sspi
+		$(CP) lib\* $(INSTALL_DIR_WIN)\lib
+		$(CP) include\curl $(INSTALL_DIR_WIN)\include\curl
+
+antlr: prepare
+        cd $(BASEDIR)\antlr\current
+
+		if exist build rmdir /s /q build
+        mkdir build
+        cd build
+        $(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/antlr/current/build && ../configure --disable-csharp --disable-python --prefix=$(INSTALL_DIR)"
+        $(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/antlr/current/build && CXXFLAGS=\"+ /MD\" make install"
+        $(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/antlr/current/build && CXXFLAGS=\"+ /MD\" make clean"
+        $(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/antlr/current/build && CXXFLAGS=\"+ /MDd\" make && cp lib/cpp/src/antlr.lib $(INSTALL_DIR)/lib/antlrd.lib"
+        $(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/antlr/current/build && CXXFLAGS=\"+ /MDd\" make clean"
+        $(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/antlr/current/build && CXXFLAGS=\"+ /MT\" make && cp lib/cpp/src/antlr.lib $(INSTALL_DIR)/lib/antlrmt.lib"
+        $(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/antlr/current/build && CXXFLAGS=\"+ /MT\" make clean"
+        $(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/antlr/current/build && CXXFLAGS=\"+ /MTd\" make && cp lib/cpp/src/antlr.lib $(INSTALL_DIR)/lib/antlrmtd.lib"
+        $(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/antlr/current/build && CXXFLAGS=\"+ /MTd\" make clean"
+        
+expat: prepare expat-build expat-install
+
+expat-build::
+		cd $(BASEDIR)\expat\current\expat
+		$(MSBUILD) expat.sln /t:expat;expat_static /p:Configuration=Release /p:Platform=$(EXPAT_FLAVOR)
+		$(MSBUILD) expat.sln /t:expat;expat_static /p:Configuration=Debug /p:Platform=$(EXPAT_FLAVOR)
+
+expat-install::
+		cd $(BASEDIR)\expat\current\expat
+		$(CP) lib\expat.h $(INSTALL_DIR_WIN)\include
+		$(CP) lib\expat_external.h $(INSTALL_DIR_WIN)\include
+		$(CP) $(EXPAT_FLAVOR)\bin\Release\libexpat.lib $(INSTALL_DIR_WIN)\lib\libexpat.lib
+		$(CP) $(EXPAT_FLAVOR)\bin\Release\libexpatMT.lib $(INSTALL_DIR_WIN)\lib\libexpatMT.lib
+		$(CP) $(EXPAT_FLAVOR)\bin\Debug\libexpat.lib $(INSTALL_DIR_WIN)\lib\libexpatd.lib
+		$(CP) $(EXPAT_FLAVOR)\bin\Debug\libexpatMT.lib $(INSTALL_DIR_WIN)\lib\libexpatMTd.lib
+
+boost: prepare
+        cd $(BASEDIR)\boost\current
+		.\bootstrap
+		.\b2 architecture=x86 address-model=$(ADDRESS_MODEL) toolset=msvc-14.1 \
+            --build-type=complete --debug-configuration \
+			--with-filesystem --with-program_options --layout=versioned \
+			--prefix="$(INSTALL_DIR_WIN)" install
+
+
+
+
+pcre: prepare
+	$(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/pcre/current && ./configure --prefix=/cygdrive/c/libRETS/vendor/vs2010-$(ARCH) \
+		--disable-shared CXX='/cygdrive/c/libRETS/vendorsrc/pcre/current/compile cl.exe' \
+        --enable-rebuild-chartables"
+	$(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/pcre/current && make && make install"
+
+
+
+
+cppunit: prepare
+        cd $(BASEDIR)\cppunit\current\src
+        $(DEVENV) CppUnitLibraries.sln /Rebuild Release /Project cppunit /Out build.log
+#
+# No automated install, so copy everything manually.
+#
+        cd ..
+        $(CP) lib/cppunit.lib $(INSTALL_DIR)/lib
+        cd include
+        $(RSYNC) --exclude="Makefile*" --exclude=".svn*" --prune-empty-dirs cppunit $(INSTALL_DIR)/include
+
+
+
+        
+
+
+
+php: prepare
+        cd $(BASEDIR)\php\current
+        $(CMD) /C "buildconf.bat"
+        $(CMD) /C "$(CSCRIPT) configure.js --disable-all --enable-cli --with-prefix=$(INSTALL_DIR_WIN)\php"
+        $(NMAKE) 
+#
+# No automated install for files needed to build an extension, so copy everything manually.
+#
+!if "$(ARCH)" == "x86"
+        $(CP) Release_TS/php5ts.lib $(INSTALL_DIR)/lib
+!elseif "$(ARCH)" == "x64"
+        $(CP) x64/Release_TS/php5ts.lib $(INSTALL_DIR)/lib
+!endif
+        $(CMD) /C "$(CSCRIPT) configure.js --disable-all --enable-cli --with-prefix=$(INSTALL_DIR_WIN)\php --disable-zts"
+        $(NMAKE) 
+!if "$(ARCH)" == "x86"
+        $(CP) Release/php5.lib $(INSTALL_DIR)/lib
+!elseif "$(ARCH)" == "x64"
+        $(CP) x64/Release/php5.lib $(INSTALL_DIR)/lib
+!endif
+        $(RSYNC) --include "*/" --include "*.h" --exclude "*" --prune-empty-dirs . $(INSTALL_DIR)/include/php
+
+
+swig: prepare
+        cd $(BASEDIR)\swigwin\current
+		copy $(BASEDIR)\pcre\current\compile .
+		$(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/swigwin/current && ./autogen.sh"
+        $(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/swigwin/current && ./configure \
+			    CC='/cygdrive/c/libRETS/vendorsrc/swigwin/current/compile cl.exe' \
+				CXX='/cygdrive/c/libRETS/vendorsrc/swigwin/current/compile cl.exe' \
+				--disable-ccache \
+			    --with-pcre-prefix=$(INSTALL_DIR) \
+				--with-boost=$(INSTALL_DIR) \
+                --prefix=$(INSTALL_DIR) \
+                --without-tcl           \
+                --without-octave        \
+                --without-gcj           \
+                --without-guile         \
+                --without-mzscheme      \
+                --without-ocaml         \
+                --without-pike          \
+                --without-chicken       \
+                --without-lua           \
+                --without-allegrocl     \
+                --without-clisp         \
+                --without-r"
+		$(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/swigwin/current && make && make install"
+
+clean::
+        @echo Usage:
+        @echo nmake /f Makefile.vc clean-antlr
+        @echo nmake /f Makefile.vc clean-boost
+        @echo nmake /f Makefile.vc clean-cppunit
+        @echo nmake /f Makefile.vc clean-curl
+        @echo nmake /f Makefile.vc clean-expat
+        @echo nmake /f Makefile.vc clean-openssl
+        @echo nmake /f Makefile.vc clean-pcre
+        @echo nmake /f Makefile.vc clean-php
+        @echo nmake /f Makefile.vc clean-swig (Takes quite a while)
+        @echo
+        @echo nmake /f Makefile.vc clean-all
+
+distclean-all: clean-all
+        rmdir /S /Q $(INSTALL_DIR_WIN)
+
+clean-all: clean-openssl clean-curl clean-antlr clean-expat clean-boost \
+        clean-pcre clean-swig
+
+clean-all-all: clean-all clean-php clean-cppunit
+
+clean-openssl:
+        cd $(BASEDIR)\openssl\current
+        $(NMAKE) /f makefile clean
+
+clean-curl:
+        cd $(BASEDIR)\curl\current\winbuild
+		$(NMAKE) /f Makefile.vc SSL_PATH=$(INSTALL_DIR_WIN) WITH_SSL=static mode=static clean
+
+clean-antlr:
+        cd $(BASEDIR)\antlr\current
+		if exist build rmdir /s /q build
+
+clean-expat:
+        cd $(BASEDIR)\expat\current\expat
+        $(MSBUILD) expat.sln /Clean 
+        if exist build.log del build.log
+        cd $(BASEDIR)\expat\current\expat\$(EXPAT_FLAVOR)
+        if exist bin rmdir /S /Q bin
+        if exist tmp rmdir /S /Q tmp
+
+clean-boost:
+        cd $(BASEDIR)\boost\current
+        .\b2 --clean
+        del bin.v2\project-cache.jam
+
+clean-pcre:
+        $(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/pcre/current && make distclean"
+
+clean-swig:
+        $(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/swigwin/current && make distclean"
+
+
+
+clean-cppunit::
+        cd $(BASEDIR)\cppunit\current\src
+        @-$(DEVENV) CppUnitLibraries.sln /Clean
+
+clean-php::
+        cd $(BASEDIR)\php\current
+        @-$(NMAKE) clean
+
+
+prepare::
+        if not exist $(INSTALL_DIR_WIN)\bin mkdir $(INSTALL_DIR_WIN)\bin
+        if not exist $(INSTALL_DIR_WIN)\include mkdir $(INSTALL_DIR_WIN)\include
+        if not exist $(INSTALL_DIR_WIN)\lib mkdir $(INSTALL_DIR_WIN)\lib
+        if not exist $(INSTALL_DIR_WIN)\include\curl mkdir $(INSTALL_DIR_WIN)\include\curl
+        if not exist $(INSTALL_DIR_WIN)\include\php mkdir $(INSTALL_DIR_WIN)\include\php
+        if not exist $(INSTALL_DIR_WIN)\lib mkdir $(INSTALL_DIR_WIN)\lib

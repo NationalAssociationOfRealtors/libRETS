@@ -40,7 +40,9 @@ PHP5_WRAP_H = php5\$(SWIG_WRAP_H)
 
 SWIG_FILES = librets.i auto_ptr_release.i shared_ptr_release.i
 
-all: csharp_ java_ $(PERL_BUILD) php5_ python_ python3_ $(RUBY_BUILD)
+all: csharp_ java_ 
+
+all-all: all $(PERL_BUILD) php5_ python_ python3_ $(RUBY_BUILD)
 
 csharp_: 
 	cd csharp
@@ -49,7 +51,7 @@ csharp_:
 
 java_: 
 	cd java
-	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=static
+	$(NMAKE) /f Makefile.vc BUILD=release RUNTIME_LIBS=dynamic
 	cd ..
 
 perl_:  $(PERL_WRAP) $(PERL_MAKEFILE)
