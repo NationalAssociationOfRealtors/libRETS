@@ -113,6 +113,20 @@ class UpdateRequest : public RetsHttpRequest
      * @param updateType A string containing the value of the update type.
      */
     void SetUpdateType(std::string updateType);
+
+     /**
+     * Returns the current value of the update parameter for the request.
+     *
+     * @return A string containing the value of the action.
+     */
+    const std::string GetUpdateAction();
+    
+    /**
+     * Set the value of the update action parameter for the current request.
+     *
+     * @param action A string containing the value of the action.
+     */
+    void SetUpdateAction(std::string action);
     
     /**
      * This requests the server update the record if there are no errors.
@@ -191,6 +205,7 @@ class UpdateRequest : public RetsHttpRequest
     static const char * RECORD_PARAMETER;
     static const char * RESOURCE_PARAMETER;
     static const char * UPDATE_TYPE_PARAMETER;
+    static const char * UPDATE_ACTION_PARAMETER;
     static const char * VALIDATE_PARAMETER;
     static const char * WARNING_RESPONSE_PARAMETER;
     
@@ -198,6 +213,7 @@ class UpdateRequest : public RetsHttpRequest
     StringMap       mFields;
     int             mFlag;
     std::string     mUpdateType;
+    std::string     mAction;
     StringMap       mWarnings;
 };
 
