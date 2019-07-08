@@ -63,3 +63,4 @@ vendorsrc/expat
 vendorsrc/openssl
 vendorsrc/pcre
 vendorsrc/swigwin
+vendor/
