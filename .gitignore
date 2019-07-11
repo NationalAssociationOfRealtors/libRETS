@@ -54,3 +54,13 @@ project/swig/csharp/bin
 project/swig/csharp/lib
 
 project/swig/node.js/binding.gyp
+
+# vendor
+vendorsrc/antlr
+vendorsrc/boost
+vendorsrc/curl
+vendorsrc/expat
+vendorsrc/openssl
+vendorsrc/pcre
+vendorsrc/swigwin
+vendor/
