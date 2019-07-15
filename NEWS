@@ -1,8 +1,9 @@
-Version 1.6.4-SNAPSHOT - xx xxx xxxx
-  * 
+Version 1.6.4 - 15 Jul 2019
+  Check the git logs for other changes not documented here.
+  * Merge pull request #76 by @darrenkopp
 
 Version 1.6.3 - 14 Apr 2019
-  - Check the git logs for other changes not identified here
+  Check the git logs for other changes not documented here.
   * Fix GetObject to comply with released RETS 1.8.0a spec. Issue #26.
   * Get default encoding from Content-Type response header.
   * Fix unit tests. Issue #26.
