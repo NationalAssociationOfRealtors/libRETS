@@ -21,11 +21,12 @@ Building:
 3. Open the expat solution in c:\libRETS\vendorsrc\expat\current
   1. Add new solution platform: x64 (copy settings from win32)
   2. For each project, update the Windows SDK Version to your Windows 10 SDK version
-4. Launch x86 Native Tools Command Prompt for VS 2017 
-  1. In c:\libRETS\vendorsrc, run nmake /f Makefile.vc ARCH=x86 TARGET_CPU=x86 build-all
-  2. In c:\libRETS, run nmake /f Makefile.vc ARCH=x86 TARGET_CPU=x86 all
-  3. In c:\libRETS, run nmake /f Makefile.vc ARCH=x86 TARGET_CPU=x86 swig
-4. Launch x64 Native Tools Command Prompt for VS 2017 
-  1. In c:\libRETS\vendorsrc, run nmake /f Makefile.vc ARCH=x64 TARGET_CPU=x64 build-all
-  2. In c:\libRETS, run nmake /f Makefile.vc ARCH=x64 TARGET_CPU=x64 all
-  3. In c:\libRETS, run nmake /f Makefile.vc ARCH=x64 TARGET_CPU=x64 swig
+4. Copy project\build\config.vc.dist to project\build\config.vc and modify for your needs
+5. Launch x86 Native Tools Command Prompt for VS 2017 
+  1. In c:\libRETS\vendorsrc, run nmake /f Makefile.vc TARGET_CPU=x86 build-all
+  2. In c:\libRETS, run nmake /f Makefile.vc TARGET_CPU=x86 all
+  3. In c:\libRETS, run nmake /f Makefile.vc TARGET_CPU=x86 swig
+6. Launch x64 Native Tools Command Prompt for VS 2017 
+  1. In c:\libRETS\vendorsrc, run nmake /f Makefile.vc TARGET_CPU=x64 build-all
+  2. In c:\libRETS, run nmake /f Makefile.vc TARGET_CPU=x64 all
+  3. In c:\libRETS, run nmake /f Makefile.vc TARGET_CPU=x64 swig

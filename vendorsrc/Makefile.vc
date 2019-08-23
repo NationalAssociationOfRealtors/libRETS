@@ -1,3 +1,6 @@
+!if "$(TARGET_CPU)" == ""
+TARGET_CPU          = x64
+!endif
 ARCH                = $(TARGET_CPU)
 BASEDIR             = c:\librets\vendorsrc
 CMD                 = cmd.exe
@@ -6,7 +9,7 @@ CSCRIPT             = cscript
 MSBUILD             = msbuild
 INSTALL_DIR_WIN     = c:\librets\vendor\$(VSVERSION)-$(ARCH)
 INSTALL_DIR         = /cygdrive/c/librets/vendor/$(VSVERSION)-$(ARCH)
-MAKE                = c:\cygwin\bin\make
+MAKE                = c:\cygwin64\bin\make
 MV                  = move
 NMAKE               = nmake /nologo
 OPENSSL_CFLAG_DYN   = /MD /Ox /W3 /Gs0 /GF /Gy /nologo \
@@ -31,11 +34,11 @@ OPENSSL_CFLAG_DYN   = /MD /Ox /W3 /Gs0 /GF /Gy /nologo \
                         -DOPENSSL_NO_DYNAMIC_ENGINE
 OPENSSL_PATH        = $(BASEDIR)\openssl\current
 RM                  = rm
-RSYNC               = c:\cygwin\bin\rsync -a 
+RSYNC               = c:\cygwin64\bin\rsync -a 
 SH                  = c:\cygwin64\bin\bash.exe --login
-TAR                 = c:\cygwin\bin\tar
-TOOLSET             = msvc-10
-VSVERSION           = vs2010
+TAR                 = c:\cygwin64\bin\tar
+VS_TOOLSET          = msvc-14.1
+VS_VERSION          = vs2017
 
 !if "$(ARCH)" == "x86"
 ADDRESS_MODEL       = 32
@@ -53,19 +56,19 @@ PERL                = c:\Perl64\bin\perl
 
 all::
         @echo Usage:
-        @echo nmake /f Makefile.vc ARCH=$$(arch) antlr - Build antlr
-        @echo nmake /f Makefile.vc ARCH=$$(arch) boost - Build boost
-        @echo nmake /f Makefile.vc ARCH=$$(arch) cppunit - Build cppunit
-        @echo nmake /f Makefile.vc ARCH=$$(arch) expat - Build expat
-        @echo nmake /f Makefile.vc ARCH=$$(arch) curl - Build libcurl
-        @echo nmake /f Makefile.vc ARCH=$$(arch) openssl - Build openssl
-        @echo nmake /f Makefile.vc ARCH=$$(arch) pcre - Build pcre
-        @echo nmake /f Makefile.vc ARCH=$$(arch) php - Build php
-        @echo nmake /f Makefile.vc ARCH=$$(arch) swig - Build swig
-        @echo
-        @echo nmake /f Makefile.vc ARCH=$$(arch) build-all - Builds everything in the proper order
-        @echo
-        @echo where $$(arch) == """x86""" or """x64"""
+        @echo nmake /f Makefile.vc TARGET_CPU=$$(arch) antlr - Build antlr
+        @echo nmake /f Makefile.vc TARGET_CPU=$$(arch) boost - Build boost
+        @echo nmake /f Makefile.vc TARGET_CPU=$$(arch) cppunit - Build cppunit
+        @echo nmake /f Makefile.vc TARGET_CPU=$$(arch) expat - Build expat
+        @echo nmake /f Makefile.vc TARGET_CPU=$$(arch) curl - Build libcurl
+        @echo nmake /f Makefile.vc TARGET_CPU=$$(arch) openssl - Build openssl
+        @echo nmake /f Makefile.vc TARGET_CPU=$$(arch) pcre - Build pcre
+        @echo nmake /f Makefile.vc TARGET_CPU=$$(arch) php - Build php
+        @echo nmake /f Makefile.vc TARGET_CPU=$$(arch) swig - Build swig
+        @echo.
+        @echo nmake /f Makefile.vc TARGET_CPU=$$(arch) build-all - Builds everything in the proper order
+        @echo.
+        @echo where $$(arch) == "x86" or "x64"
 
 help: all
 
@@ -84,13 +87,16 @@ curl: prepare
 		.\buildconf.bat
 		cd winbuild
 		$(NMAKE) /f Makefile.vc SSL_PATH=$(INSTALL_DIR_WIN) WITH_SSL=static mode=static
+		$(NMAKE) /f Makefile.vc SSL_PATH=$(INSTALL_DIR_WIN) WITH_SSL=static mode=static DEBUG=yes
 		cd ..\builds\libcurl-vc-$(ARCH)-release-static-ssl-static-ipv6-sspi
 		$(CP) lib\* $(INSTALL_DIR_WIN)\lib
 		$(CP) include\curl $(INSTALL_DIR_WIN)\include\curl
+		cd ..\..\builds\libcurl-vc-$(ARCH)-debug-static-ssl-static-ipv6-sspi
+		$(CP) lib\* $(INSTALL_DIR_WIN)\lib
 
 antlr: prepare
         cd $(BASEDIR)\antlr\current
-
+	$(CP) antlr.jar $(INSTALL_DIR_WIN)\lib
 		if exist build rmdir /s /q build
         mkdir build
         cd build
@@ -123,16 +129,16 @@ expat-install::
 boost: prepare
         cd $(BASEDIR)\boost\current
 		.\bootstrap
-		.\b2 architecture=x86 address-model=$(ADDRESS_MODEL) toolset=msvc-14.1 \
+		.\b2 architecture=x86 address-model=$(ADDRESS_MODEL) toolset=$(VS_TOOLSET) \
             --build-type=complete --debug-configuration \
-			--with-filesystem --with-program_options --layout=versioned \
+			--with-filesystem --with-program_options --with-regex --layout=versioned \
 			--prefix="$(INSTALL_DIR_WIN)" install
 
 
 
 
 pcre: prepare
-	$(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/pcre/current && ./configure --prefix=/cygdrive/c/libRETS/vendor/vs2010-$(ARCH) \
+	$(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/pcre/current && ./configure --prefix=/cygdrive/c/libRETS/vendor/$(VS_VERSION)-$(ARCH) \
 		--disable-shared CXX='/cygdrive/c/libRETS/vendorsrc/pcre/current/compile cl.exe' \
         --enable-rebuild-chartables"
 	$(SH) -c "cd /cygdrive/c/libRETS/vendorsrc/pcre/current && make && make install"
