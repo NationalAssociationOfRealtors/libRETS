@@ -4,10 +4,10 @@ BASE_PATH = c:\librets\vendor\$(VS_VERSION)-$(TARGET_CPU)
 #
 # The path to the SWIG support files. This depends on the
 # SWIG version.
-SWIG_LIBRARY = $(BASE_PATH)\share\swig\2.0.12
+SWIG_LIBRARY = $(BASE_PATH)\share\swig\3.0.12
 
 # The BOOST version currently being used.
-BOOST_VERSION=1_55
+BOOST_VERSION = 1_71
 
 # [debug, release]
 BUILD = release
@@ -27,6 +27,6 @@ RUNTIME_LIBS = static
 USE_SQL_COMPILER = true
 
 # Visual Studio version to use.
-# [vs2003, vs2005, vs2008]
+# [vs2003, vs2005, vs2008, vs2010, vs2015, vs2017, vs2019]
 #
 VS_VERSION = vs2010
