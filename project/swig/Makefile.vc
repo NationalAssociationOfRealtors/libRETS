@@ -18,7 +18,7 @@ RUBY_WRAP_H = ruby\$(SWIG_WRAP_H)
 
 PERL_BUILD =
 PERL_CLEAN =
-!if "$(VS_VERSION)" == "vs2008" || "$(VS_VERSION)" == "vs2010"
+!if "$(VS_VERSION)" != "vs2003" && "$(VS_VERSION)" != "vs2005"
 PERL_BUILD = perl_
 PERL_CLEAN = clean-perl
 !endif
