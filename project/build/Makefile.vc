@@ -170,7 +170,7 @@ MSVCR_DLL="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redi
 !endif
 
 VC_VERSION = -vc141
-WINLIBS = ws2_32.lib winmm.lib wldap32.lib user32.lib gdi32.lib advapi32.lib
+WINLIBS = ws2_32.lib winmm.lib wldap32.lib user32.lib normaliz.lib gdi32.lib crypt32.lib advapi32.lib
 !else if "$(VS_VERSION)" == "vs2019"
 
 CFLAGS_STD = /nologo $(RUNTIME_FLAGS) $(OPTIMIZE_FLAG) /Gm /Zi \
