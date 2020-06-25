@@ -82,6 +82,13 @@ using std::vector;
 using std::string;
 %}
 
+#ifdef SWIGPYTHON
+%{
+#include <boost/format.hpp>
+using boost::format;
+%}
+#endif
+
 #ifndef SWIGXML
 %include "std_string.i"
 #ifndef SWIGPHP
@@ -255,6 +262,54 @@ class RetsReplyException : public RetsException
     
     std::string GetExtendedMeaning() const throw();
 };
+
+#ifdef SWIGPYTHON
+%extend RetsException {
+    std::string __repr__() {
+        boost::format repr_fmt("<RetsException Message='%1%' ExtendedMessage='%2%'>\n");
+        repr_fmt % (*$self).GetMessage();
+        repr_fmt % (*$self).GetExtendedMessage();
+        return repr_fmt.str();
+    }
+    std::string __str__() {
+        boost::format str_fmt("Error %1%\n%2%\n");
+        str_fmt % (*$self).GetMessage();
+        str_fmt % (*$self).GetExtendedMessage();
+        return str_fmt.str();
+    }
+}
+%extend RetsHttpException {
+    std::string __repr__() {
+        boost::format repr_fmt("<RetsHttpException HttpResult='%1%' Message='%2%'>\n");
+        repr_fmt % std::to_string((*$self).GetHttpResult());
+        repr_fmt % (*$self).GetMessage();
+        return repr_fmt.str();
+    }
+    std::string __str__() {
+        boost::format str_fmt("HttpResult %1%\n%2%\n");
+        str_fmt % std::to_string((*$self).GetHttpResult());
+        str_fmt % (*$self).GetMessage();
+        return str_fmt.str();
+    }
+}
+%extend RetsReplyException {
+    std::string __repr__() {
+        boost::format repr_fmt("<RetsReplyException ReplyCode='%1%' Meaning='%2%' ExtendedMeaning='%3%'>\n");
+        repr_fmt % std::to_string((*$self).GetReplyCode());
+        repr_fmt % (*$self).GetMeaning();
+        repr_fmt % (*$self).GetExtendedMeaning();
+        return repr_fmt.str();
+    }
+    std::string __str__() {
+        boost::format str_fmt("ReplyCode %1%\n%2%\n%3%\n");
+        str_fmt % std::to_string((*$self).GetReplyCode());
+        str_fmt % (*$self).GetMeaning();
+        str_fmt % (*$self).GetExtendedMeaning();
+        return str_fmt.str();
+    }
+}
+#endif
+
 #endif
 
 #ifdef SWIGCSHARP
