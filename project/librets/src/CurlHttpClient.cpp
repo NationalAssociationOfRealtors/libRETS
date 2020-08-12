@@ -43,6 +43,7 @@ CurlHttpClient::CurlHttpClient()
      */
     curl_global_init(CURL_GLOBAL_ALL);
 
+    mCACertPath = "cacert.pem";
     mFlags = 0;
     mLogger = NullHttpLogger::GetInstance();
     mLogging = false;
@@ -235,7 +236,7 @@ RetsHttpResponsePtr CurlHttpClient::StartRequest(RetsHttpRequest * request)
     curlEasy->SetWriteFunction(CurlHttpClient::StaticWriteData);
     curlEasy->SetWriteHeaderData(client);
     curlEasy->SetWriteHeaderFunction(CurlHttpClient::StaticWriteHeader);
-    curlEasy->SetCAInfo("cacert.pem");
+    curlEasy->SetCAInfo(mCACertPath);
     
     if (mFlags & RetsSession::MODE_NO_SSL_VERIFY)
         curlEasy->SetSSLVerify(false);

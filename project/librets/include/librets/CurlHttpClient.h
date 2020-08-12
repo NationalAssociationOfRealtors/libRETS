@@ -106,6 +106,18 @@ class CurlHttpClient : public RetsHttpClient
      */
     virtual void SetTimeout(int seconds);
 
+    /**
+     * Get the path to the CACert.pem file
+     * @return A string containing the path to cacert.pem
+     */
+    virtual std::string GetCACertPath() { return mCACertPath;};
+
+    /**
+     * Set the path to the CACert.pem file
+     * @param A string containing the path to cacert.pem
+     */
+    virtual void SetCACertPath(std::string cacert_path) {mCACertPath = cacert_path;};
+
   private:
   
     static size_t StaticWriteData(char * buffer, size_t size, size_t nmemb,
@@ -131,6 +143,8 @@ class CurlHttpClient : public RetsHttpClient
     
     bool mLogging;
     
+    std::string mCACertPath;
+
     std::string mUrl;
     
     std::string mUserName;
