@@ -268,7 +268,8 @@ void CLASS::testExtendedCharacter()
      * This represents "nunez" with extended characters for the accented "u",
      * and the "enyay".
      */
-    const char nunez [] = {0x4e, 0xc2, 0x9c, 0xc2, 0x96, 0x65, 0x7a, 0x00};
+    unsigned char nunez [] = {0x4e, 0xc2, 0x9c, 0xc2, 0x96, 0x65, 0x7a,};
+    std::string s_nunez(nunez, nunez + sizeof(nunez) / sizeof(nunez[0]));
 
     mParser->SetEncoding(RETS_XML_DEFAULT_ENCODING);
     
@@ -298,7 +299,7 @@ void CLASS::testExtendedCharacter()
                         element->GetStringAttribute("StandardName"));
     ASSERT_STRING_EQUAL("Single Family",
                         element->GetStringAttribute("VisibleName"));
-    ASSERT_STRING_EQUAL(nunez,
+    ASSERT_STRING_EQUAL(s_nunez,
                         element->GetStringAttribute("Description"));
     ASSERT_STRING_EQUAL("100.00.001",
                         element->GetStringAttribute("TableVersion"));

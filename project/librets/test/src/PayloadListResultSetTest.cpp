@@ -230,7 +230,8 @@ void CLASS::testUTF8Response()
      * This represents "nunez" with utf8 characters for the accented "u",
      * and the "enyay".
      */
-    const char nunez [] = {0x4e, 0xc3, 0xba, 0xc3, 0xb1, 0x65, 0x7a, 0x00};
+    unsigned char nunez [] = {0x4e, 0xc3, 0xba, 0xc3, 0xb1, 0x65, 0x7a};
+    std::string s_nunez(nunez, nunez + sizeof(nunez) / sizeof(nunez[0]));
 
     resultSet.SetEncoding(RETS_XML_DEFAULT_ENCODING);
     try
@@ -265,8 +266,8 @@ void CLASS::testUTF8Response()
     ASSERT_STRING_EQUAL("AG000001", resultSet.GetString(0));
     ASSERT_STRING_EQUAL("Carlos", resultSet.GetString("FirstName"));
     ASSERT_STRING_EQUAL("Carlos", resultSet.GetString(1));
-    ASSERT_STRING_EQUAL(nunez, resultSet.GetString("LastName"));
-    ASSERT_STRING_EQUAL(nunez, resultSet.GetString(2));
+    ASSERT_STRING_EQUAL(s_nunez, resultSet.GetString("LastName"));
+    ASSERT_STRING_EQUAL(s_nunez, resultSet.GetString(2));
 
     CPPUNIT_ASSERT(!resultSet.HasNext());
 }
