@@ -1,4 +1,7 @@
-Version 1.6.5-SNAPSHOT - xx xxx 201x
+Version 1.6.6-SNAPSHOT  - xx xxx 2020
+
+Version 1.6.5 - 12 Aug 2020
+  * Resolve hard coded CACert location
 
 Version 1.6.4 - 15 Jul 2019
   Check the git logs for other changes not documented here.

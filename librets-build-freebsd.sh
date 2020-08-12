@@ -5,12 +5,12 @@
 # environment.
 
 CPPFLAGS="-L/usr/local/lib -I/usr/local/include"	\
- ./configure    --enable-examples               	\
+ ../configure    --enable-examples               	\
                 --enable-debug                  	\
                 --enable-depends                	\
 		--enable-maintainer-documentation	\
                 --with-expat-prefix=/usr/local  	\
                 --with-boost-prefix=/usr/local		\
-		--with-java-prefix=/usr/local/openjdk6/include \
+        --with-java-prefix=/usr/local/openjdk14/include \
 		--prefix=/tmp/librets
 
