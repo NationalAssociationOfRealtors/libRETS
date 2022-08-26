@@ -532,6 +532,8 @@ private:
     static const char * RETS_1_7_2_STRING;
     static const char * RETS_1_8_STRING;
     static const char * RETS_1_8_0_STRING;
+    static const char * RETS_1_9_STRING;
+    static const char * RETS_1_9_0_STRING;
     
     void RetrieveAction();
 

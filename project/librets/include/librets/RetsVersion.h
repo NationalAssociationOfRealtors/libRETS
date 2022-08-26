@@ -53,7 +53,15 @@ enum RetsVersion
     /**
      * This is a RETS 1.8.0 server.
      */
-    RETS_1_8_0
+    RETS_1_8_0,
+    /**
+     * This is a RETS 1.9 server.
+     */
+    RETS_1_9,
+    /**
+     * This is a RETS 1.8.0 server.
+     */
+    RETS_1_9_0
 };
 
 }

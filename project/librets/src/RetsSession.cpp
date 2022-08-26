@@ -56,6 +56,8 @@ const char * CLASS::RETS_1_7_STRING     = "RETS/1.7";
 const char * CLASS::RETS_1_7_2_STRING   = "RETS/1.7.2";
 const char * CLASS::RETS_1_8_STRING     = "RETS/1.8";
 const char * CLASS::RETS_1_8_0_STRING   = "RETS/1.8.0";
+const char * CLASS::RETS_1_9_STRING   = "RETS/1.9";
+const char * CLASS::RETS_1_9_0_STRING   = "RETS/1.9.0";
 
 const int CLASS::MODE_CACHE             = 0x01;
 const int CLASS::MODE_NO_STREAM         = 0x02;
@@ -786,6 +788,14 @@ string CLASS::RetsVersionToString(RetsVersion retsVersion)
     {
         return RETS_1_8_0_STRING;
     }
+    else if (retsVersion == RETS_1_9)
+    {
+        return RETS_1_9_STRING;
+    }
+    else if (retsVersion == RETS_1_9_0)
+    {
+        return RETS_1_9_0_STRING;
+    }
     else
     {
         throw RetsException(str_stream() << "Invalid RetsVersion: "
@@ -818,6 +828,14 @@ RetsVersion CLASS::RetsVersionFromString(string versionString)
     else if (versionString == RETS_1_8_0_STRING)
     {
         return RETS_1_8_0;
+    }
+    else if (versionString == RETS_1_9_STRING)
+    {
+        return RETS_1_9;
+    }
+    else if (versionString == RETS_1_9_0_STRING)
+    {
+        return RETS_1_9_0;
     }
     else if (versionString.empty())
     {
