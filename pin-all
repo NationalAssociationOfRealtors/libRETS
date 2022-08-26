@@ -1,0 +1,3 @@
+Package: *
+Pin: release a=bullseye
+Pin-Priority: 1001

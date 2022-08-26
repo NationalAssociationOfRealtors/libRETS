@@ -1,0 +1,15 @@
+Package: python3*
+Pin: release a=testing
+Pin-Priority: 1001
+
+Package: dh-python*
+Pin: release a=testing
+Pin-Priority: 1001
+
+Package: devscripts*
+Pin: release a=testing
+Pin-Priority: 1001
+
+Package: swig*
+Pin: release a=testing
+Pin-Priority: 1001
